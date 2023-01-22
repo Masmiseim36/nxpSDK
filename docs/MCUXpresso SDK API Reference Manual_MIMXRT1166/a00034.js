@@ -1,6 +1,6 @@
 var a00034 =
 [
-    [ "flexio_camera_edma_handle_t", "a00034.html#a00379", [
+    [ "flexio_camera_edma_handle_t", "a00034.html#a00381", [
       [ "callback", "a00034.html#aa6a47749cad9e09b544d2a4038b6e420", null ],
       [ "userData", "a00034.html#ad1efb23fc99dcbde281ccca7fcbe5d1f", null ],
       [ "rxSize", "a00034.html#a9560b4e1d59b1cce760c8a49616ee5a4", null ],

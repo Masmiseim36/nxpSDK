@@ -111,7 +111,7 @@ if (isdefinedsymbol(gUseNVMLink_d))
 /*** littleFS configuration Start ***/
 define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
 define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (0x30FBFFFF - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (0x30EBFFFF - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS + 1) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
 /*** littleFS configuration End ***/
 
 /* Sizes */

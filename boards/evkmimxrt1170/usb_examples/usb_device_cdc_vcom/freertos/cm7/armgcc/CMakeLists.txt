@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(dev_cdc_vcom_freertos_cm7)
 
+set(MCUX_BUILD_TYPES debug release sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME dev_cdc_vcom_freertos_cm7.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -53,25 +59,25 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usb_device_cdc_acm.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../..
+    ${SdkRootDirPath}/boards/evkmimxrt1170
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/xip
-    ${ProjDirPath}/../../../../../xip
-    ${ProjDirPath}/../../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers/cm7
-    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1176/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xip
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm7
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -129,6 +135,8 @@ include(driver_anatop_ai_MIMXRT1176_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
+include(driver_memory_MIMXRT1176_cm7)
+
 include(middleware_usb_device_common_header_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
@@ -138,15 +146,13 @@ include(utilities_misc_utilities_MIMXRT1176_cm7)
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

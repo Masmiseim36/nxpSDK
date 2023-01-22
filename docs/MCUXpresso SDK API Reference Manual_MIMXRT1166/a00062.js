@@ -1,13 +1,13 @@
 var a00062 =
 [
-    [ "mecc_config_t", "a00062.html#a00567", [
+    [ "mecc_config_t", "a00062.html#a00570", [
       [ "enableMecc", "a00062.html#aff19942deb461e4bf01c7360746093ca", null ],
       [ "Ocram1StartAddress", "a00062.html#ac4abea7edcd5275195098923b5909b8f", null ],
       [ "Ocram1EndAddress", "a00062.html#a46ce2a65e0f32da27f2d76a9e69fafc2", null ],
       [ "Ocram2StartAddress", "a00062.html#a5f47e08d3b6d4cd883bd88d2e3c1e197", null ],
       [ "Ocram2EndAddress", "a00062.html#a7ac404c1c0795e9fc81c2ce616d44067", null ]
     ] ],
-    [ "mecc_single_error_info_t", "a00062.html#a00569", [
+    [ "mecc_single_error_info_t", "a00062.html#a00572", [
       [ "singleErrorAddress", "a00062.html#a88678fbdae48fccdd9568a3cd1e32a76", null ],
       [ "singleErrorDataLow", "a00062.html#aded9fb5de1076b3bc7dde72c8449c77b", null ],
       [ "singleErrorDataHigh", "a00062.html#ab74a6440d154f8023c3ef922163360ac", null ],
@@ -15,7 +15,7 @@ var a00062 =
       [ "singleErrorPosHigh", "a00062.html#a87e8410fd2ab260d275f7895f0175fe4", null ],
       [ "singleErrorEccCode", "a00062.html#a63ca09ad3b4a6d8af5b3e8a8c544dcb5", null ]
     ] ],
-    [ "mecc_multi_error_info_t", "a00062.html#a00568", [
+    [ "mecc_multi_error_info_t", "a00062.html#a00571", [
       [ "multiErrorAddress", "a00062.html#ac9ab573f3d4d6caf2db8670cd731fafc", null ],
       [ "multiErrorDataLow", "a00062.html#a9c70c6fc323149df114e676c3a9a41c3", null ],
       [ "multiErrorDataHigh", "a00062.html#ac087e46613f98b9647564981ea55a833", null ],

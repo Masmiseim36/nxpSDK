@@ -6,7 +6,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/source/fsl_nand_disk
 )
 
@@ -24,4 +24,6 @@ if(NOT (CONFIG_USE_driver_nand_flash-controller-semc_MIMXRT1176_cm4 OR CONFIG_US
 endif()
 
 include(middleware_fatfs_MIMXRT1176_cm4)
+
+include(middleware_dhara_MIMXRT1176_cm4)
 

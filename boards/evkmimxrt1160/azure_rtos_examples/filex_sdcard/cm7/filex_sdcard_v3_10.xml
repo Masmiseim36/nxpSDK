@@ -217,10 +217,14 @@
     </source>
     <source path="iar" project_relative_path="MIMXRT1166/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1166xxxxx_cm7_ram.icf"/>
+    </source>
+    <source path="iar" project_relative_path="MIMXRT1166/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.icf"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT1166/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1166xxxxx_cm7_ram.scf"/>
+    </source>
+    <source path="mdk" project_relative_path="MIMXRT1166/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.scf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1166/gcc" type="linker" toolchain="armgcc">

@@ -43,6 +43,7 @@ var searchData=
   ['thstrail_5fbyteclk',['tHsTrail_ByteClk',['../a00024.html#a34a82100c6ae89ab1a0b7ca82e9d7316',1,'dsi_dphy_config_t']]],
   ['thszero_5fbyteclk',['tHsZero_ByteClk',['../a00024.html#aff7dec35b55fb46dc810923602276920',1,'dsi_dphy_config_t']]],
   ['tidletimeout_5fns',['tIdleTimeout_Ns',['../a00082.html#a3aee78fbfe593dc04381a9cc60dab764',1,'semc_sdram_config_t']]],
+  ['time_5f100ps',['time_100ps',['../a00046.html#aa7a09832fd3df0d99d62c5fcf89215e8',1,'flexspi_dll_time_t']]],
   ['timedelay',['timeDelay',['../a00087.html#a808aee40758a9d347616521d609b9bf1',1,'smartcard_context_t']]],
   ['timeoutinms',['timeoutInMs',['../a00046.html#a45cf0998ebe296a05e155722086c3495',1,'flexspi_mem_config_t']]],
   ['timeoutvalue',['timeoutValue',['../a00075.html#ab4192d93defc5943013d8376f708325d',1,'rtwdog_config_t::timeoutValue()'],['../a00096.html#a867555736162830ec456cb98b37431bf',1,'wdog_config_t::timeoutValue()']]],

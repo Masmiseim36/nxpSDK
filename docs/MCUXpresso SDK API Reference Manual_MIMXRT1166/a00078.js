@@ -1,6 +1,6 @@
 var a00078 =
 [
-    [ "sd_card_t", "a00078.html#a00630", [
+    [ "sd_card_t", "a00078.html#a00633", [
       [ "host", "a00078.html#ae1d68ff4edbc243d840cae5614d31a68", null ],
       [ "usrParam", "a00078.html#ab4566720b02d4de772cd3cbcb54eaafb", null ],
       [ "isHostReady", "a00078.html#a966fb2f61556afb59ab11f5f634e0578", null ],
@@ -24,13 +24,13 @@ var a00078 =
       [ "lock", "a00078.html#a617e4f6ef3604042d7ae2851bd1ae50c", null ]
     ] ],
     [ "FSL_SD_DRIVER_VERSION", "a00078.html#ga6fa18202479ec86d33169ee28513ae94", [
-      [ "kSD_SupportHighCapacityFlag", "a00078.html#gga0724528cce39d640312f4a7ad1a893f7a9fdf7d592b595f8dffd0519979222bc8", null ],
-      [ "kSD_Support4BitWidthFlag", "a00078.html#gga0724528cce39d640312f4a7ad1a893f7a163a232e42705c297ad363283349cc40", null ],
-      [ "kSD_SupportSdhcFlag", "a00078.html#gga0724528cce39d640312f4a7ad1a893f7ad76278db320cf350e0a21fa35cef47db", null ],
-      [ "kSD_SupportSdxcFlag", "a00078.html#gga0724528cce39d640312f4a7ad1a893f7a38bc49f3235ef3245779efcbd0f616ca", null ],
-      [ "kSD_SupportVoltage180v", "a00078.html#gga0724528cce39d640312f4a7ad1a893f7a9ea1d2e9f73d26c15593a98481eb8132", null ],
-      [ "kSD_SupportSetBlockCountCmd", "a00078.html#gga0724528cce39d640312f4a7ad1a893f7a1d6f3540c4292326a017d8b629021d09", null ],
-      [ "kSD_SupportSpeedClassControlCmd", "a00078.html#gga0724528cce39d640312f4a7ad1a893f7a76d5891295fcaef57bb726e2fde42671", null ]
+      [ "kSD_SupportHighCapacityFlag", "a00078.html#ggac72f7803394f05658258f8a2b76f53aaa9fdf7d592b595f8dffd0519979222bc8", null ],
+      [ "kSD_Support4BitWidthFlag", "a00078.html#ggac72f7803394f05658258f8a2b76f53aaa163a232e42705c297ad363283349cc40", null ],
+      [ "kSD_SupportSdhcFlag", "a00078.html#ggac72f7803394f05658258f8a2b76f53aaad76278db320cf350e0a21fa35cef47db", null ],
+      [ "kSD_SupportSdxcFlag", "a00078.html#ggac72f7803394f05658258f8a2b76f53aaa38bc49f3235ef3245779efcbd0f616ca", null ],
+      [ "kSD_SupportVoltage180v", "a00078.html#ggac72f7803394f05658258f8a2b76f53aaa9ea1d2e9f73d26c15593a98481eb8132", null ],
+      [ "kSD_SupportSetBlockCountCmd", "a00078.html#ggac72f7803394f05658258f8a2b76f53aaa1d6f3540c4292326a017d8b629021d09", null ],
+      [ "kSD_SupportSpeedClassControlCmd", "a00078.html#ggac72f7803394f05658258f8a2b76f53aaa76d5891295fcaef57bb726e2fde42671", null ]
     ] ],
     [ "SD_Init", "a00078.html#ga281fb14816d236446ee2d047be0c7155", null ],
     [ "SD_Deinit", "a00078.html#ga50dee2b5bc071a01480b0ab3671c8524", null ],

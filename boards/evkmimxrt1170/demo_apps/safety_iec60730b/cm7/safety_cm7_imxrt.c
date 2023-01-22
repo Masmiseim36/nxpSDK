@@ -6,6 +6,7 @@
  */
 
 #include "safety_cm7_imxrt.h"
+#include "freemaster.h"
 
 #if (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
     #include "linker_config.h"
@@ -103,16 +104,6 @@
 extern fs_flash_dcp_channels_t g_dcpSafetyChannel;
 #endif
 
-/* Analog test limits and inputs */
-fs_aio_test_t aio_Str;
-const fs_aio_limits_t FS_ADC_Limits[FS_CFG_AIO_CHANNELS_CNT] = FS_CFG_AIO_CHANNELS_LIMITS_INIT;
-const uint8_t FS_ADC_inputs[FS_CFG_AIO_CHANNELS_CNT]         = FS_CFG_AIO_CHANNELS_INIT;
-#ifdef FSL_FEATURE_SOC_LPADC_COUNT
-const uint8_t FS_ADC_channel_sides[FS_CFG_AIO_CHANNELS_CNT]  = FS_CFG_AIO_CHANNELS_SIDE_INIT;
-#endif
-
-
-
 /** This variable is used as flag for automatic "run" test during example development,
 these test have a 3 return value:
 1. All tests pass - wait until all after/reset and runtime test passed
@@ -178,7 +169,7 @@ void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTe
     WATCHDOG_TEST_VARIABLES->ResetDetectMask      = (uint32_t)RESET_DETECT_MASK;
 
     /* Init timer */
-    GPT1_Init(WD_GPT1_SRC, WD_GPT1_CMP, WD_GPT1_DIV);
+    ReferenceTimerInit(WD_GPT1_SRC, WD_GPT1_CMP, WD_GPT1_DIV);
 
     if (*(RESET_DETECT_REGISTER)&runTestCondition) /* If non WD reset */
     {
@@ -255,7 +246,7 @@ void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafety
     FS_CLK_Init((uint32_t *)&psSafetyClockTest->clockTestContext);
 
     /* Initialization of timer */
-    GPT1_Init(CLOCK_GPT1_SRC, CLOCK_GPT1_CMP, CLOCK_GPT1_DIV);
+    ReferenceTimerInit(CLOCK_GPT1_SRC, CLOCK_GPT1_CMP, CLOCK_GPT1_DIV);
 }
 
 /*!
@@ -992,25 +983,6 @@ void SafetyDigitalInputOutput_ShortSupplyTest(safety_common_t *psSafetyCommon,
 }
 
 /*!
- * @brief   Initialization of ADC test.
- *
- *          This function calls InputInit and InputTrigger functions from IEC60730 library
- *
- * @param   void - macros from header files define the parameters
- *
- * @return  None
- */
-void SafetyAnalogTestInitialization(void)
-{
-#ifdef FSL_FEATURE_SOC_LPADC_COUNT
-    FS_AIO_InputInit_A1(&aio_Str, (fs_aio_limits_t *)FS_ADC_Limits, (uint8_t *)FS_ADC_inputs, FS_CFG_AIO_CHANNELS_CNT, ADC_COMMAND_BUFFER, (uint8_t *)FS_ADC_channel_sides, (uint8_t) TRIGGER_EVENT);
-#else
-    FS_AIO_InputInit_A2346(&aio_Str, (fs_aio_limits_t *)FS_ADC_Limits, (uint8_t *)FS_ADC_inputs, FS_CFG_AIO_CHANNELS_CNT);
-#endif
-    FS_AIO_InputTrigger(&aio_Str);
-}
-
-/*!
  * @brief   ADC test.
  *
  *          This function calls functions from IEC60730 library to perform ADC test.
@@ -1019,39 +991,64 @@ void SafetyAnalogTestInitialization(void)
  *
  * @return  None
  */
-#if ADC_TEST_ENABLED
 void SafetyAnalogTest(safety_common_t *psSafetyCommon)
-{
+{   
+  static int index = 0; /* Iteration variable for going through all ADC test items */
+   
+  /* If state is FS_AIO_SCAN_COMPLETE, check limits, otherwise function has not effect */
+  psSafetyCommon->AIO_test_result = FS_AIO_LimitCheck(g_aio_safety_test_items[index]->RawResult, &(g_aio_safety_test_items[index]->Limits), &(g_aio_safety_test_items[index]->state));
+  
 #ifdef FSL_FEATURE_SOC_LPADC_COUNT
-    psSafetyCommon->AIO_test_result = FS_AIO_InputCheck_A1(&aio_Str, (fs_aio_a1_t *)TESTED_ADC);
-#else
-    psSafetyCommon->AIO_test_result = FS_AIO_InputCheck_A6(&aio_Str, (fs_aio_a6_t *)TESTED_ADC);
-#endif
-    switch (psSafetyCommon->AIO_test_result)
+  switch (psSafetyCommon->AIO_test_result)
+  {
+  case FS_AIO_INIT:
+    FS_AIO_InputSet_A1(g_aio_safety_test_items[index], (fs_aio_a1_t *)TESTED_ADC);
+    break; 
+  case FS_AIO_PROGRESS:
+   FS_AIO_ReadResult_A1(g_aio_safety_test_items[index], (fs_aio_a1_t *)TESTED_ADC); 
+    break; 
+  case FS_PASS: /* successfull execution of test, call the trigger function again */
+    if( g_aio_safety_test_items[++index] == NULL)
     {
-        case FS_AIO_START: /* state START means that everything is ready to trigger the conversion */
-#ifdef FSL_FEATURE_SOC_LPADC_COUNT
-            FS_AIO_InputSet_A1(&aio_Str, (fs_aio_a1_t *)TESTED_ADC);
-#else
-            FS_AIO_InputSet_A6(&aio_Str, (fs_aio_a6_t *)TESTED_ADC);
-#endif
-            break;
-        case FS_FAIL_AIO:
-            psSafetyCommon->safetyErrors |= AIO_TEST_ERROR;
-            SafetyErrorHandling(psSafetyCommon);
-            break;
-        case FS_AIO_INIT:
-            FS_AIO_InputTrigger(&aio_Str);
-            break;
-        case FS_PASS: /* successfull execution of test, call the trigger function again */
-            FS_AIO_InputTrigger(&aio_Str);
-            break;
-        default:
-            __asm("NOP");
-            break;
+      index = 0; /* again first channel*/
     }
-}
+    g_aio_safety_test_items[index]->state = FS_AIO_INIT;
+    break;
+  case FS_FAIL_AIO:
+    SafetyErrorHandling(psSafetyCommon); 
+    break;
+  default:
+    __asm("NOP");
+    break;
+  }  
+#else
+     
+  switch (psSafetyCommon->AIO_test_result)
+  {
+  case FS_AIO_INIT:
+    FS_AIO_InputSet_A6(g_aio_safety_test_items[index], (fs_aio_a6_t *)TESTED_ADC);
+    break; 
+  case FS_AIO_PROGRESS:
+   FS_AIO_ReadResult_A6(g_aio_safety_test_items[index], (fs_aio_a6_t *)TESTED_ADC); 
+    break; 
+  case FS_PASS: /* successfull execution of test, call the trigger function again */
+    if( g_aio_safety_test_items[++index] == NULL)
+    {
+      index = 0; /* again first channel*/
+    }
+    g_aio_safety_test_items[index]->state = FS_AIO_INIT;
+    break;
+  case FS_FAIL_AIO:
+    SafetyErrorHandling(psSafetyCommon); 
+    break;
+  default:
+    __asm("NOP");
+    break;
+  }   
 #endif
+   
+ 
+}
 /*!
  * @brief   Handling of the safety functions that must be called in interrupt routine.
  *
@@ -1123,11 +1120,14 @@ static void test_end(void)
  */
 void SafetyErrorHandling(safety_common_t *psSafetyCommon)
 {
-    *SAFETY_ERROR_CODE = psSafetyCommon->safetyErrors;
-    test_end(); /* Only for example validation. Indicate that some error occured and test can be stoped */
+  *SAFETY_ERROR_CODE = psSafetyCommon->safetyErrors;
+  test_end(); /* Only for example validation. Indicate that some error occured and test can be stoped */
 #if SAFETY_ERROR_ACTION
-    __asm("CPSID i"); /* disable interrupts */
-    while (1)
-        ;
+  __asm("CPSID i"); /* disable interrupts */
+  while (1){
+    #if FMSTR_SERIAL_ENABLE
+        FMSTR_Poll(); /* Freemaster cummunication */
+    #endif
+  }    
 #endif
 }

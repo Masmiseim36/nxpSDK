@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lvgl_demo_benchmark_cm7)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME lvgl_demo_benchmark_cm7.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -37,64 +43,67 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/lv_demos.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c"
+"${SdkRootDirPath}/boards/evkmimxrt1160/lvgl_examples/lvgl_freertos.h"
+"${SdkRootDirPath}/boards/evkmimxrt1160/lvgl_examples/lvgl_freertos.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../lvgl_support.h"
-"${ProjDirPath}/../../../lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1160/lvgl_examples/lvgl_support.h"
+"${SdkRootDirPath}/boards/evkmimxrt1160/lvgl_examples/lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1160/lvgl_examples/lvgl_demo_utils.h"
+"${SdkRootDirPath}/boards/evkmimxrt1160/lvgl_examples/lvgl_demo_utils.c"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../..
-    ${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/benchmark
-    ${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos
-    ${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/examples/assets
-    ${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/stress/assets
-    ${ProjDirPath}/../../..
+    ${SdkRootDirPath}/boards/evkmimxrt1160
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/examples/assets
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/stress/assets
+    ${SdkRootDirPath}/boards/evkmimxrt1160/lvgl_examples
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../components/video
-    ${ProjDirPath}/../../../../../../components/video/display
-    ${ProjDirPath}/../../../../../../components/video/display/rm68191
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../components/video/display/mipi_dsi_cmd
-    ${ProjDirPath}/../../../../../../components/video/display/rm68200
-    ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
-    ${ProjDirPath}/../../../../../../components/gt911
-    ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
-    ${ProjDirPath}/../../../../../../middleware/vglite
-    ${ProjDirPath}/../../../../../../components/video/display/hx8394
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../middleware/lvgl
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../components/video/display/dc
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/components/video/display
+    ${SdkRootDirPath}/components/video/display/rm68191
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
+    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
+    ${SdkRootDirPath}/components/video/display/rm68200
+    ${SdkRootDirPath}/components/video/display/dc/lcdifv2
+    ${SdkRootDirPath}/components/gt911
+    ${SdkRootDirPath}/components/video/display/dc/elcdif
+    ${SdkRootDirPath}/middleware/vglite
+    ${SdkRootDirPath}/components/video/display/hx8394
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/middleware/lvgl
+    ${SdkRootDirPath}/devices/MIMXRT1166
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1166/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers/cm7
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/video/display/dc
 )
 
 # include modules
@@ -168,8 +177,6 @@ include(driver_dcdc_soc_MIMXRT1166_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1166_cm7)
 
-include(component_silicon_id_MIMXRT1166_cm7)
-
 include(driver_anatop_ai_MIMXRT1166_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
@@ -191,15 +198,13 @@ include(utilities_misc_utilities_MIMXRT1166_cm7)
 include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

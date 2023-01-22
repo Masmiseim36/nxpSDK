@@ -921,12 +921,12 @@ static bool LPSPI_MasterTransferWriteAllTxData(LPSPI_Type *base,
         /*Wait until TX FIFO is not full*/
 #if SPI_RETRY_TIMES
         uint32_t waitTimes = SPI_RETRY_TIMES;
-        while ((LPSPI_GetTxFifoCount(base) == LPSPI_GetRxFifoSize(base)) && ((--waitTimes) != 0U))
+        while ((LPSPI_GetTxFifoCount(base) == LPSPI_GetRxFifoSize(base)) && (--waitTimes) != 0U))
 #else
         while (LPSPI_GetTxFifoCount(base) == LPSPI_GetRxFifoSize(base))
 #endif
-        {
-        }
+            {
+            }
 #if SPI_RETRY_TIMES
         if (waitTimes == 0U)
         {
@@ -2092,7 +2092,7 @@ void LPSPI_SlaveTransferHandleIRQ(LPSPI_Type *base, lpspi_slave_handle_t *handle
     {
         LPSPI_ClearStatusFlags(base, (uint32_t)kLPSPI_ReceiveErrorFlag);
         /* Change state to error and clear flag */
-        if (handle->rxData != NULL)
+        if (handle->txData != NULL)
         {
             handle->state = (uint8_t)kLPSPI_Error;
         }

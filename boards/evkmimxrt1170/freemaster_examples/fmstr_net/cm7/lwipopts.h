@@ -1,10 +1,10 @@
 /**
  ******************************************************************************
- * @file    lwipopts.h
+ * @file    lwipopts.h for FreeMASTER example applications
  * This file is based on \src\include\lwip\opt.h
  ******************************************************************************
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -121,6 +121,11 @@ void sys_mark_tcpip_thread(void);
    timeouts. */
 #ifndef MEMP_NUM_SYS_TIMEOUT
 #define MEMP_NUM_SYS_TIMEOUT 10
+#endif
+/* MEMP_NUM_REASS_DATA: The number of whole IP packets
+   queued for reassembly. */
+#ifndef MEMP_NUM_REASSDATA
+#define MEMP_NUM_REASSDATA 2
 #endif
 /* MEMP_NUM_NETCONN: the number of struct netconns. */
 #ifndef MEMP_NUM_NETCONN
@@ -300,6 +305,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define TCPIP_THREAD_STACKSIZE 1024
 #define TCPIP_THREAD_PRIO      8
 
+/* Use 13 BDs ((ENET_RXBD_NUM * 2) rx eth buffers by default)*/
+#define ENET_RXBD_NUM 13
+
 /**
  * DEFAULT_RAW_RECVMBOX_SIZE: The mailbox size for the incoming packets on a
  * NETCONN_RAW. The queue size value itself is platform-dependent, but is passed
@@ -333,6 +341,13 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #include "lwip/arch.h"
 u32_t lwip_rand(void);
 #define LWIP_RAND() lwip_rand()
+#endif
+
+/**
+ * IP_REASS_MAX_PBUFS: Number of buffers reserved for IP fragment reassembly.
+ */
+#ifndef IP_REASS_MAX_PBUFS
+#define IP_REASS_MAX_PBUFS 4
 #endif
 
 #endif /* __LWIPOPTS_H__ */

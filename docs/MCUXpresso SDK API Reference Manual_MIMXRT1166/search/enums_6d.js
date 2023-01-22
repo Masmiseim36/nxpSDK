@@ -19,5 +19,5 @@ var searchData=
   ['mmc_5fsleep_5fawake_5ft',['mmc_sleep_awake_t',['../a00064.html#gab89d4d12909a44eb53f0f366ea542cf4',1,'fsl_mmc.h']]],
   ['mmc_5fspecification_5fversion_5ft',['mmc_specification_version_t',['../a00063.html#ga8b7944da4cc680f88e354eecb2104935',1,'fsl_sdmmc_spec.h']]],
   ['mmc_5fvoltage_5fwindow_5ft',['mmc_voltage_window_t',['../a00063.html#ga914d0ac81ffbcd7c4e5d0f5b2f56ef51',1,'fsl_sdmmc_spec.h']]],
-  ['mu_5fmsg_5freg_5findex_5ft',['mu_msg_reg_index_t',['../a00341.html#ga6d1c262f5437e331a33c12cf26fbc90e',1,'fsl_mu.h']]]
+  ['mu_5fmsg_5freg_5findex_5ft',['mu_msg_reg_index_t',['../a00340.html#ga6d1c262f5437e331a33c12cf26fbc90e',1,'fsl_mu.h']]]
 ];

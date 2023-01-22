@@ -1,6 +1,6 @@
 var a00011 =
 [
-    [ "asrc_channel_pair_config_t", "a00011.html#a00417", [
+    [ "asrc_channel_pair_config_t", "a00011.html#a00419", [
       [ "audioDataChannels", "a00011.html#a70c663894f784597081ca9bc7b8cb700", null ],
       [ "inClockSource", "a00011.html#ac7ce7a995807967bbeebbc62634bbede", null ],
       [ "inSourceClock_Hz", "a00011.html#a2da4df3f25f16b65e66b1d623e03c318", null ],
@@ -16,13 +16,13 @@ var a00011 =
       [ "inFifoThreshold", "a00011.html#ad3aaab4d106fd192829d2b4c505f1ba4", null ],
       [ "bufStallWhenFifoEmptyFull", "a00011.html#aa41dd93ae1884063da6642544156486e", null ]
     ] ],
-    [ "asrc_transfer_t", "a00011.html#a00423", [
+    [ "asrc_transfer_t", "a00011.html#a00425", [
       [ "inData", "a00011.html#a58b2d499f0c7e9063883625a2f89e8cb", null ],
       [ "inDataSize", "a00011.html#a2dc2a0f0038710ee160242c1744fe0ca", null ],
       [ "outData", "a00011.html#a2fa99d449b43849d338540e3b7b83866", null ],
       [ "outDataSize", "a00011.html#a4e60de01990ac03e54c840453dfb8185", null ]
     ] ],
-    [ "asrc_in_handle_t", "a00011.html#a00419", [
+    [ "asrc_in_handle_t", "a00011.html#a00421", [
       [ "callback", "a00011.html#a0cebe3f287291a4e56834e4e5e7e85f7", null ],
       [ "sampleWidth", "a00011.html#aae36d8a580c988f571b003dd637636f4", null ],
       [ "sampleMask", "a00011.html#a7d50180bf803fca4745a3c9e76503c7f", null ],
@@ -32,7 +32,7 @@ var a00011 =
       [ "queueUser", "a00011.html#ae491b06ac4eea63e3af26ef9211ba152", null ],
       [ "queueDriver", "a00011.html#ae729f8014c6cdff25957b4c11a2bdace", null ]
     ] ],
-    [ "asrc_out_handle_t", "a00011.html#a00421", [
+    [ "asrc_out_handle_t", "a00011.html#a00423", [
       [ "callback", "a00011.html#a07773de652ac4aa872044780b5065459", null ],
       [ "sampleWidth", "a00011.html#a1de883b287429cc6d6ba19aff345564c", null ],
       [ "fifoThreshold", "a00011.html#a2a7dce900e38c9a74bc3bd756099f7b2", null ],
@@ -41,7 +41,7 @@ var a00011 =
       [ "queueUser", "a00011.html#aed392674e434bc61457b8372d1be2bd3", null ],
       [ "queueDriver", "a00011.html#ab3ef9d588b1dc139d1f0d79b2e287e88", null ]
     ] ],
-    [ "asrc_handle_t", "a00011.html#a00371", [
+    [ "asrc_handle_t", "a00011.html#a00373", [
       [ "base", "a00011.html#ab97cfa0e1e385c9ad92a524cc8df15cd", null ],
       [ "state", "a00011.html#a58110e0631d9011bb2cc9f4d1b1e2774", null ],
       [ "userData", "a00011.html#ae8eeee4619341acc1d48a8efe95201f0", null ],

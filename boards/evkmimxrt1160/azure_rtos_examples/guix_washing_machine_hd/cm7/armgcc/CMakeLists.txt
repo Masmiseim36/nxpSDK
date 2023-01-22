@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(guix_washing_machine_hd)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME guix_washing_machine_hd.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 SET(CMAKE_STATIC_LIBRARY_PREFIX "lib")
 
@@ -72,32 +78,32 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../rtos/azure-rtos
-    ${ProjDirPath}/../../../../../../components/video
-    ${ProjDirPath}/../../../../../../components/video/display
-    ${ProjDirPath}/../../../../../../components/video/display/rm68200
-    ${ProjDirPath}/../../../../../../components/video/display/hx8394
-    ${ProjDirPath}/../../../../../../components/video/display/rm68191
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../components/video/display/mipi_dsi_cmd
-    ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
-    ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
-    ${ProjDirPath}/../../../../../../components/gt911
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../components/video/display/dc
+    ${SdkRootDirPath}/rtos/azure-rtos
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/components/video/display
+    ${SdkRootDirPath}/components/video/display/rm68200
+    ${SdkRootDirPath}/components/video/display/hx8394
+    ${SdkRootDirPath}/components/video/display/rm68191
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
+    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
+    ${SdkRootDirPath}/components/video/display/dc/lcdifv2
+    ${SdkRootDirPath}/components/video/display/dc/elcdif
+    ${SdkRootDirPath}/components/gt911
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/devices/MIMXRT1166
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers/cm7
+    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
+    ${SdkRootDirPath}/devices/MIMXRT1166/xip
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/video/display/dc
 )
 
 # include modules
@@ -188,23 +194,20 @@ include(utilities_misc_utilities_MIMXRT1166_cm7)
 include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 
 
-add_subdirectory(${ProjDirPath}/../../../../../../rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
 
-add_subdirectory(${ProjDirPath}/../../../../../../rtos/azure-rtos/guix ./CMakeFiles/libguix)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/guix ./CMakeFiles/libguix)
+
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::guix")
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::threadx")
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

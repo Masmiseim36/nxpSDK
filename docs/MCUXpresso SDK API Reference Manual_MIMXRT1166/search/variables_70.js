@@ -122,6 +122,7 @@ var searchData=
   ['ptpconfig',['ptpConfig',['../a00029.html#ad6ea6d01ccbd30747dc4266bef99d364',1,'enet_qos_config_t']]],
   ['pwellregulatorsize',['PWELLRegulatorSize',['../a00070.html#a2b1afa83f5a7a85d0baa29e17982f0b7',1,'pmu_gpc_body_bias_config_t']]],
   ['pwmchannel',['pwmChannel',['../a00071.html#afe284fd225ea192d3456b41dd2703365',1,'pwm_signal_param_t']]],
+  ['pwmchannelenable',['pwmchannelenable',['../a00071.html#ad1495db96381190a421cc78fb450d37a',1,'pwm_signal_param_t']]],
   ['pwr',['pwr',['../a00063.html#a13677f2e457d7662cae5189e522afad4',1,'sd_usr_param_t::pwr()'],['../a00063.html#a807cc66ae8fac2047cd6cec5da43b075',1,'sdio_usr_param_t::pwr()']]],
   ['pwrbootconfigprotection',['pwrBootConfigProtection',['../a00063.html#a99452558ac58decc10d2892a94139d76',1,'mmc_boot_config_t']]]
 ];

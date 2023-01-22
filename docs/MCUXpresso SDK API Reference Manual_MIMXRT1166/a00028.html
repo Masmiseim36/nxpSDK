@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -117,7 +117,7 @@ $(document).ready(function(){initNavTree('a00028.html','');});
 Operations of Ethernet MAC Driver</h1>
 <h2><a class="anchor" id="ENETMIIInterOps"></a>
 MII interface Operation</h2>
-<p>The MII interface is the interface connected with MAC and PHY. the Serial management interface - MII management interface should be set before any access to the external PHY chip register. Call <a class="el" href="a00028.html#ga4e2546cfd538bd06950f2145592858f1" title="Sets the ENET SMI(serial management interface)- MII management interface. ">ENET_SetSMI()</a> to initialize the MII management interface. Use <a class="el" href="a00028.html#ga4b0247aa4825019f9939b2e468cf5758" title="Starts an SMI (Serial Management Interface) read command. ">ENET_StartSMIRead()</a>, <a class="el" href="a00028.html#ga0ef39cbb1042eb31189cf59fb3509b9a" title="Starts an SMI write command. ">ENET_StartSMIWrite()</a>, and <a class="el" href="a00028.html#ga1720662e45648e0f081b9152c36b3156" title="Reads data from the PHY register through an SMI interface. ">ENET_ReadSMIData()</a> to read/write to PHY registers. This function group sets up the MII and serial management SMI interface, gets data from the SMI interface, and starts the SMI read and write command. Use <a class="el" href="a00028.html#ga9008a47cdf43fe2eddde467c9841fc7b" title="Sets the ENET MII speed and duplex. ">ENET_SetMII()</a> to configure the MII before successfully getting data from the external PHY.</p>
+<p>The MII interface is the interface connected with MAC and PHY. the Serial management interface - MII management interface should be set before any access to the external PHY chip register. Call <a class="el" href="a00028.html#ga4e2546cfd538bd06950f2145592858f1" title="Sets the ENET SMI(serial management interface)- MII management interface. ">ENET_SetSMI()</a> to initialize the MII management interface. Use <a class="el" href="a00028.html#ga447a3f073b07936eff311f58024a8469" title="Sends the MDIO IEEE802.3 Clause 22 format read command. ">ENET_StartSMIRead()</a>, <a class="el" href="a00028.html#ga928b72c0b95d7f4af73a753b8afd08e2" title="Sends the MDIO IEEE802.3 Clause 22 format write command. ">ENET_StartSMIWrite()</a>, and <a class="el" href="a00028.html#ga1720662e45648e0f081b9152c36b3156" title="Reads data from the PHY register through an SMI interface. ">ENET_ReadSMIData()</a> to read/write to PHY registers. This function group sets up the MII and serial management SMI interface, gets data from the SMI interface, and starts the SMI read and write command. Use <a class="el" href="a00028.html#ga9008a47cdf43fe2eddde467c9841fc7b" title="Sets the ENET MII speed and duplex. ">ENET_SetMII()</a> to configure the MII before successfully getting data from the external PHY.</p>
 <h2><a class="anchor" id="ENETAddrFilter"></a>
 MAC address filter</h2>
 <p>This group sets/gets the ENET mac address and the multicast group address filter. <a class="el" href="a00028.html#ga5b9495b14a42f5b1ee24dcc5a6a9f227" title="Adds the ENET device to a multicast group. ">ENET_AddMulticastGroup()</a> should be called to add the ENET MAC to the multicast group. The IEEE 1588 feature requires receiving the PTP message.</p>
@@ -141,53 +141,53 @@ ENET Initialization, receive, and transmit operations</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00327"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html">ENET CMSIS Driver</a></td></tr>
+<tr class="memitem:a00326"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00326.html">ENET CMSIS Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00499"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00499">enet_rx_bd_struct_t</a></td></tr>
-<tr class="memdesc:a00499"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the receive buffer descriptor structure for the little endian system.  <a href="a00028.html#a00499">More...</a><br/></td></tr>
-<tr class="separator:a00499"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00503"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00503">enet_tx_bd_struct_t</a></td></tr>
-<tr class="memdesc:a00503"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the enhanced transmit buffer descriptor structure for the little endian system.  <a href="a00028.html#a00503">More...</a><br/></td></tr>
-<tr class="separator:a00503"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00474"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00474">enet_data_error_stats_t</a></td></tr>
-<tr class="memdesc:a00474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET data error statistics structure.  <a href="a00028.html#a00474">More...</a><br/></td></tr>
-<tr class="separator:a00474"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00500"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00500">enet_rx_frame_error_t</a></td></tr>
-<tr class="memdesc:a00500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the Rx frame error structure.  <a href="a00028.html#a00500">More...</a><br/></td></tr>
-<tr class="separator:a00500"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00501"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00501">enet_transfer_stats_t</a></td></tr>
-<tr class="memdesc:a00501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET transfer statistics structure.  <a href="a00028.html#a00501">More...</a><br/></td></tr>
+<tr class="memitem:a00501"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00501">enet_rx_bd_struct_t</a></td></tr>
+<tr class="memdesc:a00501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the receive buffer descriptor structure for the little endian system.  <a href="a00028.html#a00501">More...</a><br/></td></tr>
 <tr class="separator:a00501"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00475"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00475">enet_frame_info_t</a></td></tr>
-<tr class="memdesc:a00475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the frame info structure.  <a href="a00028.html#a00475">More...</a><br/></td></tr>
-<tr class="separator:a00475"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00504"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00504">enet_tx_dirty_ring_t</a></td></tr>
-<tr class="memdesc:a00504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET transmit dirty addresses ring/queue structure.  <a href="a00028.html#a00504">More...</a><br/></td></tr>
-<tr class="separator:a00504"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00472"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00472">enet_buffer_config_t</a></td></tr>
-<tr class="memdesc:a00472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the receive buffer descriptor configuration structure.  <a href="a00028.html#a00472">More...</a><br/></td></tr>
-<tr class="separator:a00472"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00476"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00476">enet_intcoalesce_config_t</a></td></tr>
-<tr class="memdesc:a00476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interrupt coalescing configure structure.  <a href="a00028.html#a00476">More...</a><br/></td></tr>
+<tr class="memitem:a00505"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00505">enet_tx_bd_struct_t</a></td></tr>
+<tr class="memdesc:a00505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the enhanced transmit buffer descriptor structure for the little endian system.  <a href="a00028.html#a00505">More...</a><br/></td></tr>
+<tr class="separator:a00505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00476"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00476">enet_data_error_stats_t</a></td></tr>
+<tr class="memdesc:a00476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET data error statistics structure.  <a href="a00028.html#a00476">More...</a><br/></td></tr>
 <tr class="separator:a00476"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00471"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00471">enet_avb_config_t</a></td></tr>
-<tr class="memdesc:a00471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET AVB Configure structure.  <a href="a00028.html#a00471">More...</a><br/></td></tr>
-<tr class="separator:a00471"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00473"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00473">enet_config_t</a></td></tr>
-<tr class="memdesc:a00473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the basic configuration structure for the ENET device.  <a href="a00028.html#a00473">More...</a><br/></td></tr>
-<tr class="separator:a00473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00502"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00502">enet_tx_bd_ring_t</a></td></tr>
-<tr class="memdesc:a00502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET transmit buffer descriptor ring/queue structure.  <a href="a00028.html#a00502">More...</a><br/></td></tr>
+<tr class="memitem:a00502"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00502">enet_rx_frame_error_t</a></td></tr>
+<tr class="memdesc:a00502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the Rx frame error structure.  <a href="a00028.html#a00502">More...</a><br/></td></tr>
 <tr class="separator:a00502"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00498"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00498">enet_rx_bd_ring_t</a></td></tr>
-<tr class="memdesc:a00498"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET receive buffer descriptor ring/queue structure.  <a href="a00028.html#a00498">More...</a><br/></td></tr>
-<tr class="separator:a00498"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00375"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00375">enet_handle_t</a></td></tr>
-<tr class="memdesc:a00375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET handler structure.  <a href="a00028.html#a00375">More...</a><br/></td></tr>
-<tr class="separator:a00375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00503"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00503">enet_transfer_stats_t</a></td></tr>
+<tr class="memdesc:a00503"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET transfer statistics structure.  <a href="a00028.html#a00503">More...</a><br/></td></tr>
+<tr class="separator:a00503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00477"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00477">enet_frame_info_t</a></td></tr>
+<tr class="memdesc:a00477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the frame info structure.  <a href="a00028.html#a00477">More...</a><br/></td></tr>
+<tr class="separator:a00477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00506"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00506">enet_tx_dirty_ring_t</a></td></tr>
+<tr class="memdesc:a00506"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET transmit dirty addresses ring/queue structure.  <a href="a00028.html#a00506">More...</a><br/></td></tr>
+<tr class="separator:a00506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00474"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00474">enet_buffer_config_t</a></td></tr>
+<tr class="memdesc:a00474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the receive buffer descriptor configuration structure.  <a href="a00028.html#a00474">More...</a><br/></td></tr>
+<tr class="separator:a00474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00478"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00478">enet_intcoalesce_config_t</a></td></tr>
+<tr class="memdesc:a00478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interrupt coalescing configure structure.  <a href="a00028.html#a00478">More...</a><br/></td></tr>
+<tr class="separator:a00478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00473"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00473">enet_avb_config_t</a></td></tr>
+<tr class="memdesc:a00473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET AVB Configure structure.  <a href="a00028.html#a00473">More...</a><br/></td></tr>
+<tr class="separator:a00473"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00475"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00475">enet_config_t</a></td></tr>
+<tr class="memdesc:a00475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the basic configuration structure for the ENET device.  <a href="a00028.html#a00475">More...</a><br/></td></tr>
+<tr class="separator:a00475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00504"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00504">enet_tx_bd_ring_t</a></td></tr>
+<tr class="memdesc:a00504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET transmit buffer descriptor ring/queue structure.  <a href="a00028.html#a00504">More...</a><br/></td></tr>
+<tr class="separator:a00504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00500"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00500">enet_rx_bd_ring_t</a></td></tr>
+<tr class="memdesc:a00500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET receive buffer descriptor ring/queue structure.  <a href="a00028.html#a00500">More...</a><br/></td></tr>
+<tr class="separator:a00500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00377"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00377">enet_handle_t</a></td></tr>
+<tr class="memdesc:a00377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET handler structure.  <a href="a00028.html#a00377">More...</a><br/></td></tr>
+<tr class="separator:a00377"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -203,7 +203,7 @@ Typedefs</h2></td></tr>
 <tr class="memitem:gabc91b20606887f2430289a58f03ca815"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gabc91b20606887f2430289a58f03ca815">enet_rx_free_callback_t</a> )(ENET_Type *base, void *buffer, void *userData, uint8_t ringId)</td></tr>
 <tr class="memdesc:gabc91b20606887f2430289a58f03ca815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ENET Rx memory buffer free function pointer.  <a href="#gabc91b20606887f2430289a58f03ca815">More...</a><br/></td></tr>
 <tr class="separator:gabc91b20606887f2430289a58f03ca815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e1d2f2c373688f7bc76c47bd82c1f42"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga8e1d2f2c373688f7bc76c47bd82c1f42">enet_callback_t</a> )(ENET_Type *base, enet_handle_t *handle, uint32_t ringId, <a class="el" href="a00028.html#gab6a6012153064f5996a44ecb79559fbe">enet_event_t</a> event, <a class="el" href="a00028.html#a00475">enet_frame_info_t</a> *frameInfo, void *userData)</td></tr>
+<tr class="memitem:ga8e1d2f2c373688f7bc76c47bd82c1f42"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga8e1d2f2c373688f7bc76c47bd82c1f42">enet_callback_t</a> )(ENET_Type *base, enet_handle_t *handle, uint32_t ringId, <a class="el" href="a00028.html#gab6a6012153064f5996a44ecb79559fbe">enet_event_t</a> event, <a class="el" href="a00028.html#a00477">enet_frame_info_t</a> *frameInfo, void *userData)</td></tr>
 <tr class="memdesc:ga8e1d2f2c373688f7bc76c47bd82c1f42"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENET callback function.  <a href="#ga8e1d2f2c373688f7bc76c47bd82c1f42">More...</a><br/></td></tr>
 <tr class="separator:ga8e1d2f2c373688f7bc76c47bd82c1f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7c55db60b8e1c43d5331c70c414e950e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga7c55db60b8e1c43d5331c70c414e950e">enet_isr_ring_t</a> )(ENET_Type *base, enet_handle_t *handle, uint32_t ringId)</td></tr>
@@ -469,7 +469,7 @@ Variables</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga869f211125798c5e1f17464dee22704e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga869f211125798c5e1f17464dee22704e">FSL_ENET_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 4))</td></tr>
+<tr class="memitem:ga869f211125798c5e1f17464dee22704e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga869f211125798c5e1f17464dee22704e">FSL_ENET_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 3))</td></tr>
 <tr class="memdesc:ga869f211125798c5e1f17464dee22704e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the driver version.  <a href="#ga869f211125798c5e1f17464dee22704e">More...</a><br/></td></tr>
 <tr class="separator:ga869f211125798c5e1f17464dee22704e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -576,13 +576,13 @@ Defines some Ethernet parameters.</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and De-initialization</h2></td></tr>
-<tr class="memitem:gaf0992a0c9c3a27b2a40226ac38a26d1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaf0992a0c9c3a27b2a40226ac38a26d1e">ENET_GetDefaultConfig</a> (<a class="el" href="a00028.html#a00473">enet_config_t</a> *config)</td></tr>
+<tr class="memitem:gaf0992a0c9c3a27b2a40226ac38a26d1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaf0992a0c9c3a27b2a40226ac38a26d1e">ENET_GetDefaultConfig</a> (<a class="el" href="a00028.html#a00475">enet_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaf0992a0c9c3a27b2a40226ac38a26d1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the ENET default configuration structure.  <a href="#gaf0992a0c9c3a27b2a40226ac38a26d1e">More...</a><br/></td></tr>
 <tr class="separator:gaf0992a0c9c3a27b2a40226ac38a26d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga54fbc7883a06c944520b495d9beaf642"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga54fbc7883a06c944520b495d9beaf642">ENET_Up</a> (ENET_Type *base, enet_handle_t *handle, const <a class="el" href="a00028.html#a00473">enet_config_t</a> *config, const <a class="el" href="a00028.html#a00472">enet_buffer_config_t</a> *bufferConfig, uint8_t *macAddr, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:ga54fbc7883a06c944520b495d9beaf642"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga54fbc7883a06c944520b495d9beaf642">ENET_Up</a> (ENET_Type *base, enet_handle_t *handle, const <a class="el" href="a00028.html#a00475">enet_config_t</a> *config, const <a class="el" href="a00028.html#a00474">enet_buffer_config_t</a> *bufferConfig, uint8_t *macAddr, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:ga54fbc7883a06c944520b495d9beaf642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the ENET module.  <a href="#ga54fbc7883a06c944520b495d9beaf642">More...</a><br/></td></tr>
 <tr class="separator:ga54fbc7883a06c944520b495d9beaf642"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf110b83a0fc68e066e66f71761167e72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaf110b83a0fc68e066e66f71761167e72">ENET_Init</a> (ENET_Type *base, enet_handle_t *handle, const <a class="el" href="a00028.html#a00473">enet_config_t</a> *config, const <a class="el" href="a00028.html#a00472">enet_buffer_config_t</a> *bufferConfig, uint8_t *macAddr, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:gaf110b83a0fc68e066e66f71761167e72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaf110b83a0fc68e066e66f71761167e72">ENET_Init</a> (ENET_Type *base, enet_handle_t *handle, const <a class="el" href="a00028.html#a00475">enet_config_t</a> *config, const <a class="el" href="a00028.html#a00474">enet_buffer_config_t</a> *bufferConfig, uint8_t *macAddr, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:gaf110b83a0fc68e066e66f71761167e72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the ENET module.  <a href="#gaf110b83a0fc68e066e66f71761167e72">More...</a><br/></td></tr>
 <tr class="separator:gaf110b83a0fc68e066e66f71761167e72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac1cc2627749a65945a76703cd2afb90b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gac1cc2627749a65945a76703cd2afb90b">ENET_Down</a> (ENET_Type *base)</td></tr>
@@ -609,21 +609,33 @@ MII interface operation</h2></td></tr>
 <tr class="memitem:ga1720662e45648e0f081b9152c36b3156"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga1720662e45648e0f081b9152c36b3156">ENET_ReadSMIData</a> (ENET_Type *base)</td></tr>
 <tr class="memdesc:ga1720662e45648e0f081b9152c36b3156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the PHY register through an SMI interface.  <a href="#ga1720662e45648e0f081b9152c36b3156">More...</a><br/></td></tr>
 <tr class="separator:ga1720662e45648e0f081b9152c36b3156"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b0247aa4825019f9939b2e468cf5758"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga4b0247aa4825019f9939b2e468cf5758">ENET_StartSMIRead</a> (ENET_Type *base, uint32_t phyAddr, uint32_t phyReg, <a class="el" href="a00028.html#ga9c0264e7da8e7d0a3ead667d3a7b1a89">enet_mii_read_t</a> operation)</td></tr>
-<tr class="memdesc:ga4b0247aa4825019f9939b2e468cf5758"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts an SMI (Serial Management Interface) read command.  <a href="#ga4b0247aa4825019f9939b2e468cf5758">More...</a><br/></td></tr>
-<tr class="separator:ga4b0247aa4825019f9939b2e468cf5758"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ef39cbb1042eb31189cf59fb3509b9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga0ef39cbb1042eb31189cf59fb3509b9a">ENET_StartSMIWrite</a> (ENET_Type *base, uint32_t phyAddr, uint32_t phyReg, <a class="el" href="a00028.html#ga0efd18bb4f4b754039fc30c440e38b02">enet_mii_write_t</a> operation, uint32_t data)</td></tr>
-<tr class="memdesc:ga0ef39cbb1042eb31189cf59fb3509b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts an SMI write command.  <a href="#ga0ef39cbb1042eb31189cf59fb3509b9a">More...</a><br/></td></tr>
-<tr class="separator:ga0ef39cbb1042eb31189cf59fb3509b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6601bffb2a8311822270a4323acfaa16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga6601bffb2a8311822270a4323acfaa16">ENET_StartExtC45SMIWriteReg</a> (ENET_Type *base, uint32_t phyAddr, uint32_t phyReg)</td></tr>
-<tr class="memdesc:ga6601bffb2a8311822270a4323acfaa16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the extended IEEE802.3 Clause 45 MDIO format SMI write register command.  <a href="#ga6601bffb2a8311822270a4323acfaa16">More...</a><br/></td></tr>
-<tr class="separator:ga6601bffb2a8311822270a4323acfaa16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad26a89ca24a894dcde3b3a4dbe93140"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaad26a89ca24a894dcde3b3a4dbe93140">ENET_StartExtC45SMIWriteData</a> (ENET_Type *base, uint32_t phyAddr, uint32_t phyReg, uint32_t data)</td></tr>
-<tr class="memdesc:gaad26a89ca24a894dcde3b3a4dbe93140"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the extended IEEE802.3 Clause 45 MDIO format SMI write data command.  <a href="#gaad26a89ca24a894dcde3b3a4dbe93140">More...</a><br/></td></tr>
-<tr class="separator:gaad26a89ca24a894dcde3b3a4dbe93140"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47ae815be6052df98fc84b0d523e76b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga47ae815be6052df98fc84b0d523e76b2">ENET_StartExtC45SMIReadData</a> (ENET_Type *base, uint32_t phyAddr, uint32_t phyReg)</td></tr>
-<tr class="memdesc:ga47ae815be6052df98fc84b0d523e76b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the extended IEEE802.3 Clause 45 MDIO format SMI read data command.  <a href="#ga47ae815be6052df98fc84b0d523e76b2">More...</a><br/></td></tr>
-<tr class="separator:ga47ae815be6052df98fc84b0d523e76b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga928b72c0b95d7f4af73a753b8afd08e2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga928b72c0b95d7f4af73a753b8afd08e2">ENET_StartSMIWrite</a> (ENET_Type *base, uint8_t phyAddr, uint8_t regAddr, <a class="el" href="a00028.html#ga0efd18bb4f4b754039fc30c440e38b02">enet_mii_write_t</a> operation, uint16_t data)</td></tr>
+<tr class="memdesc:ga928b72c0b95d7f4af73a753b8afd08e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the MDIO IEEE802.3 Clause 22 format write command.  <a href="#ga928b72c0b95d7f4af73a753b8afd08e2">More...</a><br/></td></tr>
+<tr class="separator:ga928b72c0b95d7f4af73a753b8afd08e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga447a3f073b07936eff311f58024a8469"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga447a3f073b07936eff311f58024a8469">ENET_StartSMIRead</a> (ENET_Type *base, uint8_t phyAddr, uint8_t regAddr, <a class="el" href="a00028.html#ga9c0264e7da8e7d0a3ead667d3a7b1a89">enet_mii_read_t</a> operation)</td></tr>
+<tr class="memdesc:ga447a3f073b07936eff311f58024a8469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the MDIO IEEE802.3 Clause 22 format read command.  <a href="#ga447a3f073b07936eff311f58024a8469">More...</a><br/></td></tr>
+<tr class="separator:ga447a3f073b07936eff311f58024a8469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadaaa62f2a826957ac10a75e4c2a5b739"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gadaaa62f2a826957ac10a75e4c2a5b739">ENET_MDIOWrite</a> (ENET_Type *base, uint8_t phyAddr, uint8_t regAddr, uint16_t data)</td></tr>
+<tr class="memdesc:gadaaa62f2a826957ac10a75e4c2a5b739"><td class="mdescLeft">&#160;</td><td class="mdescRight">MDIO write with IEEE802.3 Clause 22 format.  <a href="#gadaaa62f2a826957ac10a75e4c2a5b739">More...</a><br/></td></tr>
+<tr class="separator:gadaaa62f2a826957ac10a75e4c2a5b739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga892febd8596edf39f3301551df9dcc2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga892febd8596edf39f3301551df9dcc2c">ENET_MDIORead</a> (ENET_Type *base, uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)</td></tr>
+<tr class="memdesc:ga892febd8596edf39f3301551df9dcc2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">MDIO read with IEEE802.3 Clause 22 format.  <a href="#ga892febd8596edf39f3301551df9dcc2c">More...</a><br/></td></tr>
+<tr class="separator:ga892febd8596edf39f3301551df9dcc2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3be81738069472cacdf23d4d4630c68c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga3be81738069472cacdf23d4d4630c68c">ENET_StartExtC45SMIWriteReg</a> (ENET_Type *base, uint8_t portAddr, uint8_t devAddr, uint16_t regAddr)</td></tr>
+<tr class="memdesc:ga3be81738069472cacdf23d4d4630c68c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the MDIO IEEE802.3 Clause 45 format write register command.  <a href="#ga3be81738069472cacdf23d4d4630c68c">More...</a><br/></td></tr>
+<tr class="separator:ga3be81738069472cacdf23d4d4630c68c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc36d236821701ab448245009796c4b6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gacc36d236821701ab448245009796c4b6">ENET_StartExtC45SMIWriteData</a> (ENET_Type *base, uint8_t portAddr, uint8_t devAddr, uint16_t data)</td></tr>
+<tr class="memdesc:gacc36d236821701ab448245009796c4b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the MDIO IEEE802.3 Clause 45 format write data command.  <a href="#gacc36d236821701ab448245009796c4b6">More...</a><br/></td></tr>
+<tr class="separator:gacc36d236821701ab448245009796c4b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9b5e10d43bf267bc32cc3019ac52338"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gab9b5e10d43bf267bc32cc3019ac52338">ENET_StartExtC45SMIReadData</a> (ENET_Type *base, uint8_t portAddr, uint8_t devAddr)</td></tr>
+<tr class="memdesc:gab9b5e10d43bf267bc32cc3019ac52338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the MDIO IEEE802.3 Clause 45 format read data command.  <a href="#gab9b5e10d43bf267bc32cc3019ac52338">More...</a><br/></td></tr>
+<tr class="separator:gab9b5e10d43bf267bc32cc3019ac52338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga610d4b0c009d03f06e208431ff1b9f33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga610d4b0c009d03f06e208431ff1b9f33">ENET_MDIOC45Write</a> (ENET_Type *base, uint8_t portAddr, uint8_t devAddr, uint16_t regAddr, uint16_t data)</td></tr>
+<tr class="memdesc:ga610d4b0c009d03f06e208431ff1b9f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">MDIO write with IEEE802.3 Clause 45 format.  <a href="#ga610d4b0c009d03f06e208431ff1b9f33">More...</a><br/></td></tr>
+<tr class="separator:ga610d4b0c009d03f06e208431ff1b9f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a900675299361505ed7992137ff9061"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga4a900675299361505ed7992137ff9061">ENET_MDIOC45Read</a> (ENET_Type *base, uint8_t portAddr, uint8_t devAddr, uint16_t regAddr, uint16_t *pData)</td></tr>
+<tr class="memdesc:ga4a900675299361505ed7992137ff9061"><td class="mdescLeft">&#160;</td><td class="mdescRight">MDIO read with IEEE802.3 Clause 45 format.  <a href="#ga4a900675299361505ed7992137ff9061">More...</a><br/></td></tr>
+<tr class="separator:ga4a900675299361505ed7992137ff9061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3f71765d8252bb8aeecbe537d4e9bd93"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga3f71765d8252bb8aeecbe537d4e9bd93">ENET_SetRGMIIClockDelay</a> (ENET_Type *base, bool txEnabled, bool rxEnabled)</td></tr>
 <tr class="memdesc:ga3f71765d8252bb8aeecbe537d4e9bd93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the usage of the delayed tx/rx RGMII clock.  <a href="#ga3f71765d8252bb8aeecbe537d4e9bd93">More...</a><br/></td></tr>
 <tr class="separator:ga3f71765d8252bb8aeecbe537d4e9bd93"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -684,40 +696,40 @@ Transactional operation</h2></td></tr>
 <tr class="memitem:gae529b5e69f900ed93741a14265eee8fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae529b5e69f900ed93741a14265eee8fa">ENET_SetCallback</a> (enet_handle_t *handle, <a class="el" href="a00028.html#ga8e1d2f2c373688f7bc76c47bd82c1f42">enet_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gae529b5e69f900ed93741a14265eee8fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the callback function.  <a href="#gae529b5e69f900ed93741a14265eee8fa">More...</a><br/></td></tr>
 <tr class="separator:gae529b5e69f900ed93741a14265eee8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae8d5c96025f7b1b870e5eb20850dfa87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae8d5c96025f7b1b870e5eb20850dfa87">ENET_GetRxErrBeforeReadFrame</a> (enet_handle_t *handle, <a class="el" href="a00028.html#a00474">enet_data_error_stats_t</a> *eErrorStatic, uint8_t ringId)</td></tr>
+<tr class="memitem:gae8d5c96025f7b1b870e5eb20850dfa87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae8d5c96025f7b1b870e5eb20850dfa87">ENET_GetRxErrBeforeReadFrame</a> (enet_handle_t *handle, <a class="el" href="a00028.html#a00476">enet_data_error_stats_t</a> *eErrorStatic, uint8_t ringId)</td></tr>
 <tr class="memdesc:gae8d5c96025f7b1b870e5eb20850dfa87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the error statistics of a received frame for ENET specified ring.  <a href="#gae8d5c96025f7b1b870e5eb20850dfa87">More...</a><br/></td></tr>
 <tr class="separator:gae8d5c96025f7b1b870e5eb20850dfa87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9f83023f8f13cd9a7e61e49acda85da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa9f83023f8f13cd9a7e61e49acda85da">ENET_GetStatistics</a> (ENET_Type *base, <a class="el" href="a00028.html#a00501">enet_transfer_stats_t</a> *statistics)</td></tr>
+<tr class="memitem:gaa9f83023f8f13cd9a7e61e49acda85da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa9f83023f8f13cd9a7e61e49acda85da">ENET_GetStatistics</a> (ENET_Type *base, <a class="el" href="a00028.html#a00503">enet_transfer_stats_t</a> *statistics)</td></tr>
 <tr class="memdesc:gaa9f83023f8f13cd9a7e61e49acda85da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets statistical data in transfer.  <a href="#gaa9f83023f8f13cd9a7e61e49acda85da">More...</a><br/></td></tr>
 <tr class="separator:gaa9f83023f8f13cd9a7e61e49acda85da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab60f9fac51313d5822274a20bb059307"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gab60f9fac51313d5822274a20bb059307">ENET_GetRxFrameSize</a> (enet_handle_t *handle, uint32_t *length, uint8_t ringId)</td></tr>
+<tr class="memitem:gab60f9fac51313d5822274a20bb059307"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gab60f9fac51313d5822274a20bb059307">ENET_GetRxFrameSize</a> (enet_handle_t *handle, uint32_t *length, uint8_t ringId)</td></tr>
 <tr class="memdesc:gab60f9fac51313d5822274a20bb059307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the read frame for specified ring.  <a href="#gab60f9fac51313d5822274a20bb059307">More...</a><br/></td></tr>
 <tr class="separator:gab60f9fac51313d5822274a20bb059307"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcf878c71dccf0e4307abeb05c60067f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gabcf878c71dccf0e4307abeb05c60067f">ENET_ReadFrame</a> (ENET_Type *base, enet_handle_t *handle, uint8_t *data, uint32_t length, uint8_t ringId, uint32_t *ts)</td></tr>
+<tr class="memitem:gabcf878c71dccf0e4307abeb05c60067f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gabcf878c71dccf0e4307abeb05c60067f">ENET_ReadFrame</a> (ENET_Type *base, enet_handle_t *handle, uint8_t *data, uint32_t length, uint8_t ringId, uint32_t *ts)</td></tr>
 <tr class="memdesc:gabcf878c71dccf0e4307abeb05c60067f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a frame from the ENET device.  <a href="#gabcf878c71dccf0e4307abeb05c60067f">More...</a><br/></td></tr>
 <tr class="separator:gabcf878c71dccf0e4307abeb05c60067f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga420eb9f89621426669164f9ff3ded4b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga420eb9f89621426669164f9ff3ded4b7">ENET_SendFrame</a> (ENET_Type *base, enet_handle_t *handle, const uint8_t *data, uint32_t length, uint8_t ringId, bool tsFlag, void *context)</td></tr>
+<tr class="memitem:ga420eb9f89621426669164f9ff3ded4b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga420eb9f89621426669164f9ff3ded4b7">ENET_SendFrame</a> (ENET_Type *base, enet_handle_t *handle, const uint8_t *data, uint32_t length, uint8_t ringId, bool tsFlag, void *context)</td></tr>
 <tr class="memdesc:ga420eb9f89621426669164f9ff3ded4b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits an ENET frame for specified ring.  <a href="#ga420eb9f89621426669164f9ff3ded4b7">More...</a><br/></td></tr>
 <tr class="separator:ga420eb9f89621426669164f9ff3ded4b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa63f1bef0380a6ee9370e9ed90020173"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa63f1bef0380a6ee9370e9ed90020173">ENET_SetTxReclaim</a> (enet_handle_t *handle, bool isEnable, uint8_t ringId)</td></tr>
+<tr class="memitem:gaa63f1bef0380a6ee9370e9ed90020173"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa63f1bef0380a6ee9370e9ed90020173">ENET_SetTxReclaim</a> (enet_handle_t *handle, bool isEnable, uint8_t ringId)</td></tr>
 <tr class="memdesc:gaa63f1bef0380a6ee9370e9ed90020173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable tx descriptors reclaim mechanism.  <a href="#gaa63f1bef0380a6ee9370e9ed90020173">More...</a><br/></td></tr>
 <tr class="separator:gaa63f1bef0380a6ee9370e9ed90020173"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacf0fc8b978c83218ed677336e96b996b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gacf0fc8b978c83218ed677336e96b996b">ENET_ReclaimTxDescriptor</a> (ENET_Type *base, enet_handle_t *handle, uint8_t ringId)</td></tr>
 <tr class="memdesc:gacf0fc8b978c83218ed677336e96b996b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reclaim tx descriptors.  <a href="#gacf0fc8b978c83218ed677336e96b996b">More...</a><br/></td></tr>
 <tr class="separator:gacf0fc8b978c83218ed677336e96b996b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f16f0092b6ef1fba801e2e8c9d239a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga1f16f0092b6ef1fba801e2e8c9d239a8">ENET_GetRxBuffer</a> (ENET_Type *base, enet_handle_t *handle, void **buffer, uint32_t *length, uint8_t ringId, bool *isLastBuff, uint32_t *ts)</td></tr>
+<tr class="memitem:ga1f16f0092b6ef1fba801e2e8c9d239a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga1f16f0092b6ef1fba801e2e8c9d239a8">ENET_GetRxBuffer</a> (ENET_Type *base, enet_handle_t *handle, void **buffer, uint32_t *length, uint8_t ringId, bool *isLastBuff, uint32_t *ts)</td></tr>
 <tr class="memdesc:ga1f16f0092b6ef1fba801e2e8c9d239a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a receive buffer pointer of the ENET device for specified ring.  <a href="#ga1f16f0092b6ef1fba801e2e8c9d239a8">More...</a><br/></td></tr>
 <tr class="separator:ga1f16f0092b6ef1fba801e2e8c9d239a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga04ebc7e30a4a0bf462b6f2213960fa87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga04ebc7e30a4a0bf462b6f2213960fa87">ENET_ReleaseRxBuffer</a> (ENET_Type *base, enet_handle_t *handle, void *buffer, uint8_t ringId)</td></tr>
 <tr class="memdesc:ga04ebc7e30a4a0bf462b6f2213960fa87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release receive buffer descriptor to DMA.  <a href="#ga04ebc7e30a4a0bf462b6f2213960fa87">More...</a><br/></td></tr>
 <tr class="separator:ga04ebc7e30a4a0bf462b6f2213960fa87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa91ebe63c861f928510c45cfce40f5a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa91ebe63c861f928510c45cfce40f5a7">ENET_GetRxFrame</a> (ENET_Type *base, enet_handle_t *handle, enet_rx_frame_struct_t *rxFrame, uint8_t ringId)</td></tr>
+<tr class="memitem:gaa91ebe63c861f928510c45cfce40f5a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa91ebe63c861f928510c45cfce40f5a7">ENET_GetRxFrame</a> (ENET_Type *base, enet_handle_t *handle, enet_rx_frame_struct_t *rxFrame, uint8_t ringId)</td></tr>
 <tr class="memdesc:gaa91ebe63c861f928510c45cfce40f5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives one frame in specified BD ring with zero copy.  <a href="#gaa91ebe63c861f928510c45cfce40f5a7">More...</a><br/></td></tr>
 <tr class="separator:gaa91ebe63c861f928510c45cfce40f5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf1dfd6bda61a3f763940cc7c5fa8b144"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaf1dfd6bda61a3f763940cc7c5fa8b144">ENET_StartTxFrame</a> (ENET_Type *base, enet_handle_t *handle, enet_tx_frame_struct_t *txFrame, uint8_t ringId)</td></tr>
+<tr class="memitem:gaf1dfd6bda61a3f763940cc7c5fa8b144"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaf1dfd6bda61a3f763940cc7c5fa8b144">ENET_StartTxFrame</a> (ENET_Type *base, enet_handle_t *handle, enet_tx_frame_struct_t *txFrame, uint8_t ringId)</td></tr>
 <tr class="memdesc:gaf1dfd6bda61a3f763940cc7c5fa8b144"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends one frame in specified BD ring with zero copy.  <a href="#gaf1dfd6bda61a3f763940cc7c5fa8b144">More...</a><br/></td></tr>
 <tr class="separator:gaf1dfd6bda61a3f763940cc7c5fa8b144"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac45cf977f493add878dbfc7082074c98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gac45cf977f493add878dbfc7082074c98">ENET_SendFrameZeroCopy</a> (ENET_Type *base, enet_handle_t *handle, const uint8_t *data, uint32_t length, uint8_t ringId, bool tsFlag, void *context)</td></tr>
+<tr class="memitem:gac45cf977f493add878dbfc7082074c98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gac45cf977f493add878dbfc7082074c98">ENET_SendFrameZeroCopy</a> (ENET_Type *base, enet_handle_t *handle, const uint8_t *data, uint32_t length, uint8_t ringId, bool tsFlag, void *context)</td></tr>
 <tr class="memdesc:gac45cf977f493add878dbfc7082074c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits an ENET frame for specified ring with zero-copy.  <a href="#gac45cf977f493add878dbfc7082074c98">More...</a><br/></td></tr>
 <tr class="separator:gac45cf977f493add878dbfc7082074c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga33eb824d276346cda1775b5611f5bae4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga33eb824d276346cda1775b5611f5bae4">ENET_TransmitIRQHandler</a> (ENET_Type *base, enet_handle_t *handle, uint32_t ringId)</td></tr>
@@ -743,7 +755,7 @@ Transactional operation</h2></td></tr>
 <tr class="separator:ga9ec95f044ec27e9e0c5f060b856744d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00499" id="a00499"></a>
+<a name="a00501" id="a00501"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -760,9 +772,9 @@ Transactional operation</h2></td></tr>
 <tr class="memitem:a01a2213b5bf50b154c4ca4866c6379ea"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a01a2213b5bf50b154c4ca4866c6379ea">control</a></td></tr>
 <tr class="memdesc:a01a2213b5bf50b154c4ca4866c6379ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer descriptor control and status.  <a href="#a01a2213b5bf50b154c4ca4866c6379ea">More...</a><br/></td></tr>
 <tr class="separator:a01a2213b5bf50b154c4ca4866c6379ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d13fe112ba7cfb37d8467413b0e7c75"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a5d13fe112ba7cfb37d8467413b0e7c75">buffer</a></td></tr>
-<tr class="memdesc:a5d13fe112ba7cfb37d8467413b0e7c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer pointer.  <a href="#a5d13fe112ba7cfb37d8467413b0e7c75">More...</a><br/></td></tr>
-<tr class="separator:a5d13fe112ba7cfb37d8467413b0e7c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d4d7327dabb5920456e3f874bf0f030"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a9d4d7327dabb5920456e3f874bf0f030">buffer</a></td></tr>
+<tr class="memdesc:a9d4d7327dabb5920456e3f874bf0f030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer pointer.  <a href="#a9d4d7327dabb5920456e3f874bf0f030">More...</a><br/></td></tr>
+<tr class="separator:a9d4d7327dabb5920456e3f874bf0f030"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a class="anchor" id="a8f1b6c5523159bc56b37bfd98b378ab6"></a>
@@ -789,12 +801,12 @@ Transactional operation</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5d13fe112ba7cfb37d8467413b0e7c75"></a>
+<a class="anchor" id="a9d4d7327dabb5920456e3f874bf0f030"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* enet_rx_bd_struct_t::buffer</td>
+          <td class="memname">uint32_t enet_rx_bd_struct_t::buffer</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -804,7 +816,7 @@ Transactional operation</h2></td></tr>
 
 </div>
 </div>
-<a name="a00503" id="a00503"></a>
+<a name="a00505" id="a00505"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -821,9 +833,9 @@ Transactional operation</h2></td></tr>
 <tr class="memitem:a26f3d526bcef8f3c3cd2a0e40760e449"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a26f3d526bcef8f3c3cd2a0e40760e449">control</a></td></tr>
 <tr class="memdesc:a26f3d526bcef8f3c3cd2a0e40760e449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer descriptor control and status.  <a href="#a26f3d526bcef8f3c3cd2a0e40760e449">More...</a><br/></td></tr>
 <tr class="separator:a26f3d526bcef8f3c3cd2a0e40760e449"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54a6524c02ec1e5f6f018fd5f6efca66"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a54a6524c02ec1e5f6f018fd5f6efca66">buffer</a></td></tr>
-<tr class="memdesc:a54a6524c02ec1e5f6f018fd5f6efca66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer pointer.  <a href="#a54a6524c02ec1e5f6f018fd5f6efca66">More...</a><br/></td></tr>
-<tr class="separator:a54a6524c02ec1e5f6f018fd5f6efca66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9a742c246de1cb1634b1361202916d7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#af9a742c246de1cb1634b1361202916d7">buffer</a></td></tr>
+<tr class="memdesc:af9a742c246de1cb1634b1361202916d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer pointer.  <a href="#af9a742c246de1cb1634b1361202916d7">More...</a><br/></td></tr>
+<tr class="separator:af9a742c246de1cb1634b1361202916d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a class="anchor" id="a7f6f448911920d9e7d9ac98f83472e1e"></a>
@@ -850,12 +862,12 @@ Transactional operation</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a54a6524c02ec1e5f6f018fd5f6efca66"></a>
+<a class="anchor" id="af9a742c246de1cb1634b1361202916d7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* enet_tx_bd_struct_t::buffer</td>
+          <td class="memname">uint32_t enet_tx_bd_struct_t::buffer</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -865,7 +877,7 @@ Transactional operation</h2></td></tr>
 
 </div>
 </div>
-<a name="a00474" id="a00474"></a>
+<a name="a00476" id="a00476"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -945,7 +957,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00500" id="a00500"></a>
+<a name="a00502" id="a00502"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1036,7 +1048,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00501" id="a00501"></a>
+<a name="a00503" id="a00503"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1202,7 +1214,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00475" id="a00475"></a>
+<a name="a00477" id="a00477"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1221,7 +1233,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00504" id="a00504"></a>
+<a name="a00506" id="a00506"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1232,7 +1244,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a7af88381e15c470471345f93e6b95efb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00475">enet_frame_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a7af88381e15c470471345f93e6b95efb">txDirtyBase</a></td></tr>
+<tr class="memitem:a7af88381e15c470471345f93e6b95efb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00477">enet_frame_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a7af88381e15c470471345f93e6b95efb">txDirtyBase</a></td></tr>
 <tr class="memdesc:a7af88381e15c470471345f93e6b95efb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dirty buffer descriptor base address pointer.  <a href="#a7af88381e15c470471345f93e6b95efb">More...</a><br/></td></tr>
 <tr class="separator:a7af88381e15c470471345f93e6b95efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a433b260bfe4ae02b7046455dcc78df0d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a433b260bfe4ae02b7046455dcc78df0d">txGenIdx</a></td></tr>
@@ -1254,7 +1266,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00028.html#a00475">enet_frame_info_t</a>* enet_tx_dirty_ring_t::txDirtyBase</td>
+          <td class="memname"><a class="el" href="a00028.html#a00477">enet_frame_info_t</a>* enet_tx_dirty_ring_t::txDirtyBase</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1312,7 +1324,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00472" id="a00472"></a>
+<a name="a00474" id="a00474"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1341,10 +1353,10 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:a1523cf4ee9537fb4fc12dc210680f1b1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a1523cf4ee9537fb4fc12dc210680f1b1">txBuffSizeAlign</a></td></tr>
 <tr class="memdesc:a1523cf4ee9537fb4fc12dc210680f1b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aligned transmit data buffer size.  <a href="#a1523cf4ee9537fb4fc12dc210680f1b1">More...</a><br/></td></tr>
 <tr class="separator:a1523cf4ee9537fb4fc12dc210680f1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae90713ccb39a0bb92275a458f03c5dce"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00499">enet_rx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ae90713ccb39a0bb92275a458f03c5dce">rxBdStartAddrAlign</a></td></tr>
+<tr class="memitem:ae90713ccb39a0bb92275a458f03c5dce"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00501">enet_rx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ae90713ccb39a0bb92275a458f03c5dce">rxBdStartAddrAlign</a></td></tr>
 <tr class="memdesc:ae90713ccb39a0bb92275a458f03c5dce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aligned receive buffer descriptor start address: should be non-cacheable.  <a href="#ae90713ccb39a0bb92275a458f03c5dce">More...</a><br/></td></tr>
 <tr class="separator:ae90713ccb39a0bb92275a458f03c5dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fc178ed9e15d39b55c62d3ad26e05db"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00503">enet_tx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a9fc178ed9e15d39b55c62d3ad26e05db">txBdStartAddrAlign</a></td></tr>
+<tr class="memitem:a9fc178ed9e15d39b55c62d3ad26e05db"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00505">enet_tx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a9fc178ed9e15d39b55c62d3ad26e05db">txBdStartAddrAlign</a></td></tr>
 <tr class="memdesc:a9fc178ed9e15d39b55c62d3ad26e05db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aligned transmit buffer descriptor start address: should be non-cacheable.  <a href="#a9fc178ed9e15d39b55c62d3ad26e05db">More...</a><br/></td></tr>
 <tr class="separator:a9fc178ed9e15d39b55c62d3ad26e05db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0917bce7024fa1d557f742e731849768"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a0917bce7024fa1d557f742e731849768">rxBufferAlign</a></td></tr>
@@ -1359,7 +1371,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:aff5a3ae2854130484aa7e180c45df529"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#aff5a3ae2854130484aa7e180c45df529">txMaintainEnable</a></td></tr>
 <tr class="memdesc:aff5a3ae2854130484aa7e180c45df529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit buffer cache maintain.  <a href="#aff5a3ae2854130484aa7e180c45df529">More...</a><br/></td></tr>
 <tr class="separator:aff5a3ae2854130484aa7e180c45df529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeebb32b259a0fbbfa6b000b3a143035"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00475">enet_frame_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#aaeebb32b259a0fbbfa6b000b3a143035">txFrameInfo</a></td></tr>
+<tr class="memitem:aaeebb32b259a0fbbfa6b000b3a143035"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00477">enet_frame_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#aaeebb32b259a0fbbfa6b000b3a143035">txFrameInfo</a></td></tr>
 <tr class="memdesc:aaeebb32b259a0fbbfa6b000b3a143035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit frame information start address.  <a href="#aaeebb32b259a0fbbfa6b000b3a143035">More...</a><br/></td></tr>
 <tr class="separator:aaeebb32b259a0fbbfa6b000b3a143035"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -1417,7 +1429,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile <a class="el" href="a00028.html#a00499">enet_rx_bd_struct_t</a>* enet_buffer_config_t::rxBdStartAddrAlign</td>
+          <td class="memname">volatile <a class="el" href="a00028.html#a00501">enet_rx_bd_struct_t</a>* enet_buffer_config_t::rxBdStartAddrAlign</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1429,7 +1441,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile <a class="el" href="a00028.html#a00503">enet_tx_bd_struct_t</a>* enet_buffer_config_t::txBdStartAddrAlign</td>
+          <td class="memname">volatile <a class="el" href="a00028.html#a00505">enet_tx_bd_struct_t</a>* enet_buffer_config_t::txBdStartAddrAlign</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1489,7 +1501,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00028.html#a00475">enet_frame_info_t</a>* enet_buffer_config_t::txFrameInfo</td>
+          <td class="memname"><a class="el" href="a00028.html#a00477">enet_frame_info_t</a>* enet_buffer_config_t::txFrameInfo</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1499,7 +1511,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00476" id="a00476"></a>
+<a name="a00478" id="a00478"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1575,7 +1587,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00471" id="a00471"></a>
+<a name="a00473" id="a00473"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1629,7 +1641,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00473" id="a00473"></a>
+<a name="a00475" id="a00475"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1692,7 +1704,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memdesc:a30ec04b6b5c7018f5fa75723778c7bca"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment"> For store and forward disable case, the data required in TX FIFO
 </pre><p> before a frame transmit start.  <a href="#a30ec04b6b5c7018f5fa75723778c7bca">More...</a><br/></td></tr>
 <tr class="separator:a30ec04b6b5c7018f5fa75723778c7bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a279342d5258a08ccf05b8643b39d8535"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00476">enet_intcoalesce_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a279342d5258a08ccf05b8643b39d8535">intCoalesceCfg</a></td></tr>
+<tr class="memitem:a279342d5258a08ccf05b8643b39d8535"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00478">enet_intcoalesce_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a279342d5258a08ccf05b8643b39d8535">intCoalesceCfg</a></td></tr>
 <tr class="memdesc:a279342d5258a08ccf05b8643b39d8535"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">      If the interrupt coalsecence is not required in the ring n(0,1,2),
 </pre><p> please set to NULL.  <a href="#a279342d5258a08ccf05b8643b39d8535">More...</a><br/></td></tr>
 <tr class="separator:a279342d5258a08ccf05b8643b39d8535"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1877,7 +1889,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00028.html#a00476">enet_intcoalesce_config_t</a>* enet_config_t::intCoalesceCfg</td>
+          <td class="memname"><a class="el" href="a00028.html#a00478">enet_intcoalesce_config_t</a>* enet_config_t::intCoalesceCfg</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1948,7 +1960,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00502" id="a00502"></a>
+<a name="a00504" id="a00504"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1959,7 +1971,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac8ea415a5a4e475fc8186a64fe5c7f42"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00503">enet_tx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ac8ea415a5a4e475fc8186a64fe5c7f42">txBdBase</a></td></tr>
+<tr class="memitem:ac8ea415a5a4e475fc8186a64fe5c7f42"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00505">enet_tx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ac8ea415a5a4e475fc8186a64fe5c7f42">txBdBase</a></td></tr>
 <tr class="memdesc:ac8ea415a5a4e475fc8186a64fe5c7f42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer descriptor base address pointer.  <a href="#ac8ea415a5a4e475fc8186a64fe5c7f42">More...</a><br/></td></tr>
 <tr class="separator:ac8ea415a5a4e475fc8186a64fe5c7f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02d0c1d6dbec35379899b6d7fded3967"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a02d0c1d6dbec35379899b6d7fded3967">txGenIdx</a></td></tr>
@@ -1981,7 +1993,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile <a class="el" href="a00028.html#a00503">enet_tx_bd_struct_t</a>* enet_tx_bd_ring_t::txBdBase</td>
+          <td class="memname">volatile <a class="el" href="a00028.html#a00505">enet_tx_bd_struct_t</a>* enet_tx_bd_ring_t::txBdBase</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2039,7 +2051,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00498" id="a00498"></a>
+<a name="a00500" id="a00500"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2050,7 +2062,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a9b645c4be993309d06f1ffed6c951c45"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00499">enet_rx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a9b645c4be993309d06f1ffed6c951c45">rxBdBase</a></td></tr>
+<tr class="memitem:a9b645c4be993309d06f1ffed6c951c45"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00028.html#a00501">enet_rx_bd_struct_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a9b645c4be993309d06f1ffed6c951c45">rxBdBase</a></td></tr>
 <tr class="memdesc:a9b645c4be993309d06f1ffed6c951c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer descriptor base address pointer.  <a href="#a9b645c4be993309d06f1ffed6c951c45">More...</a><br/></td></tr>
 <tr class="separator:a9b645c4be993309d06f1ffed6c951c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3358045d4fa5d0656a5972dc6aea7b03"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a3358045d4fa5d0656a5972dc6aea7b03">rxGenIdx</a></td></tr>
@@ -2066,7 +2078,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile <a class="el" href="a00028.html#a00499">enet_rx_bd_struct_t</a>* enet_rx_bd_ring_t::rxBdBase</td>
+          <td class="memname">volatile <a class="el" href="a00028.html#a00501">enet_rx_bd_struct_t</a>* enet_rx_bd_ring_t::rxBdBase</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2100,7 +2112,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00375" id="a00375"></a>
+<a name="a00377" id="a00377"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2111,10 +2123,10 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae902f3f66d8970f7e0e401c93a810732"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00498">enet_rx_bd_ring_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ae902f3f66d8970f7e0e401c93a810732">rxBdRing</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
+<tr class="memitem:ae902f3f66d8970f7e0e401c93a810732"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00500">enet_rx_bd_ring_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ae902f3f66d8970f7e0e401c93a810732">rxBdRing</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
 <tr class="memdesc:ae902f3f66d8970f7e0e401c93a810732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer descriptor.  <a href="#ae902f3f66d8970f7e0e401c93a810732">More...</a><br/></td></tr>
 <tr class="separator:ae902f3f66d8970f7e0e401c93a810732"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5213f4eb065024353d45992c4f9d6644"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00502">enet_tx_bd_ring_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a5213f4eb065024353d45992c4f9d6644">txBdRing</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
+<tr class="memitem:a5213f4eb065024353d45992c4f9d6644"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00504">enet_tx_bd_ring_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a5213f4eb065024353d45992c4f9d6644">txBdRing</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
 <tr class="memdesc:a5213f4eb065024353d45992c4f9d6644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit buffer descriptor.  <a href="#a5213f4eb065024353d45992c4f9d6644">More...</a><br/></td></tr>
 <tr class="separator:a5213f4eb065024353d45992c4f9d6644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b098c577f9a8c2702c3d27b3d48e5b6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a7b098c577f9a8c2702c3d27b3d48e5b6">rxBuffSizeAlign</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
@@ -2138,7 +2150,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:a0fca53e60f7e5646f409633651d8e249"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a0fca53e60f7e5646f409633651d8e249">userData</a></td></tr>
 <tr class="memdesc:a0fca53e60f7e5646f409633651d8e249"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function parameter.  <a href="#a0fca53e60f7e5646f409633651d8e249">More...</a><br/></td></tr>
 <tr class="separator:a0fca53e60f7e5646f409633651d8e249"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6a254e4c93ec94fbb21210b28cefab9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00504">enet_tx_dirty_ring_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ab6a254e4c93ec94fbb21210b28cefab9">txDirtyRing</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
+<tr class="memitem:ab6a254e4c93ec94fbb21210b28cefab9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00028.html#a00506">enet_tx_dirty_ring_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ab6a254e4c93ec94fbb21210b28cefab9">txDirtyRing</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
 <tr class="memdesc:ab6a254e4c93ec94fbb21210b28cefab9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ring to store tx frame information.  <a href="#ab6a254e4c93ec94fbb21210b28cefab9">More...</a><br/></td></tr>
 <tr class="separator:ab6a254e4c93ec94fbb21210b28cefab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71960adcc67a46e8734ae8bb90aa9c11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a71960adcc67a46e8734ae8bb90aa9c11">txReclaimEnable</a> [FSL_FEATURE_ENET_QUEUE]</td></tr>
@@ -2161,7 +2173,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00028.html#a00498">enet_rx_bd_ring_t</a> enet_handle_t::rxBdRing[FSL_FEATURE_ENET_QUEUE]</td>
+          <td class="memname"><a class="el" href="a00028.html#a00500">enet_rx_bd_ring_t</a> enet_handle_t::rxBdRing[FSL_FEATURE_ENET_QUEUE]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2173,7 +2185,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00028.html#a00502">enet_tx_bd_ring_t</a> enet_handle_t::txBdRing[FSL_FEATURE_ENET_QUEUE]</td>
+          <td class="memname"><a class="el" href="a00028.html#a00504">enet_tx_bd_ring_t</a> enet_handle_t::txBdRing[FSL_FEATURE_ENET_QUEUE]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2269,7 +2281,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00028.html#a00504">enet_tx_dirty_ring_t</a> enet_handle_t::txDirtyRing[FSL_FEATURE_ENET_QUEUE]</td>
+          <td class="memname"><a class="el" href="a00028.html#a00506">enet_tx_dirty_ring_t</a> enet_handle_t::txDirtyRing[FSL_FEATURE_ENET_QUEUE]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2321,7 +2333,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_ENET_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 4))</td>
+          <td class="memname">#define FSL_ENET_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2753,7 +2765,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* enet_callback_t)(ENET_Type *base, enet_handle_t *handle, uint32_t ringId,<a class="el" href="a00028.html#gab6a6012153064f5996a44ecb79559fbe">enet_event_t</a> event, <a class="el" href="a00028.html#a00475">enet_frame_info_t</a> *frameInfo, void *userData)</td>
+          <td class="memname">typedef void(* enet_callback_t)(ENET_Type *base, enet_handle_t *handle, uint32_t ringId,<a class="el" href="a00028.html#gab6a6012153064f5996a44ecb79559fbe">enet_event_t</a> event, <a class="el" href="a00028.html#a00477">enet_frame_info_t</a> *frameInfo, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2950,7 +2962,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>These control flags are provided for special user requirements. Normally, these control flags are unused for ENET initialization. For special requirements, set the flags to macSpecialConfig in the <a class="el" href="a00028.html#a00473" title="Defines the basic configuration structure for the ENET device. ">enet_config_t</a>. The kENET_ControlStoreAndFwdDisable is used to disable the FIFO store and forward. FIFO store and forward means that the FIFO read/send is started when a complete frame is stored in TX/RX FIFO. If this flag is set, configure rxFifoFullThreshold and txFifoWatermark in the <a class="el" href="a00028.html#a00473" title="Defines the basic configuration structure for the ENET device. ">enet_config_t</a>. </p>
+<p>These control flags are provided for special user requirements. Normally, these control flags are unused for ENET initialization. For special requirements, set the flags to macSpecialConfig in the <a class="el" href="a00028.html#a00475" title="Defines the basic configuration structure for the ENET device. ">enet_config_t</a>. The kENET_ControlStoreAndFwdDisable is used to disable the FIFO store and forward. FIFO store and forward means that the FIFO read/send is started when a complete frame is stored in TX/RX FIFO. If this flag is set, configure rxFifoFullThreshold and txFifoWatermark in the <a class="el" href="a00028.html#a00475" title="Defines the basic configuration structure for the ENET device. ">enet_config_t</a>. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3dd434e4f34bd4c640cefd471763e834a2274920ae245b67edc1538ecc662e2e7"></a>kENET_ControlFlowControlEnable</em>&nbsp;</td><td class="fielddoc">
 <p>Enable ENET flow control: pause frame. </p>
@@ -3274,14 +3286,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void ENET_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00473">enet_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00475">enet_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The purpose of this API is to get the default ENET MAC controller configure structure for <a class="el" href="a00028.html#gaf110b83a0fc68e066e66f71761167e72" title="Initializes the ENET module. ">ENET_Init()</a>. User may use the initialized structure unchanged in <a class="el" href="a00028.html#gaf110b83a0fc68e066e66f71761167e72" title="Initializes the ENET module. ">ENET_Init()</a>, or modify some fields of the structure before calling <a class="el" href="a00028.html#gaf110b83a0fc68e066e66f71761167e72" title="Initializes the ENET module. ">ENET_Init()</a>. Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00473">enet_config_t</a> config;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00475">enet_config_t</a> config;</div>
 <div class="line"><a class="code" href="a00028.html#gaf0992a0c9c3a27b2a40226ac38a26d1e">ENET_GetDefaultConfig</a>(&amp;config);</div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -3297,7 +3309,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_Up </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_Up </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3311,13 +3323,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00028.html#a00473">enet_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00028.html#a00475">enet_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00028.html#a00472">enet_buffer_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00028.html#a00474">enet_buffer_config_t</a> *&#160;</td>
           <td class="paramname"><em>bufferConfig</em>, </td>
         </tr>
         <tr>
@@ -3367,7 +3379,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_Init </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_Init </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3381,13 +3393,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00028.html#a00473">enet_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00028.html#a00475">enet_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00028.html#a00472">enet_buffer_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00028.html#a00474">enet_buffer_config_t</a> *&#160;</td>
           <td class="paramname"><em>bufferConfig</em>, </td>
         </tr>
         <tr>
@@ -3657,12 +3669,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="ga4b0247aa4825019f9939b2e468cf5758"></a>
+<a class="anchor" id="ga928b72c0b95d7f4af73a753b8afd08e2"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void ENET_StartSMIRead </td>
+          <td class="memname">static void ENET_StartSMIWrite </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3670,14 +3685,77 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>phyAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>phyReg</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00028.html#ga0efd18bb4f4b754039fc30c440e38b02">enet_mii_write_t</a>&#160;</td>
+          <td class="paramname"><em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>After calling this function, need to check whether the transmission is over then do next MDIO operation. For ease of use, encapsulated <a class="el" href="a00028.html#gadaaa62f2a826957ac10a75e4c2a5b739" title="MDIO write with IEEE802.3 Clause 22 format. ">ENET_MDIOWrite()</a> can be called. For customized requirements, implement with combining separated APIs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
+    <tr><td class="paramname">phyAddr</td><td>The PHY address. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">regAddr</td><td>The PHY register address. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">operation</td><td>The write operation. </td></tr>
+    <tr><td class="paramname">data</td><td>The data written to PHY. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga447a3f073b07936eff311f58024a8469"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ENET_StartSMIRead </td>
+          <td>(</td>
+          <td class="paramtype">ENET_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>phyAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -3691,13 +3769,18 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Used for standard IEEE802.3 MDIO Clause 22 format.</p>
+<p>After calling this function, need to check whether the transmission is over then do next MDIO operation. For ease of use, encapsulated <a class="el" href="a00028.html#ga892febd8596edf39f3301551df9dcc2c" title="MDIO read with IEEE802.3 Clause 22 format. ">ENET_MDIORead()</a> can be called. For customized requirements, implement with combining separated APIs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
-    <tr><td class="paramname">phyAddr</td><td>The PHY address. </td></tr>
-    <tr><td class="paramname">phyReg</td><td>The PHY register. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">phyAddr</td><td>The PHY address. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">regAddr</td><td>The PHY register address. Range from 0 ~ 31. </td></tr>
     <tr><td class="paramname">operation</td><td>The read operation. </td></tr>
   </table>
   </dd>
@@ -3705,12 +3788,12 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="ga0ef39cbb1042eb31189cf59fb3509b9a"></a>
+<a class="anchor" id="gadaaa62f2a826957ac10a75e4c2a5b739"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ENET_StartSMIWrite </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_MDIOWrite </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3718,69 +3801,20 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>phyAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>phyReg</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#ga0efd18bb4f4b754039fc30c440e38b02">enet_mii_write_t</a>&#160;</td>
-          <td class="paramname"><em>operation</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Used for standard IEEE802.3 MDIO Clause 22 format.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
-    <tr><td class="paramname">phyAddr</td><td>The PHY address. </td></tr>
-    <tr><td class="paramname">phyReg</td><td>The PHY register. Range from 0 ~ 31. </td></tr>
-    <tr><td class="paramname">operation</td><td>The write operation. </td></tr>
-    <tr><td class="paramname">data</td><td>The data written to PHY. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6601bffb2a8311822270a4323acfaa16"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ENET_StartExtC45SMIWriteReg </td>
-          <td>(</td>
-          <td class="paramtype">ENET_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>phyAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>phyReg</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3792,20 +3826,24 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
-    <tr><td class="paramname">phyAddr</td><td>The PHY address. </td></tr>
-    <tr><td class="paramname">phyReg</td><td>The PHY register. For MDIO IEEE802.3 Clause 45, the phyReg is a 21-bits combination of the devaddr (5 bits device address) and the regAddr (16 bits phy register): phyReg = (devaddr &lt;&lt; 16) | regAddr. </td></tr>
+    <tr><td class="paramname">phyAddr</td><td>The PHY address. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">regAddr</td><td>The PHY register. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">data</td><td>The data written to PHY. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success MDIO access succeeds. </dd>
+<dd>
+kStatus_Timeout MDIO access timeout. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaad26a89ca24a894dcde3b3a4dbe93140"></a>
+<a class="anchor" id="ga892febd8596edf39f3301551df9dcc2c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ENET_StartExtC45SMIWriteData </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_MDIORead </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3813,19 +3851,236 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>phyAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>phyReg</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>pData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
+    <tr><td class="paramname">phyAddr</td><td>The PHY address. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">regAddr</td><td>The PHY register. Range from 0 ~ 31. </td></tr>
+    <tr><td class="paramname">pData</td><td>The data read from PHY. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success MDIO access succeeds. </dd>
+<dd>
+kStatus_Timeout MDIO access timeout. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3be81738069472cacdf23d4d4630c68c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ENET_StartExtC45SMIWriteReg </td>
+          <td>(</td>
+          <td class="paramtype">ENET_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>portAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>devAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>After calling this function, need to check whether the transmission is over then do next MDIO operation. For ease of use, encapsulated <a class="el" href="a00028.html#ga610d4b0c009d03f06e208431ff1b9f33" title="MDIO write with IEEE802.3 Clause 45 format. ">ENET_MDIOC45Write()</a>/ENET_MDIOC45Read() can be called. For customized requirements, implement with combining separated APIs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
+    <tr><td class="paramname">portAddr</td><td>The MDIO port address(PHY address). </td></tr>
+    <tr><td class="paramname">devAddr</td><td>The device address. </td></tr>
+    <tr><td class="paramname">regAddr</td><td>The PHY register address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacc36d236821701ab448245009796c4b6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ENET_StartExtC45SMIWriteData </td>
+          <td>(</td>
+          <td class="paramtype">ENET_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>portAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>devAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>After calling this function, need to check whether the transmission is over then do next MDIO operation. For ease of use, encapsulated <a class="el" href="a00028.html#ga610d4b0c009d03f06e208431ff1b9f33" title="MDIO write with IEEE802.3 Clause 45 format. ">ENET_MDIOC45Write()</a> can be called. For customized requirements, implement with combining separated APIs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
+    <tr><td class="paramname">portAddr</td><td>The MDIO port address(PHY address). </td></tr>
+    <tr><td class="paramname">devAddr</td><td>The device address. </td></tr>
+    <tr><td class="paramname">data</td><td>The data written to PHY. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab9b5e10d43bf267bc32cc3019ac52338"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ENET_StartExtC45SMIReadData </td>
+          <td>(</td>
+          <td class="paramtype">ENET_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>portAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>devAddr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>After calling this function, need to check whether the transmission is over then do next MDIO operation. For ease of use, encapsulated <a class="el" href="a00028.html#ga4a900675299361505ed7992137ff9061" title="MDIO read with IEEE802.3 Clause 45 format. ">ENET_MDIOC45Read()</a> can be called. For customized requirements, implement with combining separated APIs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
+    <tr><td class="paramname">portAddr</td><td>The MDIO port address(PHY address). </td></tr>
+    <tr><td class="paramname">devAddr</td><td>The device address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga610d4b0c009d03f06e208431ff1b9f33"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_MDIOC45Write </td>
+          <td>(</td>
+          <td class="paramtype">ENET_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>portAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>devAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -3835,37 +4090,28 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>After writing MMFR register, we need to check whether the transmission is over. This is an example for whole precedure of clause 45 MDIO write. </p>
-<div class="fragment"><div class="line">*       <a class="code" href="a00028.html#ga98676acb368ed3d238278b4ede220469">ENET_ClearInterruptStatus</a>(base, ENET_EIR_MII_MASK);</div>
-<div class="line">*       <a class="code" href="a00028.html#ga6601bffb2a8311822270a4323acfaa16">ENET_StartExtC45SMIWriteReg</a>(base, phyAddr, phyReg);</div>
-<div class="line">*       <span class="keywordflow">while</span> ((<a class="code" href="a00028.html#ga9b9f5a57ff20ccf83fc8887c1bba2cec">ENET_GetInterruptStatus</a>(base) &amp; ENET_EIR_MII_MASK) == 0U)</div>
-<div class="line">*       {</div>
-<div class="line">*       }</div>
-<div class="line">*       <a class="code" href="a00028.html#ga98676acb368ed3d238278b4ede220469">ENET_ClearInterruptStatus</a>(base, ENET_EIR_MII_MASK);</div>
-<div class="line">*       <a class="code" href="a00028.html#gaad26a89ca24a894dcde3b3a4dbe93140">ENET_StartExtC45SMIWriteData</a>(base, phyAddr, phyReg, data);</div>
-<div class="line">*       <span class="keywordflow">while</span> ((<a class="code" href="a00028.html#ga9b9f5a57ff20ccf83fc8887c1bba2cec">ENET_GetInterruptStatus</a>(base) &amp; ENET_EIR_MII_MASK) == 0U)</div>
-<div class="line">*       {</div>
-<div class="line">*       }</div>
-<div class="line">*       <a class="code" href="a00028.html#ga98676acb368ed3d238278b4ede220469">ENET_ClearInterruptStatus</a>(base, ENET_EIR_MII_MASK);</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
-    <tr><td class="paramname">phyAddr</td><td>The PHY address. </td></tr>
-    <tr><td class="paramname">phyReg</td><td>The PHY register. For MDIO IEEE802.3 Clause 45, the phyReg is a 21-bits combination of the devaddr (5 bits device address) and the regAddr (16 bits phy register): phyReg = (devaddr &lt;&lt; 16) | regAddr. </td></tr>
+    <tr><td class="paramname">portAddr</td><td>The MDIO port address(PHY address). </td></tr>
+    <tr><td class="paramname">devAddr</td><td>The device address. </td></tr>
+    <tr><td class="paramname">regAddr</td><td>The PHY register address. </td></tr>
     <tr><td class="paramname">data</td><td>The data written to PHY. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success MDIO access succeeds. </dd>
+<dd>
+kStatus_Timeout MDIO access timeout. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga47ae815be6052df98fc84b0d523e76b2"></a>
+<a class="anchor" id="ga4a900675299361505ed7992137ff9061"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ENET_StartExtC45SMIReadData </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_MDIOC45Read </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3873,14 +4119,26 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>phyAddr</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>portAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>phyReg</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>devAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>pData</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3889,29 +4147,19 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>After writing MMFR register, we need to check whether the transmission is over. This is an example for whole precedure of clause 45 MDIO read. </p>
-<div class="fragment"><div class="line">*       uint32_t data;</div>
-<div class="line">*       <a class="code" href="a00028.html#ga98676acb368ed3d238278b4ede220469">ENET_ClearInterruptStatus</a>(base, ENET_EIR_MII_MASK);</div>
-<div class="line">*       <a class="code" href="a00028.html#ga6601bffb2a8311822270a4323acfaa16">ENET_StartExtC45SMIWriteReg</a>(base, phyAddr, phyReg);</div>
-<div class="line">*       <span class="keywordflow">while</span> ((<a class="code" href="a00028.html#ga9b9f5a57ff20ccf83fc8887c1bba2cec">ENET_GetInterruptStatus</a>(base) &amp; ENET_EIR_MII_MASK) == 0U)</div>
-<div class="line">*       {</div>
-<div class="line">*       }</div>
-<div class="line">*       <a class="code" href="a00028.html#ga98676acb368ed3d238278b4ede220469">ENET_ClearInterruptStatus</a>(base, ENET_EIR_MII_MASK);</div>
-<div class="line">*       <a class="code" href="a00028.html#ga47ae815be6052df98fc84b0d523e76b2">ENET_StartExtC45SMIReadData</a>(base, phyAddr, phyReg);</div>
-<div class="line">*       <span class="keywordflow">while</span> ((<a class="code" href="a00028.html#ga9b9f5a57ff20ccf83fc8887c1bba2cec">ENET_GetInterruptStatus</a>(base) &amp; ENET_EIR_MII_MASK) == 0U)</div>
-<div class="line">*       {</div>
-<div class="line">*       }</div>
-<div class="line">*       <a class="code" href="a00028.html#ga98676acb368ed3d238278b4ede220469">ENET_ClearInterruptStatus</a>(base, ENET_EIR_MII_MASK);</div>
-<div class="line">*       data = <a class="code" href="a00028.html#ga1720662e45648e0f081b9152c36b3156">ENET_ReadSMIData</a>(base);</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>ENET peripheral base address. </td></tr>
-    <tr><td class="paramname">phyAddr</td><td>The PHY address. </td></tr>
-    <tr><td class="paramname">phyReg</td><td>The PHY register. For MDIO IEEE802.3 Clause 45, the phyReg is a 21-bits combination of the devaddr (5 bits device address) and the regAddr (16 bits phy register): phyReg = (devaddr &lt;&lt; 16) | regAddr. </td></tr>
+    <tr><td class="paramname">portAddr</td><td>The MDIO port address(PHY address). </td></tr>
+    <tr><td class="paramname">devAddr</td><td>The device address. </td></tr>
+    <tr><td class="paramname">regAddr</td><td>The PHY register address. </td></tr>
+    <tr><td class="paramname">pData</td><td>The data read from PHY. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success MDIO access succeeds. </dd>
+<dd>
+kStatus_Timeout MDIO access timeout. </dd></dl>
 
 </div>
 </div>
@@ -4508,7 +4756,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00368.html#_deprecated000001">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by the config param in <a class="el" href="a00028.html#gaf110b83a0fc68e066e66f71761167e72">ENET_Init</a>. This API is provided for the application callback required case when ENET interrupt is enabled. This API should be called after calling ENET_Init.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00370.html#_deprecated000001">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by the config param in <a class="el" href="a00028.html#gaf110b83a0fc68e066e66f71761167e72">ENET_Init</a>. This API is provided for the application callback required case when ENET interrupt is enabled. This API should be called after calling ENET_Init.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>ENET handler pointer. Should be provided by application. </td></tr>
@@ -4533,7 +4781,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00474">enet_data_error_stats_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00476">enet_data_error_stats_t</a> *&#160;</td>
           <td class="paramname"><em>eErrorStatic</em>, </td>
         </tr>
         <tr>
@@ -4583,7 +4831,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00501">enet_transfer_stats_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00503">enet_transfer_stats_t</a> *&#160;</td>
           <td class="paramname"><em>statistics</em>&#160;</td>
         </tr>
         <tr>
@@ -4608,7 +4856,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_GetRxFrameSize </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_GetRxFrameSize </td>
           <td>(</td>
           <td class="paramtype">enet_handle_t *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -4658,7 +4906,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_ReadFrame </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_ReadFrame </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -4747,7 +4995,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_SendFrame </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_SendFrame </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -4823,7 +5071,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_SetTxReclaim </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_SetTxReclaim </td>
           <td>(</td>
           <td class="paramtype">enet_handle_t *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -4912,7 +5160,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_GetRxBuffer </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_GetRxBuffer </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -4960,14 +5208,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00368.html#_deprecated000002">Deprecated:</a></b></dt><dd>Do not use this function. It has been superseded by <a class="el" href="a00028.html#gaa91ebe63c861f928510c45cfce40f5a7">ENET_GetRxFrame</a>.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00370.html#_deprecated000002">Deprecated:</a></b></dt><dd>Do not use this function. It has been superseded by <a class="el" href="a00028.html#gaa91ebe63c861f928510c45cfce40f5a7">ENET_GetRxFrame</a>.</dd></dl>
 <p>This function can get the data address which stores frame. Then can analyze these data directly without doing any memory copy. When the frame locates in multiple BD buffer, need to repeat calling this function until isLastBuff=true (need to store the temp buf pointer everytime call this function). After finishing the analysis of this frame, call ENET_ReleaseRxBuffer to release rxbuff memory to DMA. This is an example: </p>
 <div class="fragment"><div class="line">*       uint32_t length;</div>
 <div class="line">*       uint8_t *buf = NULL;</div>
 <div class="line">*       uint32_t data_len = 0;</div>
 <div class="line">*       <span class="keywordtype">bool</span> isLastBuff = <span class="keyword">false</span>;</div>
 <div class="line">*       enet_handle_t g_handle;</div>
-<div class="line">*       <a class="code" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status;</div>
+<div class="line">*       <a class="code" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status;</div>
 <div class="line">*       status = <a class="code" href="a00028.html#gab60f9fac51313d5822274a20bb059307">ENET_GetRxFrameSize</a>(&amp;g_handle, &amp;length, 0);</div>
 <div class="line">*       <span class="keywordflow">if</span> (length != 0)</div>
 <div class="line">*       {</div>
@@ -5032,7 +5280,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00368.html#_deprecated000003">Deprecated:</a></b></dt><dd>Do not use this function. It has been superseded by <a class="el" href="a00028.html#gaa91ebe63c861f928510c45cfce40f5a7">ENET_GetRxFrame</a>.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00370.html#_deprecated000003">Deprecated:</a></b></dt><dd>Do not use this function. It has been superseded by <a class="el" href="a00028.html#gaa91ebe63c861f928510c45cfce40f5a7">ENET_GetRxFrame</a>.</dd></dl>
 <p>This function can release specified BD owned by application, meanwhile it may rearrange the BD to let the no-owned BDs always in back of the index of DMA transfer. So for the situation that releasing order is not same as the getting order, the rearrangement makes all ready BDs can be used by DMA. </p>
 <dl class="section note"><dt>Note</dt><dd>This function can't be interrupted by ENET_GetRxBuffer, so in application must make sure ENET_GetRxBuffer is called before or after this function. And this function itself isn't thread safe due to BD content exchanging.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -5052,7 +5300,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_GetRxFrame </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_GetRxFrame </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -5110,7 +5358,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_StartTxFrame </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_StartTxFrame </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -5167,7 +5415,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_SendFrameZeroCopy </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ENET_SendFrameZeroCopy </td>
           <td>(</td>
           <td class="paramtype">ENET_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -5215,7 +5463,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00368.html#_deprecated000004">Deprecated:</a></b></dt><dd>Do not use this function. It has been superseded by <a class="el" href="a00028.html#gaf1dfd6bda61a3f763940cc7c5fa8b144">ENET_StartTxFrame</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00370.html#_deprecated000004">Deprecated:</a></b></dt><dd>Do not use this function. It has been superseded by <a class="el" href="a00028.html#gaf1dfd6bda61a3f763940cc7c5fa8b144">ENET_StartTxFrame</a>. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The CRC is automatically appended to the data. Input the data to send without the CRC. The frame must store in continuous memory and need to check the buffer start address alignment based on your device, otherwise it has issue or can't get highest DMA transmit speed.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

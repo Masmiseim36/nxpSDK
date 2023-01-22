@@ -1,6 +1,6 @@
 var a00061 =
 [
-    [ "lpuart_rtos_config_t", "a00061.html#a00565", [
+    [ "lpuart_rtos_config_t", "a00061.html#a00568", [
       [ "base", "a00061.html#abf5491a7b9c911ead3f256fc61357f65", null ],
       [ "srcclk", "a00061.html#a5209f6a860555957f5d75940b2132ae5", null ],
       [ "baudrate", "a00061.html#a86b9316f7c8bc63e672f7efd09bbb86a", null ],

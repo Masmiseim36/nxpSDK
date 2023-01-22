@@ -1,6 +1,6 @@
 var a00020 =
 [
-    [ "csi_config_t", "a00020.html#a00444", [
+    [ "csi_config_t", "a00020.html#a00446", [
       [ "width", "a00020.html#ac5d64ed31de712862131d8ba0c0acada", null ],
       [ "height", "a00020.html#af353234bdd91adf25b2bfa24cec0288e", null ],
       [ "polarityFlags", "a00020.html#a5715e589bee1f54aac85ab996a59f204", null ],
@@ -10,7 +10,7 @@ var a00020 =
       [ "dataBus", "a00020.html#a0c7630ee5ca46f6cf1a23a83378bdb1f", null ],
       [ "useExtVsync", "a00020.html#a436dcb1c1ed0cd25910b9df57267bd02", null ]
     ] ],
-    [ "csi_handle_t", "a00020.html#a00373", [
+    [ "csi_handle_t", "a00020.html#a00375", [
       [ "frameBufferQueue", "a00020.html#aa1a9c395647713b07bc92e4b89a9a547", null ],
       [ "queueWriteIdx", "a00020.html#a98aac4e50e3a3375e6dd6199e8135527", null ],
       [ "queueReadIdx", "a00020.html#afe1aaca7fbcc6240601eec4106026bf5", null ],

@@ -56,7 +56,7 @@
 /* Clock divider for sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (63U)
 
-#define DEMO_CHANNEL_NUM   1
+#define DEMO_CHANNEL_NUM   2
 #define DEMO_CODEC_CHANNEL kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight
 
 #define BOARD_MASTER_CLOCK_CONFIG()

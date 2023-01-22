@@ -10,7 +10,8 @@
 /*---------------------------------------------------------------------------/
 / MSDK adaptation configuration
 /---------------------------------------------------------------------------*/
-#define SD_DISK_ENABLE
+#define RAM_DISK_ENABLE
+#define FSL_FF_RAMDISK_DISK_SIZE 16 * FF_MIN_SS
 
 /*---------------------------------------------------------------------------/
 / Function Configurations

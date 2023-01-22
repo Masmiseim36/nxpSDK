@@ -22,16 +22,41 @@
     </p>
 
     <div style="text-align: left;">
-        <form name="ex_form" action="upload.cgi" method="POST" enctype="multipart/form-data">
-            <input type="submit" value="Upload">
-            <input id="update_file" type="file" name="update_file">
+
+      <fieldset>
+        <legend> Images for upload </legend>
+          <form name="upload_form" action="upload.cgi" method="POST" enctype="multipart/form-data">
+            <table>
+              <%ota_image_upload%>
+              <tr><td colspan=2>&nbsp;</td></tr>
+              <tr><td colspan=2><input type="submit" value="Upload"></td></tr>
+            </table>
+          </form>
+      </fieldset>
+
+      <p>
+
+      <fieldset>
+        <legend> Current image state </legend>
+        <form name='accept' action='accept.cgi' method='get'>
+          <table border='1'>
+            <tr>
+              <th>Slot</th><th>Name</th><th>Version</th><th>Size</th><th>State</th><th></th>
+            </tr>
+            <%ota_image_info%>
+          </table>
         </form>
-        <form name="ex_form" action="reboot.cgi" method="get">
-            <input type="submit" value="Reboot">
+      </fieldset>
+
+      <p>
+
+      <fieldset>
+        <legend> Machine reboot </legend>
+        <form name="reboot_form" action="reboot.cgi" method="get">
+          <input type="submit" value="Reboot">
         </form>
-        <form name="ex_form" action="accept.cgi" method="get">
-            <input type="submit" value="Accept update" <%disabled_input:accept%>>
-        </form>
+      </fieldset>
+
     </div>
 </body>
 </html>

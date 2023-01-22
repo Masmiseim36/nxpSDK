@@ -18,7 +18,7 @@ product: Peripherals v11.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 11.0.1
+processor_version: 0.13.1
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: e6284d15-619c-4414-9a55-c92278f7aa04
@@ -40,6 +40,14 @@ component:
 - type: 'uart_cmsis_common'
 - type_id: 'uart_cmsis_common_9cb8e302497aa696fdbb5a4fd622c2a8'
 - global_USART_CMSIS_common:
+  - quick_selection: 'default'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'gpio_adapter_common'
+- type_id: 'gpio_adapter_common_57579b9ac814fe26bf95df0a384c36b6'
+- global_gpio_adapter_common:
   - quick_selection: 'default'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -72,9 +80,7 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
-/* Empty initialization function (commented out)
-static void NVIC_init(void) {
-} */
+/* Empty initialization function (commented out) */
 
 /***********************************************************************************************************************
  * LPUART1 initialization code
@@ -238,7 +244,7 @@ instance:
             - bufferAddress: 'FreeMASTER_RecBuffer0'
             - bufferExternDef: 'FMSTR_U8 FreeMASTER_RecBuffer0[1024]'
             - bufferSize: '4096'
-          - basePeriod_ns: '100000'
+          - basePeriod_ns: '62500'
           - recInit: 'true'
       - FMSTR_USE_TSA: 'true'
       - FMSTR_USE_TSA_INROM: 'true'
@@ -346,8 +352,8 @@ FMSTR_U8 FreeMASTER_TxPipe3[FREEMASTER_TX_PIPE_3_SIZE];
 FMSTR_REC_BUFF FreeMASTER_Recorder_0 = {
   .name = "Description of recorder 0",
   .addr = (FMSTR_ADDR)FreeMASTER_RecBuffer0,
-  .size = FREEMASTER_REC_0_SIZE,
-  .basePeriod_ns = 100000UL
+  .size = (FMSTR_SIZE) sizeof(FreeMASTER_RecBuffer0),
+  .basePeriod_ns = 62500UL
 };
 
 static void FreeMASTER_init(void) {

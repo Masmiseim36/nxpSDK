@@ -10,7 +10,7 @@
 
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
-#include "logging.h"
+#include "maestro_logging.h"
 #include "audio_speaker.h"
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"
@@ -168,7 +168,7 @@ status_t STREAMER_speaker_Create(streamer_handle_t *handle)
     streamer_set_property(handle->streamer, prop, true);
 
     prop.prop = PROP_AUDIOSINK_SET_VOLUME;
-    prop.val  = 100;
+    prop.val  = 80;
 
     streamer_set_property(handle->streamer, prop, true);
 

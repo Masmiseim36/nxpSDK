@@ -62,8 +62,8 @@ int main(void)
 {
     /* Initialize the board.  */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("FILEX example.....\r\n");

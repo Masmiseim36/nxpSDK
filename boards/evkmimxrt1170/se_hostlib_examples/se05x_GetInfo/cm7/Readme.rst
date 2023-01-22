@@ -44,4 +44,3 @@ Console output
 If everything is successful, the output will be similar to:
 
 .. literalinclude:: out_se05x_GetInfo.rst.txt
-   :start-after: Opening connection to JRCP server on 127.0.0.1:8050

@@ -1,3 +1,15 @@
+IF(NOT DEFINED FPU)  
+    SET(FPU "-mfloat-abi=hard -mfpu=fpv5-d16")  
+ENDIF()  
+
+IF(NOT DEFINED SPECS)  
+    SET(SPECS "--specs=nano.specs --specs=nosys.specs")  
+ENDIF()  
+
+IF(NOT DEFINED DEBUG_CONSOLE_CONFIG)  
+    SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE_UART=1")  
+ENDIF()  
+
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
     -D__STARTUP_CLEAR_BSS \
@@ -5,9 +17,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -16,9 +27,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -28,8 +38,9 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DSTREAMER_ENABLE_EAP \
+    -DSTREAMER_ENABLE_AUDIO_PROC \
     -DSTREAMER_ENABLE_VIT_SINK \
+    -DMFLASH_FILE_BASEADDR=15466496 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DAPPL_USE_STANDARD_IO \
     -DGATT_CLIENT \
@@ -53,7 +64,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DFSL_OSA_TASK_ENABLE=1 \
     -DSDIO_ENABLED=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
-    -DSDK_DEBUGCONSOLE_UART=1 \
     -DCONFIG_BT_BREDR=1 \
     -DCONFIG_BT_PERIPHERAL=1 \
     -DCONFIG_BT_CENTRAL=1 \
@@ -69,12 +79,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DLFS_NO_ERROR=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSD_ENABLED \
-    -DMFLASH_FILE_BASEADDR=14221312 \
-    -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DLOG_ENABLE_ASYNC_MODE=1 \
     -DLOG_MAX_ARGUMENT_COUNT=10 \
     -DLOG_ENABLE_OVERWRITE=0 \
     -DCONFIG_ARM=1 \
+    -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
+    -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DMCUXPRESSO_SDK \
     -DCASCFG_PLATFORM_FREERTOS \
     -DFSL_OS_SELECTED=SDK_OS_FREERTOS \
@@ -88,8 +98,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -O0 \
     -mcpu=cortex-m7 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -102,6 +110,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -111,8 +121,9 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DSTREAMER_ENABLE_EAP \
+    -DSTREAMER_ENABLE_AUDIO_PROC \
     -DSTREAMER_ENABLE_VIT_SINK \
+    -DMFLASH_FILE_BASEADDR=15466496 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DAPPL_USE_STANDARD_IO \
     -DGATT_CLIENT \
@@ -136,7 +147,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DFSL_OSA_TASK_ENABLE=1 \
     -DSDIO_ENABLED=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
-    -DSDK_DEBUGCONSOLE_UART=1 \
     -DCONFIG_BT_BREDR=1 \
     -DCONFIG_BT_PERIPHERAL=1 \
     -DCONFIG_BT_CENTRAL=1 \
@@ -152,12 +162,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DLFS_NO_ERROR=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSD_ENABLED \
-    -DMFLASH_FILE_BASEADDR=14221312 \
-    -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DLOG_ENABLE_ASYNC_MODE=1 \
     -DLOG_MAX_ARGUMENT_COUNT=10 \
     -DLOG_ENABLE_OVERWRITE=0 \
     -DCONFIG_ARM=1 \
+    -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
+    -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DMCUXPRESSO_SDK \
     -DCASCFG_PLATFORM_FREERTOS \
     -DFSL_OS_SELECTED=SDK_OS_FREERTOS \
@@ -170,8 +180,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -184,6 +192,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -195,8 +205,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -O0 \
     -mcpu=cortex-m7 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -208,6 +216,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -218,8 +228,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -231,16 +239,14 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} \
     -g \
     -mcpu=cortex-m7 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -263,16 +269,14 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
     --defsym=__heap_size__=0x400 \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
     -mcpu=cortex-m7 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -295,5 +299,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
     --defsym=__heap_size__=0x400 \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor.ld -static \
 ")

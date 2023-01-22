@@ -16,6 +16,8 @@
 #include <stdarg.h>
 #include <ctype.h>
 
+#include "httpsrv_multipart.h"
+
 #include "lwip/api.h"
 
 #include "pin_mux.h"
@@ -27,14 +29,16 @@
 
 #include "mbedtls/certs.h"
 
-#include "mcuboot_app_support.h"
 #include "mflash_drv.h"
-
 #include "timers.h"
-
 #include "fsl_debug_console.h"
 
+#include "sysflash/sysflash.h"
+#include "flash_map.h"
+#include "mcuboot_app_support.h"
+
 #include "fsl_enet.h"
+#include "network_cfg.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -66,11 +70,19 @@ static int cgi_ota_reboot(HTTPSRV_CGI_REQ_STRUCT *param);
 static int cgi_ota_accept(HTTPSRV_CGI_REQ_STRUCT *param);
 
 static int ssi_ota_status(HTTPSRV_SSI_PARAM_STRUCT *param);
-static int ssi_disabled_input(HTTPSRV_SSI_PARAM_STRUCT *param);
+static int ssi_ota_image_upload(HTTPSRV_SSI_PARAM_STRUCT *param);
+static int ssi_ota_image_info(HTTPSRV_SSI_PARAM_STRUCT *param);
+
+static int32_t mcuboot_image_size_sanity_check(const uint8_t *data, uint32_t size);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#if BOARD_NETWORK_USE_100M_ENET_PORT
+phy_ksz8081_resource_t g_phy_resource;
+#else
+phy_rtl8211f_resource_t g_phy_resource;
+#endif
 
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];
 
@@ -83,7 +95,8 @@ const HTTPSRV_CGI_LINK_STRUCT cgi_lnk_tbl[] = {
 
 const HTTPSRV_SSI_LINK_STRUCT ssi_lnk_tbl[] = {
     {"ota_status", ssi_ota_status},
-    {"disabled_input", ssi_disabled_input},
+    {"ota_image_upload", ssi_ota_image_upload},
+    {"ota_image_info", ssi_ota_image_info},
     {0, 0} // DO NOT REMOVE - last item - end of table
 };
 
@@ -125,19 +138,37 @@ void BOARD_ENETFlexibleConfigure(enet_config_t *config)
 #endif
 }
 
+static void MDIO_Init(void)
+{
+    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
+    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
+}
+
+static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
+{
+    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
+}
+
+static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
+{
+    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
+}
+
 
 enum ota_status_t
 {
     OTA_STATUS_NONE = 0,
-    OTA_STATUS_UPLOADED,
+    OTA_STATUS_UPLOAD_FAILED,
+    OTA_STATUS_UPLOAD_OK,
     OTA_STATUS_TESTING,
     OTA_STATUS_BOOTLOADER_ERROR,
 } ota_status = OTA_STATUS_NONE;
 
 char *ota_status_strings[] = {
-    "Select file with updated firmware and click <b>Upload</b>.",
-    "Update image uploaded, click <b>Reboot</b> to start in test mode.",
-    "Running in test mode, click <b>Accept update</b> to make it permanent or <br>Reboot</b> for rollback.",
+    "Select firmware files to be updated and click <b>Upload</b>.",
+    "<b>Failed</b> to upload all requested images, see console log for details.",
+    "Update images successfully uploaded, click <b>Reboot</b> to start in test mode.",
+    "Running in test mode, click <b>accept</b> to make image permanent or <br>Reboot</b> for rollback.",
     "<b>Error</b> - check bootloader installation.",
 };
 
@@ -149,353 +180,148 @@ static int ssi_ota_status(HTTPSRV_SSI_PARAM_STRUCT *param)
     return (0);
 }
 
-/* Server Side Include callback to disable inputs that are of no use at the moment. */
-static int ssi_disabled_input(HTTPSRV_SSI_PARAM_STRUCT *param)
+/* generates image upload form */
+
+static int ssi_ota_image_upload(HTTPSRV_SSI_PARAM_STRUCT *param)
 {
-    int disabled = 0;
+    char buf[128];
+    char *html;
 
-    if (strcmp(param->com_param, "accept") == 0)
+    for (int image = 0; image < MCUBOOT_IMAGE_NUMBER; image++)
     {
-        disabled = (ota_status != OTA_STATUS_TESTING);
+        const char *name = boot_image_names[image];
+
+        html = "<tr>";
+        HTTPSRV_ssi_write(param->ses_handle, html, strlen(html));
+
+        snprintf(buf, sizeof(buf),
+                 "<td><b>Image %s</b></td>"
+                 "<td><input type='file' id='upload_image_%u' name='upload_image_%u'></td>",
+                 name, image, image);
+        HTTPSRV_ssi_write(param->ses_handle, buf, strlen(buf));
+
+        html = "</tr>";
+        HTTPSRV_ssi_write(param->ses_handle, html, strlen(html));
     }
-
-    if (disabled)
-    {
-        HTTPSRV_ssi_write(param->ses_handle, "disabled", strlen("disabled"));
-    }
-
-    return (0);
-}
-
-#define MULTIPART_READ_BUFSIZE (200)
-#define MULTIPART_MAX_BOUNDARY (70)
-#define FORM_DATA_NAME_SIZE    (20)
-
-enum multipart_state
-{
-    MULTIPART_END = 0,
-    MULTIPART_EXPECT_HEADERS,
-    MULTIPART_EXPECT_DATA,
-    MULTIPART_ERROR,
-};
-
-struct multipart_read_ctx
-{
-    uint32_t ses_handle;
-
-    enum multipart_state state;
-
-    /* Boundary string is 1..70 chars long. Keep 2 more reserved for CRLF */
-    char boundary[MULTIPART_MAX_BOUNDARY + 2];
-    uint32_t boundary_len; /* Actual lenght of the stored boundary string */
-
-    char buffer[MULTIPART_READ_BUFSIZE];
-    uint32_t buf_size; /* Size of the buffer (allocated space), this is to allow for possible dynamic allocation of the
-                          buffer */
-    char *buf_start;   /* Pointer to valid (not consumed so far) data in the buffer */
-    char
-        *buf_end; /* Points to location following the valid data, i.e. it may point one byte past the allocated space */
-
-    char form_data_name[FORM_DATA_NAME_SIZE + 1]; /* Extra char for null termination */
-};
-
-static int multipart_read_init(struct multipart_read_ctx *ctx, uint32_t ses_handle)
-{
-    int read;
-
-    memset(ctx, 0, sizeof(*ctx));
-
-    ctx->ses_handle = ses_handle;
-    ctx->buf_size   = MULTIPART_READ_BUFSIZE;
-    ctx->buf_end = ctx->buf_start = ctx->buffer;
-
-    /* Fill in the buffer with data */
-    read = HTTPSRV_cgi_read(ctx->ses_handle, ctx->buffer, ctx->buf_size);
-    if (read <= 0)
-    {
-        ctx->state = MULTIPART_ERROR;
-        return -1;
-    }
-    ctx->buf_end += read;
-
-    /* Determine length of boundary string by scanning its first occurence */
-    while (ctx->buf_start < ctx->buf_end)
-    {
-        if (*ctx->buf_start == ' ' || *ctx->buf_start == '\r')
-        {
-            /* End of boundary string */
-            break;
-        }
-        ctx->boundary_len++;
-        ctx->buf_start++;
-    }
-
-    if (ctx->buf_start == ctx->buf_end)
-    {
-        /* End of buffer reached while boundary end was not found */
-        ctx->state = MULTIPART_ERROR;
-        return -1;
-    }
-
-    if (ctx->boundary_len < 1 || ctx->boundary_len > 70)
-    {
-        /* Length of  boundary string is out of spec */
-        ctx->state = MULTIPART_ERROR;
-        return -1;
-    }
-
-    /*  RFC: The boundary delimiter MUST occur at the beginning of a line.
-        Implementation: Use 2 reserved bytes to prepend boundary with CRLF for convenient matching using a state machine
-     */
-    ctx->boundary[0] = '\r';
-    ctx->boundary[1] = '\n';
-    memcpy(ctx->boundary + 2, ctx->buffer, ctx->boundary_len);
-    ctx->boundary_len += 2;
-
-    /* There may be whitespaces at the end of boundary line, skip them */
-    while (ctx->buf_start < ctx->buf_end && *ctx->buf_start == ' ')
-    {
-        ctx->buf_start++;
-    }
-
-    /* There should be at least 2 chars for line termination remaining */
-    if (ctx->buf_end - ctx->buf_start < 2)
-    {
-        /* Either the buffer is small to fit a single line or we reached the end of the stream */
-        ctx->state = MULTIPART_ERROR;
-        return -1;
-    }
-
-    /* Consume CRLF at the end to the boundary line */
-    if (ctx->buf_start[0] != '\r' || ctx->buf_start[1] != '\n')
-    {
-        ctx->state = MULTIPART_ERROR;
-        return -1;
-    }
-    ctx->buf_start += 2;
-
-    /* Expect headers */
-    ctx->state = MULTIPART_EXPECT_HEADERS;
 
     return 0;
 }
 
-static int multipart_proc_header(struct multipart_read_ctx *ctx, char *buffer)
+/* generates current image information */
+
+static int ssi_ota_image_info(HTTPSRV_SSI_PARAM_STRUCT *param)
 {
-    char *param_ptr;
+    status_t status;
+    uint32_t imgstate;
+    char buf[128];
+    char *html;
 
-    if (strncmp(buffer, "Content-Disposition:", 20) == 0)
+    for (int image = 0; image < MCUBOOT_IMAGE_NUMBER; image++)
     {
-        param_ptr = buffer + 20;
-        if (strstr(param_ptr, " form-data;"))
+        status = bl_get_image_state(image, &imgstate);
+        if (status != kStatus_Success)
         {
-            char *name_ptr;
-            char *end_ptr;
+            PRINTF("Failed to get state of image %u (ret %d)", image, status);
+            return 0;
+        }
 
-            name_ptr = strstr(param_ptr, " name=\"");
-            if (name_ptr)
+        for (int slot = 0; slot < 2; slot++)
+        {
+            int faid                = image * 2 + slot;
+            struct flash_area *fa   = &boot_flash_map[faid];
+            uint32_t slotaddr       = fa->fa_off + BOOT_FLASH_BASE;
+            struct image_header *ih = (void *)slotaddr;
+            char versionstr[40];
+
+            int slotused = ih->ih_magic == IMAGE_MAGIC;
+
+            if (slotused)
             {
-                name_ptr += 7;
-                end_ptr = strchr(name_ptr, '\"');
-                if (end_ptr)
-                {
-                    int len = (end_ptr - name_ptr) < FORM_DATA_NAME_SIZE ? (end_ptr - name_ptr) : FORM_DATA_NAME_SIZE;
-                    strncpy(ctx->form_data_name, name_ptr, len);
-                }
+                struct image_version *iv = &ih->ih_ver;
+                snprintf(versionstr, sizeof(versionstr), "%u.%u.%u-%lu", iv->iv_major, iv->iv_minor, iv->iv_revision,
+                         iv->iv_build_num);
             }
+
+            html = "<tr>";
+            HTTPSRV_ssi_write(param->ses_handle, html, strlen(html));
+
+            /* slot; name; version; size */
+
+            snprintf(buf, sizeof(buf), "<td>%d</td><td>%s</td><td>%s</td><td>%lu</td>", faid, fa->fa_name,
+                     slotused ? versionstr : "-", slotused ? ih->ih_img_size : 0);
+            HTTPSRV_ssi_write(param->ses_handle, buf, strlen(buf));
+
+            /* Primary slots only */
+
+            if (faid % 2 == 0)
+            {
+                /* swap type */
+
+                snprintf(buf, sizeof(buf), "<td rowspan='2'>%s</td>", bl_imgstate_to_str(imgstate));
+                HTTPSRV_ssi_write(param->ses_handle, buf, strlen(buf));
+
+                html = "<td rowspan=2>";
+                HTTPSRV_ssi_write(param->ses_handle, html, strlen(html));
+
+                /* activate accept button when imgstate is Testing */
+                snprintf(buf, sizeof(buf), "<button type='submit' name='image_accept' value='%u' %s>accept</button>",
+                         image, imgstate != kSwapType_Testing ? "disabled" : "");
+                HTTPSRV_ssi_write(param->ses_handle, buf, strlen(buf));
+
+                html = "</td>";
+                HTTPSRV_ssi_write(param->ses_handle, html, strlen(html));
+            }
+
+            html = "</tr>";
+            HTTPSRV_ssi_write(param->ses_handle, html, strlen(html));
         }
     }
+
     return 0;
 }
 
-static void multipart_clear_headers(struct multipart_read_ctx *ctx)
+static bool cgi_get_varval(char *src, char *var_name, char *dst, uint32_t length)
 {
-    memset(ctx->form_data_name, 0, sizeof(ctx->form_data_name));
-}
+    char *name;
+    bool result;
+    uint32_t index;
+    uint32_t n_length;
 
-static int multipart_read_headers(struct multipart_read_ctx *ctx)
-{
-    char *line_start;
-    char *line_lf;
-    int read;
-    int num_headers = 0;
+    result = false;
+    dst[0] = 0;
+    name   = src;
 
-    if (ctx->state != MULTIPART_EXPECT_HEADERS)
+    n_length = strlen(var_name);
+
+    while ((name != NULL) && ((name = strstr(name, var_name)) != NULL))
     {
-        return 0;
-    }
-
-    multipart_clear_headers(ctx);
-
-    /* Process buffer line by line. End of line is \n or \r\n */
-    while (1)
-    {
-        line_start = ctx->buf_start;
-        line_lf    = memchr(line_start, '\n', ctx->buf_end - ctx->buf_start);
-
-        if (line_lf == NULL)
+        if (name[n_length] == '=')
         {
-            /* No end of line found in the buffer */
-            if (ctx->buf_end - ctx->buf_start == ctx->buf_size)
+            name += n_length + 1;
+
+            index = strcspn(name, "&");
+            if (index >= length)
             {
-                /* The buffer is full but probably not large enough to keep the whole header line */
-                ctx->state = MULTIPART_ERROR;
-                return -1;
+                index = length - 1;
             }
-
-            /* Move unprocessed data to the beginning of the buffer */
-            memmove(ctx->buffer, ctx->buf_start, ctx->buf_end - ctx->buf_start);
-            ctx->buf_end -= ctx->buf_start - ctx->buffer;
-            ctx->buf_start = ctx->buffer;
-
-            /* Top up the buffer */
-            read = HTTPSRV_cgi_read(ctx->ses_handle, ctx->buf_end, ctx->buf_size - (ctx->buf_end - ctx->buf_start));
-            if (read == 0)
-            {
-                /* End od stream */
-                ctx->state = MULTIPART_ERROR;
-                return -1;
-            }
-            ctx->buf_end += read;
-
-            /* And restart parsing */
-            continue;
-        }
-
-        /* Null terminate the line */
-        *line_lf = '\0';
-        if ((line_lf > line_start) && (*(line_lf - 1) == '\r'))
-        {
-            /* Discard optional CR */
-            *(line_lf - 1) = '\0';
-        }
-
-        /* Move start of valid data in the buffer according to data consumed */
-        ctx->buf_start = line_lf + 1;
-
-        /* Empty line indicates end of headers */
-        if (*line_start == '\0')
-        {
+            strncpy(dst, name, index);
+            dst[index] = '\0';
+            result     = true;
             break;
         }
-
-        /* Process the header */
-        multipart_proc_header(ctx, line_start);
-        num_headers++;
-    }
-
-    ctx->state = MULTIPART_EXPECT_DATA;
-    return num_headers;
-}
-
-static int32_t multipart_read_data(struct multipart_read_ctx *ctx, uint8_t *buffer, int32_t len)
-{
-    int match_idx  = 0;
-    int read_total = 0;
-
-    if (ctx->state == MULTIPART_ERROR)
-    {
-        return -1;
-    }
-
-    if (ctx->state != MULTIPART_EXPECT_DATA)
-    {
-        return 0;
-    }
-
-    /* Copy data from receive buffer to caller buffer while searching for boundary string using a state machine */
-    while (read_total != len)
-    {
-        /* If the buffer contains just partially matched boundary string (or is completely empty) we need to receive
-         * more data */
-        if (ctx->buf_start + match_idx >= ctx->buf_end)
+        else
         {
-            uint32_t read;
-
-            /* Move the unprocessed data (partially matched boundary string) to the beginning of the buffer */
-            memmove(ctx->buffer, ctx->buf_start, ctx->buf_end - ctx->buf_start);
-            ctx->buf_end -= ctx->buf_start - ctx->buffer;
-            ctx->buf_start = ctx->buffer;
-
-            /* Top up the buffer */
-            read = HTTPSRV_cgi_read(ctx->ses_handle, ctx->buf_end, ctx->buf_size - (ctx->buf_end - ctx->buf_start));
-            if (read == 0)
-            {
-                /* End od stream unexpected at this point */
-                ctx->state = MULTIPART_ERROR;
-                return -1;
-            }
-            ctx->buf_end += read;
+            name = strchr(name, '&');
         }
-
-        /* If there is a match with boundary string */
-        if (ctx->buf_start[match_idx] == ctx->boundary[match_idx])
-        {
-            /* If this is the last character of the bundary string */
-            if (++match_idx == ctx->boundary_len)
-            {
-                /* Boundary found, consume it and exit the loop (end of data part) */
-                ctx->buf_start += match_idx;
-                break;
-            }
-            continue;
-        }
-
-        /* Mismatch, reset matching index */
-        match_idx = 0;
-
-        /* The character is not part of valid boundary string for sure, copy it to the caller provided buffer */
-        if (buffer != NULL)
-        {
-            *buffer++ = *ctx->buf_start;
-        }
-        ctx->buf_start++;
-
-        read_total++;
     }
 
-    if (match_idx == ctx->boundary_len)
-    {
-        /* Boundary was matched, presume that headers will follow unless further reading of the stream indicates the
-         * processing should stop */
-        ctx->state = MULTIPART_EXPECT_HEADERS;
-
-        /* For simplicity of implementation, the closing double dash of last boundary is not strictly required.
-           Just read until encountering single dash, LF or end of stream.  */
-        do
-        {
-            /* Make sure the buffer is not empty */
-            if (ctx->buf_end == ctx->buf_start)
-            {
-                uint32_t read;
-                ctx->buf_start = ctx->buf_end = ctx->buffer;
-                read                          = HTTPSRV_cgi_read(ctx->ses_handle, ctx->buffer, ctx->buf_size);
-                if (read == 0)
-                {
-                    /* End od stream unexpected at this point */
-                    ctx->state = MULTIPART_ERROR;
-                    break;
-                }
-                ctx->buf_end += read;
-            }
-            if (*ctx->buf_start == '-')
-            {
-                /* Dash found, assume end of multipart content, rest of the buffer will be ignored */
-                ctx->state = MULTIPART_END;
-                break;
-            }
-        } while (*ctx->buf_start++ != '\n');
-    }
-
-    return (read_total);
+    return (result);
 }
 
 /* receive update image and store it in the flash partition */
-int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_log_addr, uint32_t partition_size)
+int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_phys_addr, uint32_t partition_size)
 {
     int32_t retval = 0;
-
-    uint32_t partition_phys_addr;
 
     uint32_t chunk_flash_addr;
     int32_t chunk_len;
@@ -512,15 +338,10 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
     /* Preset result code to indicate "no error" */
     int32_t mflash_result = 0;
 
-    /* Obtain physical address of FLASH to perform operations with */
-    partition_phys_addr = mflash_drv_log2phys((void *)partition_log_addr, partition_size);
-    if (partition_phys_addr == MFLASH_INVALID_ADDRESS)
-        return -1;
-
     /* Check partition alignment */
     if (!mflash_drv_is_sector_aligned(partition_phys_addr) || !mflash_drv_is_sector_aligned(partition_size))
     {
-        PRINTF("store_update_image: partition not aligned\r\n");
+        PRINTF("%s: partition not aligned\n", __func__);
         return -1;
     }
 
@@ -529,7 +350,7 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
     page_buffer = httpsrv_mem_alloc(page_size);
     if (page_buffer == NULL)
     {
-        PRINTF("store_update_image: page buffer allocation error\r\n");
+        PRINTF("%s: page buffer allocation error\n", __func__);
         return -1;
     }
 
@@ -548,7 +369,7 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
             if (chunk_flash_addr >= partition_phys_addr + partition_size)
             {
                 /* Partition boundary exceeded */
-                PRINTF("\rstore_update_image: partition boundary exceedded");
+                PRINTF("\n%s: partition boundary exceedded\n", __func__);
                 retval = -1;
                 break;
             }
@@ -580,7 +401,7 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
             total_processed += chunk_len;
             chunk_flash_addr += chunk_len;
 
-            PRINTF("\rstore_update_image: processed %i bytes", total_processed);
+            PRINTF("\r%s: processed %i bytes", __func__, total_processed);
         }
 
     } while (chunk_len == page_size);
@@ -588,7 +409,7 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
     /* If there was error reading multipart content, report failure */
     if ((chunk_len < 0))
     {
-        PRINTF("store_update_image: error reading data\r\n");
+        PRINTF("\n%s: error reading data\n", __func__);
         retval = -1;
     }
 
@@ -596,14 +417,14 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
     if (mflash_result != 0)
     {
         /* Error during flash operation */
-        PRINTF("\rstore_update_image: FLASH ERROR AT 0x%x\r\n", chunk_flash_addr);
+        PRINTF("\n%s: FLASH ERROR AT offset 0x%x\n", __func__, chunk_flash_addr);
         retval = -1;
     }
 
     /* Unless retval is already set (to an error code) */
     if (retval == 0)
     {
-        PRINTF("\r\nstore_update_image: upload complete\r\n");
+        PRINTF("\n%s: upload complete (%u bytes)\n", __func__, total_processed);
         retval = total_processed;
     }
 
@@ -617,10 +438,13 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
 static int cgi_ota_upload(HTTPSRV_CGI_REQ_STRUCT *param)
 {
     struct multipart_read_ctx *mpr_ctx;
+    int images_processed = 0;
 
     HTTPSRV_CGI_RES_STRUCT response = {0};
     response.ses_handle             = param->ses_handle;
     response.status_code            = HTTPSRV_CODE_OK;
+
+    const char *prefix = "upload_image_";
 
     if (param->request_method == HTTPSRV_REQ_POST)
     {
@@ -636,42 +460,73 @@ static int cgi_ota_upload(HTTPSRV_CGI_REQ_STRUCT *param)
         while ((mpr_ctx->state == MULTIPART_EXPECT_HEADERS) && (response.status_code == HTTPSRV_CODE_OK))
         {
             int headers;
+            int prefix_match, filename_ok;
+
             headers = multipart_read_headers(mpr_ctx);
             if (headers <= 0)
             {
                 response.status_code = HTTPSRV_CODE_BAD_REQ;
                 break;
             }
-            if (0 == strcmp(mpr_ctx->form_data_name, "update_file"))
+
+            prefix_match = !strncmp(mpr_ctx->form_data_name, prefix, strlen(prefix));
+
+            /* Continue to data download only when filename is not empty or when the 'filename' attribute
+             * is not present at all (to remain compatible with previous implementation)
+             */
+            filename_ok = !mpr_ctx->form_data_filename_present || strlen(mpr_ctx->form_data_filename);
+
+            if (prefix_match && filename_ok)
             {
-                partition_t update_partition;
+                int image = atoi(&mpr_ctx->form_data_name[strlen(prefix)]);
+                uint32_t dst_addr, dst_size;
                 int32_t stored;
-                if (bl_get_update_partition_info(&update_partition) != kStatus_Success)
+                struct flash_area *fa;
+                status_t status;
+
+                images_processed++;
+
+                if (image < 0 || image >= MCUBOOT_IMAGE_NUMBER)
                 {
-                    /* Could not get update partition info */
-                    PRINTF("Could not get update partition info\r\n");
+                    PRINTF("Unexpected image number %d\n", image);
                     response.status_code = HTTPSRV_CODE_INTERNAL_ERROR;
+                    continue;
                 }
-                else if ((stored = store_update_image(mpr_ctx, update_partition.start, update_partition.size)) <= 0)
+                /* Secondary image slot parameters */
+
+                fa       = &boot_flash_map[FLASH_AREA_IMAGE_SECONDARY(image)];
+                dst_addr = fa->fa_off;
+                dst_size = fa->fa_size;
+
+                stored = store_update_image(mpr_ctx, dst_addr, dst_size);
+                if (stored < 0)
                 {
                     /* Error during upload */
-                    PRINTF("Error during upload\r\n");
+                    PRINTF("Error during upload\n");
                     response.status_code = HTTPSRV_CODE_INTERNAL_ERROR;
+                    continue;
                 }
-                else if (bl_verify_image((void *)update_partition.start, stored) <= 0)
+
+                if (bl_verify_image(dst_addr, stored) <= 0)
                 {
                     /* Image validation failed */
-                    PRINTF("Image validation failed\r\n");
+                    PRINTF("Image validation failed\n");
                     response.status_code = HTTPSRV_CODE_INTERNAL_ERROR;
+                    continue;
                 }
-                else
+
+                /* Mark image swap type as Testing */
+                status = bl_update_image_state(image, kSwapType_ReadyForTest);
+                if (status != kStatus_Success)
                 {
-                    /* Image ok */
-                    ota_status = OTA_STATUS_UPLOADED;
+                    PRINTF("FAILED to mark image as ReadyForTest (ret=%d)\n", status);
+                    response.status_code = HTTPSRV_CODE_INTERNAL_ERROR;
+                    continue;
                 }
             }
             else
             {
+                PRINTF("SKIPPING form data of '%s'\n", mpr_ctx->form_data_name);
                 /* Discard unknown multipart data block */
                 multipart_read_data(mpr_ctx, NULL, -1);
             }
@@ -687,18 +542,26 @@ static int cgi_ota_upload(HTTPSRV_CGI_REQ_STRUCT *param)
         response.data_length    = strlen(response.data);
         HTTPSRV_cgi_write(&response);
 
-        if (response.status_code == HTTPSRV_CODE_OK)
+        if (images_processed > 0)
         {
-            response.data        = "<html><head><title>File upload successfull!</title>";
-            response.data_length = strlen(response.data);
-        }
-        else
-        {
-            response.data        = "<html><head><title>File upload failed!</title>";
-            response.data_length = strlen(response.data);
+            if (response.status_code == HTTPSRV_CODE_OK)
+            {
+                response.data        = "<html><head><title>File upload successfull!</title>";
+                response.data_length = strlen(response.data);
+
+                ota_status = OTA_STATUS_UPLOAD_OK;
+            }
+            else
+            {
+                response.data        = "<html><head><title>File upload failed!</title>";
+                response.data_length = strlen(response.data);
+
+                ota_status = OTA_STATUS_UPLOAD_FAILED;
+            }
+
+            HTTPSRV_cgi_write(&response);
         }
 
-        HTTPSRV_cgi_write(&response);
         response.data        = "<meta http-equiv=\"refresh\" content=\"0; url=ota.shtml\"></head><body></body></html>";
         response.data_length = strlen(response.data);
         HTTPSRV_cgi_write(&response);
@@ -711,8 +574,7 @@ static int cgi_ota_upload(HTTPSRV_CGI_REQ_STRUCT *param)
 
 void reboot_timer_callback(TimerHandle_t timer)
 {
-    PRINTF("SystemReset\r\n");
-    vTaskDelay(100 / portTICK_PERIOD_MS);
+    PRINTF("System reset...\n");
     NVIC_SystemReset();
 }
 
@@ -743,14 +605,6 @@ static int cgi_ota_reboot(HTTPSRV_CGI_REQ_STRUCT *param)
     response.data_length = 0;
     HTTPSRV_cgi_write(&response);
 
-    if (ota_status == OTA_STATUS_UPLOADED)
-    {
-        /* There is an update waiting, instruct bootloader to test it */
-        status_t status;
-        status = bl_update_image_state(kSwapType_ReadyForTest);
-        PRINTF("update_image_state(%i): %i\r\n", kSwapType_ReadyForTest, status);
-    }
-
     if (reboot_timer == NULL)
     {
         /* Actual reboot is delayed to give the HTTP server a chance to send the content generated by CGI and gracefully
@@ -765,6 +619,39 @@ static int cgi_ota_reboot(HTTPSRV_CGI_REQ_STRUCT *param)
 /* Common Gateway Interface callback for accepting the update. */
 static int cgi_ota_accept(HTTPSRV_CGI_REQ_STRUCT *param)
 {
+    int ret;
+    int image;
+    char buffer[128];
+    status_t status;
+
+    PRINTF("Accept query: %s\n", param->query_string);
+
+    ret = cgi_get_varval(param->query_string, "image_accept", buffer, sizeof(buffer));
+    if (!ret)
+    {
+        PRINTF("Failed to parse 'image_accept' attribute in GET request string\n");
+        return 0;
+    }
+
+    image = atoi(buffer);
+    if (image < 0 || image > MCUBOOT_IMAGE_NUMBER)
+    {
+        PRINTF("Unexpected image number %d\n", image);
+        return 0;
+    }
+
+    /* Set image as confirmed */
+
+    status = bl_update_image_state(image, kSwapType_Permanent);
+    if (status != kStatus_Success)
+    {
+        PRINTF("FAILED to accept image (ret=%d)\n", status);
+        return 0;
+    }
+
+    PRINTF("boot_set_confirmed_multi(%d): %d\n", image, ret);
+    ota_status = OTA_STATUS_NONE;
+
     HTTPSRV_CGI_RES_STRUCT response = {0};
     response.ses_handle             = param->ses_handle;
     response.status_code            = HTTPSRV_CODE_OK;
@@ -785,21 +672,72 @@ static int cgi_ota_accept(HTTPSRV_CGI_REQ_STRUCT *param)
     response.data_length = 0;
     HTTPSRV_cgi_write(&response);
 
-    if (1 || ota_status == OTA_STATUS_TESTING)
-    {
-        /* There is an update under test, instruct bootloader to make it permanent */
-        status_t status;
-        status = bl_update_image_state(kSwapType_Permanent);
-        PRINTF("update_image_state(%i): %i\r\n", kSwapType_Permanent, status);
-        ota_status = OTA_STATUS_NONE;
-    }
-
     return (response.content_length);
 }
 
 #if HTTPSRV_CFG_MBEDTLS_ENABLE
 static HTTPSRV_TLS_PARAM_STRUCT tls_params;
 #endif
+
+static int32_t mcuboot_image_size_sanity_check(const uint8_t *data, uint32_t size)
+{
+    struct image_header *ih;
+    struct image_tlv_info *it;
+    uint32_t decl_size;
+    uint32_t tlv_size;
+
+    ih = (struct image_header *)data;
+
+    /* do we have at least the header */
+    if (size < sizeof(struct image_header))
+    {
+        return 0;
+    }
+
+    /* check magic number */
+    if (ih->ih_magic != IMAGE_MAGIC)
+    {
+        return 0;
+    }
+
+    /* check that we have at least the amount of data declared by the header */
+    decl_size = ih->ih_img_size + ih->ih_hdr_size + ih->ih_protect_tlv_size;
+    if (size < decl_size)
+    {
+        return 0;
+    }
+
+    /* check protected TLVs if any */
+    if (ih->ih_protect_tlv_size > 0)
+    {
+        if (ih->ih_protect_tlv_size < sizeof(struct image_tlv_info))
+        {
+            return 0;
+        }
+        it = (struct image_tlv_info *)(data + ih->ih_img_size + ih->ih_hdr_size);
+        if ((it->it_magic != IMAGE_TLV_PROT_INFO_MAGIC) || (it->it_tlv_tot != ih->ih_protect_tlv_size))
+        {
+            return 0;
+        }
+    }
+
+    /* check for optional TLVs following the image as declared by the header */
+    tlv_size = size - decl_size;
+    if (tlv_size > 0)
+    {
+        if (tlv_size < sizeof(struct image_tlv_info))
+        {
+            return 0;
+        }
+        it = (struct image_tlv_info *)(data + decl_size);
+        if ((it->it_magic != IMAGE_TLV_INFO_MAGIC) || (it->it_tlv_tot != tlv_size))
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
 
 /*!
  * @brief Initializes server.
@@ -849,6 +787,25 @@ static void main_thread(void *arg)
 
     initNetwork();
 
+    /* determine if there is any image in TEST state */
+    for (int image = 0; image < MCUBOOT_IMAGE_NUMBER; image++)
+    {
+        status_t status;
+        uint32_t imgstate;
+
+        status = bl_get_image_state(image, &imgstate);
+        if (status != kStatus_Success)
+        {
+            PRINTF("Failed to get state of image %u (ret %d)", image, status);
+        }
+
+        if (imgstate == kSwapType_Testing)
+        {
+            ota_status = OTA_STATUS_TESTING;
+            break;
+        }
+    }
+
     http_server_socket_init();
 
     vTaskDelete(NULL);
@@ -857,10 +814,9 @@ static void main_thread(void *arg)
 /*!
  * @brief Main function.
  */
+
 int main(void)
 {
-    uint32_t state;
-
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
@@ -875,10 +831,7 @@ int main(void)
 
 #if BOARD_NETWORK_USE_100M_ENET_PORT
     BOARD_InitEnetPins();
-    GPIO_PinInit(GPIO9, 11, &gpio_config);
     GPIO_PinInit(GPIO12, 12, &gpio_config);
-    /* Pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO9, 11, 1);
     GPIO_WritePinOutput(GPIO12, 12, 0);
     SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
     GPIO_WritePinOutput(GPIO12, 12, 1);
@@ -896,23 +849,13 @@ int main(void)
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
 #endif
+
+    MDIO_Init();
+    g_phy_resource.read  = MDIO_Read;
+    g_phy_resource.write = MDIO_Write;
     CRYPTO_InitHardware();
 
     mflash_drv_init();
-
-    /* Query bootloader for state */
-    if (bl_get_image_state(&state) != kStatus_Success)
-    {
-        /* Error retrieving status, the bootloader might not be installed correctly */
-        ota_status = OTA_STATUS_BOOTLOADER_ERROR;
-    }
-    else if (state == kSwapType_Testing)
-    {
-        /* Device is executing in test mode */
-        ota_status = OTA_STATUS_TESTING;
-    }
-
-    PRINTF("Build " __DATE__ " " __TIME__ "\r\n");
 
     /* create server thread in RTOS */
     if (sys_thread_new("main", main_thread, NULL, HTTPD_STACKSIZE, HTTPD_PRIORITY) == NULL)

@@ -16,7 +16,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_adapter_uart.h"
-#include "controller.h"
+#include "controller_hci_uart.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "fsl_lpuart_edma.h"
@@ -255,7 +255,7 @@ int main(void)
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
     CRYPTO_InitHardware();
 #endif /* CONFIG_BT_SMP */
-
+    (void)memset(&timerConfig, 0, sizeof(timer_config_t));
     timerConfig.instance    = 1;
     timerConfig.srcClock_Hz = CLOCK_GetRootClockFreq(kCLOCK_Root_Bus);
     status                  = (osa_status_t)TM_Init(&timerConfig);
@@ -272,17 +272,4 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
-}
-
-void *pvPortCalloc(size_t xNum, size_t xSize)
-{
-    void *pvReturn;
-
-    pvReturn = pvPortMalloc(xNum * xSize);
-    if (pvReturn != NULL)
-    {
-        memset(pvReturn, 0x00, xNum * xSize);
-    }
-
-    return pvReturn;
 }

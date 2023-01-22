@@ -54,9 +54,9 @@ NV_STORAGE_START_ADDRESS = NVM_AREA_START;
 /*** NVM Configuration End ***/
 
 /*** littleFS configuration Start ***/
-LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
-LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
-LITTLEFS_STORAGE_MAX_SECTORS = (0x08FBFFFF - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE;
+EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (0x08FBFFFF - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
 /*** littleFS configuration End ***/
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x1000;
@@ -161,6 +161,15 @@ SECTIONS
     _settings_handler_static_list_start = .;
     KEEP(*(SORT(._settings_handler_static.static.*)))
     _settings_handler_static_list_end = .;
+    . = ALIGN(4);
+  } > m_text
+
+  ._bt_conn_cb :
+  {
+    . = ALIGN(4);
+    _bt_conn_cb_list_start = .;
+    KEEP(*(SORT(._bt_conn_cb.static.*)))
+    _bt_conn_cb_list_end = .;
     . = ALIGN(4);
   } > m_text
 

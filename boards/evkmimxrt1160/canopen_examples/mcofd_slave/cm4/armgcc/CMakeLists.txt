@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(mcofd_slave_cm4)
 
+set(MCUX_BUILD_TYPES debug release sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME mcofd_slave_cm4.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -58,26 +64,25 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../mco_config/EDS-FD
     ${ProjDirPath}/../mco_config
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../..
+    ${SdkRootDirPath}/boards/evkmimxrt1160/canopen_examples
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../middleware/canopen/mco
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm4
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware/canopen/mco
+    ${SdkRootDirPath}/devices/MIMXRT1166
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1166/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers/cm4
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -117,8 +122,6 @@ include(driver_dcdc_soc_MIMXRT1166_cm4)
 
 include(driver_cache_lmem_MIMXRT1166_cm4)
 
-include(component_silicon_id_MIMXRT1166_cm4)
-
 include(driver_anatop_ai_MIMXRT1166_cm4)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm4)
@@ -128,15 +131,13 @@ include(utilities_misc_utilities_MIMXRT1166_cm4)
 include(device_MIMXRT1166_system_MIMXRT1166_cm4)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_slave/libMCOFD_IMXRT11xx_SDK_CM4.a)

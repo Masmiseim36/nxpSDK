@@ -369,6 +369,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
           <state>$PROJ_DIR$/../../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl</state>
@@ -380,7 +381,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
@@ -1477,6 +1477,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
           <state>$PROJ_DIR$/../../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl</state>
@@ -1488,7 +1489,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
@@ -2270,6 +2270,12 @@
     <file>
       <name>$PROJ_DIR$/../lv_conf.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../lvgl_demo_utils.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../lvgl_demo_utils.c</name>
+    </file>
   </group>
   <group>
     <name>lvgl</name>
@@ -2433,6 +2439,18 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.c</name>
           </file>
           <file>
@@ -2496,6 +2514,18 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/lv_img_decoder.h</name>
           </file>
           <group>
+            <name>arm2d</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/arm2d/lv_gpu_arm2d.h</name>
+            </file>
+          </group>
+          <group>
+            <name>swm341_dma2d</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/swm341_dma2d/lv_gpu_swm341_dma2d.h</name>
+            </file>
+          </group>
+          <group>
             <name>nxp</name>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</name>
@@ -2537,6 +2567,12 @@
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</name>
@@ -2670,6 +2706,12 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_transform.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_layer.c</name>
             </file>
           </group>
         </group>
@@ -3148,10 +3190,10 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</name>
               </file>
             </group>
             <group>
@@ -3227,6 +3269,42 @@
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</name>
+              </file>
+            </group>
+            <group>
+              <name>fragment</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</name>
+              </file>
+            </group>
+            <group>
+              <name>ime</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.c</name>
+              </file>
+            </group>
+            <group>
+              <name>imgfont</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.c</name>
+              </file>
+            </group>
+            <group>
+              <name>msg</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.c</name>
               </file>
             </group>
           </group>
@@ -3618,6 +3696,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -3665,15 +3749,6 @@
         <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>startup</name>
@@ -3699,19 +3774,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

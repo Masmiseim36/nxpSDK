@@ -89,7 +89,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-Wno-unused-function -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -233,6 +233,15 @@
     <source path="." project_relative_path="board" type="c_include">
       <files mask="pin_mux.h"/>
     </source>
+    <source path="../../../../middleware/eiq/deepviewrt/boards/evkmimxrt1170/camera_label_image" project_relative_path="MIMXRT1176/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf"/>
+    </source>
+    <source path="../../../../devices/MIMXRT1176/iar" project_relative_path="MIMXRT1176/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf"/>
+    </source>
+    <source path="../../../../middleware/eiq/deepviewrt/boards/evkmimxrt1170/camera_label_image" project_relative_path="MIMXRT1176/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.ld"/>
+    </source>
     <source path="../../../../middleware/eiq/common" project_relative_path="source" type="c_include">
       <files mask="timer.h"/>
     </source>
@@ -260,15 +269,6 @@
     </source>
     <source path="mdk" project_relative_path="board" type="src" toolchain="mdk">
       <files mask="retarget.c"/>
-    </source>
-    <source path="mdk" project_relative_path="MIMXRT1176/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf"/>
-    </source>
-    <source path="iar" project_relative_path="MIMXRT1176/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf"/>
-    </source>
-    <source path="armgcc" project_relative_path="MIMXRT1176/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.ld"/>
     </source>
     <source path="mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1170_flexspi_nor_sdram.ini"/>

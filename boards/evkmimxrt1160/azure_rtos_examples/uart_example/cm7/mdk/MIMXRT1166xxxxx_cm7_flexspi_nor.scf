@@ -109,6 +109,12 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 #endif
   RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
     .ANY (+RW +ZI)
+
+    /* Explicitly place flash operation functions in RAM. */
+    mflash_drv.o (+RO +RW +ZI)
+    fsl_flexspi.o (+RO +RW +ZI)
+    fsl_cache.o (+RO +RW +ZI)
+
     * (RamFunction)
     * (NonCacheable.init)
     * (*NonCacheable)

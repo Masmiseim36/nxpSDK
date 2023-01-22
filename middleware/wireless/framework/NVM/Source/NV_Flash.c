@@ -11,21 +11,17 @@
 
 #include "EmbeddedTypes.h"
 #include "NV_Flash.h"
-#if (!defined(NVM_NO_COMPONNET) || (NVM_NO_COMPONNET == 0))
-#include "fsl_component_timer_manager.h"
-#include "fsl_component_mem_manager.h"
-#include "fsl_component_messaging.h"
-#include "RNG_Interface.h"
-#endif
 #include "fsl_adapter_flash.h"
+#include "FunctionLib.h"
+#include "fsl_os_abstraction.h"
+
+#if gUnmirroredFeatureSet_d
+#include "fsl_component_mem_manager.h"
+#endif
+
 #if (gNvUseFlexNVM_d == TRUE)
 #include "fsl_adapter_reset.h"
 #endif /* gNvUseFlexNVM_d == TRUE */
-
-
-#include "FunctionLib.h"
-
-#include "fsl_os_abstraction.h"
 
 #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && (gNvmEnableFSCIRequests_c || gNvmEnableFSCIMonitoring_c))
 #include "NV_FsciCommands.h"
@@ -1065,6 +1061,8 @@ OSA_MUTEX_HANDLE_DEFINE(mNVMMutexId);
  */
 static osa_task_handle_t mNvIdleTaskId = NULL;
 
+
+
 /*
  * Name: eraseNVMFirst
  * Description: byte used to the force the erasure of the first sector of
@@ -1075,7 +1073,7 @@ static osa_task_handle_t mNvIdleTaskId = NULL;
 #if defined ( __IAR_SYSTEMS_ICC__ )
 #pragma section = "fEraseNVM"
 #pragma location = "fEraseNVM"
-NVM_STATIC const uint8_t eraseNVMFirst[8]={0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+NVM_STATIC const uint32_t eraseNVMFirst[4]= {0xffffffff, 0xffffffff, 0xffffffff,  0xffffffff };
 
 /*
  * Name: eraseNVMSecond
@@ -1086,7 +1084,9 @@ NVM_STATIC const uint8_t eraseNVMFirst[8]={0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0
  */
 #pragma section = "sEraseNVM"
 #pragma location = "sEraseNVM"
-NVM_STATIC const uint8_t eraseNVMSecond[8]={0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+NVM_STATIC const uint32_t eraseNVMSecond[4]={0xffffffff, 0xffffffff, 0xffffffff,  0xffffffff };
+
 #endif /* __IAR_SYSTEMS_ICC__  */
 #endif /* gNvStorageIncluded_d */
 
@@ -2815,7 +2815,7 @@ NVM_STATIC bool_t NvIsRecordErased
 )
 {
     bool_t status = FALSE;
-    NVM_RecordMetaInfo_t srcMetaInfo;
+    NVM_RecordMetaInfo_t srcMetaInfo = {0};
     while(srcMetaAddress < (mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress))
     {
         (void)NvGetMetaInfo(mNvActivePageId, srcMetaAddress, &srcMetaInfo);
@@ -2848,7 +2848,7 @@ NVM_STATIC void __NvmRestoreUnmirrored
 {
     uint32_t metaInfoAddress;
     uint16_t tableEntryIdx;
-    NVM_RecordMetaInfo_t metaInfo;
+    NVM_RecordMetaInfo_t metaInfo = {0};
     uint16_t loopCnt = 0;
     uint16_t loopCnt2;
     const uint32_t erasedElement = 0xFFFFFFFFU;
@@ -3383,6 +3383,37 @@ NVM_STATIC void NvSetErasePgCmdStatus(NVM_VirtualPageID_t PageToErase, bool_t re
          }
     }
 }
+
+
+NVM_STATIC void NvPostFwUpdateMaintenance(void)
+{
+    NVM_VirtualPageID_t pageID;
+    uint32_t sect_sz = (uint32_t)((uint8_t*)NV_STORAGE_SECTOR_SIZE);
+
+    for (pageID = gFirstVirtualPage_c; pageID <= gSecondVirtualPage_c; pageID++)
+    {
+        NVM_VirtualPageProperties_t * page_props = &mNvVirtualPageProperty[pageID];
+        uint32_t p = page_props->NvRawSectorStartAddress;
+
+        if (*(uint32_t *)p == 0xffffffff)
+        {
+            /* we read 0xffffffff from the flash: it either means that it is blank / erased or written with 0xffffffff .
+             * HAL_FlashVerifyErase does not make the difference!
+             */
+            for (uint8_t i = 0; i < page_props->NvRawSectorsCount; i++)
+            {
+                /* Check if sector requires an erase */
+                if (HAL_FlashVerifyErase(p, sect_sz,  kHAL_Flash_MarginValueNormal) != kStatus_HAL_Flash_Success)
+                {
+                    HAL_FlashEraseSector(p, sect_sz);
+                }
+                p += sect_sz;
+            }
+          }
+    }
+}
+
+
 /******************************************************************************
  * Name: NvInitStorageSystem
  * Description: Initialize the storage system, retrieve the active page and
@@ -3402,6 +3433,8 @@ NVM_STATIC void NvInitStorageSystem
     uint32_t secondPageCounterBottomValue;
     uint8_t location_offset = (read_legacy_location ? gNvLegacyOffset_c : 0u);
 
+    NvPostFwUpdateMaintenance();
+
     /* read both pages counter values */
     NV_FlashRead((uint8_t*)mNvVirtualPageProperty[gFirstVirtualPage_c].NvRawSectorStartAddress, (uint8_t*)&value,
                  sizeof(value));
@@ -3416,6 +3449,7 @@ NVM_STATIC void NvInitStorageSystem
     NV_FlashRead((uint8_t*)mNvVirtualPageProperty[gSecondVirtualPage_c].NvRawSectorEndAddress - sizeof(NVM_TableInfo_t) + 1u + location_offset,
                 (uint8_t*)&value, sizeof(value));
     secondPageCounterBottomValue = value;
+
 
     /* get the active page */
     if((firstPageCounterTopValue == firstPageCounterBottomValue) && (gPageCounterMaxValue_c != firstPageCounterTopValue)) /* first page is valid */
@@ -3916,12 +3950,6 @@ NVM_STATIC NVM_Status_t NvInternalCopy
             /* copy from FLASH to cache buffer */
             NV_FlashRead((uint8_t*)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + srcMetaInfo->fields.NvmRecordOffset + innerOffset,
                          (uint8_t*)&cacheBuffer[0], size);
-            /* write to destination page */
-            if(kStatus_HAL_Flash_Success == HAL_FlashProgramUnaligned(dstAddress, (uint16_t)size, cacheBuffer))
-            {
-                break;
-            }
-            status = gNVM_RecordWriteError_c;
             break;
         }
     }
@@ -3948,8 +3976,6 @@ NVM_STATIC NVM_Status_t NvInternalCopy
                 /* compute the loop end */
                 loopEnd = (uint16_t)PGM_SIZE_BYTE - misalignedBytes;
 
-                /* read from destination page to cache buffer */
-                NV_FlashRead((uint8_t*)dstAddress, (uint8_t*)&cacheBuffer[0], PGM_SIZE_BYTE);
 
                 /* update with data from RAM */
                 for(loopIdx = 0; loopIdx < loopEnd; loopIdx++)
@@ -3986,7 +4012,19 @@ NVM_STATIC NVM_Status_t NvInternalCopy
                 }
             }
         }
+        else
+        {
+            /* write to destination page */
+            if(kStatus_HAL_Flash_Success == HAL_FlashProgramUnaligned(dstAddress, (uint16_t)size, cacheBuffer))
+            {
+            }
+            else
+            {
 
+                status = gNVM_RecordWriteError_c;
+            }
+
+        }
         if(gNVM_OK_c == status)
         {
             /* write the associated record meta information */
@@ -4013,7 +4051,7 @@ NVM_STATIC uint32_t NvGetTblEntryMetaAddrFromId
     uint16_t dataEntryId
 )
 {
-    NVM_RecordMetaInfo_t metaInfo;
+    NVM_RecordMetaInfo_t metaInfo = {0};
     uint32_t status = 0U;
 
     while(searchStartAddress >= (mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + gNvFirstMetaOffset_c))
@@ -4050,7 +4088,7 @@ NVM_STATIC uint32_t NvGetTblEntryMetaAddrFromId
 NVM_STATIC void NvInternalRecordsUpdate(uint32_t srcMetaAddr,uint16_t srcTblEntryIdx, NVM_RecordMetaInfo_t *ownerRecordMetaInfo)
 {
 
-    NVM_RecordMetaInfo_t metaInfo;
+    NVM_RecordMetaInfo_t metaInfo = {0};
     uint32_t metaAddress = srcMetaAddr;
 
     /* clear the records offsets buffer */
@@ -4519,7 +4557,7 @@ NVM_STATIC NVM_Status_t NvCopyPage
 {
     /* source page related variables */
     uint32_t srcMetaAddress;
-    NVM_RecordMetaInfo_t srcMetaInfo;
+    NVM_RecordMetaInfo_t srcMetaInfo = {0};
     uint16_t srcTableEntryIdx;
 
     /* destination page related variables */
@@ -5198,7 +5236,7 @@ NVM_STATIC NVM_Status_t NvGetTableEntryIndexFromDataPtr
 NVM_STATIC bool_t NvMetaAndRecordAddressRegulate(uint32_t pageFreeSpace, uint32_t totalRecordSize, uint32_t realRecordSize,
                                              uint32_t *metaInfoAddress, uint32_t *newRecordAddress)
 {
-    NVM_RecordMetaInfo_t metaInfo;
+    NVM_RecordMetaInfo_t metaInfo = {0};
     uint32_t lastRecordAddress;
     bool_t doWrite = FALSE;
 
@@ -5638,7 +5676,7 @@ NVM_STATIC NVM_Status_t NvRestoreData
 {
     NVM_Status_t status = gNVM_MetaNotFound_c;
     #if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-    NVM_RecordMetaInfo_t metaInfo;
+    NVM_RecordMetaInfo_t metaInfo = {0};
     uint32_t metaInfoAddress;
     #if gNvFragmentation_Enabled_d
     uint16_t cnt;
@@ -6676,14 +6714,16 @@ void NvIdle
 )
 {
 #if gNvStorageIncluded_d
-    if(mNvIdleTaskId == NULL)
+    if(mNvModuleInitialized == TRUE)
     {
-        mNvIdleTaskId = OSA_TaskGetCurrentHandle();
+        if(mNvIdleTaskId == NULL)
+        {
+            mNvIdleTaskId = OSA_TaskGetCurrentHandle();
+        }
+        (void)OSA_MutexLock(mNVMMutexId, osaWaitForever_c);
+        __NvIdle();
+        (void)OSA_MutexUnlock(mNVMMutexId);
     }
-    (void)OSA_MutexLock(mNVMMutexId, osaWaitForever_c);
-    __NvIdle();
-    (void)OSA_MutexUnlock(mNVMMutexId);
-
 #endif
 }/* NvIdle() */
 /******************************************************************************

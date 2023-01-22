@@ -16,18 +16,19 @@
     <definition extID="middleware.sdmmc.sd.MIMXRT1176"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1176"/>
     <definition extID="middleware.sdmmc.host.usdhc.MIMXRT1176"/>
+    <definition extID="middleware.fatfs.MIMXRT1176"/>
+    <definition extID="middleware.fatfs.sd.MIMXRT1176"/>
     <definition extID="middleware.sdmmc.host.usdhc.freertos.MIMXRT1176"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1176"/>
-    <definition extID="middleware.vit.cm7_RT1170.MIMXRT1176"/>
+    <definition extID="middleware.vit.cm7.MIMXRT1176"/>
     <definition extID="CMSIS_DSP_Source.MIMXRT1176"/>
+    <definition extID="middleware.maestro_framework.opus.MIMXRT1176"/>
     <definition extID="platform.drivers.pdm_edma.MIMXRT1176"/>
     <definition extID="component.igpio_adapter.MIMXRT1176"/>
+    <definition extID="middleware.voice_seeker.cm7.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1176"/>
     <definition extID="middleware.maestro_framework.MIMXRT1176"/>
     <definition extID="utility.shell.MIMXRT1176"/>
-    <definition extID="middleware.fatfs.MIMXRT1176"/>
-    <definition extID="middleware.fatfs.sd.MIMXRT1176"/>
-    <definition extID="middleware.maestro_framework.opus.MIMXRT1176"/>
     <definition extID="platform.drivers.clock.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
     <definition extID="utility.debug_console.MIMXRT1176"/>
@@ -44,7 +45,6 @@
     <definition extID="platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
-    <definition extID="component.silicon_id.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.drivers.memory.MIMXRT1176"/>
@@ -54,6 +54,7 @@
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1176"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1176"/>
     <definition extID="platform.drivers.pdm.MIMXRT1176"/>
+    <definition extID="middleware.voice_seeker.rdsp_utilities_public.MIMXRT1176"/>
     <definition extID="middleware.maestro_framework.doc.MIMXRT1176"/>
     <definition extID="middleware.maestro_framework.streamer.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
@@ -66,7 +67,7 @@
     <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="mdk"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_maestro_record" name="maestro_record" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.lpi2c.MIMXRT1176 platform.drivers.sai.MIMXRT1176 driver.wm8960.MIMXRT1176 driver.codec.MIMXRT1176 platform.drivers.common.MIMXRT1176 component.wm8960_adapter.MIMXRT1176 component.codec_i2c.MIMXRT1176 component.lpi2c_adapter.MIMXRT1176 platform.drivers.sai_edma.MIMXRT1176 platform.drivers.dmamux.MIMXRT1176 platform.drivers.edma.MIMXRT1176 middleware.sdmmc.sd.MIMXRT1176 middleware.sdmmc.common.MIMXRT1176 middleware.sdmmc.host.usdhc.MIMXRT1176 middleware.sdmmc.host.usdhc.freertos.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 middleware.vit.cm7_RT1170.MIMXRT1176 CMSIS_DSP_Source.MIMXRT1176 platform.drivers.pdm_edma.MIMXRT1176 component.igpio_adapter.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 middleware.maestro_framework.MIMXRT1176 utility.shell.MIMXRT1176 middleware.fatfs.MIMXRT1176 middleware.fatfs.sd.MIMXRT1176 middleware.maestro_framework.opus.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 utility.debug_console.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 component.silicon_id.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.memory.MIMXRT1176 middleware.sdmmc.osa.freertos.MIMXRT1176 component.osa_free_rtos.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 platform.drivers.usdhc.MIMXRT1176 platform.drivers.pdm.MIMXRT1176 middleware.maestro_framework.doc.MIMXRT1176 middleware.maestro_framework.streamer.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="audio_examples">
+  <example id="evkmimxrt1170_maestro_record" name="maestro_record" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.lpi2c.MIMXRT1176 platform.drivers.sai.MIMXRT1176 driver.wm8960.MIMXRT1176 driver.codec.MIMXRT1176 platform.drivers.common.MIMXRT1176 component.wm8960_adapter.MIMXRT1176 component.codec_i2c.MIMXRT1176 component.lpi2c_adapter.MIMXRT1176 platform.drivers.sai_edma.MIMXRT1176 platform.drivers.dmamux.MIMXRT1176 platform.drivers.edma.MIMXRT1176 middleware.sdmmc.sd.MIMXRT1176 middleware.sdmmc.common.MIMXRT1176 middleware.sdmmc.host.usdhc.MIMXRT1176 middleware.fatfs.MIMXRT1176 middleware.fatfs.sd.MIMXRT1176 middleware.sdmmc.host.usdhc.freertos.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 middleware.vit.cm7.MIMXRT1176 CMSIS_DSP_Source.MIMXRT1176 middleware.maestro_framework.opus.MIMXRT1176 platform.drivers.pdm_edma.MIMXRT1176 component.igpio_adapter.MIMXRT1176 middleware.voice_seeker.cm7.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 middleware.maestro_framework.MIMXRT1176 utility.shell.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 utility.debug_console.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.memory.MIMXRT1176 middleware.sdmmc.osa.freertos.MIMXRT1176 component.osa_free_rtos.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 platform.drivers.usdhc.MIMXRT1176 platform.drivers.pdm.MIMXRT1176 middleware.voice_seeker.rdsp_utilities_public.MIMXRT1176 middleware.maestro_framework.doc.MIMXRT1176 middleware.maestro_framework.streamer.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="audio_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -83,12 +84,13 @@
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>VOICE_SEEKER_PROC</value>
           <value>VIT_PROC</value>
           <value>CPU_MIMXRT1176DVMAA_cm7</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>STREAMER_ENABLE_EAP</value>
+          <value>STREAMER_ENABLE_AUDIO_PROC</value>
           <value>STREAMER_ENABLE_VIT_SINK</value>
           <value>OPUS_ENCODE</value>
           <value>STREAMER_ENABLE_ENCODER</value>
@@ -103,8 +105,8 @@
           <value>SD_ENABLED</value>
           <value>DISABLEFLOAT16</value>
           <value>SAI_XFER_QUEUE_SIZE=2</value>
-          <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>HAVE_CONFIG_H</value>
+          <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_OS_FREE_RTOS</value>
           <value>CASCFG_PLATFORM_FREERTOS</value>
@@ -230,6 +232,12 @@
     </source>
     <source path=".." project_relative_path="board" type="c_include">
       <files mask="pin_mux.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="src" toolchain="mcuxpresso">
+      <files mask="voice_seeker.c"/>
+    </source>
+    <source path=".." project_relative_path="source" type="c_include" toolchain="mcuxpresso">
+      <files mask="voice_seeker.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="streamer_pcm.c"/>

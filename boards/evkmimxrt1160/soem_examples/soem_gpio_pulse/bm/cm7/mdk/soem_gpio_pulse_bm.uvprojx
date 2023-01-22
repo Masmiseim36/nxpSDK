@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -451,48 +451,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_gpt.c</FileName>
               <FileType>1</FileType>
@@ -589,6 +559,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -598,20 +573,25 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -966,28 +946,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -1002,16 +962,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1368,7 +1318,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1485,48 +1435,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_gpt.c</FileName>
               <FileType>1</FileType>
@@ -1623,6 +1543,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -1632,20 +1557,25 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2000,28 +1930,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -2036,16 +1946,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2402,7 +2302,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2519,48 +2419,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_gpt.c</FileName>
               <FileType>1</FileType>
@@ -2657,6 +2527,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -2666,20 +2541,25 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3034,28 +2914,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -3070,16 +2930,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3436,7 +3286,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3553,48 +3403,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_gpt.c</FileName>
               <FileType>1</FileType>
@@ -3691,6 +3511,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -3700,20 +3525,25 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4068,28 +3898,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -4104,16 +3914,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

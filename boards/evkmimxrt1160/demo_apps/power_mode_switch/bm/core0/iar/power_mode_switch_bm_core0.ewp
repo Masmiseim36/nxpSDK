@@ -358,7 +358,6 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1449,7 +1448,6 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2536,7 +2534,6 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3627,7 +3624,6 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4581,15 +4577,6 @@
         <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>startup</name>
@@ -4615,19 +4602,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

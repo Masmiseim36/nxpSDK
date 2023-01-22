@@ -24,14 +24,20 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(mc_pmsm)
 
+set(MCUX_BUILD_TYPES debug release sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME mc_pmsm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp"
+"${SdkRootDirPath}/middleware/motor_control/freemaster/pmsm_float_enc.pmpx"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../m1_pmsm_appconfig.h"
 "${ProjDirPath}/../m2_pmsm_appconfig.h"
@@ -52,24 +58,24 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../../middleware/rtcesl
-    ${ProjDirPath}/../../../../../../../middleware/motor_control
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/xip
-    ${ProjDirPath}/../../../../../xip
-    ${ProjDirPath}/../../../../../../../middleware/freemaster
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../xmcd
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/middleware/rtcesl
+    ${SdkRootDirPath}/middleware/motor_control
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1176/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xip
+    ${SdkRootDirPath}/middleware/freemaster
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities/debug_console_lite
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xmcd
 )
 
 # include modules
@@ -140,15 +146,13 @@ include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_MCUX/AMCLIB/libAMCLIB.a)

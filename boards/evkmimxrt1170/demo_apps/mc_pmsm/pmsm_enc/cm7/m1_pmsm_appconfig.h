@@ -7,7 +7,7 @@
 
 /*
     * FILE NAME: ../boards/evkmimxrt1170/mc_pmsm/pmsm_enc/m1_pmsm_appconfig.h
-    * DATE: Wed Jan 12 2022, 09:02:49
+    * DATE: Mon Oct 17 2022, 07:55:20
 */
 
 /*
@@ -57,22 +57,23 @@
         "speedLoopLowerLimit": -2,
         "speedLoopSLKp": 0.003,
         "speedLoopSLKi": 0.09,
-        "speedLoopManualConstantTunning": false,
-        "speedLoopPLKp": 0.12
+        "speedLoopManualConstantTunning": false
     },
     "sensors": {
         "sensorEncPulseNumber": 1000,
         "sensorEncDir": 0,
         "sensorEncNmin": 0,
-        "sensorObsrvParSampleTime": 0.0001,
+        "sensorObsrvParSampleTime": 0.0000625,
         "sensorObsrvParF0": 100,
-        "sensorObsrvParKsi": 1
+        "sensorObsrvParKsi": 1,
+        "positionLoopPLKp": 0.12
     },
     "sensorless": {
         "sensorlessBemfObsrvF0": 300,
         "sensorlessBemfObsrvKsi": 1,
         "sensorlessTrackObsrvF0": 70,
         "sensorlessTrackObsrvKsi": 1,
+        "sensorlessTrackObsrvIIRSpeedCutOff": 400,
         "sensorlessStartupRamp": 5000,
         "sensorlessStartupCurrent": 0.35,
         "sensorlessMergingSpeed": 300,
@@ -88,8 +89,8 @@
 }
 */
 
-#ifndef __M1_PMSM_APPCONFIG_H
-#define __M1_PMSM_APPCONFIG_H
+#ifndef __M1_PMSM_APPCONFIG_H 
+#define __M1_PMSM_APPCONFIG_H 
 
 /* PARAMETERS*/
 #define M1_MOTOR_PP (2)
@@ -110,7 +111,7 @@
 #define M1_FREEWHEEL_DURATION (1500)
 #define M1_SCALAR_UQ_MIN (1.0F)
 #define M1_ALIGN_VOLTAGE (1.2F)
-#define M1_ALIGN_DURATION (400)
+#define M1_ALIGN_DURATION (6400)
 #define M1_U_MAX (35.1029F)
 #define M1_FREQ_MAX (146.667F)
 #define M1_N_ANGULAR_MAX (4.77465F)
@@ -134,7 +135,6 @@
 #define M1_SPEED_LOOP_LOW_LIMIT (-2.0F)
 #define M1_SPEED_PI_PROP_GAIN (0.00281883F)
 #define M1_SPEED_PI_INTEG_GAIN (0.0000283380F)
-#define M1_POS_P_PROP_GAIN FRAC16(0.12)
 #define M1_SPEED_IIR_B0 (0.0192568F)
 #define M1_SPEED_IIR_B1 (0.0192568F)
 #define M1_SPEED_IIR_A1 (0.961486F)
@@ -143,9 +143,10 @@
 #define M1_POSPE_ENC_DIRECTION (0)
 #define M1_POSPE_ENC_N_MIN (0.0F)
 #define M1_POSPE_MECH_POS_GAIN ACC32(16.384)
+#define M1_POS_P_PROP_GAIN FRAC16(0.12)
 #define M1_POSPE_KP_GAIN (1256.64F)
-#define M1_POSPE_KI_GAIN (39.4784F)
-#define M1_POSPE_INTEG_GAIN (0.0000318310F)
+#define M1_POSPE_KI_GAIN (24.6740F)
+#define M1_POSPE_INTEG_GAIN (0.0000198944F)
 /* SENSORLESS*/
 #define M1_OL_START_RAMP_INC (0.0654498F)
 #define M1_OL_START_I (0.35F)
@@ -169,5 +170,4 @@
 #define CC 4
 #define DD 2
 /* USER INPUT END */
-
 #endif /* __M1_PMSM_APPCONFIG_H */

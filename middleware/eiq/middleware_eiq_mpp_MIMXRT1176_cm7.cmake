@@ -7,7 +7,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_camera_csi_mt9m114.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_lcdif_rk043fn.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_draw.c
-    ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_evkbmimxrt1170.c
+    ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_evkmimxrt1170.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_freertos.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_graphics_pxp.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_static_image.c
@@ -22,7 +22,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/mpp/include
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/include
 )

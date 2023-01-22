@@ -45,6 +45,8 @@
     extern uint32_t SystemCoreClock;
     extern void print_string( const char * string );
     extern void vLoggingPrintf( const char *pcFormat, ... );
+extern void vLoggingPrint( const char * pcMessage );
+extern int DbgConsole_Printf( const char * fmt_s, ... );
 #endif
 
 
@@ -71,6 +73,10 @@
 #define configUSE_MALLOC_FAILED_HOOK                 1
 #define configUSE_APPLICATION_TASK_TAG               0
 #define configUSE_COUNTING_SEMAPHORES                1
+
+/* Used memory allocation (heap_x.c) */
+#define configFRTOS_MEMORY_SCHEME                    4
+
 #define configGENERATE_RUN_TIME_STATS                0
 #define configOVERRIDE_DEFAULT_TICK_CONFIGURATION    0
 #define configRECORD_STACK_HIGH_ADDRESS              1
@@ -84,6 +90,8 @@
 #define configTIMER_TASK_PRIORITY                    ( configMAX_PRIORITIES - 2 )
 #define configTIMER_QUEUE_LENGTH                     10
 #define configTIMER_TASK_STACK_DEPTH                 ( configMINIMAL_STACK_SIZE * 8 )
+
+#define configCOMMAND_INT_MAX_OUTPUT_SIZE            ( 512 )
 
 /* Set the following definitions to 1 to include the API function, or zero
  * to exclude the API function. */
@@ -109,8 +117,11 @@
 /* Map the FreeRTOS printf() to the logging task printf. */
 #define configPRINTF( x )          vLoggingPrintf x
 
+/* Non-format version thread-safe print. */
+#define configPRINT( X )    vLoggingPrint( X )
+
 /* Map the logging task's printf to the board specific output function. */
-#define configPRINT_STRING    print_string
+#define configPRINT_STRING                          DbgConsole_Printf
 
 /* Sets the length of the buffers into which logging messages are written - so
  * also defines the maximum length of each log message. */
@@ -156,15 +167,15 @@
 
 /* Prevent the assembler seeing code it doesn't understand. */
 #ifdef __ICCARM__
-	/* Logging task definitions. */
-	extern void vMainUARTPrintString( char * pcString );
+/* Logging task definitions. */
+extern void vMainUARTPrintString( char * pcString );
 
-	extern int iMainRand32( void );
+extern int iMainRand32( void );
 
-	/* Pseudo random number generator, just used by demos so does not have to be
-	 * secure.  Do not use the standard C library rand() function as it can cause
-	 * unexpected behaviour, such as calls to malloc(). */
-	#define configRAND32()    iMainRand32()
+/* Pseudo random number generator, just used by demos so does not have to be
+ * secure.  Do not use the standard C library rand() function as it can cause
+ * unexpected behaviour, such as calls to malloc(). */
+#define configRAND32()    iMainRand32()
 #endif
 
 

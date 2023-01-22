@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(azure_iot_embedded_sdk)
 
+set(MCUX_BUILD_TYPES flexspi_nor_release flexspi_nor_debug)
+
 set(MCUX_SDK_PROJECT_NAME azure_iot_embedded_sdk.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 SET(CMAKE_STATIC_LIBRARY_PREFIX "lib")
 
@@ -324,7 +330,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../azure_iot/azure-sdk-for-c/sdk/inc
     ${ProjDirPath}/../azure_iot
     ${ProjDirPath}/../azure_iot/azure_iot_security_module
@@ -337,21 +343,20 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../rtos/azure-rtos
-    ${ProjDirPath}/../../../../../../components/phy/mdio/enet
-    ${ProjDirPath}/../../../../../../components/phy/device/phyksz8081
-    ${ProjDirPath}/../../../../../../components/phy/device/phyrtl8211f
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
-    ${ProjDirPath}/../../../../../../components/phy
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/rtos/azure-rtos
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
+    ${SdkRootDirPath}/components/phy/device/phyksz8081
+    ${SdkRootDirPath}/components/phy/device/phyrtl8211f
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/devices/MIMXRT1166
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers/cm7
+    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
+    ${SdkRootDirPath}/devices/MIMXRT1166/xip
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/phy
 )
 
 # include modules
@@ -359,7 +364,7 @@ include(middleware_azure_rtos_azure_iot_MIMXRT1166_cm7)
 
 include(middleware_azure_rtos_nxd_MIMXRT1166_cm7)
 
-include(driver_mdio-enet_MIMXRT1166_cm7)
+include(driver_enet_MIMXRT1166_cm7)
 
 include(driver_phy-device-ksz8081_MIMXRT1166_cm7)
 
@@ -415,15 +420,11 @@ include(middleware_azure_rtos_tx_MIMXRT1166_cm7)
 
 include(middleware_azure_rtos_tx_template_MIMXRT1166_cm7)
 
-include(driver_mdio-common_MIMXRT1166_cm7)
+include(driver_memory_MIMXRT1166_cm7)
 
 include(driver_anatop_ai_MIMXRT1166_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
-
-include(driver_enet_MIMXRT1166_cm7)
-
-include(driver_memory_MIMXRT1166_cm7)
 
 include(driver_phy-common_MIMXRT1166_cm7)
 
@@ -432,27 +433,23 @@ include(utilities_misc_utilities_MIMXRT1166_cm7)
 include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 
 
-add_subdirectory(${ProjDirPath}/../../../../../../rtos/azure-rtos/netxduo ./CMakeFiles/libnetxduo)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ./CMakeFiles/libnetxduo)
 
-add_subdirectory(${ProjDirPath}/../../../../../../rtos/azure-rtos/filex ./CMakeFiles/libfilex)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ./CMakeFiles/libfilex)
 
-add_subdirectory(${ProjDirPath}/../../../../../../rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
+
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::netxduo")
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::filex")
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::threadx")
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

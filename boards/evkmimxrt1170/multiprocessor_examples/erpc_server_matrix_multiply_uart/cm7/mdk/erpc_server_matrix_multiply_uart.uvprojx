@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -644,9 +644,9 @@
           <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_simple_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -654,9 +654,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_server.cpp</FileName>
@@ -664,9 +664,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.cpp</FileName>
@@ -679,29 +679,29 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_codec.h</FileName>
+              <FileName>erpc_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_transport.h</FileName>
+              <FileName>erpc_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -709,14 +709,14 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_crc16.h</FileName>
+              <FileName>erpc_crc16.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_basic_codec.cpp</FileName>
@@ -739,9 +739,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_client_server_common.h</FileName>
+              <FileName>erpc_client_server_common.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_pre_post_action.h</FileName>
@@ -794,9 +794,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.cpp</FileName>
@@ -827,6 +827,16 @@
               <FileName>erpc_setup_extensions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_agnostic_example.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_undefined.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -991,28 +1001,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -1027,16 +1017,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1408,7 +1388,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1718,9 +1698,9 @@
           <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_simple_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -1728,9 +1708,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_server.cpp</FileName>
@@ -1738,9 +1718,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.cpp</FileName>
@@ -1753,29 +1733,29 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_codec.h</FileName>
+              <FileName>erpc_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_transport.h</FileName>
+              <FileName>erpc_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -1783,14 +1763,14 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_crc16.h</FileName>
+              <FileName>erpc_crc16.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_basic_codec.cpp</FileName>
@@ -1813,9 +1793,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_client_server_common.h</FileName>
+              <FileName>erpc_client_server_common.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_pre_post_action.h</FileName>
@@ -1868,9 +1848,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.cpp</FileName>
@@ -1901,6 +1881,16 @@
               <FileName>erpc_setup_extensions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_agnostic_example.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_undefined.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2065,28 +2055,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -2101,16 +2071,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2482,7 +2442,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2792,9 +2752,9 @@
           <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_simple_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -2802,9 +2762,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_server.cpp</FileName>
@@ -2812,9 +2772,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.cpp</FileName>
@@ -2827,29 +2787,29 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_codec.h</FileName>
+              <FileName>erpc_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_transport.h</FileName>
+              <FileName>erpc_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -2857,14 +2817,14 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_crc16.h</FileName>
+              <FileName>erpc_crc16.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_basic_codec.cpp</FileName>
@@ -2887,9 +2847,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_client_server_common.h</FileName>
+              <FileName>erpc_client_server_common.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_pre_post_action.h</FileName>
@@ -2942,9 +2902,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.cpp</FileName>
@@ -2975,6 +2935,16 @@
               <FileName>erpc_setup_extensions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_agnostic_example.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_undefined.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3139,28 +3109,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -3175,16 +3125,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3556,7 +3496,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3866,9 +3806,9 @@
           <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_simple_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -3876,9 +3816,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_server.cpp</FileName>
@@ -3886,9 +3826,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.cpp</FileName>
@@ -3901,29 +3841,29 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_codec.h</FileName>
+              <FileName>erpc_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_transport.h</FileName>
+              <FileName>erpc_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -3931,14 +3871,14 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_crc16.h</FileName>
+              <FileName>erpc_crc16.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_basic_codec.cpp</FileName>
@@ -3961,9 +3901,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_client_server_common.h</FileName>
+              <FileName>erpc_client_server_common.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_pre_post_action.h</FileName>
@@ -4016,9 +3956,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.cpp</FileName>
@@ -4049,6 +3989,16 @@
               <FileName>erpc_setup_extensions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_agnostic_example.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_undefined.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4213,28 +4163,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -4249,16 +4179,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4630,7 +4550,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4940,9 +4860,9 @@
           <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_simple_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -4950,9 +4870,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_server.cpp</FileName>
@@ -4960,9 +4880,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.cpp</FileName>
@@ -4975,29 +4895,29 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_codec.h</FileName>
+              <FileName>erpc_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_transport.h</FileName>
+              <FileName>erpc_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -5005,14 +4925,14 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_crc16.h</FileName>
+              <FileName>erpc_crc16.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_basic_codec.cpp</FileName>
@@ -5035,9 +4955,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_client_server_common.h</FileName>
+              <FileName>erpc_client_server_common.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_pre_post_action.h</FileName>
@@ -5090,9 +5010,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.cpp</FileName>
@@ -5123,6 +5043,16 @@
               <FileName>erpc_setup_extensions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_agnostic_example.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_undefined.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5287,28 +5217,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -5323,16 +5233,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -5704,7 +5604,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6014,9 +5914,9 @@
           <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_simple_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -6024,9 +5924,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_server.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_server.cpp</FileName>
@@ -6034,9 +5934,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.cpp</FileName>
@@ -6049,29 +5949,29 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_codec.h</FileName>
+              <FileName>erpc_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_transport.h</FileName>
+              <FileName>erpc_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -6079,14 +5979,14 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_crc16.h</FileName>
+              <FileName>erpc_crc16.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_basic_codec.cpp</FileName>
@@ -6109,9 +6009,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_client_server_common.h</FileName>
+              <FileName>erpc_client_server_common.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_pre_post_action.h</FileName>
@@ -6164,9 +6064,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.cpp</FileName>
@@ -6197,6 +6097,16 @@
               <FileName>erpc_setup_extensions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_agnostic_example.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_endianness_undefined.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6361,28 +6271,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -6397,16 +6287,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

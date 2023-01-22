@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -370,7 +370,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -491,58 +491,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_caam.c</FileName>
               <FileType>1</FileType>
@@ -649,6 +609,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -658,20 +623,35 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phyrtl8211f.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyrtl8211f.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1274,6 +1254,11 @@
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
@@ -1804,11 +1789,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1822,16 +1802,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2188,7 +2158,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2224,7 +2194,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --legacyalign --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,3912</DisabledWarnings>
+            <DisabledWarnings>6314,3912,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -2345,58 +2315,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_caam.c</FileName>
               <FileType>1</FileType>
@@ -2503,6 +2433,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -2512,20 +2447,35 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phyrtl8211f.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyrtl8211f.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3128,6 +3078,11 @@
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
@@ -3658,11 +3613,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3676,16 +3626,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4042,7 +3982,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4078,7 +4018,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -4199,58 +4139,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_caam.c</FileName>
               <FileType>1</FileType>
@@ -4357,6 +4257,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -4366,20 +4271,35 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phyrtl8211f.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyrtl8211f.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4982,6 +4902,11 @@
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
@@ -5512,11 +5437,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -5530,16 +5450,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -5896,7 +5806,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5932,7 +5842,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --legacyalign --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,3912</DisabledWarnings>
+            <DisabledWarnings>6314,3912,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -6053,58 +5963,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyrtl8211f.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_caam.c</FileName>
               <FileType>1</FileType>
@@ -6211,6 +6081,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -6220,20 +6095,35 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>fsl_phyksz8081.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>fsl_phyrtl8211f.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyrtl8211f.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6836,6 +6726,11 @@
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
@@ -7366,11 +7261,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -7384,16 +7274,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

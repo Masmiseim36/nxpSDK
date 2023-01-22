@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(erpc_two_way_rpc_rpmsg_rtos_cm4)
 
+set(MCUX_BUILD_TYPES debug release)
+
 set(MCUX_SDK_PROJECT_NAME erpc_two_way_rpc_rpmsg_rtos_cm4.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -35,46 +41,45 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../erpc_common/erpc_error_handler.h"
-"${ProjDirPath}/../../../erpc_common/erpc_error_handler.cpp"
-"${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc.erpc"
-"${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface.h"
-"${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_client.cpp"
-"${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface.h"
-"${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_server.h"
-"${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_server.cpp"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_error_handler.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_error_handler.cpp"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc.erpc"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_client.cpp"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_server.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_server.cpp"
 "${ProjDirPath}/../main_core1.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../rpmsg_config.h"
-"${ProjDirPath}/../../erpc_config.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_two_way_rpc_rpmsg_rtos/rpmsg_config.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_two_way_rpc_rpmsg_rtos/erpc_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm4side.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../erpc_common
-    ${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service
-    ${ProjDirPath}/../..
+    ${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common
+    ${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_common/erpc_two_way_rpc/service
+    ${SdkRootDirPath}/boards/evkmimxrt1170/multicore_examples/erpc_two_way_rpc_rpmsg_rtos
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../middleware/multicore
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm4
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/middleware/multicore
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1176/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xip
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm4
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -138,8 +143,6 @@ include(driver_dcdc_soc_MIMXRT1176_cm4)
 
 include(driver_cache_lmem_MIMXRT1176_cm4)
 
-include(component_silicon_id_MIMXRT1176_cm4)
-
 include(driver_mu_MIMXRT1176_cm4)
 
 include(driver_anatop_ai_MIMXRT1176_cm4)
@@ -155,15 +158,13 @@ include(utilities_misc_utilities_MIMXRT1176_cm4)
 include(device_MIMXRT1176_system_MIMXRT1176_cm4)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

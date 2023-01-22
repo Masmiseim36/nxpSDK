@@ -15,12 +15,15 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_adapter_uart.h"
-#include "controller.h"
+#include "controller_hci_uart.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "fsl_lpuart_edma.h"
 #include "fsl_dmamux.h"
 #include "usb_phy.h"
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+#include "ksdk_mbedtls.h"
+#endif /* CONFIG_BT_SMP */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -48,7 +51,8 @@ extern void app_audio_streamer_task_signal(void);
  * Code
  ******************************************************************************/
 
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
+#if (defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_M2))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -92,6 +96,29 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 #endif
     config->enableRxRTS = 1u;
     config->enableTxCTS = 1u;
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 1U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 1U;
+    config->rx_request       = kDmaRequestMuxLPUART7Rx;
+    config->tx_request       = kDmaRequestMuxLPUART7Tx;
+#endif
     return 0;
 }
 #elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
@@ -162,9 +189,9 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_88W8987_BOARD_AW_CM358MA)
+#if (defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2))
     BOARD_InitM2UARTPins();
-
 #else
     BOARD_InitArduinoUARTPins();
 #endif
@@ -178,6 +205,9 @@ int main(void)
     EDMA_GetDefaultConfig(&config);
     EDMA_Init(dmaBases[1], &config);
 #endif
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+    CRYPTO_InitHardware();
+#endif /* CONFIG_BT_SMP */
 
     if (xTaskCreate(app_a2dp_source_task, "app_a2dp_source_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {

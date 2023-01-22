@@ -474,6 +474,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_puf.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
@@ -1014,6 +1019,11 @@
               <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/flexspi_nand_config_MIMXRT1176.c</FilePath>
             </File>
             <File>
+              <FileName>flexspi_nor_config_MIMXRT1176.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/flexspi_nor_config_MIMXRT1176.c</FilePath>
+            </File>
+            <File>
               <FileName>fusemap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/fusemap.h</FilePath>
@@ -1394,11 +1404,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1412,16 +1417,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

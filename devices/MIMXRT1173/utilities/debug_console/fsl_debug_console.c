@@ -272,7 +272,7 @@ serial_handle_t g_serialHandle; /*!< serial manager handle */
  * @param[in] len length of the character
  *
  */
-#if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
+#if SDK_DEBUGCONSOLE
 static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char dbgVal, int len);
 #endif
 
@@ -728,7 +728,7 @@ int DbgConsole_ReadCharacter(uint8_t *ch)
     return ret;
 }
 
-#if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
+#if SDK_DEBUGCONSOLE
 static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char dbgVal, int len)
 {
     int i = 0;

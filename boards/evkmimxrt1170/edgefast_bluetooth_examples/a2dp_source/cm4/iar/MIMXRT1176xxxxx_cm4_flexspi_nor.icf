@@ -98,9 +98,9 @@ if (isdefinedsymbol(gUseNVMLink_d))
 /*** NVM Configuration End ***/
 
 /*** littleFS configuration Start ***/
-define exported symbol LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
-define exported symbol LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
-define exported symbol LITTLEFS_STORAGE_MAX_SECTORS = (0x08FBFFFF - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (0x08FBFFFF - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
 /*** littleFS configuration End ***/
 
 /* Sizes */
@@ -152,11 +152,20 @@ place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boo
 place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
 
 keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data,section NVM_ADAPTER_TABLE };
-keep { section .flash_area_list, section ._net_buf_pool, section ._k_mem_slab, section ._bt*, section ._settings* };
+keep { section .flash_area_list, section ._net_buf_pool*, section ._k_mem_slab*, section ._bt*, section ._settings* };
 
-place in TEXT_region                        { readonly,readonly section ._bt* };
+define block ._bt_gatt_service_static with fixed order { readonly section ._bt_gatt_service_static*};
+define block ._bt_settings_static with fixed order { readonly section ._bt_settings*};
+define block ._bt_conn_cb with fixed order { readonly section ._bt_conn_cb*};
+define block ._bt_l2cap_fixed_chan with fixed order { readonly section ._bt_l2cap_fixed_chan*};
+define block ._bt_l2cap_br_fixed_chan with fixed order { readonly section ._bt_l2cap_br_fixed_chan*};
+define block ._settings_handler_static with fixed order { readonly section ._settings_handler_static*};
+define block ._k_mem_slab with fixed order { readwrite section ._k_mem_slab*};
+define block ._net_buf_pool with fixed order { readwrite section ._net_buf_pool*};
+
+place in TEXT_region                        { readonly,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
 place in DATA2_region                       { block RW,};
-place in DATA2_region                        { block ZI,section ._net_buf_pool, section ._k_mem_slab   };
+place in DATA2_region                        { block ZI, block ._net_buf_pool, block ._k_mem_slab   };
 if (isdefinedsymbol(__heap_noncacheable__)) {
   place in NCACHE_region                    { last block HEAP };
 } else {

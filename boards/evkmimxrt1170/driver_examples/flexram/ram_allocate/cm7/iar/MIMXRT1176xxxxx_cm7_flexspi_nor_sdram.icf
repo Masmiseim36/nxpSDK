@@ -64,13 +64,13 @@ define symbol m_boot_hdr_xmcd_data_start      = 0x30001040;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x0400;
+  define symbol __size_cstack__        = 0x10000;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x0400;
+  define symbol __size_heap__          = 0x400000;
 }
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;

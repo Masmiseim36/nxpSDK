@@ -6,11 +6,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "spi_nor_eeprom_memory.h"
+#include "bl_semc.h"
 #include "fusemap.h"
 #include "memory_config.h"
 #include "peripherals_pinmux.h"
-#include "bl_semc.h"
+#include "spi_nor_eeprom_memory.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 /*******************************************************************************
@@ -202,7 +202,7 @@ void spi_clock_config(uint32_t instance, spi_module_clock_freq_t freq)
 }
 
 //!@brief Configure IOMUX for LPSPI Peripheral
-void spi_iomux_config(spi_nor_eeprom_peripheral_config_t* config)
+void spi_iomux_config(spi_nor_eeprom_peripheral_config_t *config)
 {
     switch (config->spiIndex)
     {
@@ -343,17 +343,20 @@ uint32_t get_primary_boot_device(void)
         case 0x2:
         case 0x3:
             flash_device = kBootDevice_SemcNAND; // Semc NAND
+            break;
         /* 01xx */
         case 0x4:
         case 0x5:
         case 0x6:
         case 0x7:
+            flash_device = kBootDevice_SD; // SD
+            break;
         /* 10xx */
         case 0x8:
         case 0x9:
         case 0xa:
         case 0xb:
-            flash_device = kBootDevice_MMC_SD; // SD/MMC/eMMC
+            flash_device = kBootDevice_MMC; // MMC/eMMC
             break;
         /* 11xx */
         case 0xc:
@@ -492,7 +495,8 @@ void update_memory_map(void)
         uint32_t flexramOcramSize = 1024u * k_flexramCfgList[flexramCfgIndex].ocramSize;
         uint32_t fixedOcramSize = 1536u * 1024u;
         g_memoryMap[kIndexOCRAM].startAddress = OCRAM_START_ADDRESS;
-        g_memoryMap[kIndexOCRAM].endAddress = g_memoryMap[kIndexOCRAM].startAddress + fixedOcramSize + flexramOcramSize - 1;
+        g_memoryMap[kIndexOCRAM].endAddress =
+            g_memoryMap[kIndexOCRAM].startAddress + fixedOcramSize + flexramOcramSize - 1;
     }
     else
     {
@@ -508,10 +512,11 @@ void update_memory_map(void)
         g_memoryMap[kIndexDTCM].startAddress = M7_DTCM_SRAM_START_ADDRESS;
         g_memoryMap[kIndexDTCM].endAddress = g_memoryMap[kIndexDTCM].startAddress + dtcmSize - 1;
 
-// OCRAM
+        // OCRAM
         uint32_t fixedOcramSize = M4_OCRAM_SIZE + OCRAM1_SIZE + OCRAM2_SIZE + OCRAM_ECC_SIZE + FLEXRAM_ECC_SIZE;
         g_memoryMap[kIndexOCRAM].startAddress = OCRAM_START_ADDRESS;
-        g_memoryMap[kIndexOCRAM].endAddress = g_memoryMap[kIndexOCRAM].startAddress + fixedOcramSize + flexramOcramSize - 1;
+        g_memoryMap[kIndexOCRAM].endAddress =
+            g_memoryMap[kIndexOCRAM].startAddress + fixedOcramSize + flexramOcramSize - 1;
     }
 }
 

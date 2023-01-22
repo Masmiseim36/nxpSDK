@@ -11,6 +11,7 @@
 #include "MIMXRT1166_cm7.h"
 #include "iec60730b.h"
 #include "iec60730b_core.h"
+#include "safety_test_items.h"
 #include "project_setup_evkmimxrt1160.h"
 #include "safety_cm7_imxrt.h"
 
@@ -54,7 +55,7 @@
 #define CLOCK_GPT2_FREQ ((CLOCK_GPT2_SRC == GPT_SRC_32K ? 32768.F : 16000000.F) / CLOCK_GPT2_DIV)
 
 #define SYSTICK_FREQ 600000000 /* 600MHz */
-#define SYSTICK_RELOAD_VALUE 600000 /* 600MHz/600kHz = 1ms period */  
+#define SYSTICK_RELOAD_VALUE 600000 /* 600MHz/600kHz = 1ms period */
 #define SYSTICK_RELOAD_VALUE_MAX 0x00FFFFFFU // TODO:unused
 
 #define ISR_FREQUENCY (SYSTICK_FREQ / SYSTICK_RELOAD_VALUE)
@@ -99,7 +100,7 @@
 
 /********* Flashtest *********/
 /* Hyper flash size */
-#define BOARD_FLASH_SIZE (0x800000U)
+//#define BOARD_FLASH_SIZE (0x800000U)
 
 #define FLASH_TEST_BLOCK_SIZE     0x4
 #define FLASH_TEST_CONDITION_SEED 0xFFFFFFFF
@@ -165,11 +166,11 @@
 #define ADC_MIN_LIMIT(val)      (uint16_t)(((val) * (100 - ADC_DEVIATION_PERCENT)) / 100)
 #define ADC_MAX_LIMIT(val)      (uint16_t)(((val) * (100 + ADC_DEVIATION_PERCENT)) / 100)
 #define FS_CFG_AIO_CHANNELS_CNT 3
-      
+
 #define ADC_COMMAND_BUFFER       1
-#define TRIGGER_EVENT            0  /* write to the SWTRIG register  select between 0 - 3, SWTRIG[SWT0] is associated with TCTRL0 */       
-      
-      
+#define TRIGGER_EVENT            0  /* write to the SWTRIG register  select between 0 - 3, SWTRIG[SWT0] is associated with TCTRL0 */
+
+
 #define FS_CFG_AIO_CHANNELS_LIMITS_INIT                                                                     \
     {                                                                                                       \
         {(uint32_t)ADC_MIN_LIMIT(0), (uint32_t)ADC_MAX_LIMIT(60)},                                          \
@@ -184,7 +185,7 @@
         0x04U, 0x03U, 0x02U      \
     } /* ADC Channels for V_refl, V_refh, bandgap */
 
-#define FS_CFG_AIO_CHANNELS_SIDE_INIT {0, 0, 0}  /* sides associated with input channels,  0 = A, 1 = B */    
+#define FS_CFG_AIO_CHANNELS_SIDE_INIT {0, 0, 0}  /* sides associated with input channels,  0 = A, 1 = B */
 
 /********* ADC END *********/
 

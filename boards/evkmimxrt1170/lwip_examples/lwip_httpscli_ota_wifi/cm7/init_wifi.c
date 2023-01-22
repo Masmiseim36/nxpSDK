@@ -21,18 +21,19 @@
  * Definitions
  ******************************************************************************/
 /*${macro:start}*/
+
+#define WIFI_NETWORK_LABEL "demo"
+
 /*${macro:end}*/
 
 /* @TEST_ANCHOR */
-
-#ifndef WIFI_BANNER
-#define WIFI_BANNER "Successfully initialized WiFi module\r\n"
-#endif
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 /*${prototype:start}*/
+extern char wifi_ssid[];
+extern char wifi_pass[];
 /*${prototype:end}*/
 
 /*******************************************************************************
@@ -47,66 +48,48 @@ bool wifi_ap_mode = WIFI_MODE;
  * Code
  ******************************************************************************/
 /*${function:start}*/
+
+/* Link lost callback */
+static void LinkStatusChangeCallback(bool linkState)
+{
+    if (linkState == false)
+    {
+        /* -------- LINK LOST -------- */
+        /* DO SOMETHING */
+        PRINTF("-------- LINK LOST --------\n");
+    }
+    else
+    {
+        /* -------- LINK REESTABLISHED -------- */
+        /* DO SOMETHING */
+        PRINTF("-------- LINK REESTABLISHED --------\n");
+    }
+}
+
 int initNetwork()
 {
     int result;
 
     /* Initialize WiFi board */
-    PRINTF("Initializing WiFi connection... \r\n");
+    PRINTF("Initializing WiFi connection... \n");
 
-    if (((result = WPL_Init()) != WPL_SUCCESS) || ((result = WPL_Start()) != WPL_SUCCESS))
+    result = WPL_Init();
+    if (result != WPLRET_SUCCESS)
     {
-        PRINTF("Could not initialize WiFi module %d\r\n", (uint32_t)result);
+        PRINTF("Failed to init wifi (%d)\n", result);
         return -1;
     }
-    else
+
+    result = WPL_Start(LinkStatusChangeCallback);
+    if (result != WPLRET_SUCCESS)
     {
-        PRINTF(WIFI_BANNER);
-    }
-
-    if (wifi_ap_mode)
-    {
-        /* AP mode */
-        PRINTF("Starting Access Point: SSID: %s, Chnl: %d\r\n", WIFI_SSID, WIFI_AP_CHANNEL);
-
-        result = WPL_Start_AP(WIFI_SSID, WIFI_PASSWORD, WIFI_AP_CHANNEL);
-
-        if (result != WPL_SUCCESS)
-        {
-            PRINTF("Failed to start access point\r\n");
-            return -1;
-        }
-
-        /* Start DHCP server */
-        WPL_StartDHCPServer(WIFI_AP_IP_ADDR, WIFI_AP_NET_MASK);
-
-        char ip[16];
-        WPL_GetIP(ip, 0);
-
-        PRINTF("Started \'%s\' WiFi network with IP %s\r\n", WIFI_SSID, ip);
-
-        return 0;
-    }
-
-    /* Client mode */
-    PRINTF("Joining: " WIFI_SSID "\r\n");
-
-    result = WPL_Join(WIFI_SSID, WIFI_PASSWORD);
-    if (result != WPL_SUCCESS)
-    {
-        PRINTF("Failed to join: " WIFI_SSID "\r\n");
+        PRINTF("Failed to start wifi (%d)\n", result);
         return -1;
     }
-    else
-    {
-        PRINTF("Successfully joined: " WIFI_SSID "\r\n");
 
-        char ip[16];
-        WPL_GetIP(ip, 1);
-
-        PRINTF("Got IP address %s\r\n", ip);
-    }
+    PRINTF("Successfully initialized WiFi module\n");
 
     return 0;
 }
+
 /*${function:end}*/

@@ -6,14 +6,14 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/.
 )
 
 
+include(middleware_freertos-kernel_MIMXRT1176_cm7)
+
 include(middleware_iot_reference_mqtt_agent_interface_MIMXRT1176_cm7)
 
 include(middleware_freertos_backoffalgorithm_MIMXRT1176_cm7)
-
-include(middleware_freertos-kernel_MIMXRT1176_cm7)
 

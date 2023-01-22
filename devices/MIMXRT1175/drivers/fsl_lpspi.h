@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief LPSPI driver version. */
-#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 4, 1))
+#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
 /*@}*/
 
 #ifndef LPSPI_DUMMY_DATA

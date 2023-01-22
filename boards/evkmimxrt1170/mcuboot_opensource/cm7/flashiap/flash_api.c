@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "flash_map.h"
+#include "flash_partitioning.h"
 #include "sysflash/sysflash.h"
 #include "bootutil/bootutil_log.h"
 #include "mflash_drv.h"
@@ -22,9 +23,6 @@
 #define ERASED_VAL 0xFF
 
 static uint32_t flash_page_buf[MFLASH_PAGE_SIZE / sizeof(uint32_t)];
-
-static struct flash_area flash_map[IMAGE_SLOT_NUM] = {FLASH_AREA_INIT(1, 1) FLASH_AREA_INIT(2, 1)
-                                                          FLASH_AREA_INIT(3, 1)};
 
 int flash_device_base(uint8_t fd_id, uintptr_t *ret)
 {
@@ -41,11 +39,11 @@ int flash_area_open(uint8_t id, const struct flash_area **area)
 {
     uint32_t i = 0;
 
-    for (i = 0; i < IMAGE_SLOT_NUM; i++)
+    for (i = 0; i < MCUBOOT_IMAGE_SLOT_NUMBER; i++)
     {
-        if (flash_map[i].fa_id == id)
+        if (boot_flash_map[i].fa_id == id)
         {
-            *area = &flash_map[i];
+            *area = &boot_flash_map[i];
             return 0;
         }
     }
@@ -62,7 +60,6 @@ void flash_area_close(const struct flash_area *area)
  */
 int flash_area_read(const struct flash_area *area, uint32_t off, void *dst, uint32_t len)
 {
-    status_t status;
     uint32_t addr = area->fa_off + off;
 
     if (area->fa_device_id != FLASH_DEVICE_ID)
@@ -295,7 +292,7 @@ out:
 }
 
 /*
- * This depends on the mappings defined in sysflash.h.
+ * This depends on the mappings defined in flash_partitioning.c.
  * MCUBoot uses continuous numbering for the primary slot, the secondary slot,
  * and the scratch while zephyr might number it differently.
  */
@@ -305,45 +302,16 @@ int flash_area_id_from_multi_image_slot(int image_index, int slot)
     {
         case 0:
             return FLASH_AREA_IMAGE_PRIMARY(image_index);
-#if !defined(CONFIG_SINGLE_APPLICATION_SLOT)
+
         case 1:
             return FLASH_AREA_IMAGE_SECONDARY(image_index);
-#if !defined(CONFIG_BOOT_SWAP_USING_MOVE)
-        case 2:
-            return FLASH_AREA_IMAGE_SCRATCH;
-#endif
-#endif
-    }
 
-    return -1; /* flash_area_open will fail on that */
+        default:
+            return -1; /* flash_area_open will fail on that */
+    }
 }
 
-/*
- * This depends on the mappings defined in sysflash.h.
- * MCUBoot uses continuous numbering for the primary slot, the secondary slot,
- * and the scratch while zephyr might number it differently.
- */
 int flash_area_id_from_image_slot(int slot)
 {
-    static const int area_id_tab[] = {
-        FLASH_AREA_IMAGE_PRIMARY(0),
-        FLASH_AREA_IMAGE_SECONDARY(0),
-#if !defined(CONFIG_BOOT_SWAP_USING_MOVE)
-        FLASH_AREA_IMAGE_SCRATCH
-    };
-#else
-    };
-#endif
-
-    if (slot >= 0 && slot < ARRAY_SIZE(area_id_tab))
-    {
-        return area_id_tab[slot];
-    }
-
-    return -1; /* flash_area_open will fail on that */
-}
-
-int flash_area_id_to_image_slot(int area_id)
-{
-    return (area_id - 1);
+    return flash_area_id_from_multi_image_slot(0, slot);
 }

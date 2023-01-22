@@ -57,7 +57,7 @@
 #define configUSE_DAEMON_TASK_STARTUP_HOOK           1
 #define configCPU_CLOCK_HZ                           ( SystemCoreClock )
 #define configTICK_RATE_HZ                           ( ( TickType_t ) 1000 )
-#define configMAX_PRIORITIES                         ( 7 )
+#define configMAX_PRIORITIES                         ( 10 )
 #define configMINIMAL_STACK_SIZE                     ( ( uint16_t ) 90 )
 #define configTOTAL_HEAP_SIZE                        ( ( size_t ) ( 85 * 1024 ) )    /* 85 Kbytes. */
 #define configMAX_TASK_NAME_LEN                      ( 16 )
@@ -71,6 +71,10 @@
 #define configUSE_MALLOC_FAILED_HOOK                 1
 #define configUSE_APPLICATION_TASK_TAG               0
 #define configUSE_COUNTING_SEMAPHORES                1
+
+/* Used memory allocation (heap_x.c) */
+#define configFRTOS_MEMORY_SCHEME                    4
+
 #define configGENERATE_RUN_TIME_STATS                0
 #define configOVERRIDE_DEFAULT_TICK_CONFIGURATION    0
 #define configRECORD_STACK_HIGH_ADDRESS              1

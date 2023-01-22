@@ -35,14 +35,14 @@ extern "C" {
 
 typedef mbedtls_ssl_context *http_client_tls_sock_t;
 
-int https_client_tls_init(void);
+int https_client_tls_init(const char *server, const char *service);
 void https_client_tls_release(void);
 http_client_tls_sock_t https_client_tls_socket(int sock);
 void https_client_tls_shutdown(http_client_tls_sock_t tls_sock);
 int32_t https_client_tls_recv(http_client_tls_sock_t tls_sock, void *buf, size_t len, int flags);
 int32_t https_client_tls_send(http_client_tls_sock_t tls_sock, const void *buf, size_t len, int flags);
 
-int https_client_ota_download(const char *fPath);
+int https_client_ota_download(const char *host, const char *fPath, uint32_t dstAddr, size_t dstSize, size_t *fSize);
 
 void *client_mem_alloc_zero(size_t xSize);
 

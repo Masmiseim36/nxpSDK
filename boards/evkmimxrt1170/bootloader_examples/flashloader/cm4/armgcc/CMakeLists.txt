@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(flashloader_cm4)
 
+set(MCUX_BUILD_TYPES release)
+
 set(MCUX_SDK_PROJECT_NAME flashloader_cm4.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -41,19 +47,20 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usb_device_class.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../middleware/mcu-boot
-    ${ProjDirPath}/../../../../../../middleware
-    ${ProjDirPath}/../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/middleware/mcu-boot
+    ${SdkRootDirPath}/middleware/mcu-boot/
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/lists
 )
 
 # include modules
@@ -105,6 +112,8 @@ include(middleware_mcu-boot_drv_ocotp_MIMXRT1176_cm4)
 
 include(middleware_mcu-boot_mem_spi_nor_eeprom_MIMXRT1176_cm4)
 
+include(driver_memory_MIMXRT1176_cm4)
+
 include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
 
 include(driver_common_MIMXRT1176_cm4)
@@ -128,15 +137,13 @@ include(middleware_mcu-boot_drv_serial_nor_eeprom_MIMXRT1176_cm4)
 include(driver_lpspi_MIMXRT1176_cm4)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

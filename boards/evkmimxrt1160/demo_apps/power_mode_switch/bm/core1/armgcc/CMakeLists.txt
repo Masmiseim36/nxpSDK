@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(power_mode_switch_bm_core1)
 
+set(MCUX_BUILD_TYPES debug release)
+
 set(MCUX_SDK_PROJECT_NAME power_mode_switch_bm_core1.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -32,10 +38,10 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../power_mode_switch_core1.c"
-"${ProjDirPath}/../../common/lpm.c"
-"${ProjDirPath}/../../common/lpm.h"
-"${ProjDirPath}/../../common/chip_init_def.h"
-"${ProjDirPath}/../../common/setpoint_table_def.h"
+"${SdkRootDirPath}/boards/evkmimxrt1160/demo_apps/power_mode_switch/bm/common/lpm.c"
+"${SdkRootDirPath}/boards/evkmimxrt1160/demo_apps/power_mode_switch/bm/common/lpm.h"
+"${SdkRootDirPath}/boards/evkmimxrt1160/demo_apps/power_mode_switch/bm/common/chip_init_def.h"
+"${SdkRootDirPath}/boards/evkmimxrt1160/demo_apps/power_mode_switch/bm/common/setpoint_table_def.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
@@ -47,23 +53,22 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../common
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    ${SdkRootDirPath}/boards/evkmimxrt1160/demo_apps/power_mode_switch/bm/common
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
-    ${ProjDirPath}/../../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/xip
-    ${ProjDirPath}/../../../../../xip
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers/cm4
-    ${ProjDirPath}/../../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1166
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1166/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers/cm4
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -113,8 +118,6 @@ include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm4)
 
 include(driver_cache_lmem_MIMXRT1166_cm4)
 
-include(component_silicon_id_MIMXRT1166_cm4)
-
 include(driver_anatop_ai_MIMXRT1166_cm4)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm4)
@@ -124,15 +127,13 @@ include(utilities_misc_utilities_MIMXRT1166_cm4)
 include(device_MIMXRT1166_system_MIMXRT1166_cm4)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

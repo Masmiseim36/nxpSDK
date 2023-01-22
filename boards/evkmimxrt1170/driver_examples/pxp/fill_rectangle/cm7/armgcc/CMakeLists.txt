@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(pxp_fill_rectangle_cm7)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release sdram_debug sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME pxp_fill_rectangle_cm7.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -45,32 +51,31 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../../components/video
-    ${ProjDirPath}/../../../../../../../components/video/display
-    ${ProjDirPath}/../../../../../../../components/video/display/rm68191
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../../components/video/display/mipi_dsi_cmd
-    ${ProjDirPath}/../../../../../../../components/video/display/rm68200
-    ${ProjDirPath}/../../../../../../../components/video/display/dc/lcdifv2
-    ${ProjDirPath}/../../../../../../../components/video/display/dc/elcdif
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../../components/video/display/hx8394
-    ${ProjDirPath}/../../../../../../../components/video/display/dc
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/xip
-    ${ProjDirPath}/../../../../../xip
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers/cm7
-    ${ProjDirPath}/../../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../xmcd
-    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/components/video/display
+    ${SdkRootDirPath}/components/video/display/rm68191
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
+    ${SdkRootDirPath}/components/video/display/rm68200
+    ${SdkRootDirPath}/components/video/display/dc/lcdifv2
+    ${SdkRootDirPath}/components/video/display/dc/elcdif
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities/debug_console_lite
+    ${SdkRootDirPath}/components/video/display/hx8394
+    ${SdkRootDirPath}/components/video/display/dc
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1176/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xip
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm7
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xmcd
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -132,8 +137,6 @@ include(driver_dcdc_soc_MIMXRT1176_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1176_cm7)
 
-include(component_silicon_id_MIMXRT1176_cm7)
-
 include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
@@ -151,15 +154,13 @@ include(utilities_misc_utilities_MIMXRT1176_cm7)
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

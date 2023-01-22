@@ -375,7 +375,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1477,7 +1476,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2214,6 +2212,9 @@
       <name>$PROJ_DIR$/../boot.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../bootutil_hooks.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../keys.c</name>
     </file>
     <file>
@@ -2224,9 +2225,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../main.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sblconfig.h</name>
     </file>
   </group>
   <group>
@@ -2276,12 +2274,12 @@
     <file>
       <name>$PROJ_DIR$/../flashiap/flash_api.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../flashiap/flash_info.h</name>
-    </file>
   </group>
   <group>
     <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../sblconfig.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
@@ -2290,6 +2288,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../flash_partitioning.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../flash_partitioning.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
@@ -3359,15 +3360,6 @@
         <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>startup</name>
@@ -3393,19 +3385,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

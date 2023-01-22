@@ -36,6 +36,7 @@ var searchData=
   ['interfacecallbackparam',['interfaceCallbackParam',['../a00087.html#ad91072ab0516b7a8a9d90145d309a0bd',1,'smartcard_context_t']]],
   ['interfaceconfig',['interfaceConfig',['../a00087.html#ac569ed73a7546a74f362fcddfbf75bdf',1,'smartcard_context_t']]],
   ['interlacedmode',['interlacedMode',['../a00072.html#a983f72ad396f697c6d5fdc2afbf93b9a',1,'pxp_output_buffer_config_t']]],
+  ['interleavetype',['interleaveType',['../a00067.html#a21498e65aee36252fdfc3f1fef5a3f24',1,'_pdm_edma_handle']]],
   ['internalbuffer',['internalBuffer',['../a00064.html#ac62c08dd4ae6fa2938127e5ca556b614',1,'mmc_card_t::internalBuffer()'],['../a00078.html#a32f0cae971b2a8785e4efe92877f723f',1,'sd_card_t::internalBuffer()'],['../a00079.html#af117938433e273d737ddcbb023ca2d79',1,'_sdio_card::internalBuffer()']]],
   ['interrupt',['interrupt',['../a00028.html#ad6126ff38c3d09e8f4b305cc0a45befd',1,'enet_config_t::interrupt()'],['../a00051.html#a3f6f88fe9bcaf13690da0506e52f8bd9',1,'kpp_config_t::interrupt()']]],
   ['interruptmode',['interruptMode',['../a00048.html#a2aaf4ec1e85d3fcea653b422c673441e',1,'gpio_pin_config_t']]],

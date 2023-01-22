@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,34 +100,46 @@ $(document).ready(function(){initNavTree('a00067.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">PDM EDMA Driver<div class="ingroups"><a class="el" href="a00343.html">PDM: Microphone Interface</a></div></div>  </div>
+<div class="title">PDM EDMA Driver<div class="ingroups"><a class="el" href="a00342.html">PDM: Microphone Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00583"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00583">pdm_edma_transfer_t</a></td></tr>
-<tr class="memdesc:a00583"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM edma transfer.  <a href="a00067.html#a00583">More...</a><br/></td></tr>
-<tr class="separator:a00583"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00400"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00400">pdm_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00400"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM DMA transfer handle, users should not touch the content of the handle.  <a href="a00067.html#a00400">More...</a><br/></td></tr>
-<tr class="separator:a00400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00586"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00586">pdm_edma_transfer_t</a></td></tr>
+<tr class="memdesc:a00586"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM edma transfer.  <a href="a00067.html#a00586">More...</a><br/></td></tr>
+<tr class="separator:a00586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00402"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00402">pdm_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00402"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM DMA transfer handle, users should not touch the content of the handle.  <a href="a00067.html#a00402">More...</a><br/></td></tr>
+<tr class="separator:a00402"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga7a687206d7275e856d530dddc99b3b9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7a687206d7275e856d530dddc99b3b9b"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a> )(PDM_Type *base, pdm_edma_handle_t *handle, <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a> )(PDM_Type *base, pdm_edma_handle_t *handle, <a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga7a687206d7275e856d530dddc99b3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM eDMA transfer callback function for finish and error. <br/></td></tr>
 <tr class="separator:ga7a687206d7275e856d530dddc99b3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga24ac3c2b1dc469e120197bb045601356"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga24ac3c2b1dc469e120197bb045601356">pdm_edma_multi_channel_interleave_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00067.html#gga24ac3c2b1dc469e120197bb045601356ad14b3643089e53c2ba4cb2a22cf7e674">kPDM_EDMAMultiChannelInterleavePerChannelSample</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00067.html#gga24ac3c2b1dc469e120197bb045601356ac5de8626736c8e7123c11058fc3b852e">kPDM_EDMAMultiChannelInterleavePerChannelBlock</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga24ac3c2b1dc469e120197bb045601356"><td class="mdescLeft">&#160;</td><td class="mdescRight">pdm multi channel interleave type  <a href="a00067.html#ga24ac3c2b1dc469e120197bb045601356">More...</a><br/></td></tr>
+<tr class="separator:ga24ac3c2b1dc469e120197bb045601356"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga29bd00b6c0b456c95f72cec1c634e1d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29bd00b6c0b456c95f72cec1c634e1d9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga29bd00b6c0b456c95f72cec1c634e1d9">FSL_PDM_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
-<tr class="memdesc:ga29bd00b6c0b456c95f72cec1c634e1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.5.0. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga29bd00b6c0b456c95f72cec1c634e1d9">FSL_PDM_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 1))</td></tr>
+<tr class="memdesc:ga29bd00b6c0b456c95f72cec1c634e1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.6.1. <br/></td></tr>
 <tr class="separator:ga29bd00b6c0b456c95f72cec1c634e1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -135,13 +147,16 @@ PDM eDMA Transactional</h2></td></tr>
 <tr class="memitem:ga46652b70ce85c35399c477e4e1461eb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga46652b70ce85c35399c477e4e1461eb3">PDM_TransferInstallEDMATCDMemory</a> (pdm_edma_handle_t *handle, void *tcdAddr, size_t tcdNum)</td></tr>
 <tr class="memdesc:ga46652b70ce85c35399c477e4e1461eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Install EDMA descriptor memory.  <a href="#ga46652b70ce85c35399c477e4e1461eb3">More...</a><br/></td></tr>
 <tr class="separator:ga46652b70ce85c35399c477e4e1461eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8367df0d34950716dcc5476f95839538"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga8367df0d34950716dcc5476f95839538">PDM_TransferCreateHandleEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, <a class="el" href="a00067.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a> callback, void *userData, <a class="el" href="a00025.html#a00461">edma_handle_t</a> *dmaHandle)</td></tr>
+<tr class="memitem:ga8367df0d34950716dcc5476f95839538"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga8367df0d34950716dcc5476f95839538">PDM_TransferCreateHandleEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, <a class="el" href="a00067.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a> callback, void *userData, <a class="el" href="a00025.html#a00463">edma_handle_t</a> *dmaHandle)</td></tr>
 <tr class="memdesc:ga8367df0d34950716dcc5476f95839538"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the PDM Rx eDMA handle.  <a href="#ga8367df0d34950716dcc5476f95839538">More...</a><br/></td></tr>
 <tr class="separator:ga8367df0d34950716dcc5476f95839538"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17662bef15ba44cbccd5835bd76408d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga17662bef15ba44cbccd5835bd76408d8">PDM_TransferSetChannelConfigEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, uint32_t channel, const <a class="el" href="a00066.html#a00581">pdm_channel_config_t</a> *config)</td></tr>
+<tr class="memitem:gad57078ecc7b3444208df53e605e9db00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gad57078ecc7b3444208df53e605e9db00">PDM_TransferSetMultiChannelInterleaveType</a> (pdm_edma_handle_t *handle, <a class="el" href="a00067.html#ga24ac3c2b1dc469e120197bb045601356">pdm_edma_multi_channel_interleave_t</a> multiChannelInterleaveType)</td></tr>
+<tr class="memdesc:gad57078ecc7b3444208df53e605e9db00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the multi PDM channel interleave type.  <a href="#gad57078ecc7b3444208df53e605e9db00">More...</a><br/></td></tr>
+<tr class="separator:gad57078ecc7b3444208df53e605e9db00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17662bef15ba44cbccd5835bd76408d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga17662bef15ba44cbccd5835bd76408d8">PDM_TransferSetChannelConfigEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, uint32_t channel, const <a class="el" href="a00066.html#a00584">pdm_channel_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga17662bef15ba44cbccd5835bd76408d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the PDM channel.  <a href="#ga17662bef15ba44cbccd5835bd76408d8">More...</a><br/></td></tr>
 <tr class="separator:ga17662bef15ba44cbccd5835bd76408d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8199077b7fbc3dcaaa5b6f079b1c252"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gac8199077b7fbc3dcaaa5b6f079b1c252">PDM_TransferReceiveEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, <a class="el" href="a00067.html#a00583">pdm_edma_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gac8199077b7fbc3dcaaa5b6f079b1c252"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gac8199077b7fbc3dcaaa5b6f079b1c252">PDM_TransferReceiveEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, <a class="el" href="a00067.html#a00586">pdm_edma_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gac8199077b7fbc3dcaaa5b6f079b1c252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking PDM receive using eDMA.  <a href="#gac8199077b7fbc3dcaaa5b6f079b1c252">More...</a><br/></td></tr>
 <tr class="separator:gac8199077b7fbc3dcaaa5b6f079b1c252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf2c58ec42596da7cbf98e3db604e0f0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gaf2c58ec42596da7cbf98e3db604e0f0e">PDM_TransferTerminateReceiveEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle)</td></tr>
@@ -150,12 +165,12 @@ PDM eDMA Transactional</h2></td></tr>
 <tr class="memitem:gac8d44c39e41824161b5c29e525e33d60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gac8d44c39e41824161b5c29e525e33d60">PDM_TransferAbortReceiveEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle)</td></tr>
 <tr class="memdesc:gac8d44c39e41824161b5c29e525e33d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a PDM receive using eDMA.  <a href="#gac8d44c39e41824161b5c29e525e33d60">More...</a><br/></td></tr>
 <tr class="separator:gac8d44c39e41824161b5c29e525e33d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31eb23e10fcc2b0ad11f822f7c8fd15d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga31eb23e10fcc2b0ad11f822f7c8fd15d">PDM_TransferGetReceiveCountEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga31eb23e10fcc2b0ad11f822f7c8fd15d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga31eb23e10fcc2b0ad11f822f7c8fd15d">PDM_TransferGetReceiveCountEDMA</a> (PDM_Type *base, pdm_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga31eb23e10fcc2b0ad11f822f7c8fd15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets byte count received by PDM.  <a href="#ga31eb23e10fcc2b0ad11f822f7c8fd15d">More...</a><br/></td></tr>
 <tr class="separator:ga31eb23e10fcc2b0ad11f822f7c8fd15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00583" id="a00583"></a>
+<a name="a00586" id="a00586"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -205,7 +220,7 @@ struct _pdm_edma_transfer *&#160;</td><td class="memItemRight" valign="bottom"><
 
 </div>
 </div>
-<a name="a00400" id="a00400"></a>
+<a name="a00402" id="a00402"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -218,7 +233,7 @@ struct _pdm_edma_transfer *&#160;</td><td class="memItemRight" valign="bottom"><
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:aa6948b7fae5b9b60a9cb3d35caab43e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6948b7fae5b9b60a9cb3d35caab43e6"></a>
-<a class="el" href="a00025.html#a00461">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#aa6948b7fae5b9b60a9cb3d35caab43e6">dmaHandle</a></td></tr>
+<a class="el" href="a00025.html#a00463">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#aa6948b7fae5b9b60a9cb3d35caab43e6">dmaHandle</a></td></tr>
 <tr class="memdesc:aa6948b7fae5b9b60a9cb3d35caab43e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for PDM send. <br/></td></tr>
 <tr class="separator:aa6948b7fae5b9b60a9cb3d35caab43e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48b93a4eb7d24f514f83583e47d55d25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48b93a4eb7d24f514f83583e47d55d25"></a>
@@ -245,7 +260,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#afe4cd17f193812ec34b607c0530b68c3">userData</a></td></tr>
 <tr class="memdesc:afe4cd17f193812ec34b607c0530b68c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">User callback parameter. <br/></td></tr>
 <tr class="separator:afe4cd17f193812ec34b607c0530b68c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a469ababbefe4020017083a3cd9bf5377"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#a00463">edma_tcd_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a469ababbefe4020017083a3cd9bf5377">tcd</a></td></tr>
+<tr class="memitem:a469ababbefe4020017083a3cd9bf5377"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#a00465">edma_tcd_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a469ababbefe4020017083a3cd9bf5377">tcd</a></td></tr>
 <tr class="memdesc:a469ababbefe4020017083a3cd9bf5377"><td class="mdescLeft">&#160;</td><td class="mdescRight">TCD pool for eDMA transfer.  <a href="#a469ababbefe4020017083a3cd9bf5377">More...</a><br/></td></tr>
 <tr class="separator:a469ababbefe4020017083a3cd9bf5377"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0e7c34a57ac259e553f6f41828cc307"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0e7c34a57ac259e553f6f41828cc307"></a>
@@ -262,6 +277,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memitem:acdea13541018e16c86315c979b0adfc3"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#acdea13541018e16c86315c979b0adfc3">tcdUsedNum</a></td></tr>
 <tr class="memdesc:acdea13541018e16c86315c979b0adfc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer.  <a href="#acdea13541018e16c86315c979b0adfc3">More...</a><br/></td></tr>
 <tr class="separator:acdea13541018e16c86315c979b0adfc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21498e65aee36252fdfc3f1fef5a3f24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21498e65aee36252fdfc3f1fef5a3f24"></a>
+<a class="el" href="a00067.html#ga24ac3c2b1dc469e120197bb045601356">pdm_edma_multi_channel_interleave_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a21498e65aee36252fdfc3f1fef5a3f24">interleaveType</a></td></tr>
+<tr class="memdesc:a21498e65aee36252fdfc3f1fef5a3f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">multi channel transfer interleave type <br/></td></tr>
+<tr class="separator:a21498e65aee36252fdfc3f1fef5a3f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ea2fa008497b21d20e7e58addb37f3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ea2fa008497b21d20e7e58addb37f3a"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a7ea2fa008497b21d20e7e58addb37f3a">endChannel</a></td></tr>
 <tr class="memdesc:a7ea2fa008497b21d20e7e58addb37f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The last enabled channel. <br/></td></tr>
@@ -277,7 +296,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00025.html#a00463">edma_tcd_t</a>* pdm_edma_handle_t::tcd</td>
+          <td class="memname"><a class="el" href="a00025.html#a00465">edma_tcd_t</a>* pdm_edma_handle_t::tcd</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -308,6 +327,32 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga24ac3c2b1dc469e120197bb045601356"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00067.html#ga24ac3c2b1dc469e120197bb045601356">pdm_edma_multi_channel_interleave_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga24ac3c2b1dc469e120197bb045601356ad14b3643089e53c2ba4cb2a22cf7e674"></a>kPDM_EDMAMultiChannelInterleavePerChannelSample</em>&nbsp;</td><td class="fielddoc">
+<h2>multi channel PDM data interleave per channel sample </h2>
+<p>|CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL 1 | .... </p>
+<h2>| </h2>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga24ac3c2b1dc469e120197bb045601356ac5de8626736c8e7123c11058fc3b852e"></a>kPDM_EDMAMultiChannelInterleavePerChannelBlock</em>&nbsp;</td><td class="fielddoc">
+<h2>multi channel PDM data interleave per channel block </h2>
+<p>|CHANNEL0 | CHANNEL0 | CHANNEL0 | ...... </p>
+<p>| CHANNEL1 | CHANNEL 1 | CHANNEL 1 | ....| CHANNEL2 | CHANNEL 2 </p>
+<h2>| CHANNEL 2 | ....| </h2>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -383,7 +428,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00461">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00025.html#a00463">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>dmaHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -398,10 +443,43 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>PDM base pointer. </td></tr>
     <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
-    <tr><td class="paramname">base</td><td>PDM peripheral base address. </td></tr>
     <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
     <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
     <tr><td class="paramname">dmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad57078ecc7b3444208df53e605e9db00"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PDM_TransferSetMultiChannelInterleaveType </td>
+          <td>(</td>
+          <td class="paramtype">pdm_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00067.html#ga24ac3c2b1dc469e120197bb045601356">pdm_edma_multi_channel_interleave_t</a>&#160;</td>
+          <td class="paramname"><em>multiChannelInterleaveType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the PDM DMA handle member interleaveType, it shall be called only when application would like to use type kPDM_EDMAMultiChannelInterleavePerChannelBlock, since the default interleaveType is kPDM_EDMAMultiChannelInterleavePerChannelSample always</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">multiChannelInterleaveType</td><td>Multi channel interleave type. </td></tr>
   </table>
   </dd>
 </dl>
@@ -433,7 +511,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00066.html#a00581">pdm_channel_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00066.html#a00584">pdm_channel_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -460,7 +538,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PDM_TransferReceiveEDMA </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PDM_TransferReceiveEDMA </td>
           <td>(</td>
           <td class="paramtype">PDM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -474,7 +552,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00583">pdm_edma_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00067.html#a00586">pdm_edma_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -486,7 +564,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="section note"><dt>Note</dt><dd>This interface returns immediately after the transfer initiates. Call the PDM_GetReceiveRemainingBytes to poll the transfer status and check whether the PDM transfer is finished.</dd></dl>
 <ol type="1">
-<li>Scatter gather case: This functio support dynamic scatter gather and staic scatter gather, a. for the dynamic scatter gather case: Application should call PDM_TransferReceiveEDMA function continuously to make sure new receive request is submit before the previous one finish. b. for the static scatter gather case: Application should use the link transfer feature and make sure a loop link transfer is provided, such as: <div class="fragment"><div class="line">* <a class="code" href="a00067.html#a00583">pdm_edma_transfer_t</a> pdmXfer[2] =</div>
+<li>Scatter gather case: This functio support dynamic scatter gather and staic scatter gather, a. for the dynamic scatter gather case: Application should call PDM_TransferReceiveEDMA function continuously to make sure new receive request is submit before the previous one finish. b. for the static scatter gather case: Application should use the link transfer feature and make sure a loop link transfer is provided, such as: <div class="fragment"><div class="line"> <a class="code" href="a00067.html#a00586">pdm_edma_transfer_t</a> pdmXfer[2] =</div>
 <div class="line">*   {</div>
 <div class="line">*       {</div>
 <div class="line">*       .<a class="code" href="a00067.html#a5a16758981c9514c1e31e562ac402383">data</a>  = s_buffer,</div>
@@ -500,16 +578,25 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line">*       .linkTransfer = &amp;pdmXfer[0]</div>
 <div class="line">*       },</div>
 <div class="line">*   };</div>
-<div class="line">*</div>
+<div class="line">* </div>
 </div><!-- fragment --></li>
 <li>Multi channel case: This function support receive multi pdm channel data, for example, if two channel is requested, <div class="fragment"><div class="line">* <a class="code" href="a00067.html#ga17662bef15ba44cbccd5835bd76408d8">PDM_TransferSetChannelConfigEDMA</a>(DEMO_PDM, &amp;s_pdmRxHandle_0, DEMO_PDM_ENABLE_CHANNEL_0, &amp;channelConfig);</div>
 <div class="line">* <a class="code" href="a00067.html#ga17662bef15ba44cbccd5835bd76408d8">PDM_TransferSetChannelConfigEDMA</a>(DEMO_PDM, &amp;s_pdmRxHandle_0, DEMO_PDM_ENABLE_CHANNEL_1, &amp;channelConfig);</div>
 <div class="line">* <a class="code" href="a00067.html#gac8199077b7fbc3dcaaa5b6f079b1c252">PDM_TransferReceiveEDMA</a>(DEMO_PDM, &amp;s_pdmRxHandle_0, pdmXfer);</div>
 <div class="line">* </div>
-</div><!-- fragment --> <h2>Then the output data will be formatted as: </h2>
+</div><!-- fragment --> The output data will be formatted as below if handle-&gt;interleaveType = <h2>kPDM_EDMAMultiChannelInterleavePerChannelSample : </h2>
 </li>
 </ol>
 <h2>|CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL 1 | ....| </h2>
+<p>The output data will be formatted as below if handle-&gt;interleaveType = kPDM_EDMAMultiChannelInterleavePerChannelBlock </p>
+<h2>: </h2>
+<p>|CHANNEL3 | CHANNEL3 | CHANNEL3 | .... | CHANNEL4 | CHANNEL 4 | CHANNEL4 |....| CHANNEL5 | CHANNEL 5 | CHANNEL5 </p>
+<h2>|....| </h2>
+<p>Note: the dataSize of xfer is the total data size, while application using kPDM_EDMAMultiChannelInterleavePerChannelBlock, the buffer size for each PDM channel is channelSize = dataSize / channelNums, then there are limitation for this feature,</p>
+<ol type="1">
+<li>3 DMIC array: the dataSize shall be 4 * (channelSize) The addtional buffer is mandantory for edma modulo feature.</li>
+<li>The kPDM_EDMAMultiChannelInterleavePerChannelBlock feature support below dmic array only, 2 DMIC array: CHANNEL3, CHANNEL4 3 DMIC array: CHANNEL3, CHANNEL4, CHANNEL5 4 DMIC array: CHANNEL3, CHANNEL4, CHANNEL5, CHANNEL6 Any other combinations is not support, that is to SAY, THE FEATURE SUPPORT RECEIVE START FROM CHANNEL3 ONLY AND 4 MAXIMUM DMIC CHANNELS.</li>
+</ol>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>PDM base pointer </td></tr>
@@ -602,7 +689,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PDM_TransferGetReceiveCountEDMA </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PDM_TransferGetReceiveCountEDMA </td>
           <td>(</td>
           <td class="paramtype">PDM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(host_hid_mouse_bm_cm4)
 
+set(MCUX_BUILD_TYPES debug release sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME host_hid_mouse_bm_cm4.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -48,24 +54,24 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../../middleware
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/xip
-    ${ProjDirPath}/../../../../../xip
-    ${ProjDirPath}/../../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers/cm4
-    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1166/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1166
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1166/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/devices/MIMXRT1166/drivers/cm4
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -99,6 +105,8 @@ include(driver_iomuxc_MIMXRT1166_cm4)
 
 include(driver_igpio_MIMXRT1166_cm4)
 
+include(driver_memory_MIMXRT1166_cm4)
+
 include(driver_xip_device_MIMXRT1166_cm4)
 
 include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm4)
@@ -126,15 +134,13 @@ include(utilities_misc_utilities_MIMXRT1166_cm4)
 include(device_MIMXRT1166_system_MIMXRT1166_cm4)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

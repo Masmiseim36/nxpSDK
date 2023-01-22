@@ -87,7 +87,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-Wno-unused-function -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.cpp.exe.release.option.optimization.level" type="enum">
           <value>gnu.cpp.compiler.optimization.level.more</value>

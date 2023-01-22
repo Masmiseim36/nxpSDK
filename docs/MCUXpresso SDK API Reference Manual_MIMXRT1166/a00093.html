@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -111,12 +111,12 @@ $(document).ready(function(){initNavTree('a00093.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00679"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a00679">ssarc_descriptor_config_t</a></td></tr>
-<tr class="memdesc:a00679"><td class="mdescLeft">&#160;</td><td class="mdescRight">The configuration of descriptor.  <a href="a00093.html#a00679">More...</a><br/></td></tr>
-<tr class="separator:a00679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00680"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a00680">ssarc_group_config_t</a></td></tr>
-<tr class="memdesc:a00680"><td class="mdescLeft">&#160;</td><td class="mdescRight">The configuration of the group.  <a href="a00093.html#a00680">More...</a><br/></td></tr>
-<tr class="separator:a00680"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00682"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a00682">ssarc_descriptor_config_t</a></td></tr>
+<tr class="memdesc:a00682"><td class="mdescLeft">&#160;</td><td class="mdescRight">The configuration of descriptor.  <a href="a00093.html#a00682">More...</a><br/></td></tr>
+<tr class="separator:a00682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00683"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a00683">ssarc_group_config_t</a></td></tr>
+<tr class="memdesc:a00683"><td class="mdescLeft">&#160;</td><td class="mdescRight">The configuration of the group.  <a href="a00093.html#a00683">More...</a><br/></td></tr>
+<tr class="separator:a00683"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -193,7 +193,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga27b325de74f64c08f1464f671943f66b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#ga27b325de74f64c08f1464f671943f66b">FSL_SSARC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
+<tr class="memitem:ga27b325de74f64c08f1464f671943f66b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#ga27b325de74f64c08f1464f671943f66b">FSL_SSARC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
 <tr class="memdesc:ga27b325de74f64c08f1464f671943f66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">SSARC driver version 2.1.0.  <a href="#ga27b325de74f64c08f1464f671943f66b">More...</a><br/></td></tr>
 <tr class="separator:ga27b325de74f64c08f1464f671943f66b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -205,13 +205,13 @@ Descriptor related APIs.</h2></td></tr>
 <tr class="memitem:ga8960d148b6596a9c8731d128c512141e"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#ga8960d148b6596a9c8731d128c512141e">SSARC_GetDescriptorRegisterData</a> (SSARC_HP_Type *base, uint32_t index)</td></tr>
 <tr class="memdesc:ga8960d148b6596a9c8731d128c512141e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value of the register to be saved/restored.  <a href="#ga8960d148b6596a9c8731d128c512141e">More...</a><br/></td></tr>
 <tr class="separator:ga8960d148b6596a9c8731d128c512141e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae0f04b064c0941b7e52e38742dfa4981"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#gae0f04b064c0941b7e52e38742dfa4981">SSARC_SetDescriptorConfig</a> (SSARC_HP_Type *base, uint32_t index, const <a class="el" href="a00093.html#a00679">ssarc_descriptor_config_t</a> *config)</td></tr>
+<tr class="memitem:gae0f04b064c0941b7e52e38742dfa4981"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#gae0f04b064c0941b7e52e38742dfa4981">SSARC_SetDescriptorConfig</a> (SSARC_HP_Type *base, uint32_t index, const <a class="el" href="a00093.html#a00682">ssarc_descriptor_config_t</a> *config)</td></tr>
 <tr class="memdesc:gae0f04b064c0941b7e52e38742dfa4981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the configuration of the descriptor.  <a href="#gae0f04b064c0941b7e52e38742dfa4981">More...</a><br/></td></tr>
 <tr class="separator:gae0f04b064c0941b7e52e38742dfa4981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Group Related APIs</h2></td></tr>
-<tr class="memitem:gaaee941d2eaf25b22d972e604ea67f168"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#gaaee941d2eaf25b22d972e604ea67f168">SSARC_GroupInit</a> (SSARC_LP_Type *base, uint8_t groupID, const <a class="el" href="a00093.html#a00680">ssarc_group_config_t</a> *config)</td></tr>
+<tr class="memitem:gaaee941d2eaf25b22d972e604ea67f168"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#gaaee941d2eaf25b22d972e604ea67f168">SSARC_GroupInit</a> (SSARC_LP_Type *base, uint8_t groupID, const <a class="el" href="a00093.html#a00683">ssarc_group_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaaee941d2eaf25b22d972e604ea67f168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits the selected group.  <a href="#gaaee941d2eaf25b22d972e604ea67f168">More...</a><br/></td></tr>
 <tr class="separator:gaaee941d2eaf25b22d972e604ea67f168"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga069022bb5a3ef349b00a888ac614c564"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#ga069022bb5a3ef349b00a888ac614c564">SSARC_GroupDeinit</a> (SSARC_LP_Type *base, uint8_t groupID)</td></tr>
@@ -276,7 +276,7 @@ Pending Group Related APIs</h2></td></tr>
 <tr class="separator:gaf48bd135a46c75af2d923c3a8d2a88bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00679" id="a00679"></a>
+<a name="a00682" id="a00682"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -367,7 +367,7 @@ Pending Group Related APIs</h2></td></tr>
 
 </div>
 </div>
-<a name="a00680" id="a00680"></a>
+<a name="a00683" id="a00683"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -541,7 +541,7 @@ Pending Group Related APIs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SSARC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
+          <td class="memname">#define FSL_SSARC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -806,7 +806,7 @@ Pending Group Related APIs</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00093.html#a00679">ssarc_descriptor_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00093.html#a00682">ssarc_descriptor_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -820,7 +820,7 @@ Pending Group Related APIs</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>SSARC_HP peripheral base address. </td></tr>
     <tr><td class="paramname">index</td><td>The index of descriptor. Range from 0 to 1023. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the structure <a class="el" href="a00093.html#a00679" title="The configuration of descriptor. ">ssarc_descriptor_config_t</a>. Please refer to <a class="el" href="a00093.html#a00679">ssarc_descriptor_config_t</a> for details. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the structure <a class="el" href="a00093.html#a00682" title="The configuration of descriptor. ">ssarc_descriptor_config_t</a>. Please refer to <a class="el" href="a00093.html#a00682">ssarc_descriptor_config_t</a> for details. </td></tr>
   </table>
   </dd>
 </dl>
@@ -846,7 +846,7 @@ Pending Group Related APIs</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00093.html#a00680">ssarc_group_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00093.html#a00683">ssarc_group_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -861,7 +861,7 @@ Pending Group Related APIs</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>SSARC_LP peripheral base address. </td></tr>
     <tr><td class="paramname">groupID</td><td>The index of the group. Range from 0 to 15. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the structure <a class="el" href="a00093.html#a00680" title="The configuration of the group. ">ssarc_group_config_t</a>. Please refer to <a class="el" href="a00093.html#a00680">ssarc_group_config_t</a> for details. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the structure <a class="el" href="a00093.html#a00683" title="The configuration of the group. ">ssarc_group_config_t</a>. Please refer to <a class="el" href="a00093.html#a00683">ssarc_group_config_t</a> for details. </td></tr>
   </table>
   </dd>
 </dl>

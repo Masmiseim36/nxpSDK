@@ -1,6 +1,6 @@
 var a00052 =
 [
-    [ "lcdifv2_display_config_t", "a00052.html#a00552", [
+    [ "lcdifv2_display_config_t", "a00052.html#a00555", [
       [ "panelWidth", "a00052.html#a644ef05df1993a4215a2f6e6bfe1a54b", null ],
       [ "panelHeight", "a00052.html#ac6df59b7f9ad6ccf22d3211cbeaa6d77", null ],
       [ "hsw", "a00052.html#aaeeadc9061767b3d0db813b20e82c90a", null ],
@@ -12,11 +12,11 @@ var a00052 =
       [ "polarityFlags", "a00052.html#aa80eedd06dda3b5cfeb393a40c1de365", null ],
       [ "lineOrder", "a00052.html#ac3a949880303eb1ed75f6d32ca57084f", null ]
     ] ],
-    [ "lcdifv2_buffer_config_t", "a00052.html#a00551", [
+    [ "lcdifv2_buffer_config_t", "a00052.html#a00554", [
       [ "strideBytes", "a00052.html#a4161dde9c1b640c4c1d40e21094ad057", null ],
       [ "pixelFormat", "a00052.html#a7c1d0fe932febb725db1403276a1804e", null ]
     ] ],
-    [ "lcdifv2_blend_config_t", "a00052.html#a00550", [
+    [ "lcdifv2_blend_config_t", "a00052.html#a00553", [
       [ "globalAlpha", "a00052.html#afd135efecc632a888671a9d00ad5f887", null ],
       [ "alphaMode", "a00052.html#ad7326e15a49e9c16d357bd31a12640e9", null ],
       [ "pdAlphaMode", "a00052.html#a0e052fccc7cf8ec0ce9ee91f05775c98", null ],
@@ -29,16 +29,16 @@ var a00052 =
     [ "LCDIFV2_MAKE_DMA_DONE_INTERRUPT", "a00052.html#gaa6a7735cc6fdabc028438e0ee26dccde", null ],
     [ "LCDIFV2_MAKE_DMA_ERROR_INTERRUPT", "a00052.html#ga9dfe40d044ec28c4418d2372e9862a9b", null ],
     [ "_lcdifv2_polarity_flags", "a00052.html#ga79dc11f5ab25c5d06bbf2233a6fef875", [
-      [ "kLCDIFV2_VsyncActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a689e9418949051b0d34b25b3d3d73e44", null ],
       [ "kLCDIFV2_VsyncActiveHigh", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875aff940f5ac0021e784d5b32070b9e8750", null ],
-      [ "kLCDIFV2_HsyncActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0f6ab525dce0f9b1df439fd14289152f", null ],
       [ "kLCDIFV2_HsyncActiveHigh", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a3998d632b82ecac7474b1698334375cf", null ],
-      [ "kLCDIFV2_DataEnableActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875aac082fd580ff5a336d0b68e419f27e6d", null ],
       [ "kLCDIFV2_DataEnableActiveHigh", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875ac2b7e8fe2434f50df72d4678f50c95ec", null ],
-      [ "kLCDIFV2_DriveDataOnFallingClkEdge", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0fbadd2ed932c4cd52ac0e29893cf9a6", null ],
       [ "kLCDIFV2_DriveDataOnRisingClkEdge", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a954ef56b636c596d6bf2849228eb09b8", null ],
-      [ "kLCDIFV2_DataActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a21e8f7c725afa37214c24ec9ad48fe8c", null ],
-      [ "kLCDIFV2_DataActiveHigh", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc", null ]
+      [ "kLCDIFV2_DataActiveHigh", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc", null ],
+      [ "kLCDIFV2_VsyncActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a689e9418949051b0d34b25b3d3d73e44", null ],
+      [ "kLCDIFV2_HsyncActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0f6ab525dce0f9b1df439fd14289152f", null ],
+      [ "kLCDIFV2_DataEnableActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875aac082fd580ff5a336d0b68e419f27e6d", null ],
+      [ "kLCDIFV2_DriveDataOnFallingClkEdge", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0fbadd2ed932c4cd52ac0e29893cf9a6", null ],
+      [ "kLCDIFV2_DataActiveLow", "a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a21e8f7c725afa37214c24ec9ad48fe8c", null ]
     ] ],
     [ "_lcdifv2_interrupt", "a00052.html#ga06d944793a2798723283074283620cb5", [
       [ "kLCDIFV2_Layer0FifoEmptyInterrupt", "a00052.html#gga06d944793a2798723283074283620cb5a358a7bc9ea8354422102984248199259", null ],

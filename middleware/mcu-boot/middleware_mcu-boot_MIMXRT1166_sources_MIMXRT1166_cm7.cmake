@@ -7,6 +7,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src/external_memory_property_map_MIMXRT1166.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src/flexspi_config_MIMXRT1166.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src/flexspi_nand_config_MIMXRT1166.c
+    ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src/flexspi_nor_config_MIMXRT1166.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src/hardware_init_MIMXRT1166.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src/memory_map_MIMXRT1166.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src/ocotp_MIMXRT1166.c
@@ -29,7 +30,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1166/src
     ${CMAKE_CURRENT_LIST_DIR}/src
     ${CMAKE_CURRENT_LIST_DIR}/src/bootloader

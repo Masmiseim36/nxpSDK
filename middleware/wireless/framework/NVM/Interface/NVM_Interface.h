@@ -1,9 +1,8 @@
-/*! *********************************************************************************
+/**********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017, 2020-2021 NXP
+* Copyright 2016-2017, 2020-2022 NXP
 * All rights reserved.
 *
-* \file
 *
 * Non-volatile storage module interface declarations for the CORTEX-M4 processor
 *
@@ -12,6 +11,60 @@
 
 #ifndef _NVM_INTERFACE_H
 #define _NVM_INTERFACE_H
+
+
+/*!
+ * @addtogroup NVM
+ * The NVM module
+ *
+ * NVM module provides non volatile memory service to the application and the stack. 
+ * 
+ * INFORMATION
+ *
+ * Data sets are only saved by the idle task. There is no save-immediately
+ * capability.
+ *
+ * There are three save mechanism, each with it's own API function.
+ *
+ *      1) NvSaveOnIdle(): save the next time the idle task runs. This
+ *      will save the data set at least as soon as either of the other
+ *      functions, and usually sooner.
+ *
+ *      2) NvSaveOnInterval(): save no more often than a given time
+ *      interval. If it has been at least that long since the last save,
+ *      this function will cause a save the next time the idle task runs.
+ *
+ *      3) NvSaveOnCount(): increment a counter that is associated with the
+ *      data set. When that counter equals or exceeds some trigger value,
+ *      save the next time the idle task runs.
+ *
+ * The data set will be saved to NV storage during the next execution of
+ * the idle task if:
+ *      NvSaveOnIdle() has been called,
+ *  OR
+ *      NvSaveOnInterval() has been called, and at least the specified
+ *      time has past since the last save,
+ *  OR
+ *      NvSaveOnCount() has been called at least as often as the counter's
+ *      trigger value since the last save.
+ *
+ * All three functions cause NvIsDataSetDirty() to return TRUE. No API is
+ * provided to allow the client to know which save function or functions
+ * have been called. The data set is either believed to be identical to
+ * the saved copy (== not dirty) or not identical (== dirty).
+ *
+ * The NV code does not require a data set to have a minimum-time-between-
+ * saves or a minimum-count-between-saves. A data set may have both.
+ *
+ * Whenever a data set is saved for any reason:
+ *      it's dirty flag is cleared
+ *  AND
+ *      it's minimum-time-between-saves timer is restarted from 0,
+ *  AND
+ *      it's minimum-count-between-saves counter is set to 0.
+ * 
+ * @{
+ */
 
 #include "EmbeddedTypes.h"
 
@@ -335,118 +388,115 @@
 ******************************************************************************
 *****************************************************************************/
 
-/*
- * Name: NvSaveCounter_t
- * Description: save counter data type definition
+/*! 
+ * \brief  Data type definition used by dataset save on count function.
  */
 typedef uint16_t NvSaveCounter_t;
 
-/*
- * Name: NvSaveInterval_t
- * Description: save interval data type definition
+
+/*! 
+ * \brief  Data type definition used by dataset save on interval function.
  */
 typedef uint16_t NvSaveInterval_t;
 
 
-/*
- * Name: NvTableEntryId_t
- * Description: type definition for the unique ID of each NVM table entry
+/*! 
+ * \brief  Data type definition for the unique ID of each NVM table entry.
  */
 typedef uint16_t NvTableEntryId_t;
 
 
-/*
- * Name: NVM_ElementInfo_t
- * Description: element information data type definition
+/*!
+ * \struct NVM_DatasetInfo_t
+ * \brief Data type definition for a dataset (NV table entry) information.
  */
 typedef struct NVM_DatasetInfo_tag
 {
-    bool_t saveNextInterval;
-    NvSaveInterval_t ticksToNextSave;
-    NvSaveCounter_t countsToNextSave;
+    bool_t saveNextInterval;            /*!<  dataset to be saved on next interval */
+    NvSaveInterval_t ticksToNextSave;   /*!<  ticks to next save interval */
+    NvSaveCounter_t countsToNextSave;   /*!<  counts to next save interval */
 #if gUnmirroredFeatureSet_d
-    uint16_t elementIndex;
+    uint16_t elementIndex;              /*!<  element index */
 #endif
 }NVM_DatasetInfo_t;
 
-/*
- * Name: NVM_DataEntryType_tag
- * Description: enumerated datasets entry types
+/*!
+ * \brief Enumerated data type definition for NVM Data entry.
  */
 typedef enum NVM_DataEntryType_tag
 {
-  gNVM_MirroredInRam_c,
+  gNVM_MirroredInRam_c,                 /*!< entry mirrored */
 #if gUnmirroredFeatureSet_d
-  gNVM_NotMirroredInRam_c,
-  gNVM_NotMirroredInRamAutoRestore_c
+  gNVM_NotMirroredInRam_c,              /*!< entry not mirrored  */
+  gNVM_NotMirroredInRamAutoRestore_c    /*!< entry not mirrored, should be restored at initialization */
 #endif
 }NVM_DataEntryType_t;
 
-/*
- * Name: NVM_DataEntry_t
- * Description: NVM dataset entry info definition
+/*!
+ * \struct NVM_DataEntry_t
+ * \brief Data type definition for a NV table entry. 
  */
 typedef struct NVM_DataEntry_tag
 {
-    void* pData;
-    uint16_t ElementsCount;
-    uint16_t ElementSize;
-    uint16_t DataEntryID;
-    uint16_t DataEntryType;
+    void* pData;                /*!< pointer to the RAM memory location where the dataset elements are stored */
+    uint16_t ElementsCount;     /*!< number of elements the dataset has */
+    uint16_t ElementSize;       /*!< size of a single element */
+    uint16_t DataEntryID;       /*!< a 16-bit unique ID of the dataset */
+    uint16_t DataEntryType;     /*!< type of entry (mirrored/unmirrored/unmirrored auto restore) */
 } NVM_DataEntry_t;
 
-/*
- * Name: NVM_Status_t
- * Description: enumerated data type used by NVM functions as return code
+
+/*!
+ * \brief Enumerated data type definition for NV storage module error codes.
  */
 typedef enum NVM_Status_tag
 {
-    gNVM_OK_c,
-    gNVM_Error_c,
-    gNVM_InvalidPageID_c,
-    gNVM_PageIsNotBlank_c,
-    gNVM_SectorEraseFail_c,
-    gNVM_NullPointer_c,
-    gNVM_PointerOutOfRange_c,
-    gNVM_AddressOutOfRange_c,
-    gNVM_InvalidSectorsCount_c,
-    gNVM_InvalidTableEntry_c,
-    gNVM_PageIsEmpty_c,
-    gNVM_MetaNotFound_c,
-    gNVM_RecordWriteError_c,
-    gNVM_MetaInfoWriteError_c,
-    gNVM_ModuleNotInitialized_c,
-    gNVM_CriticalSectionActive_c,
-    gNVM_ModuleAlreadyInitialized_c,
-    gNVM_PageCopyPending_c,
-    gNVM_RestoreFailure_c,
-    gNVM_FormatFailure_c,
-    gNVM_RegisterFailure_c,
-    gNVM_AlreadyRegistered,
-    gNVM_SaveRequestRejected_c,
-    gNVM_NvTableExceedFlexRAMSize_c,
-    gNVM_NvWrongFlashDataIFRMap_c,
-    gNVM_CannotCreateMutex_c,
-    gNVM_NoMemory_c,
-    gNVM_IsMirroredDataSet_c,
-    gNVM_DefragBufferTooSmall_c,
-    gNVM_ReservedFlashTooSmall_c,
-    gNVM_FragmentatedEntry_c,
-    gNVM_AlignamentError_c,
-    gNVM_InvalidTableEntriesCount_c,
-    gNVM_SaveRequestRecursive_c,
-    gNVM_AtomicSaveRecursive_c,
+    gNVM_OK_c,                          /*!< operation successful */
+    gNVM_Error_c,                       /*!< in case of error */
+    gNVM_InvalidPageID_c,               /*!< page ID is not valid*/
+    gNVM_PageIsNotBlank_c,              /*!< page is not blank */        
+    gNVM_SectorEraseFail_c,             /*!< page cannot be erased */
+    gNVM_NullPointer_c,                 /*!< provided pointer is null */
+    gNVM_PointerOutOfRange_c,           /*!< pointer is out of range */
+    gNVM_AddressOutOfRange_c,           /*!< address is out of range */
+    gNVM_InvalidSectorsCount_c,         /*!< sector count configured in the project linker file is invalid*/
+    gNVM_InvalidTableEntry_c,           /*!< table entry is not valid */
+    gNVM_PageIsEmpty_c,                 /*!< page is empty */
+    gNVM_MetaNotFound_c,                /*!< meta info not found */        
+    gNVM_RecordWriteError_c,            /*!< record couldn't be written */
+    gNVM_MetaInfoWriteError_c,          /*!< meta info couldn't be written */
+    gNVM_ModuleNotInitialized_c,        /*!< NVM  module is not initialized */        
+    gNVM_CriticalSectionActive_c,       /*!< NVM  module is in critical sequence */
+    gNVM_ModuleAlreadyInitialized_c,    /*!< NVM  module already initialized*/
+    gNVM_PageCopyPending_c,             /*!< page copy is pending */
+    gNVM_RestoreFailure_c,              /*!< recovery failure */
+    gNVM_FormatFailure_c,               /*!< format operation fails */
+    gNVM_RegisterFailure_c,             /*!< invalid id or unmirrored data set */
+    gNVM_AlreadyRegistered,             /*!< id already registered in another entry*/
+    gNVM_SaveRequestRejected_c,         /*!< request couldn't be queued */
+    gNVM_NvTableExceedFlexRAMSize_c,    /*!< the table exceed the size of FlexRAM window */
+    gNVM_NvWrongFlashDataIFRMap_c,      /*!< invalid data flash IFR map */
+    gNVM_CannotCreateMutex_c,           /*!< no mutex available */
+    gNVM_NoMemory_c,                    /*!< no free memory block */
+    gNVM_IsMirroredDataSet_c,           /*!< data set is mirrored in RAM */
+    gNVM_DefragBufferTooSmall_c,        /*!< buffer too small */
+    gNVM_ReservedFlashTooSmall_c,       /*!< Flash buffer is too small */
+    gNVM_FragmentatedEntry_c,           /*!< entry fragmenttated */
+    gNVM_AlignamentError_c,             /*!< alignment error */
+    gNVM_InvalidTableEntriesCount_c,    /*!< invalid table entries count */
+    gNVM_SaveRequestRecursive_c,        /*!< save request flag to run again */
+    gNVM_AtomicSaveRecursive_c,         /*!< atomic save request flag to run again*/
 #if gNvUseFlexNVM_d
     gNVM_FlashMemoryIsSecured_c,
     gNVM_FlexNVMPartitioningFail_c
 #endif
 } NVM_Status_t;
 
-/*
- * Name: NVM_Statistics_t
- * Description: structure used to store pages statistic information
+/*!
+ * \struct NVM_Statistics_t
+ * \brief Data structure type used to store pages statistic information
  *              (erase cycle count of each page)
- */
+*/
 typedef struct NVM_Statistics_tag
 {
     uint32_t FirstPageEraseCyclesCount;
@@ -516,101 +566,77 @@ extern void BUtl_SetReceiverOn(void);
 ******************************************************************************
 *****************************************************************************/
 
-/*****************************************************************************
- * INFORMATION
- *****************************************************************************
+/*!*********************************************************************************
+ * \brief Initialise the NV storage module
  *
- * Data sets are only saved by the idle task. There is no save-immediately
- * capability.
- *
- * There are three save mechanism, each with it's own API function.
- *
- *      1) NvSaveOnIdle(): save the next time the idle task runs. This
- *      will save the data set at least as soon as either of the other
- *      functions, and usually sooner.
- *
- *      2) NvSaveOnInterval(): save no more often than a given time
- *      interval. If it has been at least that long since the last save,
- *      this function will cause a save the next time the idle task runs.
- *
- *      3) NvSaveOnCount(): increment a counter that is associated with the
- *      data set. When that counter equals or exceeds some trigger value,
- *      save the next time the idle task runs.
- *
- * The data set will be saved to NV storage during the next execution of
- * the idle task if:
- *      NvSaveOnIdle() has been called,
- *  OR
- *      NvSaveOnInterval() has been called, and at least the specified
- *      time has past since the last save,
- *  OR
- *      NvSaveOnCount() has been called at least as often as the counter's
- *      trigger value since the last save.
- *
- * All three functions cause NvIsDataSetDirty() to return TRUE. No API is
- * provided to allow the client to know which save function or functions
- * have been called. The data set is either believed to be identical to
- * the saved copy (== not dirty) or not identical (== dirty).
- *
- * The NV code does not require a data set to have a minimum-time-between-
- * saves or a minimum-count-between-saves. A data set may have both.
- *
- * Whenever a data set is saved for any reason:
- *      it's dirty flag is cleared
- *  AND
- *      it's minimum-time-between-saves timer is restarted from 0,
- *  AND
- *      it's minimum-count-between-saves counter is set to 0.
- *****************************************************************************/
-
-/******************************************************************************
- * Name: NvModuleInit
- * Description: Initialise the NV storage module
- * Parameter(s): -
- * Return: gNVM_ModuleAlreadyInitialized_c - if the module is already
- *                                           initialised
- *         gNVM_InvalidSectorsCount_c - if the sector count configured in the
- *                                      project linker file is invalid
- *         gNVM_MetaNotFound_c - if no meta information was found
- *         gNVM_OK_c - module was successfully initialised
- *****************************************************************************/
+ * \details This function is used to initialize the Flash Management and Non-Volatile 
+ *          Storage Module. It indirectly initializes the flash HAL driver and gets 
+ *          the active page ID. It initializes internal state variables and counters.
+ *          If the RAM entries are different from flash entries, a page copy is triggered 
+ *          and the different entries are skipped in the process. It also handles NVM 
+ *          table changes. 
+ *          For example, the MCU program was changed and the NVM table was updated 
+ *          by automatically doing a table upgrade. 
+ *          To trigger this behavior, the application must change gNvFlashTableVersion_c.
+ * 
+ * \return NVM_Status_t: \n
+ *         gNVM_ModuleAlreadyInitialized_c: if the module is already initialised\n
+ *         gNVM_InvalidSectorsCount_c: if the sector count configured in the
+ *                                      project linker file is invalid\n
+ *         gNVM_MetaNotFound_c: if no meta information was found\n
+ *         gNVM_OK_c: module was successfully initialised
+ ********************************************************************************* */
 extern NVM_Status_t NvModuleInit
 (
     void
 );
 
-/******************************************************************************
- * Name: NvModuleReInit
- * Description: Reinit the NV module , reload from Flash to RAM the latest NVM changes
- *      Usefull for RAM off use case in lowpower
- *    Same than __NvModuleInit without call to NV_Init(); and no mNvModuleInitialized protection
- *  TODO : merge with __NvModuleInit some common processing
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Reinit the NV module , reload from Flash to RAM the latest NVM changes.\n
+ *        Usefull for RAM off use case in lowpower.
+ * 
+ * \note  Same than __NvModuleInit without call to NV_Init(); and no mNvModuleInitialized protection.
+ *
+ * \return NVM_Status_t: \n
+ *         gNVM_ModuleAlreadyInitialized_c: if the module is already initialised\n
+ *         gNVM_InvalidSectorsCount_c: if the sector count configured in the
+ *                                      project linker file is invalid\n
+ *         gNVM_MetaNotFound_c: if no meta information was found\n
+ *         gNVM_OK_c: module was successfully initialised
+ ********************************************************************************* */
+/* TODO : merge with __NvModuleInit some common processing */
 extern NVM_Status_t NvModuleReInit
 (
     void
 );
 
-/******************************************************************************
- * Name: NvMoveToRam
- * Description: Move from NVM to Ram
- * Parameter(s):  ppData     double pointer to the entity to be moved from flash to RAM
- * Return: gNVM_OK_c - if operation completed successfully
- *         gNVM_NoMemory_c - in case there is not a memory block free
- *         Note: see also return codes of NvGetEntryFromDataPtr() function
- *****************************************************************************/
-
+/*! *********************************************************************************
+ * \brief Move from NVM to Ram
+ *
+ * \details This function moves the data pointed to by ppData from flash to RAM (allocates 
+ *          space and copies the data). It can only move a single element. It changes pData 
+ *          in the NVM table to point to the new location. If the specified element is 
+ *          already in RAM, the function cancels any pending saves and returns. The 
+ *          unmirrored functionality must be enabled if this function is required.
+ *
+ * \param[in] ppData double pointer to the entity to be moved from flash to RAM
+ *
+ * \return gNVM_OK_c: if operation completed successfully\n
+ *         gNVM_NoMemory_c: in case there is not a memory block free\n
+ *         gNVM_NullPointer_c: if the provided pointer is NULL \n
+ *         gNVM_PointerOutOfRange_c: if the provided pointer is not found within the RAM table
+ ********************************************************************************* */
 extern NVM_Status_t NvMoveToRam
 (
   void** ppData
 );
 
-/******************************************************************************
- * Name: GetFlashTableVersion
- * Description: returns the flash table version
- * Parameter(s): -
- * Return: 0 or flash table version
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Retrieves the version stored in the flash table or 0 if no table is detected. 
+ *        The extended functionality must be enabled if this function is required
+ *
+ * \return 0 or flash table version
+ ********************************************************************************* */
 #if gNvStorageIncluded_d
 #if gNvUseExtendedFeatureSet_d
 extern uint16_t GetFlashTableVersion
@@ -620,244 +646,288 @@ extern uint16_t GetFlashTableVersion
 #endif
 #endif
 
-/******************************************************************************
- * Name: NvErase
- * Description: Erase from NVM an unmirrored dataset
- * Parameter(s):  ppData     double pointer to the entity to be moved from flash to RAM
- * Return: gNVM_OK_c - if operation completed successfully
- *         gNVM_NoMemory_c - in case there is not a memory block free
- *         Note: see also return codes of NvGetEntryFromDataPtr() function
- *****************************************************************************/
-
+/*! *********************************************************************************
+ * \brief Erase from NVM an unmirrored dataset
+ *
+ * \details It generally does not trigger a page copy, but writes a new record in the 
+ *          NVM memory that specifies that this element was removed. If the page is 
+ *          full, a page copy is triggered. It sets pData for the specified element 
+ *          to NULL. It can only erase a single element. If the specified element is 
+ *          in RAM, it is freed but no changes are made in flash. The unmirrored 
+ *          functionality must be enabled if this function is required.
+ *
+ * \param[in] ppData double pointer to the entity to be moved from flash to RAM
+ *
+ * \return gNVM_OK_c: if operation completed successfully\n
+ *         gNVM_NoMemory_c: in case there is not a memory block free
+ *         gNVM_NullPointer_c: if the provided pointer is NULL \n
+ *         gNVM_PointerOutOfRange_c: if the provided pointer is not found within the RAM table
+ ********************************************************************************* */
 extern NVM_Status_t NvErase
 (
   void** ppData
 );
 
-
-
-/******************************************************************************
- * Name: NvSaveOnIdle
- * Description: Save the data pointed by ptrData on the next call to NvIdle()
- * Parameter(s): [IN] ptrData - pointer to data to be saved
- *               [IN] saveRestoreAll - specify if all the elements from the NVM table
- *                              entry shall be saved
- * Return: gNVM_OK_c - if operation completed successfully
- *         gNVM_Error_c - in case of error(s)
- *         Note: see also return codes of NvGetEntryFromDataPtr() function
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief Saves the dataset pointed by ptrData on the next call to NvIdle()
+ *
+ * \details This function saves the element or the entire NV table entry (dataset) 
+ *          pointed to by the ptrData argument, as soon as the NvIdle() function is 
+ *          called. If ptrData belongs to an unmirrored dataset, after the save the 
+ *          RAM pointer is freed and pData points to the flash backup. No other saves 
+ *          can be made while the data is in flash. 
+ *
+ * \param[in] ptrData pointer to data to be saved
+ * \param[in] saveAll specify if all the elements from the NVM table entry shall be saved
+ *
+ * \return gNVM_OK_c: if operation completed successfully\n
+ *         gNVM_Error_c: in case of error(s)
+ *         gNVM_NullPointer_c: if the provided pointer is NULL \n
+ *         gNVM_PointerOutOfRange_c: if the provided pointer is not found within the RAM table
+ ********************************************************************************* */
 extern NVM_Status_t NvSaveOnIdle
 (
     void* ptrData,
     bool_t saveAll
 );
 
-
-/******************************************************************************
- * Name: NvSaveOnInterval
- * Description:  save no more often than a given time interval. If it has
- *               been at least that long since the last save,
- *               this function will cause a save the next time the idle
- *               task runs.
- * Parameters: [IN] ptrData - pointer to data to be saved
- * NOTE: this function saves all the element of the table entry pointed by
- *       ptrData
- * Return: NVM_OK_c - if operation completed successfully
- *         Note: see also return codes of NvGetEntryFromDataPtr() function
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief Saves a dataset no more often than a given time interval. 
+ *
+ * \details This function saves the specified dataset no more often than at a given 
+ *          time interval. If it has been at least that long since the last save, 
+ *          this function causes a save as soon as the NvIdle() function is called. 
+ *          If ptrData belongs to an unmirrored dataset, after the save the RAM 
+ *          pointer is freed and pData points to the flash backup. No other saves 
+ *          can be made while the data is in flash. If ptrData belongs to a mirrored 
+ *          dataset, a full save is made. Otherwise, only the element indicated by 
+ *          the ptrData is saved. If the function is called before a previous save 
+ *          on interval was processed, the call is ignored.
+ *
+ * \param[in] ptrData pointer to data to be saved
+ *
+ * \return gNVM_OK_c: if operation completed successfully
+ *         gNVM_NullPointer_c: if the provided pointer is NULL \n
+ *         gNVM_PointerOutOfRange_c: if the provided pointer is not found within the RAM table
+ ********************************************************************************* */
 extern NVM_Status_t NvSaveOnInterval
 (
     void* ptrData
 );
 
-
-/******************************************************************************
- * Name: NvSaveOnCount
- * Description: Decrement the counter. Once it reaches 0, the next call to
- *              NvIdle() will save the entire table entry (all elements).
- * Parameters: [IN] ptrData - pointer to data to be saved
- * Return: NVM_OK_c - if operation completed successfully
- *         Note: see also return codes of NvGetEntryFromDataPtr() function
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief Decrement the counter. Once it reaches 0, the next call to
+ *        NvIdle() will save the entire table entry (all elements).
+ *
+ * \details If the ptrData belongs to an unmirrored dataset, after the save, the 
+ *          RAM pointer is freed and pData points to the flash backup. No other saves 
+ *          can be made while the data is in flash. If ptrData belongs to a mirrored 
+ *          dataset, a full save is made. Otherwise, only the element indicated by ptrData is saved.
+ *
+ * \param[in] ptrData pointer to data to be saved
+ *
+ * \return gNVM_OK_c: if operation completed successfully
+ *         gNVM_NullPointer_c: if the provided pointer is NULL \n
+ *         gNVM_PointerOutOfRange_c: if the provided pointer is not found within the RAM table
+ ********************************************************************************* */
 extern NVM_Status_t NvSaveOnCount
 (
     void* ptrData
 );
 
-
-/******************************************************************************
- * Name: NvSetMinimumTicksBetweenSaves
- * Description: Set the timer used by NvSaveOnInterval(). Takes effect after
- *              the next save.
- * Parameters: [IN] newInterval - new time interval
- * Return: -
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief Set the timer used by NvSaveOnInterval().
+ *
+ * \details This function sets a new value of the timer interval that is used by 
+ *          the 'save on interval' mechanism. The change takes effect after the 
+ *          next save is completed.
+ *
+ * \param[in] newInterval new time interval
+ ********************************************************************************* */
 extern void NvSetMinimumTicksBetweenSaves
 (
     NvSaveInterval_t newInterval
 );
 
-
-/******************************************************************************
- * Name: NvSetCountsBetweenSaves
- * Description: Set the counter trigger value used by NvSaveOnCount().
- *              Takes effect after the next save.
- * Parameters: [IN] newCounter - new counter value
- * Return: -
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief Set the counter trigger value used by NvSaveOnCount().
+ *
+ * \details This function sets a new value of the counter trigger that is used by 
+ *          the 'save on count' mechanism. The change takes effect after the next 
+ *          save is completed.
+ *
+ * \param[in] newCounter new counter value
+ ********************************************************************************* */
 extern void NvSetCountsBetweenSaves
 (
     NvSaveCounter_t newCounter
 );
 
-/******************************************************************************
- * Name: NvTimerTick
- * Description: Called from the idle task to process save-on-interval requests
- * Parameters: [IN] countTick - enable/disable tick count
- * Return: FALSE if the timer tick counters for all data sets have reached
- *         zero. In this case, the timer can be turned off.
+/*! *********************************************************************************
+ * \brief Called from the idle task to process save-on-interval requests
+ *
+ * \details This function processes NvSaveOnInterval() requests. If the call of this 
+ *          function counts a timer tick, call it with countTick set to TRUE. Otherwise, 
+ *          call it with countTick set to FALSE. Regardless of the value of countTick, 
+ *          NvTimerTick() returns TRUE if one or more of the datasets tick counters 
+ *          have not yet counted down to zero, or FALSE if all data set tick counters 
+ *          have reached zero. This function is called automatically inside the module 
+ *          to process interval saves, but it can be called from the application if necessary.
+ *
+ * \param[in] countTick enable/disable tick count
+ * \return FALSE if the timer tick counters for all data sets have reached
+ *         zero. In this case, the timer can be turned off.\n
  *         TRUE if any of the data sets' timer tick counters have not yet
  *         counted down to zero. In this case, the timer should be active
- ******************************************************************************/
+ ********************************************************************************* */
 extern bool_t NvTimerTick
 (
     bool_t countTick
 );
 
-
-/******************************************************************************
- * Name: NvRestoreDataSet
- * Description: copy the most recent version of the element/table entry pointed
- *              by ptrData from NVM storage system to RAM memory
- * Parameter(s): [IN] ptrData - pointer to data (element) to be restored
- *               [IN] restoreAll - if FALSE restores a single element
- *                               - if TRUE restores an entire table entry
- * Return: status of the restore operation
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Copy the most recent version of the element/table entry pointed
+ *        by ptrData from NVM storage system to RAM memory
+ *
+ * \details This function restores the element or the entire NV table entry specified 
+ *          by the function argument ptrData. If a valid table entry copy is found in 
+ *          the flash memory, it is restored to RAM NV Table.For unmirrored datasets, 
+ *          the function only restores a pointer to the flash location of the entry. 
+ *          In order to restore the data from flash to RAM, the application has to call NvMoveToRam.
+ *
+ * \param[in] ptrData pointer to data (element) to be restored
+ * \param[in] restoreAll if FALSE restores a single element. if TRUE restores an entire table entry
+ *            
+ * \return status of the restore operation
+ ********************************************************************************* */
 extern NVM_Status_t NvRestoreDataSet
 (
     void* ptrData,
     bool_t restoreAll
 );
 
+/*! *********************************************************************************
+ * \brief Enter critical sequence
+ *
+ * \details This function increments an internal counter variable each time it is called. 
+ *          All the sync save/erase/copy functions are checking this counter before 
+ *          executing their code. If the counter has a nonzero value, the function 
+ *          returns with no further operations. This function guarantees that all the 
+ *          sync save/erase/copy operations are put in the pending queue while the 
+ *          critical sequence is on and processed when the critical sequence is lifter, 
+ *          on the idle task. 
+ ********************************************************************************* */
+extern void NvSetCriticalSection
+(
+    void
+);
 
-/******************************************************************************
- * Name: NvClearCriticalSection
- * Description: leave critical section
- * Parameters: -
- * Return: -
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief Leave critical sequence
+ *
+ * \details This function decrements an internal counter variable each time it is called. 
+ *          All the sync save/erase/copy functions are checking this counter before executing 
+ *          their code. If the counter has a nonzero value, the function returns with 
+ *          no further operations.
+ ********************************************************************************* */
 extern void NvClearCriticalSection
 (
     void
 );
 
-
-/******************************************************************************
- * Name: NvSetCriticalSection
- * Description: enter critical section
- * Parameters: -
- * Return: -
- ******************************************************************************/
-extern void NvSetCriticalSection
-(
-    void
-);
-/******************************************************************************
- * Name: NvIdle
- * Description: Called from the idle task (bare-metal) or NVM_Task (MQX,
- *              FreeRTOS) to process the pending saves, erase or copy
- *              operations.
- * Parameters: -
- * Return: -
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief  Processes the NvSaveOnIdle() and NvSaveOnCount() requests.
+ *
+ * \details This function processes the NvSaveOnIdle() and NvSaveOnCount() requests. 
+ *          It also checks if the internal timer made a tick and determines if any 
+ *          save on interval should be processed. It also does page copy and erase. 
+ *          Any saves that were not processed when the critical sequence was active 
+ *          are processed here. It must be called from a low-priority task, such as 
+ *          Idle task.Called from the idle task (bare-metal) or NVM_Task (MQX,
+ *          FreeRTOS) to process the pending saves, erase or copy operations.
+ ********************************************************************************* */
 extern void NvIdle
 (
     void
 );
-/******************************************************************************
- * Name: NvGetNvIdleTaskId
- * Description:
- * Parameters: -
- * Return: returns the Id of the task which hosts NvIdle function
- ******************************************************************************/
+
+/*! *********************************************************************************
+ * \brief returns the Id of the task which hosts NvIdle function
+ *
+ * \return Id of the task which hosts NvIdle function
+ ********************************************************************************* */
 void* NvGetNvIdleTaskId
 (
 void
 );
 
-/******************************************************************************
- * Name: NvIsDataSetDirty
- * Description: return TRUE if the element pointed by ptrData is dirty
- * Parameters: [IN] ptrData - pointer to data to be checked
- * Return: TRUE if the element is dirty, FALSE otherwise
- ******************************************************************************/
+/*! *********************************************************************************
+ * \brief Check if element pointed is dirty(a save is pending on the specified dataset).
+ *
+ * \param[in] ptrData pointer to data to be checked
+ * \return TRUE if the element is dirty, FALSE otherwise
+ ********************************************************************************* */
 extern bool_t NvIsDataSetDirty
 (
     void* ptrData
 );
 
-
-/******************************************************************************
- * Name: NvGetStatistics
- * Description:
- * Parameter(s): [OUT] ptrStat - pointer to a memory location where the pages
- *                               statistics (erase cycles of each page) will
- *                               be stored
- * Return: -
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Returns the virtual pages statistics (how many times each virtual page has been erased).
+ *
+ * \param[out] ptrStat pointer to a memory location where the pages statistics (erase cycles
+ *             of each page) are stored
+ ********************************************************************************* */
 extern void NvGetPagesStatistics
 (
     NVM_Statistics_t* ptrStat
 );
 
-
-/******************************************************************************
- * Name: NvGetPagesSize
- * Description: Retrieves the NV Virtual Page size
- * Parameter(s): [OUT] pPageSize - pointer to a memory location where the page
- *                                 size will be stored
- * Return: -
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Retrieves the NV Virtual Page size
+ *
+ * \param[out] pPageSize pointer to a memory location where the page size will be stored
+ ********************************************************************************* */
 void NvGetPagesSize
 (
     uint32_t* pPageSize
 );
 
-
-/******************************************************************************
- * Name: NvFormat
- * Description: Format the NV storage system. The function erases both virtual
- *              pages and then writes the page counter to active page.
- * Parameter(s): -
- * Return: gNVM_OK_c - if the operation completes successfully
- *         gNVM_FormatFailure_c - if the format operation fails
- *         gNVM_ModuleNotInitialized_c - if the NVM  module is not initialised
- *         gNVM_CriticalSectionActive_c - if the system has entered in a
- *                                        critical section
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Format the NV storage system.\n
+ *        The function erases both virtual pages and then writes the page counter to active page.
+ *
+ * \return gNVM_OK_c: if the operation completes successfully \n
+ *         gNVM_FormatFailure_c:  if the format operation fails \n
+ *         gNVM_ModuleNotInitialized_c: if the NVM  module is not initialised \n
+ *         gNVM_CriticalSectionActive_c: if the system has entered in a critical sequence
+ ********************************************************************************* */
 extern NVM_Status_t NvFormat
 (
     void
 );
 
 
-/******************************************************************************
- * Name: NvRegisterTableEntry
- * Description: The function tries to register a new table entry within an
- *              existing NV table. If the NV table contained an erased (invalid)
- *              entry, the entry will be overwritten with a new one (provided
- *              by the mean of this function arguments)
- * Parameter(s): [IN] ptrData - generic pointer to RAM data to be registered
- *                              within the NV storage system
- *               [IN] uniqueId - an unique ID of the table entry
- *               [IN] elemCount - how many elements the table entry contains
- *               [IN] elemSize - the size of an element
- *               [IN] overwrite - if an existing table entry shall be
- *                                overwritten
- * Return: gNVM_OK_c - if the operation completes successfully
- *         gNVM_ModuleNotInitialized_c - if the NVM  module is not initialised
- *****************************************************************************/
+/*! *********************************************************************************
+ *  \brief The function tries to register a new table entry within an existing NV table.
+ *
+ * \details If the NV table contained an erased (invalid) entry, the entry will be overwritten 
+ *          with a new one (provided by the mean of this function arguments). This triggers 
+ *          a page copy. If the critical sequence is active, the page copy is done as soon as 
+ *          it is deactivated. Extended functionality must be enabled if this function is required.
+ *
+ * \param[in] ptrData generic pointer to RAM data to be registered within the NV storage system
+ * \param[in] uniqueId an unique ID of the table entry
+ * \param[in] elemCount how many elements the table entry contains
+ * \param[in] elemSize the size of an element
+ * \param[in] dataEntryType the type of the new entry
+ * \param[in] overwrite if an existing table entry shall be overwritten
+ *            Otherwise, if overwrite is set to FALSE, the data is placed in the first 
+ *            free position in the table.
+ *
+ * \return gNVM_OK_c: if the operation completes successfully\n
+ *         gNVM_ModuleNotInitialized_c: if the NVM  module is not initialised
+  ********************************************************************************* */
 extern NVM_Status_t NvRegisterTableEntry
 (
     void* ptrData,
@@ -869,38 +939,45 @@ extern NVM_Status_t NvRegisterTableEntry
 );
 
 
-/******************************************************************************
- * Name: NvEraseEntryFromStorage
- * Description: The function removes a table entry within the existing NV
- *              table.
- * Parameter(s): [IN] ptrData - a pointer to an existing RAM data that is
- *                              managed by the NV storage system
- * Return: gNVM_OK_c - if the operation completes successfully
- *         gNVM_ModuleNotInitialized_c - if the NVM  module is not initialised
- *         gNVM_NullPointer_c - if a NULL pointer is provided
- *****************************************************************************/
+/*! *********************************************************************************
+ *  \brief Removes a table entry within the existing NV table.
+ *
+ * \details A page copy is triggered and the data associated with the entry is not copied. 
+ *          If the critical sequence is active, the page copy is done as soon as it is 
+ *          deactivated. It sets entrySize and entryCount to 0 and pData to NULL. EntryId 
+ *          remains unchanged. For unmirrored datasets, use NvErase because it can delete 
+ *          individual elements. The extended functionality must be enabled if this function is required
+ *
+ * \param[in] ptrData a pointer to an existing RAM data that is managed by the NV storage system
+ *
+ * \return gNVM_OK_c: if the operation completes successfully\n
+ *         gNVM_ModuleNotInitialized_c: if the NVM  module is not initialised\n
+ *         gNVM_NullPointer_c: if a NULL pointer is provided
+  ********************************************************************************* */
 extern NVM_Status_t NvEraseEntryFromStorage
 (
     void* ptrData
 );
 
-/******************************************************************************
- * Name: NvSyncSave
- * Description: The function saves the pointed element or the entire table
- *              entry to the storage system. The save operation is not
- *              performed on the idle task but within this function call.
- * Parameter(s): [IN] ptrData - a pointer to data to be saved
- *               [IN] saveAll - specifies if the entire table entry shall be
- *                              saved or only the pointed element
- * Return: gNVM_OK_c - if the operation completes successfully
- *         gNVM_ModuleNotInitialized_c - if the NVM  module is not initialized
- *         gNVM_NullPointer_c - if a NULL pointer is provided
- *         gNVM_PointerOutOfRange_c - if the pointer is out of range
- *         gNVM_InvalidTableEntry_c - if the table entry is not valid
- *         gNVM_MetaInfoWriteError_c - meta tag couldn't be written
- *         gNVM_RecordWriteError_c - record couldn't be written
- *         gNVM_CriticalSectionActive_c - the module is in critical section
- *****************************************************************************/
+/*! *********************************************************************************
+ *  \brief Saves the pointed element or the entire table entry to the storage system.
+ *
+ * \details The save operation is not performed on the idle task but within this function call. 
+ *          If ptrData belongs to an unmirrored dataset, after the save, the RAM pointer is 
+ *          freed and pData points to the flash backup. Also, saveAll is ignored and only 
+ *          individual elements can be saved. No other saves can be made while the data is in flash.
+ * 
+ * \param[in] ptrData a pointer to data to be saved
+ * \param[in] saveAll specifies if the entire table entry shall be saved or only the pointed element
+ * \return gNVM_OK_c: if the operation completes successfully\n
+ *         gNVM_ModuleNotInitialized_c: if the NVM  module is not initialized\n
+ *         gNVM_NullPointer_c: if a NULL pointer is provided\n
+ *         gNVM_PointerOutOfRange_c: if the pointer is out of range\n
+ *         gNVM_InvalidTableEntry_c: if the table entry is not valid\n
+ *         gNVM_MetaInfoWriteError_c: meta tag couldn't be written\n
+ *         gNVM_RecordWriteError_c: record couldn't be written\n
+ *         gNVM_CriticalSectionActive_c: the module is in critical sequence
+  ********************************************************************************* */
 extern NVM_Status_t NvSyncSave
 (
     void* ptrData,
@@ -908,60 +985,60 @@ extern NVM_Status_t NvSyncSave
 );
 
 
-/******************************************************************************
- * Name: NvAtomicSave
- * Description: The function performs an atomic save of the entire NV table
- *              to the storage system. The operation is performed
- *              in place (atomic).
- * Parameter(s):  [IN] ignoreCriticalSectionFlag - if set to TRUE, the critical
- *                                                section flag is ignored
- * Return: gNVM_OK_c - if the operation completes successfully
- *         gNVM_ModuleNotInitialized_c - if the NVM  module is not initialized
- *         gNVM_NullPointer_c - if a NULL pointer is provided
- *         gNVM_PointerOutOfRange_c - if the pointer is out of range
- *         gNVM_InvalidTableEntry_c - if the table entry is not valid
- *         gNVM_MetaInfoWriteError_c - meta tag couldn't be written
- *         gNVM_RecordWriteError_c - record couldn't be written
- *         gNVM_CriticalSectionActive_c - the module is in critical section
- *****************************************************************************/
+/*! *********************************************************************************
+ *  \brief Performs an atomic save of the entire NV table to the storage system.\n
+ *         The operation is performed in place (atomic).
+ *
+ * \return gNVM_OK_c: if the operation completes successfully\n
+ *         gNVM_ModuleNotInitialized_c: if the NVM  module is not initialized\n
+ *         gNVM_NullPointer_c : if a NULL pointer is provided\n
+ *         gNVM_PointerOutOfRange_c: if the pointer is out of range\n
+ *         gNVM_InvalidTableEntry_c: if the table entry is not valid\n
+ *         gNVM_MetaInfoWriteError_c: meta tag couldn't be written\n
+ *         gNVM_RecordWriteError_c: record couldn't be written\n
+ *         gNVM_CriticalSectionActive_c: the module is in critical sequence
+ ********************************************************************************* */
 extern NVM_Status_t NvAtomicSave
 (
     void
 );
 
-/******************************************************************************
- * Name: NvShutdown
- * Description: The function waits for all idle saves to be processed.
- * Parameter(s):  -
- * Return: -
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Blocks until all the saves in queue, page copy operations, and interval 
+ *        saves have been processed to ensure that the MCU has the latest data before a reset.
+ *
+ ********************************************************************************* */
 extern void NvShutdown
 (
     void
 );
 
-/******************************************************************************
- * Name: NvCompletePendingOperations
- * Description: The function attemps to complete all the NVM related pending
- *              operations.
- * Parameter(s):  -
- * Return: -
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Attemps to complete all the NVM related pending operations, like queued 
+ *        writes, page copy, page erase and save on interval requests.
+ *
+ ********************************************************************************* */
 extern void NvCompletePendingOperations
 (
     void
 );
 
-/******************************************************************************
- * Name: RecoverNvEntry
- * Description: Reads a flash entry so that the application can handle dynamic entries.
- * Parameter(s): [IN] index - the ram entry index
- *               [OUT] entry - the flash entry at the specified index
- * Return: gNVM_OK_c - if the operation completes successfully
-           gNVM_RestoreFailure_c - if the operation failed
-           gNVM_AddressOutOfRange_c - if the index is too large
-           gNVM_Error_c - not supported, NVM table is stored in FLASH
- *****************************************************************************/
+/*! *********************************************************************************
+ *  \brief Reads a flash entry so that the application can handle dynamic entries.
+ *
+ * \details It is used to determine before initialization if some flash entries are 
+ *          different than the RAM counterparts. To use data stored in the flash table, 
+ *          the application should copy the members returned by this function in their 
+ *          respective RAM entry and allocate pData. The extended functionality must 
+ *          be enabled if this function is required.
+ *
+ * \param[in] index the ram entry index
+ * \param[out] entry the flash entry at the specified index
+ * \return gNVM_OK_c: if the operation completes successfully\n
+           gNVM_RestoreFailure_c: if the operation failed\n
+           gNVM_AddressOutOfRange_c: if the index is too large\n
+           gNVM_Error_c: not supported, NVM table is stored in FLASH
+ ********************************************************************************* */
 #if gNvStorageIncluded_d
 #if gNvUseExtendedFeatureSet_d
 extern NVM_Status_t RecoverNvEntry
@@ -972,14 +1049,16 @@ extern NVM_Status_t RecoverNvEntry
 #endif
 #endif
 
-/******************************************************************************
- * Name: NvCompletePendingOperationsUnsafe
- * Description: The function attemps to complete all the NVM related pending
- *              operations. Function unsafe as not protected by Mutex
- * Parameter(s):  -
- * Return: -
- *****************************************************************************/
+/*! *********************************************************************************
+ * \brief Attemps to complete all the NVM related pending operations.\n
+ *        Function unsafe as not protected by Mutex
+ *
+ ********************************************************************************* */
 extern void NvCompletePendingOperationsUnsafe(void);
+
+/*!
+ * @}  end of NVM addtogroup
+ */
 
 #ifdef __cplusplus
 }

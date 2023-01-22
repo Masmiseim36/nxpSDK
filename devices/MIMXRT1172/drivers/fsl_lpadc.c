@@ -158,7 +158,7 @@ void LPADC_Init(ADC_Type *base, const lpadc_config_t *config)
     tmp32 |= ADC_CFG_PUDLY(config->powerUpDelay)              /* Power up delay. */
              | ADC_CFG_REFSEL(config->referenceVoltageSource) /* Reference voltage. */
 
-#if defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && (FSL_FEATURE_LPADC_HAS_CFG_PWRSEL)
+#if !(defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && (FSL_FEATURE_LPADC_HAS_CFG_PWRSEL == 0))
              | ADC_CFG_PWRSEL(config->powerLevelMode)           /* Power configuration. */
 #endif                                                          /* FSL_FEATURE_LPADC_HAS_CFG_PWRSEL */
              | ADC_CFG_TPRICTRL(config->triggerPriorityPolicy); /* Trigger priority policy. */
@@ -227,7 +227,7 @@ void LPADC_GetDefaultConfig(lpadc_config_t *config)
     config->enableAnalogPreliminary = false;
     config->powerUpDelay            = 0x80;
     config->referenceVoltageSource  = kLPADC_ReferenceVoltageAlt1;
-#if defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && FSL_FEATURE_LPADC_HAS_CFG_PWRSEL
+#if !(defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && (FSL_FEATURE_LPADC_HAS_CFG_PWRSEL == 0))
     config->powerLevelMode = kLPADC_PowerLevelAlt1;
 #endif /* FSL_FEATURE_LPADC_HAS_CFG_PWRSEL */
     config->triggerPriorityPolicy = kLPADC_TriggerPriorityPreemptImmediately;

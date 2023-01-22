@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CR_INTEGER_PRINTF, CMSIS_NN, ARM_MATH_CM7, __FPU_PRESENT=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, SDK_I2C_BASED_COMPONENT_USED=1, DISABLEFLOAT16, EIQ_GUI_PRINTF, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/i2c;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../xmcd</IncludePath>
+              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/i2c;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -658,6 +658,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1694,11 +1704,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1712,16 +1717,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2078,7 +2073,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CR_INTEGER_PRINTF, CMSIS_NN, ARM_MATH_CM7, __FPU_PRESENT=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, SDK_I2C_BASED_COMPONENT_USED=1, DISABLEFLOAT16, EIQ_GUI_PRINTF, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/i2c;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../xmcd</IncludePath>
+              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/i2c;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2402,6 +2397,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -3438,11 +3443,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3456,16 +3456,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -123,10 +123,10 @@ Notifier Overview</h1>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;fsl_notifier.h&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Definition of the Power Manager callback.</span></div>
-<div class="line"><a class="code" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00065.html#a00580">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
+<div class="line"><a class="code" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00065.html#a00583">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
 <div class="line">{</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00325.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line">    <a class="code" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00324.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
 <div class="line"></div>
 <div class="line">    ...</div>
 <div class="line">    ...</div>
@@ -135,7 +135,7 @@ Notifier Overview</h1>
 <div class="line">    <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="line"><span class="comment">// Definition of the Power Manager user function.</span></div>
-<div class="line"><a class="code" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><a class="code" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    ...</div>
 <div class="line">    ...</div>
@@ -150,16 +150,16 @@ Notifier Overview</h1>
 <div class="line">int main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Define a notifier handle.</span></div>
-<div class="line">    <a class="code" href="a00065.html#a00579">notifier_handle_t</a> powerModeHandle;</div>
+<div class="line">    <a class="code" href="a00065.html#a00582">notifier_handle_t</a> powerModeHandle;</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Callback configuration.</span></div>
 <div class="line">    user_callback_data_t callbackData0;</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="a00065.html#a00578">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
+<div class="line">    <a class="code" href="a00065.html#a00581">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
 <div class="line">                <a class="code" href="a00065.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a>,</div>
 <div class="line">                (<span class="keywordtype">void</span> *)&amp;callbackData0};</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="a00065.html#a00578">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
+<div class="line">    <a class="code" href="a00065.html#a00581">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Power mode configurations.</span></div>
 <div class="line">    power_user_config_t vlprConfig;</div>
@@ -184,25 +184,25 @@ Notifier Overview</h1>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00580"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00580">notifier_notification_block_t</a></td></tr>
-<tr class="memdesc:a00580"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00065.html#a00580">More...</a><br/></td></tr>
-<tr class="separator:a00580"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00578"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00578">notifier_callback_config_t</a></td></tr>
-<tr class="memdesc:a00578"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00065.html#a00578">More...</a><br/></td></tr>
-<tr class="separator:a00578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00579"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00579">notifier_handle_t</a></td></tr>
-<tr class="memdesc:a00579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00065.html#a00579">More...</a><br/></td></tr>
-<tr class="separator:a00579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00583"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00583">notifier_notification_block_t</a></td></tr>
+<tr class="memdesc:a00583"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00065.html#a00583">More...</a><br/></td></tr>
+<tr class="separator:a00583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00581"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00581">notifier_callback_config_t</a></td></tr>
+<tr class="memdesc:a00581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00065.html#a00581">More...</a><br/></td></tr>
+<tr class="separator:a00581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00582"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00582">notifier_handle_t</a></td></tr>
+<tr class="memdesc:a00582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00065.html#a00582">More...</a><br/></td></tr>
+<tr class="separator:a00582"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td></tr>
 <tr class="memdesc:gad0b6e919f3ff69992b36a2734a650ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user configuration type.  <a href="#gad0b6e919f3ff69992b36a2734a650ec7">More...</a><br/></td></tr>
 <tr class="separator:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
+<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
 <tr class="memdesc:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user function prototype Use this function to execute specific operations in configuration switch.  <a href="#gacb6a6d6f99e6ddfbb96dae53382949b2">More...</a><br/></td></tr>
 <tr class="separator:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00065.html#a00580">notifier_notification_block_t</a> *notify, void *data)</td></tr>
+<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00065.html#a00583">notifier_notification_block_t</a> *notify, void *data)</td></tr>
 <tr class="memdesc:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback prototype.  <a href="#gafd1d8cc01c496de8b4cd3990ff85415c">More...</a><br/></td></tr>
 <tr class="separator:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -247,18 +247,18 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00065.html#a00579">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00065.html#a00578">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
+<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00065.html#a00582">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00065.html#a00581">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
 <tr class="memdesc:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Notifier handle.  <a href="#gaa2dfe33b4724d9c1025acdde1b1b3c31">More...</a><br/></td></tr>
 <tr class="separator:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00065.html#a00579">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> policy)</td></tr>
+<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00065.html#a00582">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> policy)</td></tr>
 <tr class="memdesc:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the configuration according to a pre-defined structure.  <a href="#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">More...</a><br/></td></tr>
 <tr class="separator:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00065.html#a00579">notifier_handle_t</a> *notifierHandle)</td></tr>
+<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00065.html#a00582">notifier_handle_t</a> *notifierHandle)</td></tr>
 <tr class="memdesc:ga9736632c3beca486ec3f8dab504b839c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the last failed notification callback.  <a href="#ga9736632c3beca486ec3f8dab504b839c">More...</a><br/></td></tr>
 <tr class="separator:ga9736632c3beca486ec3f8dab504b839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00580" id="a00580"></a>
+<a name="a00583" id="a00583"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -319,7 +319,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a name="a00578" id="a00578"></a>
+<a name="a00581" id="a00581"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -381,7 +381,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a name="a00579" id="a00579"></a>
+<a name="a00582" id="a00582"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -399,7 +399,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a59bdd44c33254cfd4626f5906d3c0a7a">configsNumber</a></td></tr>
 <tr class="memdesc:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of configurations.  <a href="#a59bdd44c33254cfd4626f5906d3c0a7a">More...</a><br/></td></tr>
 <tr class="separator:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423480d080ea2580628222dc6c492735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#a00578">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a423480d080ea2580628222dc6c492735">callbacksTable</a></td></tr>
+<tr class="memitem:a423480d080ea2580628222dc6c492735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#a00581">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a423480d080ea2580628222dc6c492735">callbacksTable</a></td></tr>
 <tr class="memdesc:a423480d080ea2580628222dc6c492735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback table.  <a href="#a423480d080ea2580628222dc6c492735">More...</a><br/></td></tr>
 <tr class="separator:a423480d080ea2580628222dc6c492735"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#acd4e9338f2cd47c46fc0c02886daafbb">callbacksNumber</a></td></tr>
@@ -448,7 +448,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00065.html#a00578">notifier_callback_config_t</a>* notifier_handle_t::callbacksTable</td>
+          <td class="memname"><a class="el" href="a00065.html#a00581">notifier_callback_config_t</a>* notifier_handle_t::callbacksTable</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -537,7 +537,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
+          <td class="memname">typedef <a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -558,11 +558,11 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00065.html#a00580">notifier_notification_block_t</a> *notify, void *data)</td>
+          <td class="memname">typedef <a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00065.html#a00583">notifier_notification_block_t</a> *notify, void *data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the <a class="el" href="a00065.html#a00578" title="Callback configuration structure. ">notifier_callback_config_t</a> callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see <a class="el" href="a00065.html#a00580" title="notification block passed to the registered callback function. ">notifier_notification_block_t</a>) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
+<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the <a class="el" href="a00065.html#a00581" title="Callback configuration structure. ">notifier_callback_config_t</a> callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see <a class="el" href="a00065.html#a00583" title="notification block passed to the registered callback function. ">notifier_notification_block_t</a>) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">notify</td><td>Notification block. </td></tr>
@@ -650,7 +650,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used in the callback configuration structure (<a class="el" href="a00065.html#a00578" title="Callback configuration structure. ">notifier_callback_config_t</a>) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
+<p>Used in the callback configuration structure (<a class="el" href="a00065.html#a00581" title="Callback configuration structure. ">notifier_callback_config_t</a>) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
 <ul>
 <li>Before the configuration switch (Callback return value can affect <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
 <li>After an unsuccessful attempt to switch configuration</li>
@@ -676,9 +676,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00579">notifier_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00582">notifier_handle_t</a> *&#160;</td>
           <td class="paramname"><em>notifierHandle</em>, </td>
         </tr>
         <tr>
@@ -696,7 +696,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00578">notifier_callback_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00581">notifier_callback_config_t</a> *&#160;</td>
           <td class="paramname"><em>callbacks</em>, </td>
         </tr>
         <tr>
@@ -745,9 +745,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00579">notifier_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00582">notifier_handle_t</a> *&#160;</td>
           <td class="paramname"><em>notifierHandle</em>, </td>
         </tr>
         <tr>
@@ -789,7 +789,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t NOTIFIER_GetErrorCallbackIndex </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00579">notifier_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00582">notifier_handle_t</a> *&#160;</td>
           <td class="paramname"><em>notifierHandle</em></td><td>)</td>
           <td></td>
         </tr>

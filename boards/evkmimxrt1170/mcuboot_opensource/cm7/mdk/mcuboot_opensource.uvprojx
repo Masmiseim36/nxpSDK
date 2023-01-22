@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../components/flash/mflash/mimxrt1170;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1176/drivers;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../components/flash/mflash/mimxrt1170;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1176/drivers;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,6 +389,11 @@
               <FilePath>../boot.h</FilePath>
             </File>
             <File>
+              <FileName>bootutil_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../bootutil_hooks.c</FilePath>
+            </File>
+            <File>
               <FileName>keys.c</FileName>
               <FileType>1</FileType>
               <FilePath>../keys.c</FilePath>
@@ -407,11 +412,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
-            </File>
-            <File>
-              <FileName>sblconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sblconfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -493,16 +493,16 @@
               <FileType>1</FileType>
               <FilePath>../flashiap/flash_api.c</FilePath>
             </File>
-            <File>
-              <FileName>flash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../flashiap/flash_info.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
+            <File>
+              <FileName>sblconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sblconfig.h</FilePath>
+            </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
@@ -517,6 +517,11 @@
               <FileName>flash_partitioning.h</FileName>
               <FileType>5</FileType>
               <FilePath>../flash_partitioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../flash_partitioning.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2301,28 +2306,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -2337,16 +2322,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2703,7 +2678,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../components/flash/mflash/mimxrt1170;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1176/drivers;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../components/flash/mflash/mimxrt1170;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1176/drivers;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2758,6 +2733,11 @@
               <FilePath>../boot.h</FilePath>
             </File>
             <File>
+              <FileName>bootutil_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../bootutil_hooks.c</FilePath>
+            </File>
+            <File>
               <FileName>keys.c</FileName>
               <FileType>1</FileType>
               <FilePath>../keys.c</FilePath>
@@ -2776,11 +2756,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
-            </File>
-            <File>
-              <FileName>sblconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sblconfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2862,16 +2837,16 @@
               <FileType>1</FileType>
               <FilePath>../flashiap/flash_api.c</FilePath>
             </File>
-            <File>
-              <FileName>flash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../flashiap/flash_info.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
+            <File>
+              <FileName>sblconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sblconfig.h</FilePath>
+            </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
@@ -2886,6 +2861,11 @@
               <FileName>flash_partitioning.h</FileName>
               <FileType>5</FileType>
               <FilePath>../flash_partitioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../flash_partitioning.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -4670,28 +4650,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -4706,16 +4666,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

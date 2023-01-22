@@ -370,10 +370,9 @@
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -404,6 +403,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/web</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -413,8 +413,8 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1512,10 +1512,9 @@
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1546,6 +1545,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/web</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -1555,8 +1555,8 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3551,6 +3551,9 @@
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</name>
           </file>
           <file>
@@ -3930,37 +3933,13 @@
     </file>
   </group>
   <group>
-    <name>mdio</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/fsl_mdio.h</name>
-    </file>
-  </group>
-  <group>
-    <name>phy</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/fsl_phy.h</name>
-    </file>
-  </group>
-  <group>
     <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_caam.c</name>
     </file>
@@ -4025,23 +4004,35 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</name>
-    </file>
   </group>
   <group>
     <name>component</name>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/fsl_phy.h</name>
+      </file>
+    </group>
     <group>
       <name>lists</name>
       <file>
@@ -4142,19 +4133,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

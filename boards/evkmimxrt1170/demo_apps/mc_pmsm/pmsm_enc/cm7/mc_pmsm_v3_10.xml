@@ -157,7 +157,7 @@
       <files mask="build_flexspi_nor_sdram_release.sh"/>
     </source>
     <source path="../../../../../../middleware/motor_control/freemaster" project_relative_path="motor_control/freemaster" type="src">
-      <files mask="pmsm_float_enc.pmp"/>
+      <files mask="pmsm_float_enc.pmpx"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="main.c"/>

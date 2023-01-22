@@ -26,7 +26,7 @@ __vector_table_size__ = 0x400;
 __size_cstack__       = 0x0400;
 
 SRAM_DTC_start       = 0x20000000; /* Part of 512KB on-chip RAM (Data-Tightly-Coupled) */
-SRAM_DTC_end         = 0x2000FFFF + 1;
+SRAM_DTC_end         = 0x2003FFFF + 1;
 
 m_flash_config_start = 0x30000000;
 

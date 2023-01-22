@@ -30,9 +30,9 @@ enum
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CAAM driver version. Version 2.2.0.
+/*! @brief CAAM driver version. Version 2.2.1.
  *
- * Current version: 2.2.0
+ * Current version: 2.2.1
  *
  * Change log:
  * - Version 2.0.0
@@ -62,8 +62,10 @@ enum
  *   - Improve DCACHE handling. Requires CAAM used and cached memory set in write-trough mode.
  * - Version 2.2.0
  *   - Added API for Blob functions and CRC
+ * - Version 2.2.1
+ *   - Fixed AES-CCM decrypt failing with TAG length bigger than 8 byte.
  */
-#define FSL_CAAM_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+#define FSL_CAAM_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /*! @brief CAAM callback function. */

@@ -11,12 +11,15 @@
 #include "board.h"
 #include "main.h"
 #include "cmd.h"
+#include "fsl_os_abstraction.h"
 
+#ifdef SD_ENABLED
 #include "fsl_sd.h"
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_sd_disk.h"
 #include "sdmmc_config.h"
+#endif
 
 #include "fsl_debug_console.h"
 
@@ -39,7 +42,9 @@
  ******************************************************************************/
 
 int BOARD_CODEC_Init(void);
+#ifdef SD_ENABLED
 static void APP_SDCARD_DetectCallBack(bool isInserted, void *userData);
+#endif
 
 /*******************************************************************************
  * Variables
@@ -182,6 +187,7 @@ void update_MPU_config(void)
     SCB_EnableICache();
 }
 
+#ifdef SD_ENABLED
 static void APP_SDCARD_DetectCallBack(bool isInserted, void *userData)
 {
     app_handle_t *app = (app_handle_t *)userData;
@@ -254,6 +260,7 @@ void APP_SDCARD_Task(void *param)
         }
     }
 }
+#endif
 
 void APP_Shell_Task(void *param)
 {
@@ -322,6 +329,7 @@ int main(void)
         return -1;
     }
 
+#ifdef SD_ENABLED
     if (xTaskCreate(APP_SDCARD_Task, "SDCard Task", SDCARD_TASK_STACK_SIZE, &app, configMAX_PRIORITIES - 4, NULL) !=
         pdPASS)
     {
@@ -329,6 +337,7 @@ int main(void)
         while (1)
             ;
     }
+#endif
 
     /* Set shell command task priority = 1 */
     if (xTaskCreate(APP_Shell_Task, "Shell Task", APP_SHELL_TASK_STACK_SIZE, &app, configMAX_PRIORITIES - 5,

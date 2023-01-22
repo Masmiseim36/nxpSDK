@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(fmstr_example_can_cm4)
 
+set(MCUX_BUILD_TYPES debug release sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME fmstr_example_can_cm4.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -37,40 +43,40 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../freemaster_cfg.h"
-"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.c"
-"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/freemaster_example.c"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/freemaster_example.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../../../common/fmstr_example/data_example_pmp.h"
-"${ProjDirPath}/../../../common/fmstr_example/data_img_logo.h"
-"${ProjDirPath}/../../../common/fmstr_example/data_img_file.h"
-"${ProjDirPath}/../../../common/fmstr_example/data_img_fmstrlogo.h"
-"${ProjDirPath}/../../../common/fmstr_example/data_html_index.h"
-"${ProjDirPath}/../../../common/fmstr_example/example_data.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/data_example_pmp.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/data_img_logo.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/data_img_file.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/data_img_fmstrlogo.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/data_html_index.h"
+"${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example/example_data.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm4side.jlinkscript"
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../common/fmstr_example
+    ${SdkRootDirPath}/boards/evkmimxrt1170/freemaster_examples/common/fmstr_example
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../middleware/freemaster
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm4
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../xmcd
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/middleware/freemaster
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities/debug_console_lite
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1176/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xip
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm4
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xmcd
 )
 
 # include modules
@@ -98,6 +104,8 @@ include(device_MIMXRT1176_startup_MIMXRT1176_cm4)
 
 include(driver_iomuxc_MIMXRT1176_cm4)
 
+include(driver_memory_MIMXRT1176_cm4)
+
 include(driver_igpio_MIMXRT1176_cm4)
 
 include(driver_xip_device_MIMXRT1176_cm4)
@@ -123,15 +131,13 @@ include(device_MIMXRT1176_system_MIMXRT1176_cm4)
 include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm4)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

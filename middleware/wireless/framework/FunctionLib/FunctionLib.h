@@ -1,9 +1,8 @@
-/*! *********************************************************************************
+/**********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* \file
 *
 * This is the Function Lib module header file
 *
@@ -15,14 +14,27 @@
 
 #include "EmbeddedTypes.h"
 
-/*! *********************************************************************************
+/*!
+ * @addtogroup FunctionLib
+ * The FunctionLib module
+ *
+ * This module provides a collection of features commonly used in embedded software centered on memory manipulation.
+ * @{
+ */
+
+/**********************************************************************************
 *************************************************************************************
 * Public macros
 *************************************************************************************
 ********************************************************************************** */
 
 #ifndef gUseToolchainMemFunc_d
+/* [/BLUETOOTH-8395] This is a temporary fix to overcome the issue causing HF(unaligned) when using MCUX */
+#if defined(__GNUC__)
+#define gUseToolchainMemFunc_d 0
+#else
 #define gUseToolchainMemFunc_d 1
+#endif /* __GNUC__ */
 #endif
 
 #ifndef gFLib_CheckBufferOverflow_d
@@ -31,25 +43,25 @@
 
 #define FLib_MemSet16 FLib_MemSet
 
-/*! *********************************************************************************
+/**********************************************************************************
 *************************************************************************************
 * Public prototypes
 *************************************************************************************
 ********************************************************************************** */
 
-/*! *********************************************************************************
+/**********************************************************************************
 *************************************************************************************
 * Public type definitions
 *************************************************************************************
 ********************************************************************************** */
 
-/*! *********************************************************************************
+/**********************************************************************************
 *************************************************************************************
 * Public memory declarations
 *************************************************************************************
 ********************************************************************************** */
 
-/*! *********************************************************************************
+/**********************************************************************************
 *************************************************************************************
 * Public functions
 *************************************************************************************
@@ -59,24 +71,43 @@
 extern "C" {
 #endif
 
+
 /*! *********************************************************************************
 * \brief  Copy the content of one memory block to another. The amount of data to copy
 *         must be specified in number of bytes.
 *
-* \param[out] pDst   Pointer to destination memory block
-* \param[in] pSrc    Pointer to source memory block
-* \param[in] cBytes  Number of bytes to copy
-*
+* \param[out] pDst    Pointer to destination memory block
+* \param[in]  pSrc    Pointer to source memory block
+* \param[in]  cBytes  Number of bytes to copy
 ********************************************************************************** */
 void FLib_MemCpy (void* pDst,
                   const void* pSrc,
                   uint32_t cBytes
                   );
 
+
+/*! *********************************************************************************
+* \brief  Copy the content of one memory block to another. The amount of data to copy
+*         must be specified in number of bytes.
+*
+* \param[out] to_ptr           Pointer to destination memory block
+* \param[in]  from_ptr         Pointer to source memory block
+* \param[in]  number_of_bytes  Number of bytes to copy
+********************************************************************************** */
 void FLib_MemCpyAligned32bit (void* to_ptr,
                               const void* from_ptr,
                               register uint32_t number_of_bytes);
 
+
+/*! *********************************************************************************
+* \brief  Copy the content of one memory block to another. The amount of data to copy
+*         must be specified in number of bytes.
+*
+* \param[out] pBuf1   Pointer to a memory buffer
+* \param[out] pBuf2   Pointer to a memory buffer
+* \param[in]  dir     Copying direction
+* \param[in]  n       Number of bytes to copy
+********************************************************************************** */
 void FLib_MemCpyDir (void* pBuf1,
                      void* pBuf2,
                      bool_t dir,
@@ -87,10 +118,9 @@ void FLib_MemCpyDir (void* pBuf1,
 * \brief  Copy bytes. The byte at index i from the source buffer is copied to index
 *         ((n-1) - i) in the destination buffer (and vice versa).
 *
-* \param[out] pDst   Pointer to destination memory block
-* \param[in] pSrc    Pointer to source memory block
-* \param[in] cBytes  Number of bytes to copy
-*
+* \param[out] pDst    Pointer to destination memory block
+* \param[in]  pSrc    Pointer to source memory block
+* \param[in]  cBytes  Number of bytes to copy
 ********************************************************************************** */
 void FLib_MemCpyReverseOrder (void* pDst,
                               const void* pSrc,
@@ -107,8 +137,7 @@ void FLib_MemCpyReverseOrder (void* pDst,
 * \param[in] pData2  Second memory block to compare
 * \param[in] cBytes  Number of bytes to compare
 *
-* \return  TRUE if memory areas are equal. FALSE othwerwise.
-*
+* \return  TRUE if memory areas are equal. FALSE otherwise.
 ********************************************************************************** */
 bool_t FLib_MemCmp (const void* pData1,
                     const void* pData2,
@@ -123,10 +152,9 @@ bool_t FLib_MemCmp (const void* pData1,
 *
 * \param[in] pAddr   Location to be compared
 * \param[in] val     Reference value
-* \param[in] length  Number of bytes to compare
+* \param[in] len  Number of bytes to compare
 *
 * \return  TRUE if all bytes match and FALSE otherwise.
-*
 ********************************************************************************** */
 bool_t FLib_MemCmpToVal(const void* pAddr,
                         uint8_t val,
@@ -140,7 +168,6 @@ bool_t FLib_MemCmpToVal(const void* pAddr,
 * \param[in] pData   Pointer to memory block to reset
 * \param[in] value   Value that memory block will be set to
 * \param[in] cBytes  Number of bytes to set
-*
 ********************************************************************************** */
  void FLib_MemSet (void* pData,
                    uint8_t value,
@@ -154,7 +181,6 @@ bool_t FLib_MemCmpToVal(const void* pAddr,
 * \param[out] pDst   Pointer to destination memory block
 * \param[in] pSrc    Pointer to source memory block
 * \param[in] cBytes  Number of bytes to copy
-*
 ********************************************************************************** */
 void FLib_MemInPlaceCpy (void* pDst,
                          void* pSrc,
@@ -167,7 +193,6 @@ void FLib_MemInPlaceCpy (void* pDst,
 *
 * \param[out] pDst   Pointer to destination memory block
 * \param[in] val16   The 16-bit value to be copied
-*
 ********************************************************************************** */
 void FLib_MemCopy16Unaligned (void* pDst,
                               uint16_t val16
@@ -179,7 +204,6 @@ void FLib_MemCopy16Unaligned (void* pDst,
 *
 * \param[out] pDst   Pointer to destination memory block
 * \param[in] val32   The 32-bit value to be copied
-*
 ********************************************************************************** */
 void FLib_MemCopy32Unaligned (void* pDst,
                               uint32_t val32
@@ -191,7 +215,6 @@ void FLib_MemCopy32Unaligned (void* pDst,
 *
 * \param[out] pDst   Pointer to destination memory block
 * \param[in] val64   The 64-bit value to be copied
-*
 ********************************************************************************** */
 void FLib_MemCopy64Unaligned (void* pDst,
                               uint64_t val64
@@ -203,12 +226,9 @@ void FLib_MemCopy64Unaligned (void* pDst,
 *
 * \param[out] pPtr   Pointer to the pointer to be updated
 * \param[in] offset  The offset(in bytes) to be added
-*
 ********************************************************************************** */
 void FLib_AddOffsetToPointer (void** pPtr,
                               uint32_t offset);
-
-#define FLib_AddOffsetToPtr(pPtr,offset) FLib_AddOffsetToPointer((void**)(pPtr),(offset))
 
 
 /*! *********************************************************************************
@@ -217,7 +237,6 @@ void FLib_AddOffsetToPointer (void** pPtr,
 * \param[in]  str  A NULL terminated string
 *
 * \return  the size of string in bytes
-*
 ********************************************************************************** */
 uint32_t FLib_StrLen(const char *str);
 
@@ -229,7 +248,6 @@ uint32_t FLib_StrLen(const char *str);
 * \param[in] pCmp2  pointer to the second 2-byte compare value
 *
 * \return  TRUE if the two bytes are equal, and FALSE otherwise.
-*
 ********************************************************************************** */
 #define FLib_Cmp2Bytes(pCmp1, pCmp2) ((((uint8_t *)(pCmp1))[0] == ((uint8_t *)(pCmp2))[0]) && \
                                       (((uint8_t *)(pCmp1))[1] == ((uint8_t *)(pCmp2))[1]))
@@ -241,9 +259,8 @@ uint32_t FLib_StrLen(const char *str);
 * \return  The maximum value of arguments a and b
 *
 * \remarks
-*   The primitive should must be implemented as a macro, as it should be possible to
+*   The primitive must be implemented as a macro, as it should be possible to
 *   evaluate the result on compile time if the arguments are constants.
-*
 ********************************************************************************** */
 #define FLib_GetMax(a,b)    (((a) > (b)) ? (a) : (b))
 
@@ -254,11 +271,15 @@ uint32_t FLib_StrLen(const char *str);
 * \return  The minimum value of arguments a and b
 *
 * \remarks
-*   The primitive should must be implemented as a macro, as it should be possible to
+*   The primitive must be implemented as a macro, as it should be possible to
 *   evaluate the result on compile time if the arguments are constants.
-*
 ********************************************************************************** */
 #define FLib_GetMin(a,b)    (((a) < (b)) ? (a) : (b))
+
+
+/*!
+ * @}  end of FunctionLib addtogroup
+ */
 
 #ifdef __cplusplus
 }

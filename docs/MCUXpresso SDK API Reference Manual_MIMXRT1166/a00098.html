@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -131,9 +131,9 @@ Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00701"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a00701">xbara_control_config_t</a></td></tr>
-<tr class="memdesc:a00701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the configuration structure of the XBARA control register.  <a href="a00098.html#a00701">More...</a><br/></td></tr>
-<tr class="separator:a00701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00704"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a00704">xbara_control_config_t</a></td></tr>
+<tr class="memdesc:a00704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the configuration structure of the XBARA control register.  <a href="a00098.html#a00704">More...</a><br/></td></tr>
+<tr class="separator:a00704"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -189,12 +189,12 @@ XBARA functional Operation.</h2></td></tr>
 <tr class="memitem:gaee2d4bb11ed4c302dc6d66904f4eb7a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#gaee2d4bb11ed4c302dc6d66904f4eb7a8">XBARA_ClearStatusFlags</a> (XBARA_Type *base, uint32_t mask)</td></tr>
 <tr class="memdesc:gaee2d4bb11ed4c302dc6d66904f4eb7a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the edge detection status flags of relative mask.  <a href="#gaee2d4bb11ed4c302dc6d66904f4eb7a8">More...</a><br/></td></tr>
 <tr class="separator:gaee2d4bb11ed4c302dc6d66904f4eb7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa010e6aecc627b857b04d9c2e8f5178b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#gaa010e6aecc627b857b04d9c2e8f5178b">XBARA_SetOutputSignalConfig</a> (XBARA_Type *base, xbar_output_signal_t output, const <a class="el" href="a00098.html#a00701">xbara_control_config_t</a> *controlConfig)</td></tr>
+<tr class="memitem:gaa010e6aecc627b857b04d9c2e8f5178b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#gaa010e6aecc627b857b04d9c2e8f5178b">XBARA_SetOutputSignalConfig</a> (XBARA_Type *base, xbar_output_signal_t output, const <a class="el" href="a00098.html#a00704">xbara_control_config_t</a> *controlConfig)</td></tr>
 <tr class="memdesc:gaa010e6aecc627b857b04d9c2e8f5178b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the XBARA control register.  <a href="#gaa010e6aecc627b857b04d9c2e8f5178b">More...</a><br/></td></tr>
 <tr class="separator:gaa010e6aecc627b857b04d9c2e8f5178b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00701" id="a00701"></a>
+<a name="a00704" id="a00704"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -484,7 +484,7 @@ XBARA functional Operation.</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00098.html#a00701">xbara_control_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00098.html#a00704">xbara_control_config_t</a> *&#160;</td>
           <td class="paramname"><em>controlConfig</em>&#160;</td>
         </tr>
         <tr>
@@ -496,7 +496,7 @@ XBARA functional Operation.</h2></td></tr>
 </div><div class="memdoc">
 <p>This function configures an XBARA control register. The active edge detection and the DMA/IRQ function on the corresponding XBARA output can be set.</p>
 <p>Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00098.html#a00701">xbara_control_config_t</a> userConfig;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00098.html#a00704">xbara_control_config_t</a> userConfig;</div>
 <div class="line">userConfig.<a class="code" href="a00098.html#a115969c58f3d6d8642a1095a7c685167">activeEdge</a> = <a class="code" href="a00098.html#ggacf40a09fdbb3dd3f141697fb08ce224caa9f6a89ba6b33bb42492a01a32e125d2">kXBARA_EdgeRising</a>;</div>
 <div class="line">userConfig.<a class="code" href="a00098.html#ae5ec7c11cc4f3164a562917fbc8f9183">requestType</a> = kXBARA_RequestInterruptEnalbe;</div>
 <div class="line"><a class="code" href="a00098.html#gaa010e6aecc627b857b04d9c2e8f5178b">XBARA_SetOutputSignalConfig</a>(XBARA, kXBARA_OutputDMAMUX18, &amp;userConfig);</div>

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -118,50 +118,50 @@ Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00552"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a00552">lcdifv2_display_config_t</a></td></tr>
-<tr class="memdesc:a00552"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 display configure structure.  <a href="a00052.html#a00552">More...</a><br/></td></tr>
-<tr class="separator:a00552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00551"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a00551">lcdifv2_buffer_config_t</a></td></tr>
-<tr class="memdesc:a00551"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 source buffer configuration.  <a href="a00052.html#a00551">More...</a><br/></td></tr>
-<tr class="separator:a00551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00550"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a00550">lcdifv2_blend_config_t</a></td></tr>
-<tr class="memdesc:a00550"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending configuration.  <a href="a00052.html#a00550">More...</a><br/></td></tr>
-<tr class="separator:a00550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00555"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a00555">lcdifv2_display_config_t</a></td></tr>
+<tr class="memdesc:a00555"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 display configure structure.  <a href="a00052.html#a00555">More...</a><br/></td></tr>
+<tr class="separator:a00555"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00554"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a00554">lcdifv2_buffer_config_t</a></td></tr>
+<tr class="memdesc:a00554"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 source buffer configuration.  <a href="a00052.html#a00554">More...</a><br/></td></tr>
+<tr class="separator:a00554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00553"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a00553">lcdifv2_blend_config_t</a></td></tr>
+<tr class="memdesc:a00553"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending configuration.  <a href="a00052.html#a00553">More...</a><br/></td></tr>
+<tr class="separator:a00553"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga56846b0f6c97d532e0f9b5fa48e10022"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga56846b0f6c97d532e0f9b5fa48e10022">LCDIFV2_MAKE_FIFO_EMPTY_INTERRUPT</a>(layer)&#160;&#160;&#160;(1U &lt;&lt; ((uint32_t)(layer) + 24U))</td></tr>
+<tr class="memitem:ga56846b0f6c97d532e0f9b5fa48e10022"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga56846b0f6c97d532e0f9b5fa48e10022">LCDIFV2_MAKE_FIFO_EMPTY_INTERRUPT</a>(layer)&#160;&#160;&#160;(1UL &lt;&lt; ((uint32_t)(layer) + 24U))</td></tr>
 <tr class="memdesc:ga56846b0f6c97d532e0f9b5fa48e10022"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 FIFO empty interrupt.  <a href="#ga56846b0f6c97d532e0f9b5fa48e10022">More...</a><br/></td></tr>
 <tr class="separator:ga56846b0f6c97d532e0f9b5fa48e10022"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa6a7735cc6fdabc028438e0ee26dccde"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gaa6a7735cc6fdabc028438e0ee26dccde">LCDIFV2_MAKE_DMA_DONE_INTERRUPT</a>(layer)&#160;&#160;&#160;(1U &lt;&lt; ((uint32_t)(layer) + 16U))</td></tr>
+<tr class="memitem:gaa6a7735cc6fdabc028438e0ee26dccde"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gaa6a7735cc6fdabc028438e0ee26dccde">LCDIFV2_MAKE_DMA_DONE_INTERRUPT</a>(layer)&#160;&#160;&#160;(1UL &lt;&lt; ((uint32_t)(layer) + 16U))</td></tr>
 <tr class="memdesc:gaa6a7735cc6fdabc028438e0ee26dccde"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 DMA done interrupt.  <a href="#gaa6a7735cc6fdabc028438e0ee26dccde">More...</a><br/></td></tr>
 <tr class="separator:gaa6a7735cc6fdabc028438e0ee26dccde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9dfe40d044ec28c4418d2372e9862a9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga9dfe40d044ec28c4418d2372e9862a9b">LCDIFV2_MAKE_DMA_ERROR_INTERRUPT</a>(layer)&#160;&#160;&#160;(1U &lt;&lt; ((uint32_t)(layer) + 8U))</td></tr>
+<tr class="memitem:ga9dfe40d044ec28c4418d2372e9862a9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga9dfe40d044ec28c4418d2372e9862a9b">LCDIFV2_MAKE_DMA_ERROR_INTERRUPT</a>(layer)&#160;&#160;&#160;(1UL &lt;&lt; ((uint32_t)(layer) + 8U))</td></tr>
 <tr class="memdesc:ga9dfe40d044ec28c4418d2372e9862a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 DMA error interrupt.  <a href="#ga9dfe40d044ec28c4418d2372e9862a9b">More...</a><br/></td></tr>
 <tr class="separator:ga9dfe40d044ec28c4418d2372e9862a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga79dc11f5ab25c5d06bbf2233a6fef875"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga79dc11f5ab25c5d06bbf2233a6fef875">_lcdifv2_polarity_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a689e9418949051b0d34b25b3d3d73e44">kLCDIFV2_VsyncActiveLow</a> = LCDIFV2_CTRL_INV_VS_MASK, 
-<br/>
 &#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875aff940f5ac0021e784d5b32070b9e8750">kLCDIFV2_VsyncActiveHigh</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0f6ab525dce0f9b1df439fd14289152f">kLCDIFV2_HsyncActiveLow</a> = LCDIFV2_CTRL_INV_HS_MASK, 
 <br/>
 &#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a3998d632b82ecac7474b1698334375cf">kLCDIFV2_HsyncActiveHigh</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875aac082fd580ff5a336d0b68e419f27e6d">kLCDIFV2_DataEnableActiveLow</a> = LCDIFV2_CTRL_INV_DE_MASK, 
-<br/>
 &#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875ac2b7e8fe2434f50df72d4678f50c95ec">kLCDIFV2_DataEnableActiveHigh</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0fbadd2ed932c4cd52ac0e29893cf9a6">kLCDIFV2_DriveDataOnFallingClkEdge</a> = LCDIFV2_CTRL_INV_PXCK_MASK, 
 <br/>
 &#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a954ef56b636c596d6bf2849228eb09b8">kLCDIFV2_DriveDataOnRisingClkEdge</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a21e8f7c725afa37214c24ec9ad48fe8c">kLCDIFV2_DataActiveLow</a> = LCDIFV2_CTRL_NEG_MASK, 
+&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc">kLCDIFV2_DataActiveHigh</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc">kLCDIFV2_DataActiveHigh</a> = 0U
+&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a689e9418949051b0d34b25b3d3d73e44">kLCDIFV2_VsyncActiveLow</a> = LCDIFV2_CTRL_INV_VS_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0f6ab525dce0f9b1df439fd14289152f">kLCDIFV2_HsyncActiveLow</a> = LCDIFV2_CTRL_INV_HS_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875aac082fd580ff5a336d0b68e419f27e6d">kLCDIFV2_DataEnableActiveLow</a> = LCDIFV2_CTRL_INV_DE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0fbadd2ed932c4cd52ac0e29893cf9a6">kLCDIFV2_DriveDataOnFallingClkEdge</a> = LCDIFV2_CTRL_INV_PXCK_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00052.html#gga79dc11f5ab25c5d06bbf2233a6fef875a21e8f7c725afa37214c24ec9ad48fe8c">kLCDIFV2_DataActiveLow</a> = LCDIFV2_CTRL_NEG_MASK
 <br/>
  }</td></tr>
 <tr class="memdesc:ga79dc11f5ab25c5d06bbf2233a6fef875"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 signal polarity flags.  <a href="a00052.html#ga79dc11f5ab25c5d06bbf2233a6fef875">More...</a><br/></td></tr>
@@ -376,7 +376,7 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga6e1d2ba9a5303fd29a8f78702a82895e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6e1d2ba9a5303fd29a8f78702a82895e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga6e1d2ba9a5303fd29a8f78702a82895e">FSL_LCDIFV2_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga6e1d2ba9a5303fd29a8f78702a82895e">FSL_LCDIFV2_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
 <tr class="memdesc:ga6e1d2ba9a5303fd29a8f78702a82895e"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 driver version. <br/></td></tr>
 <tr class="separator:ga6e1d2ba9a5303fd29a8f78702a82895e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -394,10 +394,10 @@ LCDIF v2 initialization and de-initialization</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Display</h2></td></tr>
-<tr class="memitem:gabed37700087de4e0029bcbbfebac7b59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gabed37700087de4e0029bcbbfebac7b59">LCDIFV2_DisplayGetDefaultConfig</a> (<a class="el" href="a00052.html#a00552">lcdifv2_display_config_t</a> *config)</td></tr>
+<tr class="memitem:gabed37700087de4e0029bcbbfebac7b59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gabed37700087de4e0029bcbbfebac7b59">LCDIFV2_DisplayGetDefaultConfig</a> (<a class="el" href="a00052.html#a00555">lcdifv2_display_config_t</a> *config)</td></tr>
 <tr class="memdesc:gabed37700087de4e0029bcbbfebac7b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the LCDIF display default configuration structure.  <a href="#gabed37700087de4e0029bcbbfebac7b59">More...</a><br/></td></tr>
 <tr class="separator:gabed37700087de4e0029bcbbfebac7b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacead64f9e9366e70b3536628f9870564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gacead64f9e9366e70b3536628f9870564">LCDIFV2_SetDisplayConfig</a> (LCDIFV2_Type *base, const <a class="el" href="a00052.html#a00552">lcdifv2_display_config_t</a> *config)</td></tr>
+<tr class="memitem:gacead64f9e9366e70b3536628f9870564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gacead64f9e9366e70b3536628f9870564">LCDIFV2_SetDisplayConfig</a> (LCDIFV2_Type *base, const <a class="el" href="a00052.html#a00555">lcdifv2_display_config_t</a> *config)</td></tr>
 <tr class="memdesc:gacead64f9e9366e70b3536628f9870564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LCDIF v2 display configurations.  <a href="#gacead64f9e9366e70b3536628f9870564">More...</a><br/></td></tr>
 <tr class="separator:gacead64f9e9366e70b3536628f9870564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaabe85f1639111a0fd6d1522a201e54a8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gaabe85f1639111a0fd6d1522a201e54a8">LCDIFV2_EnableDisplay</a> (LCDIFV2_Type *base, bool enable)</td></tr>
@@ -421,7 +421,7 @@ Interrupts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 LUT</h2></td></tr>
-<tr class="memitem:ga290ea115f86cc1bfef9328067fba224a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga290ea115f86cc1bfef9328067fba224a">LCDIFV2_SetLut</a> (LCDIFV2_Type *base, uint8_t layerIndex, const uint32_t *lutData, uint16_t count, bool useShadowLoad)</td></tr>
+<tr class="memitem:ga290ea115f86cc1bfef9328067fba224a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga290ea115f86cc1bfef9328067fba224a">LCDIFV2_SetLut</a> (LCDIFV2_Type *base, uint8_t layerIndex, const uint32_t *lutData, uint16_t count, bool useShadowLoad)</td></tr>
 <tr class="memdesc:ga290ea115f86cc1bfef9328067fba224a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LUT data.  <a href="#ga290ea115f86cc1bfef9328067fba224a">More...</a><br/></td></tr>
 <tr class="separator:ga290ea115f86cc1bfef9328067fba224a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -433,7 +433,7 @@ Layer operation</h2></td></tr>
 <tr class="memitem:ga8fd876343654535defa3a7e2908103ec"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga8fd876343654535defa3a7e2908103ec">LCDIFV2_SetLayerOffset</a> (LCDIFV2_Type *base, uint8_t layerIndex, uint16_t offsetX, uint16_t offsetY)</td></tr>
 <tr class="memdesc:ga8fd876343654535defa3a7e2908103ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer position in output frame.  <a href="#ga8fd876343654535defa3a7e2908103ec">More...</a><br/></td></tr>
 <tr class="separator:ga8fd876343654535defa3a7e2908103ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5eee64e6c0e6e944802c63bf8723247d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga5eee64e6c0e6e944802c63bf8723247d">LCDIFV2_SetLayerBufferConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00052.html#a00551">lcdifv2_buffer_config_t</a> *config)</td></tr>
+<tr class="memitem:ga5eee64e6c0e6e944802c63bf8723247d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga5eee64e6c0e6e944802c63bf8723247d">LCDIFV2_SetLayerBufferConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00052.html#a00554">lcdifv2_buffer_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga5eee64e6c0e6e944802c63bf8723247d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer source buffer configuration.  <a href="#ga5eee64e6c0e6e944802c63bf8723247d">More...</a><br/></td></tr>
 <tr class="separator:ga5eee64e6c0e6e944802c63bf8723247d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44b1c8c192b0711fcb43d4d55a1d35e9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga44b1c8c192b0711fcb43d4d55a1d35e9">LCDIFV2_SetLayerBufferAddr</a> (LCDIFV2_Type *base, uint8_t layerIndex, uint32_t addr)</td></tr>
@@ -448,7 +448,7 @@ Layer operation</h2></td></tr>
 <tr class="memitem:gaf3ce7445b7b1882b509e005b3a022941"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gaf3ce7445b7b1882b509e005b3a022941">LCDIFV2_SetLayerBackGroundColor</a> (LCDIFV2_Type *base, uint8_t layerIndex, uint32_t backGroundColor)</td></tr>
 <tr class="memdesc:gaf3ce7445b7b1882b509e005b3a022941"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer back ground color.  <a href="#gaf3ce7445b7b1882b509e005b3a022941">More...</a><br/></td></tr>
 <tr class="separator:gaf3ce7445b7b1882b509e005b3a022941"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8fa66c5933a819853b533da9eacbe2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gad8fa66c5933a819853b533da9eacbe2f">LCDIFV2_SetLayerBlendConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00052.html#a00550">lcdifv2_blend_config_t</a> *config)</td></tr>
+<tr class="memitem:gad8fa66c5933a819853b533da9eacbe2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gad8fa66c5933a819853b533da9eacbe2f">LCDIFV2_SetLayerBlendConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00052.html#a00553">lcdifv2_blend_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad8fa66c5933a819853b533da9eacbe2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer alpha blend mode.  <a href="#gad8fa66c5933a819853b533da9eacbe2f">More...</a><br/></td></tr>
 <tr class="separator:gad8fa66c5933a819853b533da9eacbe2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1fdda10ffad58347fea2fd7c8329d11a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#ga1fdda10ffad58347fea2fd7c8329d11a">LCDIFV2_SetCscMode</a> (LCDIFV2_Type *base, uint8_t layerIndex, <a class="el" href="a00052.html#gaebf78f91cbd1e0b5481222b3674ff7f2">lcdifv2_csc_mode_t</a> mode)</td></tr>
@@ -457,18 +457,18 @@ Layer operation</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Porter Duff</h2></td></tr>
-<tr class="memitem:gaa2c722736c01796f61c67681a4eb0656"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gaa2c722736c01796f61c67681a4eb0656">LCDIFV2_GetPorterDuffConfig</a> (<a class="el" href="a00052.html#ga4078f51a5317cfb7aed7fb4935909e15">lcdifv2_pd_blend_mode_t</a> mode, <a class="el" href="a00052.html#gac34c8f53d468df33b2a212e450c76eaa">lcdifv2_pd_layer_t</a> layer, <a class="el" href="a00052.html#a00550">lcdifv2_blend_config_t</a> *config)</td></tr>
+<tr class="memitem:gaa2c722736c01796f61c67681a4eb0656"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gaa2c722736c01796f61c67681a4eb0656">LCDIFV2_GetPorterDuffConfig</a> (<a class="el" href="a00052.html#ga4078f51a5317cfb7aed7fb4935909e15">lcdifv2_pd_blend_mode_t</a> mode, <a class="el" href="a00052.html#gac34c8f53d468df33b2a212e450c76eaa">lcdifv2_pd_layer_t</a> layer, <a class="el" href="a00052.html#a00553">lcdifv2_blend_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaa2c722736c01796f61c67681a4eb0656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the blend configuration for Porter Duff blend.  <a href="#gaa2c722736c01796f61c67681a4eb0656">More...</a><br/></td></tr>
 <tr class="separator:gaa2c722736c01796f61c67681a4eb0656"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Misc</h2></td></tr>
-<tr class="memitem:gafde98fd72f7510c363728aa9624ee1b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gafde98fd72f7510c363728aa9624ee1b3">LCDIFV2_GetMultiLayerGlobalAlpha</a> (const uint8_t blendedAlpha[], uint8_t globalAlpha[], uint8_t layerCount)</td></tr>
+<tr class="memitem:gafde98fd72f7510c363728aa9624ee1b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#gafde98fd72f7510c363728aa9624ee1b3">LCDIFV2_GetMultiLayerGlobalAlpha</a> (const uint8_t blendedAlpha[], uint8_t globalAlpha[], uint8_t layerCount)</td></tr>
 <tr class="memdesc:gafde98fd72f7510c363728aa9624ee1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the global alpha values for multiple layer blend.  <a href="#gafde98fd72f7510c363728aa9624ee1b3">More...</a><br/></td></tr>
 <tr class="separator:gafde98fd72f7510c363728aa9624ee1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00552" id="a00552"></a>
+<a name="a00555" id="a00555"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -634,7 +634,7 @@ Misc</h2></td></tr>
 
 </div>
 </div>
-<a name="a00551" id="a00551"></a>
+<a name="a00554" id="a00554"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -680,7 +680,7 @@ Misc</h2></td></tr>
 
 </div>
 </div>
-<a name="a00550" id="a00550"></a>
+<a name="a00553" id="a00553"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -743,7 +743,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">layer</td><td>)</td>
-          <td>&#160;&#160;&#160;(1U &lt;&lt; ((uint32_t)(layer) + 24U))</td>
+          <td>&#160;&#160;&#160;(1UL &lt;&lt; ((uint32_t)(layer) + 24U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -759,7 +759,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">layer</td><td>)</td>
-          <td>&#160;&#160;&#160;(1U &lt;&lt; ((uint32_t)(layer) + 16U))</td>
+          <td>&#160;&#160;&#160;(1UL &lt;&lt; ((uint32_t)(layer) + 16U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -775,7 +775,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">layer</td><td>)</td>
-          <td>&#160;&#160;&#160;(1U &lt;&lt; ((uint32_t)(layer) + 8U))</td>
+          <td>&#160;&#160;&#160;(1UL &lt;&lt; ((uint32_t)(layer) + 8U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -793,34 +793,34 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a689e9418949051b0d34b25b3d3d73e44"></a>kLCDIFV2_VsyncActiveLow</em>&nbsp;</td><td class="fielddoc">
-<p>VSYNC active low. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875aff940f5ac0021e784d5b32070b9e8750"></a>kLCDIFV2_VsyncActiveHigh</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875aff940f5ac0021e784d5b32070b9e8750"></a>kLCDIFV2_VsyncActiveHigh</em>&nbsp;</td><td class="fielddoc">
 <p>VSYNC active high. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a0f6ab525dce0f9b1df439fd14289152f"></a>kLCDIFV2_HsyncActiveLow</em>&nbsp;</td><td class="fielddoc">
-<p>HSYNC active low. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a3998d632b82ecac7474b1698334375cf"></a>kLCDIFV2_HsyncActiveHigh</em>&nbsp;</td><td class="fielddoc">
 <p>HSYNC active high. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875aac082fd580ff5a336d0b68e419f27e6d"></a>kLCDIFV2_DataEnableActiveLow</em>&nbsp;</td><td class="fielddoc">
-<p>Data enable line active low. </p>
-</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875ac2b7e8fe2434f50df72d4678f50c95ec"></a>kLCDIFV2_DataEnableActiveHigh</em>&nbsp;</td><td class="fielddoc">
 <p>Data enable line active high. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a0fbadd2ed932c4cd52ac0e29893cf9a6"></a>kLCDIFV2_DriveDataOnFallingClkEdge</em>&nbsp;</td><td class="fielddoc">
-<p>Output data on falling clock edge, capture data on rising clock edge. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a954ef56b636c596d6bf2849228eb09b8"></a>kLCDIFV2_DriveDataOnRisingClkEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Output data on rising clock edge, capture data on falling clock edge. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a21e8f7c725afa37214c24ec9ad48fe8c"></a>kLCDIFV2_DataActiveLow</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc"></a>kLCDIFV2_DataActiveHigh</em>&nbsp;</td><td class="fielddoc">
 <p>Data active high. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc"></a>kLCDIFV2_DataActiveHigh</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a689e9418949051b0d34b25b3d3d73e44"></a>kLCDIFV2_VsyncActiveLow</em>&nbsp;</td><td class="fielddoc">
+<p>VSYNC active low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a0f6ab525dce0f9b1df439fd14289152f"></a>kLCDIFV2_HsyncActiveLow</em>&nbsp;</td><td class="fielddoc">
+<p>HSYNC active low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875aac082fd580ff5a336d0b68e419f27e6d"></a>kLCDIFV2_DataEnableActiveLow</em>&nbsp;</td><td class="fielddoc">
+<p>Data enable line active low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a0fbadd2ed932c4cd52ac0e29893cf9a6"></a>kLCDIFV2_DriveDataOnFallingClkEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Output data on falling clock edge, capture data on rising clock edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga79dc11f5ab25c5d06bbf2233a6fef875a21e8f7c725afa37214c24ec9ad48fe8c"></a>kLCDIFV2_DataActiveLow</em>&nbsp;</td><td class="fielddoc">
 <p>Data active high. </p>
 </td></tr>
 </table>
@@ -1301,7 +1301,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void LCDIFV2_DisplayGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00052.html#a00552">lcdifv2_display_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00052.html#a00555">lcdifv2_display_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1341,7 +1341,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00052.html#a00552">lcdifv2_display_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00052.html#a00555">lcdifv2_display_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1593,7 +1593,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_SetLut </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_SetLut </td>
           <td>(</td>
           <td class="paramtype">LCDIFV2_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1780,7 +1780,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00052.html#a00551">lcdifv2_buffer_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00052.html#a00554">lcdifv2_buffer_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -2008,7 +2008,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00052.html#a00550">lcdifv2_blend_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00052.html#a00553">lcdifv2_blend_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -2075,7 +2075,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetPorterDuffConfig </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetPorterDuffConfig </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00052.html#ga4078f51a5317cfb7aed7fb4935909e15">lcdifv2_pd_blend_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>, </td>
@@ -2089,7 +2089,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#a00550">lcdifv2_blend_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00052.html#a00553">lcdifv2_blend_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -2128,7 +2128,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetMultiLayerGlobalAlpha </td>
+          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetMultiLayerGlobalAlpha </td>
           <td>(</td>
           <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>blendedAlpha</em>[], </td>

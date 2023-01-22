@@ -869,11 +869,6 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/src/nx_crypto_methods.c</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_module_start.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/src/nx_crypto_module_start.c</FilePath>
-            </File>
-            <File>
               <FileName>nx_crypto_null_cipher.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/src/nx_crypto_null_cipher.c</FilePath>
@@ -1309,9 +1304,54 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_dtls_verify_mac.c</FilePath>
             </File>
             <File>
+              <FileName>nx_secure_generate_client_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_client_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_master_secret.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_master_secret.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_premaster_secret.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_premaster_secret.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_server_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_server_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_session_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_session_keys.c</FilePath>
+            </File>
+            <File>
               <FileName>nx_secure_module_hash_compute.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_module_hash_compute.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_process_client_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_process_client_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_process_server_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_process_server_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_remote_certificate_verify.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_remote_certificate_verify.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_session_keys_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_session_keys_set.c</FilePath>
             </File>
             <File>
               <FileName>nx_secure_tls_1_3_client_handshake.c</FileName>
@@ -1799,6 +1839,11 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_session_packet_buffer_set.c</FilePath>
             </File>
             <File>
+              <FileName>nx_secure_tls_session_packet_pool_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_session_packet_pool_set.c</FilePath>
+            </File>
+            <File>
               <FileName>nx_secure_tls_session_protocol_version_override.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_session_protocol_version_override.c</FilePath>
@@ -1882,6 +1927,16 @@
               <FileName>nx_secure_tls_verify_mac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_verify_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_trusted_certificate_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_trusted_certificate_add.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_verify_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_verify_mac.c</FilePath>
             </File>
             <File>
               <FileName>nx_secure_x509.c</FileName>
@@ -2334,6 +2389,11 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nxe_secure_tls_session_packet_buffer_set.c</FilePath>
             </File>
             <File>
+              <FileName>nxe_secure_tls_session_packet_pool_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nxe_secure_tls_session_packet_pool_set.c</FilePath>
+            </File>
+            <File>
               <FileName>nxe_secure_tls_session_protocol_version_override.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nxe_secure_tls_session_protocol_version_override.c</FilePath>
@@ -2582,6 +2642,11 @@
               <FileName>nx_arp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
             </File>
             <File>
               <FileName>nx_icmp.h</FileName>
@@ -3563,11 +3628,6 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/src/nx_crypto_methods.c</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_module_start.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/src/nx_crypto_module_start.c</FilePath>
-            </File>
-            <File>
               <FileName>nx_crypto_null_cipher.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/src/nx_crypto_null_cipher.c</FilePath>
@@ -4003,9 +4063,54 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_dtls_verify_mac.c</FilePath>
             </File>
             <File>
+              <FileName>nx_secure_generate_client_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_client_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_master_secret.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_master_secret.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_premaster_secret.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_premaster_secret.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_server_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_server_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_generate_session_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_generate_session_keys.c</FilePath>
+            </File>
+            <File>
               <FileName>nx_secure_module_hash_compute.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_module_hash_compute.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_process_client_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_process_client_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_process_server_key_exchange.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_process_server_key_exchange.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_remote_certificate_verify.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_remote_certificate_verify.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_session_keys_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_session_keys_set.c</FilePath>
             </File>
             <File>
               <FileName>nx_secure_tls_1_3_client_handshake.c</FileName>
@@ -4493,6 +4598,11 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_session_packet_buffer_set.c</FilePath>
             </File>
             <File>
+              <FileName>nx_secure_tls_session_packet_pool_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_session_packet_pool_set.c</FilePath>
+            </File>
+            <File>
               <FileName>nx_secure_tls_session_protocol_version_override.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_session_protocol_version_override.c</FilePath>
@@ -4576,6 +4686,16 @@
               <FileName>nx_secure_tls_verify_mac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_tls_verify_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_trusted_certificate_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_trusted_certificate_add.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_verify_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_verify_mac.c</FilePath>
             </File>
             <File>
               <FileName>nx_secure_x509.c</FileName>
@@ -5028,6 +5148,11 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nxe_secure_tls_session_packet_buffer_set.c</FilePath>
             </File>
             <File>
+              <FileName>nxe_secure_tls_session_packet_pool_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nxe_secure_tls_session_packet_pool_set.c</FilePath>
+            </File>
+            <File>
               <FileName>nxe_secure_tls_session_protocol_version_override.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nxe_secure_tls_session_protocol_version_override.c</FilePath>
@@ -5276,6 +5401,11 @@
               <FileName>nx_arp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
             </File>
             <File>
               <FileName>nx_icmp.h</FileName>

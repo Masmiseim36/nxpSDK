@@ -12,10 +12,9 @@
 #include <string.h>
 #include <stddef.h>
 
-#include "mpp_api_types.h"
-#include "hal_camera_dev.h"
-#include "hal_valgo_dev.h"
+#include "hal_graphics_dev.h"
 #include "hal_draw.h"
+#include "hal_utils.h"
 
 #define BLACK_RGB565    (0x0000)
 #define WHITE_RGB565    (0xFFFF)
@@ -45,14 +44,32 @@ int hal_img_convert_setup(gfx_dev_t *dev)
     return hal_pxp_setup(dev);
 }
 
-int hal_tflite_setup(vision_algo_dev_t *dev);
-int hal_inference_tflite_setup(vision_algo_dev_t *dev)
+/* Display setup */
+int HAL_DisplayDev_Lcdifv2Rk055a_setup(display_dev_t *dev);
+
+hal_display_setup_t display_setup[] =
 {
-    return hal_tflite_setup(dev);
+    {"Lcdifv2Rk055ah", HAL_DisplayDev_Lcdifv2Rk055a_setup},
+};
+
+int setup_display_dev(hal_display_setup_t display_setup[], int display_nb,
+		      const char *name, display_dev_t *dev);
+int hal_display_setup(const char *name, display_dev_t *dev)
+{
+    return setup_display_dev(display_setup, ARRAY_SIZE(display_setup), name, dev);
 }
 
-int hal_glow_setup(vision_algo_dev_t *dev);
-int hal_inference_glow_setup(vision_algo_dev_t *dev)
+/* Camera setup */
+int HAL_CameraDev_MipiOv5640_setup(const char *name, camera_dev_t *dev, _Bool defconfig);
+
+hal_camera_setup_t camera_setup[] =
 {
-	return hal_glow_setup(dev);
+    {"MipiOv5640", HAL_CameraDev_MipiOv5640_setup},
+};
+
+int setup_camera_dev(hal_camera_setup_t camera_setup[], int camera_nb,
+		      const char *name, camera_dev_t *dev, _Bool defconfig);
+int hal_camera_setup(const char *name, camera_dev_t *dev, _Bool defconfig)
+{
+  return setup_camera_dev(camera_setup, ARRAY_SIZE(camera_setup), name, dev, defconfig);
 }

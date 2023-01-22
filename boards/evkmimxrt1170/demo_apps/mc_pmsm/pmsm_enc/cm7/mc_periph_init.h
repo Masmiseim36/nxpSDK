@@ -58,6 +58,8 @@ typedef struct _clock_setup
 /* Braking resistor macros */
 #define M1_BRAKE_SET()
 #define M1_BRAKE_CLEAR()
+/* DC bus braking threshold hysteresis */
+#define M1_U_DCB_HYSTERESIS (0.05F)
 
 /******************************************************************************
  * ADC measurement definition for motor 1

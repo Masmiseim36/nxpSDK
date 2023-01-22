@@ -14,8 +14,8 @@ slave is correct.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.6.0
-- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -403,7 +403,7 @@ static shell_status_t WriteNewFile(shell_handle_t shellHandle, int32_t argc, cha
         {
             totalS   = ((float)(endMs - startMs)) / 1000U;
             wr_speed = ((float)(writeLines * DEMO_READ_WRITE_LINE_SIZE) / 1024U) / totalS;
-            SHELL_Printf("\r\nWrite file successfully, speed %.1fKB/S. \r\n", wr_speed);
+            SHELL_Printf("\r\nWrite file successfully, speed %.1fKB/S. \r\n", (double)wr_speed);
         }
 
         if (f_close(&g_fileObject))
@@ -465,7 +465,7 @@ static shell_status_t WriteAppendFile(shell_handle_t shellHandle, int32_t argc, 
         {
             totalS   = ((float)(endMs - startMs)) / 1000U;
             wr_speed = ((float)(writeLines * DEMO_READ_WRITE_LINE_SIZE) / 1024U) / totalS;
-            SHELL_Printf("\r\nWrite file successfully, speed %.1fKB/S. \r\n", wr_speed);
+            SHELL_Printf("\r\nWrite file successfully, speed %.1fKB/S. \r\n", (double)wr_speed);
         }
 
         if (f_close(&g_fileObject))
@@ -524,7 +524,7 @@ static shell_status_t ReadFile(shell_handle_t shellHandle, int32_t argc, char **
         {
             totalS   = ((float)(endMs - startMs)) / 1000U;
             re_speed = ((float)(readLines * DEMO_READ_WRITE_LINE_SIZE) / 1024U) / totalS;
-            SHELL_Printf("\r\nRead file successfully, speed %.1fKB/S. \r\n", re_speed);
+            SHELL_Printf("\r\nRead file successfully, speed %.1fKB/S. \r\n", (double)re_speed);
         }
 
         if (f_close(&g_fileObject))

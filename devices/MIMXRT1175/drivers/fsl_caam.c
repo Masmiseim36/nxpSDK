@@ -1006,6 +1006,9 @@ status_t caam_aes_ccm_non_blocking(CAAM_Type *base,
     }
     else if (tag != 0U)
     {
+        /* If we decrypt message with tag, then desc[18] is not last FIFO LOAD because FIFO LOAD is used for TAG */
+        /* So desc[18] is changed from 0x22530000u to 0x22510000u*/
+        descriptor[18] = 0x22510000u;
         descriptor[13] |= 2u; /* ICV_TEST */
     }
     else

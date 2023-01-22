@@ -1,13 +1,13 @@
 var a00093 =
 [
-    [ "ssarc_descriptor_config_t", "a00093.html#a00679", [
+    [ "ssarc_descriptor_config_t", "a00093.html#a00682", [
       [ "address", "a00093.html#a662007b4e4c7502fea9b6ed639cbf4ba", null ],
       [ "data", "a00093.html#a61930fd142cc8c63904a7503a8c921cb", null ],
       [ "size", "a00093.html#a040623a9fc1146c31dcedf6fe332419e", null ],
       [ "operation", "a00093.html#ad74a1cecaf93b105e3e3d05023a679f9", null ],
       [ "type", "a00093.html#a2b6080fb90fe0297ca4830e4f655e081", null ]
     ] ],
-    [ "ssarc_group_config_t", "a00093.html#a00680", [
+    [ "ssarc_group_config_t", "a00093.html#a00683", [
       [ "cpuDomain", "a00093.html#afb0108b7a03709cbac87b624091dfe76", null ],
       [ "startIndex", "a00093.html#a3c546561d7190e9631a349795a99781a", null ],
       [ "endIndex", "a00093.html#af5fa9b62c388e59071f324e074df41da", null ],

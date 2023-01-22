@@ -2,13 +2,16 @@ Overview
 ========
 The pdm sai multi channel edma example shows how to use pdm driver with edma:
 
-In this example, pdm gathers two channels' audio data though edma, then sai sends it to codec.
+In this example, pdm gathers two channels' audio data though edma, then sai sends it to codec, the received DMIC data format,
+ ----------------------------------------------------------------------------------------------------------------------
+ |CHANNEL0 | CHANNEL1 | CHANNEL2 | .... | CHANNEL0 | CHANNEL 1 | CHANNEL2 |....| CHANNEL0 | CHANNEL 1 | CHANNEL2 |....|
+ ----------------------------------------------------------------------------------------------------------------------
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements

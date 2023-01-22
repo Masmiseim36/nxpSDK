@@ -15,7 +15,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/pmsm/pmsm_float/mc_identification
     ${CMAKE_CURRENT_LIST_DIR}/pmsm/pmsm_float/mc_algorithms
     ${CMAKE_CURRENT_LIST_DIR}/pmsm/pmsm_float/state_machine

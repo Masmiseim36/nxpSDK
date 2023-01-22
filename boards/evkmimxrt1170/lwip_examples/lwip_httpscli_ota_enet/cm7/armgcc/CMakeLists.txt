@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lwip_httpscli_ota_enet)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME lwip_httpscli_ota_enet.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -51,7 +57,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../network_board_cfg.h"
 "${ProjDirPath}/../mcuboot_app_support.c"
 "${ProjDirPath}/../mcuboot_app_support.h"
-"${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.c"
+"${ProjDirPath}/../bootutil_port/board_specific/sblconfig.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_config.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
+"${ProjDirPath}/../bootutil_port/flash_map.h"
+"${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
+"${ProjDirPath}/../bootutil_port/sbldef.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -61,10 +74,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../..
-    ${ProjDirPath}/../..
+    ${SdkRootDirPath}/boards/evkmimxrt1170
+    ${SdkRootDirPath}/boards/evkmimxrt1170/lwip_examples/lwip_httpscli_ota_enet
+    ${ProjDirPath}/../bootutil_port
+    ${ProjDirPath}/../bootutil_port/mcuboot_config
+    ${ProjDirPath}/../bootutil_port/sysflash
+    ${ProjDirPath}/../bootutil_port/board_specific
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -76,30 +93,29 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../components/phy/mdio/enet
-    ${ProjDirPath}/../../../../../../components/phy/device/phyksz8081
-    ${ProjDirPath}/../../../../../../components/phy/device/phyrtl8211f
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
-    ${ProjDirPath}/../../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../components/phy
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../components/flash/mflash/mimxrt1170
-    ${ProjDirPath}/../../../../../../components/flash/mflash
-    ${ProjDirPath}/../../../../../../rtos/freertos
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/components/phy/device/phyksz8081
+    ${SdkRootDirPath}/components/phy/device/phyrtl8211f
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm7
+    ${SdkRootDirPath}/middleware/mbedtls
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/components/phy
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt1170
+    ${SdkRootDirPath}/components/flash/mflash
+    ${SdkRootDirPath}/components/silicon_id
+    ${SdkRootDirPath}/components/silicon_id/socs/imxrt1170
+    ${SdkRootDirPath}/rtos/freertos/corehttp
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/middleware/llhttp
 )
 
 # include modules
-include(driver_mdio-enet_MIMXRT1176_cm7)
-
 include(driver_phy-device-ksz8081_MIMXRT1176_cm7)
 
 include(driver_phy-device-rtl8211f_MIMXRT1176_cm7)
@@ -126,13 +142,19 @@ include(component_mflash_common_MIMXRT1176_cm7)
 
 include(driver_flexspi_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_libraries_corehttp_MIMXRT1176_cm7)
+include(component_silicon_id_MIMXRT1176_cm7)
+
+include(driver_common_MIMXRT1176_cm7)
+
+include(component_silicon_id_rt1170_MIMXRT1176_cm7)
+
+include(middleware_freertos_corehttp_MIMXRT1176_cm7)
 
 include(driver_clock_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1176_cm7)
 
-include(driver_common_MIMXRT1176_cm7)
+include(utility_shell_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
 
@@ -160,19 +182,15 @@ include(driver_pmu_1_MIMXRT1176_cm7)
 
 include(driver_dcdc_soc_MIMXRT1176_cm7)
 
-include(component_silicon_id_MIMXRT1176_cm7)
-
-include(driver_mdio-common_MIMXRT1176_cm7)
-
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
-include(driver_memory_MIMXRT1176_cm7)
-
 include(driver_caam_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_http_parser_MIMXRT1176_cm7)
+include(driver_memory_MIMXRT1176_cm7)
+
+include(middleware_llhttp_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_MIMXRT1176_cm7)
 
@@ -183,15 +201,13 @@ include(utilities_misc_utilities_MIMXRT1176_cm7)
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

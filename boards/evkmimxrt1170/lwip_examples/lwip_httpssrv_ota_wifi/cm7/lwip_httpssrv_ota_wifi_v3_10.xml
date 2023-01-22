@@ -37,7 +37,6 @@
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
-    <definition extID="component.silicon_id.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.drivers.caam.MIMXRT1176"/>
@@ -48,6 +47,7 @@
     <definition extID="component.osa_free_rtos.MIMXRT1176"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1176"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT1176"/>
+    <definition extID="middleware.wifi.common_files.MIMXRT1176"/>
     <definition extID="middleware.lwip.apps.httpsrv.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
@@ -59,7 +59,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_lwip_httpssrv_ota_wifi" name="lwip_httpssrv_ota_wifi" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.flexspi.MIMXRT1176 component.mflash.rt1170.MIMXRT1176 component.mflash.common.MIMXRT1176 middleware.mbedtls.MIMXRT1176 middleware.mbedtls.port.ksdk.MIMXRT1176 middleware.mbedtls.rt2.MIMXRT1176 middleware.wifi.wifidriver.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.wifi.sdio.MIMXRT1176 middleware.wifi.fwdnld.MIMXRT1176 middleware.sdmmc.sdio.MIMXRT1176 middleware.sdmmc.common.MIMXRT1176 middleware.sdmmc.host.usdhc.MIMXRT1176 middleware.sdmmc.host.usdhc.freertos.MIMXRT1176 component.igpio_adapter.MIMXRT1176 middleware.lwip.apps.httpssrv.MIMXRT1176 platform.drivers.clock.MIMXRT1176 middleware.freertos-kernel.heap_3.MIMXRT1176 middleware.lwip.MIMXRT1176 middleware.wifi.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 component.silicon_id.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.caam.MIMXRT1176 platform.drivers.memory.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 middleware.wifi.sdio-2.MIMXRT1176 middleware.sdmmc.osa.freertos.MIMXRT1176 component.osa_free_rtos.MIMXRT1176 platform.drivers.usdhc.MIMXRT1176 component.wifi_bt_module.tx_pwr_limits.MIMXRT1176 middleware.lwip.apps.httpsrv.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="lwip_examples">
+  <example id="evkmimxrt1170_lwip_httpssrv_ota_wifi" name="lwip_httpssrv_ota_wifi" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.flexspi.MIMXRT1176 component.mflash.rt1170.MIMXRT1176 component.mflash.common.MIMXRT1176 middleware.mbedtls.MIMXRT1176 middleware.mbedtls.port.ksdk.MIMXRT1176 middleware.mbedtls.rt2.MIMXRT1176 middleware.wifi.wifidriver.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.wifi.sdio.MIMXRT1176 middleware.wifi.fwdnld.MIMXRT1176 middleware.sdmmc.sdio.MIMXRT1176 middleware.sdmmc.common.MIMXRT1176 middleware.sdmmc.host.usdhc.MIMXRT1176 middleware.sdmmc.host.usdhc.freertos.MIMXRT1176 component.igpio_adapter.MIMXRT1176 middleware.lwip.apps.httpssrv.MIMXRT1176 platform.drivers.clock.MIMXRT1176 middleware.freertos-kernel.heap_3.MIMXRT1176 middleware.lwip.MIMXRT1176 middleware.wifi.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.caam.MIMXRT1176 platform.drivers.memory.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 middleware.wifi.sdio-2.MIMXRT1176 middleware.sdmmc.osa.freertos.MIMXRT1176 component.osa_free_rtos.MIMXRT1176 platform.drivers.usdhc.MIMXRT1176 component.wifi_bt_module.tx_pwr_limits.MIMXRT1176 middleware.wifi.common_files.MIMXRT1176 middleware.lwip.apps.httpsrv.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="lwip_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -76,9 +76,6 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
           <value>gnu.c.optimization.level.general</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.minimal</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
@@ -106,6 +103,7 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>MCUBOOT_APPLICATION=1</value>
           <value>USE_RTOS=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>HTTPSRV_CFG_WEBSOCKET_ENABLED=0</value>
@@ -115,6 +113,8 @@
           <value>MFLASH_FILE_BASEADDR=14221312</value>
           <value>SDK_OS_FREE_RTOS</value>
           <value>SDIO_ENABLED</value>
+          <value>MBEDTLS_THREADING_C</value>
+          <value>MBEDTLS_THREADING_ALT</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>CRYPTO_USE_DRIVER_CAAM</value>
           <value>CACHE_MODE_WRITE_THROUGH=1</value>
@@ -167,8 +167,12 @@
     <include_paths>
       <include_path path="." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="." type="c_include"/>
-      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="bootutil_port" project_relative_path="bootutil_port" type="c_include"/>
+      <include_path path="bootutil_port/mcuboot_config" project_relative_path="bootutil_port/mcuboot_config" type="c_include"/>
+      <include_path path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include"/>
+      <include_path path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include"/>
       <include_path path="../../.." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -215,7 +219,13 @@
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="lwip_httpssrv_ota.c"/>
+      <files mask="httpsrv_multipart.c"/>
       <files mask="httpsrv_fs_data.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="httpsrv_multipart.h"/>
+      <files mask="mbedtls_config.h"/>
+      <files mask="FreeRTOSConfig.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="network_cfg.h"/>
@@ -227,10 +237,6 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="wpl.h"/>
       <files mask="lwipopts.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="mbedtls_config.h"/>
-      <files mask="FreeRTOSConfig.h"/>
     </source>
     <source path="." project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
@@ -250,8 +256,25 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="mcuboot_app_support.h"/>
     </source>
-    <source path="." project_relative_path="board" type="c_include">
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include">
       <files mask="flash_partitioning.h"/>
+    </source>
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="src">
+      <files mask="flash_partitioning.c"/>
+    </source>
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include">
+      <files mask="sblconfig.h"/>
+    </source>
+    <source path="bootutil_port/mcuboot_config" project_relative_path="bootutil_port/mcuboot_config" type="c_include">
+      <files mask="mcuboot_config.h"/>
+      <files mask="mcuboot_logging.h"/>
+    </source>
+    <source path="bootutil_port" project_relative_path="bootutil_port" type="c_include">
+      <files mask="flash_map.h"/>
+      <files mask="sbldef.h"/>
+    </source>
+    <source path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include">
+      <files mask="sysflash.h"/>
     </source>
     <source path="webpage" project_relative_path="src/lwip_examples/lwip_httpssrv_ota/webpage" type="other" exclude="true">
       <files mask="httpsrv.css" hidden="true"/>

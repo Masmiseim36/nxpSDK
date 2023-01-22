@@ -23,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPADC driver version 2.6.0. */
-#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 6, 0))
+/*! @brief LPADC driver version 2.6.1. */
+#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 6, 1))
 /*@}*/
 
 /*!
@@ -412,7 +412,7 @@ typedef struct
     lpadc_reference_voltage_source_t referenceVoltageSource; /*!< Selects the voltage reference high used for
                                                                   conversions.*/
 
-#if defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && (FSL_FEATURE_LPADC_HAS_CFG_PWRSEL)
+#if !(defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && (FSL_FEATURE_LPADC_HAS_CFG_PWRSEL == 0))
     lpadc_power_level_mode_t powerLevelMode;               /*!< Power Configuration Selection. */
 #endif                                                     /* FSL_FEATURE_LPADC_HAS_CFG_PWRSEL */
     lpadc_trigger_priority_policy_t triggerPriorityPolicy; /*!< Control how higher priority triggers are handled, see to

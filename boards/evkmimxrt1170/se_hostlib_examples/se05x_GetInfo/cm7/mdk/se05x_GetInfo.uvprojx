@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO, PRINTF_ADVANCED_ENABLE=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1976,28 +1976,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -2012,16 +1992,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2192,6 +2162,11 @@
               <FileName>ledHandler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>modules.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/inc/modules.h</FilePath>
             </File>
             <File>
               <FileName>nxEnsure.h</FileName>
@@ -2558,6 +2533,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_freertos.c</FilePath>
             </File>
+            <File>
+              <FileName>timer_kinetis_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_threadx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2792,6 +2772,11 @@
               <FileName>ex_sss_main_inc_lpcxpresso55s.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_lpcxpresso55s.h</FilePath>
+            </File>
+            <File>
+              <FileName>ex_sss_main_inc_nrf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_nrf.h</FilePath>
             </File>
             <File>
               <FileName>ex_sss_main_inc_qn9090.h</FileName>
@@ -3338,7 +3323,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO, PRINTF_ADVANCED_ENABLE=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4980,28 +4965,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -5016,16 +4981,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -5196,6 +5151,11 @@
               <FileName>ledHandler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>modules.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/inc/modules.h</FilePath>
             </File>
             <File>
               <FileName>nxEnsure.h</FileName>
@@ -5562,6 +5522,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_freertos.c</FilePath>
             </File>
+            <File>
+              <FileName>timer_kinetis_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_threadx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5796,6 +5761,11 @@
               <FileName>ex_sss_main_inc_lpcxpresso55s.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_lpcxpresso55s.h</FilePath>
+            </File>
+            <File>
+              <FileName>ex_sss_main_inc_nrf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_nrf.h</FilePath>
             </File>
             <File>
               <FileName>ex_sss_main_inc_qn9090.h</FileName>

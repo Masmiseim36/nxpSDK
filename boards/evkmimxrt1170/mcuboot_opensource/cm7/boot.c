@@ -6,15 +6,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "sbl.h"
 #include "boot.h"
+#include "sbl.h"
+#include "flash_partitioning.h"
 #include "fsl_debug_console.h"
+
+#ifdef NDEBUG
+#undef assert
+#define assert(x) ((void)(x))
+#endif
 
 iapfun jump2app;
 
-#define IOMUXC_GPR_GPR30_REG 0x400AC078 // To specify the start address of flexspi1 and flexspi2
-#define IOMUXC_GPR_GPR31_REG 0x400AC07C // To specify the end address of flexspi1 and flexspi2
-#define IOMUXC_GPR_GPR32_REG 0x400AC080 // To specify the offset address of flexspi1 and flexspi2
+#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
+extern void SBL_EnableRemap(uint32_t start_addr, uint32_t end_addr, uint32_t off);
+extern void SBL_DisableRemap(void);
+#endif
 
 struct arm_vector_table
 {
@@ -26,17 +33,6 @@ static struct arm_vector_table *vt;
 
 #pragma weak cleanup
 void cleanup(void);
-
-void set_image_addr(uint32_t start_addr, uint32_t end_addr)
-{
-    *((volatile uint32_t *)IOMUXC_GPR_GPR30_REG) = start_addr;
-    *((volatile uint32_t *)IOMUXC_GPR_GPR31_REG) = end_addr;
-}
-
-void change_image_offset(uint32_t offset_size)
-{
-    *((volatile uint32_t *)IOMUXC_GPR_GPR32_REG) = offset_size;
-}
 
 /* The bootloader of MCUboot */
 void do_boot(struct boot_rsp *rsp)
@@ -51,6 +47,31 @@ void do_boot(struct boot_rsp *rsp)
      */
     rc = flash_device_base(rsp->br_flash_dev_id, &flash_base);
     assert(rc == 0);
+
+#if defined(MCUBOOT_DIRECT_XIP) && defined(CONFIG_MCUBOOT_FLASH_REMAP_ENABLE)
+
+    /* In case direct-xip mode and enabled flash remapping function check if
+     * the secondary slot is chosen to boot. If so we have to modify boot_rsp
+     * structure here and enable flash remapping just before the jumping to app.
+     * Flash remapping function has to be disabled when bootloader starts.
+     */
+
+    if (rsp->br_image_off == (BOOT_FLASH_CAND_APP - BOOT_FLASH_BASE))
+    {
+        uintptr_t start, end, off;
+        start = BOOT_FLASH_ACT_APP;
+        end   = BOOT_FLASH_ACT_APP + (BOOT_FLASH_CAND_APP - BOOT_FLASH_ACT_APP);
+        off   = BOOT_FLASH_CAND_APP - BOOT_FLASH_ACT_APP;
+
+        SBL_EnableRemap(start, end, off);
+        rsp->br_image_off = BOOT_FLASH_ACT_APP - BOOT_FLASH_BASE;
+        PRINTF("Booting the secondary slot - flash remapping is enabled\n");
+    }
+    else
+    {
+        PRINTF("Booting the primary slot - flash remapping is disabled\n");
+    }
+#endif
 
     vt = (struct arm_vector_table *)(flash_base + rsp->br_image_off +
 #ifdef MCUBOOT_SIGN_ROM

@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include "board.h"
 #include "project_setup_evkmimxrt1170.h"
 
 #include "freemaster.h"
@@ -19,14 +19,13 @@
  *
  *          Enables the watchdog. Also in Wait and Stop mode. Updates are allowed
  *
- * @param   timeout
- * @param   window
- * @param   prescaler
+ * @param   wd_setup_value      //watchdog setup value for timeout
  *
  * @return  None
  */
-void WatchdogEnable(void)
+void WatchdogEnable(uint32_t wd_setup_value)
 {
+    // no input parameter is being sent
     uint32_t prescaler = 0;
     uint16_t window    = 0;
 
@@ -47,7 +46,7 @@ void WatchdogEnable(void)
 
     /* USED_WDOG */
     USED_WDOG->CNT   = RTWDOG_UPDATE_KEY;                /* Unlock sequence */
-    USED_WDOG->TOVAL = (uint16_t)WATCHDOG_TIMEOUT_VALUE; /* Set timeout */
+    USED_WDOG->TOVAL = (uint16_t)wd_setup_value;         /* Set timeout */
 
     /* Enable rtwdog, LPO clock, interrupt disabled, update enabled, 32b refresh, window mode, prescaler 255
      * enabled/disabled */
@@ -107,7 +106,7 @@ void WatchdogDisable(void)
  *
  * @return  None
  */
-void GPT1_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
+void ReferenceTimerInit(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
 {
     clock_ip_name_t gpt_clock = kCLOCK_Gpt1;
 
@@ -211,7 +210,7 @@ void GPT2_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
  *
  * @return  None
  */
-void SystickInitialisation(uint32_t compare)
+void SystickInit(uint32_t compare)
 {
     SysTick->VAL  = 0;
     SysTick->LOAD = compare;
@@ -316,7 +315,7 @@ void AdcInit(void)
 
     /* Disable PAUSE between conversions */
     TESTED_ADC->PAUSE = 0U;
-    
+
     TESTED_ADC->TCTRL[0] = ADC_TCTRL_TCMD(1);
 
     /* Enable ADC */

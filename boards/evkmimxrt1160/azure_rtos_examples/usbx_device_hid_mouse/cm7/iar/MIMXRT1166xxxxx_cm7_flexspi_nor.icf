@@ -106,7 +106,19 @@ define block QACCESS_DATA  { section DataQuickAccess };
 define region core1_region = mem:[from core1_image_start to core1_image_end];
 define block CORE1_IMAGE_BLOCK          { section  __core1_image };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
+initialize by copy {
+  readwrite,
+
+  /* Explicitly place flash operation functions in RAM. */
+  object mflash_drv.o,
+  object fsl_flexspi.o,
+  object fsl_cache.o,
+
+  section .textrw,
+  section CodeQuickAccess,
+  section DataQuickAccess
+};
+
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
   do not initialize  { section rpmsg_sh_mem_section };

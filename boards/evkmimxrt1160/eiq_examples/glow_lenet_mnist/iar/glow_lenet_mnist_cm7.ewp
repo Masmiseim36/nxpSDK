@@ -364,6 +364,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/glow/bundle_utils</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -1461,6 +1462,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/glow/bundle_utils</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -2279,6 +2281,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2435,19 +2443,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

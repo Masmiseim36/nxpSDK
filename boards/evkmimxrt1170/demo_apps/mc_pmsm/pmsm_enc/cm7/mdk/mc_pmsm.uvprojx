@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -379,9 +379,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -3239,6 +3239,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3259,11 +3269,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3277,16 +3282,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3643,7 +3638,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3688,9 +3683,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -6548,6 +6543,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -6568,11 +6573,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -6586,16 +6586,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -6952,7 +6942,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6997,9 +6987,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -9857,6 +9847,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -9877,11 +9877,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -9895,16 +9890,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -10261,7 +10246,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10306,9 +10291,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -13166,6 +13151,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -13186,11 +13181,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -13204,16 +13194,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -13570,7 +13550,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -13615,9 +13595,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -16475,6 +16455,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -16495,11 +16485,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -16513,16 +16498,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -16879,7 +16854,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -16924,9 +16899,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -19784,6 +19759,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -19804,11 +19789,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -19822,16 +19802,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -20188,7 +20158,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -20233,9 +20203,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -23093,6 +23063,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -23113,11 +23093,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -23131,16 +23106,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -23497,7 +23462,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../CMSIS/Core/Include;../../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -23542,9 +23507,9 @@
           <GroupName>motor_control/freemaster</GroupName>
           <Files>
             <File>
-              <FileName>pmsm_float_enc.pmp</FileName>
+              <FileName>pmsm_float_enc.pmpx</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</FilePath>
             </File>
           </Files>
         </Group>
@@ -26402,6 +26367,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -26422,11 +26397,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -26440,16 +26410,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

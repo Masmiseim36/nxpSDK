@@ -358,7 +358,6 @@
           <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1443,7 +1442,6 @@
           <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2529,7 +2527,6 @@
           <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3613,7 +3610,6 @@
           <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4698,7 +4694,6 @@
           <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5784,7 +5779,6 @@
           <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6622,18 +6616,6 @@
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_flexspi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_flexspi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.h</name>
     </file>
     <file>
@@ -6643,10 +6625,22 @@
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_dmamux.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_dmamux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_flexspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_flexspi.h</name>
     </file>
   </group>
   <group>
@@ -6726,15 +6720,6 @@
         <name>$PROJ_DIR$/../../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>startup</name>
@@ -6760,19 +6745,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

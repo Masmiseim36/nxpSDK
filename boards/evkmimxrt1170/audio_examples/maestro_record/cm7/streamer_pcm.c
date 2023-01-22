@@ -14,7 +14,7 @@
 #include "fsl_pdm.h"
 #include "fsl_pdm_edma.h"
 
-#define RECORD_BUFFER_SIZE (640)
+#define RECORD_BUFFER_SIZE (3840) // 16kHz * 4bytes * 2channels * 30ms
 #define BUFFER_NUM         (3U)
 #define BUFFER_SIZE        (RECORD_BUFFER_SIZE * BUFFER_NUM)
 
@@ -95,6 +95,7 @@ void streamer_pcm_init(void)
                                  &pcmHandle.dmaRxHandle);
     PDM_TransferInstallEDMATCDMemory(&pcmHandle.pdmRxHandle, s_edmaTcd, BUFFER_NUM);
     PDM_TransferSetChannelConfigEDMA(DEMO_PDM, &pcmHandle.pdmRxHandle, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);
+    PDM_TransferSetChannelConfigEDMA(DEMO_PDM, &pcmHandle.pdmRxHandle, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig);
     PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE);
     PDM_EnableInterrupts(DEMO_PDM, kPDM_ErrorInterruptEnable);
     PDM_Reset(DEMO_PDM);
@@ -122,10 +123,6 @@ pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers)
 pcm_rtos_t *streamer_pcm_rx_open(uint32_t num_buffers)
 {
     pcmHandle.semaphoreRX = xSemaphoreCreateBinary();
-    for (int i = 0; i < BUFFER_NUM; i++)
-    {
-        PDM_TransferReceiveEDMA(DEMO_PDM, &pcmHandle.pdmRxHandle, &s_receiveXfer[i]);
-    }
     return &pcmHandle;
 }
 
@@ -179,6 +176,10 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
     if (pcm->isFirstRx)
     {
         pcm->isFirstRx = 0;
+        for (int i = 0; i < BUFFER_NUM; i++)
+        {
+            PDM_TransferReceiveEDMA(DEMO_PDM, &pcmHandle.pdmRxHandle, &s_receiveXfer[i]);
+        }
     }
     else
     {
@@ -214,7 +215,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     if (transfer)
     {
         /* I2S mode configurations */
-        SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_MonoLeft, kSAI_Channel0Mask);
+        SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
         config.bitClock.bclkSource = (sai_bclk_source_t)DEMO_SAI_CLOCK_SOURCE;
         config.masterSlave         = DEMO_SAI_MASTER_SLAVE;
         SAI_TransferTxSetConfigEDMA(DEMO_SAI, &pcmHandle.saiTxHandle, &config);

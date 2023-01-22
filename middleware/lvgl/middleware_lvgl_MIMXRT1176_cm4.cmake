@@ -148,6 +148,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/png/lodepng.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/png/lv_png.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/qrcode/lv_qrcode.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/qrcode/qrcodegen.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/rlottie/lv_rlottie.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/sjpg/lv_sjpg.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/sjpg/tjpgd.c
@@ -156,6 +157,10 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/others/snapshot/lv_snapshot.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/others/gridnav/lv_gridnav.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/others/monkey/lv_monkey.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/others/fragment/lv_fragment.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/others/ime/lv_ime_pinyin.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/others/imgfont/lv_imgfont.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/others/msg/lv_msg.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/themes/basic/lv_theme_basic.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/themes/default/lv_theme_default.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/themes/mono/lv_theme_mono.c
@@ -181,7 +186,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/lvgl
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src
     ${CMAKE_CURRENT_LIST_DIR}/.

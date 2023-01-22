@@ -559,6 +559,11 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
@@ -884,6 +889,16 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</FilePath>
             </File>
             <File>
+              <FileName>ux_class_audio10.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio10.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_class_audio20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio20.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_dcd_sim_slave.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_dcd_sim_slave.h</FilePath>
@@ -949,6 +964,11 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_ccid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_ccid.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_class_cdc_acm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</FilePath>
@@ -987,6 +1007,11 @@
               <FileName>ux_device_class_storage.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_video.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_video.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2183,6 +2208,11 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
+              <FileName>nx_http_proxy_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
@@ -2508,6 +2538,16 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</FilePath>
             </File>
             <File>
+              <FileName>ux_class_audio10.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio10.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_class_audio20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio20.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_dcd_sim_slave.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_dcd_sim_slave.h</FilePath>
@@ -2573,6 +2613,11 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_ccid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_ccid.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_class_cdc_acm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</FilePath>
@@ -2611,6 +2656,11 @@
               <FileName>ux_device_class_storage.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_video.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_video.h</FilePath>
             </File>
           </Files>
         </Group>

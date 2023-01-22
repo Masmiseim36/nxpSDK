@@ -7,12 +7,8 @@
  */
 
 #include "mc_periph_init.h"
-#include "fsl_lpadc.h"
 #include "fsl_common.h"
-#include "fsl_xbara.h"
-#include "fsl_adc_etc.h"
 #include "mcdrv_enc_qd.h"
-#include "fsl_acmp.h"
 
 /*******************************************************************************
  * Variables
@@ -54,9 +50,6 @@ void MCDRV_Init_M1(void)
 
     /* Init ADC */
     M1_MCDRV_ADC_PERIPH_INIT();
-
-    /* init XBAR  */
-    InitXBARA();
 
     /* Init ADC_ETC */
     InitADC_ETC();
@@ -107,22 +100,44 @@ void InitClock(void)
  */
 void InitADC(void)
 {
+    /* Initialize the ADC1 module. */
+    /* Reset all ADC internal logic and registers, except the CTRL register */ 
+    LPADC1->CTRL |= ADC_CTRL_RST_MASK;
+    LPADC1->CTRL &= ~ADC_CTRL_RST_MASK;
+    LPADC1->CTRL |= ADC_CTRL_RSTFIFO_MASK;      /* Reset FIFO conversion */
+    
+    LPADC1->CTRL &= ~ADC_CTRL_ADCEN_MASK;       /* Disable the module before setting configuration */
+    
+    /* Configure the module generally. */
+    LPADC1->CTRL &= ~ADC_CTRL_DOZEN_MASK;       /* LPADC disabled in Doze mode */
+    LPADC1->CFG = ADC_CFG_PWREN_MASK  |         /* Analog pre-enable LPADC */
+                  ADC_CFG_REFSEL(1U)  |         /* Reference voltage source selection */
+                  ADC_CFG_PWRSEL(3U);           /* Power level selection */
+    LPADC1->PAUSE = 0U;                         /* Disable the ADC pausing function */
+    LPADC1->FCTRL = ADC_FCTRL_FWMARK(0U);       /* FIFO watermark level selection */
+    
+    LPADC1->CTRL |= ADC_CTRL_ADCEN_MASK;        /* Enable the module */
+    
+    
+    /* Initialize the ADC2 module. */
+    /* Reset all ADC internal logic and registers, except the CTRL register */ 
+    LPADC2->CTRL |= ADC_CTRL_RST_MASK;
+    LPADC2->CTRL &= ~ADC_CTRL_RST_MASK;
+    LPADC2->CTRL |= ADC_CTRL_RSTFIFO_MASK;      /* Reset FIFO conversion */
 
-    lpadc_config_t lpadcConfig;
-    lpadc_conv_command_config_t lpadcCommandConfig;
-    lpadc_conv_trigger_config_t lpadcTriggerConfig;
-
-    /* Initialize the ADC module. */
-    LPADC_GetDefaultConfig(&lpadcConfig);
-
-    lpadcConfig.enableAnalogPreliminary = true;
-    lpadcConfig.referenceVoltageSource = kLPADC_ReferenceVoltageAlt2;
-    lpadcConfig.powerLevelMode = kLPADC_PowerLevelAlt4;
-    lpadcConfig.powerUpDelay = 0U;
-
-    LPADC_Init(LPADC1, &lpadcConfig);
-    LPADC_Init(LPADC2, &lpadcConfig);
-
+    LPADC2->CTRL &= ~ADC_CTRL_ADCEN_MASK;       /* Disable the module before setting configuration */
+    
+    /* Configure the module generally. */
+    LPADC2->CTRL &= ~ADC_CTRL_DOZEN_MASK;       /* LPADC disabled in Doze mode */
+    LPADC2->CFG = ADC_CFG_PWREN_MASK  |         /* Analog pre-enable LPADC */
+                  ADC_CFG_REFSEL(1U)  |         /* Reference voltage source selection */
+                  ADC_CFG_PWRSEL(3U);           /* Power level selection */
+    LPADC2->PAUSE = 0U;                         /* Disable the ADC pausing function */
+    LPADC2->FCTRL = ADC_FCTRL_FWMARK(0U);       /* FIFO watermark level selection */
+    
+    LPADC2->CTRL |= ADC_CTRL_ADCEN_MASK;        /* Enable the module */
+    
+    
     /* Phase current measurement */
     /* Sector 1,6 - measured currents Ib & Ic */
     /* ADC1, channel Ib = M1_ADC1_PH_B (ADC_ETC trigger 0, chain 0) */
@@ -156,68 +171,62 @@ void InitADC(void)
     g_sM1AdcSensor.ui16ChanNumAux = 7U;
     g_sM1AdcSensor.ui16ChanSideAux = kLPADC_SampleChannelSingleEndSideB;
 
-    //Default channel assigment for Sector 2
+        
+    /* Default channel assigment for Sector 2 */
+    /* The available command number are 1-15, while the index of register group are 0-14. */
 
     /**************************************/
     /*             ADC1                   */
     /**************************************/
+    
+    /* Configure the CMD 1. */
+    assert(1U < (ADC_CMDL_COUNT + 1U));                         /* Check if the command 1 is available */
+    LPADC1->CMD[0].CMDL = ADC_CMDL_ADCH(M1_ADC1_PH_A_CHNL)  |   /* Channel number selection */
+                          ADC_CMDL_CSCALE(0U);                  /* Channel scale selection */
 
-    /* Set conversion CMD configuration. */
-    LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA;
-    lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
-    lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaA;
-    LPADC_SetConvCommandConfig(LPADC1, 1U, &lpadcCommandConfig); // CMDL[number]
-    /* Set trigger configuration. */
-    LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
-    lpadcTriggerConfig.targetCommandId = 1U; //CMDL
-    lpadcTriggerConfig.enableHardwareTrigger = true;
-    LPADC_SetConvTriggerConfig(LPADC1, 0U, &lpadcTriggerConfig); // trigger from TCTRL[number]
+    /* Configure the conversion trigger 0 source. */
+    assert(0U < ADC_TCTRL_COUNT);                               /* Check if the trigger 0 is available */
+    LPADC1->TCTRL[0] = ADC_TCTRL_TCMD(1U)   |                   /* Trigger command select */
+                       ADC_TCTRL_HTEN_MASK;                     /* Hardware trigger source enable */
+        
+    
+    /* Configure the CMD 2. */
+    assert(2U < (ADC_CMDL_COUNT + 1U));                         /* Check if the command 2 is available */
+    LPADC1->CMD[1].CMDL = ADC_CMDL_ADCH(M1_ADC1_UDCB_CHNL)  |   /* Channel number selection */
+                          ADC_CMDL_CSCALE(0U)               |   /* Channel scale selection */
+                          ADC_CMDL_ABSEL_MASK;                  /* A-side vs. B-side selection */
 
-    /* Set conversion CMD configuration. */
-    LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.ui16ChanNumVDcb;
-    lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
-    lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.ui16ChanSideVDcb;
-    LPADC_SetConvCommandConfig(LPADC1, 2U, &lpadcCommandConfig); // CMDL[number]
-    /* Set trigger configuration. */
-    LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
-    lpadcTriggerConfig.targetCommandId = 2U; //CMDL
-    lpadcTriggerConfig.enableHardwareTrigger = true;
-    LPADC_SetConvTriggerConfig(LPADC1, 1U, &lpadcTriggerConfig); // trigger from TCTRL[number]
+    /* Configure the conversion trigger 1 source. */
+    assert(1U < ADC_TCTRL_COUNT);                               /* Check if the trigger 1 is available */
+    LPADC1->TCTRL[1] = ADC_TCTRL_TCMD(2U)   |                   /* Trigger command select */
+                       ADC_TCTRL_HTEN_MASK;                     /* Hardware trigger source enable */
 
     /**************************************/
     /*             ADC2                   */
     /**************************************/
-
-    /* Set conversion CMD configuration. */
-    LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC;
-    lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
-    lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaC;
-    LPADC_SetConvCommandConfig(LPADC2, 1U, &lpadcCommandConfig); // CMDL[number]
-    /* Set trigger configuration. */
-    LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
-    lpadcTriggerConfig.targetCommandId = 1U; //CMDL
-    lpadcTriggerConfig.enableHardwareTrigger = true;
-    LPADC_SetConvTriggerConfig(LPADC2, 0U, &lpadcTriggerConfig); // trigger from TCTRL[number]
-
-    /* Set conversion CMD configuration. */
-    LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.ui16ChanNumAux;
-    lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
-    lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.ui16ChanSideAux;
-    LPADC_SetConvCommandConfig(LPADC2, 2U, &lpadcCommandConfig); // CMDL[number]
-    /* Set trigger configuration. */
-    LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
-    lpadcTriggerConfig.targetCommandId = 2U; //CMDL
-    lpadcTriggerConfig.enableHardwareTrigger = true;
-    LPADC_SetConvTriggerConfig(LPADC2, 1U, &lpadcTriggerConfig); // trigger from TCTRL[number]
-
+     
+    /* Configure the CMD 1. */
+    assert(1U < (ADC_CMDL_COUNT + 1U));                         /* Check if the command 1 is available */
+    LPADC2->CMD[0].CMDL = ADC_CMDL_ADCH(M1_ADC2_PH_C_CHNL)  |   /* Channel number selection */
+                          ADC_CMDL_CSCALE(0U)               |   /* Channel scale selection */
+                          ADC_CMDL_ABSEL_MASK;                  /* A-side vs. B-side selection */
+    
+    /* Configure the conversion trigger 0 source. */
+    assert(0U < ADC_TCTRL_COUNT);                               /* Check if the trigger 0 is available */
+    LPADC2->TCTRL[0] = ADC_TCTRL_TCMD(1U)   |                   /* Trigger command select */
+                       ADC_TCTRL_HTEN_MASK;                     /* Hardware trigger source enable */
+    
+        
+    /* Configure the CMD 2. */
+    assert(2U < (ADC_CMDL_COUNT + 1U));                         /* Check if the command 2 is available */
+    LPADC2->CMD[1].CMDL = ADC_CMDL_ADCH(7U)                 |   /* Channel number selection */
+                          ADC_CMDL_CSCALE(0U)               |   /* Channel scale selection */
+                          ADC_CMDL_ABSEL_MASK;                  /* A-side vs. B-side selection */
+    
+    /* Configure the conversion trigger 1 source. */
+    assert(1U < ADC_TCTRL_COUNT);                               /* Check if the trigger 1 is available */
+    LPADC2->TCTRL[1] = ADC_TCTRL_TCMD(2U)   |                   /* Trigger command select */
+                       ADC_TCTRL_HTEN_MASK;                     /* Hardware trigger source enable */
 }
 
 /*!
@@ -262,7 +271,7 @@ void InitTMR1(void)
     TMR1->CHANNEL[0].CTRL |= TMR_CTRL_CM(0x01);
 
     /* Enable & setup interrupt from TMR1 */
-    EnableIRQ(TMR1_IRQn);
+    NVIC_EnableIRQ(TMR1_IRQn);
     NVIC_SetPriority(TMR1_IRQn, 3U);
 
 }
@@ -386,24 +395,6 @@ void M1_InitPWM(void)
 }
 
 /*!
- * @brief   void InitXBARA(void)
- *           - Initialization of the XBARA peripheral
- *
- * @param   void
- *
- * @return  none
- */
-void InitXBARA(void)
-{
-    /* Enable clock to XBAR. */
-    CLOCK_EnableClock(kCLOCK_Xbar1);
-
-    /* Configure the XBARA signal connections. (set for sync mode in ADC_ETC) */
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputFlexpwm1Pwm0OutTrig0, kXBARA1_OutputAdcEtc0Coco0);
-
-}
-
-/*!
  * @brief   void InitADC_ETC(void)
  *           - Initialization of the ADC_ETC peripheral
  *
@@ -413,65 +404,60 @@ void InitXBARA(void)
  */
 void InitADC_ETC(void)
 {
-    adc_etc_config_t adcEtcConfig;
-    adc_etc_trigger_config_t adcEtcTriggerConfig;
-    adc_etc_trigger_chain_config_t adcEtcTriggerChainConfig;
-
     /* Initialize the ADC_ETC. */
-    ADC_ETC_GetDefaultConfig(&adcEtcConfig);
-    adcEtcConfig.XBARtriggerMask = 1U; /* Enable the external XBAR trigger0. */
-    ADC_ETC_Init(ADC_ETC, &adcEtcConfig);
+    ADC_ETC->CTRL &= ~ADC_ETC_CTRL_SOFTRST_MASK;     /* Reset all ADC_CTRL registers to default value */
+    ADC_ETC->CTRL = ADC_ETC_CTRL_TRIG_ENABLE(1U);    /* Enable the external XBAR trigger0 */
 
+    
     /* Set the external XBAR trigger0 configuration. */
-    adcEtcTriggerConfig.enableSyncMode      = true;
-    adcEtcTriggerConfig.enableSWTriggerMode = false;
-    adcEtcTriggerConfig.triggerChainLength  = 1U; /* Chain length 1. */
-    adcEtcTriggerConfig.triggerPriority     = 0U;
-    adcEtcTriggerConfig.sampleIntervalDelay = 0U;
-    adcEtcTriggerConfig.initialDelay        = 0U;
-    ADC_ETC_SetTriggerConfig(ADC_ETC, 0U, &adcEtcTriggerConfig);
+    /* Configure ADC_ETC_TRG0_CTRL register. */
+    assert(0U < ADC_ETC_TRIGn_CTRL_COUNT);
+    assert(ADC_ETC_TRIGn_COUNTER_COUNT > 0U);   
+    ADC_ETC->TRIG[0].TRIGn_CTRL = 
+             ADC_ETC_TRIGn_CTRL_TRIG_CHAIN(1U)  |    /* The number of segments inside the trigger chain of TRIG0 */
+             ADC_ETC_TRIGn_CTRL_SYNC_MODE_MASK;      /* Trigger synchronization mode enabled */
 
-    /* Set the external XBAR trigger0 chain configuration. */
-    adcEtcTriggerChainConfig.enableB2BMode       = true;
+    /* Configure ADC_ETC_TRIG0_CHAIN 0 register. */
+    assert(0U < ADC_ETC_TRIGn_CTRL_COUNT);
+    ADC_ETC->TRIG[0].TRIGn_CHAIN_1_0 |=
+             ADC_ETC_TRIGn_CHAIN_1_0_HWTS0(1U)  |    /* Select ADC TRIG0 hardware trigger */
+             ADC_ETC_TRIGn_CHAIN_1_0_CSEL0(0U)  |    /* ADC hardware trigger command selection */
+             ADC_ETC_TRIGn_CHAIN_1_0_B2B0_MASK;      /* Enable Back-To-Back (B2B0) */
 
-    adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 0U; /* Select ADC_HC0 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC0 will be triggered to sample Corresponding channel. */
-    adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done0 interrupt. */
-    adcEtcTriggerChainConfig.enableIrq = false; /* Enable the IRQ. */
-    ADC_ETC_SetTriggerChainConfig(ADC_ETC, 0U, 0U, &adcEtcTriggerChainConfig); /* Configure the trigger0 chain0. */
-
-    adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 1U; /* Select ADC_HC1 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC1 will be triggered to sample Corresponding channel. */
-    adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done1 interrupt. */
-    adcEtcTriggerChainConfig.enableIrq = false; /* Enable the IRQ. */
-    ADC_ETC_SetTriggerChainConfig(ADC_ETC, 0U, 1U, &adcEtcTriggerChainConfig); /* Configure the trigger0 group chain 1. */
+    /* Configure ADC_ETC_TRIG0_CHAIN 1 register. */
+    assert(0U < ADC_ETC_TRIGn_CTRL_COUNT);
+    ADC_ETC->TRIG[0].TRIGn_CHAIN_1_0 |=
+             ADC_ETC_TRIGn_CHAIN_1_0_HWTS1(2U)  |    /* Select ADC TRIG1 hardware trigger */
+             ADC_ETC_TRIGn_CHAIN_1_0_CSEL1(0U)  |    /* ADC hardware trigger command selection */
+             ADC_ETC_TRIGn_CHAIN_1_0_B2B1_MASK;      /* Enable Back-To-Back (B2B1) */
 
 
     /* Set the external XBAR trigger4 configuration. */
-    adcEtcTriggerConfig.enableSyncMode      = false;
-    adcEtcTriggerConfig.enableSWTriggerMode = false;
-    adcEtcTriggerConfig.triggerChainLength  = 1U; /* Chain length 2. */
-    adcEtcTriggerConfig.triggerPriority     = 0U;
-    adcEtcTriggerConfig.sampleIntervalDelay = 0U;
-    adcEtcTriggerConfig.initialDelay        = 0U;
-    ADC_ETC_SetTriggerConfig(ADC_ETC, 4U, &adcEtcTriggerConfig);
+    /* Configure ADC_ETC_TRG4_CTRL register. */
+    assert(4U < ADC_ETC_TRIGn_CTRL_COUNT);
+    assert(ADC_ETC_TRIGn_COUNTER_COUNT > 4U);
+    ADC_ETC->TRIG[4].TRIGn_CTRL = 
+             ADC_ETC_TRIGn_CTRL_TRIG_CHAIN(1U);      /* The number of segments inside the trigger chain of TRIG0 */
 
-    adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 0U; /* Select ADC_HC0 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC0 will be triggered to sample Corresponding channel. */
-    adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done0 interrupt. */
-    adcEtcTriggerChainConfig.enableIrq = false; /* Enable the IRQ. */
-    ADC_ETC_SetTriggerChainConfig(ADC_ETC, 4U, 0U, &adcEtcTriggerChainConfig); /* Configure the trigger4 chain0. */
+    /* Configure ADC_ETC_TRIG4_CHAIN 0 register. */
+    assert(4U < ADC_ETC_TRIGn_CTRL_COUNT);
+    ADC_ETC->TRIG[4].TRIGn_CHAIN_1_0 |= 
+             ADC_ETC_TRIGn_CHAIN_1_0_HWTS0(1U)  |    /* Select ADC TRIG0 hardware trigger */
+             ADC_ETC_TRIGn_CHAIN_1_0_CSEL0(0U)  |    /* ADC hardware trigger command selection */
+             ADC_ETC_TRIGn_CHAIN_1_0_B2B0_MASK;      /* Enable Back-To-Back (B2B0) */
 
-    adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 1U; /* Select ADC_HC1 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC1 will be triggered to sample Corresponding channel. */
-    adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done1 interrupt. */
-    adcEtcTriggerChainConfig.enableIrq = true; /* Enable the IRQ. */
-    ADC_ETC_SetTriggerChainConfig(ADC_ETC, 4U, 1U, &adcEtcTriggerChainConfig); /* Configure the trigger4 group chain 1. */
+    /* Configure ADC_ETC_TRIG4_CHAIN 1 register. */
+    assert(4U < ADC_ETC_TRIGn_CTRL_COUNT);
+    ADC_ETC->TRIG[4].TRIGn_CHAIN_1_0 |=
+             ADC_ETC_TRIGn_CHAIN_1_0_HWTS1(2U)  |    /* Select ADC_TRIG1 hardware trigger */
+             ADC_ETC_TRIGn_CHAIN_1_0_CSEL1(0U)  |    /* ADC hardware trigger command selection */
+             ADC_ETC_TRIGn_CHAIN_1_0_B2B1_MASK  |    /* Enable Back-To-Back (B2B1) */
+             ADC_ETC_TRIGn_CHAIN_1_0_IE1_EN_MASK;    /* Enable the Done interrupt */
 
-    /* Enable the NVIC. */
-    EnableIRQ(ADC_ETC_IRQ0_IRQn);
+
+    /* Enable & setup interrupt from ADC_ETC. */
+    NVIC_EnableIRQ(ADC_ETC_IRQ0_IRQn);
     NVIC_SetPriority(ADC_ETC_IRQ0_IRQn, 0U);
-
 }
 
 /*!
@@ -519,36 +505,23 @@ void M1_InitQD(void)
 */
 void InitCMP(void)
 {
-    acmp_config_t acmpConfigStruct;
-    acmp_channel_config_t channelConfigStruct;
-    acmp_dac_config_t dacConfigStruct;
-    acmp_discrete_mode_config_t acmpDiscreteconfig;
-
     /* Configure ACMP. */
-    ACMP_GetDefaultConfig(&acmpConfigStruct);
-    acmpConfigStruct.enableInvertOutput = false;
-    acmpConfigStruct.enableHighSpeed = true;
+    CMP3->C0 &= ~(CMP_C0_EN_MASK | CMP_C0_CFR_MASK | CMP_C0_CFF_MASK);    /* Disable ACMP3 */
+    CMP3->C0 |= CMP_C0_PMODE_MASK;       /* Set HS comparison mode */
 
-    ACMP_Init(CMP3, &acmpConfigStruct);
-
-    /* Configure negative inputs are coming from 3v domain. */
-    ACMP_GetDefaultDiscreteModeConfig(&acmpDiscreteconfig);
-    acmpDiscreteconfig.enablePositiveChannelDiscreteMode = true;
-    acmpDiscreteconfig.enableResistorDivider = true;
-
-    ACMP_SetDiscreteModeConfig(CMP3, &acmpDiscreteconfig);
+    /* Configure negative inputs coming from 3v domain. */
+    CMP3->C3 |= CMP_C3_RDIVE_MASK    |   /* Resistor divider enable */
+                CMP_C3_NCHCTEN_MASK;     /* Enable negative channel continuous mode */
 
     /* Configure channel. Select the positive port input from DAC and negative port input from minus mux input. */
-    channelConfigStruct.plusMuxInput  = 3U; // GPIO_AD_30
-    channelConfigStruct.minusMuxInput = 7U;
-    ACMP_SetChannelConfig(CMP3, &channelConfigStruct);
+    CMP3->C1 |= CMP_C1_PSEL(3U)      |   /* Plus Input MUX Control - GPIO_AD_30 */
+                CMP_C1_MSEL(7U)      |   /* Minus Input MUX Control */
+                CMP_C1_VRSEL(1U)     |   /* Supply voltage reference source select - 3V PAD */
+                CMP_C1_VOSEL(166U)   |   /* DAC voltage output select - range is 0-255U */
+                CMP_C1_DACEN_MASK    |   /* Enable DAC */
+                CMP_C1_DMODE_MASK;       /* Set DAC to work in HS power mode */
 
-    /* Configure DAC. */
-    dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin2; // 3V PAD
-    dacConfigStruct.DACValue = 166U; // range is 0-255U
-    dacConfigStruct.workMode = kACMP_DACWorkHighSpeedMode;
-
-    ACMP_SetDACConfig(CMP3, &dacConfigStruct);
-    ACMP_Enable(CMP3, true);
-
+    /* Enable ACMP3. */
+    CMP3->C0 |= CMP_C0_EN_MASK;
+    CMP3->C0 &= ~(CMP_C0_CFR_MASK | CMP_C0_CFF_MASK);        
 }

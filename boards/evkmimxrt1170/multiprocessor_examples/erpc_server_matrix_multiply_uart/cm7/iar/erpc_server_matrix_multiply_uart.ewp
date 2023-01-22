@@ -364,7 +364,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -1462,7 +1461,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -2560,7 +2558,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -3656,7 +3653,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -4754,7 +4750,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -5852,7 +5847,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -6620,19 +6614,19 @@
     <group>
       <name>infra</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</name>
@@ -6641,28 +6635,28 @@
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</name>
@@ -6677,7 +6671,7 @@
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.h</name>
@@ -6710,7 +6704,7 @@
     <group>
       <name>transports</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</name>
@@ -6729,6 +6723,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</name>
       </file>
     </group>
   </group>
@@ -6938,15 +6938,6 @@
         <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>startup</name>
@@ -6972,19 +6963,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

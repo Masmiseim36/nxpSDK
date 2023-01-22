@@ -777,7 +777,7 @@ void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
         }
     }
     audioSpeakerPreWriteDataCount = g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0];
-    g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0] += play2ChannelLength;
+    g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0] += (size / (AUDIO_FORMAT_CHANNELS / 2U));
     if (audioSpeakerPreWriteDataCount > g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0])
     {
         g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[1] += 1U;

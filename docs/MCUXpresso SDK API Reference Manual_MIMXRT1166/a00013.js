@@ -1,15 +1,15 @@
 var a00013 =
 [
-    [ "CAAM Blocking APIs", "a00314.html", "a00314" ],
-    [ "CAAM Non-blocking APIs", "a00318.html", "a00318" ],
-    [ "caam_job_callback_t", "a00013.html#a00426", [
+    [ "CAAM Blocking APIs", "a00313.html", "a00313" ],
+    [ "CAAM Non-blocking APIs", "a00317.html", "a00317" ],
+    [ "caam_job_callback_t", "a00013.html#a00428", [
       [ "JobCompleted", "a00013.html#a51d80a64c0717c6e48006080394f4487", null ]
     ] ],
-    [ "caam_handle_t", "a00013.html#a00425", [
+    [ "caam_handle_t", "a00013.html#a00427", [
       [ "callback", "a00013.html#a961166a009ff62d3190738acf21d5a18", null ],
       [ "userData", "a00013.html#a5ce553aa4a2ea5e2a9bc50c30ffa9b5f", null ]
     ] ],
-    [ "caam_config_t", "a00013.html#a00424", [
+    [ "caam_config_t", "a00013.html#a00426", [
       [ "rngSampleMode", "a00013.html#a085d73f1fb46aa55c1709675d770b107", null ],
       [ "rngRingOscDiv", "a00013.html#af56ff16dd89c70393278b9de08d9f8ce", null ],
       [ "scfgrLockTrngProgramMode", "a00013.html#a23ec544167197e50fd4305f383bfc89d", null ],
@@ -28,7 +28,9 @@ var a00013 =
     [ "caam_desc_rng_t", "a00013.html#ga6b38feaf2c1aa50ff3f305de0af71dd4", null ],
     [ "caam_desc_cipher_des_t", "a00013.html#gac208efb5c22648dda9161a46b2da16cd", null ],
     [ "caam_desc_pkha_t", "a00013.html#ga24016776e1066a59c608fbb715ef254c", null ],
-    [ "caam_desc_pkha_ecc_t", "a00013.html#ga7e2d3f370529eea30d276f5d0c9b79bc", [
+    [ "caam_desc_pkha_ecc_t", "a00013.html#ga7e2d3f370529eea30d276f5d0c9b79bc", null ],
+    [ "caam_desc_key_black_t", "a00013.html#ga46e0febc25742a8ca3aff3f6cba43449", null ],
+    [ "caam_desc_gen_enc_blob_t", "a00013.html#ga45f570f5700a360fddccd0fd900ddbee", [
       [ "kStatus_CAAM_Again", "a00013.html#ggadb49720dc49f7d4e4cf9adbf2948e409a508b71b439a39bc7196b756a74cf6c5c", null ],
       [ "kStatus_CAAM_DataOverflow", "a00013.html#ggadb49720dc49f7d4e4cf9adbf2948e409a07c3670d0758345a3aed91a190be4f3d", null ]
     ] ],

@@ -1,33 +1,33 @@
 var a00008 =
 [
-    [ "acmp_config_t", "a00008.html#a00408", [
+    [ "acmp_config_t", "a00008.html#a00410", [
       [ "hysteresisMode", "a00008.html#a2b2c72e5637e1644fa73c82c29bd8370", null ],
       [ "enableHighSpeed", "a00008.html#a490dce695b3daf85e0c53322fec294d0", null ],
       [ "enableInvertOutput", "a00008.html#a51e507b19239d73c0aa7045f50632341", null ],
       [ "useUnfilteredOutput", "a00008.html#ad3b6395ad9320dd0ecd495a83ddf4734", null ],
       [ "enablePinOut", "a00008.html#a9db54c903806a57b189755d56c6d60f7", null ]
     ] ],
-    [ "acmp_channel_config_t", "a00008.html#a00407", [
+    [ "acmp_channel_config_t", "a00008.html#a00409", [
       [ "plusMuxInput", "a00008.html#a3480deb0dfc7c1e52a763d8d7b172847", null ],
       [ "minusMuxInput", "a00008.html#a47e25c53ffff810bbcd90517b6e5cbc2", null ]
     ] ],
-    [ "acmp_filter_config_t", "a00008.html#a00411", [
+    [ "acmp_filter_config_t", "a00008.html#a00413", [
       [ "enableSample", "a00008.html#a8976a836edc291ae9f224ccfb0380456", null ],
       [ "filterCount", "a00008.html#a72763e3572b22aceb221eb9e5ab05f8f", null ],
       [ "filterPeriod", "a00008.html#a461e173112f927d662ca11f2cee27711", null ]
     ] ],
-    [ "acmp_dac_config_t", "a00008.html#a00409", [
+    [ "acmp_dac_config_t", "a00008.html#a00411", [
       [ "referenceVoltageSource", "a00008.html#a73470b7b736972106db5945cdf5ef345", null ],
       [ "DACValue", "a00008.html#a54d46ea3e8fbf7e6299e4140745eb60a", null ]
     ] ],
-    [ "acmp_round_robin_config_t", "a00008.html#a00412", [
+    [ "acmp_round_robin_config_t", "a00008.html#a00414", [
       [ "fixedPort", "a00008.html#ab8df0b9d1c577202ee7595194effc546", null ],
       [ "fixedChannelNumber", "a00008.html#a585aa3db67037d896877ca36f70184b5", null ],
       [ "checkerChannelMask", "a00008.html#af377391bb9609189dd500f8bd4ef338d", null ],
       [ "sampleClockCount", "a00008.html#a14582884eb5f9eefbec82243d9532827", null ],
       [ "delayModulus", "a00008.html#a9f700106cee0d8dfa4c40caa340f0ed7", null ]
     ] ],
-    [ "acmp_discrete_mode_config_t", "a00008.html#a00410", [
+    [ "acmp_discrete_mode_config_t", "a00008.html#a00412", [
       [ "enablePositiveChannelDiscreteMode", "a00008.html#abc43335b986434b867a2732d2612a8ce", null ],
       [ "enableNegativeChannelDiscreteMode", "a00008.html#ae29c9e7b41843e4d5a391f82b11bbf33", null ],
       [ "enableResistorDivider", "a00008.html#a1b0622ddd352b34acae7215f0e123f22", null ],

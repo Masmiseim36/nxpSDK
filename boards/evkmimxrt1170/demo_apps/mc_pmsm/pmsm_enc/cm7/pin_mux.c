@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v11.0
+product: Pins v13.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 11.0.1
+processor_version: 0.13.1
 pin_labels:
 - {pin_num: T17, pin_signal: GPIO_AD_07, label: TP, identifier: TP}
 - {pin_num: R15, pin_signal: GPIO_AD_08, label: TP, identifier: TP}
@@ -165,6 +165,7 @@ BOARD_InitADC:
   - {pin_num: L12, peripheral: LPADC1, signal: 'B, 1_3', pin_signal: GPIO_AD_13, pull_keeper_select: Keeper}
   - {pin_num: P17, peripheral: LPADC2, signal: 'A, 2_3', pin_signal: GPIO_AD_12, pull_keeper_select: Keeper}
   - {pin_num: L12, peripheral: LPADC2, signal: 'B, 2_3', pin_signal: GPIO_AD_13, pull_keeper_select: Keeper}
+  - {peripheral: ADC_ETC, signal: 'XBAR0_TRIG, 0', pin_signal: FLEXPWM1_PWM0_OUT_TRIG0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -176,6 +177,7 @@ BOARD_InitADC:
  * END ****************************************************************************************************************/
 void BOARD_InitADC(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
+  CLOCK_EnableClock(kCLOCK_Xbar1);            /* LPCG on: LPCG is ON. */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_10_GPIO_MUX3_IO09,       /* GPIO_AD_10 is configured as GPIO_MUX3_IO09 */
@@ -189,6 +191,7 @@ void BOARD_InitADC(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_13_GPIO_MUX3_IO12,       /* GPIO_AD_13 is configured as GPIO_MUX3_IO12 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputFlexpwm1Pwm0OutTrig0, kXBARA1_OutputAdcEtc0Coco0); /* FLEXPWM1_PWM0_OUT_TRIG0 output assigned to XBARA1_IN74 input is connected to XBARA1_OUT155 output assigned to ADC_ETC0_COCO0 */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_10_GPIO_MUX3_IO09,       /* GPIO_AD_10 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate

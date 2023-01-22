@@ -21,7 +21,7 @@
 
 #if LV_USE_GPU_NXP_VG_LITE
 #include "vg_lite.h"
-#include "vg_lite_platform.h"
+#include "vglite_support.h"
 #endif
 
 #if LV_USE_GPU_NXP_PXP
@@ -69,11 +69,6 @@
 #define DEMO_FB_SIZE \
     (((DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
 
-#if LV_USE_GPU_NXP_VG_LITE
-#define VG_LITE_MAX_CONTIGUOUS_SIZE 0x200000
-#define VG_LITE_COMMAND_BUFFER_SIZE (256 << 10)
-#endif
-
 #if DEMO_USE_ROTATE
 #define LVGL_BUFFER_WIDTH  DEMO_BUFFER_HEIGHT
 #define LVGL_BUFFER_HEIGHT DEMO_BUFFER_WIDTH
@@ -106,12 +101,6 @@ static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer);
 static void BOARD_PullMIPIPanelTouchResetPin(bool pullUp);
 
 static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode);
-
-#if LV_USE_GPU_NXP_VG_LITE
-static status_t BOARD_PrepareVGLiteController(void);
-
-static status_t BOARD_InitVGliteClock(void);
-#endif /* LV_USE_GPU_NXP_VG_LITE */
 
 static void DEMO_WaitBufferSwitchOff(void);
 
@@ -150,30 +139,6 @@ static const gt911_config_t s_touchConfig = {
 };
 static int s_touchResolutionX;
 static int s_touchResolutionY;
-
-#if LV_USE_GPU_NXP_VG_LITE
-static uint32_t registerMemBase = 0x41800000;
-static uint32_t gpu_mem_base    = 0x0;
-
-/*
- * In case custom VGLite memory parameters are used, the application needs to
- * allocate and publish the VGLite heap base, its size and the size of the
- * command buffer(s) using the following global variables:
- */
-extern void *vglite_heap_base;
-extern uint32_t vglite_heap_size;
-extern uint32_t vglite_cmd_buff_size;
-
-#if (CUSTOM_VGLITE_MEMORY_CONFIG == 0)
-/* VGLite driver heap */
-AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t vglite_contiguous_mem[VG_LITE_MAX_CONTIGUOUS_SIZE], 64);
-
-void *vglite_heap_base        = &vglite_contiguous_mem;
-uint32_t vglite_heap_size     = VG_LITE_MAX_CONTIGUOUS_SIZE;
-uint32_t vglite_cmd_buff_size = VG_LITE_COMMAND_BUFFER_SIZE;
-#endif /* CUSTOM_VGLITE_MEMORY_CONFIG */
-
-#endif /* LV_USE_GPU_NXP_VG_LITE */
 
 /*******************************************************************************
  * Code
@@ -282,11 +247,20 @@ void lv_port_disp_init(void)
     lv_disp_drv_register(&disp_drv);
 
 #if LV_USE_GPU_NXP_VG_LITE
-    if (vg_lite_init(64, 64) != VG_LITE_SUCCESS)
+    if (vg_lite_init(DEFAULT_VG_LITE_TW_WIDTH, DEFAULT_VG_LITE_TW_HEIGHT) != VG_LITE_SUCCESS)
     {
         PRINTF("VGLite init error. STOP.");
         vg_lite_close();
-        assert(0);
+        while (1)
+            ;
+    }
+
+    if (vg_lite_set_command_buffer_size(VG_LITE_COMMAND_BUFFER_SIZE) != VG_LITE_SUCCESS)
+    {
+        PRINTF("VGLite set command buffer. STOP.");
+        vg_lite_close();
+        while (1)
+            ;
     }
 #endif
 }
@@ -499,49 +473,3 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
     data->point.y = touch_y * DEMO_PANEL_HEIGHT / s_touchResolutionY;
 #endif
 }
-
-#if LV_USE_GPU_NXP_VG_LITE
-void GPU2D_IRQHandler(void)
-{
-    vg_lite_IRQHandler();
-}
-
-static status_t BOARD_InitVGliteClock(void)
-{
-    const clock_root_config_t gc355ClockConfig = {
-        .clockOff = false,
-        .mux      = kCLOCK_GC355_ClockRoot_MuxVideoPllOut,
-        .div      = 2,
-    };
-
-    CLOCK_SetRootClock(kCLOCK_Root_Gc355, &gc355ClockConfig);
-
-    CLOCK_GetRootClockFreq(kCLOCK_Root_Gc355);
-
-    CLOCK_EnableClock(kCLOCK_Gpu2d);
-
-    NVIC_SetPriority(GPU2D_IRQn, 3);
-
-    EnableIRQ(GPU2D_IRQn);
-
-    return kStatus_Success;
-}
-
-static status_t BOARD_PrepareVGLiteController(void)
-{
-    status_t status;
-
-    status = BOARD_InitVGliteClock();
-
-    if (kStatus_Success != status)
-    {
-        return status;
-    }
-
-    vg_lite_init_mem(registerMemBase, gpu_mem_base, vglite_heap_base, vglite_heap_size);
-
-    vg_lite_set_command_buffer_size(vglite_cmd_buff_size);
-
-    return kStatus_Success;
-}
-#endif /* LV_USE_GPU_NXP_VG_LITE */

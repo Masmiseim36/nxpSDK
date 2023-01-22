@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(glow_lenet_mnist_camera_cm7)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME glow_lenet_mnist_camera_cm7.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -68,45 +74,45 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../source/image
     ${ProjDirPath}/../source/video
     ${ProjDirPath}/../eiq/cmsis_nn/Include
     ${ProjDirPath}/../source
     ${ProjDirPath}/../board
-    ${ProjDirPath}/../../../../../middleware/eiq/glow/examples/lenet_mnist_camera/evkmimxrt1170
+    ${SdkRootDirPath}/middleware/eiq/glow/examples/lenet_mnist_camera/evkmimxrt1170
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../components/video/display/mipi_dsi_cmd
-    ${ProjDirPath}/../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../components/video/display/rm68191
-    ${ProjDirPath}/../../../../../components/video/display/rm68200
-    ${ProjDirPath}/../../../../../components/video/display/hx8394
-    ${ProjDirPath}/../../../../../components/video/display
-    ${ProjDirPath}/../../../../../components/video/camera/device
-    ${ProjDirPath}/../../../../../components/video/camera
-    ${ProjDirPath}/../../../../../components/video
-    ${ProjDirPath}/../../../../../components/video/camera/receiver
-    ${ProjDirPath}/../../../../../components/video/camera/device/sccb
-    ${ProjDirPath}/../../../../../components/video/camera/device/ov5640
-    ${ProjDirPath}/../../../../../components/video/i2c
-    ${ProjDirPath}/../../../../../components/video/camera/receiver/csi
-    ${ProjDirPath}/../../../../../components/video/display/dc
-    ${ProjDirPath}/../../../../../components/video/display/dc/elcdif
-    ${ProjDirPath}/../../../../../components/video/display/dc/lcdifv2
-    ${ProjDirPath}/../../../../../CMSIS/DSP
-    ${ProjDirPath}/../../../../../middleware/eiq
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../devices/MIMXRT1176/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../xmcd
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities/debug_console_lite
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/components/video/display/rm68191
+    ${SdkRootDirPath}/components/video/display/rm68200
+    ${SdkRootDirPath}/components/video/display/hx8394
+    ${SdkRootDirPath}/components/video/display
+    ${SdkRootDirPath}/components/video/camera/device
+    ${SdkRootDirPath}/components/video/camera
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/components/video/camera/receiver
+    ${SdkRootDirPath}/components/video/camera/device/sccb
+    ${SdkRootDirPath}/components/video/camera/device/ov5640
+    ${SdkRootDirPath}/components/video/i2c
+    ${SdkRootDirPath}/components/video/camera/receiver/csi
+    ${SdkRootDirPath}/components/video/display/dc
+    ${SdkRootDirPath}/components/video/display/dc/elcdif
+    ${SdkRootDirPath}/components/video/display/dc/lcdifv2
+    ${SdkRootDirPath}/CMSIS/DSP
+    ${SdkRootDirPath}/middleware/eiq
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/devices/MIMXRT1176/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/boards/evkmimxrt1170/xmcd
 )
 
 # include modules
@@ -213,15 +219,13 @@ include(driver_lcdifv2_MIMXRT1176_cm7)
 include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

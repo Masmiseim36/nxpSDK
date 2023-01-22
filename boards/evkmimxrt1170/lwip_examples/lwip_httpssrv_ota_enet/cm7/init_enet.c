@@ -12,7 +12,7 @@
 /*${header:start}*/
 #include "board.h"
 
-#include "enet_ethernetif.h"
+#include "ethernetif.h"
 #include "lwip/netifapi.h"
 
 #include "network_cfg.h"
@@ -44,8 +44,7 @@
  * Variables
  ******************************************************************************/
 /*${variable:start}*/
-static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
-static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+static phy_handle_t phyHandle;
 
 static struct netif netif;
 
@@ -59,13 +58,15 @@ int initNetwork(void)
 {
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle = &phyHandle,
+        .phyHandle   = &phyHandle,
+        .phyAddr     = EXAMPLE_PHY_ADDRESS,
+        .phyOps      = EXAMPLE_PHY_OPS,
+        .phyResource = EXAMPLE_PHY_RESOURCE,
+        .srcClockHz  = EXAMPLE_CLOCK_FREQ,
 #ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
 #endif
     };
-
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
 #ifndef configMAC_ADDR
     /* Set special address for each chip. */
@@ -82,6 +83,11 @@ int initNetwork(void)
                        tcpip_input);
     netifapi_netif_set_default(&netif);
     netifapi_netif_set_up(&netif);
+
+    while (ethernetif_wait_linkup(&netif, 5000) != ERR_OK)
+    {
+        PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
+    }
 
     LWIP_PLATFORM_DIAG(("\r\n************************************************"));
     LWIP_PLATFORM_DIAG((EXAMPLE_BANNER));

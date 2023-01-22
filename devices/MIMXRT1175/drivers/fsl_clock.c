@@ -1059,6 +1059,11 @@ void CLOCK_InitSysPll1(const clock_sys_pll1_config_t *config)
     div         = 41U;
     numerator   = 178956970UL;
 
+    if (config->ssEnable && (config->ss != NULL))
+    {
+        return;
+    }
+
     /* configure pll */
     ANATOP_PllConfigure(kAI_Itf_1g, div, numerator, 0U, denominator,
                         (config->ssEnable && (config->ss != NULL)) ? config->ss : NULL);
@@ -1748,6 +1753,7 @@ bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
     USBPHY1->PLL_SIC_SET = (USBPHY_PLL_SIC_PLL_EN_USB_CLKS_MASK);
 
     USBPHY1->CTRL_CLR = USBPHY_CTRL_CLR_CLKGATE_MASK;
+    USBPHY1->PWD_SET  = 0x0;
 
     while (0UL == (USBPHY1->PLL_SIC & USBPHY_PLL_SIC_PLL_LOCK_MASK))
     {
@@ -1853,6 +1859,7 @@ bool CLOCK_EnableUsbhs1PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
     USBPHY2->PLL_SIC_SET = (USBPHY_PLL_SIC_PLL_EN_USB_CLKS_MASK);
 
     USBPHY2->CTRL_CLR = USBPHY_CTRL_CLR_CLKGATE_MASK;
+    USBPHY2->PWD_SET  = 0x0;
 
     while (0UL == (USBPHY2->PLL_SIC & USBPHY_PLL_SIC_PLL_LOCK_MASK))
     {

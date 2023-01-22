@@ -246,7 +246,6 @@
           <state>SDK_OS_FREE_RTOS</state>
           <state>FSL_OSA_TASK_ENABLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>SDK_DEBUGCONSOLE_UART=1</state>
           <state>CFG_BLE</state>
           <state>NVM_NO_COMPONNET=1</state>
@@ -254,6 +253,7 @@
           <state>HAL_AUDIO_DMA_INIT_ENABLE=0</state>
           <state>LFS_NO_INTRINSICS=1</state>
           <state>LFS_NO_ERROR=1</state>
+          <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>LOG_ENABLE_ASYNC_MODE=1</state>
           <state>LOG_MAX_ARGUMENT_COUNT=10</state>
@@ -384,6 +384,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/port/os</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver</state>
@@ -416,8 +417,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor</state>
@@ -452,9 +453,9 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/extension</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/bluetooth</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/bluetooth</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/porting</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/services</state>
           <state>$PROJ_DIR$/../../../../../../components/internal_flash</state>
@@ -466,6 +467,7 @@
           <state>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wlcmgr</state>
           <state>$PROJ_DIR$/../../../../../../components/log</state>
         </option>
         <option>
@@ -931,6 +933,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_gatt.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_protocol.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_util.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_ga.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_lc3_common.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_lc3_decoder.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_lc3_encoder.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1442,7 +1448,6 @@
           <state>SDK_OS_FREE_RTOS</state>
           <state>FSL_OSA_TASK_ENABLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>SDK_DEBUGCONSOLE_UART=1</state>
           <state>CFG_BLE</state>
           <state>NVM_NO_COMPONNET=1</state>
@@ -1450,6 +1455,7 @@
           <state>HAL_AUDIO_DMA_INIT_ENABLE=0</state>
           <state>LFS_NO_INTRINSICS=1</state>
           <state>LFS_NO_ERROR=1</state>
+          <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>LOG_ENABLE_ASYNC_MODE=1</state>
           <state>LOG_MAX_ARGUMENT_COUNT=10</state>
@@ -1580,6 +1586,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/port/os</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver</state>
@@ -1612,8 +1619,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor</state>
@@ -1648,9 +1655,9 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/export/extension</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/bluetooth</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/bluetooth</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/porting</state>
           <state>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/services</state>
           <state>$PROJ_DIR$/../../../../../../components/internal_flash</state>
@@ -1662,6 +1669,7 @@
           <state>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wlcmgr</state>
           <state>$PROJ_DIR$/../../../../../../components/log</state>
         </option>
         <option>
@@ -2127,6 +2135,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_gatt.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_protocol.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_util.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_ga.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_lc3_common.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_lc3_decoder.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_lc3_encoder.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2529,6 +2541,12 @@
           <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_iso.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_iso_internal.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.c</name>
         </file>
         <file>
@@ -2675,7 +2693,19 @@
             <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/util.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/util_internal.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/util_loops.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/util_macro.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/printk.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/check.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/byteorder.h</name>
@@ -2685,6 +2715,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/slist.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/dlist.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/include/sys/atomic.h</name>
@@ -2722,6 +2755,12 @@
         </group>
       </group>
       <group>
+        <name>common</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/common/addr.c</name>
+        </file>
+      </group>
+      <group>
         <name>porting</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/porting/porting.c</name>
@@ -2735,6 +2774,9 @@
             <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/porting/errno/errno.h</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/porting/utf8.c</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/edgefast_bluetooth/source/porting/work_queue.c</name>
         </file>
@@ -2757,6 +2799,117 @@
     </file>
   </group>
   <group>
+    <name>wifi</name>
+    <group>
+      <name>incl</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
+      </file>
+      <group>
+        <name>wifidriver</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</name>
+        </file>
+      </group>
+      <group>
+        <name>port</name>
+        <group>
+          <name>os</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</name>
+          </file>
+        </group>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wm_utils.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wmerrno.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wmlog.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wmtypes.h</name>
+      </file>
+    </group>
+    <group>
+      <name>wifidriver</name>
+      <group>
+        <name>incl</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/sdio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</name>
+      </file>
+    </group>
+    <group>
+      <name>wifi_bt_firmware</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</name>
+      </file>
+    </group>
+    <group>
+      <name>port</name>
+      <group>
+        <name>os</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/port/os/os.c</name>
+        </file>
+      </group>
+    </group>
+  </group>
+  <group>
     <name>bt_ble</name>
     <group>
       <name>port</name>
@@ -2766,12 +2919,6 @@
           <name>mcux</name>
           <group>
             <name>bluetooth</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.h</name>
-            </file>
             <group>
               <name>controller</name>
               <group>
@@ -2796,7 +2943,16 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_k32w.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_k32w.h</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_hci_uart.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_wifi_nxp.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_hci_uart.h</name>
               </file>
             </group>
             <file>
@@ -2893,16 +3049,10 @@
               <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/littlefs_pl.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller.c</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_wifi_nxp.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_wifi_nxp.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.h</name>
             </file>
           </group>
           <group>
@@ -3477,117 +3627,6 @@
     </group>
   </group>
   <group>
-    <name>wifi</name>
-    <group>
-      <name>incl</name>
-      <group>
-        <name>port</name>
-        <group>
-          <name>os</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</name>
-          </file>
-        </group>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
-      </file>
-      <group>
-        <name>wifidriver</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wm_utils.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wmerrno.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wmlog.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/incl/wmtypes.h</name>
-      </file>
-    </group>
-    <group>
-      <name>wifidriver</name>
-      <group>
-        <name>incl</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/sdio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/sdio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</name>
-      </file>
-    </group>
-    <group>
-      <name>port</name>
-      <group>
-        <name>os</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/port/os/os.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>wifi_bt_firmware</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
@@ -3787,10 +3826,10 @@
     <group>
       <name>internal_flash</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/internal_flash/fsl_adapter_flash.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/internal_flash/fsl_adapter_flexspi_nor_flash.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/internal_flash/fsl_adapter_flexspi_nor_flash.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/internal_flash/fsl_adapter_flash.h</name>
       </file>
     </group>
     <group>
@@ -3801,6 +3840,9 @@
           <name>tx_pwr_limits</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</name>
           </file>
         </group>
       </group>
@@ -4094,16 +4136,16 @@
   <group>
     <name>freertos</name>
     <group>
-      <name>freertos_kernel</name>
+      <name>freertos-kernel</name>
       <group>
         <name>portable</name>
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
           </file>
         </group>
         <group>
@@ -4111,103 +4153,103 @@
           <group>
             <name>ARM_CM4F</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
             </file>
           </group>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -4943,19 +4985,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

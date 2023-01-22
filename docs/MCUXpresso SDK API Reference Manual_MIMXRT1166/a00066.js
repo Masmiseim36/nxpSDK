@@ -1,16 +1,16 @@
 var a00066 =
 [
-    [ "pdm_channel_config_t", "a00066.html#a00581", [
+    [ "pdm_channel_config_t", "a00066.html#a00584", [
       [ "cutOffFreq", "a00066.html#a892c726c35fa841ac00ae2c53aa5fc70", null ],
       [ "gain", "a00066.html#a44f9e948fecd2aa21158208d1a1345c5", null ]
     ] ],
-    [ "pdm_config_t", "a00066.html#a00582", [
+    [ "pdm_config_t", "a00066.html#a00585", [
       [ "enableDoze", "a00066.html#a52ea2cadf34eadcd38311cb1ea3a7c2a", null ],
       [ "fifoWatermark", "a00066.html#a3db11fc707c217446032a7d7c408203c", null ],
       [ "qualityMode", "a00066.html#af5a7749baf36467e4668c58d909dc8f1", null ],
       [ "cicOverSampleRate", "a00066.html#a8cc4f599b9ecf6bf905933155ce3ee16", null ]
     ] ],
-    [ "pdm_hwvad_config_t", "a00066.html#a00584", [
+    [ "pdm_hwvad_config_t", "a00066.html#a00587", [
       [ "channel", "a00066.html#ae44bdb0573a7a718adaeb712d0172f86", null ],
       [ "initializeTime", "a00066.html#a1b0b76c560e10d787d70273db9a6a971", null ],
       [ "cicOverSampleRate", "a00066.html#a15f02e72862a7e74271a2cd4c6614687", null ],
@@ -20,7 +20,7 @@ var a00066 =
       [ "enableFrameEnergy", "a00066.html#aec6b8ca63093fcb7073734ea12d6e35a", null ],
       [ "enablePreFilter", "a00066.html#a8b9257c5f3a1d8e875f83bbe52870b98", null ]
     ] ],
-    [ "pdm_hwvad_noise_filter_t", "a00066.html#a00585", [
+    [ "pdm_hwvad_noise_filter_t", "a00066.html#a00588", [
       [ "enableAutoNoiseFilter", "a00066.html#a5bb168231a196e9e513ec6e8d0378a1b", null ],
       [ "enableNoiseMin", "a00066.html#afabdf9985504adde1f491d7d5bced266", null ],
       [ "enableNoiseDecimation", "a00066.html#acea1e92f33e2c8f63e7c2fdd35e73bb3", null ],
@@ -28,18 +28,18 @@ var a00066 =
       [ "noiseFilterAdjustment", "a00066.html#aa9df6cdbf47ef4eaf06f29bff548a8bd", null ],
       [ "noiseGain", "a00066.html#ade6a68f4d654916e434895fea2479757", null ]
     ] ],
-    [ "pdm_hwvad_zero_cross_detector_t", "a00066.html#a00587", [
+    [ "pdm_hwvad_zero_cross_detector_t", "a00066.html#a00590", [
       [ "enableAutoThreshold", "a00066.html#a85356b87a791c5cf53a4193869d3fd3e", null ],
       [ "zcdAnd", "a00066.html#a3c5f375530d6bf5ee157480f709f46c7", null ],
       [ "threshold", "a00066.html#a4e2528d882836eea6a8387efd9cacf19", null ],
       [ "adjustmentThreshold", "a00066.html#add34bccb6c0392bdea758735e72b1ec8", null ]
     ] ],
-    [ "pdm_transfer_t", "a00066.html#a00588", [
+    [ "pdm_transfer_t", "a00066.html#a00591", [
       [ "data", "a00066.html#a4ba616d801fccc52f3d73364746f677b", null ],
       [ "dataSize", "a00066.html#a8af478d5a7369fc2c00715231fe34467", null ]
     ] ],
-    [ "pdm_hwvad_notification_t", "a00066.html#a00586", null ],
-    [ "pdm_handle_t", "a00066.html#a00401", [
+    [ "pdm_hwvad_notification_t", "a00066.html#a00589", null ],
+    [ "pdm_handle_t", "a00066.html#a00403", [
       [ "state", "a00066.html#ab2b16dd293c06768cbca8eea7a37a514", null ],
       [ "callback", "a00066.html#a9930728ef1b19dc11541c140bace0cc3", null ],
       [ "userData", "a00066.html#a1e2468882ba36fdf414fb068d5f6c294", null ],

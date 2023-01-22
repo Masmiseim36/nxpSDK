@@ -6,7 +6,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/incl
     ${CMAKE_CURRENT_LIST_DIR}/incl/port/os
     ${CMAKE_CURRENT_LIST_DIR}/incl/wifidriver

@@ -10,7 +10,7 @@
 
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
-#include "logging.h"
+#include "maestro_logging.h"
 #include "audio_microphone.h"
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"

@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -392,6 +392,16 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../httpsrv_freertos.c</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../httpsrv_freertos.h</FilePath>
             </File>
             <File>
               <FileName>httpsrv_fs_data.c</FileName>
@@ -466,27 +476,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -516,177 +506,142 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/httpsrv</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>httpsrv.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.c</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
             <File>
-              <FileName>httpsrv.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.h</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
             <File>
-              <FileName>httpsrv_base64.c</FileName>
+              <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.c</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
             </File>
             <File>
-              <FileName>httpsrv_base64.h</FileName>
+              <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_fs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_prv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_prv.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_script.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_script.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_supp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_supp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_tls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_utf8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_utf8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_api.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws_prv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_prv.h</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/mdns</GroupName>
+          <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>mdns.c</FileName>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_domain.c</FileName>
+              <FileName>fsl_common_arm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_domain.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_out.c</FileName>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_out.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>mdns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_domain.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_domain.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>mdns_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_priv.h</FilePath>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_opts.h</FileName>
+              <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_opts.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>mdns_out.h</FileName>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_out.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -694,29 +649,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1861,132 +1836,192 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>lwip/src/apps/httpsrv</GroupName>
           <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>httpsrv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
+              <FileName>httpsrv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>httpsrv_base64.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
+              <FileName>httpsrv_base64.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>httpsrv_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_fs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common_arm.c</FileName>
+              <FileName>httpsrv_fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_prv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_prv.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_script.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common_arm.h</FileName>
+              <FileName>httpsrv_script.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>httpsrv_sha1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_iomuxc.h</FileName>
+              <FileName>httpsrv_sha1.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>httpsrv_supp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_pmu.h</FileName>
+              <FileName>httpsrv_supp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_pmu.c</FileName>
+              <FileName>httpsrv_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_task.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dcdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcdc.c</FileName>
+              <FileName>httpsrv_tls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.c</FileName>
+              <FileName>httpsrv_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_utf8.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.h</FileName>
+              <FileName>httpsrv_utf8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
+              <FileName>httpsrv_ws.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>httpsrv_ws.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_ws_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_ws_prv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_prv.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>lwip/src/apps/mdns</GroupName>
+          <Files>
+            <File>
+              <FileName>mdns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_domain.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_out.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>mdns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_domain.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_opts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_out.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_3.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
@@ -2151,28 +2186,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -2187,16 +2202,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2216,172 +2221,172 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2718,7 +2723,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2776,6 +2781,16 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../httpsrv_freertos.c</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../httpsrv_freertos.h</FilePath>
             </File>
             <File>
               <FileName>httpsrv_fs_data.c</FileName>
@@ -2850,27 +2865,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -2900,177 +2895,142 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/httpsrv</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>httpsrv.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.c</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
             <File>
-              <FileName>httpsrv.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.h</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
             <File>
-              <FileName>httpsrv_base64.c</FileName>
+              <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.c</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
             </File>
             <File>
-              <FileName>httpsrv_base64.h</FileName>
+              <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_fs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_prv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_prv.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_script.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_script.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_supp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_supp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_tls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_utf8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_utf8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_api.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpsrv_ws_prv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_prv.h</FilePath>
+              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/mdns</GroupName>
+          <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>mdns.c</FileName>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_domain.c</FileName>
+              <FileName>fsl_common_arm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_domain.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_out.c</FileName>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_out.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>mdns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_domain.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_domain.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>mdns_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_priv.h</FilePath>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>mdns_opts.h</FileName>
+              <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_opts.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>mdns_out.h</FileName>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_out.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3078,29 +3038,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4245,132 +4225,192 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>lwip/src/apps/httpsrv</GroupName>
           <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
+              <FileName>httpsrv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_enet.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
+              <FileName>httpsrv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>httpsrv_base64.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
+              <FileName>httpsrv_base64.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_base64.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>httpsrv_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_fs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common_arm.c</FileName>
+              <FileName>httpsrv_fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_prv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_prv.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_script.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common_arm.h</FileName>
+              <FileName>httpsrv_script.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_script.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>httpsrv_sha1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_iomuxc.h</FileName>
+              <FileName>httpsrv_sha1.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_sha1.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>httpsrv_supp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_pmu.h</FileName>
+              <FileName>httpsrv_supp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_supp.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_pmu.c</FileName>
+              <FileName>httpsrv_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_task.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dcdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcdc.c</FileName>
+              <FileName>httpsrv_tls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.c</FileName>
+              <FileName>httpsrv_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_tls.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_utf8.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.h</FileName>
+              <FileName>httpsrv_utf8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_utf8.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
+              <FileName>httpsrv_ws.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
+              <FileName>httpsrv_ws.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_ws_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>httpsrv_ws_prv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_prv.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>lwip/src/apps/mdns</GroupName>
+          <Files>
+            <File>
+              <FileName>mdns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_domain.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/mdns/mdns_out.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>mdns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_domain.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_opts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/mdns_out.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_3.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
@@ -4535,28 +4575,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -4571,16 +4591,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4600,172 +4610,172 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>

@@ -229,9 +229,10 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_VIT_PRE_PROC=1</state>
+          <state>XA_VOICE_SEEKER=1</state>
           <state>XA_RENDERER=1</state>
           <state>XA_CAPTURER=1</state>
-          <state>BOARD_DMIC_NUM=1</state>
+          <state>BOARD_DMIC_NUM=2</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
@@ -365,7 +366,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33</state>
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
@@ -383,7 +384,7 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1338,9 +1339,10 @@
           <state>NDEBUG</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_VIT_PRE_PROC=1</state>
+          <state>XA_VOICE_SEEKER=1</state>
           <state>XA_RENDERER=1</state>
           <state>XA_CAPTURER=1</state>
-          <state>BOARD_DMIC_NUM=1</state>
+          <state>BOARD_DMIC_NUM=2</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
@@ -1474,7 +1476,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33</state>
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
@@ -1492,7 +1494,7 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2527,7 +2529,7 @@
   <group>
     <name>freertos</name>
     <group>
-      <name>freertos_kernel</name>
+      <name>freertos-kernel</name>
       <group>
         <name>portable</name>
         <group>
@@ -2537,16 +2539,19 @@
             <group>
               <name>non_secure</name>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
               </file>
             </group>
           </group>
@@ -2554,99 +2559,99 @@
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -2806,19 +2811,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

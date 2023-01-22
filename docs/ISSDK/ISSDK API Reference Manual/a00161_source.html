@@ -53,7 +53,7 @@ $(function() {
 <div class="ttc" id="a00158_html_a70ee6ecf0544a29f4f0367d45b1dd6cd"><div class="ttname"><a href="a00158.html#a70ee6ecf0544a29f4f0367d45b1dd6cd">MPL3115_CTRL_REG1_SBYB_ACTIVE</a></div><div class="ttdeci">#define MPL3115_CTRL_REG1_SBYB_ACTIVE</div><div class="ttdef"><b>Definition:</b> <a href="a00158_source.html#l00869">mpl3115.h:869</a></div></div>
 <div class="ttc" id="a00182_html_aa75349faed7c77807cb88d9224aa2636"><div class="ttname"><a href="a00182.html#aa75349faed7c77807cb88d9224aa2636">Sensor_I2C_Read</a></div><div class="ttdeci">int32_t Sensor_I2C_Read(ARM_DRIVER_I2C *pCommDrv, registerDeviceInfo_t *devInfo, uint16_t slaveAddress, const registerreadlist_t *pReadList, uint8_t *pOutBuffer)</div><div class="ttdoc">Read register data from a sensor. </div><div class="ttdef"><b>Definition:</b> <a href="a00182_source.html#l00105">sensor_io_i2c.c:105</a></div></div>
 <div class="ttc" id="a03807_html"><div class="ttname"><a href="a03807.html">registerwritelist_t</a></div><div class="ttdoc">This structure defines the Write command List. </div><div class="ttdef"><b>Definition:</b> <a href="a00179_source.html#l00068">sensor_drv.h:68</a></div></div>
-<div class="ttc" id="a00359_html_a369536ebfe385731562c0b55dd6f3a7c"><div class="ttname"><a href="a00359.html#a369536ebfe385731562c0b55dd6f3a7c">status</a></div><div class="ttdeci">int32_t status</div><div class="ttdef"><b>Definition:</b> <a href="a00359_source.html#l00244">fxls896xaf_freemaster_demo.c:244</a></div></div>
+<div class="ttc" id="a00359_html_a369536ebfe385731562c0b55dd6f3a7c"><div class="ttname"><a href="a00359.html#a369536ebfe385731562c0b55dd6f3a7c">status</a></div><div class="ttdeci">int32_t status</div><div class="ttdef"><b>Definition:</b> <a href="a00359_source.html#l00248">fxls896xaf_freemaster_demo.c:248</a></div></div>
 <div class="ttc" id="a00179_html_a18a00cbfd8ad83c7fd229cd0d5fad5aca961b6871536a27c9e4718100e0024274"><div class="ttname"><a href="a00179.html#a18a00cbfd8ad83c7fd229cd0d5fad5aca961b6871536a27c9e4718100e0024274">SENSOR_ERROR_NONE</a></div><div class="ttdef"><b>Definition:</b> <a href="a00179_source.html#l00033">sensor_drv.h:33</a></div></div>
 <div class="ttc" id="a00161_html_a1744cb8d032f2df40470591ad644c0d2"><div class="ttname"><a href="a00161.html#a1744cb8d032f2df40470591ad644c0d2">MPL3115_I2C_SetIdleTask</a></div><div class="ttdeci">void MPL3115_I2C_SetIdleTask(mpl3115_i2c_sensorhandle_t *pSensorHandle, registeridlefunction_t idleTask, void *userParam)</div><div class="ttdoc">: The interface function to set the I2C Idle Task. </div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00053">mpl3115_drv.c:53</a></div></div>
 <div class="ttc" id="a00167_html_ac8a60c799d9dbc84531b4680762eb8dc"><div class="ttname"><a href="a00167.html#ac8a60c799d9dbc84531b4680762eb8dc">Register_I2C_Read</a></div><div class="ttdeci">int32_t Register_I2C_Read(ARM_DRIVER_I2C *pCommDrv, registerDeviceInfo_t *devInfo, uint16_t slaveAddress, uint8_t offset, uint8_t length, uint8_t *pOutBuffer)</div><div class="ttdoc">The interface function to read a sensor register. </div><div class="ttdef"><b>Definition:</b> <a href="a00167_source.html#l00310">register_io_i2c.c:310</a></div></div>
@@ -86,7 +86,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>
-&copy; Copyright 2016-2020 NXP. All Rights Reserved.
+&copy; Copyright 2016-2022 NXP. All Rights Reserved. SPDX-License-Identifier: BSD-3-Clause
 </small></address>
 </body>
 </html>

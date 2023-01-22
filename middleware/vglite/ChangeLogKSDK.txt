@@ -2,7 +2,20 @@
 @page middleware_log Middleware Change Log
 
 @section vglite VGLite GPU Driver
-  The current version of the VGLite GPU Driver is 3.0.15_rev5.
+  The current version of the VGLite GPU Driver is 3.0.15_rev7.
+  - version 3.0.15_rev7
+    - Fixed:
+      - (MCUX-54842) Fixed build warnings
+  - version 3.0.15_rev6
+    - Fixed:
+      - Fixed incorrect scissoring issue in single thread mode
+      - Optimized line stroking to reduce memory consumption
+      - Extended blit output quality workaround to "vg_lite_blit_rect"
+      - (IMX-3008) Fixed driver reporting incorrect version number
+      - (IMX-2848) Allocated path stroking parameters dynamically
+      - (IMX-3010) Fixed scissoring window check with large tessellation buffers
+    - Changed:
+      - (IMX-2907) Removed obsolete "vg_lite_perspective" API
   - version 3.0.15_rev5
     - Fixed:
       - (IMX-2867) Fixed hang when processing vector paths with zero length

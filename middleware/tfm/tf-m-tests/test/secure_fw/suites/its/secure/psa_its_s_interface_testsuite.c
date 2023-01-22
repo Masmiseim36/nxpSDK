@@ -4,13 +4,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
-
+#include <string.h>
 #include "its_s_tests.h"
 #include "psa/internal_trusted_storage.h"
 #include "test_framework_helpers.h"
 #include "tfm_secure_client_2_api.h"
 #include "../its_tests_common.h"
-#include "tfm_memory_utils.h"
 
 /* UID to test partition access control */
 #define TEST_UID_ACCESS_CONTROL 42U
@@ -159,7 +158,7 @@ static void tfm_its_test_1021(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }
@@ -175,7 +174,7 @@ static void tfm_its_test_1021(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }

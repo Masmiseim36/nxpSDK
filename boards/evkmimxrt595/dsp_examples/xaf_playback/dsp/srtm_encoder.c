@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,7 +13,7 @@
 
 #include <xtensa/xos.h>
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 #include "srtm_config_audio.h"
 #if XA_OPUS_ENCODER
 #include "audio/xa-opus-encoder-api.h"
@@ -48,8 +48,7 @@
 #define SBC_ENC_BITPOOL   31
 #define SBC_ENC_CHMODE    XA_SBC_ENC_CHMODE_DUAL
 
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
+#define TASK_STACK_SIZE (11 * 1024)
 
 /*******************************************************************************
  * Commands processing
@@ -60,7 +59,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     void *p_adev    = NULL;
     void *p_encoder = NULL;
     XosThread enc_thread;
-    char enc_stack[STACK_SIZE];
+    char enc_stack[TASK_STACK_SIZE];
     xaf_comp_status enc_status;
     int enc_info[4];
     void *enc_inbuf[1];
@@ -231,7 +230,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 
     /* Start processing thread */
     ret = xos_thread_create(&enc_thread, NULL, DSP_ProcessThread, (void *)dsp, "DSP_ProcessThread", enc_stack,
-                            STACK_SIZE, 7, 0, 0);
+                            TASK_STACK_SIZE, 7, 0, 0);
     if (ret != XOS_OK)
     {
         DSP_PRINTF("xos_thread_create failure: %d\r\n", ret);

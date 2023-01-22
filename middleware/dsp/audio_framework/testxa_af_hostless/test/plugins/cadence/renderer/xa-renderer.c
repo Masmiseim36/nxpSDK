@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -55,6 +55,7 @@
 #include <stdio.h>
 #include "audio/xa-renderer-api.h"
 #include "xf-debug.h"
+#include "xaf-api.h"
 #include <string.h>
 
 #ifdef XAF_PROFILE
@@ -174,6 +175,9 @@ typedef struct XARenderer
     /* ...framesize in samples per channel */
     UWORD32     frame_size;
 
+    /* ...input port bypass flag: 0 disabled (default), 1 enabled */
+    UWORD32     inport_bypass;
+
 }   XARenderer;
 
 
@@ -238,7 +242,10 @@ static void xa_fw_handler(void *arg)
 static inline void xa_fw_renderer_close(XARenderer *d)
 {
     fclose(d->fw);
-    __xf_timer_stop(&rend_timer);
+    if ((d->state & XA_RENDERER_FLAG_RUNNING))
+    {
+        __xf_timer_stop(&rend_timer);
+    }
     __xf_timer_destroy(&rend_timer);
 }
 
@@ -250,6 +257,14 @@ static inline UWORD32 xa_fw_renderer_submit(XARenderer *d, void *b, UWORD32 byte
     UWORD32 k;
     UWORD32 zfill;
     UWORD32 payload;
+    UWORD32 size;
+
+    /* ...check buffer size is sane */
+    XF_CHK_ERR((size = d->submited_inbytes / (d->sample_size * d->channels)) >= 0, XA_RENDERER_EXEC_FATAL_INPUT);
+
+    /* ...make sure we have integral amount of samples in input buffer */
+    /* ...TENA-3225: If input is over, consume partial input and zero fill the rest. */
+    XF_CHK_ERR(d->input_over || ((size * d->sample_size * d->channels) == d->submited_inbytes), XA_RENDERER_EXEC_FATAL_INPUT);
 
     fp      = d ->fw;
     payload = d->frame_size_bytes*d->channels;
@@ -358,6 +373,12 @@ static XA_ERRORCODE xa_fw_renderer_init (XARenderer *d)
    
    /*initialises the timer ;timer0 is used as system timer*/
    __xf_timer_init(&rend_timer, xa_fw_handler, d, 1);
+
+#ifdef XA_INPORT_BYPASS_TEST
+    /* ...enabled at init for testing. To be enabled by set-config to the plugin. */
+    d->inport_bypass = 1;
+#endif
+
    return XA_NO_ERROR;
 }
 
@@ -644,15 +665,27 @@ static XA_ERRORCODE xa_renderer_get_config_param(XARenderer *d, WORD32 i_idx, pV
         /* ...return current execution state */
         *(WORD32 *)pv_value = xa_hw_renderer_get_state(d);
         return XA_NO_ERROR;
+
     case XA_RENDERER_CONFIG_PARAM_BYTES_PRODUCED:
         /* ...return current execution state */
         *(UWORD32 *)pv_value = (UWORD32)(d->cumulative_bytes_produced > MAX_UWORD32 ? MAX_UWORD32 : d->cumulative_bytes_produced) ;
         return XA_NO_ERROR;
 
+#ifdef XA_EXT_CONFIG_TEST
+    case XA_RENDERER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
+    {
+        /* ...return current audio frame length (in samples) */
+        xaf_ext_buffer_t *ext_buf = (xaf_ext_buffer_t *) pv_value;
+        memcpy(ext_buf->data, &d->frame_size, sizeof(d->frame_size));
+        ext_buf->valid_data_size = sizeof(d->frame_size);
+        return XA_NO_ERROR;
+    }
+#else
     case XA_RENDERER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
         /* ...return current audio frame length (in samples) */
         *(WORD32 *)pv_value = d->frame_size;
         return XA_NO_ERROR;
+#endif
 
     default:
         /* ...unrecognized parameter */
@@ -707,8 +740,6 @@ static XA_ERRORCODE xa_renderer_execute(XARenderer *d, WORD32 i_idx, pVOID pv_va
 /* ...set number of input bytes */
 static XA_ERRORCODE xa_renderer_set_input_bytes(XARenderer *d, WORD32 i_idx, pVOID pv_value)
 {
-    UWORD32     size=0;
-   
     XF_CHK_ERR(d && pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...make sure it is an input port  */
@@ -720,12 +751,6 @@ static XA_ERRORCODE xa_renderer_set_input_bytes(XARenderer *d, WORD32 i_idx, pVO
     /* ...input buffer pointer must be valid */
     XF_CHK_ERR(d->input, XA_API_FATAL_INVALID_CMD_TYPE);
 
-    /* ...check buffer size is sane */
-    XF_CHK_ERR((size = *(UWORD32 *)pv_value / (d->sample_size * d->channels)) >= 0, XA_RENDERER_EXEC_FATAL_INPUT);
-
-    /* ...make sure we have integral amount of samples */
-    XF_CHK_ERR((size * d->sample_size * d->channels) == *(UWORD32 *)pv_value, XA_RENDERER_EXEC_FATAL_INPUT);
-   
     d->submited_inbytes = *(UWORD32 *)pv_value;
 
     /* ...all is correct */
@@ -741,7 +766,6 @@ static XA_ERRORCODE xa_renderer_get_output_bytes(XARenderer *d, WORD32 i_idx, pV
     /* ...track index must be valid */
     XF_CHK_ERR(i_idx == 1, XA_API_FATAL_INVALID_CMD_TYPE);
     
-    /* ...pcm gain component must be running */
     //XF_CHK_ERR(d->state & XA_RENDERER_FLAG_RUNNING, XA_API_FATAL_INVALID_CMD_TYPE);
     XF_CHK_ERR(d->state & XA_RENDERER_FLAG_POSTINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
     
@@ -833,8 +857,16 @@ static XA_ERRORCODE xa_renderer_get_mem_info_size(XARenderer *d, WORD32 i_idx, p
     switch (i_idx)
     {
     case 0:
-        /* ...input buffer specification; accept exact audio frame */
-        i_value = d->frame_size_bytes * d->channels;
+        if(d->inport_bypass)
+        {
+            /* ...input buffer length 0 enabling input bypass mode */
+            i_value = 0;
+        }
+        else
+        {
+            /* ...input buffer specification; accept exact audio frame */
+            i_value = d->frame_size_bytes * d->channels;
+        }
         break;
 
     case 1:

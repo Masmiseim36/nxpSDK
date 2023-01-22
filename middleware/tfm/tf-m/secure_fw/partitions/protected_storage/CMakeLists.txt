@@ -1,19 +1,11 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 #-------------------------------------------------------------------------------
 
 if (NOT TFM_PARTITION_PROTECTED_STORAGE)
-    if(TFM_PARTITION_PSA_PROXY)
-        add_library(tfm_app_rot_partition_ps INTERFACE)
-
-        target_include_directories(tfm_app_rot_partition_ps
-            INTERFACE
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        )
-    endif()
     return()
 endif()
 
@@ -61,11 +53,9 @@ target_sources(tfm_partitions
 
 target_link_libraries(tfm_app_rot_partition_ps
     PRIVATE
-        tfm_secure_api
-        psa_interface
         secure_fw
         platform_s
-        tfm_psa_rot_partition_its
+        tfm_sprt
 )
 
 ############################ Secure API ########################################

@@ -1,6 +1,8 @@
 /*
  * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
- * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
+ * Copyright (c) 2021-2022 Cypress Semiconductor Corporation (an Infineon
+ * company) or an affiliate of Cypress Semiconductor Corporation. All rights
+ * reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -36,6 +38,7 @@
 REGION_DECLARE(Image$$, PT_TFM_NS_MAILBOX_AGENT_PRIVATE, _DATA_START$$Base);
 REGION_DECLARE(Image$$, PT_TFM_NS_MAILBOX_AGENT_PRIVATE, _DATA_END$$Base);
 #endif
+
 extern uint8_t tfm_ns_mailbox_agent_stack[];
 
 /* Entrypoint function declaration */
@@ -61,17 +64,18 @@ struct partition_tfm_ns_mailbox_agent_load_info_t {
 
 /* Partition load, deps, service load data. Put to a dedicated section. */
 #if defined(__ICCARM__)
-#pragma location = ".part_load"
+#pragma location = ".part_load_priority_low"
 __root
 #endif /* __ICCARM__ */
 const struct partition_tfm_ns_mailbox_agent_load_info_t tfm_ns_mailbox_agent_load
-    __attribute__((used, section(".part_load"))) = {
+    __attribute__((used, section(".part_load_priority_low"))) = {
     .load_info = {
         .psa_ff_ver                 = 0x0101 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_NS_MAILBOX_AGENT,
         .flags                      = 0
                                     | PARTITION_MODEL_IPC
                                     | PARTITION_MODEL_PSA_ROT
+                                    | PARTITION_NS_AGENT
                                     | PARTITION_PRI_LOW,
         .entry                      = ENTRY_TO_POSITION(ns_agent_mailbox_entry),
         .stack_size                 = 0x800,
@@ -106,8 +110,8 @@ const struct partition_tfm_ns_mailbox_agent_load_info_t tfm_ns_mailbox_agent_loa
 
 /* Placeholder for partition and service runtime space. Do not reference it. */
 #if defined(__ICCARM__)
-#pragma location=".bss.part_runtime"
+#pragma location=".bss.part_runtime_priority_low"
 __root
 #endif /* __ICCARM__ */
 static struct partition_t tfm_ns_mailbox_agent_partition_runtime_item
-    __attribute__((used, section(".bss.part_runtime")));
+    __attribute__((used, section(".bss.part_runtime_priority_low")));

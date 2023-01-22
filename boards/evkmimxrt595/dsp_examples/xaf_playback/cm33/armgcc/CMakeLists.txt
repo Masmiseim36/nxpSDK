@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(dsp_xaf_playback_cm33)
 
+set(MCUX_BUILD_TYPES flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME dsp_xaf_playback_cm33.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -74,37 +80,38 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../dsp/binary/dsp_reset_release.bin"
-"${ProjDirPath}/../../dsp/binary/dsp_text_release.bin"
-"${ProjDirPath}/../../dsp/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/dsp_examples/xaf_playback/dsp/binary/dsp_reset_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/dsp_examples/xaf_playback/dsp/binary/dsp_text_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/dsp_examples/xaf_playback/dsp/binary/dsp_data_release.bin"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../dsp/binary
-    ${ProjDirPath}/../../../..
+    ${SdkRootDirPath}/boards/evkmimxrt595/dsp_examples/xaf_playback/dsp/binary
+    ${SdkRootDirPath}/boards/evkmimxrt595
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
-    ${ProjDirPath}/../../../../../../middleware/multicore
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
-    ${ProjDirPath}/../../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../../middleware/fatfs
-    ${ProjDirPath}/../../../../../../components/pca9420
-    ${ProjDirPath}/../../../../../../components/codec/wm8904
-    ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/i2c
-    ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../components/gpio
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../components/osa
+    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
+    ${SdkRootDirPath}/middleware/multicore
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
+    ${SdkRootDirPath}/middleware/sdmmc
+    ${SdkRootDirPath}/middleware/fatfs
+    ${SdkRootDirPath}/components/pca9420
+    ${SdkRootDirPath}/components/codec/wm8904
+    ${SdkRootDirPath}/components/codec
+    ${SdkRootDirPath}/components/codec/
+    ${SdkRootDirPath}/components/codec/i2c
+    ${SdkRootDirPath}/components/i2c
+    ${SdkRootDirPath}/components/gpio
+    ${SdkRootDirPath}/devices/MIMXRT595S
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/osa
 )
 
 # include modules
@@ -213,15 +220,13 @@ include(utilities_misc_utilities_MIMXRT595S_cm33)
 include(driver_iap_MIMXRT595S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

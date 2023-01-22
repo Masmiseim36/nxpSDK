@@ -86,7 +86,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/port
     ${CMAKE_CURRENT_LIST_DIR}/src
     ${CMAKE_CURRENT_LIST_DIR}/src/include
@@ -103,11 +103,14 @@ endif()
 if(CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT595S_cm33)
      include(middleware_lwip_enet_ethernetif_MIMXRT595S_cm33)
 endif()
+if(CONFIG_USE_middleware_lwip_netc_ethernetif_MIMXRT595S_cm33)
+     include(middleware_lwip_netc_ethernetif_MIMXRT595S_cm33)
+endif()
 if(CONFIG_USE_middleware_wifi_MIMXRT595S_cm33)
      include(middleware_wifi_MIMXRT595S_cm33)
 endif()
-if(NOT (CONFIG_USE_middleware_lwip_empty_ethernetif_MIMXRT595S_cm33 OR CONFIG_USE_middleware_lwip_usb_ethernetif_MIMXRT595S_cm33 OR CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT595S_cm33 OR CONFIG_USE_middleware_wifi_MIMXRT595S_cm33))
-    message(WARNING "Since middleware_lwip_empty_ethernetif_MIMXRT595S_cm33/middleware_lwip_usb_ethernetif_MIMXRT595S_cm33/middleware_lwip_enet_ethernetif_MIMXRT595S_cm33/middleware_wifi_MIMXRT595S_cm33 is not included at first or config in config.cmake file, use middleware_lwip_empty_ethernetif_MIMXRT595S_cm33 by default.")
+if(NOT (CONFIG_USE_middleware_lwip_empty_ethernetif_MIMXRT595S_cm33 OR CONFIG_USE_middleware_lwip_usb_ethernetif_MIMXRT595S_cm33 OR CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT595S_cm33 OR CONFIG_USE_middleware_lwip_netc_ethernetif_MIMXRT595S_cm33 OR CONFIG_USE_middleware_wifi_MIMXRT595S_cm33))
+    message(WARNING "Since middleware_lwip_empty_ethernetif_MIMXRT595S_cm33/middleware_lwip_usb_ethernetif_MIMXRT595S_cm33/middleware_lwip_enet_ethernetif_MIMXRT595S_cm33/middleware_lwip_netc_ethernetif_MIMXRT595S_cm33/middleware_wifi_MIMXRT595S_cm33 is not included at first or config in config.cmake file, use middleware_lwip_empty_ethernetif_MIMXRT595S_cm33 by default.")
     include(middleware_lwip_empty_ethernetif_MIMXRT595S_cm33)
 endif()
 

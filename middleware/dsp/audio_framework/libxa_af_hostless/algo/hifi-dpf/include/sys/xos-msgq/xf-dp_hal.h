@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -42,10 +42,13 @@
  * Auxilliary macros definitions
  ******************************************************************************/
 
+#if (XF_CFG_CORES_NUM > 1)
 /* ...use system-specific cache-line size */
-//#define XF_PROXY_ALIGNMENT              XCHAL_DCACHE_LINESIZE
+#define XF_PROXY_ALIGNMENT              XCHAL_DCACHE_LINESIZE
+#else //(XF_CFG_CORES_NUM > 1)
 /* ...use fixed alignment independent of cores used, this matches the memory numbers quoted in PG */
 #define XF_PROXY_ALIGNMENT              64
+#endif //(XF_CFG_CORES_NUM > 1)
 
 /* ...properly aligned shared memory structure */
 #define __xf_shmem__        __attribute__((__aligned__(XF_PROXY_ALIGNMENT)))

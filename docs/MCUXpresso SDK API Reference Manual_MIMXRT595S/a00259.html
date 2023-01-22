@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -235,7 +235,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gac08525378e7d8aaa3e0e6b16e9f76ad3">FSL_MU_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
+<tr class="memitem:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gac08525378e7d8aaa3e0e6b16e9f76ad3">FSL_MU_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
 <tr class="memdesc:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU driver version.  <a href="#gac08525378e7d8aaa3e0e6b16e9f76ad3">More...</a><br/></td></tr>
 <tr class="separator:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -292,7 +292,7 @@ Status and Interrupt.</h2></td></tr>
 <tr class="memitem:gaecadc0cf75fd66e80737b33c0971cbca"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gaecadc0cf75fd66e80737b33c0971cbca">MU_DisableInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
 <tr class="memdesc:gaecadc0cf75fd66e80737b33c0971cbca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the specific MU interrupts.  <a href="#gaecadc0cf75fd66e80737b33c0971cbca">More...</a><br/></td></tr>
 <tr class="separator:gaecadc0cf75fd66e80737b33c0971cbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
+<tr class="memitem:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
 <tr class="memdesc:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers interrupts to the other core.  <a href="#ga1c78b4336b2f9ef4a4ca8ff22be7116c">More...</a><br/></td></tr>
 <tr class="separator:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -311,7 +311,7 @@ MU misc functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_MU_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
+          <td class="memname">#define FSL_MU_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -357,13 +357,13 @@ MU misc functions</h2></td></tr>
 <p>General purpose interrupt 0 pending. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa784232e66cb93c5e307727a579688f5a"></a>kMU_GenInt1Flag</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 0 pending. </p>
+<p>General purpose interrupt 1 pending. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa15712a6b86201fbcbd389c66a85fb3d3"></a>kMU_GenInt2Flag</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 0 pending. </p>
+<p>General purpose interrupt 2 pending. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa78e94d0880b08c6e4fe44cbc254e6555"></a>kMU_GenInt3Flag</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 0 pending. </p>
+<p>General purpose interrupt 3 pending. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfad2f4fdc37e185dd77f42ae824a334197"></a>kMU_EventPendingFlag</em>&nbsp;</td><td class="fielddoc">
 <p>MU event pending. </p>
@@ -1035,7 +1035,7 @@ MU misc functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MU_TriggerInterrupts </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MU_TriggerInterrupts </td>
           <td>(</td>
           <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1054,7 +1054,7 @@ MU misc functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>This function triggers the specific interrupts to the other core. The interrupts to trigger are passed in as bit mask. See <a class="el" href="a00259.html#ga41108bad4d5d228e3832b2739e982084">_mu_interrupt_trigger</a>. The MU should not trigger an interrupt to the other core when the previous interrupt has not been processed by the other core. This function checks whether the previous interrupts have been processed. If not, it returns an error.</p>
-<div class="fragment"><div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> != <a class="code" href="a00259.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a>(base, <a class="code" href="a00259.html#gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53">kMU_GenInt0InterruptTrigger</a> | <a class="code" href="a00259.html#gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20">kMU_GenInt2InterruptTrigger</a>))</div>
+<div class="fragment"><div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> != <a class="code" href="a00259.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a>(base, <a class="code" href="a00259.html#gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53">kMU_GenInt0InterruptTrigger</a> | <a class="code" href="a00259.html#gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20">kMU_GenInt2InterruptTrigger</a>))</div>
 <div class="line">* {</div>
 <div class="line">*      Previous general purpose interrupt 0 or general purpose interrupt 2</div>
 <div class="line">*      has not been processed by the other core.</div>

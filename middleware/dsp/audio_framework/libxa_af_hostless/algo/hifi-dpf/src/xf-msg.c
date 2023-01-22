@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -39,12 +39,14 @@
  ******************************************************************************/
 
 /* ...allocate message pool */
-int xf_msg_pool_init(xf_msg_pool_t *pool, UWORD32 n, UWORD32 core)
+int xf_msg_pool_init(xf_msg_pool_t *pool, UWORD32 n, UWORD32 core, UWORD32 shared)
 {   
     UWORD32     i;
     
     /* ...allocate shared memory from global pool */
-    XF_CHK_ERR(pool->p = xf_mem_alloc(XF_MM(sizeof(*pool->p) * n), XF_PROXY_ALIGNMENT, core, 1), XAF_MEMORY_ERR);
+    XF_CHK_ERR(pool->p = xf_mem_alloc(XF_MM(sizeof(*pool->p) * n), XF_PROXY_ALIGNMENT, core, shared), XAF_MEMORY_ERR);
+
+    TRACE(INFO, _b("sizeof(*pool->p):%d n:%d align:%d"), sizeof(*pool->p), n, XF_PROXY_ALIGNMENT);
     
     /* ...make sure the pool pointer is properly aligned */
     BUG(!XF_IS_ALIGNED(pool->p), _x("Unaligned pool pointer: %p"), pool->p);
@@ -66,10 +68,10 @@ int xf_msg_pool_init(xf_msg_pool_t *pool, UWORD32 n, UWORD32 core)
 }
 
 /* ...destroy memory pool */
-void xf_msg_pool_destroy(xf_msg_pool_t *pool, UWORD32 core)
+void xf_msg_pool_destroy(xf_msg_pool_t *pool, UWORD32 core, UWORD32 shared)
 {
     /* ...release pool memory (from shared local-IPC memory) */
-    xf_mem_free(pool->p, XF_MM(sizeof(*pool->p) * pool->n), core, 1);
+    xf_mem_free(pool->p, XF_MM(sizeof(*pool->p) * pool->n), core, shared);
 }
 
 /* ...allocate message from a pool (no concurrent access from other cores) */

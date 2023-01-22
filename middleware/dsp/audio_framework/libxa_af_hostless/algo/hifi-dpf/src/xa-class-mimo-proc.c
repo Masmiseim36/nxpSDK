@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -167,7 +167,7 @@ typedef struct XAMimoProc
     UWORD32                     sample_size;
 
     /* ...audio sample duration */
-    UWORD32                     factor;
+    UWORD64                     factor;
 
     /* ...audio frame size in samples */
     //UWORD32                 frame_size;
@@ -307,15 +307,25 @@ static inline UWORD32 xa_mimo_proc_output_port_ready(XAMimoProc *mimo_proc)
     {
         /* ... skip port readiness check based on relax sched */
         if ( XF_CHK_PORT_MASK(mimo_proc->relax_sched, (mimo_proc->num_in_ports+i)) )
-            continue;
+        {
+            /* ...skip relax_sched check during init (TENA-2999). 
+             * Else component is scheduled on the START buffer from 1st output port causing init not to complete */
+            if (!(mimo_proc->base.state & XA_BASE_FLAG_RUNTIME_INIT))
+            {
+                continue;
+            }
+        }
 
         /* ...skip paused ports */
         if (xa_out_track_test_flags(track, XA_OUT_TRACK_FLAG_PAUSED))
             continue;
 #if 1
         /* ...skip unrouted ports */
-        if (!xa_out_track_test_flags(track, XA_OUT_TRACK_FLAG_ROUTED))
+        if (!xa_out_track_test_flags(track, XA_OUT_TRACK_FLAG_ROUTED ))
+        {
+            if(mimo_proc->num_out_ports>1)
             continue;
+        }
 #endif
         /* ...TBD check if any output port is active (routed) */
         if (!xf_output_port_ready(&track->output))
@@ -378,7 +388,7 @@ static inline XA_ERRORCODE xa_mimo_proc_prepare_runtime(XAMimoProc *mimo_proc)
 {
     XACodecBase    *base = (XACodecBase *) mimo_proc;
     UWORD32             frame_size;
-    UWORD32             factor;
+    UWORD64             factor;
     UWORD32             i;
 	xf_message_t   *m;
 	xf_start_msg_t *msg;
@@ -391,6 +401,7 @@ static inline XA_ERRORCODE xa_mimo_proc_prepare_runtime(XAMimoProc *mimo_proc)
 	else
 	{
 		m = xf_msg_dequeue(&mimo_proc->out_track[0].output.queue);
+        XF_CHK_ERR(m != NULL, XAF_INVALIDVAL_ERR);
 		msg = m->buffer;
 	}
 
@@ -403,14 +414,17 @@ static inline XA_ERRORCODE xa_mimo_proc_prepare_runtime(XAMimoProc *mimo_proc)
     XA_API(base, XA_API_CMD_GET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_SAMPLE_RATE, &msg->sample_rate);
     XA_API(base, XA_API_CMD_GET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_CHANNELS, &msg->channels);
     XA_API(base, XA_API_CMD_GET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PCM_WIDTH, &msg->pcm_width);
+    TRACE(INIT, _b("mimo[%p]::runtime init: f=%u, c=%u, w=%u"), mimo_proc, msg->sample_rate, msg->channels, msg->pcm_width);
 
     for (i=0; i<mimo_proc->num_in_ports; i++)
     {
         XA_API(base, XA_API_CMD_GET_MEM_INFO_SIZE, mimo_proc->in_track[i].idx, &msg->input_length[i]);
+        TRACE(INIT, _b("mimo[%p]::runtime init: i[%d]=%u"), mimo_proc, i, msg->input_length[i]);
     }
     for (i=0; i<mimo_proc->num_out_ports; i++)
     {
         XA_API(base, XA_API_CMD_GET_MEM_INFO_SIZE, mimo_proc->out_track[i].idx, &msg->output_length[i]);
+        TRACE(INIT, _b("mimo[%p]::runtime init: o[%d]=%u"), mimo_proc, i, msg->output_length[i]);
     }
 
 	if ( mimo_proc->num_out_ports == 0)
@@ -422,7 +436,7 @@ static inline XA_ERRORCODE xa_mimo_proc_prepare_runtime(XAMimoProc *mimo_proc)
     msg->probe_length = (mimo_proc->probe_enabled) ? mimo_proc->probe.length : 0;
 
     /* ...save sample size in bytes */
-    mimo_proc->sample_size = msg->channels * (msg->pcm_width == 16 ? 2 : 4);
+    mimo_proc->sample_size = msg->channels * ((msg->pcm_width == 8) ? 1 :((msg->pcm_width == 16) ? 2 : 4));
 
     /* ...sample size should be positive */
     XF_CHK_ERR(mimo_proc->sample_size > 0, XA_API_FATAL_INVALID_CMD_TYPE);
@@ -439,9 +453,10 @@ static inline XA_ERRORCODE xa_mimo_proc_prepare_runtime(XAMimoProc *mimo_proc)
     /* ...set frame duration factor (converts number of bytes into timebase units) */
     mimo_proc->factor = factor / mimo_proc->sample_size;
     
-    TRACE(INIT, _b("ts-factor: %u (%u)"), mimo_proc->factor, factor);
+    TRACE(INIT, _b("ts-factor: %llu (%llu)"), mimo_proc->factor, factor);
 
-    BUG(mimo_proc->factor * mimo_proc->sample_size != factor, _x("Freq mismatch: %u vs %u"), mimo_proc->factor * mimo_proc->sample_size, factor);
+    /* ...factor must be a multiple */
+    XF_CHK_ERR(mimo_proc->factor * mimo_proc->sample_size == factor, XA_MIMO_PROC_CONFIG_FATAL_RANGE);
 
     if(mimo_proc->num_out_ports)
     {    
@@ -684,9 +699,9 @@ static XA_ERRORCODE xa_mimo_proc_fill_this_buffer(XACodecBase *base, xf_message_
 
          return XA_NO_ERROR;
     }
-    else if (m->length != 0) /* ...EOS response */
+    else
     {
-        /* ...adjust message length (may be shorter than original) */
+        /* ...adjust message length (may be shorter than original) [TENA-2957] */
         m->length = track->output.length;
     }
 
@@ -759,8 +774,11 @@ static XA_ERRORCODE xa_mimo_proc_port_route(XACodecBase *base, xf_message_t *m)
     XF_CHK_ERR(!xf_output_port_routed(port), XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...pass route info to component */
-    XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_CONNECT, &port_idx);
+    m->error = XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_CONNECT, &port_idx);
     
+    /* ...reset mimo-speicifc output port state flags */
+    mimo_proc->out_track[i].output.flags = 0;
+
     /* ...set output track as active */
     xa_out_track_set_flags(&mimo_proc->out_track[i], XA_OUT_TRACK_FLAG_ACTIVE);
 
@@ -792,6 +810,7 @@ static XA_ERRORCODE xa_mimo_proc_port_unroute(XACodecBase *base, xf_message_t *m
     UWORD32             i = XF_MSG_DST_PORT(m->id) - mimo_proc->num_in_ports;
     xf_output_port_t   *port = &mimo_proc->out_track[i].output;
     UWORD32             port_idx = XF_MSG_DST_PORT(m->id);
+    WORD32              error = 0;
     
     /* ...command is allowed only in "postinit" state */
     XF_CHK_ERR(base->state & XA_BASE_FLAG_POSTINIT, XA_API_FATAL_INVALID_CMD);
@@ -817,10 +836,14 @@ static XA_ERRORCODE xa_mimo_proc_port_unroute(XACodecBase *base, xf_message_t *m
     xa_out_track_clear_flags(&mimo_proc->out_track[i], XA_OUT_TRACK_FLAG_ROUTED);
 
     /* ...pass resume info to component. Clear paused status at component, so that reconnect wont be affected with the previous pause */    
-    XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_RESUME, &port_idx);
+    m->error = XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_RESUME, &port_idx);
     
     /* ...pass unroute info to component */        
-    XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_DISCONNECT, &port_idx);
+    error = XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_DISCONNECT, &port_idx);
+
+    /* ...only the first error is captured*/
+    if ((error) && (m->error == 0))
+        m->error = error;
 
     /* ...pass flush command down the graph */
     if (xf_output_port_flush(port, XF_FLUSH))
@@ -1009,8 +1032,11 @@ static XA_ERRORCODE xa_mimo_proc_memtab(XACodecBase *base, WORD32 idx, WORD32 ty
         /* ...create input port for a track */
         XF_CHK_ERR(xf_input_port_init(&track->input, size, align, core) == 0, XA_API_FATAL_MEM_ALLOC);
 
-        /* ...set input port buffer */
-        XA_API(base, XA_API_CMD_SET_MEM_PTR, idx, track->input.buffer);
+        if(size)
+        {
+            /* ...set input port buffer */
+            XA_API(base, XA_API_CMD_SET_MEM_PTR, idx, track->input.buffer);
+        }
 
         /* ...store idx in port state */
         track->idx = idx;
@@ -1065,6 +1091,13 @@ static XA_ERRORCODE xa_mimo_proc_memtab(XACodecBase *base, WORD32 idx, WORD32 ty
         {
             if ((io_ports_created &= xf_input_port_created(&inp_track->input)) == 0)
                 break;
+
+            /*... return error if probe is enabled for input port with input bypass enabled. */
+            if((xf_input_port_bypass(&inp_track->input) && (XF_CHK_PORT_MASK(mimo_proc->probe_enabled, i))))
+            {
+                TRACE(ERROR, _x("Probe buffer-length error on port[%d] with input bypass"), i);
+                return XAF_INVALIDVAL_ERR;
+            }
 
             probe_size += XF_CHK_PORT_MASK(mimo_proc->probe_enabled, i) ?  XF_ALIGNED_PROBE_SIZE(mimo_proc->in_track[i].input.length) : 0;
         }
@@ -1185,21 +1218,26 @@ static XA_ERRORCODE xa_mimo_proc_preprocess(XACodecBase *base)
         /* ...skip the tracks that has been setup already */
         if (xa_in_track_test_flags(in_track, XA_IN_TRACK_FLAG_INPUT_SETUP))  continue;
 
+        UWORD32 filled = 0;
+        if (xf_input_port_bypass(&in_track->input))
         {
-            UWORD32     filled;
-#if 0            
-            /* ...take actual data from input port (mimo_proc is always using internal buffer) */
-            if (xf_input_port_done(&in_track->input) || xf_input_port_fill(&in_track->input))
+            void *input;
+
+            /* ...port is in bypass mode; try to update the buffer pointer, remaining bytes if necessary */
+            xf_input_port_fill(&in_track->input);
+
+            /* ...use input buffer directly; check if there is data available */
+            if ((input = xf_input_port_data(&in_track->input)) != NULL)
             {
-                /* ...retrieve number of bytes available */
-                filled = xf_input_port_level(&in_track->input);
+                /* ...set input data buffer pointer */
+                XA_API(base, XA_API_CMD_SET_MEM_PTR, i, input);
+
+                /* ...retrieve number of input bytes */
+                filled = xf_input_port_length(&in_track->input);
             }
-            else
-            {
-                /* ...failed to prefill input buffer - no sufficient data yet */
-                return XA_MIMO_PROC_EXEC_NONFATAL_NO_DATA;
-            }
-#else
+        }
+        else
+        {
             if (!xf_input_port_done(&in_track->input))
             {
                 /* ...take actual data from input port (mimo_proc is always using internal buffer) */
@@ -1208,6 +1246,7 @@ static XA_ERRORCODE xa_mimo_proc_preprocess(XACodecBase *base)
 
             /* ...retrieve number of bytes available */
             filled = xf_input_port_level(&in_track->input);
+        }
            
             /* ...allow partially filled inputs to components */ 
             if (!xf_input_port_done(&in_track->input) && !filled && !xa_in_track_test_flags(in_track, XA_IN_TRACK_FLAG_PAUSED))
@@ -1223,22 +1262,20 @@ static XA_ERRORCODE xa_mimo_proc_preprocess(XACodecBase *base)
                 }
             }
 
-#endif
-            /* ...check if input stream is over */
-            if (xf_input_port_done(&in_track->input))
-            {
-                /* ...pass input-over command to the codec to indicate the final buffer */
-                XA_API(base, XA_API_CMD_INPUT_OVER, in_track->idx, NULL);
+        /* ...check if input stream is over */
+        if (xf_input_port_done(&in_track->input))
+        {
+            /* ...pass input-over command to the codec to indicate the final buffer */
+            XA_API(base, XA_API_CMD_INPUT_OVER, in_track->idx, NULL);
 
-                TRACE(INFO, _b("mimo_proc[%p]:in_track[%u] signal input-over (filled: %u)"), mimo_proc, i, filled);
-            }
-
-            /* ...set total number of bytes we have in buffer */
-            XA_API(base, XA_API_CMD_SET_INPUT_BYTES, in_track->idx, &filled);
-
-            /* ...actual data is to be played */
-            TRACE(INPUT, _b("in_track-%u: filled %u bytes"), i, filled);
+            TRACE(INFO, _b("mimo_proc[%p]:in_track[%u] signal input-over (filled: %u)"), mimo_proc, i, filled);
         }
+
+        /* ...set total number of bytes we have in buffer */
+        XA_API(base, XA_API_CMD_SET_INPUT_BYTES, in_track->idx, &filled);
+
+        /* ...actual data is to be played */
+        TRACE(INPUT, _b("in_track-%u: filled %u bytes"), i, filled);
         
         /* ...mark the track input is setup */
         xa_in_track_set_flags(in_track, XA_IN_TRACK_FLAG_INPUT_SETUP);
@@ -1268,8 +1305,11 @@ static XA_ERRORCODE xa_mimo_proc_postprocess(XACodecBase *base, int done)
         /* ...skip the tracks that are not runing */
         if (!xa_in_track_test_flags(in_track, XA_IN_TRACK_FLAG_ACTIVE))  continue;
 
-        /* ...get total amount of consumed bytes */
-        XA_API(base, XA_API_CMD_GET_CURIDX_INPUT_BUF, in_track->idx, &consumed);
+        if (!(done && (base->state & XA_BASE_FLAG_EXECUTION)))
+        {
+            /* ...get total amount of consumed bytes */
+            XA_API(base, XA_API_CMD_GET_CURIDX_INPUT_BUF, in_track->idx, &consumed);
+        }
 
         TRACE(INPUT, _b("in_track-%u::postprocess(c=%u)"), i, consumed);
 
@@ -1311,7 +1351,7 @@ static XA_ERRORCODE xa_mimo_proc_postprocess(XACodecBase *base, int done)
             /* ...pass input port disconnect to component */
             XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_DISCONNECT, &i);
 
-            TRACE(INFO, _b("mimo_proc[%p]::in_track[%u] completed"), mimo_proc, i);
+            TRACE(INFO, _b("mimo_proc[%p]::in_track[%u] completed, exec_done:%d"), mimo_proc, i, done);
 
             /* ...check if this is not last active input port */
             if (xa_mimo_proc_check_active(mimo_proc)
@@ -1571,7 +1611,7 @@ static XA_ERRORCODE xa_mimo_proc_port_pause(XACodecBase *base, xf_message_t *m)
             xa_in_track_set_flags(in_track, XA_IN_TRACK_FLAG_PAUSED);
 
             /* ... pass port pause info to component */
-            XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_PAUSE, &i);
+            m->error = XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_PAUSE, &i);
     
             /* ...other tracks may be waiting for this track, so force data processing */
             if (xa_mimo_proc_input_port_ready(mimo_proc) && xa_mimo_proc_output_port_ready(mimo_proc))
@@ -1597,7 +1637,7 @@ static XA_ERRORCODE xa_mimo_proc_port_pause(XACodecBase *base, xf_message_t *m)
             xa_out_track_set_flags(out_track, XA_OUT_TRACK_FLAG_PAUSED);
             
             /* ... pass port pause info to component */
-            XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_PAUSE, &i);
+            m->error = XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_PAUSE, &i);
 
             /* ...other tracks may be waiting for this track, so force data processing */
             if (xa_mimo_proc_input_port_ready(mimo_proc) && xa_mimo_proc_output_port_ready(mimo_proc))
@@ -1676,7 +1716,7 @@ static XA_ERRORCODE xa_mimo_proc_port_resume(XACodecBase *base, xf_message_t *m)
             xa_in_track_clear_flags(in_track, XA_IN_TRACK_FLAG_PAUSED);
 
             /* ... pass port resume info to component */
-            XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_RESUME, &i);
+            m->error = XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_RESUME, &i);
     
             /* ...other tracks may be waiting for this track, so force data processing */
             if (xa_mimo_proc_input_port_ready(mimo_proc) && xa_mimo_proc_output_port_ready(mimo_proc))
@@ -1702,7 +1742,7 @@ static XA_ERRORCODE xa_mimo_proc_port_resume(XACodecBase *base, xf_message_t *m)
             xa_out_track_clear_flags(out_track, XA_OUT_TRACK_FLAG_PAUSED);
             
             /* ... pass port resume info to component */
-            XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_RESUME, &i);
+            m->error = XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, XA_MIMO_PROC_CONFIG_PARAM_PORT_RESUME, &i);
 
             /* ...other tracks may be waiting for this track, so force data processing */
             if (xa_mimo_proc_input_port_ready(mimo_proc) && xa_mimo_proc_output_port_ready(mimo_proc))
@@ -1753,6 +1793,10 @@ static XA_ERRORCODE (* const xa_mimo_proc_cmd[])(XACodecBase *, xf_message_t *) 
     [XF_OPCODE_TYPE(XF_SET_PARAM)] = xa_base_set_param,
     [XF_OPCODE_TYPE(XF_GET_PARAM)] = xa_base_get_param,
 
+    /* ...extended set-get-config parameter */
+    [XF_OPCODE_TYPE(XF_SET_PARAM_EXT)] = xa_base_set_param_ext,
+    [XF_OPCODE_TYPE(XF_GET_PARAM_EXT)] = xa_base_get_param_ext,
+
     /* ...output port routing/unrouting */
     [XF_OPCODE_TYPE(XF_ROUTE)] = xa_mimo_proc_port_route,
     [XF_OPCODE_TYPE(XF_UNROUTE)] = xa_mimo_proc_port_unroute,
@@ -1783,7 +1827,7 @@ static int xa_mimo_proc_terminate(xf_component_t *component, xf_message_t *m)
     {
         /* ...ignore component processing during component termination(rare case) */
         TRACE(OUTPUT, _b("component processing ignored.."));
-        return -1;
+        return 0;
     }
 
     if(XF_MSG_DST_PORT(m->id) < mimo_proc->num_in_ports)
@@ -1811,7 +1855,11 @@ static int xa_mimo_proc_terminate(xf_component_t *component, xf_message_t *m)
         xa_out_track_set_flags(track, XA_OUT_TRACK_FLAG_FLUSHING_DONE);
         TRACE(OUTPUT, _b("mimo_proc[%p] flush completed for port[%d] in terminate"), mimo_proc, i);
         if (xa_mimo_proc_output_port_flush_done(mimo_proc))
+#ifdef XF_MSG_ERR_HANDLING
+            return XAF_UNREGISTER;
+#else
             return -1;
+#endif
 
         return 0;
     }
@@ -1869,8 +1917,11 @@ static int xa_mimo_proc_destroy(xf_component_t *component, xf_message_t *m)
     /* ...destroy base object */
     xa_base_destroy(&mimo_proc->base, XF_MM(sizeof(*mimo_proc)), core);
 
-    /* ...complete the command with response */
-    xf_response_err(m_resp);
+    if (m_resp != NULL)
+    {
+        /* ...complete the command with response */
+        xf_response_err(m_resp);
+    }
     
     TRACE(INIT, _b("mimo_proc[%p] destroyed"), mimo_proc);
 

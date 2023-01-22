@@ -41,6 +41,15 @@
 #if (VG_RENDER_TEXT==1)
 #include "vg_lite_text.h"
 #endif /* VG_RENDER_TEXT */
+#include "vg_lite_flat.h"
+
+/*
+ * Stop IAR compiler from warning about implicit conversions from float to
+ * double
+ */
+#if (defined(__ICCARM__))
+#pragma diag_suppress = Pa205
+#endif
 
 /* This is the function to call from the VGLite driver to interface with the GPU. */
 vg_lite_error_t vg_lite_kernel(vg_lite_kernel_command_t command, void * data);
@@ -698,7 +707,7 @@ static vg_lite_error_t _set_point_tangent(
     return VG_LITE_SUCCESS;
 }
 
-static vg_lite_error_t _add_point_to_point_list_wdelta(
+vg_lite_error_t _add_point_to_point_list_wdelta(
     vg_lite_stroke_conversion_t * stroke_conversion,
     vg_lite_float_t X,
     vg_lite_float_t Y,
@@ -742,7 +751,7 @@ ErrorHandler:
     return error;
 }
 
-static vg_lite_error_t _add_point_to_point_list(
+vg_lite_error_t _add_point_to_point_list(
     vg_lite_stroke_conversion_t * stroke_conversion,
     vg_lite_float_t X,
     vg_lite_float_t Y,
@@ -829,394 +838,6 @@ static vg_lite_error_t _add_point_to_point_list(
 
 ErrorHandler:
     return status;
-}
-
-static vg_lite_error_t
-_flatten_quad_bezier(
-    vg_lite_stroke_conversion_t * stroke_conversion,
-    vg_lite_float_t X0,
-    vg_lite_float_t Y0,
-    vg_lite_float_t X1,
-    vg_lite_float_t Y1,
-    vg_lite_float_t X2,
-    vg_lite_float_t Y2
-    )
-{
-    vg_lite_error_t error = VG_LITE_SUCCESS;
-    uint32_t n;
-    vg_lite_path_point_ptr point0, point1;
-    vg_lite_float_t x, y;
-    vg_lite_float_t a1x, a1y, a2x, a2y;
-    vg_lite_float_t f1, f2, t1, t2, upper_bound;
-
-    if(!stroke_conversion)
-        return VG_LITE_INVALID_ARGUMENT;
-
-    /* Formula.
-    * f(t) = (1 - t)^2 * p0 + 2 * t * (1 - t) * p1 + t^2 * p2
-    *      = a0 + a1 * t + a2 * t^2
-    *   a0 = p0
-    *   a1 = 2 * (-p0 + p1)
-    *   a2 = p0 - 2 * p1 + p2
-    */
-    x = X1 - X0;
-    a1x = x + x;
-    y = Y1 - Y0;
-    a1y = y + y;
-    a2x = X0 - X1 - X1 + X2;
-    a2y = Y0 - Y1 - Y1 + Y2;
-
-    /* Step 1: Calculate N. */
-    /* Lefan's method. */
-    /* dist(t) = ...
-    * t2 = ...
-    * if 0 <= t2 <= 1
-    *    upper_bound = dist(t2)
-    * else
-    *    upper_bound = max(dist(0), dist(1))
-    * N = ceil(sqrt(upper_bound / epsilon / 8))
-    */
-    /* Prepare dist(t). */
-    f1 = a1x * a2y - a2x * a1y;
-    if (f1 != 0.0f)
-    {
-        if (f1 < 0.0f) f1 = -f1;
-
-        /* Calculate t2. */
-        t1 = a2x * a2x + a2y * a2y;
-        t2 = -(x * a2x + y * a2y) / t1;
-        /* Calculate upper_bound. */
-        if (t2 >= 0.0f && t2 <= 1.0f)
-        {
-            f2 = x + a2x * t2;
-            f2 *= f2;
-            t1 = y + a2y * t2;
-            t1 *= t1;
-            upper_bound = t1 + f2;
-        }
-        else
-        {
-            f2 = x + a2x;
-            f2 *= f2;
-            t1 = y + a2y;
-            t1 *= t1;
-            t2 = t1 + f2;
-            t1 = x * x + y * y;
-            upper_bound = t1 < t2 ? t1 : t2;
-        }
-        /* Calculate n. */
-        upper_bound = f1 / SQRTF(upper_bound);
-        upper_bound = SQRTF(upper_bound);
-        if (stroke_conversion->is_fat)
-        {
-            upper_bound *= stroke_conversion->stroke_line_width;
-        }
-        n = (uint32_t) ceil(upper_bound);
-    }
-    else
-    {
-        /* n = 0 => n = 256. */
-        n = 256;
-    }
-
-    if (n == 0 || n > 256)
-    {
-        n = 256;
-    }
-
-    /* Add extra P0 for incoming tangent. */
-    point0 = stroke_conversion->path_last_point;
-    /* First add P1 to calculate incoming tangent, which is saved in P0. */
-    VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X1, Y1, vgcFLATTEN_START)); 
-
-    point1 = stroke_conversion->path_last_point;
-    /* Change the point1's coordinates back to P0. */
-    point1->x = X0;
-    point1->y = Y0;
-    point0->length = 0.0f;
-
-    if (n > 1)
-    {
-        vg_lite_float_t d, dsquare, dx, dy, ddx, ddy;
-        vg_lite_float_t ratioX, ratioY;
-        uint32_t i;
-
-        /* Step 2: Calculate deltas. */
-        /*   Df(t) = f(t + d) - f(t)
-        *         = a1 * d + a2 * d^2 + 2 * a2 * d * t
-        *  DDf(t) = Df(t + d) - Df(t)
-        *         = 2 * a2 * d^2
-        *    f(0) = a0
-        *   Df(0) = a1 * d + a2 * d^2
-        *  DDf(0) = 2 * a2 * d^2
-        */
-        d = 1.0f / (vg_lite_float_t) n;
-        dsquare = d * d;
-        ddx = a2x * dsquare;
-        ddy = a2y * dsquare;
-        dx  = a1x * d + ddx;
-        dy  = a1y * d + ddy;
-        ddx += ddx;
-        ddy += ddy;
-
-        /* Step 3: Add points. */
-        ratioX = dx / X0;
-        if (ratioX < 0.0f) ratioX = -ratioX;
-        ratioY = dy / Y0;
-        if (ratioY < 0.0f) ratioY = -ratioY;
-        if (ratioX > 1.0e-6f && ratioY > 1.0e-6f)
-        {
-            x = X0;
-            y = Y0;
-            for (i = 1; i < n; i++)
-            {
-                x += dx;
-                y += dy;
-
-                /* Add a point to subpath. */
-                VG_LITE_ERROR_HANDLER(_add_point_to_point_list_wdelta(stroke_conversion, x, y, dx, dy, vgcFLATTEN_MIDDLE));             
-
-                dx += ddx;
-                dy += ddy;
-            }
-
-        }
-        else
-        {
-            for (i = 1; i < n; i++)
-            {
-                vg_lite_float_t t = (vg_lite_float_t) i / (vg_lite_float_t) n;
-                vg_lite_float_t u = 1.0f - t;
-                vg_lite_float_t a0 = u * u;
-                vg_lite_float_t a1 = 2.0f * t * u;
-                vg_lite_float_t a2 = t * t;
-
-                x  = a0 * X0 + a1 * X1 + a2 * X2;
-                y  = a0 * Y0 + a1 * Y1 + a2 * Y2;
-
-                /* Add a point to subpath. */
-                VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, x, y, vgcFLATTEN_MIDDLE));                
-            }
-        }
-    }
-
-
-    /* Add point 2 separately to avoid cumulative errors. */
-    VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X2, Y2, vgcFLATTEN_END));
-
-    /* Add extra P2 for outgoing tangent. */
-    /* First change P2(point0)'s coordinates to P1. */
-    point0 = stroke_conversion->path_last_point;
-    point0->x = X1;
-    point0->y = Y1;
-
-    /* Add P2 to calculate outgoing tangent. */
-    VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X2, Y2, vgcFLATTEN_NO)); 
-
-    point1 = stroke_conversion->path_last_point;
-
-    /* Change point0's coordinates back to P2. */
-    point0->x = X2;
-    point0->y = Y2;
-    point0->length = 0.0f;
-
-ErrorHandler:
-    return error;
-}
-
-static vg_lite_error_t
-_flatten_cubic_bezier(
-    vg_lite_stroke_conversion_t *  stroke_conversion,
-    vg_lite_float_t X0,
-    vg_lite_float_t Y0,
-    vg_lite_float_t X1,
-    vg_lite_float_t Y1,
-    vg_lite_float_t X2,
-    vg_lite_float_t Y2,
-    vg_lite_float_t X3,
-    vg_lite_float_t Y3
-    )
-{
-    vg_lite_error_t error = VG_LITE_SUCCESS;
-    uint32_t n;
-    vg_lite_path_point_ptr point0, point1;
-    vg_lite_float_t x, y;
-    vg_lite_float_t a1x, a1y, a2x, a2y, a3x, a3y;
-    vg_lite_float_t ddf0, ddf1, t1, t2, upper_bound;
-
-    if(!stroke_conversion)
-        return VG_LITE_INVALID_ARGUMENT;
-
-    /* Formula.
-    * f(t) = (1 - t)^3 * p0 + 3 * t * (1 - t)^2 * p1 + 3 * t^2 * (1 - t) * p2 + t^3 * p3
-    *      = a0 + a1 * t + a2 * t^2 + a3 * t^3
-    */
-    x = X1 - X0;
-    a1x = x + x + x;
-    y = Y1 - Y0;
-    a1y = y + y + y;
-    x = X0 - X1 - X1 + X2;
-    a2x = x + x + x;
-    y = Y0 - Y1 - Y1 + Y2;
-    a2y = y + y + y;
-    x = X1 - X2;
-    a3x = x + x + x + X3 - X0;
-    y = Y1 - Y2;
-    a3y = y + y + y + Y3 - Y0;
-
-    /* Step 1: Calculate N. */
-    /* Lefan's method. */
-    /*  df(t)/dt  = a1 + 2 * a2 * t + 3 * a3 * t^2
-    * d2f(t)/dt2 = 2 * a2 + 6 * a3 * t
-    * N = ceil(sqrt(max(ddfx(0)^2 + ddfy(0)^2, ddfx(1)^2 + ddyf(1)^2) / epsilon / 8))
-    */
-
-    ddf0 = a2x * a2x + a2y * a2y;
-    t1 = a2x + a3x + a3x + a3x;
-    t2 = a2y + a3y + a3y + a3y;
-    ddf1 = t1 * t1 + t2 * t2;
-    upper_bound = ddf0 > ddf1 ? ddf0: ddf1;
-    upper_bound = SQRTF(upper_bound);
-    upper_bound += upper_bound;
-    upper_bound = SQRTF(upper_bound);
-    if (stroke_conversion->is_fat)
-    {
-        upper_bound *= stroke_conversion->stroke_line_width;
-    }
-    n = (uint32_t) ceil(upper_bound);
-
-    if (n == 0 || n > 256)
-    {
-        n = 256;
-    }
-
-    /* Add extra P0 for incoming tangent. */
-    point0 = stroke_conversion->path_last_point;
-    /* First add P1/P2/P3 to calculate incoming tangent, which is saved in P0. */
-    if (X0 != X1 || Y0 != Y1)
-    {
-        VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X1, Y1, vgcFLATTEN_START));
-    }
-    else if (X0 != X2 || Y0 != Y2)
-    {
-        VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X2, Y2, vgcFLATTEN_START));
-    }
-    else
-    {
-        VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X3, Y3, vgcFLATTEN_START));
-    }
-    point1 = stroke_conversion->path_last_point;
-    /* Change the point1's coordinates back to P0. */
-    point1->x = X0;
-    point1->y = Y0;
-    point0->length = 0.0f;
-
-    if (n > 1)
-    {
-        vg_lite_float_t d, dsquare, dcube, dx, dy, ddx, ddy, dddx, dddy;
-        vg_lite_float_t ratioX, ratioY;
-        uint32_t i;
-
-        /* Step 2: Calculate deltas */
-        /*   Df(t) = f(t + d) - f(t)
-        *  DDf(t) = Df(t + d) - Df(t)
-        * DDDf(t) = DDf(t + d) - DDf(t)
-        *    f(0) = a0
-        *   Df(0) = a1 * d + a2 * d^2 + a3 * d^3
-        *  DDf(0) = 2 * a2 * d^2 + 6 * a3 * d^3
-        * DDDf(0) = 6 * a3 * d^3
-        */
-        d = 1.0f / (vg_lite_float_t) n;
-        dsquare   = d * d;
-        dcube     = dsquare * d;
-        ddx  = a2x * dsquare;
-        ddy  = a2y * dsquare;
-        dddx = a3x * dcube;
-        dddy = a3y * dcube;
-        dx   = a1x * d + ddx + dddx;
-        dy   = a1y * d + ddy + dddy;
-        ddx  += ddx;
-        ddy  += ddy;
-        dddx *= 6.0f;
-        dddy *= 6.0f;
-        ddx  += dddx;
-        ddy  += dddy;
-
-        /* Step 3: Add points. */
-        ratioX = dx / X0;
-        if (ratioX < 0.0f) ratioX = -ratioX;
-        ratioY = dy / Y0;
-        if (ratioY < 0.0f) ratioY = -ratioY;
-        if (ratioX > 1.0e-6f && ratioY > 1.0e-6f)
-        {
-            x = X0;
-            y = Y0;
-            for (i = 1; i < n; i++)
-            {
-                x += dx;
-                y += dy;
-
-                /* Add a point to subpath. */
-                VG_LITE_ERROR_HANDLER(_add_point_to_point_list_wdelta(stroke_conversion, x, y, dx, dy, vgcFLATTEN_MIDDLE));
-                dx += ddx; ddx += dddx;
-                dy += ddy; ddy += dddy;
-            }
-        }
-        else
-        {
-            for (i = 1; i < n; i++)
-            {
-                vg_lite_float_t t = (vg_lite_float_t) i / (vg_lite_float_t) n;
-                vg_lite_float_t tSquare = t * t;
-                vg_lite_float_t tCube = tSquare * t;
-                vg_lite_float_t a0 =  1.0f -  3.0f * t + 3.0f * tSquare -        tCube;
-                vg_lite_float_t a1 =          3.0f * t - 6.0f * tSquare + 3.0f * tCube;
-                vg_lite_float_t a2 =                     3.0f * tSquare - 3.0f * tCube;
-                vg_lite_float_t a3 =                                             tCube;
-
-                x  = a0 * X0 + a1 * X1 + a2 * X2 + a3 * X3;
-                y  = a0 * Y0 + a1 * Y1 + a2 * Y2 + a3 * Y3;
-
-                /* Add a point to subpath. */
-                VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, x, y, vgcFLATTEN_MIDDLE));
-            }
-        }
-    }
-
-    /* Add point 3 separately to avoid cumulative errors. */
-    VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X3, Y3, vgcFLATTEN_END));
-
-    /* Add extra P3 for outgoing tangent. */
-    /* First change P3(point0)'s coordinates to P0/P1/P2. */
-    point0 = stroke_conversion->path_last_point;
-    if (X3 != X2 || Y3 != Y2)
-    {
-        point0->x = X2;
-        point0->y = Y2;
-    }
-    else if (X3 != X1 || Y3 != Y1)
-    {
-        point0->x = X1;
-        point0->y = Y1;
-    }
-    else
-    {
-        point0->x = X0;
-        point0->y = Y0;
-    }
-
-    /* Add P3 to calculate outgoing tangent. */
-    VG_LITE_ERROR_HANDLER(_add_point_to_point_list(stroke_conversion, X3, Y3, vgcFLATTEN_NO));
-
-    point1 = stroke_conversion->path_last_point;
-
-    /* Change point0's coordinates back to P3. */
-    point0->x = X3;
-    point0->y = Y3;
-    point0->length = 0.0f;
-
-ErrorHandler:
-    return error;
 }
 
 static vg_lite_error_t _flatten_path(
@@ -3076,9 +2697,13 @@ static vg_lite_error_t _copy_stroke_path(
         temp_stroke_path_size = path->stroke_path_size;
 
         path->stroke_path_size += totalsize;
+        if(path->stroke_path_size == 0) {
+            error = VG_LITE_INVALID_ARGUMENT;
+            goto ErrorHandler;
+        }
         path->stroke_path_data = (void *)vg_lite_os_malloc(path->stroke_path_size);
         if(!path->stroke_path_data) {
-            error = VG_LITE_INVALID_ARGUMENT;
+            error = VG_LITE_OUT_OF_RESOURCES;
             goto ErrorHandler;
         }
 
@@ -3327,7 +2952,10 @@ vg_lite_error_t vg_lite_update_stroke(
     if(!path->path)
         return VG_LITE_INVALID_ARGUMENT;
 
-    stroke_conversion = &path->stroke_conversion;
+    if (!path->stroke_conversion)
+        return VG_LITE_INVALID_ARGUMENT;
+
+    stroke_conversion = path->stroke_conversion;
 
     /* Free the stroke. */
     if (path->stroke_path_data)
@@ -3368,15 +2996,22 @@ vg_lite_error_t vg_lite_set_stroke(
     if(stroke_miter_limit < 1.0f)
         stroke_miter_limit = 1.0f;
 
-    path->stroke_conversion.stroke_cap_style = stroke_cap_style;
-    path->stroke_conversion.stroke_join_style = stroke_join_style;
-    path->stroke_conversion.stroke_line_width = stroke_line_width;
-    path->stroke_conversion.stroke_miter_limit = stroke_miter_limit;
-    path->stroke_conversion.half_line_width = stroke_line_width / 2.0f;
-    path->stroke_conversion.stroke_miter_limit_square = path->stroke_conversion.stroke_miter_limit * path->stroke_conversion.stroke_miter_limit;
-    path->stroke_conversion.stroke_dash_pattern = stroke_dash_pattern;
-    path->stroke_conversion.stroke_dash_pattern_count = stroke_dash_pattern_count;
-    path->stroke_conversion.stroke_dash_phase = stroke_dash_phase;
+    if (!path->stroke_conversion) {
+        path->stroke_conversion = (vg_lite_stroke_conversion_t *)vg_lite_os_malloc(sizeof(vg_lite_stroke_conversion_t));
+        if (!path->stroke_conversion)
+            return VG_LITE_OUT_OF_RESOURCES;
+        memset(path->stroke_conversion, 0, sizeof(vg_lite_stroke_conversion_t));
+    }
+
+    path->stroke_conversion->stroke_cap_style = stroke_cap_style;
+    path->stroke_conversion->stroke_join_style = stroke_join_style;
+    path->stroke_conversion->stroke_line_width = stroke_line_width;
+    path->stroke_conversion->stroke_miter_limit = stroke_miter_limit;
+    path->stroke_conversion->half_line_width = stroke_line_width / 2.0f;
+    path->stroke_conversion->stroke_miter_limit_square = path->stroke_conversion->stroke_miter_limit * path->stroke_conversion->stroke_miter_limit;
+    path->stroke_conversion->stroke_dash_pattern = stroke_dash_pattern;
+    path->stroke_conversion->stroke_dash_pattern_count = stroke_dash_pattern_count;
+    path->stroke_conversion->stroke_dash_phase = stroke_dash_phase;
     path->stroke_color = stroke_color;
 
     return VG_LITE_SUCCESS;
@@ -6073,8 +5708,8 @@ static inline vg_lite_error_t transform_bounding_box(vg_lite_rectangle_t *in_bbx
 
     memset(out_bbx, 0, sizeof(vg_lite_rectangle_t));
 
-    /* Transform image point (0, 0). */
-    if (!transform(&temp, 0.0f, 0.0f, matrix))
+    /* Transform image point (x, y). */
+    if (!transform(&temp, in_bbx->x, in_bbx->y, matrix))
         return VG_LITE_INVALID_ARGUMENT;
     out_bbx->x = temp.x;
     out_bbx->y = temp.y;
@@ -6085,18 +5720,19 @@ static inline vg_lite_error_t transform_bounding_box(vg_lite_rectangle_t *in_bbx
         origin->y = temp.y;
     }
 
-    /* Transform image point (0, height). */
-    if (!transform(&temp, 0.0f, in_bbx->height, matrix))
+    /* Transform image point (x, y+height). */
+    if (!transform(&temp, in_bbx->x, (in_bbx->y + in_bbx->height), matrix))
         return VG_LITE_INVALID_ARGUMENT;
     UPDATE_BOUNDING_BOX(*out_bbx, temp);
 
-    /* Transform image point (width, height). */
-    if (!transform(&temp, in_bbx->width, in_bbx->height, matrix))
+    /* Transform image point (x+width, y+height). */
+    if (!transform(&temp, (in_bbx->x + in_bbx->width), (in_bbx->y + in_bbx->height),
+            matrix))
         return VG_LITE_INVALID_ARGUMENT;
     UPDATE_BOUNDING_BOX(*out_bbx, temp);
 
-    /* Transform image point (width, 0). */
-    if (!transform(&temp, in_bbx->width, 0.0f, matrix))
+    /* Transform image point (x+width, y). */
+    if (!transform(&temp, (in_bbx->x + in_bbx->width), in_bbx->y, matrix))
         return VG_LITE_INVALID_ARGUMENT;
     UPDATE_BOUNDING_BOX(*out_bbx, temp);
 
@@ -6693,6 +6329,10 @@ vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t * target,
     uint32_t rect_x = 0, rect_y = 0, rect_w = 0, rect_h = 0;
     int32_t src_align_width;
     uint32_t mul, div, align;
+#if (VG_BLIT_WORKAROUND == 1)
+    vg_lite_matrix_t new_matrix;
+    vg_lite_buffer_t new_target;
+#endif /* VG_BLIT_WORKAROUND */
 #if defined(VG_DRIVER_SINGLE_THREAD)
     vg_lite_context_t *ctx = &s_context;
 #else
@@ -6704,15 +6344,6 @@ vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t * target,
 
     ctx = &tls->t_context;
 #endif /* VG_DRIVER_SINGLE_THREAD */
-
-    error = set_render_target(target);
-    if (error != VG_LITE_SUCCESS) {
-        return error;
-    } else if (error == VG_LITE_NO_CONTEXT) {
-        /* If scissoring is enabled and no valid scissoring rectangles
-           are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
-    }
 
     transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
     /* Check if the specified matrix has rotation or perspective. */
@@ -6775,8 +6406,6 @@ vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t * target,
             rect_h = source->height - rect_y;
         }
 
-        src_bbx.x       = rect_x;
-        src_bbx.y       = rect_y;
         src_bbx.width   = rect_w;
         src_bbx.height  = rect_h;
     }
@@ -6795,10 +6424,39 @@ vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t * target,
         clip.height = ctx->scissor[3];
     } else {
         clip.x = clip.y = 0;
-        clip.width  = ctx->rtbuffer->width;
-        clip.height = ctx->rtbuffer->height;
+        clip.width  = target->width;
+        clip.height = target->height;
     }
     transform_bounding_box(&src_bbx, matrix, &clip, &bounding_box, NULL);
+
+#if (VG_BLIT_WORKAROUND==1)
+    /*
+     * The blit output quality workaround works only for afine transformations
+     * because it is based on the process of cumulating translations into the
+     * matrix. This process is not possible for non-affine transformations, such
+     * as the perspective projections.
+     */
+    if ((matrix->m[2][0] == 0) && (matrix->m[2][1] == 0)) {
+        /*
+         * Make a local copy of the transformation matrix in order not to mess
+         * up the user's matrix.
+         */
+        memcpy(&new_matrix, matrix, sizeof(vg_lite_matrix_t));
+        matrix = &new_matrix;
+
+        config_new_target(target, source, matrix, &bounding_box, &new_target);
+        target = &new_target;
+    }
+#endif /* VG_BLIT_WORKAROUND */
+
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
 
     /* Determine image mode (NORMAL, NONE or MULTIPLY) depending on the color. */
     imageMode = (source->image_mode == VG_LITE_NONE_IMAGE_MODE) ? 0 : (source->image_mode == VG_LITE_MULTIPLY_IMAGE_MODE) ? 0x00002000 : 0x00001000;
@@ -7252,13 +6910,13 @@ vg_lite_error_t vg_lite_draw(vg_lite_buffer_t * target,
         if (point_min.y < 0) point_min.y = 0;
         if (point_max.x > dst_align_width) point_max.x = dst_align_width;
         if (point_max.y > target->height) point_max.y = target->height;
+    }
 
-        if (ctx->scissor_enabled) {
-            point_min.x = MAX(point_min.x, ctx->scissor[0]);
-            point_min.y = MAX(point_min.y, ctx->scissor[1]);
-            point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
-            point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
-        }
+    if (ctx->scissor_enabled) {
+        point_min.x = MAX(point_min.x, ctx->scissor[0]);
+        point_min.y = MAX(point_min.y, ctx->scissor[1]);
+        point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
+        point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
     }
 
     /* Convert states into hardware values. */
@@ -8521,37 +8179,41 @@ vg_lite_error_t vg_lite_clear_path(vg_lite_path_t * path)
     if(path->stroke_path_data) {
         vg_lite_os_free(path->stroke_path_data);
         path->stroke_path_data = NULL;
+    }
 
-        if(path->stroke_conversion.path_point_list) {
+    if (path->stroke_conversion) {
+        if(path->stroke_conversion->path_point_list) {
             vg_lite_path_point_ptr temp_point;
-            while(path->stroke_conversion.path_point_list) {
-                temp_point = path->stroke_conversion.path_point_list->next;
-                vg_lite_os_free(path->stroke_conversion.path_point_list);
-                path->stroke_conversion.path_point_list = temp_point;
+            while(path->stroke_conversion->path_point_list) {
+                temp_point = path->stroke_conversion->path_point_list->next;
+                vg_lite_os_free(path->stroke_conversion->path_point_list);
+                path->stroke_conversion->path_point_list = temp_point;
             }
             temp_point = NULL;
         }
 
-        if(path->stroke_conversion.stroke_sub_path_list) {
+        if(path->stroke_conversion->stroke_sub_path_list) {
             vg_lite_sub_path_ptr temp_sub_path;
-            while(path->stroke_conversion.stroke_sub_path_list) {
-                temp_sub_path = path->stroke_conversion.stroke_sub_path_list->next;
-                if(path->stroke_conversion.stroke_sub_path_list->point_list) {
+            while(path->stroke_conversion->stroke_sub_path_list) {
+                temp_sub_path = path->stroke_conversion->stroke_sub_path_list->next;
+                if(path->stroke_conversion->stroke_sub_path_list->point_list) {
                     vg_lite_path_point_ptr temp_point;
-                    while(path->stroke_conversion.stroke_sub_path_list->point_list) {
-                        temp_point = path->stroke_conversion.stroke_sub_path_list->point_list->next;
-                        vg_lite_os_free(path->stroke_conversion.stroke_sub_path_list->point_list);
-                        path->stroke_conversion.stroke_sub_path_list->point_list = temp_point;
+                    while(path->stroke_conversion->stroke_sub_path_list->point_list) {
+                        temp_point = path->stroke_conversion->stroke_sub_path_list->point_list->next;
+                        vg_lite_os_free(path->stroke_conversion->stroke_sub_path_list->point_list);
+                        path->stroke_conversion->stroke_sub_path_list->point_list = temp_point;
                     }
                     temp_point = NULL;
                 }
-                vg_lite_os_free(path->stroke_conversion.stroke_sub_path_list);
-                path->stroke_conversion.stroke_sub_path_list = temp_sub_path;
+                vg_lite_os_free(path->stroke_conversion->stroke_sub_path_list);
+                path->stroke_conversion->stroke_sub_path_list = temp_sub_path;
             }
             temp_sub_path = NULL;
         }
-    }
 
+        vg_lite_os_free(path->stroke_conversion);
+        path->stroke_conversion = NULL;
+    }
     return VG_LITE_SUCCESS;
 }
 
@@ -8881,13 +8543,13 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
         point_min.y = MAX(point_min.y, 0);
         point_max.x = MIN(point_max.x, dst_align_width);
         point_max.y = MIN(point_max.y, target->height);
+    }
 
-        if (ctx->scissor_enabled) {
-            point_min.x = MAX(point_min.x, ctx->scissor[0]);
-            point_min.y = MAX(point_min.y, ctx->scissor[1]);
-            point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
-            point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
-        }
+    if (ctx->scissor_enabled) {
+        point_min.x = MAX(point_min.x, ctx->scissor[0]);
+        point_min.y = MAX(point_min.y, ctx->scissor[1]);
+        point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
+        point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
     }
 
     /* Convert states into hardware values. */
@@ -9311,13 +8973,13 @@ vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
         point_min.y = MAX(point_min.y, 0);
         point_max.x = MIN(point_max.x, dst_align_width);
         point_max.y = MIN(point_max.y, target->height);
+    }
 
-        if (ctx->scissor_enabled) {
-            point_min.x = MAX(point_min.x, ctx->scissor[0]);
-            point_min.y = MAX(point_min.y, ctx->scissor[1]);
-            point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
-            point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
-        }
+    if (ctx->scissor_enabled) {
+        point_min.x = MAX(point_min.x, ctx->scissor[0]);
+        point_min.y = MAX(point_min.y, ctx->scissor[1]);
+        point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
+        point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
     }
 
     /* Convert states into hardware values. */
@@ -10012,13 +9674,13 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
         point_min.y = MAX(point_min.y, 0);
         point_max.x = MIN(point_max.x, dst_align_width);
         point_max.y = MIN(point_max.y, target->height);
+    }
 
-        if (ctx->scissor_enabled) {
-            point_min.x = MAX(point_min.x, ctx->scissor[0]);
-            point_min.y = MAX(point_min.y, ctx->scissor[1]);
-            point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
-            point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
-        }
+    if (ctx->scissor_enabled) {
+        point_min.x = MAX(point_min.x, ctx->scissor[0]);
+        point_min.y = MAX(point_min.y, ctx->scissor[1]);
+        point_max.x = MIN(point_max.x, ctx->scissor[0] + ctx->scissor[2]);
+        point_max.y = MIN(point_max.y, ctx->scissor[1] + ctx->scissor[3]);
     }
 
     /* Convert states into hardware values. */
@@ -11018,6 +10680,9 @@ vg_lite_error_t vg_lite_set_scissor(int32_t x, int32_t y, int32_t width, int32_t
     vg_lite_error_t error = VG_LITE_SUCCESS;
 #if defined(VG_DRIVER_SINGLE_THREAD)
     vg_lite_context_t *ctx = &s_context;
+
+    /* Scissor dirty. */
+    ctx->scissor_dirty = 1;
 #else
     vg_lite_context_t *ctx;
     vg_lite_tls_t* tls;
@@ -11042,6 +10707,9 @@ vg_lite_error_t vg_lite_enable_scissor(void)
 {
 #if defined(VG_DRIVER_SINGLE_THREAD)
     vg_lite_context_t *ctx = &s_context;
+
+    /* Scissor dirty. */
+    ctx->scissor_dirty = 1;
 #else
     vg_lite_context_t *ctx;
     vg_lite_tls_t* tls;
@@ -11063,6 +10731,9 @@ vg_lite_error_t vg_lite_disable_scissor(void)
 {
 #if defined(VG_DRIVER_SINGLE_THREAD)
     vg_lite_context_t *ctx = &s_context;
+
+    /* Scissor dirty. */
+    ctx->scissor_dirty = 1;
 #else
     vg_lite_context_t *ctx;
     vg_lite_tls_t* tls;

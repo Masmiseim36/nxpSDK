@@ -89,9 +89,9 @@ var searchData=
   ['sdio_5fsetdriverstrength',['SDIO_SetDriverStrength',['../a00059.html#ga1d7eb887cb13f6a837bb7b7ff42fdddc',1,'fsl_sdio.h']]],
   ['sdio_5fsetioirqhandler',['SDIO_SetIOIRQHandler',['../a00059.html#gac4c9b0351ead20e77eb148bc4cee7d42',1,'fsl_sdio.h']]],
   ['sdio_5fswitchtohighspeed',['SDIO_SwitchToHighSpeed',['../a00059.html#ga78df99aeaeb2c0a9208cba6f243022a3',1,'fsl_sdio.h']]],
-  ['sdk_5fdelayatleastus',['SDK_DelayAtLeastUs',['../a00237.html#ga4f9121590e5b8fe025d706ff2fe5da36',1,'fsl_common.h']]],
-  ['sdk_5ffree',['SDK_Free',['../a00237.html#ga0be5caec9b8493d87cc849714bd47865',1,'fsl_common.h']]],
-  ['sdk_5fmalloc',['SDK_Malloc',['../a00237.html#ga4e1420d9e817ebe0e8973420411de015',1,'fsl_common.h']]],
+  ['sdk_5fdelayatleastus',['SDK_DelayAtLeastUs',['../a00236.html#ga4f9121590e5b8fe025d706ff2fe5da36',1,'fsl_common.h']]],
+  ['sdk_5ffree',['SDK_Free',['../a00236.html#ga0be5caec9b8493d87cc849714bd47865',1,'fsl_common.h']]],
+  ['sdk_5fmalloc',['SDK_Malloc',['../a00236.html#ga4e1420d9e817ebe0e8973420411de015',1,'fsl_common.h']]],
   ['sdmmc_5fgoidle',['SDMMC_GoIdle',['../a00049.html#ga8f2b6070a1a84f1a9bb1c27bd40f2a73',1,'fsl_sdmmc_common.h']]],
   ['sdmmc_5fosadelay',['SDMMC_OSADelay',['../a00060.html#ga885c6a7de60f8225f903a2d991fd585a',1,'fsl_sdmmc_osa.h']]],
   ['sdmmc_5fosadelayus',['SDMMC_OSADelayUs',['../a00060.html#ga2ef80e6970255224f59a284e3f9b31b7',1,'fsl_sdmmc_osa.h']]],
@@ -185,7 +185,5 @@ var searchData=
   ['spi_5fslavetransferabortdma',['SPI_SlaveTransferAbortDMA',['../a00068.html#ga03ab24789dc4c2438a5daff733ce2cfe',1,'fsl_spi_dma.h']]],
   ['spi_5fslavetransfercreatehandledma',['SPI_SlaveTransferCreateHandleDMA',['../a00068.html#ga029df430a54021c536661fd17b9c60bb',1,'fsl_spi_dma.h']]],
   ['spi_5fslavetransferdma',['SPI_SlaveTransferDMA',['../a00068.html#ga6848a2579e3e84d48123407448df60ed',1,'fsl_spi_dma.h']]],
-  ['spi_5fslavetransfergetcountdma',['SPI_SlaveTransferGetCountDMA',['../a00068.html#gafa44608920f3653a4692f87f4d4220cc',1,'fsl_spi_dma.h']]],
-  ['strformatprintf',['StrFormatPrintf',['../a00265.html#ga50b9d66ac2ba38b23b99dac4e81f4b8c',1,'fsl_str.h']]],
-  ['strformatscanf',['StrFormatScanf',['../a00265.html#gafe318e0fd8d0f6ebad0c8a871a7a196f',1,'fsl_str.h']]]
+  ['spi_5fslavetransfergetcountdma',['SPI_SlaveTransferGetCountDMA',['../a00068.html#gafa44608920f3653a4692f87f4d4220cc',1,'fsl_spi_dma.h']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['flexcomm_5fperiph_5ft',['FLEXCOMM_PERIPH_T',['../a00240.html#ga41eebbb4c49103c4d42f91c8f542c2c7',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fperiph_5ft',['FLEXCOMM_PERIPH_T',['../a00239.html#ga41eebbb4c49103c4d42f91c8f542c2c7',1,'fsl_flexcomm.h']]],
   ['flexio_5fi2c_5fdirection_5ft',['flexio_i2c_direction_t',['../a00024.html#gad7cd7cc57788188d0f804b5e3a549303',1,'fsl_flexio_i2c_master.h']]],
   ['flexio_5fmculcd_5fbus_5ft',['flexio_mculcd_bus_t',['../a00025.html#gaa17db8a882f5f3fe15456cb122260d19',1,'fsl_flexio_mculcd.h']]],
   ['flexio_5fmculcd_5fpixel_5fformat_5ft',['flexio_mculcd_pixel_format_t',['../a00025.html#ga3721e99acc2b54f3b08411e5880c476f',1,'fsl_flexio_mculcd.h']]],
@@ -20,6 +20,7 @@ var searchData=
   ['flexio_5ftimer_5fdisable_5fcondition_5ft',['flexio_timer_disable_condition_t',['../a00023.html#ga9250279474f51f4bf8b87263f7ee021f',1,'fsl_flexio.h']]],
   ['flexio_5ftimer_5fenable_5fcondition_5ft',['flexio_timer_enable_condition_t',['../a00023.html#gabd61e9502766f26300630109a256ff70',1,'fsl_flexio.h']]],
   ['flexio_5ftimer_5fmode_5ft',['flexio_timer_mode_t',['../a00023.html#gaffe8bb899f03089cd3164933b59ccc6a',1,'fsl_flexio.h']]],
+  ['flexio_5ftimer_5foutput_5fstate_5ft',['flexio_timer_output_state_t',['../a00023.html#gad41019b1e1d73d8116c75ce72cdeb4fa',1,'fsl_flexio.h']]],
   ['flexio_5ftimer_5foutput_5ft',['flexio_timer_output_t',['../a00023.html#gae7cc1af35a657c623cf1392ddd281744',1,'fsl_flexio.h']]],
   ['flexio_5ftimer_5freset_5fcondition_5ft',['flexio_timer_reset_condition_t',['../a00023.html#ga12536a2356d854da58788e52915d2e9b',1,'fsl_flexio.h']]],
   ['flexio_5ftimer_5fstart_5fbit_5fcondition_5ft',['flexio_timer_start_bit_condition_t',['../a00023.html#gadb300cb6718b193cd1bfee2d4530fb4e',1,'fsl_flexio.h']]],

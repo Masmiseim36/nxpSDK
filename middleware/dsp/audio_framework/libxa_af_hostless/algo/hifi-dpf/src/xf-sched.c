@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -36,14 +36,14 @@
 
 
 /* ...current scheduler timestamp */
-static inline UWORD32 xf_sched_timestamp(xf_sched_t *sched)
+static inline UWORD64 xf_sched_timestamp(xf_sched_t *sched)
 {
     /* ...don't quite care about last bit */
     return sched->tree.root.color;
 }
 
 /* ...set scheduler timestamp */
-static inline UWORD32 xf_sched_timestamp_set(xf_sched_t *sched, UWORD32 ts)
+static inline UWORD64 xf_sched_timestamp_set(xf_sched_t *sched, UWORD64 ts)
 {
     /* ...wipe out last bit (black color is 0) */
     return (sched->tree.root.color = ts & ~0x1);
@@ -54,13 +54,13 @@ static inline UWORD32 xf_sched_timestamp_set(xf_sched_t *sched, UWORD32 ts)
  ******************************************************************************/
 
 /* ...place task into scheduler queue */
-void xf_sched_put(xf_sched_t *sched, xf_task_t *t, UWORD32 dts)
+void xf_sched_put(xf_sched_t *sched, xf_task_t *t, UWORD64 dts)
 {
     rb_tree_t  *tree = &sched->tree;
     rb_node_t  *node = (rb_node_t *)t;
     rb_idx_t    p_idx, t_idx;
-    UWORD32 ts;
-    UWORD32         _ts;
+    UWORD64 ts;
+    UWORD64         _ts;
 
     xf_flx_lock(&sched->lock);
 
@@ -110,7 +110,7 @@ insert:
     /* ...head cannot be NULL */
     BUG(rb_cache(tree) == rb_null(tree), _x("Invalid scheduler state"));
     
-    TRACE(DEBUG, _b("in:  %08x:[%p] (ts:%08x)"), ts, node, xf_sched_timestamp(sched));
+    TRACE(DEBUG, _b("in:  %016llx:[%p] (ts:%016llx)"), ts, node, xf_sched_timestamp(sched));
     xf_flx_unlock(&sched->lock);
 }
 
@@ -119,7 +119,7 @@ xf_task_t * xf_sched_get(xf_sched_t *sched)
 {
     rb_tree_t      *tree = &sched->tree;
     rb_idx_t        n_idx, t_idx;
-    UWORD32             ts;
+    UWORD64             ts;
 
     xf_flx_lock(&sched->lock);
     /* ...head of the tree is cached; replace it with its parent (direct successor) */
@@ -133,7 +133,7 @@ xf_task_t * xf_sched_get(xf_sched_t *sched)
         /* ...advance scheduler timestamp */
         xf_sched_timestamp_set(sched, ts);
 
-        TRACE(DEBUG, _b("out: %08x:[%p]"), ts, n_idx);
+        TRACE(DEBUG, _b("out: %016llx:[%p]"), ts, n_idx);
     } else {
         n_idx = NULL;
     }

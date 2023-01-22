@@ -29,11 +29,11 @@
     <definition extID="middleware.usb.pd.phy.ptn5110.MIMXRT595S"/>
     <definition extID="platform.drivers.flexspi.MIMXRT595S"/>
     <definition extID="platform.drivers.cache_cache64.MIMXRT595S"/>
-    <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
     <definition extID="platform.drivers.flexcomm_i2c.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
     <definition extID="component.osa.MIMXRT595S"/>
-    <definition extID="middleware.usb.common_header.MIMXRT595S"/>
+    <definition extID="middleware.usb_pd.common_header.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
@@ -48,7 +48,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_om13790host_usb_pd_freertos" name="usb_pd_freertos" device_core="cm33_MIMXRT595S" dependency="middleware.usb.pd.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S component.osa_free_rtos.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.common.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S utility.debug_console.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.flash_config.evkmimxrt595.MIMXRT595S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S component.flexcomm_i2c_adapter.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.mrt_adapter.MIMXRT595S middleware.usb.pd.phy.ptn5110.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S component.osa.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.iap.MIMXRT595S platform.drivers.mrt.MIMXRT595S" category="usb_examples">
+  <example id="evkmimxrt595_om13790host_usb_pd_freertos" name="usb_pd_freertos" device_core="cm33_MIMXRT595S" dependency="middleware.usb.pd.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S component.osa_free_rtos.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.common.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S utility.debug_console.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.flash_config.evkmimxrt595.MIMXRT595S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S component.flexcomm_i2c_adapter.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.mrt_adapter.MIMXRT595S middleware.usb.pd.phy.ptn5110.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S component.osa.MIMXRT595S middleware.usb_pd.common_header.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.iap.MIMXRT595S platform.drivers.mrt.MIMXRT595S" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

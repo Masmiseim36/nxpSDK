@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2018-2021 Arm Limited. All rights reserved.
- * Copyright (c) 2019-2020 NXP. All rights reserved.
+ * Copyright (c) 2018-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022 NXP. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@
 #include "platform_description.h"
 #include "device_definition.h"
 #include "region_defs.h"
-#include "tfm_secure_api.h"
 #include "tfm_plat_defs.h"
 #include "region.h"
 #include "tfm_assert.h"
 #include "tfm_spm_log.h"
+#include "utilities.h"
 
 /* The section names come from the scatter file */
 REGION_DECLARE(Load$$LR$$, LR_NS_PARTITION, $$Base);
@@ -1174,9 +1174,8 @@ void ppc_configure_to_secure(volatile uint32_t *bank, uint32_t pos, bool privile
 /* Secure Violation IRQ */
 void SECURE_VIOLATION_IRQHandler(void)
 {
-    ERROR_MSG("Oops... Secure Violation!!!");
-    while (1) {
-        ;
-    }
+    SPMLOG_ERRMSG("Oops... Secure Violation!!!");
+    
+    tfm_core_panic();
 }
 

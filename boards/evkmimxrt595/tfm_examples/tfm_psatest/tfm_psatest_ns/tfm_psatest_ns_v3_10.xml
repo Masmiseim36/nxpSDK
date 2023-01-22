@@ -102,10 +102,14 @@
           <value>PROTECTED_STORAGE</value>
           <value>PS_TEST</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>CONFIG_TFM_FP=2</value>
+          <value>CONFIG_TFM_FLOAT_ABI=2</value>
+          <value>CONFIG_TFM_ENABLE_CP10CP11</value>
           <value>CONFIG_TFM_LAZY_STACKING</value>
           <value>__DOMAIN_NS=1</value>
           <value>DOMAIN_NS=1</value>
+          <value>CONFIG_TFM_USE_TRUSTZONE</value>
+          <value>ATTEST_TOKEN_PROFILE_PSA_IOT_1</value>
+          <value>PLATFORM_DEFAULT_CRYPTO_KEYS</value>
           <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">

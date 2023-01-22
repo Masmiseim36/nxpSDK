@@ -1,6 +1,5 @@
 var a00251 =
 [
-    [ "Hashcrypt AES", "a00033.html", "a00033" ],
-    [ "Hashcrypt Background HASH", "a00252.html", "a00252" ],
-    [ "Hashcrypt HASH", "a00034.html", "a00034" ]
+    [ "HASHCRYPT_SHA_SetCallback", "a00251.html#gaf7a0a7647b12bbfa27490a1ecf84ed75", null ],
+    [ "HASHCRYPT_SHA_UpdateNonBlocking", "a00251.html#ga19c0131424db9a618d164fdb6ffa470e", null ]
 ];

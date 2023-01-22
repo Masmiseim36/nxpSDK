@@ -1,5 +1,7 @@
 #-------------------------------------------------------------------------------
 # Copyright (c) 2020-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
+# or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -14,17 +16,8 @@ include(cmake/version.cmake)
 # Configure TFM_PLATFORM
 include(${CMAKE_SOURCE_DIR}/config/tfm_platform.cmake)
 
-if(TFM_SYSTEM_MVE)
-    message(FATAL_ERROR "Hardware MVE is currently not supported in TF-M")
-endif()
 if(TFM_SYSTEM_DSP)
     message(FATAL_ERROR "Hardware DSP is currently not supported in TF-M")
-endif()
-
-# The default build type is release. If debug symbols are needed then
-# -DCMAKE_BUILD_TYPE=debug should be used (likewise with other build types)
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type: [Debug, Release, RelWithDebInfo, MinSizeRel]" FORCE)
 endif()
 
 include(config/set_config.cmake)
@@ -69,10 +62,6 @@ endif()
 
 include(${CMAKE_SOURCE_DIR}/config/check_config.cmake)
 
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/platform/ext/target/${TFM_PLATFORM}/check_config.cmake)
-    include(platform/ext/target/${TFM_PLATFORM}/check_config.cmake)
-endif()
-
 ################################################################################
 
 add_subdirectory(lib/ext)
@@ -80,7 +69,9 @@ add_subdirectory(lib/fih)
 add_subdirectory(tools)
 add_subdirectory(secure_fw)
 
-if(NS OR TFM_S_REG_TEST OR TFM_NS_REG_TEST OR TEST_BL2)
+if(NS AND NS_EVALUATION_APP_PATH)
+    add_subdirectory(${NS_EVALUATION_APP_PATH} ${CMAKE_CURRENT_BINARY_DIR}/evaluation-app)
+elseif(NS OR TFM_S_REG_TEST OR TFM_NS_REG_TEST OR TEST_BL2 OR TEST_BL1_1 OR TEST_BL1_2)
     add_subdirectory(${TFM_TEST_REPO_PATH} ${CMAKE_CURRENT_BINARY_DIR}/tf-m-tests)
 endif()
 
@@ -89,10 +80,15 @@ if(BL2)
     add_subdirectory(bl2)
 endif()
 
-add_subdirectory(platform)
+if(BL1 AND PLATFORM_DEFAULT_BL1)
+    add_subdirectory(bl1/bl1_2)
+    add_subdirectory(bl1/bl1_1)
+endif()
 
-include(cmake/install.cmake)
+add_subdirectory(platform)
 
 if(CRYPTO_HW_ACCELERATOR)
     add_subdirectory(platform/ext/accelerator)
 endif()
+
+include(cmake/install.cmake)

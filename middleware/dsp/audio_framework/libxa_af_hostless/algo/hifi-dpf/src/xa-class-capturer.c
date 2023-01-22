@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -71,7 +71,7 @@ typedef struct XACapturer
     UWORD32                     sample_size;
 
     /* ...audio sample duration */
-    UWORD32                     factor;
+    UWORD64                     factor;
     /* ...internal message scheduling flag (shared with interrupt) */
     UWORD32                 schedule;
 
@@ -99,7 +99,7 @@ static inline XA_ERRORCODE xa_capturer_prepare_runtime(XACapturer *capturer)
     XACodecBase    *base = (XACodecBase *)capturer;
     xf_message_t   *m = xf_msg_queue_head(&capturer->output.queue);
     xf_start_msg_t *msg = m->buffer;
-    UWORD32             factor;
+    UWORD64             factor;
 
     /* ...fill-in buffer parameters */
     XA_API(base, XA_API_CMD_GET_CONFIG_PARAM, XA_CAPTURER_CONFIG_PARAM_SAMPLE_RATE, &msg->sample_rate);
@@ -110,7 +110,7 @@ static inline XA_ERRORCODE xa_capturer_prepare_runtime(XACapturer *capturer)
     TRACE(INIT, _b("codec[%p]::runtime init: f=%u, c=%u, w=%u, o=%u"), capturer, msg->sample_rate, msg->channels, msg->pcm_width, msg->output_length[0]);
 
     /* ...save sample size in bytes */
-    capturer->sample_size = msg->channels * (msg->pcm_width == 16 ? 2 : 4);
+    capturer->sample_size = msg->channels * ((msg->pcm_width == 8) ? 1 :((msg->pcm_width == 16) ? 2 : 4));
 
     /* ...retrieve upsampling factor for given sample rate */
     XF_CHK_ERR(factor = xf_timebase_factor(msg->sample_rate), XA_API_FATAL_INVALID_CMD_TYPE);
@@ -121,16 +121,17 @@ static inline XA_ERRORCODE xa_capturer_prepare_runtime(XACapturer *capturer)
     /* ...set frame duration factor (converts number of bytes into timebase units) */
     capturer->factor = factor / capturer->sample_size;
 
-    TRACE(INIT, _b("ts-factor: %u (%u)"), capturer->factor, factor);
+    TRACE(INIT, _b("ts-factor: %llu (%llu)"), capturer->factor, factor);
 
-    BUG(capturer->factor * capturer->sample_size != factor, _x("Freq mismatch: %u vs %u"), capturer->factor * capturer->sample_size, factor);
+    /* ...factor must be a multiple */
+    XF_CHK_ERR(((capturer->factor * capturer->sample_size) == factor), XA_CAPTURER_CONFIG_FATAL_RANGE);
+
+    /* ...codec runtime initialization is completed */
+    TRACE(INIT, _b("codec[%p] runtime initialized: o=%u"), capturer, msg->output_length[0]);
 
     /* ...pass response to caller (push out of output port) */
     /*here the capturer would be sending the response back to the app*/
     xf_output_port_produce(&capturer->output, sizeof(*msg));
-
-    /* ...codec runtime initialization is completed */
-    TRACE(INIT, _b("codec[%p] runtime initialized: o=%u"), capturer, msg->output_length[0]);
 
     return XA_NO_ERROR;
 }
@@ -554,7 +555,7 @@ static int xa_capturer_terminate(xf_component_t *component, xf_message_t *m)
     {
         /* ...ignore component processing during component termination(rare case) */
         TRACE(OUTPUT, _b("component processing ignored.."));
-        return -1;
+        return 0;
     }
 
     /* ...check if we received output port control message */
@@ -563,7 +564,11 @@ static int xa_capturer_terminate(xf_component_t *component, xf_message_t *m)
         /* ...output port flushing complete; mark port is idle and terminate */
         xf_output_port_flush_done(&capturer->output);
         TRACE(OUTPUT, _b("capturer[%p] flush completed in terminate"), capturer);
+#ifdef XF_MSG_ERR_HANDLING
+        return XAF_UNREGISTER;
+#else
         return -1;
+#endif
     }
     else if (m->opcode == XF_FILL_THIS_BUFFER)
     {
@@ -605,8 +610,11 @@ static int xa_capturer_destroy(xf_component_t *component, xf_message_t *m)
     /* ...deallocate all resources */
     xa_base_destroy(&capturer->base, XF_MM(sizeof(*capturer)), core);
 
-    /* ...complete the command with response */
-    xf_response_err(m_resp);
+    if (m_resp != NULL)
+    {
+        /* ...complete the command with response */
+        xf_response_err(m_resp);
+    }
 
     TRACE(INIT, _b("capturer[%p@%u] destroyed"), capturer, core);
 

@@ -14,6 +14,7 @@ extern "C" {
 
 #include "psa/crypto.h"
 #include "test_framework_helpers.h"
+#include "crypto_tests_check_config.h"
 
 /**
  * \brief Size of the key to use in tests in bits
@@ -40,9 +41,8 @@ extern "C" {
 #define BYTE_SIZE_CHUNK (16)
 
 /**
- * \brief Size in bytes of the plain data processed in cipher
- *        tests
- * 
+ * \brief Size in bytes of the plain data processed in cipher tests
+ *
  */
 #define PLAIN_DATA_SIZE (3 * BYTE_SIZE_CHUNK)
 
@@ -59,18 +59,15 @@ extern "C" {
  */
 #define ENC_DEC_BUFFER_SIZE_PAD_MODES (ENC_DEC_BUFFER_SIZE + BYTE_SIZE_CHUNK)
 
-
 /**
  * \brief Size in bytes of the small input plain data that is used for
  *        the dedicated tests for padded modes which process smaller
- *        chunks of data 
+ *        chunks of data
  */
 #define PLAIN_DATA_SIZE_PAD_TEST (BYTE_SIZE_CHUNK + BYTE_SIZE_CHUNK / 2)
 /**
- * \brief Size in bytes of the encrypted/decrypted buffers for the
- *        dedicated tests for padded modes which process smaller
- *        chunks of data
- * 
+ * \brief Size in bytes of the encrypted/decrypted buffers for the dedicated
+ *        tests for padded modes which process smaller chunks of data
  */
 #define ENC_DEC_BUFFER_SIZE_PAD_TEST (2 * BYTE_SIZE_CHUNK)
 
@@ -285,8 +282,26 @@ void psa_asymmetric_encryption_test(psa_algorithm_t alg,
 void psa_sign_verify_message_test(psa_algorithm_t alg,
                                   struct test_result_t *ret);
 
+#ifdef TFM_CRYPTO_TEST_CHACHA20
+/**
+ * \brief Verification of Chacha20 using RFC7539 test vectors
+ *
+ * \param[out] ret Test result
+ */
+void psa_cipher_rfc7539_test(struct test_result_t *ret);
+#endif /* TFM_CRYPTO_TEST_CHACHA20 */
+
+#ifdef TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305
+/**
+ * \brief Verification of Chacha20-Poly1305 using RFC7539 test vectors
+ *
+ * \param[out] ret Test result
+ */
+void psa_aead_rfc7539_test(struct test_result_t *ret);
+#endif /* TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305 */
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __CRYPTO_TESTS_COMMON__ */
+#endif /* __CRYPTO_TESTS_COMMON_H__ */

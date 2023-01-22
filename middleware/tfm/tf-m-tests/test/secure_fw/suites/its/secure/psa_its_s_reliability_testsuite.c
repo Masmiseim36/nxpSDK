@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
-
+#include <string.h>
 #include "its_s_tests.h"
 #include "psa/internal_trusted_storage.h"
 #include "test_framework_helpers.h"
-#include "tfm_memory_utils.h"
 
 /* Test UIDs */
 #define TEST_UID 2UL  /* UID 1 cannot be used as it references a write once
@@ -86,13 +85,13 @@ static void tfm_its_test_2001(struct test_result_t *ret)
         }
 
         /* Check that the data has not changed */
-        if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+        if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
             TEST_FAIL("The data should not have changed");
             return;
         }
 
         /* Set the original data into read buffer */
-        tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
+        memcpy(read_data, READ_DATA, sizeof(read_data));
     }
 
     TEST_LOG("\n");
@@ -144,7 +143,7 @@ static void tfm_its_test_2002(struct test_result_t *ret)
         }
 
         /* Check that the data has not changed */
-        if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+        if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
             TEST_FAIL("The data should not have changed");
             return;
         }
@@ -157,7 +156,7 @@ static void tfm_its_test_2002(struct test_result_t *ret)
         }
 
         /* Set the original data into read buffer */
-        tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
+        memcpy(read_data, READ_DATA, sizeof(read_data));
     }
 
     TEST_LOG("\n");

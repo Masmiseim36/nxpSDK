@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -38,7 +38,7 @@
 typedef struct xf_proxy_message
 {
     /* ...session ID */
-    UWORD32                 session_id;
+    xf_msg_id_dtype         session_id;
 
     /* ...proxy API command/reponse code */
     UWORD32                 opcode;
@@ -48,6 +48,9 @@ typedef struct xf_proxy_message
 
     /* ...physical address of message buffer */
     UWORD32                 address;
+    
+    /* ...error response*/
+    WORD32                 error;
 
 }   __attribute__((__packed__)) xf_proxy_message_t;
 

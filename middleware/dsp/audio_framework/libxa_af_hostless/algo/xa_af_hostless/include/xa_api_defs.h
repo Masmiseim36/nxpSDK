@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -31,7 +31,7 @@
 #define XA_API_STR_LEN           30
 
 /* API version information is directly modified by the packing script, do not change */
-#define XA_APIVERSION_MAJOR 2
+#define XA_APIVERSION_MAJOR 3
 #define XA_APIVERSION_MINOR 0
 
 /* last compatible version */

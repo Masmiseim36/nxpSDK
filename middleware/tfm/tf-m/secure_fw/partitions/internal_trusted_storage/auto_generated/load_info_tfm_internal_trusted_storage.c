@@ -1,6 +1,8 @@
 /*
  * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
- * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
+ * Copyright (c) 2021-2022 Cypress Semiconductor Corporation (an Infineon
+ * company) or an affiliate of Cypress Semiconductor Corporation. All rights
+ * reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -36,6 +38,7 @@
 REGION_DECLARE(Image$$, PT_TFM_SP_ITS_PRIVATE, _DATA_START$$Base);
 REGION_DECLARE(Image$$, PT_TFM_SP_ITS_PRIVATE, _DATA_END$$Base);
 #endif
+
 extern uint8_t tfm_sp_its_stack[];
 
 extern psa_status_t tfm_its_entry(void);
@@ -58,11 +61,11 @@ struct partition_tfm_sp_its_load_info_t {
 
 /* Partition load, deps, service load data. Put to a dedicated section. */
 #if defined(__ICCARM__)
-#pragma location = ".part_load"
+#pragma location = ".part_load_priority_normal"
 __root
 #endif /* __ICCARM__ */
 const struct partition_tfm_sp_its_load_info_t tfm_sp_its_load
-    __attribute__((used, section(".part_load"))) = {
+    __attribute__((used, section(".part_load_priority_normal"))) = {
     .load_info = {
         .psa_ff_ver                 = 0x0101 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_ITS,
@@ -83,13 +86,13 @@ const struct partition_tfm_sp_its_load_info_t tfm_sp_its_load
         {
             .name_strid             = STRING_PTR_TO_STRID("TFM_INTERNAL_TRUSTED_STORAGE_SERVICE"),
             .sfn                    = ENTRY_TO_POSITION(tfm_internal_trusted_storage_service_sfn),
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = 1,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
             .sid                    = 0x00000070,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
                                     | SERVICE_FLAG_STATELESS | 0x2
+                                    | SERVICE_FLAG_MM_IOVEC
                                     | SERVICE_VERSION_POLICY_STRICT,
             .version                = 1,
         },
@@ -108,14 +111,14 @@ const struct partition_tfm_sp_its_load_info_t tfm_sp_its_load
 
 /* Placeholder for partition and service runtime space. Do not reference it. */
 #if defined(__ICCARM__)
-#pragma location=".bss.part_runtime"
+#pragma location=".bss.part_runtime_priority_normal"
 __root
 #endif /* __ICCARM__ */
 static struct partition_t tfm_sp_its_partition_runtime_item
-    __attribute__((used, section(".bss.part_runtime")));
+    __attribute__((used, section(".bss.part_runtime_priority_normal")));
 #if defined(__ICCARM__)
-#pragma location = ".bss.serv_runtime"
+#pragma location = ".bss.serv_runtime_priority_normal"
 __root
 #endif /* __ICCARM__ */
 static struct service_t tfm_sp_its_service_runtime_item[TFM_SP_ITS_NSERVS]
-    __attribute__((used, section(".bss.serv_runtime")));
+    __attribute__((used, section(".bss.serv_runtime_priority_normal")));

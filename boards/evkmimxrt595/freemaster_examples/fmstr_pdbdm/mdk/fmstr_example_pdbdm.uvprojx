@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT595SEVKA=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -608,6 +608,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -969,11 +979,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -987,16 +992,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1353,7 +1348,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT595SEVKA=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1627,6 +1622,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1988,11 +1993,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2006,16 +2006,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2372,7 +2362,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT595SEVKA=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2646,6 +2636,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -3007,11 +3007,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3025,16 +3020,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3391,7 +3376,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT595SEVKA=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../devices/MIMXRT595S/drivers;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3665,6 +3650,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -4026,11 +4021,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4044,16 +4034,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

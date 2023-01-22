@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2022 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -78,7 +78,6 @@ void USB_DeviceClockInit(void)
     /* Make sure USDHC ram buffer and usb1 phy has power up */
     POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
-    POWER_DisablePD(kPDRUNCFG_LP_HSPAD_FSPI0_VDET);
     POWER_ApplyPD();
 
     RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);

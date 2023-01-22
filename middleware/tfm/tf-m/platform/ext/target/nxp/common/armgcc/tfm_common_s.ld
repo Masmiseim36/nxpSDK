@@ -1,5 +1,7 @@
 ;/*
 ; * Copyright (c) 2009-2022 Arm Limited
+; * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
+; * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
 ; *
 ; * Licensed under the Apache License, Version 2.0 (the "License");
 ; * you may not use this file except in compliance with the License.
@@ -33,18 +35,12 @@ MEMORY
 #if defined(S_CODE_SRAM_ALIAS_BASE)
   CODE_RAM (rwx) : ORIGIN = S_CODE_SRAM_ALIAS_BASE, LENGTH = TOTAL_CODE_SRAM_SIZE
 #endif
-
-#if defined(PSA_PROXY_SHARED_MEMORY_BASE)
-  PSA_PROXY_SHARED_MEMORY_RAM (rw) : ORIGIN = PSA_PROXY_SHARED_MEMORY_BASE, LENGTH = PSA_PROXY_SHARED_MEMORY_SIZE
-#endif
-
 }
 
-__heap_size__  = S_HEAP_SIZE;
 #if !defined(TFM_PSA_API)
 __psp_stack_size__ = S_PSP_STACK_SIZE;
 #endif
-__msp_init_stack_size__ = S_MSP_STACK_SIZE; //NXP S_MSP_STACK_SIZE_INIT
+__msp_stack_size__ = S_MSP_STACK_SIZE;
 
 /* Library configurations */
 GROUP(libgcc.a libc.a libm.a libnosys.a libc_nano.a)
@@ -72,7 +68,7 @@ SECTIONS
         __vectors_end__ = .;
     } > FLASH
 
-#ifndef TFM_MULTI_CORE_TOPOLOGY
+#ifdef CONFIG_TFM_USE_TRUSTZONE
     ASSERT(. <= ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE, ".TFM_VECTORS section size overflow.")
     . = ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE;
     /*
@@ -137,10 +133,6 @@ SECTIONS
 
         LONG (ADDR(.TFM_APP_ROT_LINKER_BSS))
         LONG (SIZEOF(.TFM_APP_ROT_LINKER_BSS))
-#if defined(PSA_PROXY_SHARED_MEMORY_BASE)
-        LONG (PSA_PROXY_SHARED_MEMORY_BASE)
-        LONG (PSA_PROXY_SHARED_MEMORY_SIZE)
-#endif
 #if defined(CONFIG_TFM_PARTITION_META)
         LONG (ADDR(.TFM_SP_META_PTR))
         LONG (SIZEOF(.TFM_SP_META_PTR))
@@ -149,9 +141,16 @@ SECTIONS
     } > FLASH
 
     /**** Section for holding partition RO load data */
+    /*
+     * Sort the partition info by priority to guarantee the initing order.
+     * The first loaded partition will be inited at last in SFN model.
+     */
     .TFM_SP_LOAD_LIST : ALIGN(4)
     {
-       KEEP(*(.part_load))
+       KEEP(*(.part_load_priority_lowest))
+       KEEP(*(.part_load_priority_low))
+       KEEP(*(.part_load_priority_normal))
+       KEEP(*(.part_load_priority_high))
     } > FLASH
     Image$$TFM_SP_LOAD_LIST$$RO$$Base = ADDR(.TFM_SP_LOAD_LIST);
     Image$$TFM_SP_LOAD_LIST$$RO$$Limit = ADDR(.TFM_SP_LOAD_LIST) + SIZEOF(.TFM_SP_LOAD_LIST);
@@ -240,28 +239,6 @@ SECTIONS
         *tfm_secure_client_2_api.*(.rodata*)
         *(TFM_SP_SECURE_CLIENT_2_ATTR_FN)
 
-// #ifdef TEST_NS_SLIH_IRQ
-        *tfm_slih_test_service.*(.text*)
-        *tfm_slih_test_service.*(.rodata*)
-        *tfm_irq_test_service.*(.text*)
-        *tfm_irq_test_service.*(.rodata*)
-        *intermedia_tfm_slih_test_service.*(.text*)
-        *intermedia_tfm_slih_test_service.*(.rodata*)
-        *load_info_tfm_slih_test_service.*(.text*)
-        *load_info_tfm_slih_test_service.*(.rodata*)
-        *(TFM_SP_SLIH_TEST_ATTR_FN)
-
-// #ifdef TEST_NS_FLIH_IRQ
-        *tfm_flih_test_service.*(.text*)
-        *tfm_flih_test_service.*(.rodata*)
-        *tfm_irq_test_service.*(.text*)
-        *tfm_irq_test_service.*(.rodata*)
-        *intermedia_tfm_flih_test_service.*(.text*)
-        *intermedia_tfm_flih_test_service.*(.rodata*)
-        *load_info_tfm_flih_test_service.*(.text*)
-        *load_info_tfm_flih_test_service.*(.rodata*)
-        *(TFM_SP_FLIH_TEST_ATTR_FN)
-
 // #ifdef TEST_PARTITION_FPU_TEST
         *tfm_fpu_service_test.*(.text*)
         *tfm_fpu_service_test.*(.rodata*)
@@ -336,14 +313,15 @@ SECTIONS
      * MPU on Armv6-M/v7-M core in multi-core topology may require more strict
      * alignment that MPU region base address must align with the MPU region
      * size.
-     * As a result, in multi-core topology, to save memory resource and MPU
+     * As a result, on Armv6-M/v7-M cores, to save memory resource and MPU
      * regions, unprivileged data sections and privileged data sections are
      * separated and gathered in unprivileged/privileged data area respectively.
      * Keep BL2 shared data and MSP stack at the beginning of the secure data
-     * area in single Armv8-M topology, while move the two areas to the
-     * beginning of privileged data region in multi-core topology.
+     * area on Armv8-M cores, while move the two areas to the beginning of
+     * privileged data region on Armv6-M/v7-M cores.
      */
-#ifndef TFM_MULTI_CORE_TOPOLOGY
+#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__) || \
+    defined(__ARM_ARCH_8_1M_MAIN__)
 #ifdef CODE_SHARING
     /* The code sharing between bootloader and runtime requires to share the
      * global variables.
@@ -365,7 +343,7 @@ SECTIONS
 
     .msp_stack : ALIGN(32)
     {
-        . += __msp_init_stack_size__;
+        . += __msp_stack_size__;
     } > RAM
     Image$$ARM_LIB_STACK$$ZI$$Base = ADDR(.msp_stack);
     Image$$ARM_LIB_STACK$$ZI$$Limit = ADDR(.msp_stack) + SIZEOF(.msp_stack);
@@ -386,7 +364,8 @@ SECTIONS
     Image$$ER_INITIAL_PSP_SEAL$$ZI$$Base = ADDR(.psp_stack_seal_res);
     Image$$ER_INITIAL_PSP_SEAL$$ZI$$Limit = ADDR(.psp_stack_seal_res) + SIZEOF(.psp_stack_seal_res);
 # endif
-#endif
+#endif /* defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__) || \
+        * defined(__ARM_ARCH_8_1M_MAIN__) */
 
 #if !defined(TFM_PSA_API)
     .TFM_SECURE_STACK : ALIGN(128)
@@ -397,7 +376,8 @@ SECTIONS
     Image$$TFM_SECURE_STACK$$ZI$$Limit = ADDR(.TFM_SECURE_STACK) + SIZEOF(.TFM_SECURE_STACK);
 #endif /* !defined(TFM_PSA_API) */
 
-#if (TFM_LVL == 1)
+#if defined(ENABLE_HEAP)
+    __heap_size__ = S_HEAP_SIZE;
     .heap : ALIGN(8)
     {
         __end__ = .;
@@ -407,7 +387,7 @@ SECTIONS
         __HeapLimit = .;
         __heap_limit = .; /* Add for _sbrk */
     } > RAM
-#endif /* TFM_LVL == 1 */
+#endif
 
 #if defined(CONFIG_TFM_PARTITION_META)
     .TFM_SP_META_PTR : ALIGN(32)
@@ -459,20 +439,6 @@ SECTIONS
         *tfm_secure_client_2_api.*(.data*)
         *tfm_secure_client_2_api.*(.data*)
         *(TFM_SP_SECURE_CLIENT_2_ATTR_RW)
-
-// #ifdef TEST_NS_SLIH_IRQ
-        *tfm_slih_test_service.*(.data*)
-        *tfm_irq_test_service.*(.data*)
-        *intermedia_tfm_slih_test_service.*(.data*)
-        *load_info_tfm_slih_test_service.*(.data*)
-        *(TFM_SP_SLIH_TEST_ATTR_RW)
-
-// #ifdef TEST_NS_FLIH_IRQ
-        *tfm_flih_test_service.*(.data*)
-        *tfm_irq_test_service.*(.data*)
-        *intermedia_tfm_flih_test_service.*(.data*)
-        *load_info_tfm_flih_test_service.*(.data*)
-        *(TFM_SP_FLIH_TEST_ATTR_RW)
 
 // #ifdef TEST_PARTITION_FPU_TEST
         *tfm_fpu_service_test.*(.data*)
@@ -549,28 +515,6 @@ SECTIONS
         *tfm_secure_client_2_api.*(COMMON)
         *(TFM_SP_SECURE_CLIENT_2_ATTR_ZI)
 
-// #ifdef TEST_NS_SLIH_IRQ
-        *tfm_slih_test_service.*(.bss)
-        *tfm_slih_test_service.*(COMMON)
-        *tfm_irq_test_service.*(.bss*)
-        *tfm_irq_test_service.*(COMMON)
-        *intermedia_tfm_slih_test_service.*(.bss*)
-        *intermedia_tfm_slih_test_service.*(COMMON)
-        *load_info_tfm_slih_test_service.*(.bss)
-        *load_info_tfm_slih_test_service.*(COMMON)
-        *(TFM_SP_SLIH_TEST_ATTR_ZI)
-
-// #ifdef TEST_NS_FLIH_IRQ
-        *tfm_flih_test_service.*(.bss)
-        *tfm_flih_test_service.*(COMMON)
-        *tfm_irq_test_service.*(.bss*)
-        *tfm_irq_test_service.*(COMMON)
-        *intermedia_tfm_flih_test_service.*(.bss*)
-        *intermedia_tfm_flih_test_service.*(COMMON)
-        *load_info_tfm_flih_test_service.*(.bss)
-        *load_info_tfm_flih_test_service.*(COMMON)
-        *(TFM_SP_FLIH_TEST_ATTR_ZI)
-
 // #ifdef TEST_PARTITION_FPU_TEST
         *tfm_fpu_service_test.*(.bss)
         *tfm_fpu_service_test.*(COMMON)
@@ -591,52 +535,10 @@ SECTIONS
     /**** APPLICATION RoT DATA end here */
     Image$$TFM_APP_RW_STACK_END$$Base = .;
 
-#if TFM_LVL != 1
-#ifdef TFM_PARTITION_TEST_SECURE_SERVICES
-    .TFM_SP_SECURE_TEST_PARTITION_LINKER_DATA : ALIGN(32)
-    {
-        *libc_nano*:*(.data*)
-        . = ALIGN(32);
-    } > RAM AT> FLASH
-
-    .TFM_SP_SECURE_TEST_PARTITION_LINKER_BSS : ALIGN(32)
-    {
-        /* FixMe:
-         * Test framework use printf to print out test result. Implementation of
-         * printf in GCC libc use static data and heap as well. To be able to
-         * execute test suites with TFM_LVL=3 this workaround is needed to
-         * allocate libc static data and heap within the data section of secure
-         * test partition. This can be removed if test service will be executed
-         * in privileged mode.
-         */
-        *libc_nano*:*(.bss*)
-        *libc_nano*:*(COMMON)
-
-        __end__ = .;
-        PROVIDE(end = .);
-        __HeapBase = .;
-        . += __heap_size__;
-        __HeapLimit = .;
-        __heap_limit = .; /* Add for _sbrk */
-
-        . = ALIGN(32);
-    } > RAM AT> RAM
-#else /* TFM_PARTITION_TEST_SECURE_SERVICES */
-    .heap : ALIGN(8)
-    {
-        __end__ = .;
-        PROVIDE(end = .);
-        __HeapBase = .;
-        . += __heap_size__;
-        __HeapLimit = .;
-        __heap_limit = .; /* Add for _sbrk */
-    } > RAM AT> RAM
-#endif /* TFM_PARTITION_TEST_SECURE_SERVICES */
-#endif /* TFM_LVL != 1 */
-
-#ifdef TFM_MULTI_CORE_TOPOLOGY
+#if defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_7M__) || \
+    defined(__ARM_ARCH_7EM__)
 #ifdef S_DATA_PRIV_START
-    /**** Privileged data area base address specified by multi-core platform */
+    /**** Privileged data area base address specified by Armv6-M/v7-M platform */
     .tfm_secure_priv_data_boundary :
     {
         . = ABSOLUTE(S_DATA_PRIV_START) ;
@@ -645,7 +547,7 @@ SECTIONS
 
     /*
      * Move BL2 shared area and MSP stack to the beginning of privileged data
-     * area in multi-core topology.
+     * area on Armv6-M/v7-M platforms.
      */
 
     /* shared_data and msp_stack are overlapping on purpose when
@@ -659,11 +561,12 @@ SECTIONS
 
     .msp_stack : ALIGN(32)
     {
-        . += __msp_init_stack_size__;
+        . += __msp_stack_size__;
     } > RAM
     Image$$ARM_LIB_STACK$$ZI$$Base = ADDR(.msp_stack);
     Image$$ARM_LIB_STACK$$ZI$$Limit = ADDR(.msp_stack) + SIZEOF(.msp_stack);
-#endif
+#endif /* defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_7M__) || \
+        * defined(__ARM_ARCH_7EM__) */
 
     /**** PSA RoT DATA start here */
 
@@ -771,12 +674,22 @@ SECTIONS
     .TFM_BSS : ALIGN(4)
     {
         __bss_start__ = .;
+
+        /* The runtime partition placed order is same as load partition */
         __partition_runtime_start__ = .;
-        KEEP(*(.bss.part_runtime))
+        KEEP(*(.bss.part_runtime_priority_lowest))
+        KEEP(*(.bss.part_runtime_priority_low))
+        KEEP(*(.bss.part_runtime_priority_normal))
+        KEEP(*(.bss.part_runtime_priority_high))
         __partition_runtime_end__ = .;
         . = ALIGN(4);
+
+        /* The runtime service placed order is same as load partition */
         __service_runtime_start__ = .;
-        KEEP(*(.bss.serv_runtime))
+        KEEP(*(.bss.serv_runtime_priority_lowest))
+        KEEP(*(.bss.serv_runtime_priority_low))
+        KEEP(*(.bss.serv_runtime_priority_normal))
+        KEEP(*(.bss.serv_runtime_priority_high))
         __service_runtime_end__ = .;
         *(.bss*)
         *(COMMON)
@@ -792,17 +705,6 @@ SECTIONS
 
     Image$$ER_TFM_DATA$$Base = ADDR(.TFM_DATA);
     Image$$ER_TFM_DATA$$Limit = ADDR(.TFM_DATA) + SIZEOF(.TFM_DATA) + SIZEOF(.TFM_BSS);
-
-#if defined(PSA_PROXY_SHARED_MEMORY_BASE)
-    /* If a variable defined with __attribute__((section())) keyword the
-     * variable is treated like an initialized variable. To not waste memory
-     * NOLOAD attribute used here. The whole section is zero initialized by
-     * adding section information to .zero.table */
-    .PSA_PROXY_SHARED_MEMORY (NOLOAD) :
-    {
-        KEEP(*(PSA_PROXY_SHARED_MEMORY_SECTION))
-    } > PSA_PROXY_SHARED_MEMORY_RAM
-#endif
 
 #if defined (S_RAM_CODE_START)
     /* Code executed from RAM */

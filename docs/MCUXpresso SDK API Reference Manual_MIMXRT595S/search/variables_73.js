@@ -70,7 +70,7 @@ var searchData=
   ['smartdmaparam',['smartdmaParam',['../a00027.html#abeddc544e4d720fa0da6744d13e5d500',1,'_flexio_mculcd_smartdma_handle']]],
   ['smartdmastack',['smartdmaStack',['../a00027.html#abdd80443a537d877aa163b53e3ef62f5',1,'_flexio_mculcd_smartdma_handle::smartdmaStack()'],['../a00020.html#a46d8c3bd48e51d9e97ad9b94a602c74b',1,'_dsi_smartdma_handle::smartdmaStack()']]],
   ['source',['source',['../a00075.html#a8f428fb7c12a19ade6f5e1256eb2d3ab',1,'wm8904_fll_config_t']]],
-  ['sourceclock_5fhz',['sourceClock_Hz',['../a00074.html#a09d0d482636c704b9e9f77dbde06822c',1,'usdhc_host_t']]],
+  ['sourceclock_5fhz',['sourceClock_Hz',['../a00041.html#a36cc72e0f803e1f4a53a820dd94009f5',1,'i3c_master_daa_baudrate_t::sourceClock_Hz()'],['../a00074.html#a09d0d482636c704b9e9f77dbde06822c',1,'usdhc_host_t::sourceClock_Hz()']]],
   ['sparsebitlimit',['sparseBitLimit',['../a00071.html#aa13e97aea012bac044c8b468b96a346a',1,'trng_config_t']]],
   ['speedclass',['speedClass',['../a00049.html#a897c49cd598ad25e03b9a04f9cc1d199',1,'sd_status_t']]],
   ['srcaddr',['srcAddr',['../a00016.html#a2a315d0141311dd82dd6ac1a3523671b',1,'dma_transfer_config_t']]],

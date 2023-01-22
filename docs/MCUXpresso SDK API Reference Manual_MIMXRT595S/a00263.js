@@ -3,8 +3,8 @@ var a00263 =
     [ "FSL_SEMA42_DRIVER_VERSION", "a00263.html#ga9d157e87f2444c405d2ebf7fe9a39508", null ],
     [ "SEMA42_GATE_NUM_RESET_ALL", "a00263.html#gaa2a42c2ffaa2a3b57c39a5e46988d7f3", null ],
     [ "SEMA42_GATEn", "a00263.html#ga530cd6b85fc81427b81eb16b837b7dfd", [
-      [ "kStatus_SEMA42_Busy", "a00263.html#ggac9420823bfeba78fce625fc105e3b01dad5619ab112a016977ca65fb758bf6c17", null ],
-      [ "kStatus_SEMA42_Reseting", "a00263.html#ggac9420823bfeba78fce625fc105e3b01dab405b2900737aa815ebc18ea68df56b1", null ]
+      [ "kStatus_SEMA42_Busy", "a00263.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ad5619ab112a016977ca65fb758bf6c17", null ],
+      [ "kStatus_SEMA42_Reseting", "a00263.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ab405b2900737aa815ebc18ea68df56b1", null ]
     ] ],
     [ "sema42_gate_status_t", "a00263.html#ga84eaf8f6200932ad09d0a75ece6e463d", [
       [ "kSEMA42_Unlocked", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463daf9c45d68a643bac3a34b65a5cf1aade6", null ],

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -65,7 +65,8 @@
 extern xf_dsp_t *xf_g_dsp;
 
 /* ...local memory accessor */
-#define XF_CORE_DATA(core)      (&(xf_g_dsp->xf_core_data[core]))
+//#define XF_CORE_DATA(core)      (&(xf_g_dsp->xf_core_data[core]))
+#define XF_CORE_DATA(core)      (&(xf_g_dsp->xf_core_data[0]))
 
 /*******************************************************************************
  * Inter-processor communication and shared memory interface definition

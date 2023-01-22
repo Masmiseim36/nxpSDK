@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -136,7 +136,7 @@ int ipc_msgq_delete(xf_msgq_t *cmdq, xf_msgq_t *respq)
 int xf_ipc_send(xf_proxy_ipc_data_t *ipc, xf_proxy_msg_t *msg, void *b)
 {
 
-    TRACE(CMD, _b("C[%08x]:(%x,%08x,%u)"), msg->id, msg->opcode, msg->address, msg->length);
+    TRACE(CMD, _b("C[%016llx]:(%x,%08x,%u,%d)"), (UWORD64)msg->id, msg->opcode, msg->address, msg->length, msg->error);
 
     if (XF_REMOTE_IPC_NON_COHERENT)
     {
@@ -166,7 +166,7 @@ int xf_ipc_recv(xf_proxy_ipc_data_t *ipc, xf_proxy_msg_t *msg, void **buffer)
         __xf_msgq_recv(ipc->resp_msgq, msg, sizeof(*msg)) < 0)
         return 0;
 
-    TRACE(RSP, _b("R[%08x]:(%x,%u,%08x)"), msg->id, msg->opcode, msg->length, msg->address);
+    TRACE(RSP, _b("R[%016llx]:(%x,%u,%08x,%d)"), (UWORD64)msg->id, msg->opcode, msg->length, msg->address, msg->error);
 
     /* ...translate shared address into local pointer */
     XF_CHK_ERR((*buffer = xf_ipc_a2b(ipc, msg->address)) != (void *)-1, XAF_INVALIDVAL_ERR);
@@ -187,7 +187,13 @@ int xf_ipc_open(xf_proxy_ipc_data_t *ipc, UWORD32 core)
 
     ipc->lresp_msgq = __xf_msgq_create(SEND_LOCAL_MSGQ_ENTRIES, sizeof(xf_user_msg_t));
     /* ...allocation mustn't fail on App Interface Layer */
-    BUG(ipc->lresp_msgq == NULL, _x("Out-of-memeory"));
+    BUG(ipc->lresp_msgq == NULL, _x("Out-of-memeory lresp_msgq"));
+
+#ifdef DELAYED_SYNC_RESPONSE
+    ipc->lresp_msgq_delayed = __xf_msgq_create(SEND_LOCAL_MSGQ_ENTRIES, sizeof(xf_user_msg_t));
+    /* ...allocation mustn't fail on App Interface Layer */
+    BUG(ipc->lresp_msgq_delayed == NULL, _x("Out-of-memeory lresp_msgq_delayed"));
+#endif
 
     TRACE(INIT, _b("proxy-%u interface opened"), core);
 
@@ -210,6 +216,11 @@ void xf_ipc_close(xf_proxy_ipc_data_t *ipc, UWORD32 core)
     __xf_msgq_destroy(ipc->lresp_msgq);
     //xf_g_ap->xf_mem_free_fxn(ipc->lresp_msgq, XAF_MEM_ID_DEV);
     ipc->lresp_msgq = NULL;
+
+#ifdef DELAYED_SYNC_RESPONSE
+    __xf_msgq_destroy(ipc->lresp_msgq_delayed);
+    ipc->lresp_msgq_delayed = NULL;
+#endif
 
     TRACE(INIT, _b("proxy-%u interface closed"), core);
 }

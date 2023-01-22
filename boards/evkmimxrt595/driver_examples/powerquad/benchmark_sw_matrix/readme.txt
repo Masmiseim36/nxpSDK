@@ -5,9 +5,9 @@ It could be compared with the project powerquad_benckmark_matrix to show the Pow
 
 Toolchain supported
 ===================
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 - Keil MDK  5.37
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements

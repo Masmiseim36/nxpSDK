@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -98,6 +98,9 @@ typedef struct XAPcmGain
     /* ...framesize in samples per channel */
     UWORD32                 frame_size;    
 
+    /* ...input port bypass flag: 0 disabled (default), 1 enabled */
+    UWORD32                 inport_bypass;
+
 }   XAPcmGain;
 
 
@@ -160,28 +163,31 @@ static inline void xa_pcm_gain_preinit(XAPcmGain *d)
     d->sample_rate = 48000;
     d->burn_cycles = 0;
     d->frame_size = 480; /* ...10ms frame size at 48 kHz */
+
+#ifdef XA_INPORT_BYPASS_TEST
+    /* ...enabled at init for testing. To be enabled by set-config to the plugin. */
+    d->inport_bypass = 1;
+#endif
+
 }
 
 /* ...apply gain to 8-bit PCM stream */
 static XA_ERRORCODE xa_pcm_gain_do_execute_8bit(XAPcmGain *d)
 {
-    WORD32     i, k, nSize;
+    WORD32     i, nSize;
     WORD8    *pIn = (WORD8 *) d->input;
     WORD8    *pOut = (WORD8 *) d->output;
-    UWORD32     filled = d->input_avail;   
+    UWORD32     filled;
     WORD8     input;
     WORD16     gain = pcm_gains[d->gain_idx];
     WORD32     product;
 
-
-    nSize = filled;    //size of each sample is 1 byte    
-    k = (WORD32)(d->buffer_size - filled);
+    filled = (d->input_avail > d->buffer_size) ? d->buffer_size : d->input_avail;
+    nSize = filled;    //size of each sample is 1 byte
     
     /* ...check I/O buffer */
     XF_CHK_ERR(d->input, XA_PCM_GAIN_EXEC_FATAL_INPUT);    
     XF_CHK_ERR(d->output, XA_PCM_GAIN_EXEC_FATAL_INPUT);
-    
-    (k > 0 ? memset((void *)pIn + filled, 0x00, k) : 0);
     
     /* ...Processing loop */
     for (i = 0; i < nSize; i++)
@@ -199,7 +205,8 @@ static XA_ERRORCODE xa_pcm_gain_do_execute_8bit(XAPcmGain *d)
     }
 
     /* ...save total number of consumed bytes */
-    d->consumed = (UWORD32)((void *)pIn - d->input);
+    //d->consumed = (UWORD32)((void *)pIn - d->input);
+    d->consumed = filled;
 
     /* ...save total number of produced bytes */
     d->produced = (UWORD32)((void *)pOut - d->output);
@@ -216,23 +223,20 @@ static XA_ERRORCODE xa_pcm_gain_do_execute_8bit(XAPcmGain *d)
 /* ...apply gain to 16-bit PCM stream */
 static XA_ERRORCODE xa_pcm_gain_do_execute_16bit(XAPcmGain *d)
 {
-    WORD32     i, k, nSize;
+    WORD32     i, nSize;
     WORD16    *pIn = (WORD16 *) d->input;
     WORD16    *pOut = (WORD16 *) d->output;
-    UWORD32     filled = d->input_avail;   
+    UWORD32     filled;
     WORD16     input;
     WORD16     gain = pcm_gains[d->gain_idx];
     WORD32     product;
 
-
+    filled = (d->input_avail > d->buffer_size) ? d->buffer_size : d->input_avail;
     nSize = filled >> 1;    //size of each sample is 2 bytes    
-    k = (WORD32)(d->buffer_size - filled);
     
     /* ...check I/O buffer */
     XF_CHK_ERR(d->input, XA_PCM_GAIN_EXEC_FATAL_INPUT);    
     XF_CHK_ERR(d->output, XA_PCM_GAIN_EXEC_FATAL_INPUT);
-    
-    (k > 0 ? memset((void *)pIn + filled, 0x00, k) : 0);
     
     /* ...Processing loop */
     for (i = 0; i < nSize; i++)
@@ -250,7 +254,8 @@ static XA_ERRORCODE xa_pcm_gain_do_execute_16bit(XAPcmGain *d)
     }
 
     /* ...save total number of consumed bytes */
-    d->consumed = (UWORD32)((void *)pIn - d->input);
+    //d->consumed = (UWORD32)((void *)pIn - d->input);
+    d->consumed = filled;
 
     /* ...save total number of produced bytes */
     d->produced = (UWORD32)((void *)pOut - d->output);
@@ -267,23 +272,20 @@ static XA_ERRORCODE xa_pcm_gain_do_execute_16bit(XAPcmGain *d)
 /* ...apply gain to 24-bit PCM stream */
 static XA_ERRORCODE xa_pcm_gain_do_execute_24bit(XAPcmGain *d)
 {
-    WORD32     i, k, nSize;
+    WORD32     i, nSize;
     WORD24    *pIn = (WORD24 *) d->input;
     WORD24    *pOut = (WORD24 *) d->output;
-    UWORD32     filled = d->input_avail;   
+    UWORD32     filled;
     WORD24     input;
     WORD16     gain = pcm_gains[d->gain_idx];
     WORD64     product;
 
-
+    filled = (d->input_avail > d->buffer_size) ? d->buffer_size : d->input_avail;
     nSize = filled >> 2;    //size of each sample is 4 bytes    
-    k = (WORD32)(d->buffer_size - filled);
     
     /* ...check I/O buffer */
     XF_CHK_ERR(d->input, XA_PCM_GAIN_EXEC_FATAL_INPUT);    
     XF_CHK_ERR(d->output, XA_PCM_GAIN_EXEC_FATAL_INPUT);
-    
-    (k > 0 ? memset((void *)pIn + filled, 0x00, k) : 0);
     
     /* ...Processing loop */
     for (i = 0; i < nSize; i++)
@@ -302,7 +304,8 @@ static XA_ERRORCODE xa_pcm_gain_do_execute_24bit(XAPcmGain *d)
     }
 
     /* ...save total number of consumed bytes */
-    d->consumed = (UWORD32)((void *)pIn - d->input);
+    //d->consumed = (UWORD32)((void *)pIn - d->input);
+    d->consumed = filled;
 
     /* ...save total number of produced bytes */
     d->produced = (UWORD32)((void *)pOut - d->output);
@@ -319,23 +322,20 @@ static XA_ERRORCODE xa_pcm_gain_do_execute_24bit(XAPcmGain *d)
 /* ...apply gain to 32-bit PCM stream */
 static XA_ERRORCODE xa_pcm_gain_do_execute_32bit(XAPcmGain *d)
 {
-    WORD32     i, k, nSize;
+    WORD32     i, nSize;
     WORD32    *pIn = (WORD32 *) d->input;
     WORD32    *pOut = (WORD32 *) d->output;
-    UWORD32     filled = d->input_avail;   
+    UWORD32     filled;   
     WORD32     input;
     WORD16     gain = pcm_gains[d->gain_idx];
     WORD64     product;
 
-
+    filled = (d->input_avail > d->buffer_size)?d->buffer_size:d->input_avail;
     nSize = filled >> 2;    //size of each sample is 4 bytes    
-    k = (WORD32)(d->buffer_size - filled);
     
     /* ...check I/O buffer */
     XF_CHK_ERR(d->input, XA_PCM_GAIN_EXEC_FATAL_INPUT);    
     XF_CHK_ERR(d->output, XA_PCM_GAIN_EXEC_FATAL_INPUT);
-    
-    (k > 0 ? memset((void *)pIn + filled, 0x00, k) : 0);
     
     /* ...Processing loop */
     for (i = 0; i < nSize; i++)
@@ -353,7 +353,8 @@ static XA_ERRORCODE xa_pcm_gain_do_execute_32bit(XAPcmGain *d)
     }
 
     /* ...save total number of consumed bytes */
-    d->consumed = (UWORD32)((void *)pIn - d->input);
+    //d->consumed = (UWORD32)((void *)pIn - d->input);
+    d->consumed = filled;
 
     /* ...save total number of produced bytes */
     d->produced = (UWORD32)((void *)pOut - d->output);
@@ -482,7 +483,7 @@ static XA_ERRORCODE xa_pcm_gain_set_config_param(XAPcmGain *d, WORD32 i_idx, pVO
                     d->pcm_width = (UWORD32)i_value;
                     break;
                 default:
-                    XF_CHK_ERR(0, XA_PCM_GAIN_CONFIG_NONFATAL_RANGE);
+                    return XA_PCM_GAIN_CONFIG_NONFATAL_RANGE;
             }
 
             /* ...update the internal variable, buffer_size */
@@ -523,14 +524,14 @@ static XA_ERRORCODE xa_pcm_gain_set_config_param(XAPcmGain *d, WORD32 i_idx, pVO
                     d->sample_rate = (UWORD32)i_value;
                     break;
                 default:
-                    XF_CHK_ERR(0, XA_PCM_GAIN_CONFIG_NONFATAL_RANGE);
+                    return XA_PCM_GAIN_CONFIG_NONFATAL_RANGE;
             }
             return XA_NO_ERROR;
         }
 
     case XA_PCM_GAIN_CONFIG_PARAM_GAIN_FACTOR:
         /* ...set pcm gain component gain index */
-        XF_CHK_ERR(((i_value >= 0)&&(i_value <= 6)), XA_PCM_GAIN_CONFIG_NONFATAL_RANGE);
+        XF_CHK_ERR((i_value <= 6), XA_PCM_GAIN_CONFIG_NONFATAL_RANGE);
         d->gain_idx = (UWORD32)i_value;
         return XA_NO_ERROR;
         
@@ -682,7 +683,7 @@ static XA_ERRORCODE xa_pcm_gain_execute(XAPcmGain *d, WORD32 i_idx, pVOID pv_val
                 ret = xa_pcm_gain_do_execute_32bit(d);
                 break;
             default:
-                XF_CHK_ERR(0, XA_PCM_GAIN_CONFIG_NONFATAL_RANGE);
+                return XA_PCM_GAIN_CONFIG_NONFATAL_RANGE;
         }
 
         if ((d->input_avail == d->consumed) && (d->state & XA_PCM_GAIN_FLAG_EOS_RECEIVED)) /* Signal done */
@@ -732,7 +733,9 @@ static XA_ERRORCODE xa_pcm_gain_set_input_bytes(XAPcmGain *d, WORD32 i_idx, pVOI
     XF_CHK_ERR(d->input, XA_API_FATAL_INVALID_CMD_TYPE);
     
     /* ...input frame length should not be zero (in bytes) */
-    XF_CHK_ERR((size = (UWORD32)*(WORD32 *)pv_value) >= 0, XA_PCM_GAIN_EXEC_NONFATAL_INPUT);
+    XF_CHK_ERR((*(WORD32 *)pv_value) >= 0, XA_PCM_GAIN_EXEC_NONFATAL_INPUT);
+
+    size = (UWORD32)*(WORD32 *)pv_value;
 
     /* ...all is correct; set input buffer length in bytes */
     d->input_avail = size;
@@ -855,8 +858,17 @@ static XA_ERRORCODE xa_pcm_gain_get_mem_info_size(XAPcmGain *d, WORD32 i_idx, pV
     XF_CHK_ERR(d->state & XA_PCM_GAIN_FLAG_POSTINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...all buffers are of the same length */
-    *(WORD32 *)pv_value = (WORD32) d->buffer_size;
-        
+    if((i_idx == 0) && (d->inport_bypass))
+    {
+        /* ...input buffer length 0 enabling input bypass mode */
+        *(WORD32 *)pv_value = 0;
+    }
+    else
+    {
+        /* ...all buffers are of the same length */
+        *(WORD32 *)pv_value = (WORD32) d->buffer_size;
+    }
+
     return XA_NO_ERROR;
 }
 
@@ -903,7 +915,7 @@ static XA_ERRORCODE xa_pcm_gain_get_mem_info_type(XAPcmGain *d, WORD32 i_idx, pV
 
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 }
 
@@ -936,7 +948,7 @@ static XA_ERRORCODE xa_pcm_gain_set_mem_ptr(XAPcmGain *d, WORD32 i_idx, pVOID pv
        
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 }
 

@@ -153,6 +153,11 @@ void sys_check_core_locking(void);
 #ifndef MEMP_NUM_TCP_SEG
 #define MEMP_NUM_TCP_SEG 22
 #endif
+/* MEMP_NUM_REASSDATA: the number of IP packets simultaneously queued for
+   reassembly (whole packets, not fragments!) */
+#ifndef MEMP_NUM_REASSDATA
+#define MEMP_NUM_REASSDATA 2
+#endif
 /* MEMP_NUM_SYS_TIMEOUT: the number of simulateously active
    timeouts. */
 #ifndef MEMP_NUM_SYS_TIMEOUT
@@ -168,6 +173,13 @@ void sys_check_core_locking(void);
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
 /* Default value is defined in lwip\src\include\lwip\opt.h as
  * LWIP_MEM_ALIGN_SIZE(TCP_MSS+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)*/
+
+/* ---------- IP options ---------- */
+
+/* IP_REASS_MAX_PBUFS: Total maximum amount of pbufs waiting to be reassembled. */
+#ifndef IP_REASS_MAX_PBUFS
+#define IP_REASS_MAX_PBUFS 4
+#endif
 
 /* ---------- TCP options ---------- */
 #ifndef LWIP_TCP

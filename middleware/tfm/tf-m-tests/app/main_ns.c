@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2017-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
+ * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -10,22 +12,17 @@
 #include "cmsis_compiler.h"
 #include "tfm_ns_interface.h"
 #include "tfm_nsid_manager.h"
-#if defined(TEST_FRAMEWORK_NS) || defined(TEST_FRAMEWORK_S)
-#include "tfm_integ_test.h"
-#endif
-#ifdef PSA_API_TEST_NS
-#include "psa_api_test.h"
-#endif
+#include "test_app.h"
 #include "tfm_plat_ns.h"
 #include "driver/Driver_USART.h"
 #include "device_cfg.h"
-#ifdef TFM_MULTI_CORE_TOPOLOGY
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX
 #include "tfm_multi_core_api.h"
 #include "tfm_ns_mailbox.h"
 #endif
 #include "tfm_log.h"
 #include "uart_stdout.h"
-#if (CONFIG_TFM_FP >= 1)
+#if (CONFIG_TFM_FLOAT_ABI >= 1)
 #include "cmsis.h"
 #endif
 
@@ -52,14 +49,16 @@ __asm("  .global __ARM_use_no_argv\n");
 /**
  * \brief List of RTOS thread attributes
  */
-#if defined(TEST_FRAMEWORK_NS) || defined(TEST_FRAMEWORK_S) \
- || defined(PSA_API_TEST_NS)
 static const osThreadAttr_t thread_attr = {
     .name = "test_thread",
     .stack_size = 4096U,
     .tz_module = ((TZ_ModuleId_t)TFM_DEFAULT_NSID)
 };
-#endif
+/**
+ * \brief Static globals to hold RTOS related quantities,
+ *        main thread
+ */
+static osThreadFunc_t thread_func = test_app;
 
 #ifdef TFM_MULTI_CORE_NS_OS_MAILBOX_THREAD
 static osThreadFunc_t mailbox_thread_func = tfm_ns_mailbox_thread_runner;
@@ -69,16 +68,7 @@ static const osThreadAttr_t mailbox_thread_attr = {
 };
 #endif
 
-/**
- * \brief Static globals to hold RTOS related quantities,
- *        main thread
- */
-#if defined(TEST_FRAMEWORK_NS) || defined(TEST_FRAMEWORK_S) \
- || defined(PSA_API_TEST_NS)
-static osThreadFunc_t thread_func;
-#endif
-
-#ifdef TFM_MULTI_CORE_TOPOLOGY
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX
 static struct ns_mailbox_queue_t ns_mailbox_queue;
 
 static void tfm_ns_multi_core_boot(void)
@@ -104,7 +94,9 @@ static void tfm_ns_multi_core_boot(void)
         }
     }
 }
-#else
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */
+
+#ifdef CONFIG_TFM_USE_TRUSTZONE
 extern uint32_t tfm_ns_interface_init(void);
 #endif
 
@@ -137,7 +129,7 @@ __WEAK int32_t tfm_ns_platform_uninit(void)
 
 __WEAK int32_t tfm_ns_cp_init(void)
 {
-#if (CONFIG_TFM_FP >= 1)
+#if (CONFIG_TFM_FLOAT_ABI >= 1)
 #ifdef __GNUC__
     /* Enable NSPE privileged and unprivilged access to the FP Extension */
     SCB->CPACR |= (3U << 10U*2U)     /* enable CP10 full access */
@@ -167,9 +159,11 @@ int main(void)
 
     (void) osKernelInitialize();
 
-#ifdef TFM_MULTI_CORE_TOPOLOGY
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX
     tfm_ns_multi_core_boot();
-#else
+#endif
+
+#ifdef CONFIG_TFM_USE_TRUSTZONE
     /* Initialize the TFM NS interface */
     tfm_ns_interface_init();
 #endif
@@ -178,16 +172,7 @@ int main(void)
     (void) osThreadNew(mailbox_thread_func, NULL, &mailbox_thread_attr);
 #endif
 
-#if defined(TEST_FRAMEWORK_NS) || defined(TEST_FRAMEWORK_S)
-    thread_func = test_app;
-#elif defined(PSA_API_TEST_NS)
-    thread_func = psa_api_test;
-#endif
-
-#if defined(TEST_FRAMEWORK_NS) || defined(TEST_FRAMEWORK_S) \
- || defined(PSA_API_TEST_NS)
     (void) osThreadNew(thread_func, NULL, &thread_attr);
-#endif
 
     LOG_MSG("Non-Secure system starting...\r\n");
     (void) osKernelStart();

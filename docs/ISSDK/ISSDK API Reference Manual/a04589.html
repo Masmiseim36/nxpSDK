@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: boardkit/frdm-k22f/pin_mux.h File Reference</title>
+<title>ISSDK: boardkit/evk-mimxrt1060/pin_mux.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,214 +40,61 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_9e8127cfa8255b08fe5dbf6fbeefa392.html">frdm-k22f</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_33461c2f8f888185ed7230ffe6139a51.html">evk-mimxrt1060</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pin_mux.h File Reference</div>  </div>
+<div class="title">pin_mux.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
+<div class="textblock"><code>#include &quot;fsl_common.h&quot;</code><br />
+<code>#include &quot;fsl_iomuxc.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a04652_source.html">pin_mux.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for pin_mux.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a04591.png" border="0" usemap="#boardkit_2frdm-k22f_2pin__mux_8hdep" alt=""/></div>
-<map name="boardkit_2frdm-k22f_2pin__mux_8hdep" id="boardkit_2frdm-k22f_2pin__mux_8hdep">
-<area shape="rect" id="node2" href="a00605.html" title="The frdm_k22f.h file defines GPIO pins for FRDM&#45;K22F board. " alt="" coords="5,95,131,136"/>
-<area shape="rect" id="node3" href="a04526.html" title="boardkit/frdm&#45;k22f\l/pin_mux.c" alt="" coords="155,95,280,136"/>
+<div class="center"><img src="a04590.png" border="0" usemap="#boardkit_2evk-mimxrt1060_2pin__mux_8c" alt=""/></div>
+<map name="boardkit_2evk-mimxrt1060_2pin__mux_8c" id="boardkit_2evk-mimxrt1060_2pin__mux_8c">
+<area shape="rect" id="node4" href="a04652.html" title="pin_mux.h" alt="" coords="251,95,334,121"/>
 </map>
 </div>
 </div>
 <p><a href="a04589_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a34eccc1bbbd0395454c14036a6aaceff"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a04586.html#a1e6097b94c8cfcb8d8c13cd65d92e319">_pin_mux_direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04589.html#a34eccc1bbbd0395454c14036a6aaceff">pin_mux_direction_t</a></td></tr>
-<tr class="memdesc:a34eccc1bbbd0395454c14036a6aaceff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction type.  <a href="#a34eccc1bbbd0395454c14036a6aaceff">More...</a><br /></td></tr>
-<tr class="separator:a34eccc1bbbd0395454c14036a6aaceff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a1e6097b94c8cfcb8d8c13cd65d92e319"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04589.html#a1e6097b94c8cfcb8d8c13cd65d92e319">_pin_mux_direction</a> { <br />
-&#160;&#160;<a class="el" href="a04586.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04586.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04586.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04589.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<br />
-&#160;&#160;<a class="el" href="a04589.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04589.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04592.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04592.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<br />
-&#160;&#160;<a class="el" href="a04592.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04595.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04595.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04595.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<br />
-&#160;&#160;<a class="el" href="a04598.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04598.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04598.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04607.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<br />
-&#160;&#160;<a class="el" href="a04607.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04607.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04610.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04610.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<br />
-&#160;&#160;<a class="el" href="a04610.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04616.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04616.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04616.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<br />
-&#160;&#160;<a class="el" href="a04619.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04619.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04619.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04625.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<br />
-&#160;&#160;<a class="el" href="a04625.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04625.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04634.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04634.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<br />
-&#160;&#160;<a class="el" href="a04634.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U, 
-<a class="el" href="a04637.html#a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1">kPIN_MUX_DirectionInput</a> = 0U, 
-<a class="el" href="a04637.html#a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109">kPIN_MUX_DirectionOutput</a> = 1U, 
-<a class="el" href="a04637.html#a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f">kPIN_MUX_DirectionInputOrOutput</a> = 2U
-<br />
- }<tr class="memdesc:a1e6097b94c8cfcb8d8c13cd65d92e319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction type.  <a href="a04589.html#a1e6097b94c8cfcb8d8c13cd65d92e319">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a1e6097b94c8cfcb8d8c13cd65d92e319"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga8652eb15efb9dfe7368dd7f292dab554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga8652eb15efb9dfe7368dd7f292dab554">BOARD_InitBootPins</a> (void)</td></tr>
+<tr class="memdesc:ga8652eb15efb9dfe7368dd7f292dab554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls initialization functions.  <a href="a00959.html#ga8652eb15efb9dfe7368dd7f292dab554">More...</a><br /></td></tr>
+<tr class="separator:ga8652eb15efb9dfe7368dd7f292dab554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2c9fe54b6b84723fbaa590a6f4576966"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga2c9fe54b6b84723fbaa590a6f4576966">BOARD_InitPins</a> (void)</td></tr>
 <tr class="memdesc:ga2c9fe54b6b84723fbaa590a6f4576966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga2c9fe54b6b84723fbaa590a6f4576966">More...</a><br /></td></tr>
 <tr class="separator:ga2c9fe54b6b84723fbaa590a6f4576966"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a18c9665d7d526b76488e90a271cc8e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga3a18c9665d7d526b76488e90a271cc8e">I2C0_InitPins</a> (void)</td></tr>
-<tr class="memdesc:ga3a18c9665d7d526b76488e90a271cc8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga3a18c9665d7d526b76488e90a271cc8e">More...</a><br /></td></tr>
-<tr class="separator:ga3a18c9665d7d526b76488e90a271cc8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e9cb3ef8722919469dc52bd99cb9cc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga8e9cb3ef8722919469dc52bd99cb9cc5">I2C0_DeinitPins</a> (void)</td></tr>
-<tr class="memdesc:ga8e9cb3ef8722919469dc52bd99cb9cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga8e9cb3ef8722919469dc52bd99cb9cc5">More...</a><br /></td></tr>
-<tr class="separator:ga8e9cb3ef8722919469dc52bd99cb9cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa63f3828e7f823cef465873563ca99c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gaa63f3828e7f823cef465873563ca99c4">I2C1_InitPins</a> (void)</td></tr>
-<tr class="memdesc:gaa63f3828e7f823cef465873563ca99c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gaa63f3828e7f823cef465873563ca99c4">More...</a><br /></td></tr>
-<tr class="separator:gaa63f3828e7f823cef465873563ca99c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga455ca4e86bd4798c0368a926fe30f692"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga455ca4e86bd4798c0368a926fe30f692">I2C1_DeinitPins</a> (void)</td></tr>
-<tr class="memdesc:ga455ca4e86bd4798c0368a926fe30f692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga455ca4e86bd4798c0368a926fe30f692">More...</a><br /></td></tr>
-<tr class="separator:ga455ca4e86bd4798c0368a926fe30f692"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77ffc6fc00fcf955e77715fa57a49cb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga77ffc6fc00fcf955e77715fa57a49cb2">DSPI0_InitPins</a> (void)</td></tr>
-<tr class="memdesc:ga77ffc6fc00fcf955e77715fa57a49cb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga77ffc6fc00fcf955e77715fa57a49cb2">More...</a><br /></td></tr>
-<tr class="separator:ga77ffc6fc00fcf955e77715fa57a49cb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d57fe80b769719e9c26b075b2cd70df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga4d57fe80b769719e9c26b075b2cd70df">DSPI0_DeinitPins</a> (void)</td></tr>
-<tr class="memdesc:ga4d57fe80b769719e9c26b075b2cd70df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga4d57fe80b769719e9c26b075b2cd70df">More...</a><br /></td></tr>
-<tr class="separator:ga4d57fe80b769719e9c26b075b2cd70df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8fcc1eb508eaf0307b46d69e897edb84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga8fcc1eb508eaf0307b46d69e897edb84">DSPI1_InitPins</a> (void)</td></tr>
-<tr class="memdesc:ga8fcc1eb508eaf0307b46d69e897edb84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga8fcc1eb508eaf0307b46d69e897edb84">More...</a><br /></td></tr>
-<tr class="separator:ga8fcc1eb508eaf0307b46d69e897edb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fca3bfff7adb4dce300f1f3a6fa9cb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga4fca3bfff7adb4dce300f1f3a6fa9cb7">DSPI1_DeinitPins</a> (void)</td></tr>
-<tr class="memdesc:ga4fca3bfff7adb4dce300f1f3a6fa9cb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga4fca3bfff7adb4dce300f1f3a6fa9cb7">More...</a><br /></td></tr>
-<tr class="separator:ga4fca3bfff7adb4dce300f1f3a6fa9cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6826e40d7223c26b9744e4ccef0f93b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gab6826e40d7223c26b9744e4ccef0f93b">UART0_InitPins</a> (void)</td></tr>
-<tr class="memdesc:gab6826e40d7223c26b9744e4ccef0f93b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gab6826e40d7223c26b9744e4ccef0f93b">More...</a><br /></td></tr>
-<tr class="separator:gab6826e40d7223c26b9744e4ccef0f93b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9977bd52c9e9a965c2bf95090ce216c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gaa9977bd52c9e9a965c2bf95090ce216c">UART0_DeinitPins</a> (void)</td></tr>
-<tr class="memdesc:gaa9977bd52c9e9a965c2bf95090ce216c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gaa9977bd52c9e9a965c2bf95090ce216c">More...</a><br /></td></tr>
-<tr class="separator:gaa9977bd52c9e9a965c2bf95090ce216c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0b6bd06fe4860ab68ee4277a768dd58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gac0b6bd06fe4860ab68ee4277a768dd58">UART1_InitPins</a> (void)</td></tr>
-<tr class="memdesc:gac0b6bd06fe4860ab68ee4277a768dd58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gac0b6bd06fe4860ab68ee4277a768dd58">More...</a><br /></td></tr>
-<tr class="separator:gac0b6bd06fe4860ab68ee4277a768dd58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0920374f155e3101ed05eb7703f643e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gad0920374f155e3101ed05eb7703f643e">UART1_DeinitPins</a> (void)</td></tr>
-<tr class="memdesc:gad0920374f155e3101ed05eb7703f643e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gad0920374f155e3101ed05eb7703f643e">More...</a><br /></td></tr>
-<tr class="separator:gad0920374f155e3101ed05eb7703f643e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd64f4a4ad478e3e183b1fb6b42f8c2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gadd64f4a4ad478e3e183b1fb6b42f8c2a">UART2_InitPins</a> (void)</td></tr>
-<tr class="memdesc:gadd64f4a4ad478e3e183b1fb6b42f8c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gadd64f4a4ad478e3e183b1fb6b42f8c2a">More...</a><br /></td></tr>
-<tr class="separator:gadd64f4a4ad478e3e183b1fb6b42f8c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac77df2b286379dc3c0c9f40ca8c70eef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gac77df2b286379dc3c0c9f40ca8c70eef">UART2_DeinitPins</a> (void)</td></tr>
-<tr class="memdesc:gac77df2b286379dc3c0c9f40ca8c70eef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gac77df2b286379dc3c0c9f40ca8c70eef">More...</a><br /></td></tr>
-<tr class="separator:gac77df2b286379dc3c0c9f40ca8c70eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga886b3f64f3736736b2f5bbb05eecfdbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga886b3f64f3736736b2f5bbb05eecfdbf">LPI2C1_InitPins</a> (void)</td></tr>
+<tr class="memdesc:ga886b3f64f3736736b2f5bbb05eecfdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga886b3f64f3736736b2f5bbb05eecfdbf">More...</a><br /></td></tr>
+<tr class="separator:ga886b3f64f3736736b2f5bbb05eecfdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9d8e8c17cb0d5c76d8a3b9a662d6269"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gab9d8e8c17cb0d5c76d8a3b9a662d6269">LPI2C1_DeinitPins</a> (void)</td></tr>
+<tr class="memdesc:gab9d8e8c17cb0d5c76d8a3b9a662d6269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gab9d8e8c17cb0d5c76d8a3b9a662d6269">More...</a><br /></td></tr>
+<tr class="separator:gab9d8e8c17cb0d5c76d8a3b9a662d6269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ed5b195b7ab3d7f5b49018df511ff3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga2ed5b195b7ab3d7f5b49018df511ff3c">LPSPI1_InitPins</a> (void)</td></tr>
+<tr class="memdesc:ga2ed5b195b7ab3d7f5b49018df511ff3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga2ed5b195b7ab3d7f5b49018df511ff3c">More...</a><br /></td></tr>
+<tr class="separator:ga2ed5b195b7ab3d7f5b49018df511ff3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae406e205d9f6bd00e7c37ab3ad3cb56c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#gae406e205d9f6bd00e7c37ab3ad3cb56c">LPSPI1_DeinitPins</a> (void)</td></tr>
+<tr class="memdesc:gae406e205d9f6bd00e7c37ab3ad3cb56c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#gae406e205d9f6bd00e7c37ab3ad3cb56c">More...</a><br /></td></tr>
+<tr class="separator:gae406e205d9f6bd00e7c37ab3ad3cb56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1825322bc8784d2c6d41b39f2160a1c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga1825322bc8784d2c6d41b39f2160a1c5">LPUART1_InitPins</a> (void)</td></tr>
+<tr class="memdesc:ga1825322bc8784d2c6d41b39f2160a1c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga1825322bc8784d2c6d41b39f2160a1c5">More...</a><br /></td></tr>
+<tr class="separator:ga1825322bc8784d2c6d41b39f2160a1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga805aa876a73d4079658d2f6961d97043"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html#ga805aa876a73d4079658d2f6961d97043">LPUART1_DeinitPins</a> (void)</td></tr>
+<tr class="memdesc:ga805aa876a73d4079658d2f6961d97043"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures pin routing and optionally pin electrical features.  <a href="a00959.html#ga805aa876a73d4079658d2f6961d97043">More...</a><br /></td></tr>
+<tr class="separator:ga805aa876a73d4079658d2f6961d97043"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a34eccc1bbbd0395454c14036a6aaceff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34eccc1bbbd0395454c14036a6aaceff">&#9670;&nbsp;</a></span>pin_mux_direction_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a04586.html#a1e6097b94c8cfcb8d8c13cd65d92e319">_pin_mux_direction</a>  <a class="el" href="a04586.html#a34eccc1bbbd0395454c14036a6aaceff">pin_mux_direction_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Direction type. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a1e6097b94c8cfcb8d8c13cd65d92e319"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e6097b94c8cfcb8d8c13cd65d92e319">&#9670;&nbsp;</a></span>_pin_mux_direction</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a04586.html#a1e6097b94c8cfcb8d8c13cd65d92e319">_pin_mux_direction</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Direction type. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a3988321c2a740623b0696d09405719f1"></a>kPIN_MUX_DirectionInput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a08f45d2e8f0c6635ec9fa221e3b7d109"></a>kPIN_MUX_DirectionOutput&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1e6097b94c8cfcb8d8c13cd65d92e319a6f0bf527b1e0e7866ef8bf980f36eb0f"></a>kPIN_MUX_DirectionInputOrOutput&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-<p class="definition">Definition at line <a class="el" href="a04589_source.html#l00018">18</a> of file <a class="el" href="a04589_source.html">pin_mux.h</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>
-&copy; Copyright 2016-2020 NXP. All Rights Reserved.
+&copy; Copyright 2016-2022 NXP. All Rights Reserved. SPDX-License-Identifier: BSD-3-Clause
 </small></address>
 </body>
 </html>

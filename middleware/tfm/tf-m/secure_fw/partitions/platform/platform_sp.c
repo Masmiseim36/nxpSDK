@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -9,74 +9,29 @@
 
 #include "tfm_platform_system.h"
 #include "tfm_plat_nv_counters.h"
-#include "tfm_secure_api.h"
-#include "psa_manifest/pid.h"
 #include "load/partition_defs.h"
+#include "psa_manifest/pid.h"
 
 #define NV_COUNTER_ID_SIZE  sizeof(enum tfm_nv_counter_t)
 
-#ifdef TFM_PARTITION_PROTECTED_STORAGE
-#define NV_COUNTER_MAP_SIZE   3
-#else /* TFM_PARTITION_PROTECTED_STORAGE */
-#define NV_COUNTER_MAP_SIZE   1
-#endif /* TFM_PARTITION_PROTECTED_STORAGE */
-
-/* Access map using NVCOUNTER_IDX -> tfm_partition-id key-value pairs */
-static const int32_t nv_counter_access_map[NV_COUNTER_MAP_SIZE] = {
-#ifdef TFM_PARTITION_PROTECTED_STORAGE
-                                          [PLAT_NV_COUNTER_PS_0] = TFM_SP_PS,
-                                          [PLAT_NV_COUNTER_PS_1] = TFM_SP_PS,
-                                          [PLAT_NV_COUNTER_PS_2] = TFM_SP_PS
-#else
-                                          [0] = INVALID_PARTITION_ID
-#endif
-              };
-
 #ifdef TFM_PSA_API
-#include "psa_manifest/tfm_platform.h"
 #include "psa/client.h"
 #include "psa/service.h"
 #include "region_defs.h"
+#include "psa_manifest/tfm_platform.h"
 
-#define INPUT_BUFFER_SIZE  64
-#define OUTPUT_BUFFER_SIZE 64
+#ifndef INPUT_BUFFER_SIZE
+#define INPUT_BUFFER_SIZE      64
+#endif
+
+#ifndef OUTPUT_BUFFER_SIZE
+#define OUTPUT_BUFFER_SIZE     64
+#endif
 
 typedef enum tfm_platform_err_t (*plat_func_t)(const psa_msg_t *msg);
+#else
+#include "tfm_secure_api.h"
 #endif /* TFM_PSA_API */
-
-/*
- * \brief Verifies ownership of a nv_counter resource to a partition id.
- *
- * \param[in] nv_counter_no  Number of nv_counter as assigned in platform.
- *
- * \return true if the calling partition is allowed to access this counter id
- */
-
-static bool nv_counter_access_grant(int32_t client_id,
-                                    enum tfm_nv_counter_t nv_counter_no)
-{
-    int32_t req_id;
-
-    /* Boundary check the input argument */
-    const uint32_t bounds[] = {PLAT_NV_COUNTER_MAX, NV_COUNTER_MAP_SIZE};
-    const uint32_t lower_bound_check = bounds[0] < bounds[1] ?
-                                       bounds[0] : bounds[1];
-
-    /* Check that nv_counter no is in [0; lower_bound_check-1] */
-    if (!((uint32_t)nv_counter_no < lower_bound_check)) {
-        return false;
-    }
-
-    req_id = nv_counter_access_map[nv_counter_no];
-
-    /* NV Counters are indexed from 0 and incremented. A gap in the platform
-     *  counter sequence is assigned a zero( invalid ) partition id
-     */
-    if (client_id == req_id && req_id != 0) {
-       return true;
-    }
-    return false;
-}
 
 enum tfm_platform_err_t platform_sp_system_reset(void)
 {
@@ -87,6 +42,39 @@ enum tfm_platform_err_t platform_sp_system_reset(void)
     tfm_platform_hal_system_reset();
 
     return TFM_PLATFORM_ERR_SUCCESS;
+}
+
+static enum tfm_platform_err_t nv_counter_permissions_check(
+        int32_t client_id,
+        enum tfm_nv_counter_t nv_counter_no,
+        bool is_read)
+{
+    /* Not used currently */
+    (void)is_read;
+
+    switch (nv_counter_no) {
+#ifdef TFM_PARTITION_PROTECTED_STORAGE
+    case PLAT_NV_COUNTER_PS_0:
+    case PLAT_NV_COUNTER_PS_1:
+    case PLAT_NV_COUNTER_PS_2:
+        if (client_id == TFM_SP_PS) {
+            return TFM_PLATFORM_ERR_SUCCESS;
+        } else {
+            return TFM_PLATFORM_ERR_NOT_SUPPORTED;
+        }
+#endif
+    case PLAT_NV_COUNTER_NS_0:
+    case PLAT_NV_COUNTER_NS_1:
+    case PLAT_NV_COUNTER_NS_2:
+        /* TODO how does this interact with the ns_ctx extension? */
+        if (client_id < 0) {
+            return TFM_PLATFORM_ERR_SUCCESS;
+        } else {
+            return TFM_PLATFORM_ERR_NOT_SUPPORTED;
+        }
+    default:
+        return TFM_PLATFORM_ERR_NOT_SUPPORTED;
+    }
 }
 
 #ifndef TFM_PSA_API
@@ -132,8 +120,12 @@ platform_sp_nv_counter_read(psa_invec  *in_vec,  uint32_t num_invec,
     if (status != (int32_t)TFM_SUCCESS) {
         return TFM_PLATFORM_ERR_SYSTEM_ERROR;
     }
+    if (client_id < 0) {
+        counter_id += PLAT_NV_COUNTER_NS_0;
+    }
 
-    if (!nv_counter_access_grant(client_id, counter_id)) {
+    if (nv_counter_permissions_check(client_id, counter_id, true)
+        != TFM_PLAT_ERR_SUCCESS) {
        return TFM_PLATFORM_ERR_SYSTEM_ERROR;
     }
     err = tfm_plat_read_nv_counter(counter_id, counter_size,
@@ -164,13 +156,17 @@ platform_sp_nv_counter_increment(psa_invec  *in_vec,  uint32_t num_invec,
     }
 
     counter_id = *((enum tfm_nv_counter_t *)in_vec[0].base);
+    if (client_id < 0) {
+        counter_id += PLAT_NV_COUNTER_NS_0;
+    }
 
-    if (!nv_counter_access_grant(client_id, counter_id)) {
-       return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+    if (nv_counter_permissions_check(client_id, counter_id, false)
+        != TFM_PLAT_ERR_SUCCESS) {
+        return TFM_PLATFORM_ERR_SYSTEM_ERROR;
     }
     err = tfm_plat_increment_nv_counter(counter_id);
     if (err != TFM_PLAT_ERR_SUCCESS) {
-       return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+        return TFM_PLATFORM_ERR_SYSTEM_ERROR;
     }
 
     return TFM_PLATFORM_ERR_SUCCESS;
@@ -178,16 +174,14 @@ platform_sp_nv_counter_increment(psa_invec  *in_vec,  uint32_t num_invec,
 
 #else /* TFM_PSA_API */
 
-static enum tfm_platform_err_t
-platform_sp_system_reset_ipc(const psa_msg_t *msg)
+static psa_status_t platform_sp_system_reset_psa_api(const psa_msg_t *msg)
 {
     (void)msg; /* unused parameter */
 
     return platform_sp_system_reset();
 }
 
-static enum tfm_platform_err_t
-platform_sp_nv_counter_ipc(const psa_msg_t *msg)
+static psa_status_t platform_sp_nv_read_psa_api(const psa_msg_t *msg)
 {
     enum tfm_plat_err_t err = TFM_PLAT_ERR_SYSTEM_ERR;
     size_t in_len = PSA_MAX_IOVEC, out_len = PSA_MAX_IOVEC, num = 0;
@@ -205,61 +199,84 @@ platform_sp_nv_counter_ipc(const psa_msg_t *msg)
     while ((out_len > 0) && (msg->out_size[out_len - 1] == 0)) {
         out_len--;
     }
-    switch (msg->type) {
-    case TFM_PLATFORM_API_ID_NV_INCREMENT:
-        if (msg->in_size[0] != NV_COUNTER_ID_SIZE ||
-            in_len != 1 || out_len != 0) {
-            return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        }
 
-        num = psa_read(msg->handle, 0, &counter_id, msg->in_size[0]);
-
-        if (num != msg->in_size[0]) {
-            return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        }
-
-        if (!nv_counter_access_grant(msg->client_id, counter_id)) {
-           return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        }
-
-        err = tfm_plat_increment_nv_counter(counter_id);
-        break;
-    case TFM_PLATFORM_API_ID_NV_READ:
-        if (msg->in_size[0] != NV_COUNTER_ID_SIZE ||
-            in_len != 1 || out_len != 1) {
-            return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        }
-
-        num = psa_read(msg->handle, 0, &counter_id, msg->in_size[0]);
-        if (num != msg->in_size[0]) {
-            return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        }
-
-        if (!nv_counter_access_grant(msg->client_id, counter_id)) {
-           return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        }
-
-        err = tfm_plat_read_nv_counter(counter_id,  msg->out_size[0],
-                                       counter_val); //NXP
-
-        if (err != TFM_PLAT_ERR_SUCCESS) {
-           return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        }
-        psa_write(msg->handle, 0, counter_val, msg->out_size[0]); //NXP
-        break;
-    default:
+    if (msg->in_size[0] != NV_COUNTER_ID_SIZE ||
+        in_len != 1 || out_len != 1) {
         return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-        break;
     }
+
+    num = psa_read(msg->handle, 0, &counter_id, msg->in_size[0]);
+    if (num != NV_COUNTER_ID_SIZE) {
+        return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+    }
+
+    if (msg->client_id < 0) {
+        counter_id += PLAT_NV_COUNTER_NS_0;
+    }
+
+    if (nv_counter_permissions_check(msg->client_id, counter_id, true)
+        != TFM_PLATFORM_ERR_SUCCESS) {
+       return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+    }
+
+    err = tfm_plat_read_nv_counter(counter_id,  msg->out_size[0],
+                                   counter_val); //NXP
+
+    if (err != TFM_PLAT_ERR_SUCCESS) {
+       return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+    }
+
+    psa_write(msg->handle, 0, counter_val, msg->out_size[0]); //NXP
+
+    return TFM_PLATFORM_ERR_SUCCESS;
+}
+
+static psa_status_t platform_sp_nv_increment_psa_api(const psa_msg_t *msg)
+{
+    enum tfm_plat_err_t err = TFM_PLAT_ERR_SYSTEM_ERR;
+    size_t in_len = PSA_MAX_IOVEC, out_len = PSA_MAX_IOVEC, num = 0;
+
+    enum tfm_nv_counter_t counter_id;
+
+    /* Check the number of in_vec filled */
+    while ((in_len > 0) && (msg->in_size[in_len - 1] == 0)) {
+        in_len--;
+    }
+
+    /* Check the number of out_vec filled */
+    while ((out_len > 0) && (msg->out_size[out_len - 1] == 0)) {
+        out_len--;
+    }
+
+    if (msg->in_size[0] != NV_COUNTER_ID_SIZE ||
+        in_len != 1 || out_len != 0) {
+        return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+    }
+
+    num = psa_read(msg->handle, 0, &counter_id, msg->in_size[0]);
+    if (num != NV_COUNTER_ID_SIZE) {
+        return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+    }
+
+    if (msg->client_id < 0) {
+        counter_id += PLAT_NV_COUNTER_NS_0;
+    }
+
+    if (nv_counter_permissions_check(msg->client_id, counter_id, false)
+        != TFM_PLATFORM_ERR_SUCCESS) {
+       return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+    }
+
+    err = tfm_plat_increment_nv_counter(counter_id);
 
     if (err != TFM_PLAT_ERR_SUCCESS) {
         return TFM_PLATFORM_ERR_SYSTEM_ERROR;
     }
+
     return TFM_PLATFORM_ERR_SUCCESS;
 }
 
-static enum tfm_platform_err_t
-platform_sp_ioctl_ipc(const psa_msg_t *msg)
+static psa_status_t platform_sp_ioctl_psa_api(const psa_msg_t *msg)
 {
     void *input = NULL;
     void *output = NULL;
@@ -272,6 +289,7 @@ platform_sp_ioctl_ipc(const psa_msg_t *msg)
     int num = 0;
     uint32_t in_len = PSA_MAX_IOVEC;
     uint32_t out_len = PSA_MAX_IOVEC;
+    size_t input_size;
 
     while ((in_len > 0) && (msg->in_size[in_len - 1] == 0)) {
         in_len--;
@@ -292,15 +310,16 @@ platform_sp_ioctl_ipc(const psa_msg_t *msg)
     }
 
     if (in_len > 1) {
-        if (msg->in_size[1] > INPUT_BUFFER_SIZE) {
-            return (enum tfm_platform_err_t) PSA_ERROR_PROGRAMMER_ERROR;
+        input_size = msg->in_size[1];
+        if (input_size > INPUT_BUFFER_SIZE) {
+            return (enum tfm_platform_err_t) PSA_ERROR_BUFFER_TOO_SMALL;
         }
         num = psa_read(msg->handle, 1, &input_buffer, msg->in_size[1]);
-        if (num != msg->in_size[1]) {
+        if (num != input_size) {
             return (enum tfm_platform_err_t) PSA_ERROR_PROGRAMMER_ERROR;
         }
         invec.base = input_buffer;
-        invec.len = msg->in_size[1];
+        invec.len = input_size;
         input = &invec;
     }
 
@@ -322,64 +341,34 @@ platform_sp_ioctl_ipc(const psa_msg_t *msg)
     return ret;
 }
 
-static void platform_signal_handle(psa_signal_t signal, plat_func_t pfn)
+psa_status_t tfm_platform_service_sfn(const psa_msg_t *msg)
 {
-    psa_msg_t msg;
-    psa_status_t status;
-
-    status = psa_get(signal, &msg);
-    switch (msg.type) {
-    case PSA_IPC_CONNECT:
-        psa_reply(msg.handle, PSA_SUCCESS);
-        break;
-    case PSA_IPC_CALL:
+    switch (msg->type) {
     case TFM_PLATFORM_API_ID_NV_READ:
+        return platform_sp_nv_read_psa_api(msg);
     case TFM_PLATFORM_API_ID_NV_INCREMENT:
-        status = (psa_status_t)pfn(&msg);
-        psa_reply(msg.handle, status);
-        break;
-    case PSA_IPC_DISCONNECT:
-        psa_reply(msg.handle, PSA_SUCCESS);
-        break;
+        return platform_sp_nv_increment_psa_api(msg);
+    case TFM_PLATFORM_API_ID_SYSTEM_RESET:
+        return platform_sp_system_reset_psa_api(msg);
+    case TFM_PLATFORM_API_ID_IOCTL:
+        return platform_sp_ioctl_psa_api(msg);
     default:
-        psa_panic();
+        return PSA_ERROR_NOT_SUPPORTED;
     }
-}
 
+    return PSA_ERROR_GENERIC_ERROR;
+}
 #endif /* TFM_PSA_API */
 
-enum tfm_platform_err_t platform_sp_init(void)
+psa_status_t platform_sp_init(void)
 {
     /* Initialise the non-volatile counters */
     enum tfm_plat_err_t err;
+
     err = tfm_plat_init_nv_counter();
     if (err != TFM_PLAT_ERR_SUCCESS) {
-#ifdef TFM_PSA_API
-        psa_panic();
-#else
-        return TFM_PLATFORM_ERR_SYSTEM_ERROR;
-#endif
-    }
-#ifdef TFM_PSA_API
-    psa_signal_t signals;
-
-    while (1) {
-        signals = psa_wait(PSA_WAIT_ANY, PSA_BLOCK);
-        if (signals & TFM_SP_PLATFORM_SYSTEM_RESET_SIGNAL) {
-            platform_signal_handle(TFM_SP_PLATFORM_SYSTEM_RESET_SIGNAL,
-                                   platform_sp_system_reset_ipc);
-        } else if (signals & TFM_SP_PLATFORM_IOCTL_SIGNAL) {
-            platform_signal_handle(TFM_SP_PLATFORM_IOCTL_SIGNAL,
-                                   platform_sp_ioctl_ipc);
-       } else if (signals & TFM_SP_PLATFORM_NV_COUNTER_SIGNAL) {
-            platform_signal_handle(TFM_SP_PLATFORM_NV_COUNTER_SIGNAL,
-                                   platform_sp_nv_counter_ipc);
-        } else {
-            psa_panic();
-        }
+        return PSA_ERROR_HARDWARE_FAILURE;
     }
 
-#else
-    return TFM_PLATFORM_ERR_SUCCESS;
-#endif /* TFM_PSA_API */
+    return PSA_SUCCESS;
 }

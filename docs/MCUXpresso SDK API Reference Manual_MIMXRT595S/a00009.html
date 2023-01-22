@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -149,8 +149,8 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gac954b8be2bb59a983a9594c59e4b4fa5">FSL_CACHE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
-<tr class="memdesc:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">cache driver version 2.0.4.  <a href="#gac954b8be2bb59a983a9594c59e4b4fa5">More...</a><br/></td></tr>
+<tr class="memitem:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gac954b8be2bb59a983a9594c59e4b4fa5">FSL_CACHE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
+<tr class="memdesc:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">cache driver version.  <a href="#gac954b8be2bb59a983a9594c59e4b4fa5">More...</a><br/></td></tr>
 <tr class="separator:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -161,7 +161,7 @@ cache control for cache64</h2></td></tr>
 <tr class="memitem:gae0c17677e350b4fbb2f948fe0d1849c6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gae0c17677e350b4fbb2f948fe0d1849c6">CACHE64_GetInstanceByAddr</a> (uint32_t address)</td></tr>
 <tr class="memdesc:gae0c17677e350b4fbb2f948fe0d1849c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">brief Returns an instance number given physical memory address.  <a href="#gae0c17677e350b4fbb2f948fe0d1849c6">More...</a><br/></td></tr>
 <tr class="separator:gae0c17677e350b4fbb2f948fe0d1849c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeaf4a9f883482372bb5d215ea7772335"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gaeaf4a9f883482372bb5d215ea7772335">CACHE64_Init</a> (CACHE64_POLSEL_Type *base, const <a class="el" href="a00009.html#a00315">cache64_config_t</a> *config)</td></tr>
+<tr class="memitem:gaeaf4a9f883482372bb5d215ea7772335"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gaeaf4a9f883482372bb5d215ea7772335">CACHE64_Init</a> (CACHE64_POLSEL_Type *base, const <a class="el" href="a00009.html#a00315">cache64_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaeaf4a9f883482372bb5d215ea7772335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an CACHE64 instance with the user configuration structure.  <a href="#gaeaf4a9f883482372bb5d215ea7772335">More...</a><br/></td></tr>
 <tr class="separator:gaeaf4a9f883482372bb5d215ea7772335"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0e5b6b0432722fcca3b9da743837d115"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga0e5b6b0432722fcca3b9da743837d115">CACHE64_GetDefaultConfig</a> (<a class="el" href="a00009.html#a00315">cache64_config_t</a> *config)</td></tr>
@@ -249,7 +249,7 @@ Unified Cache Control for all caches</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_CACHE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
+          <td class="memname">#define FSL_CACHE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -363,7 +363,7 @@ Unified Cache Control for all caches</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CACHE64_Init </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CACHE64_Init </td>
           <td>(</td>
           <td class="paramtype">CACHE64_POLSEL_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
+ * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -16,9 +18,9 @@
 /**************************************************************************/
 /** IRQ count per partition */
 /**************************************************************************/
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
 #define TFM_PARTITION_TFM_NS_MAILBOX_AGENT_IRQ_COUNT 1
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
 #ifdef TFM_PARTITION_PROTECTED_STORAGE //NXP
 #define TFM_PARTITION_TFM_SP_PS_IRQ_COUNT 0
@@ -91,9 +93,9 @@
 /**************************************************************************/
 /** Declarations of partition init functions */
 /**************************************************************************/
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
 extern void ns_agent_mailbox_entry(void);
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
 #ifdef TFM_PARTITION_PROTECTED_STORAGE //NXP
 extern void tfm_ps_entry(void);
@@ -120,7 +122,7 @@ extern void attest_partition_init(void);
 #endif /* TFM_PARTITION_INITIAL_ATTESTATION */ //NXP
 
 #ifdef TFM_PARTITION_FIRMWARE_UPDATE //NXP
-extern void tfm_fwu_init(void);
+extern void tfm_fwu_entry(void);
 #endif /* TFM_PARTITION_FIRMWARE_UPDATE */ //NXP
 
 #ifdef TEST_NS_CORE //NXP
@@ -181,14 +183,14 @@ static uint32_t ns_interrupt_ctx_stack[
 static uint32_t tfm_core_interrupt_ctx_stack[
         sizeof(struct interrupted_ctx_stack_frame_t) / sizeof(uint32_t)];
 
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
 static uint32_t ctx_stack_TFM_NS_MAILBOX_AGENT[
         (sizeof(struct interrupted_ctx_stack_frame_t) +
             (TFM_PARTITION_TFM_NS_MAILBOX_AGENT_IRQ_COUNT) * (
                 sizeof(struct interrupted_ctx_stack_frame_t) +
                 sizeof(struct handler_ctx_stack_frame_t)
         )) / sizeof(uint32_t)];
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
 #ifdef TFM_PARTITION_PROTECTED_STORAGE //NXP
 static uint32_t ctx_stack_TFM_SP_PS[
@@ -347,9 +349,9 @@ uint32_t *ctx_stack_list[] =
 {
     ns_interrupt_ctx_stack,
     tfm_core_interrupt_ctx_stack,
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
     ctx_stack_TFM_NS_MAILBOX_AGENT,
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 #ifdef TFM_PARTITION_PROTECTED_STORAGE //NXP
     ctx_stack_TFM_SP_PS,
 #endif /* TFM_PARTITION_PROTECTED_STORAGE */ //NXP
@@ -411,7 +413,7 @@ static int32_t dependencies_TFM_SP_PS[] =
 {
     TFM_CRYPTO_SID,
     TFM_INTERNAL_TRUSTED_STORAGE_SERVICE_SID,
-    TFM_SP_PLATFORM_NV_COUNTER_SID,
+    TFM_PLATFORM_SERVICE_SID,
 };
 #endif /* TFM_PARTITION_PROTECTED_STORAGE */ //NXP
 
@@ -433,7 +435,7 @@ static int32_t dependencies_TFM_SP_INITIAL_ATTESTATION[] =
 static int32_t dependencies_TFM_SP_FWU[] =
 {
     TFM_CRYPTO_SID,
-    TFM_SP_PLATFORM_SYSTEM_RESET_SID,
+    TFM_PLATFORM_SERVICE_SID,
 };
 #endif /* TFM_PARTITION_FIRMWARE_UPDATE */ //NXP
 
@@ -477,8 +479,8 @@ static int32_t dependencies_TFM_SP_PS_TEST[] =
 const struct spm_partition_static_data_t static_data_list[] =
 {
     {
-        .partition_id         = TFM_SP_NON_SECURE_ID,
-        .partition_flags      = 0,
+        .partition_id         = 0,
+        .partition_flags      = SPM_PART_FLAG_NS_AGENT,
     },
 
     {
@@ -486,18 +488,17 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = SPM_PART_FLAG_APP_ROT | SPM_PART_FLAG_PSA_ROT,
     },
 
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
     {
         .partition_id         = TFM_NS_MAILBOX_AGENT,
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(LOW),
         .partition_init       = ns_agent_mailbox_entry,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
     },
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
 #ifdef TFM_PARTITION_PROTECTED_STORAGE //NXP
     {
@@ -505,7 +506,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = tfm_ps_entry,
         .dependencies_num     = 3,
         .p_dependencies       = dependencies_TFM_SP_PS,
@@ -518,7 +518,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = tfm_its_entry,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -531,7 +530,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = audit_core_init,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -544,7 +542,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = tfm_crypto_init,
         .dependencies_num     = 1,
         .p_dependencies       = dependencies_TFM_SP_CRYPTO,
@@ -557,7 +554,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = platform_sp_init,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -570,7 +566,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = attest_partition_init,
         .dependencies_num     = 1,
         .p_dependencies       = dependencies_TFM_SP_INITIAL_ATTESTATION,
@@ -583,8 +578,7 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
-        .partition_init       = tfm_fwu_init,
+        .partition_init       = tfm_fwu_entry,
         .dependencies_num     = 2,
         .p_dependencies       = dependencies_TFM_SP_FWU,
     },
@@ -596,7 +590,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = core_test_init,
         .dependencies_num     = 3,
         .p_dependencies       = dependencies_TFM_SP_CORE_TEST,
@@ -609,7 +602,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = core_test_2_init,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -622,7 +614,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(LOW),
         .partition_init       = tfm_secure_client_service_init,
         .dependencies_num     = 1,
         .p_dependencies       = dependencies_TFM_SP_SECURE_TEST_PARTITION,
@@ -635,7 +626,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(HIGH),
         .partition_init       = ipc_service_test_main,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -648,7 +638,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = ipc_client_test_main,
         .dependencies_num     = 4,
         .p_dependencies       = dependencies_TFM_SP_IPC_CLIENT_TEST,
@@ -661,7 +650,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = tfm_ps_test_init,
         .dependencies_num     = 2,
         .p_dependencies       = dependencies_TFM_SP_PS_TEST,
@@ -674,7 +662,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = tfm_secure_client_2_init,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -685,9 +672,8 @@ const struct spm_partition_static_data_t static_data_list[] =
     {
         .partition_id         = TFM_SP_SLIH_TEST,
         .partition_flags      = 0
-                              | SPM_PART_FLAG_APP_ROT
+                              | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = tfm_slih_test_service_entry,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -698,9 +684,8 @@ const struct spm_partition_static_data_t static_data_list[] =
     {
         .partition_id         = TFM_SP_FLIH_TEST,
         .partition_flags      = 0
-                              | SPM_PART_FLAG_APP_ROT
+                              | SPM_PART_FLAG_PSA_ROT | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = tfm_flih_test_service_entry,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -713,7 +698,6 @@ const struct spm_partition_static_data_t static_data_list[] =
         .partition_flags      = 0
                               | SPM_PART_FLAG_APP_ROT
                               ,
-        .partition_priority   = TFM_PRIORITY(NORMAL),
         .partition_init       = fpu_service_test_main,
         .dependencies_num     = 0,
         .p_dependencies       = NULL,
@@ -763,24 +747,14 @@ const struct platform_data_t *
 };
 #endif /* TEST_NS_FLIH_IRQ */ //NXP
 
-#ifdef TEST_PARTITION_FPU_TEST //NXP
-const struct platform_data_t *
-    platform_data_list_TFM_SP_FPU_SERVICE_TEST[] =
-{
-    TFM_PERIPHERAL_TIMER0,
-    TFM_PERIPHERAL_TIMER1,
-    NULL
-};
-#endif /* TEST_PARTITION_FPU_TEST */ //NXP
-
 const struct platform_data_t **platform_data_list_list[] =
 {
     NULL,
     NULL,
 
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
     NULL,
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
 #ifdef TFM_PARTITION_PROTECTED_STORAGE //NXP
     NULL,
@@ -847,7 +821,7 @@ const struct platform_data_t **platform_data_list_list[] =
 #endif /* TEST_NS_FLIH_IRQ */ //NXP
 
 #ifdef TEST_PARTITION_FPU_TEST //NXP
-    platform_data_list_TFM_SP_FPU_SERVICE_TEST,
+    NULL,
 #endif /* TEST_PARTITION_FPU_TEST */ //NXP
 
 };
@@ -863,14 +837,14 @@ static struct spm_partition_desc_t partition_list [] =
     /* -----------------------------------------------------------------------*/
     /* - Partition DB record for TFM_NS_MAILBOX_AGENT */
     /* -----------------------------------------------------------------------*/
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
     {
     /* Runtime data */
         .runtime_data             = {0},
         .static_data              = NULL,
         .platform_data_list       = NULL,
     },
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
     /* -----------------------------------------------------------------------*/
     /* - Partition DB record for TFM_SP_PS */

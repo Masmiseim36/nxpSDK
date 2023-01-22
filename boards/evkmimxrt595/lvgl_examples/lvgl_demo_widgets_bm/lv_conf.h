@@ -1,6 +1,6 @@
 /**
  * @file lv_conf.h
- * Configuration file for v8.2.0
+ * Configuration file for v8.3.2
  */
 
 #ifndef LV_CONF_H
@@ -32,7 +32,9 @@
  * Useful if the display has a 8 bit interface (e.g. SPI)*/
 #define LV_COLOR_16_SWAP   0
 
-/* 1: Enable screen transparency.
+/*Enable features to draw on transparent background.
+ *It's required if opa, and transform_* style properties are used.
+ *Can be also used if the UI is above another layer, e.g. an OSD menu or video player.*//* 1: Enable screen transparency.
  * Useful for OSD or other overlapping GUIs.
  * Requires `LV_COLOR_DEPTH = 32` colors and the screen's style should be modified: `style.body.opa = ...`*/
 #define LV_COLOR_SCREEN_TRANSP    0
@@ -64,6 +66,12 @@
 /* Set an address for the memory pool instead of allocating it as an array.
  * Can be in external SRAM too. */
 #  define LV_MEM_ADR          0
+
+    /*Instead of an address give a memory allocator that will be called to get a memory pool for LVGL. E.g. my_malloc*/
+    #if LV_MEM_ADR == 0
+        #undef LV_MEM_POOL_INCLUDE
+        #undef LV_MEM_POOL_ALLOC
+    #endif
 
 #else       /*LV_MEM_CUSTOM*/
 #  define LV_MEM_CUSTOM_INCLUDE <stdlib.h>    /*Header for the dynamic memory function*/
@@ -157,6 +165,22 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 
 /* Draw random colored rectangles over the redrawn areas */
 #define LV_USE_REFR_DEBUG 0
+
+/**
+ * "Simple layers" are used when a widget has `style_opa < 255` to buffer the widget into a layer
+ * and blend it as an image with the given opacity.
+ * Note that `bg_opa`, `text_opa` etc don't require buffering into layer)
+ * The widget can be buffered in smaller chunks to avoid using large buffers.
+ *
+ * - LV_LAYER_SIMPLE_BUF_SIZE: [bytes] the optimal target buffer size. LVGL will try to allocate it
+ * - LV_LAYER_SIMPLE_FALLBACK_BUF_SIZE: [bytes]  used if `LV_LAYER_SIMPLE_BUF_SIZE` couldn't be allocated.
+ *
+ * Both buffer sizes are in bytes.
+ * "Transformed layers" (where transform_angle/zoom properties are used) use larger buffers
+ * and can't be drawn in chunks. So these settings affects only widgets with opacity.
+ */
+#define LV_LAYER_SIMPLE_BUF_SIZE          (24 * 1024)
+#define LV_LAYER_SIMPLE_FALLBACK_BUF_SIZE (3 * 1024)
 
 /* Default image cache size. Image caching keeps the images opened.
  * If only the built-in image formats are used there is no real advantage of caching.
@@ -415,6 +439,12 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 
 /* An very simple them that is a good starting point for a custom theme */
 #define LV_USE_THEME_BASIC 1
+
+/*Enable drawing placeholders when glyph dsc is not found*/
+#define LV_USE_FONT_PLACEHOLDER 1
+
+/*Enable drawing placeholders when glyph dsc is not found*/
+#define LV_USE_FONT_PLACEHOLDER 1
 
 /*=================
  *  Text settings
@@ -695,7 +725,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #define LV_USE_FFMPEG  0
 #if LV_USE_FFMPEG
     /*Dump input information to stderr*/
-    #define LV_FFMPEG_AV_DUMP_FORMAT 0
+    #define LV_FFMPEG_DUMP_FORMAT 0
 #endif
 
 /*-----------
@@ -711,6 +741,33 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 /*1: Enable grid navigation*/
 #define LV_USE_GRIDNAV  0
 
+
+/*1: Enable lv_obj fragment*/
+#define LV_USE_FRAGMENT 0
+
+/*1: Support using images as font in label or span widgets */
+#define LV_USE_IMGFONT 0
+
+/*1: Enable a published subscriber based messaging system */
+#define LV_USE_MSG 0
+
+/*1: Enable Pinyin input method*/
+/*Requires: lv_keyboard*/
+#define LV_USE_IME_PINYIN 0
+#if LV_USE_IME_PINYIN
+    /*1: Use default thesaurus*/
+    /*If you do not use the default thesaurus, be sure to use `lv_ime_pinyin` after setting the thesauruss*/
+    #define LV_IME_PINYIN_USE_DEFAULT_DICT 1
+    /*Set the maximum number of candidate panels that can be displayed*/
+    /*This needs to be adjusted according to the size of the screen*/
+    #define LV_IME_PINYIN_CAND_TEXT_NUM 6
+
+    /*Use 9 key input(k9)*/
+    #define LV_IME_PINYIN_USE_K9_MODE      1
+    #if LV_IME_PINYIN_USE_K9_MODE == 1
+        #define LV_IME_PINYIN_K9_CAND_TEXT_NUM 3
+    #endif // LV_IME_PINYIN_USE_K9_MODE
+#endif
 /*==================
 * EXAMPLES
 *==================*/
@@ -733,6 +790,10 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 
 /*Benchmark your system*/
 #define LV_USE_DEMO_BENCHMARK   0
+#if LV_USE_DEMO_BENCHMARK
+/*Use RGB565A8 images with 16 bit color depth instead of ARGB8565*/
+#define LV_DEMO_BENCHMARK_RGB565A8 0
+#endif
 
 /*Stress test for LVGL*/
 #define LV_USE_DEMO_STRESS      0

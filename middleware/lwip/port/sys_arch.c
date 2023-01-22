@@ -60,6 +60,9 @@
 #include "lwip/init.h"
 #endif
 
+/* ------------------------ SDK includes --------------------------------- */
+#include "fsl_common.h"
+
 #ifndef errno
 int errno = 0;
 #endif

@@ -12,7 +12,6 @@
 #include "tfm_api.h"
 #include "tfm_arch.h"
 #include "tfm_core_trustzone.h"
-#include "tfm_core_utils.h"
 #include "tfm_svcalls.h"
 #include "utilities.h"
 #include "load/spm_load_api.h"
@@ -23,6 +22,7 @@
 #include "tfm_hal_spm_logdev.h"
 #include "load/partition_defs.h"
 #include "psa/client.h"
+#include "tfm_hal_platform.h"
 
 /* MSP bottom (higher address) */
 REGION_DECLARE(Image$$, ARM_LIB_STACK, $$ZI$$Limit);
@@ -32,6 +32,7 @@ extern int32_t platform_svc_handlers(uint8_t svc_num,
                                      uint32_t *ctx, uint32_t lr);
 #endif
 
+#if CONFIG_TFM_SPM_BACKEND_IPC == 1
 static int32_t SVC_Handler_IPC(uint8_t svc_num, uint32_t *ctx,
                                uint32_t lr)
 {
@@ -113,11 +114,6 @@ static int32_t SVC_Handler_IPC(uint8_t svc_num, uint32_t *ctx,
         break;
 #endif
 #endif /* CONFIG_TFM_FLIH_API == 1 || CONFIG_TFM_SLIH_API == 1 */
-
-#if TFM_SP_LOG_RAW_ENABLED
-    case TFM_SVC_OUTPUT_UNPRIV_STRING:
-        return tfm_hal_output_spm_log((const char *)ctx[0], ctx[1]);
-#endif
     default:
 #ifdef PLATFORM_SVC_HANDLERS
         return (platform_svc_handlers(svc_num, ctx, lr));
@@ -129,6 +125,7 @@ static int32_t SVC_Handler_IPC(uint8_t svc_num, uint32_t *ctx,
     spm_handle_programmer_errors(status);
     return status;
 }
+#endif
 
 uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t exc_return,
                               uint32_t *psp)
@@ -175,6 +172,7 @@ uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t exc_return,
     case TFM_SVC_GET_BOOT_DATA:
         tfm_core_get_boot_data_handler(svc_args);
         break;
+#if (TFM_LVL != 1) && (CONFIG_TFM_FLIH_API == 1)
     case TFM_SVC_PREPARE_DEPRIV_FLIH:
         exc_return = tfm_flih_prepare_depriv_flih(
                                             (struct partition_t *)svc_args[0],
@@ -184,18 +182,33 @@ uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t exc_return,
         exc_return = tfm_flih_return_to_isr(svc_args[0],
                                             (struct context_flih_ret_t *)msp);
         break;
+#endif
+#if TFM_SP_LOG_RAW_ENABLED
+    case TFM_SVC_OUTPUT_UNPRIV_STRING:
+        svc_args[0] = tfm_hal_output_spm_log((const char *)svc_args[0],
+                                             svc_args[1]);
+        break;
+#endif
     default:
+#if CONFIG_TFM_SPM_BACKEND_IPC == 1
         if (((uint32_t)&REGION_NAME(Image$$, ARM_LIB_STACK, $$ZI$$Limit)
                                      - (uint32_t)msp) > TFM_STACK_SEALED_SIZE) {
             /* The Main Stack has contents, not calling from Partition thread */
             tfm_core_panic();
         }
         svc_args[0] = SVC_Handler_IPC(svc_number, svc_args, exc_return);
-
         if (THRD_EXPECTING_SCHEDULE()) {
             tfm_arch_trigger_pendsv();
         }
-
+#else
+#ifdef PLATFORM_SVC_HANDLERS
+        svc_args[0] = (platform_svc_handlers(svc_number, svc_args, exc_return));
+#else
+        SPMLOG_ERRMSG("Unknown SVC number requested!\r\n");
+        svc_args[0] = PSA_ERROR_GENERIC_ERROR;
+#endif
+        spm_handle_programmer_errors(svc_args[0]);
+#endif
         break;
     }
 
@@ -211,7 +224,5 @@ __attribute__ ((naked)) void tfm_core_handler_mode(void)
 
 void tfm_access_violation_handler(void)
 {
-    while (1) {
-        ;
-    }
+    tfm_hal_system_halt();
 }

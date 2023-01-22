@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,24 +58,8 @@ static const test_data check1[] = {
     .data             = key_data,
     .data_length      = AES_16B_KEY_SIZE,
     .usage_flags      = PSA_KEY_USAGE_ENCRYPT,
-    .alg              = PSA_ALG_CCM,
+    .alg              = PSA_ALG_AEAD_WITH_SHORTENED_TAG(PSA_ALG_CCM, 4),
     .setup_alg        = PSA_ALG_AEAD_WITH_SHORTENED_TAG(PSA_ALG_CCM, 4),
-    .nonce            = nonce,
-    .nonce_length     = 13,
-    .ad_length        = 8,
-    .plaintext_length = 32,
-    .operation_state  = 1,
-    .expected_status  = PSA_SUCCESS
-},
-
-{
-    .test_desc        = "Test psa_aead_set_lengths - Encrypt - CCM - Default Tag length\n",
-    .type             = PSA_KEY_TYPE_AES,
-    .data             = key_data,
-    .data_length      = AES_16B_KEY_SIZE,
-    .usage_flags      = PSA_KEY_USAGE_ENCRYPT,
-    .alg              = PSA_ALG_CCM,
-    .setup_alg        = PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG(PSA_ALG_CCM),
     .nonce            = nonce,
     .nonce_length     = 13,
     .ad_length        = 8,
@@ -174,24 +158,8 @@ static const test_data check1[] = {
     .data             = key_data,
     .data_length      = AES_16B_KEY_SIZE,
     .usage_flags      = PSA_KEY_USAGE_DECRYPT,
-    .alg              = PSA_ALG_CCM,
+    .alg              = PSA_ALG_AEAD_WITH_SHORTENED_TAG(PSA_ALG_CCM, 4),
     .setup_alg        = PSA_ALG_AEAD_WITH_SHORTENED_TAG(PSA_ALG_CCM, 4),
-    .nonce            = nonce,
-    .nonce_length     = 13,
-    .ad_length        = 8,
-    .plaintext_length = 32,
-    .operation_state  = 1,
-    .expected_status  = PSA_SUCCESS
-},
-
-{
-    .test_desc        = "Test psa_aead_set_lengths - Decrypt - CCM - Default Tag length\n",
-    .type             = PSA_KEY_TYPE_AES,
-    .data             = key_data,
-    .data_length      = AES_16B_KEY_SIZE,
-    .usage_flags      = PSA_KEY_USAGE_DECRYPT,
-    .alg              = PSA_ALG_CCM,
-    .setup_alg        = PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG(PSA_ALG_CCM),
     .nonce            = nonce,
     .nonce_length     = 13,
     .ad_length        = 8,

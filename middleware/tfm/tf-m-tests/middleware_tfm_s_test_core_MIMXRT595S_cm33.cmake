@@ -11,7 +11,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/core/service/tfm_core_test
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/core/service/tfm_core_test_2
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/test_services/tfm_core_test/psa_manifest

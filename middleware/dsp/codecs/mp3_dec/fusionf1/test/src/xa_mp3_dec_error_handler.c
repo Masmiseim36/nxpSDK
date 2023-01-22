@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2019 Cadence Design Systems, Inc.
+ * Copyright (c) 2022 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -87,8 +87,8 @@ const char *ppb_xa_mp3_dec_execute_non_fatal[] = {
     "Next sync word not found. Moving ahead",
     "CRC check failed",
     "Insufficient Main Audio Data",
-    "Mult-Channel / Extension CRC error",
-    "Muliti-Channel / Extension stream error"
+    "Multi-Channel / Extension CRC error",
+    "Multi-Channel / Extension stream error"
     ,"Invalid Bitrate and Mode combination"
 #ifdef ENABLE_SCF_CRC
     ,"",

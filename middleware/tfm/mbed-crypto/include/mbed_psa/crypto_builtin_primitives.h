@@ -34,7 +34,7 @@
 #define PSA_CRYPTO_BUILTIN_PRIMITIVES_H
 #include "mbedtls/private_access.h"
 
-#include <mbed_psa/crypto_driver_common.h>
+#include <mbed_psa/crypto_driver_common.h> //NXP
 
 /*
  * Hash multi-part operation definitions.
@@ -94,7 +94,6 @@ typedef struct
     defined(MBEDTLS_PSA_BUILTIN_ALG_CTR) || \
     defined(MBEDTLS_PSA_BUILTIN_ALG_CFB) || \
     defined(MBEDTLS_PSA_BUILTIN_ALG_OFB) || \
-    defined(MBEDTLS_PSA_BUILTIN_ALG_XTS) || \
     defined(MBEDTLS_PSA_BUILTIN_ALG_ECB_NO_PADDING) || \
     defined(MBEDTLS_PSA_BUILTIN_ALG_CBC_NO_PADDING) || \
     defined(MBEDTLS_PSA_BUILTIN_ALG_CBC_PKCS7)

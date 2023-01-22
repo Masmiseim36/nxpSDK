@@ -1,6 +1,8 @@
 /*
  * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
- * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
+ * Copyright (c) 2021-2022 Cypress Semiconductor Corporation (an Infineon
+ * company) or an affiliate of Cypress Semiconductor Corporation. All rights
+ * reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -23,7 +25,7 @@
 #include "psa_manifest/tfm_platform.h"
 
 #define TFM_SP_PLATFORM_NDEPS                                   (0)
-#define TFM_SP_PLATFORM_NSERVS                                  (3)
+#define TFM_SP_PLATFORM_NSERVS                                  (1)
 #if TFM_LVL == 3
 #define TFM_SP_PLATFORM_NASSETS                                 (0 + 1)
 #else
@@ -36,10 +38,10 @@
 REGION_DECLARE(Image$$, PT_TFM_SP_PLATFORM_PRIVATE, _DATA_START$$Base);
 REGION_DECLARE(Image$$, PT_TFM_SP_PLATFORM_PRIVATE, _DATA_END$$Base);
 #endif
+
 extern uint8_t tfm_sp_platform_stack[];
 
-/* Entrypoint function declaration */
-extern void platform_sp_init(void);
+extern psa_status_t platform_sp_init(void);
 
 /* Interrupt init functions */
 
@@ -59,20 +61,19 @@ struct partition_tfm_sp_platform_load_info_t {
 
 /* Partition load, deps, service load data. Put to a dedicated section. */
 #if defined(__ICCARM__)
-#pragma location = ".part_load"
+#pragma location = ".part_load_priority_normal"
 __root
 #endif /* __ICCARM__ */
 const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
-    __attribute__((used, section(".part_load"))) = {
+    __attribute__((used, section(".part_load_priority_normal"))) = {
     .load_info = {
-        .psa_ff_ver                 = 0x0100 | PARTITION_INFO_MAGIC,
+        .psa_ff_ver                 = 0x0101 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_PLATFORM,
         .flags                      = 0
-                                    | PARTITION_MODEL_IPC
                                     | PARTITION_MODEL_PSA_ROT
                                     | PARTITION_PRI_NORMAL,
         .entry                      = ENTRY_TO_POSITION(platform_sp_init),
-        .stack_size                 = 0x0500,
+        .stack_size                 = 0x500,
         .heap_size                  = 0,
         .ndeps                      = TFM_SP_PLATFORM_NDEPS,
         .nservices                  = TFM_SP_PLATFORM_NSERVS,
@@ -83,37 +84,14 @@ const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
     .heap_addr                      = 0,
     .services = {
         {
-            .name_strid             = STRING_PTR_TO_STRID("TFM_SP_PLATFORM_SYSTEM_RESET"),
-            .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
-            .signal                 = TFM_SP_PLATFORM_SYSTEM_RESET_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+            .name_strid             = STRING_PTR_TO_STRID("TFM_PLATFORM_SERVICE"),
+            .sfn                    = ENTRY_TO_POSITION(tfm_platform_service_sfn),
+            .signal                 = 1,
+
             .sid                    = 0x00000040,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
-                                    | SERVICE_VERSION_POLICY_STRICT,
-            .version                = 1,
-        },
-        {
-            .name_strid             = STRING_PTR_TO_STRID("TFM_SP_PLATFORM_IOCTL"),
-            .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
-            .signal                 = TFM_SP_PLATFORM_IOCTL_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
-            .sid                    = 0x00000041,
-            .flags                  = 0
-                                    | SERVICE_FLAG_NS_ACCESSIBLE
-                                    | SERVICE_VERSION_POLICY_STRICT,
-            .version                = 1,
-        },
-        {
-            .name_strid             = STRING_PTR_TO_STRID("TFM_SP_PLATFORM_NV_COUNTER"),
-            .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
-            .signal                 = TFM_SP_PLATFORM_NV_COUNTER_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
-            .sid                    = 0x00000042,
-            .flags                  = 0
+                                    | SERVICE_FLAG_STATELESS | 0x5
                                     | SERVICE_VERSION_POLICY_STRICT,
             .version                = 1,
         },
@@ -132,14 +110,14 @@ const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
 
 /* Placeholder for partition and service runtime space. Do not reference it. */
 #if defined(__ICCARM__)
-#pragma location=".bss.part_runtime"
+#pragma location=".bss.part_runtime_priority_normal"
 __root
 #endif /* __ICCARM__ */
 static struct partition_t tfm_sp_platform_partition_runtime_item
-    __attribute__((used, section(".bss.part_runtime")));
+    __attribute__((used, section(".bss.part_runtime_priority_normal")));
 #if defined(__ICCARM__)
-#pragma location = ".bss.serv_runtime"
+#pragma location = ".bss.serv_runtime_priority_normal"
 __root
 #endif /* __ICCARM__ */
 static struct service_t tfm_sp_platform_service_runtime_item[TFM_SP_PLATFORM_NSERVS]
-    __attribute__((used, section(".bss.serv_runtime")));
+    __attribute__((used, section(".bss.serv_runtime_priority_normal")));

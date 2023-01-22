@@ -1,6 +1,7 @@
 #-------------------------------------------------------------------------------
 # Copyright (c) 2020-2022, Arm Limited. All rights reserved.
-# Copyright (c) 2020, Cypress Semiconductor Corporation. All rights reserved.
+# Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
+# or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -18,7 +19,7 @@ set(INSTALL_INTERFACE_SRC_DIR    ${TFM_INSTALL_PATH}/interface/src)
 set(INSTALL_INTERFACE_LIB_DIR    ${TFM_INSTALL_PATH}/interface/lib)
 
 # export veneer lib
-if (NOT TFM_MULTI_CORE_TOPOLOGY)
+if (CONFIG_TFM_USE_TRUSTZONE)
     install(FILES       ${CMAKE_BINARY_DIR}/secure_fw/s_veneers.o
             DESTINATION ${INSTALL_INTERFACE_LIB_DIR})
 endif()
@@ -40,31 +41,38 @@ install(FILES       ${INTERFACE_INC_DIR}/tfm_api.h
 install(FILES       ${INTERFACE_INC_DIR}/tfm_ns_client_ext.h
         DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 
+install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/config_impl.h
+        DESTINATION ${INSTALL_INTERFACE_INC_DIR})
+
 if (TFM_PSA_API)
     install(FILES       ${INTERFACE_INC_DIR}/tfm_psa_call_pack.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
+    install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/psa/framework_feature.h
+            DESTINATION ${INSTALL_INTERFACE_INC_DIR}/psa)
 endif()
 
-if (TFM_MULTI_CORE_TOPOLOGY)
+if (TFM_PARTITION_NS_AGENT_MAILBOX)
     install(FILES       ${INTERFACE_INC_DIR}/multi_core/tfm_multi_core_api.h
                         ${INTERFACE_INC_DIR}/multi_core/tfm_ns_mailbox.h
                         ${INTERFACE_INC_DIR}/multi_core/tfm_mailbox.h
                         ${INTERFACE_INC_DIR}/multi_core/tfm_ns_mailbox_test.h
                         ${CMAKE_BINARY_DIR}/generated/interface/include/tfm_mailbox_config.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
-elseif (NOT TFM_PSA_API)
+endif()
+
+if (NOT TFM_PSA_API)
     install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/tfm_veneers.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR}/tfm/veneers)
 endif()
 
-if (TFM_PARTITION_PROTECTED_STORAGE OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_PROTECTED_STORAGE)
     install(FILES       ${INTERFACE_INC_DIR}/psa/protected_storage.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR}/psa)
     install(FILES       ${INTERFACE_INC_DIR}/tfm_ps_defs.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
 
-if (TFM_PARTITION_INTERNAL_TRUSTED_STORAGE OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_INTERNAL_TRUSTED_STORAGE)
     install(FILES       ${INTERFACE_INC_DIR}/psa/internal_trusted_storage.h
                         ${INTERFACE_INC_DIR}/psa/storage_common.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR}/psa)
@@ -72,7 +80,7 @@ if (TFM_PARTITION_INTERNAL_TRUSTED_STORAGE OR FORWARD_PROT_MSG)
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
 
-if (TFM_PARTITION_CRYPTO OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_CRYPTO)
     install(FILES       ${INTERFACE_INC_DIR}/psa/crypto_extra.h
                         ${INTERFACE_INC_DIR}/psa/crypto_compat.h
                         ${INTERFACE_INC_DIR}/psa/crypto.h
@@ -86,10 +94,11 @@ if (TFM_PARTITION_CRYPTO OR FORWARD_PROT_MSG)
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
 
-if (TFM_PARTITION_INITIAL_ATTESTATION OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_INITIAL_ATTESTATION)
     install(FILES       ${INTERFACE_INC_DIR}/psa/initial_attestation.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR}/psa)
     install(FILES       ${INTERFACE_INC_DIR}/tfm_attest_defs.h
+                        ${INTERFACE_INC_DIR}/tfm_attest_iat_defs.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
 
@@ -99,7 +108,7 @@ if(TFM_PARTITION_AUDIT_LOG)
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
 
-if(TFM_PARTITION_PLATFORM OR FORWARD_PROT_MSG)
+if(TFM_PARTITION_PLATFORM)
     install(FILES       ${INTERFACE_INC_DIR}/tfm_platform_api.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
@@ -112,25 +121,32 @@ if(TFM_PARTITION_FIRMWARE_UPDATE)
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
 
+if(PLATFORM_DEFAULT_CRYPTO_KEYS)
+    install(DIRECTORY   ${INTERFACE_INC_DIR}/crypto_keys
+            DESTINATION ${INSTALL_INTERFACE_INC_DIR})
+endif()
+
 ####################### export sources #########################################
 
-if (TFM_MULTI_CORE_TOPOLOGY)
+if (TFM_PARTITION_NS_AGENT_MAILBOX)
     install(FILES       ${INTERFACE_SRC_DIR}/multi_core/tfm_ns_mailbox.c
                         ${INTERFACE_SRC_DIR}/multi_core/tfm_multi_core_ns_api.c
                         ${INTERFACE_SRC_DIR}/multi_core/tfm_multi_core_psa_ns_api.c
                         ${INTERFACE_SRC_DIR}/multi_core/tfm_ns_mailbox_thread.c
-            DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-else()
-    if(TFM_PSA_API)
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_psa_ns_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    endif()
+            DESTINATION ${INSTALL_INTERFACE_SRC_DIR}/multi_core)
+endif()
 
+if (TFM_PARTITION_NS_AGENT_TZ)
+    install(FILES       ${INTERFACE_SRC_DIR}/tfm_psa_ns_api.c
+            DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
+endif()
+
+if (CONFIG_TFM_USE_TRUSTZONE)
     install(FILES       ${INTERFACE_SRC_DIR}/tfm_ns_interface.c.example
             DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
-if (TFM_PARTITION_PROTECTED_STORAGE OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_PROTECTED_STORAGE)
     if (TFM_PSA_API)
         install(FILES       ${INTERFACE_SRC_DIR}/tfm_ps_ipc_api.c
                 DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
@@ -140,7 +156,7 @@ if (TFM_PARTITION_PROTECTED_STORAGE OR FORWARD_PROT_MSG)
     endif()
 endif()
 
-if (TFM_PARTITION_INTERNAL_TRUSTED_STORAGE OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_INTERNAL_TRUSTED_STORAGE)
     if (TFM_PSA_API)
         install(FILES       ${INTERFACE_SRC_DIR}/tfm_its_ipc_api.c
                 DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
@@ -150,7 +166,7 @@ if (TFM_PARTITION_INTERNAL_TRUSTED_STORAGE OR FORWARD_PROT_MSG)
     endif()
 endif()
 
-if (TFM_PARTITION_CRYPTO OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_CRYPTO)
     if (TFM_PSA_API)
         install(FILES       ${INTERFACE_SRC_DIR}/tfm_crypto_ipc_api.c
                 DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
@@ -160,7 +176,7 @@ if (TFM_PARTITION_CRYPTO OR FORWARD_PROT_MSG)
     endif()
 endif()
 
-if (TFM_PARTITION_INITIAL_ATTESTATION OR FORWARD_PROT_MSG)
+if (TFM_PARTITION_INITIAL_ATTESTATION)
     if (TFM_PSA_API)
         install(FILES       ${INTERFACE_SRC_DIR}/tfm_initial_attestation_ipc_api.c
                 DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
@@ -175,7 +191,7 @@ if(TFM_PARTITION_AUDIT_LOG)
             DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
-if(TFM_PARTITION_PLATFORM OR FORWARD_PROT_MSG)
+if(TFM_PARTITION_PLATFORM)
     if(TFM_PSA_API)
         install(FILES       ${INTERFACE_SRC_DIR}/tfm_platform_ipc_api.c
                 DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
@@ -222,4 +238,10 @@ if(TFM_PARTITION_FIRMWARE_UPDATE)
         install(FILES       ${INTERFACE_SRC_DIR}/tfm_firmware_update_func_api.c
                 DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
     endif()
+endif()
+
+##################### Platform-specific installation ###########################
+
+if (EXISTS ${CMAKE_SOURCE_DIR}/platform/ext/target/${TFM_PLATFORM}/install.cmake)
+    include(platform/ext/target/${TFM_PLATFORM}/install.cmake)
 endif()

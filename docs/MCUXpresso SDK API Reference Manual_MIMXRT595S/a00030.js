@@ -6,7 +6,6 @@ var a00030 =
       [ "enableSckFreeRunning", "a00030.html#aff3b7741db982d0de6b123e449173fea", null ],
       [ "enableDoze", "a00030.html#a874d2c8764b144c7cb1e490721b92c79", null ],
       [ "enableHalfSpeedAccess", "a00030.html#a8970f0b6e4456a5aef0b5062b5081653", null ],
-      [ "enableSckBDiffOpt", "a00030.html#adb81f059fd762c30013c130f4672a89e", null ],
       [ "enableSameConfigForAll", "a00030.html#a6b92b43578a6461b8a2790bdb3f6ef6d", null ],
       [ "seqTimeoutCycle", "a00030.html#ac441de6664a70ba5569701f7a627a071", null ],
       [ "ipGrantTimeoutCycle", "a00030.html#af4432f3255d836eae19a72b45dc1b012", null ],
@@ -39,7 +38,8 @@ var a00030 =
       [ "ARDSeqNumber", "a00030.html#a2eda9dcea9c95e6ea8af30c8877ccc3f", null ],
       [ "AHBWriteWaitUnit", "a00030.html#a90b3175a91354f25e6632a323564e495", null ],
       [ "AHBWriteWaitInterval", "a00030.html#ac257c0df9ebe1e95af1b2eccd9bac6da", null ],
-      [ "enableWriteMask", "a00030.html#a537cacf6f847b62d33ef849149984ee3", null ]
+      [ "enableWriteMask", "a00030.html#a537cacf6f847b62d33ef849149984ee3", null ],
+      [ "isFroClockSource", "a00030.html#aafbdce8b8a0323ffa3d1df49115bbfb5", null ]
     ] ],
     [ "flexspi_transfer_t", "a00030.html#a00366", [
       [ "deviceAddress", "a00030.html#ad60ddfe61616ffc2b1c289b398249687", null ],
@@ -52,7 +52,7 @@ var a00030 =
     ] ],
     [ "flexspi_handle_t", "a00030.html#a00292", [
       [ "state", "a00030.html#a933e9a2e61686adbe8e85cc6e996c707", null ],
-      [ "data", "a00030.html#abce3dc34abdfbdcbdafe2c6745940e5a", null ],
+      [ "data", "a00030.html#a295ef5147af8f1d4079af11f0c649060", null ],
       [ "dataSize", "a00030.html#af398d4e2e49ebb106f29a2afe50e0f97", null ],
       [ "transferTotalSize", "a00030.html#a545846b125a3a78dc0328b3a446a132e", null ],
       [ "completionCallback", "a00030.html#a3fb995fc8cad27df08d2581224ee3e46", null ],
@@ -194,8 +194,8 @@ var a00030 =
     [ "FLEXSPI_UpdateLUT", "a00030.html#ga160f066685276e79b0f79968e3087489", null ],
     [ "FLEXSPI_WriteData", "a00030.html#ga054519fc1555d02f1c3e6652631e50ae", null ],
     [ "FLEXSPI_ReadData", "a00030.html#ga05c507ce3babcb459cda71a4ab347eae", null ],
-    [ "FLEXSPI_WriteBlocking", "a00030.html#ga280f49b55e211c416f38085dd67c0559", null ],
-    [ "FLEXSPI_ReadBlocking", "a00030.html#ga3c4c3127c9420d3a97755dec9931a306", null ],
+    [ "FLEXSPI_WriteBlocking", "a00030.html#ga9707db6bb7aaac807060bf4036554787", null ],
+    [ "FLEXSPI_ReadBlocking", "a00030.html#ga60aa4f8455c65b2c90ff4e42fc425c82", null ],
     [ "FLEXSPI_TransferBlocking", "a00030.html#ga7a3c2f27e20ac2862f61d5e393abf8d7", null ],
     [ "FLEXSPI_TransferCreateHandle", "a00030.html#ga6f3f9cb5f3499ba238a3f316949742f0", null ],
     [ "FLEXSPI_TransferNonBlocking", "a00030.html#ga9d2eccbfd3eaf1554fd287a4a808956d", null ],

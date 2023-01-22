@@ -20,6 +20,7 @@ static void tfm_crypto_test_1003(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
 #ifdef TFM_CRYPTO_TEST_ALG_CTR
 static void tfm_crypto_test_1005(struct test_result_t *ret);
+static void tfm_crypto_test_1006(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CTR */
 static void tfm_crypto_test_1007(struct test_result_t *ret);
 static void tfm_crypto_test_1008(struct test_result_t *ret);
@@ -31,14 +32,18 @@ static void tfm_crypto_test_1010(struct test_result_t *ret);
 static void tfm_crypto_test_1011(struct test_result_t *ret);
 #endif
 static void tfm_crypto_test_1012(struct test_result_t *ret);
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_384
 static void tfm_crypto_test_1013(struct test_result_t *ret);
+#endif /* TFM_CRYPTO_TEST_ALG_SHA_384 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_1014(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
 static void tfm_crypto_test_1019(struct test_result_t *ret);
 static void tfm_crypto_test_1020(struct test_result_t *ret);
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_384
 static void tfm_crypto_test_1021(struct test_result_t *ret);
+#endif /* TFM_CRYPTO_TEST_ALG_SHA_384 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_1022(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
@@ -83,9 +88,11 @@ static void tfm_crypto_test_1048(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CBC */
 #ifdef TFM_CRYPTO_TEST_CHACHA20
 static void tfm_crypto_test_1049(struct test_result_t *ret);
+static void tfm_crypto_test_1051(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_CHACHA20 */
 #ifdef TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305
 static void tfm_crypto_test_1050(struct test_result_t *ret);
+static void tfm_crypto_test_1052(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305 */
 
 static struct test_t crypto_tests[] = {
@@ -102,6 +109,8 @@ static struct test_t crypto_tests[] = {
 #ifdef TFM_CRYPTO_TEST_ALG_CTR
     {&tfm_crypto_test_1005, "TFM_S_CRYPTO_TEST_1005",
      "Secure Symmetric encryption (AES-128-CTR) interface"},
+    {&tfm_crypto_test_1006, "TFM_S_CRYPTO_TEST_1006",
+     "Secure Symmetric encryption (AES-256-CTR) interface"},
 #endif /* TFM_CRYPTO_TEST_ALG_CTR */
     {&tfm_crypto_test_1007, "TFM_S_CRYPTO_TEST_1007",
      "Secure Symmetric encryption invalid cipher"},
@@ -119,9 +128,11 @@ static struct test_t crypto_tests[] = {
 #endif 
     {&tfm_crypto_test_1012, "TFM_S_CRYPTO_TEST_1012",
      "Secure Hash (SHA-256) interface"},
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_384
     {&tfm_crypto_test_1013, "TFM_S_CRYPTO_TEST_1013",
      "Secure Hash (SHA-384) interface"},
+#endif /* TFM_CRYPTO_TEST_ALG_SHA_384 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
     {&tfm_crypto_test_1014, "TFM_S_CRYPTO_TEST_1014",
      "Secure Hash (SHA-512) interface"},
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
@@ -129,9 +140,11 @@ static struct test_t crypto_tests[] = {
      "Secure Unsupported HMAC (SHA-1) interface"},
     {&tfm_crypto_test_1020, "TFM_S_CRYPTO_TEST_1020",
      "Secure HMAC (SHA-256) interface"},
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_384
     {&tfm_crypto_test_1021, "TFM_S_CRYPTO_TEST_1021",
      "Secure HMAC (SHA-384) interface"},
+#endif /* TFM_CRYPTO_TEST_ALG_SHA_384 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
     {&tfm_crypto_test_1022, "TFM_S_CRYPTO_TEST_1022",
      "Secure HMAC (SHA-512) interface"},
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
@@ -181,9 +194,9 @@ static struct test_t crypto_tests[] = {
 #endif /* TFM_CRYPTO_TEST_ALG_ECB */
 #ifdef TFM_CRYPTO_TEST_ASYM_ENCRYPT
     {&tfm_crypto_test_1043, "TFM_S_CRYPTO_TEST_1043",
-     "Secure Asymmetric encryption interface (RSA_OAEP)"},
+     "Secure Asymmetric encryption interface (RSA-OAEP)"},
     {&tfm_crypto_test_1044, "TFM_S_CRYPTO_TEST_1044",
-     "Secure Asymmetric encryption interface (RSA_PKCS1V15)"},
+     "Secure Asymmetric encryption interface (RSA-PKCS1V15)"},
     {&tfm_crypto_test_1045, "TFM_S_CRYPTO_TEST_1045",
      "Secure Sign and verify message interface (ECDSA-SECP256R1-SHA256)"},
 #endif /* TFM_CRYPTO_TEST_ASYM_ENCRYPT */
@@ -197,11 +210,19 @@ static struct test_t crypto_tests[] = {
 #endif /* TFM_CRYPTO_TEST_ALG_CBC */
 #ifdef TFM_CRYPTO_TEST_CHACHA20
     {&tfm_crypto_test_1049, "TFM_S_CRYPTO_TEST_1049",
-     "Secure Symmetric encryption (CHACHA20-256) interface"},
+     "Secure Symmetric encryption (CHACHA20) interface"},
 #endif /* TFM_CRYPTO_TEST_CHACHA20 */
 #ifdef TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305
     {&tfm_crypto_test_1050, "TFM_S_CRYPTO_TEST_1050",
-     "Secure AEAD (CHACHA20-256-POLY1305) interface"},
+     "Secure AEAD (CHACHA20-POLY1305) interface"},
+#endif /* TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305 */
+#ifdef TFM_CRYPTO_TEST_CHACHA20
+    {&tfm_crypto_test_1051, "TFM_S_CRYPTO_TEST_1051",
+     "Secure RFC7539 verification on Chacha20"},
+#endif /* TFM_CRYPTO_TEST_CHACHA20 */
+#ifdef TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305
+    {&tfm_crypto_test_1052, "TFM_S_CRYPTO_TEST_1052",
+     "Secure RFC7539 verification on Chacha20-Poly1305"},
 #endif /* TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305 */
 };
 
@@ -249,6 +270,12 @@ static void tfm_crypto_test_1005(struct test_result_t *ret)
     psa_cipher_test(PSA_KEY_TYPE_AES, PSA_ALG_CTR,
                     test_key_128, BIT_SIZE_TEST_KEY, ret);
 }
+
+static void tfm_crypto_test_1006(struct test_result_t *ret)
+{
+    psa_cipher_test(PSA_KEY_TYPE_AES, PSA_ALG_CTR,
+                    test_key_256, BIT_SIZE_TEST_LONG_KEY, ret);
+}
 #endif /* TFM_CRYPTO_TEST_ALG_CTR */
 
 static void tfm_crypto_test_1007(struct test_result_t *ret)
@@ -287,12 +314,14 @@ static void tfm_crypto_test_1012(struct test_result_t *ret)
     psa_hash_test(PSA_ALG_SHA_256, ret);
 }
 
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_384
 static void tfm_crypto_test_1013(struct test_result_t *ret)
 {
     psa_hash_test(PSA_ALG_SHA_384, ret);
 }
+#endif /* TFM_CRYPTO_TEST_ALG_SHA_384 */
 
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_1014(struct test_result_t *ret)
 {
     psa_hash_test(PSA_ALG_SHA_512, ret);
@@ -311,13 +340,15 @@ static void tfm_crypto_test_1020(struct test_result_t *ret)
                  test_key_128, BIT_SIZE_TEST_KEY, ret);
 }
 
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_384
 static void tfm_crypto_test_1021(struct test_result_t *ret)
 {
     psa_mac_test(PSA_ALG_HMAC(PSA_ALG_SHA_384),
                  test_key_128, BIT_SIZE_TEST_KEY, ret);
 }
+#endif /* TFM_CRYPTO_TEST_ALG_SHA_384 */
 
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_1022(struct test_result_t *ret)
 {
     psa_mac_test(PSA_ALG_HMAC(PSA_ALG_SHA_512),
@@ -497,6 +528,11 @@ static void tfm_crypto_test_1049(struct test_result_t *ret)
     psa_cipher_test(PSA_KEY_TYPE_CHACHA20, PSA_ALG_STREAM_CIPHER,
                     test_key_256, BIT_SIZE_TEST_LONG_KEY, ret);
 }
+
+static void tfm_crypto_test_1051(struct test_result_t *ret)
+{
+    psa_cipher_rfc7539_test(ret);
+}
 #endif /* TFM_CRYPTO_TEST_CHACHA20 */
 
 #ifdef TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305
@@ -504,5 +540,10 @@ static void tfm_crypto_test_1050(struct test_result_t *ret)
 {
     psa_aead_test(PSA_KEY_TYPE_CHACHA20, PSA_ALG_CHACHA20_POLY1305,
                   test_key_256, BIT_SIZE_TEST_LONG_KEY, ret);
+}
+
+static void tfm_crypto_test_1052(struct test_result_t *ret)
+{
+    psa_aead_rfc7539_test(ret);
 }
 #endif /* TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305 */

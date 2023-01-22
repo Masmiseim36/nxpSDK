@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -55,6 +55,7 @@
 #include <stdio.h>
 #include "audio/xa-capturer-api.h"
 #include "xf-debug.h"
+#include "xaf-api.h"
 #include <string.h>
 #ifdef XAF_PROFILE
 #include "xaf-clk-test.h"
@@ -546,10 +547,22 @@ static XA_ERRORCODE xa_capturer_get_config_param(XACapturer *d, WORD32 i_idx, pV
         *(WORD32 *)pv_value = d->frame_size_bytes;
         return XA_NO_ERROR;
 
+#ifdef XA_EXT_CONFIG_TEST
+    case XA_CAPTURER_CONFIG_PARAM_STATE:
+    {
+        /* ...return current execution state */
+        UWORD32 state = xa_hw_capturer_get_state(d);
+        xaf_ext_buffer_t *ext_buf = (xaf_ext_buffer_t *) pv_value;
+        memcpy(ext_buf->data, &state, sizeof(state));
+        ext_buf->valid_data_size = sizeof(state);
+        return XA_NO_ERROR;
+    }
+#else
     case XA_CAPTURER_CONFIG_PARAM_STATE:
         /* ...return current execution state */
         *(WORD32 *)pv_value = xa_hw_capturer_get_state(d);
         return XA_NO_ERROR;
+#endif
 
     case XA_CAPTURER_CONFIG_PARAM_BYTES_PRODUCED:
         /* ...return current execution state */

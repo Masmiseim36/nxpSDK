@@ -1,5 +1,8 @@
 /*
- * Copyright 2021 NXP
+ * Copyright (c) 2014, Mentor Graphics Corporation
+ * Copyright (c) 2015 Xilinx, Inc.
+ * Copyright (c) 2016 Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -50,7 +53,7 @@
 //!
 //! Static API functions (no dynamic allocation) enabled/disabled.
 //! The default value is 0 (static API disabled).
-#define RL_USE_STATIC_API (1)
+#define RL_USE_STATIC_API (0)
 
 //! @def RL_CLEAR_USED_BUFFERS
 //!

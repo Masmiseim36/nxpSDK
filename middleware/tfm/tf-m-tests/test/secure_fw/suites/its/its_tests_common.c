@@ -7,11 +7,7 @@
 
 #include "its_tests_common.h"
 #include "psa/internal_trusted_storage.h"
-#if DOMAIN_NS == 1
 #include <string.h>
-#else
-#include "tfm_memory_utils.h"
-#endif
 
 #define TEST_019_CYCLES    3U
 
@@ -147,13 +143,8 @@ void tfm_its_test_common_004(struct test_result_t *ret)
         return;
     }
 
-#if DOMAIN_NS == 1U
     /* Check that write once data has not changed */
     comp_result = memcmp(read_data, WRITE_ONCE_RESULT_DATA, sizeof(read_data));
-#else
-    comp_result = tfm_memcmp(read_data, WRITE_ONCE_RESULT_DATA,
-                             sizeof(read_data));
-#endif
     if (comp_result != 0) {
         TEST_FAIL("Write once data should not have changed");
         return;
@@ -199,7 +190,7 @@ void tfm_its_test_common_005(struct test_result_t *ret)
     /* Check that the data is correct, including no illegal pre- or post-data */
     comp_result = memcmp(read_data, RESULT_DATA, sizeof(read_data));
 #else
-    comp_result = tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data));
+    comp_result = memcmp(read_data, RESULT_DATA, sizeof(read_data));
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read data should be equal to result data");
@@ -212,12 +203,8 @@ void tfm_its_test_common_005(struct test_result_t *ret)
         return;
     }
 
-#if DOMAIN_NS == 1U
     /* Reset read data */
     memcpy(read_data, READ_DATA, sizeof(read_data));
-#else
-    tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
-#endif
 
     /* Read from offset 2 to 2 bytes before end of the data */
     offset = 2;
@@ -234,7 +221,7 @@ void tfm_its_test_common_005(struct test_result_t *ret)
     /* Check that the correct data was read */
     comp_result = memcmp(p_read_data, "____", HALF_PADDING_SIZE);
 #else
-    comp_result = tfm_memcmp(p_read_data, "____", HALF_PADDING_SIZE);
+    comp_result = memcmp(p_read_data, "____", HALF_PADDING_SIZE);
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read data contains illegal pre-data");
@@ -243,11 +230,7 @@ void tfm_its_test_common_005(struct test_result_t *ret)
 
     p_read_data += HALF_PADDING_SIZE;
 
-#if DOMAIN_NS == 1U
     comp_result = memcmp(p_read_data, write_data + offset, data_len);
-#else
-    comp_result = tfm_memcmp(p_read_data, write_data + offset, data_len);
-#endif
     if (comp_result != 0) {
         TEST_FAIL("Read data incorrect");
         return;
@@ -258,7 +241,7 @@ void tfm_its_test_common_005(struct test_result_t *ret)
 #if DOMAIN_NS == 1U
     comp_result = memcmp(p_read_data, "____", HALF_PADDING_SIZE);
 #else
-    comp_result = tfm_memcmp(p_read_data, "____", HALF_PADDING_SIZE);
+    comp_result = memcmp(p_read_data, "____", HALF_PADDING_SIZE);
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read data contains illegal post-data");
@@ -302,12 +285,8 @@ void tfm_its_test_common_006(struct test_result_t *ret)
         return;
     }
 
-#if DOMAIN_NS == 1U
     /* Check that the read data is unchanged */
     comp_result = memcmp(read_data, READ_DATA, sizeof(read_data));
-#else
-    comp_result = tfm_memcmp(read_data, READ_DATA, sizeof(read_data));
-#endif
     if (comp_result != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
@@ -334,7 +313,7 @@ void tfm_its_test_common_006(struct test_result_t *ret)
     /* Check that the read data is unchanged */
     comp_result = memcmp(read_data, READ_DATA, sizeof(read_data));
 #else
-    comp_result = tfm_memcmp(read_data, READ_DATA, sizeof(read_data));
+    comp_result = memcmp(read_data, READ_DATA, sizeof(read_data));
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read data should be equal to original read data");
@@ -375,12 +354,8 @@ void tfm_its_test_common_007(struct test_result_t *ret)
         return;
     }
 
-#if DOMAIN_NS == 1U
     /* Check that the read data is unchanged */
     comp_result = memcmp(read_data, READ_DATA, sizeof(read_data));
-#else
-    comp_result = tfm_memcmp(read_data, READ_DATA, sizeof(read_data));
-#endif
     if (comp_result != 0) {
         TEST_FAIL("Read data not equal to original read data");
         return;
@@ -398,7 +373,7 @@ void tfm_its_test_common_007(struct test_result_t *ret)
     /* Check that the read data is unchanged */
     comp_result = memcmp(read_data, READ_DATA, sizeof(read_data));
 #else
-    comp_result = tfm_memcmp(read_data, READ_DATA, sizeof(read_data));
+    comp_result = memcmp(read_data, READ_DATA, sizeof(read_data));
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read data not equal to original read data");
@@ -438,12 +413,8 @@ void tfm_its_test_common_008(struct test_result_t *ret)
         return;
     }
 
-#if DOMAIN_NS == 1U
     /* Check that the read data is unchanged */
     comp_result = memcmp(read_data, READ_DATA, sizeof(read_data));
-#else
-    comp_result = tfm_memcmp(read_data, READ_DATA, sizeof(read_data));
-#endif
     if (comp_result != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
@@ -470,7 +441,7 @@ void tfm_its_test_common_008(struct test_result_t *ret)
     /* Check that the read data is changed */
     comp_result = memcmp(read_data, RESULT_DATA, sizeof(read_data));
 #else
-    comp_result = tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data));
+    comp_result = memcmp(read_data, RESULT_DATA, sizeof(read_data));
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read data should be equal to newly read data");
@@ -480,12 +451,8 @@ void tfm_its_test_common_008(struct test_result_t *ret)
     /* Get with offset + data length greater than UID's length, but individually
      * valid
      */
-#if DOMAIN_NS == 1U
     /* Reset read_data to original READ_DATA */
     memcpy(read_data, READ_DATA, sizeof(read_data));
-#else
-    tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
-#endif
     read_len = write_len;
     offset = 1;
 
@@ -508,7 +475,7 @@ void tfm_its_test_common_008(struct test_result_t *ret)
     /* Check that the read data is changed */
     comp_result = memcmp(read_data, OFFSET_RESULT_DATA, sizeof(read_data));
 #else
-    comp_result = tfm_memcmp(read_data, OFFSET_RESULT_DATA, sizeof(read_data));
+    comp_result = memcmp(read_data, OFFSET_RESULT_DATA, sizeof(read_data));
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read data should be equal to newly read data starting at "
@@ -817,11 +784,7 @@ void tfm_its_test_common_016(struct test_result_t *ret)
         return;
     }
 
-#if DOMAIN_NS == 1U
     comp_result = memcmp(read_data, RESULT_DATA, sizeof(read_data));
-#else
-    comp_result = tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data));
-#endif
     if (comp_result != 0) {
         TEST_FAIL("Read buffer has incorrect data");
         return;
@@ -875,7 +838,7 @@ void tfm_its_test_common_017(struct test_result_t *ret)
 #if DOMAIN_NS == 1U
     comp_result = memcmp(read_data, RESULT_DATA, sizeof(read_data));
 #else
-    comp_result = tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data));
+    comp_result = memcmp(read_data, RESULT_DATA, sizeof(read_data));
 #endif
     if (comp_result != 0) {
         TEST_FAIL("Read buffer has incorrect data");
@@ -933,12 +896,8 @@ void tfm_its_test_common_018(struct test_result_t *ret)
         return;
     }
 
-#if DOMAIN_NS == 1U
     /* Check that get returns the last data to be set */
     comp_result = memcmp(read_data, write_data_3, sizeof(write_data_3));
-#else
-    comp_result = tfm_memcmp(read_data, write_data_3, sizeof(write_data_3));
-#endif
     if (comp_result != 0) {
         TEST_FAIL("Read buffer has incorrect data");
         return;
@@ -983,7 +942,7 @@ void tfm_its_test_common_019(struct test_result_t *ret)
 #if DOMAIN_NS == 1U
         memset(read_asset_data, 0x00, sizeof(read_asset_data));
 #else
-        tfm_memset(read_asset_data, 0x00, sizeof(read_asset_data));
+        memset(read_asset_data, 0x00, sizeof(read_asset_data));
 #endif
 
         /* Set with data and no flags and a valid UID */
@@ -1022,12 +981,8 @@ void tfm_its_test_common_019(struct test_result_t *ret)
             return;
         }
 
-#if DOMAIN_NS == 1U
         /* Check that get returns the last data which was set */
         comp_result = memcmp(read_asset_data, write_asset_data, data_size);
-#else
-        comp_result = tfm_memcmp(read_asset_data, write_asset_data, data_size);
-#endif
         if (comp_result != 0) {
             TEST_FAIL("Read data should be equal to original write data");
             return;

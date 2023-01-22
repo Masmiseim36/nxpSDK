@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -70,6 +70,10 @@
 /* ...flexible lock definition */
 #include "xf-flx-lock-if.h"
 
+#if (XF_CFG_CORES_NUM > 1)
+#include "xf-mc-ipc.h"
+#endif //XF_CFG_CORES_NUM
+
 /* ...generic memory allocator */
 #include "xf-mm.h"
 
@@ -100,12 +104,22 @@
 /* ...system abstractions */
 #include "xf-sys.h"
 
-/* ...memory management */
-#include "xf-mem.h"
-
 /* ...common timebase */
 #include "xf-timebase.h"
 
 /* ...probe port */
 #include "xf-probe.h"
 
+#if (XF_CFG_CORES_NUM > 1)
+/* ...inter-core shared memory */
+#include "xf-shared.h"
+
+/* ...inter-core IPC */
+#include "xf-ipc-if.h"
+
+/* ...IPC mem interfaces */
+#include "xf-mem-ipc.h"
+#endif //XF_CFG_CORES_NUM
+
+/* ...memory management */
+#include "xf-mem.h"

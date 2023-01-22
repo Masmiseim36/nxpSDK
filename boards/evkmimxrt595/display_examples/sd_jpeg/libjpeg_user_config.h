@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019,2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,9 @@
 
 #define LIBJPEG_USER_CONFIG_PIXEL_FORMAT 1
 
-#if ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055IQH091 == DEMO_PANEL))
+#if ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || \
+     (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || \
+     (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
 
 /* The LCDIF does not support RGB888. So use XRGB8888 here. */
 #define RGB_RED       2 /* Offset of Red in an RGB scanline element */

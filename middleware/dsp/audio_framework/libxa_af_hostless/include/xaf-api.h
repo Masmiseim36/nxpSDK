@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -33,12 +33,30 @@
 /* Port BITMASK creation macro */
 #define XAF_PORT_MASK(idx)                  (1 << (idx))
 
+/* Ext param set flag */
+#define XAF_EXT_PARAM_SET_FLAG(idx)         (1 << (idx))
+
+/* Ext param clear flag */
+#define XAF_EXT_PARAM_CLEAR_FLAG(idx)       (~(1 << (idx)))
+
+/* Check if the ext param flag is set */
+#define XAF_CHK_EXT_PARAM_FLAG(flag, idx)   ((flag) & (1 << (idx)))
+
 #define XAF_MAX_WORKER_THREADS              16
 
-/* ...num thread arguments to DSP */
-#define XAF_NUM_THREAD_ARGS                 16
+#ifndef XF_CFG_CORES_NUM
+#define XF_CFG_CORES_NUM                    2
+#endif //XF_CFG_CORES_NUM
 
-//#endif
+#define XF_CORE_ID_MASTER                   0
+
+#if (XF_CFG_CORES_NUM > 1)
+#define XF_EXTERNAL_INTERRUPT_NUMBER	    7
+#endif //XF_CFG_CORES_NUM
+
+enum {
+    XAF_EXT_PARAM_FLAG_OFFSET_ZERO_COPY = 0,
+};
 
 typedef enum {
     XAF_DECODER         = 0,
@@ -65,6 +83,7 @@ typedef enum {
     XAF_PROBE_READY     = 4,
     XAF_PROBE_DONE      = 5,
     XAF_EXEC_DONE       = 6,
+    XAF_INIT_NEED_INPUT = 7,
 } xaf_comp_status;
 
 typedef enum {
@@ -85,6 +104,7 @@ typedef enum {
     XAF_API_ERR         = -5,
     XAF_TIMEOUT_ERR     = -6,   // Get status timeout
     XAF_MEMORY_ERR      = -7,   // Memory allocation or availability error
+    XAF_NUM_ERRS        = -8,   // Make sure this is always the last one
 } XAF_ERR_CODE;
 
 typedef enum {
@@ -105,20 +125,12 @@ typedef enum {
 } xaf_error_channel_ctl;
 #endif
 
-typedef struct xaf_format_s {
-    UWORD32             sample_rate;
-    UWORD32             channels;
-    UWORD32             pcm_width;
-    UWORD32             input_length;
-    UWORD32             output_length;
-    UWORD64             output_produced;
-} xaf_format_t;
-
 enum xaf_comp_config_param {
     XAF_COMP_CONFIG_PARAM_PROBE_ENABLE = 0x20000 + 0x0,
     XAF_COMP_CONFIG_PARAM_RELAX_SCHED  = 0x20000 + 0x1,
     XAF_COMP_CONFIG_PARAM_PRIORITY     = 0x20000 + 0x2,
     XAF_COMP_CONFIG_PARAM_SELF_SCHED   = 0x20000 + 0x3, 
+    XAF_COMP_CONFIG_PARAM_DEC_INIT_WO_INP   = 0x20000 + 0x4, 
     XAF_COMP_CONFIG_PARAM_EVENT_CB     = 0x20000 + 0xE, 
 };
 
@@ -138,6 +150,30 @@ typedef struct xa_raise_event_cb_s
 }xa_raise_event_cb_t;
 #endif
 
+/*... performance stats structure for MCPS.
+ * For a cached subsystem, the size is cache aligned */
+
+#if (XF_CFG_CORES_NUM > 1)
+#include <xtensa/config/core.h>
+struct xaf_perf_stats_s{
+    long long tot_cycles;
+    long long frmwk_cycles;
+    long long dsp_comps_cycles;
+    int dsp_frmwk_buf_size_peak;
+    int dsp_comp_buf_size_peak;
+    int dsp_shmem_buf_size_peak;
+    int dsp_xaf_buf_size_peak;
+} __attribute__ ((aligned(XCHAL_DCACHE_LINESIZE)));
+#else //if(XF_CFG_CORES_NUM > 1)
+struct xaf_perf_stats_s{
+    long long tot_cycles;
+    long long frmwk_cycles;
+    long long dsp_comps_cycles;
+};
+#endif //if(XF_CFG_CORES_NUM > 1)
+typedef struct xaf_perf_stats_s xaf_perf_stats_t;
+#define XF_SHMEM_SIZE_PERF_STATS    (sizeof(xaf_perf_stats_t) * XF_CFG_CORES_NUM)
+
 /* ...api config structs */
 typedef struct xaf_adev_config_s{
 	xaf_mem_malloc_fxn_t *pmem_malloc;
@@ -150,6 +186,15 @@ typedef struct xaf_adev_config_s{
 	UWORD32 proxy_thread_priority;
 	UWORD32 dsp_thread_priority;
 	UWORD32	worker_thread_scratch_size[XAF_MAX_WORKER_THREADS];
+    UWORD32 core;
+    void * pshmem_frmwk;
+    void * pshmem_dsp;
+    UWORD32 audio_shmem_buffer_size;
+
+    int (*cb_compute_cycles)(xaf_perf_stats_t*); /* ... callback function pointer to update the thread-wise cycles into stats structure */
+
+    xaf_perf_stats_t *cb_stats; /* ... pointer to worker stats structure */
+
 }xaf_adev_config_t;
 
 typedef struct xaf_comp_config_s{
@@ -157,28 +202,48 @@ typedef struct xaf_comp_config_s{
 	xaf_comp_type comp_type;
 	UWORD32 num_input_buffers;
 	UWORD32 num_output_buffers;
+	UWORD32 cfg_param_ext_buf_size_max;
 	pVOID (*pp_inbuf)[XAF_MAX_INBUFS];
+    UWORD32 core;
 #ifndef XA_DISABLE_EVENT
 	UWORD32 error_channel_ctl;
     UWORD32 num_err_msg_buf;
 #endif
 }xaf_comp_config_t;
 
+typedef struct xaf_ext_buffer
+{
+    /* ...max data size */
+    UWORD32 max_data_size;
+
+    /* ...valid data size */
+    UWORD32 valid_data_size;
+
+    /* ...indicates whether in-place-buffer used */
+    UWORD32 ext_config_flags;
+
+    /* ...parameter data (4 bytes aligned) */
+    UWORD8 *data;
+
+} __attribute__ ((__packed__, __aligned__(4))) xaf_ext_buffer_t;
+
 /* Function prototypes */
 XAF_ERR_CODE xaf_adev_config_default_init(xaf_adev_config_t *pconfig);
 XAF_ERR_CODE xaf_adev_open(pVOID *pp_adev, xaf_adev_config_t *pconfig);
 XAF_ERR_CODE xaf_adev_close(pVOID p_adev, xaf_adev_close_flag flag);
-XAF_ERR_CODE xaf_adev_set_priorities(pVOID p_adev, WORD32 n_rt_priorities, WORD32 rt_priority_base, WORD32 bg_priority);
+XAF_ERR_CODE xaf_adev_set_priorities(pVOID p_adev, WORD32 n_rt_priorities, WORD32 rt_priority_base, WORD32 bg_priority, UWORD32 core);
 
 XAF_ERR_CODE xaf_comp_config_default_init(xaf_comp_config_t *pconfig);
 XAF_ERR_CODE xaf_comp_create(pVOID p_adev, pVOID *pp_comp, xaf_comp_config_t *pconfig);
 XAF_ERR_CODE xaf_comp_delete(pVOID p_comp);
 XAF_ERR_CODE xaf_comp_set_config(pVOID p_comp, WORD32 num_param, pWORD32 p_param);
+XAF_ERR_CODE xaf_comp_set_config_ext(pVOID comp_ptr, WORD32 num_param, WORD32 *p_param);
 XAF_ERR_CODE xaf_comp_get_config(pVOID p_comp, WORD32 num_param, pWORD32 p_param);
+XAF_ERR_CODE xaf_comp_get_config_ext(pVOID comp_ptr, WORD32 num_param, WORD32 *p_param);
 XAF_ERR_CODE xaf_comp_process(pVOID p_adev, pVOID p_comp, pVOID p_buf, UWORD32 length, xaf_comp_flag flag);
 XAF_ERR_CODE xaf_connect(pVOID p_src, WORD32 src_out_port, pVOID p_dest, WORD32 dest_in_port, WORD32 num_buf);
 XAF_ERR_CODE xaf_disconnect(pVOID p_src, WORD32 src_out_port, pVOID p_dest, WORD32 dest_in_port);
-XAF_ERR_CODE xaf_get_mem_stats(pVOID p_dev, WORD32 *pmem_info);
+XAF_ERR_CODE xaf_get_mem_stats(pVOID p_dev, UWORD32 core, WORD32 *pmem_info);
 
 XAF_ERR_CODE xaf_comp_get_status(pVOID p_adev, pVOID p_comp, xaf_comp_status *p_status, pVOID p_info);
 XAF_ERR_CODE xaf_get_verinfo(pUWORD8 ver_info[3]);
@@ -194,8 +259,8 @@ XAF_ERR_CODE xaf_create_event_channel(pVOID p_src, UWORD32 src_config_param, pVO
 XAF_ERR_CODE xaf_delete_event_channel(pVOID p_src, UWORD32 src_config_param, pVOID p_dest, UWORD32 dst_config_param);
 #endif
 
-#ifndef XA_DISABLE_DEPRECATED_API
-XAF_ERR_CODE xaf_adev_open_deprecated(pVOID *pp_adev, WORD32 audio_frmwk_buf_size, WORD32 audio_comp_buf_size, xaf_mem_malloc_fxn_t mem_malloc, xaf_mem_free_fxn_t mem_free);
-XAF_ERR_CODE xaf_comp_create_deprecated(pVOID adev_ptr, pVOID *pp_comp, xf_id_t comp_id, UWORD32 ninbuf, UWORD32 noutbuf, pVOID pp_inbuf[], xaf_comp_type comp_type);
-#endif
+#if (XF_CFG_CORES_NUM > 1)
+XAF_ERR_CODE xaf_dsp_open(pVOID *pp_adev, xaf_adev_config_t *pconfig);
+XAF_ERR_CODE xaf_dsp_close(pVOID p_adev);
+#endif //XF_CFG_CORES_NUM
 #endif /* __XA_API_H__ */

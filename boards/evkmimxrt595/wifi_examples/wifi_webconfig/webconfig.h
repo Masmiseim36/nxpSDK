@@ -12,6 +12,8 @@
  * Definitions
  ******************************************************************************/
 
+/* @TEST_ANCHOR */
+
 /* Common Wi-Fi parameters */
 #ifndef WIFI_SSID
 #define WIFI_SSID "nxp_configuration_access_point"

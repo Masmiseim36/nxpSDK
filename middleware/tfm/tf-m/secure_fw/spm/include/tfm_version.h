@@ -11,7 +11,7 @@
 /*
  * Defines for TFM version.
  */
-#define TFM_VERSION        1.5.0
+#define TFM_VERSION        1.6.0
 
 #define VERSION_STRING     ""
 

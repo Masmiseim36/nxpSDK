@@ -1,19 +1,11 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 #-------------------------------------------------------------------------------
 
 if (NOT TFM_PARTITION_INITIAL_ATTESTATION)
-    if(TFM_PARTITION_PSA_PROXY)
-        add_library(tfm_attestation_defs INTERFACE)
-
-        target_include_directories(tfm_attestation_defs
-            INTERFACE
-                .
-        )
-    endif()
     return()
 endif()
 
@@ -26,6 +18,7 @@ target_sources(tfm_psa_rot_partition_attestation PRIVATE
     tfm_attest.c
     tfm_attest_req_mngr.c
     attest_core.c
+    attest_boot_data.c
     $<$<NOT:$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>>:attest_asymmetric_key.c>
     $<$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>:attest_symmetric_key.c>
     attest_token_encode.c
@@ -57,22 +50,22 @@ target_include_directories(tfm_partitions
 
 target_link_libraries(tfm_psa_rot_partition_attestation
     PRIVATE
-        tfm_secure_api
         platform_s
         tfm_qcbor_s
         tfm_t_cose_s
-        secure_fw
-        psa_interface
         tfm_sprt
+        tfm_boot_status
 )
 
 target_compile_definitions(tfm_psa_rot_partition_attestation
     PRIVATE
-        $<$<CONFIG:Debug>:INCLUDE_TEST_CODE>
+        $<$<BOOL:${ATTEST_INCLUDE_TEST_CODE}>:INCLUDE_TEST_CODE>
         $<$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>:SYMMETRIC_INITIAL_ATTESTATION>
         $<$<BOOL:${ATTEST_INCLUDE_OPTIONAL_CLAIMS}>:INCLUDE_OPTIONAL_CLAIMS>
         $<$<BOOL:${ATTEST_INCLUDE_COSE_KEY_ID}>:INCLUDE_COSE_KEY_ID>
         $<$<NOT:$<BOOL:${PLATFORM_DEFAULT_ATTEST_HAL}>>:CLAIM_VALUE_CHECK>
+        ATTEST_TOKEN_PROFILE_${ATTEST_TOKEN_PROFILE}
+        $<$<NOT:$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>>:ATTEST_KEY_BITS=${ATTEST_KEY_BITS}>
 )
 
 ########################### Attest defs ########################################
@@ -82,6 +75,11 @@ add_library(tfm_attestation_defs INTERFACE)
 target_include_directories(tfm_attestation_defs
     INTERFACE
         .
+)
+
+target_compile_definitions(tfm_attestation_defs
+    INTERFACE
+        ATTEST_TOKEN_PROFILE_${ATTEST_TOKEN_PROFILE}
 )
 
 ############################ Secure API ########################################
@@ -112,4 +110,13 @@ target_link_libraries(tfm_partitions
 target_compile_definitions(tfm_partition_defs
     INTERFACE
     TFM_PARTITION_INITIAL_ATTESTATION
+)
+
+################ Display the configuration being applied #######################
+
+include(utils)
+dump_options("Initial Attestation config"
+"
+    ATTEST_STACK_SIZE
+"
 )

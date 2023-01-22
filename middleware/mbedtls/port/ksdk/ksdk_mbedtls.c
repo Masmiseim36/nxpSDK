@@ -279,18 +279,6 @@ static bool crypto_key_is_loaded(const void *ctx)
 }
 #endif
 
-#if defined(MBEDTLS_SHA1_ALT) || defined(MBEDTLS_SHA256_ALT)
-/* Implementation that should never be optimized out by the compiler */
-static void mbedtls_zeroize(void *v, size_t n)
-{
-    volatile unsigned char *p = v;
-    while (0U != n--)
-    {
-        *p++ = 0;
-    }
-}
-#endif /* MBEDTLS_SHA1_ALT || MBEDTLS_SHA256_ALT */
-
 /******************************************************************************/
 /******************** CRYPTO_InitHardware **************************************/
 /******************************************************************************/

@@ -1,4 +1,4 @@
-<map id="boardkit/evk&#45;mimxrt1015/frdm&#45;stbc&#45;agm01/issdk_hal.h" name="boardkit/evk&#45;mimxrt1015/frdm&#45;stbc&#45;agm01/issdk_hal.h">
-<area shape="rect" id="node2" href="$a00710.html" title="The evkmimxrt1015.h file defines GPIO pin mappings for evkmimxrt1015 board. " alt="" coords="5,95,125,121"/>
-<area shape="rect" id="node3" href="$a04499.html" title="frdm_stbc_agm01_shield.h" alt="" coords="150,95,327,121"/>
+<map id="boardkit/frdm&#45;ke15z/frdm&#45;stbi&#45;dp300x/issdk_hal.h" name="boardkit/frdm&#45;ke15z/frdm&#45;stbi&#45;dp300x/issdk_hal.h">
+<area shape="rect" id="node5" href="$a00674.html" title="The frdm_ke15z.h file defines GPIO pin mappings for FRDM&#45;KE15Z board. " alt="" coords="450,95,550,121"/>
+<area shape="rect" id="node6" href="$a00668.html" title="frdm&#45;stbi&#45;dp300x_shield.h" alt="" coords="575,95,745,121"/>
 </map>

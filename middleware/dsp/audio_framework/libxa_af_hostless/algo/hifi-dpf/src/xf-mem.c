@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -38,7 +38,9 @@
  * Internal helpers
  ******************************************************************************/
 
-#define XA_COMP_BUF_SHMEM_STRUCT_SIZE   (12288)     /* 12KB for struct xf_proxy_host_data for App Interface Layer and DSP Interface Layer */
+/* ...offset of frmwrk buffer pool start in (xf_shmem_data_t), 
+ * after considering struct xf_proxy_host_data for App Interface Layer and DSP Interface Layer */
+#define XA_COMP_BUF_SHMEM_STRUCT_SIZE   (sizeof(xf_shmem_data_t)-XF_CFG_REMOTE_IPC_POOL_SIZE)
 
 /* ...initialize block */
 static inline xf_mm_block_t * xf_mm_block_init(void *addr, UWORD32 size)
@@ -276,16 +278,16 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
     /* update the buffer utilization counters for DSP's component and framework buffers */
     if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer))->buffer)
     {
-        xf_g_dsp->dsp_frmwk_buf_size_curr += size;
-        if (xf_g_dsp->dsp_frmwk_buf_size_curr > xf_g_dsp->dsp_frmwk_buf_size_peak)
-            xf_g_dsp->dsp_frmwk_buf_size_peak = xf_g_dsp->dsp_frmwk_buf_size_curr;
+        *xf_g_dsp->pdsp_frmwk_buf_size_curr += size;
+        if (*xf_g_dsp->pdsp_frmwk_buf_size_curr > *xf_g_dsp->pdsp_frmwk_buf_size_peak)
+            *xf_g_dsp->pdsp_frmwk_buf_size_peak = *xf_g_dsp->pdsp_frmwk_buf_size_curr;
         
     }
     else if(pool->addr == xf_g_dsp->xf_dsp_local_buffer)
     {
-        xf_g_dsp->dsp_comp_buf_size_curr += size;
-        if (xf_g_dsp->dsp_comp_buf_size_curr > xf_g_dsp->dsp_comp_buf_size_peak)
-            xf_g_dsp->dsp_comp_buf_size_peak = xf_g_dsp->dsp_comp_buf_size_curr;
+        *xf_g_dsp->pdsp_comp_buf_size_curr += size;
+        if (*xf_g_dsp->pdsp_comp_buf_size_curr > *xf_g_dsp->pdsp_comp_buf_size_peak)
+            *xf_g_dsp->pdsp_comp_buf_size_peak = *xf_g_dsp->pdsp_comp_buf_size_curr;
     }
 
     /* ...check if the size is exactly the same as requested */
@@ -305,7 +307,7 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
         xf_mm_insert_size(pool, b, size);
 
         xf_flx_unlock(&pool->lock);
-        TRACE(INFO, _b("Allocated: pool=%p buffer=%p size=%d"), pool, b, osize);
+        TRACE(INFO, _b("Allocated: pool=%p buffer=%p size=%d"), pool, (void *) b + size, osize);
         /* ...A-map remains intact; tail of the block goes to user */
         return (void *) b + size;
     }
@@ -325,11 +327,11 @@ void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
 #if 1 //TENA-2491
     if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer))->buffer)
     {
-        xf_g_dsp->dsp_frmwk_buf_size_curr -= size;
+        *xf_g_dsp->pdsp_frmwk_buf_size_curr -= size;
     }
     else if(pool->addr == xf_g_dsp->xf_dsp_local_buffer)
     {
-        xf_g_dsp->dsp_comp_buf_size_curr -= size;
+        *xf_g_dsp->pdsp_comp_buf_size_curr -= size;
     }
 #endif    
 
@@ -404,6 +406,7 @@ int xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size)
     XF_CHK_ERR(((UWORD32)addr & (sizeof(xf_mm_block_t) - 1)) == 0, XAF_INVALIDVAL_ERR);
 
     /* ...check pool size validity */
+    TRACE(INIT, _b("size=%d "), size);
     XF_CHK_ERR(((size) & (sizeof(xf_mm_block_t) - 1)) == 0, XAF_INVALIDVAL_ERR);
     
     /* ...set pool parameters (need that stuff at all? - tbd) */    
@@ -422,11 +425,11 @@ int xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size)
     /* initialize the buffer size utilization counters for DSP's component and framework buffers */
     if(addr == (xf_g_dsp->xf_ap_shmem_buffer + XA_COMP_BUF_SHMEM_STRUCT_SIZE))
     {
-        xf_g_dsp->dsp_frmwk_buf_size_peak = xf_g_dsp->dsp_frmwk_buf_size_curr = XA_COMP_BUF_SHMEM_STRUCT_SIZE;
+        *xf_g_dsp->pdsp_frmwk_buf_size_peak = *xf_g_dsp->pdsp_frmwk_buf_size_curr = XA_COMP_BUF_SHMEM_STRUCT_SIZE;
     }
     else if(addr == (xf_g_dsp->xf_dsp_local_buffer))
     {
-        xf_g_dsp->dsp_comp_buf_size_peak = xf_g_dsp->dsp_comp_buf_size_curr = 0;
+        *xf_g_dsp->pdsp_comp_buf_size_peak = *xf_g_dsp->pdsp_comp_buf_size_curr = 0;
     }
 
     return 0;

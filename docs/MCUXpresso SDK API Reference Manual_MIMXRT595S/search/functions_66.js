@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['flexcomm_5fgetinstance',['FLEXCOMM_GetInstance',['../a00240.html#ga59338c42d2715c76e95c4dc2c1190f08',1,'fsl_flexcomm.h']]],
-  ['flexcomm_5finit',['FLEXCOMM_Init',['../a00240.html#gaff39b352ed7517521dfcece68ba34327',1,'fsl_flexcomm.h']]],
-  ['flexcomm_5fsetirqhandler',['FLEXCOMM_SetIRQHandler',['../a00240.html#gaedf64691b871a2b0ea6a68fab284376a',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fgetinstance',['FLEXCOMM_GetInstance',['../a00239.html#ga59338c42d2715c76e95c4dc2c1190f08',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5finit',['FLEXCOMM_Init',['../a00239.html#gaff39b352ed7517521dfcece68ba34327',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fsetirqhandler',['FLEXCOMM_SetIRQHandler',['../a00239.html#gaedf64691b871a2b0ea6a68fab284376a',1,'fsl_flexcomm.h']]],
   ['flexio_5fclearshiftererrorflags',['FLEXIO_ClearShifterErrorFlags',['../a00023.html#ga0b6f2a30e4a265077a3516ef9b56c0e9',1,'fsl_flexio.h']]],
   ['flexio_5fclearshifterstatusflags',['FLEXIO_ClearShifterStatusFlags',['../a00023.html#gadfc3bc7f461c0e43f88a2c20b1d1cf71',1,'fsl_flexio.h']]],
   ['flexio_5fcleartimerstatusflags',['FLEXIO_ClearTimerStatusFlags',['../a00023.html#gaa61aa3b919ac1c0622076d631f14d3af',1,'fsl_flexio.h']]],
@@ -96,6 +96,7 @@ var searchData=
   ['flexio_5freadpininput',['FLEXIO_ReadPinInput',['../a00023.html#ga8bd12008b5e59ec3e63da736c3c7a9b6',1,'fsl_flexio.h']]],
   ['flexio_5fregisterhandleirq',['FLEXIO_RegisterHandleIRQ',['../a00023.html#gaa69efc375ec2d7c2a84c1fb91b8953fc',1,'fsl_flexio.h']]],
   ['flexio_5freset',['FLEXIO_Reset',['../a00023.html#ga5a2be6b9a88ef67fa057acf98066cbbc',1,'fsl_flexio.h']]],
+  ['flexio_5fsetclockmode',['FLEXIO_SetClockMode',['../a00023.html#gac5178222cc0d3b410723d9100df532ad',1,'fsl_flexio.h']]],
   ['flexio_5fsetshifterconfig',['FLEXIO_SetShifterConfig',['../a00023.html#ga01ef8ce3081a0276707d93a5214b2858',1,'fsl_flexio.h']]],
   ['flexio_5fsettimerconfig',['FLEXIO_SetTimerConfig',['../a00023.html#ga84363290deba8506240427b3b5600c60',1,'fsl_flexio.h']]],
   ['flexio_5fspi_5fclearstatusflags',['FLEXIO_SPI_ClearStatusFlags',['../a00028.html#ga53311c201694351c61d5d56f2924d73e',1,'fsl_flexio_spi.h']]],
@@ -178,7 +179,7 @@ var searchData=
   ['flexspi_5fgetrxfifoaddress',['FLEXSPI_GetRxFifoAddress',['../a00030.html#ga34c014e6d3d86f854f2ff767f0891dbe',1,'fsl_flexspi.h']]],
   ['flexspi_5fgettxfifoaddress',['FLEXSPI_GetTxFifoAddress',['../a00030.html#gab0476f9699fc375fee33a5afc7ec5ee8',1,'fsl_flexspi.h']]],
   ['flexspi_5finit',['FLEXSPI_Init',['../a00030.html#ga8f12065e78d8a8c6527b0a937f06316d',1,'fsl_flexspi.h']]],
-  ['flexspi_5freadblocking',['FLEXSPI_ReadBlocking',['../a00030.html#ga3c4c3127c9420d3a97755dec9931a306',1,'fsl_flexspi.h']]],
+  ['flexspi_5freadblocking',['FLEXSPI_ReadBlocking',['../a00030.html#ga60aa4f8455c65b2c90ff4e42fc425c82',1,'fsl_flexspi.h']]],
   ['flexspi_5freaddata',['FLEXSPI_ReadData',['../a00030.html#ga05c507ce3babcb459cda71a4ab347eae',1,'fsl_flexspi.h']]],
   ['flexspi_5fresetfifos',['FLEXSPI_ResetFifos',['../a00030.html#gadd183feac77a644fe03802bd2989d1f7',1,'fsl_flexspi.h']]],
   ['flexspi_5fsetflashconfig',['FLEXSPI_SetFlashConfig',['../a00030.html#ga43bbcb0a954c93243a0dc472e07db7d3',1,'fsl_flexspi.h']]],
@@ -197,9 +198,9 @@ var searchData=
   ['flexspi_5fupdatedllvalue',['FLEXSPI_UpdateDllValue',['../a00030.html#ga03e96ef7a2fbf0c6a931b4d6701bb573',1,'fsl_flexspi.h']]],
   ['flexspi_5fupdatelut',['FLEXSPI_UpdateLUT',['../a00030.html#ga160f066685276e79b0f79968e3087489',1,'fsl_flexspi.h']]],
   ['flexspi_5fupdaterxsampleclock',['FLEXSPI_UpdateRxSampleClock',['../a00030.html#ga482b015aec3e0491c9359e698ca638a1',1,'fsl_flexspi.h']]],
-  ['flexspi_5fwriteblocking',['FLEXSPI_WriteBlocking',['../a00030.html#ga280f49b55e211c416f38085dd67c0559',1,'fsl_flexspi.h']]],
+  ['flexspi_5fwriteblocking',['FLEXSPI_WriteBlocking',['../a00030.html#ga9707db6bb7aaac807060bf4036554787',1,'fsl_flexspi.h']]],
   ['flexspi_5fwritedata',['FLEXSPI_WriteData',['../a00030.html#ga054519fc1555d02f1c3e6652631e50ae',1,'fsl_flexspi.h']]],
-  ['fmeas_5fgetfrequency',['FMEAS_GetFrequency',['../a00250.html#gac6ee7be474a37d4c17120b54fc8b856a',1,'fsl_fmeas.h']]],
-  ['fmeas_5fismeasurecomplete',['FMEAS_IsMeasureComplete',['../a00250.html#ga39ff45995edf620470c1397b1edd83b5',1,'fsl_fmeas.h']]],
-  ['fmeas_5fstartmeasure',['FMEAS_StartMeasure',['../a00250.html#gaf1392245996cea51e17175085a0c3cef',1,'fsl_fmeas.h']]]
+  ['fmeas_5fgetfrequency',['FMEAS_GetFrequency',['../a00249.html#gac6ee7be474a37d4c17120b54fc8b856a',1,'fsl_fmeas.h']]],
+  ['fmeas_5fismeasurecomplete',['FMEAS_IsMeasureComplete',['../a00249.html#ga39ff45995edf620470c1397b1edd83b5',1,'fsl_fmeas.h']]],
+  ['fmeas_5fstartmeasure',['FMEAS_StartMeasure',['../a00249.html#gaf1392245996cea51e17175085a0c3cef',1,'fsl_fmeas.h']]]
 ];

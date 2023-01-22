@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -54,8 +54,11 @@ static inline int xf_ipi_wait(UWORD32 core)
 
     __xf_event_wait_any(msgq_event, CMD_MSGQ_READY | DSP_DIE_MSGQ_ENTRY);
     if (__xf_event_get(msgq_event) & DSP_DIE_MSGQ_ENTRY)
+    {
         return 0;
-    __xf_event_clear(msgq_event, CMD_MSGQ_READY | DSP_DIE_MSGQ_ENTRY);
+    }
+	__xf_event_clear(msgq_event, CMD_MSGQ_READY | DSP_DIE_MSGQ_ENTRY);
+
     return 1;
 }
 
@@ -67,17 +70,35 @@ static inline void xf_ipi_resume(UWORD32 core)
 /* ...complete IPI waiting and resume dsp thread (non ISR-safe) */
 static inline void xf_ipi_resume_dsp(UWORD32 core)
 {
-	xf_core_ro_data_t *ro = XF_CORE_RO_DATA(core);
+    if(core == XF_CORE_ID_MASTER)
+    {
+    	xf_core_ro_data_t *ro = XF_CORE_RO_DATA(core);
 
-	__xf_event_set(ro->ipc.msgq_event, CMD_MSGQ_READY);
+	    __xf_event_set(ro->ipc.msgq_event, CMD_MSGQ_READY);
+    }
+#if (XF_CFG_CORES_NUM > 1)
+    else
+    {
+        __xf_event_set(xf_g_dsp->pmsgq_event, CMD_MSGQ_READY);
+    }
+#endif
 }
 
 /* ...complete IPI waiting and resume dsp thread (ISR safe) */
 static inline void xf_ipi_resume_dsp_isr(UWORD32 core)
 {
-	xf_core_ro_data_t *ro = XF_CORE_RO_DATA(core);
+    if(core == XF_CORE_ID_MASTER)
+    {
+        xf_core_ro_data_t *ro = XF_CORE_RO_DATA(core);
 
-	__xf_event_set_isr(ro->ipc.msgq_event, CMD_MSGQ_READY);
+        __xf_event_set_isr(ro->ipc.msgq_event, CMD_MSGQ_READY);
+    }
+#if (XF_CFG_CORES_NUM > 1)
+    else
+    {
+        __xf_event_set_isr(xf_g_dsp->pmsgq_event, CMD_MSGQ_READY);
+    }
+#endif
 }
 
 /* ...assert IPI interrupt on remote core - board-specific */

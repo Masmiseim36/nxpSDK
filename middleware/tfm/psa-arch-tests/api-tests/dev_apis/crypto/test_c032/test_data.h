@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -152,10 +152,10 @@ static const test_data check1[] = {
 #endif
 
 #ifdef ARCH_TEST_CIPHER_MODE_CTR
-#ifdef ARCH_TEST_ARC4
+#ifdef ARCH_TEST_DES
 {
     .test_desc       = "Test psa_cipher_encrypt_setup - incompatible key ARC4\n",
-    .type            = PSA_KEY_TYPE_ARC4,
+    .type            = PSA_KEY_TYPE_DES,
     .data            = key_data,
     .data_length     = AES_16B_KEY_SIZE,
     .bits            = BYTES_TO_BITS(AES_16B_KEY_SIZE),

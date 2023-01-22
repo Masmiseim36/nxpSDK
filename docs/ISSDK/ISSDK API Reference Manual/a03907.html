@@ -50,7 +50,7 @@ $(function() {
 <p>The GPIO Pin Configuration i.MX SDK.  
  <a href="a03907.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a04835_source.html">gpio_driver.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a04862_source.html">gpio_driver.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for gpioConfigiMXSDK:</div>
 <div class="dyncontent">
@@ -63,16 +63,20 @@ Data Fields</h2></td></tr>
 <tr class="separator:a8d80002047482cef61fe6041cc9a52a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a460673b988f072fa76c7b5142d881320"><td class="memItemLeft" align="right" valign="top">gpio_interrupt_mode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03907.html#a460673b988f072fa76c7b5142d881320">interruptMode</a></td></tr>
 <tr class="separator:a460673b988f072fa76c7b5142d881320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a247451bf7506b3e86bc6df685607ed8d"><td class="memItemLeft" align="right" valign="top">rgpio_pin_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03907.html#a247451bf7506b3e86bc6df685607ed8d">pinConfig</a></td></tr>
+<tr class="separator:a247451bf7506b3e86bc6df685607ed8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4a5de0990b95619b3e028001fa8cb40"><td class="memItemLeft" align="right" valign="top">rgpio_interrupt_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03907.html#ac4a5de0990b95619b3e028001fa8cb40">interruptMode</a></td></tr>
+<tr class="separator:ac4a5de0990b95619b3e028001fa8cb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dec505518c98e4fd8ae3129703792bc"><td class="memItemLeft" align="right" valign="top">gpio_interrupt_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03907.html#a4dec505518c98e4fd8ae3129703792bc">interruptMode</a></td></tr>
 <tr class="separator:a4dec505518c98e4fd8ae3129703792bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The GPIO Pin Configuration i.MX SDK. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00040">40</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00040">40</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a460673b988f072fa76c7b5142d881320"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a460673b988f072fa76c7b5142d881320">&#9670;&nbsp;</a></span>interruptMode <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a460673b988f072fa76c7b5142d881320">&#9670;&nbsp;</a></span>interruptMode <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -84,12 +88,12 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Interrupt mode for a pin. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00043">43</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00043">43</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 
 </div>
 </div>
 <a id="a4dec505518c98e4fd8ae3129703792bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dec505518c98e4fd8ae3129703792bc">&#9670;&nbsp;</a></span>interruptMode <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dec505518c98e4fd8ae3129703792bc">&#9670;&nbsp;</a></span>interruptMode <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -101,12 +105,29 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Interrupt mode for a pin. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04838_source.html#l00043">43</a> of file <a class="el" href="a04838_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04868_source.html#l00043">43</a> of file <a class="el" href="a04868_source.html">gpio_driver.h</a>.</p>
+
+</div>
+</div>
+<a id="ac4a5de0990b95619b3e028001fa8cb40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4a5de0990b95619b3e028001fa8cb40">&#9670;&nbsp;</a></span>interruptMode <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rgpio_interrupt_config_t interruptMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Interrupt mode for a pin. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04865_source.html#l00044">44</a> of file <a class="el" href="a04865_source.html">gpio_driver.h</a>.</p>
 
 </div>
 </div>
 <a id="a8d80002047482cef61fe6041cc9a52a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d80002047482cef61fe6041cc9a52a1">&#9670;&nbsp;</a></span>pinConfig</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d80002047482cef61fe6041cc9a52a1">&#9670;&nbsp;</a></span>pinConfig <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -118,17 +139,34 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>General pin charactertics. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00042">42</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00042">42</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
+
+</div>
+</div>
+<a id="a247451bf7506b3e86bc6df685607ed8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a247451bf7506b3e86bc6df685607ed8d">&#9670;&nbsp;</a></span>pinConfig <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rgpio_pin_config_t pinConfig</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>General pin charactertics. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04865_source.html#l00043">43</a> of file <a class="el" href="a04865_source.html">gpio_driver.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>drivers/gpio/i.mx/<a class="el" href="a04835_source.html">gpio_driver.h</a></li>
+<li>drivers/gpio/i.mx/<a class="el" href="a04862_source.html">gpio_driver.h</a></li>
 </ul>
 </div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>
-&copy; Copyright 2016-2020 NXP. All Rights Reserved.
+&copy; Copyright 2016-2022 NXP. All Rights Reserved. SPDX-License-Identifier: BSD-3-Clause
 </small></address>
 </body>
 </html>

@@ -229,15 +229,51 @@
 /** Characteristic supports Signed Write on its value */
 #define GATT_DB_CHAR_SIGNED_WRITE_PROPERTY             0x00000040U
 
-/** Characteristic supports write on its User Description Descriptor */
-#define GATT_DB_CHAR_WRIEABLE_AUX_PROPERTY             0x00000200U
-
 /**
  * Characteristic supports Write on its descriptor
  * Setting this property automatically includes Characteristic
  * Extended Properties Descriptor to the Characteristic
  */
 #define GATT_DB_CHAR_EXTENDED_PROPERTY                 0x00000080U
+
+/** Characteristic supports write on its User Description Descriptor */
+#define GATT_DB_CHAR_WRITEABLE_AUX_PROPERTY            0x00000200U
+
+/** \cond ignore_this unused */
+/* Corrected Typo and Adding this macro for Backward Compatibility */
+/** Characteristic supports write on its User Description Descriptor */
+/** TODO: This is currently not used anywhere. To be made Obsolete */
+#define GATT_DB_CHAR_WRIEABLE_AUX_PROPERTY             GATT_DB_CHAR_WRITEABLE_AUX_PROPERTY
+/** \endcond */
+
+/**
+ * Auxiliary Property used to indicate if a Characteristic supports variable
+ * length vales as Characteristic Values. This is to be passed as "property"
+ * member of \ref BT_gatt_db_add_characteristic(...) when adding a
+ * Characteristic in a GATT Database.
+ * The value for this corresponds to BIT14 being SET.
+ * This could also be used during the Characteristic Descriptor addition
+ * to GATT Database.
+ *
+ * \note: This is not used in a static GATT DB i.e. is GATT_DB_DYNAMIC
+ * feature is not used.
+ */
+#define GATT_DB_CHAR_VARIABLE_LENGTH_AUX_PROPERTY      0x00004000U
+
+/**
+ * Auxiliary Property used to indicate if a Characteristic supports
+ * maintenance of Characteristic Values specific to each Peer Device.
+ * This is to be passed as "property" member of
+ * \ref BT_gatt_db_add_characteristic(...) when adding a Characteristic
+ * in a GATT Database.
+ * The value for this corresponds to BIT15 being SET.
+ * This could also be used during the Characteristic Descriptor addition
+ * to GATT Database.
+ *
+ * \note: This is not used in a static GATT DB i.e. is GATT_DB_DYNAMIC
+ * feature is not used.
+ */
+#define GATT_DB_CHAR_PEER_SPECIFIC_AUX_PROPERTY        0x00008000
 
 /** No Auxillary Property */
 #define GATT_DB_NO_AUXILLARY_PROPERTY                  0x00U
@@ -632,6 +668,19 @@ typedef struct
     /**  Offset where the Descriptor Value is located */
     DECL_CONST UCHAR     * data_offset;
 
+#ifdef GATT_DB_DYNAMIC
+    /**
+     * This member tracks the current state of an attribute
+     * Discovery/Operations on this attribute needs to be valid
+     * only when its set to \ref BT_TRUE.
+     * If the state is set to \ref BT_FALSE this attribute is out
+     * of bounds.
+     */
+    UCHAR      is_active;
+#endif /* GATT_DB_DYNAMIC */
+
+
+
 }GATT_DB_DESC_DATA;
 
 typedef struct
@@ -771,11 +820,28 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
     /** Number of GATT Services */
     UINT16 config_GATT_DB_DYN_MAX_SERVICE_COUNT;
 
+#ifdef BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE
+    /** Number Number of GATT Service - with 16-bit UUID */
+    UINT16 config_GATT_DB_DYN_MAX_16_BIT_SERVICE_COUNT;
+
+    /** Number of GATT Service - with 128-bit UUID */
+    UINT16 config_GATT_DB_DYN_MAX_128_BIT_SERVICE_COUNT;
+#endif /* BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
+
+
     /** Number of GATT Characteristics */
     UINT16 config_GATT_DB_DYN_CHARACTERISTIC_COUNT;
 
     /** Number of GATT Attributes */
     UINT16 config_GATT_DB_DYN_MAX_ATTRIBUTES;
+
+#ifdef BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE
+    /** Number of GATT Attributes - corresponding to Services with 16-bit UUID */
+    UINT16 config_GATT_DB_DYN_MAX_ATTRIBUTES_16_BIT;
+
+    /** Number of GATT Attributes - corresponding to Services with 128-bit UUID */
+    UINT16 config_GATT_DB_DYN_MAX_ATTRIBUTES_128_BIT;
+#endif /* BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
 
     /** Number of GATT attribute types or UUIDs */
     UINT16 config_GATT_DB_DYN_MAX_TYPE_COUNT;
@@ -851,6 +917,7 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
 #endif /* GATT_DB_DYNAMIC */
 
 #ifdef BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY
+#ifndef BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE
 #define GATT_DB_INIT_DYNAMIC_CONFIG(config)                                                 \
     (config).config_GATT_DB_DYN_MAX_SERVICE_COUNT      = GATT_DB_DYN_MAX_SERVICE_COUNT;     \
     (config).config_GATT_DB_DYN_CHARACTERISTIC_COUNT   = GATT_DB_DYN_CHARACTERISTIC_COUNT;  \
@@ -861,6 +928,22 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
     (config).config_GATT_VALUE_ARRAY_SIZE              = GATT_VALUE_ARRAY_SIZE;             \
     (config).config_GATT_DB_DYN_UUID_ARRAY_SIZE        = GATT_DB_DYN_UUID_ARRAY_SIZE;       \
     (config).config_GATT_DB_DYN_MAX_PEER_CONFIGURATION = GATT_DB_DYN_MAX_PEER_CONFIGURATION
+#else
+#define GATT_DB_INIT_DYNAMIC_CONFIG(config)                                                          \
+    (config).config_GATT_DB_DYN_MAX_SERVICE_COUNT           = GATT_DB_DYN_MAX_SERVICE_COUNT;         \
+    (config).config_GATT_DB_DYN_MAX_16_BIT_SERVICE_COUNT    = GATT_DB_DYN_MAX_16_BIT_SERVICE_COUNT;  \
+    (config).config_GATT_DB_DYN_MAX_128_BIT_SERVICE_COUNT   = GATT_DB_DYN_MAX_128_BIT_SERVICE_COUNT; \
+    (config).config_GATT_DB_DYN_CHARACTERISTIC_COUNT        = GATT_DB_DYN_CHARACTERISTIC_COUNT;      \
+    (config).config_GATT_DB_DYN_MAX_ATTRIBUTES              = GATT_DB_DYN_MAX_ATTRIBUTES;            \
+    (config).config_GATT_DB_DYN_MAX_ATTRIBUTES_16_BIT       = GATT_DB_DYN_MAX_ATTRIBUTES_16_BIT;     \
+    (config).config_GATT_DB_DYN_MAX_ATTRIBUTES_128_BIT      = GATT_DB_DYN_MAX_ATTRIBUTES_128_BIT;    \
+    (config).config_GATT_DB_DYN_MAX_TYPE_COUNT              = GATT_DB_DYN_MAX_TYPE_COUNT;            \
+    (config).config_GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE       = GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE;     \
+    (config).config_GATT_DB_DYN_VALUE_ARRAY_SIZE            = GATT_DB_DYN_VALUE_ARRAY_SIZE;          \
+    (config).config_GATT_VALUE_ARRAY_SIZE                   = GATT_VALUE_ARRAY_SIZE;                 \
+    (config).config_GATT_DB_DYN_UUID_ARRAY_SIZE             = GATT_DB_DYN_UUID_ARRAY_SIZE;           \
+    (config).config_GATT_DB_DYN_MAX_PEER_CONFIGURATION      = GATT_DB_DYN_MAX_PEER_CONFIGURATION
+#endif /* BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
 
 #define GATT_DB_DYNAMIC_CONFIG_LIMITS(x) \
         gatt_db_dynamic_global_config.config_##x
@@ -877,7 +960,7 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
         COMMON_TRC(BT_MODULE_ID_GATT_DB, "Allocated %lu bytes for %s. Ptr: %p\n", ((s) * sizeof(type)), #var, (var)); \
         BT_mem_set((var), (i), ((s) * sizeof(type)))
 
-#define BT_DEINIT_GLOBAL_ARRAY(var) \
+#define BT_DEINIT_GLOBAL_ARRAY(type, var, s) \
         if (NULL != (var))            \
         {                           \
             COMMON_TRC(BT_MODULE_ID_GATT_DB, "Freeing %s with Allocated Ptr: %p\n", #var, (var));\
@@ -896,7 +979,7 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
 #define BT_INIT_GLOBAL_ARRAY(type, var, s, i) \
         BT_mem_set(var, (i), ((s) * sizeof(type)))
 
-#define BT_DEINIT_GLOBAL_ARRAY(...)
+#define BT_DEINIT_GLOBAL_ARRAY(type, var, s)
 
 #endif /* BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY */
 
@@ -1818,23 +1901,51 @@ API_RESULT BT_gatt_db_add_characteristic
  *  \par Description:
  *  This API adds a GATT characteristic descriptor to the GATT database.
  *
+ *  \param [in]  sh Service Handle to which the descriptor to be added.
+ *  \param [in]  ch Characteristic Handle to which the descriptor to be added.
+ *  \param [in]  u  Characteristic Descriptor UUID.
+ *  \param [in]  p  Characteristic Descriptor access permission.
+ *  \param [in]  dv Characteristic Descriptor value.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+#define BT_gatt_db_add_characteristic_descriptor(sh, ch, u, p, dv) \
+        BT_gatt_db_add_characteristic_descriptor_with_property     \
+        (                                                          \
+            (sh),                                                  \
+            (ch),                                                  \
+            (u),                                                   \
+            (p),                                                   \
+            GATT_DB_NO_AUXILLARY_PROPERTY,                         \
+            (dv)                                                   \
+        );
+
+/**
+ *  \brief To add a characteristic descriptor to GATT Database
+ *
+ *  \par Description:
+ *  This API adds a GATT characteristic descriptor to the GATT database.
+ *
  *  \param [in]  service_handle    Service Handle to which the descriptor to be added.
  *  \param [in]  char_handle       Characteristic Handle to which the descriptor to be added.
  *  \param [in]  desc_uuid         Characteristic Descriptor UUID.
  *  \param [in]  perm              Characteristic Descriptor access permission.
- *  \param [in]  property          Characteristic property.
+ *  \param [in]  property          Characteristic Descriptor property.
  *  \param [in]  desc_value        Characteristic Descriptor value.
  *
  *  \return API_RESULT
  *          - API_SUCCESS: If successful.
  *          - Error Codes: Error code describing cause of failure.
  */
-API_RESULT BT_gatt_db_add_characteristic_descriptor
+API_RESULT BT_gatt_db_add_characteristic_descriptor_with_property
            (
                /* IN */  UINT16              service_handle,
                /* IN */  UINT16              char_handle,
                /* IN */  GATT_DB_UUID_TYPE * desc_uuid,
                /* IN */  UINT16              perm,
+               /* IN */  UINT16              property,
                /* IN */  ATT_VALUE         * desc_value
            );
 
@@ -1856,21 +1967,39 @@ API_RESULT BT_gatt_db_delete_service
            );
 
 /**
- *  \brief To enable a service in GATT Database
+ *  \brief To enable or disable a service in GATT Database
  *
  *  \par Description:
  *  This API is to enable a service in GATT database.
  *
- *  \param [in]  service_handle    Service Handle to be enabled.
+ *  \param [in]  service_handle  Service Handle to be enabled.
+ *  \param [in]  is_enable       \ref BT_TRUE - Service is to be Enabled
+ *                               \ref BT_FALSE - Service is to be Disabled
  *
  *  \return API_RESULT
  *          - API_SUCCESS: If successful.
  *          - Error Codes: Error code describing cause of failure.
  */
-API_RESULT BT_gatt_db_enable_service
+API_RESULT BT_gatt_db_enable_disable_service
            (
-               /* IN */  UINT16                service_handle
+               /* IN */ UINT16 service_handle,
+               /* IN */ UCHAR  is_enable
            );
+
+/**
+ *  \brief To enable a service in GATT Database
+ *
+ *  \par Description:
+ *  This API is to enable a service in GATT database.
+ *
+ *  \param [in] sh    Service Handle to be enabled.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+#define BT_gatt_db_enable_service(sh) \
+        BT_gatt_db_enable_disable_service((sh), BT_TRUE)
 
 /**
  *  \brief To disable a service in GATT Database
@@ -1878,15 +2007,177 @@ API_RESULT BT_gatt_db_enable_service
  *  \par Description:
  *  This API is to disable a service in GATT database.
  *
- *  \param [in]  service_handle    Service Handle to be disabled.
+ *  \param [in] sh    Service Handle to be disabled.
  *
  *  \return API_RESULT
  *          - API_SUCCESS: If successful.
  *          - Error Codes: Error code describing cause of failure.
  */
-API_RESULT BT_gatt_db_disable_service
+#define BT_gatt_db_disable_service(sh) \
+        BT_gatt_db_enable_disable_service((sh), BT_FALSE)
+
+/**
+ *  \brief To fetch the current state of a Service from GATT Database
+ *
+ *  \par Description:
+ *  This API is to fetch/get the current state of a Service from the GATT
+ *  database.
+ *
+ *  \param [in]  service_handle  Service Handle corresponding to the service
+ *                               whose state is to be known.
+ *  \param [out] is_enable       Reference to a variable where the current
+ *                               state of the service will be informed.
+ *                               \ref BT_TRUE - Service is Enabled
+ *                               \ref BT_FALSE - Service is Disabled
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_get_service_state
            (
-               /* IN */  UINT16                service_handle
+               /* IN */  UINT16 service_handle,
+               /* OUT */ UCHAR  * is_enable
+           );
+
+/**
+ *  \brief To enable/disable an already included service with a given Service in the GATT Database
+ *
+ *  \par Description:
+ *  This API enables/disables an already included service with a given Service in the GATT Database.
+ *  This unhides/hides the Included Service Declaration which is present with Parent Service.
+ *
+ *  \param [in] service_handle           Service Handle in which the included service to be enabled/disabled.
+ *  \param [in] included_service_handle  Service Handle of the included service.
+ *  \param [in] is_enable                \ref BT_TRUE  - Include Service Declaration is to be Enabled
+ *                                       \ref BT_FALSE - Include Service Declaration is to be Disabled
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_enable_disable_included_service
+           (
+               /* IN */ UINT16 service_handle,
+               /* IN */ UINT16 included_service_handle,
+               /* IN */ UCHAR  is_enable
+           );
+
+/**
+ *  \brief To enable an already included service with a given Service in the GATT Database
+ *
+ *  \par Description:
+ *  This API enables an already included service with a given Service in the GATT Database.
+ *  This unhides the Included Service Declaration which is present with Parent Service.
+ *
+ *  \param [in] sh   Service Handle in which the included service to be enabled.
+ *  \param [in] ish  Service Handle of the included service.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+#define BT_gatt_db_enable_included_service(sh, ish) \
+        BT_gatt_db_enable_disable_included_service((sh), (ish), BT_TRUE)
+
+/**
+ *  \brief To disable an already included service with a given Service in the GATT Database
+ *
+ *  \par Description:
+ *  This API disables an already included service with a given Service in the GATT Database.
+ *  This hides the Included Service Declaration which is present with Parent Service.
+ *
+ *  \param [in] sh   Service Handle in which the included service to be disabled.
+ *  \param [in] ish  Service Handle of the included service.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+#define BT_gatt_db_disable_included_service(sh, ish) \
+        BT_gatt_db_enable_disable_included_service((sh), (ish), BT_FALSE)
+
+/**
+ *  \brief To enable or disable a characteristic in GATT Database
+ *
+ *  \par Description:
+ *  This API is to enable a characteristic in GATT database. The said
+ *  characteristic is expected to be already present in the GATT database,
+ *  but the current state of the characteristic is such that it is not
+ *  visible to remote device which performs GATT Discovery.
+ *
+ *  \param [in]  char_handle Characteristic Handle to be enabled.
+ *  \param [in]  is_enable   \ref BT_TRUE - Characteristic is to be Enabled
+ *                           \ref BT_FALSE - Characteristic is to be Disabled
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_enable_disable_characteristic
+           (
+               /* IN */ UINT16 char_handle,
+               /* IN */ UCHAR  is_enable
+           );
+
+/**
+ *  \brief To enable a characteristic in GATT Database
+ *
+ *  \par Description:
+ *  This API is to enable a characteristic in GATT database. The said
+ *  characteristic is expected to be already present in the GATT database,
+ *  but the current state of the characteristic is such that it is not
+ *  visible to remote device which performs GATT Discovery.
+ *
+ *  \param [in] ch    Characteristic Handle to be enabled.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+#define BT_gatt_db_enable_characteristic(ch) \
+        BT_gatt_db_enable_disable_characteristic((ch), BT_TRUE)
+
+/**
+ *  \brief To disable a characteristic in GATT Database
+ *
+ *  \par Description:
+ *  This API is to disable a characteristic in GATT database. The said
+ *  characteristic is expected to be already present in the GATT database,
+ *  but the current state of the characteristic is such that it is
+ *  visible to remote device which performs GATT Discovery.
+ *
+ *  \param [in] ch    Characteristic Handle to be disabled.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+#define BT_gatt_db_disable_characteristic(ch) \
+        BT_gatt_db_enable_disable_characteristic((ch), BT_FALSE)
+
+/**
+ *  \brief To fetch the current state of a Characteristic from GATT Database
+ *
+ *  \par Description:
+ *  This API is to fetch/get the current state of a Characteristic from the GATT
+ *  database.
+ *
+ *  \param [in]  char_handle  Characteristic Handle corresponding to the characteristic
+ *                            whose state is to be known.
+ *  \param [out] is_enable    Reference to a variable where the current
+ *                            state of the Characteristic will be informed.
+ *                            \ref BT_TRUE - Characterised is Enabled
+ *                            \ref BT_FALSE - Characteristic is Disabled
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_get_characteristic_state
+           (
+               /* IN */  UINT16 char_handle,
+               /* OUT */ UCHAR  * is_enable
            );
 
 /**
@@ -1916,7 +2207,7 @@ API_RESULT BT_gatt_db_set_attr_value
  *  \par Description:
  *  This API is to get attribute value in GATT database.
  *
- *  \param [in] attr_handle    Attribute Handle which is to be retrived.
+ *  \param [in] attr_handle    Attribute Handle which is to be retrieved.
  *  \param [in] value          Pointer to the attribute value.
  *  \param [in] length         Pointer to the length of the attribute value.
  *
@@ -1936,7 +2227,7 @@ API_RESULT BT_gatt_db_get_attr_value
  *
  *  \par Description:
  *  This API registers dynamic GATT database.
- *  This shall be called after constructing the dynmaic GATT database,
+ *  This shall be called after constructing the dynamic GATT database,
  *  using the exposed APIs (to add service, characteristic, descriptor etc.)
  *
  *  \return API_RESULT
@@ -1974,6 +2265,81 @@ API_RESULT BT_gatt_db_dyn_set_db_signature(GATT_DB_SIGNATURE db_sign);
 
 #endif /* GATT_DB_DYNAMIC */
 
+/**
+ *  \brief Fetch the Attribute Handle Range of Service
+ *
+ *  \par Description:
+ *  This API fetches the Attribute Handle Range associated with a given
+ *  Service Instance.
+ *
+ *  \param [in]  service_handle  Service Handle corresponding to the service
+ *
+ *  \param [out] service_range   Reference to corresponding handle range of the
+ *                               service.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_get_service_range
+           (
+               /* IN */  UINT16           service_handle,
+               /* OUT */ ATT_HANDLE_RANGE * service_range
+           );
+
+/**
+ *  \brief Fetch the Attribute Handle Range of Characteristic
+ *
+ *  \par Description:
+ *  This API fetches the Attribute Handle Range associated with a given
+ *  Service Instance.
+ *
+ *  \param [in] service_handle        Service Handle corresponding to the
+ *                                    service where the Characteristic belongs
+ *
+ *  \param [in] characteristic_handle Characteristic Handle corresponding to
+ *                                    the Characteristic.
+ *
+ *  \param [out] characteristic_range Reference to corresponding handle range of the
+ *                                    Characteristic.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_get_characteristic_range
+           (
+               /* IN */  UINT16           service_handle,
+               /* IN */  UINT16           characteristic_handle,
+               /* OUT */ ATT_HANDLE_RANGE * characteristic_range
+           );
+
+/**
+ *  \brief Fetch the Descriptor Count associated with a Characteristic
+ *
+ *  \par Description:
+ *  This API fetches Descriptor Count associated with a Characteristic.
+ *
+ *  \param [in] service_handle        Service Handle corresponding to the
+ *                                    service where the Characteristic belongs
+ *
+ *  \param [in] characteristic_handle Characteristic Handle corresponding to
+ *                                    the Characteristic.
+ *
+ *  \param [out] desc_count           Count of Descriptors associated with the
+ *                                    Characteristic.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_get_characteristic_desc_count
+           (
+               /* IN */  UINT16 service_handle,
+               /* IN */  UINT16 characteristic_handle,
+               /* OUT */ UINT16 * desc_count
+           );
+
 /** \cond ignore_this Internal interface - called only from HCI */
 void gatt_db_handle_hci_command_complete
      (
@@ -1983,6 +2349,7 @@ void gatt_db_handle_hci_command_complete
 
 /** \} */
 /** \} */
+
 /** \} */
 
 API_RESULT gatt_char_handler (GATT_DB_HANDLE * handle,GATT_DB_PARAMS * param);
@@ -1992,4 +2359,3 @@ API_RESULT gatt_char_handler (GATT_DB_HANDLE * handle,GATT_DB_PARAMS * param);
 #endif
 
 #endif /* _H_BT_GATT_DB_API_ */
-

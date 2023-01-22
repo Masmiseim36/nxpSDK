@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -127,14 +127,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gac9420823bfeba78fce625fc105e3b01d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00263.html#ggac9420823bfeba78fce625fc105e3b01dad5619ab112a016977ca65fb758bf6c17">kStatus_SEMA42_Busy</a> = MAKE_STATUS(kStatusGroup_SEMA42, 0), 
+<tr class="memitem:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00263.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ad5619ab112a016977ca65fb758bf6c17">kStatus_SEMA42_Busy</a> = MAKE_STATUS(kStatusGroup_SEMA42, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#ggac9420823bfeba78fce625fc105e3b01dab405b2900737aa815ebc18ea68df56b1">kStatus_SEMA42_Reseting</a> = MAKE_STATUS(kStatusGroup_SEMA42, 1)
+&#160;&#160;<a class="el" href="a00263.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ab405b2900737aa815ebc18ea68df56b1">kStatus_SEMA42_Reseting</a> = MAKE_STATUS(kStatusGroup_SEMA42, 1)
 <br/>
  }</td></tr>
-<tr class="memdesc:gac9420823bfeba78fce625fc105e3b01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMA42 status return codes.  <a href="a00263.html#gac9420823bfeba78fce625fc105e3b01d">More...</a><br/></td></tr>
-<tr class="separator:gac9420823bfeba78fce625fc105e3b01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMA42 status return codes.  <a href="a00263.html#gae6dceca96ec2c7a1b4aa211264a87ef6">More...</a><br/></td></tr>
+<tr class="separator:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga84eaf8f6200932ad09d0a75ece6e463d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga84eaf8f6200932ad09d0a75ece6e463d">sema42_gate_status_t</a> { <br/>
 &#160;&#160;<a class="el" href="a00263.html#gga84eaf8f6200932ad09d0a75ece6e463daf9c45d68a643bac3a34b65a5cf1aade6">kSEMA42_Unlocked</a> = 0U, 
 <br/>
@@ -180,7 +180,7 @@ Functions</h2></td></tr>
 <tr class="memitem:gae646085e5d791b895d478e9ef161c3b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gae646085e5d791b895d478e9ef161c3b3">SEMA42_Deinit</a> (SEMA42_Type *base)</td></tr>
 <tr class="memdesc:gae646085e5d791b895d478e9ef161c3b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the SEMA42 module.  <a href="#gae646085e5d791b895d478e9ef161c3b3">More...</a><br/></td></tr>
 <tr class="separator:gae646085e5d791b895d478e9ef161c3b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5e2b0d71c6219bcfb381f4b70d7e7b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gab5e2b0d71c6219bcfb381f4b70d7e7b0">SEMA42_TryLock</a> (SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)</td></tr>
+<tr class="memitem:gab5e2b0d71c6219bcfb381f4b70d7e7b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gab5e2b0d71c6219bcfb381f4b70d7e7b0">SEMA42_TryLock</a> (SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)</td></tr>
 <tr class="memdesc:gab5e2b0d71c6219bcfb381f4b70d7e7b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to lock the SEMA42 gate.  <a href="#gab5e2b0d71c6219bcfb381f4b70d7e7b0">More...</a><br/></td></tr>
 <tr class="separator:gab5e2b0d71c6219bcfb381f4b70d7e7b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaab41e809f563868b6b477a7bb62c9ce2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaab41e809f563868b6b477a7bb62c9ce2">SEMA42_Lock</a> (SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)</td></tr>
@@ -192,17 +192,17 @@ Functions</h2></td></tr>
 <tr class="memitem:gace62f3aae17c5f6d75764f932f2a673f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00263.html#ga84eaf8f6200932ad09d0a75ece6e463d">sema42_gate_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gace62f3aae17c5f6d75764f932f2a673f">SEMA42_GetGateStatus</a> (SEMA42_Type *base, uint8_t gateNum)</td></tr>
 <tr class="memdesc:gace62f3aae17c5f6d75764f932f2a673f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the status of the SEMA42 gate.  <a href="#gace62f3aae17c5f6d75764f932f2a673f">More...</a><br/></td></tr>
 <tr class="separator:gace62f3aae17c5f6d75764f932f2a673f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fc8ecf853c6394511d55536d37c7d4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga6fc8ecf853c6394511d55536d37c7d4f">SEMA42_ResetGate</a> (SEMA42_Type *base, uint8_t gateNum)</td></tr>
+<tr class="memitem:ga6fc8ecf853c6394511d55536d37c7d4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga6fc8ecf853c6394511d55536d37c7d4f">SEMA42_ResetGate</a> (SEMA42_Type *base, uint8_t gateNum)</td></tr>
 <tr class="memdesc:ga6fc8ecf853c6394511d55536d37c7d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the SEMA42 gate to an unlocked status.  <a href="#ga6fc8ecf853c6394511d55536d37c7d4f">More...</a><br/></td></tr>
 <tr class="separator:ga6fc8ecf853c6394511d55536d37c7d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9695921a658471089cddadb8789bb138"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga9695921a658471089cddadb8789bb138">SEMA42_ResetAllGates</a> (SEMA42_Type *base)</td></tr>
+<tr class="memitem:ga9695921a658471089cddadb8789bb138"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga9695921a658471089cddadb8789bb138">SEMA42_ResetAllGates</a> (SEMA42_Type *base)</td></tr>
 <tr class="memdesc:ga9695921a658471089cddadb8789bb138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets all SEMA42 gates to an unlocked status.  <a href="#ga9695921a658471089cddadb8789bb138">More...</a><br/></td></tr>
 <tr class="separator:ga9695921a658471089cddadb8789bb138"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga9d157e87f2444c405d2ebf7fe9a39508"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9d157e87f2444c405d2ebf7fe9a39508"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga9d157e87f2444c405d2ebf7fe9a39508">FSL_SEMA42_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga9d157e87f2444c405d2ebf7fe9a39508">FSL_SEMA42_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
 <tr class="memdesc:ga9d157e87f2444c405d2ebf7fe9a39508"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMA42 driver version. <br/></td></tr>
 <tr class="separator:ga9d157e87f2444c405d2ebf7fe9a39508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -248,7 +248,7 @@ Driver version</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gac9420823bfeba78fce625fc105e3b01d"></a>
+<a class="anchor" id="gae6dceca96ec2c7a1b4aa211264a87ef6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -258,10 +258,10 @@ Driver version</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac9420823bfeba78fce625fc105e3b01dad5619ab112a016977ca65fb758bf6c17"></a>kStatus_SEMA42_Busy</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6ad5619ab112a016977ca65fb758bf6c17"></a>kStatus_SEMA42_Busy</em>&nbsp;</td><td class="fielddoc">
 <p>SEMA42 gate has been locked by other processor. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac9420823bfeba78fce625fc105e3b01dab405b2900737aa815ebc18ea68df56b1"></a>kStatus_SEMA42_Reseting</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6ab405b2900737aa815ebc18ea68df56b1"></a>kStatus_SEMA42_Reseting</em>&nbsp;</td><td class="fielddoc">
 <p>SEMA42 gate reseting is ongoing. </p>
 </td></tr>
 </table>
@@ -382,7 +382,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_TryLock </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_TryLock </td>
           <td>(</td>
           <td class="paramtype">SEMA42_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -556,7 +556,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_ResetGate </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_ResetGate </td>
           <td>(</td>
           <td class="paramtype">SEMA42_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -600,7 +600,7 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_ResetAllGates </td>
+          <td class="memname">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_ResetAllGates </td>
           <td>(</td>
           <td class="paramtype">SEMA42_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -186,13 +186,13 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:gae60f7d34c9e499abba96e5979ee1818d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Timer match registers.  <a href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">More...</a><br/></td></tr>
 <tr class="separator:gae60f7d34c9e499abba96e5979ee1818d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga09f5eb858c001377062fe0b8a0d5bd29"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga09f5eb858c001377062fe0b8a0d5bd29">ctimer_external_match_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29a42b2f4d5cb9a524f87f6626169155207">kCTIMER_External_Match_0</a> = (1U &lt;&lt; 0), 
+&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29a42b2f4d5cb9a524f87f6626169155207">kCTIMER_External_Match_0</a> = (1UL &lt;&lt; 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29a90643d7c03749f64e0d20cfcf55a80ed">kCTIMER_External_Match_1</a> = (1U &lt;&lt; 1), 
+&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29a90643d7c03749f64e0d20cfcf55a80ed">kCTIMER_External_Match_1</a> = (1UL &lt;&lt; 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29ab4602750f83eba0e5cebd0f2ed91a3c4">kCTIMER_External_Match_2</a> = (1U &lt;&lt; 2), 
+&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29ab4602750f83eba0e5cebd0f2ed91a3c4">kCTIMER_External_Match_2</a> = (1UL &lt;&lt; 2), 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29aba7194efe10386e467b082fc0b847031">kCTIMER_External_Match_3</a> = (1U &lt;&lt; 3)
+&#160;&#160;<a class="el" href="a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29aba7194efe10386e467b082fc0b847031">kCTIMER_External_Match_3</a> = (1UL &lt;&lt; 3)
 <br/>
  }</td></tr>
 <tr class="memdesc:ga09f5eb858c001377062fe0b8a0d5bd29"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of external match.  <a href="a00015.html#ga09f5eb858c001377062fe0b8a0d5bd29">More...</a><br/></td></tr>
@@ -281,12 +281,30 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7ea373165af081e0e1700f7a3ba56642"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga7ea373165af081e0e1700f7a3ba56642">CTIMER_Reset</a> (CTIMER_Type *base)</td></tr>
 <tr class="memdesc:ga7ea373165af081e0e1700f7a3ba56642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the counter.  <a href="#ga7ea373165af081e0e1700f7a3ba56642">More...</a><br/></td></tr>
 <tr class="separator:ga7ea373165af081e0e1700f7a3ba56642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd6bd05573ab1128b8f3feaf30058e32"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gacd6bd05573ab1128b8f3feaf30058e32">CTIMER_SetPrescale</a> (CTIMER_Type *base, uint32_t prescale)</td></tr>
+<tr class="memdesc:gacd6bd05573ab1128b8f3feaf30058e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup the timer prescale value.  <a href="#gacd6bd05573ab1128b8f3feaf30058e32">More...</a><br/></td></tr>
+<tr class="separator:gacd6bd05573ab1128b8f3feaf30058e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad50a3d5668e4b0e9aba06d4d555139b9"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gad50a3d5668e4b0e9aba06d4d555139b9">CTIMER_GetCaptureValue</a> (CTIMER_Type *base, <a class="el" href="a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f">ctimer_capture_channel_t</a> capture)</td></tr>
+<tr class="memdesc:gad50a3d5668e4b0e9aba06d4d555139b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get capture channel value.  <a href="#gad50a3d5668e4b0e9aba06d4d555139b9">More...</a><br/></td></tr>
+<tr class="separator:gad50a3d5668e4b0e9aba06d4d555139b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb3527b175c6158c02d76e063e2794b5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gaeb3527b175c6158c02d76e063e2794b5">CTIMER_EnableResetMatchChannel</a> (CTIMER_Type *base, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> match, bool enable)</td></tr>
+<tr class="memdesc:gaeb3527b175c6158c02d76e063e2794b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable reset match channel.  <a href="#gaeb3527b175c6158c02d76e063e2794b5">More...</a><br/></td></tr>
+<tr class="separator:gaeb3527b175c6158c02d76e063e2794b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf575852d70d9db218b0def620a0b7302"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gaf575852d70d9db218b0def620a0b7302">CTIMER_EnableStopMatchChannel</a> (CTIMER_Type *base, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> match, bool enable)</td></tr>
+<tr class="memdesc:gaf575852d70d9db218b0def620a0b7302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable stop match channel.  <a href="#gaf575852d70d9db218b0def620a0b7302">More...</a><br/></td></tr>
+<tr class="separator:gaf575852d70d9db218b0def620a0b7302"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b4954f928c8e278c29325ea10aa7fa5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga0b4954f928c8e278c29325ea10aa7fa5">CTIMER_EnableRisingEdgeCapture</a> (CTIMER_Type *base, <a class="el" href="a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f">ctimer_capture_channel_t</a> capture, bool enable)</td></tr>
+<tr class="memdesc:ga0b4954f928c8e278c29325ea10aa7fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable capture channel rising edge.  <a href="#ga0b4954f928c8e278c29325ea10aa7fa5">More...</a><br/></td></tr>
+<tr class="separator:ga0b4954f928c8e278c29325ea10aa7fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37f6a866661fa105f4e66e76e02d4236"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga37f6a866661fa105f4e66e76e02d4236">CTIMER_EnableFallingEdgeCapture</a> (CTIMER_Type *base, <a class="el" href="a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f">ctimer_capture_channel_t</a> capture, bool enable)</td></tr>
+<tr class="memdesc:ga37f6a866661fa105f4e66e76e02d4236"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable capture channel falling edge.  <a href="#ga37f6a866661fa105f4e66e76e02d4236">More...</a><br/></td></tr>
+<tr class="separator:ga37f6a866661fa105f4e66e76e02d4236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga89b626fd25a5b3bbd511672ff51618f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga89b626fd25a5b3bbd511672ff51618f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga89b626fd25a5b3bbd511672ff51618f8">FSL_CTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
-<tr class="memdesc:ga89b626fd25a5b3bbd511672ff51618f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.2.2. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga89b626fd25a5b3bbd511672ff51618f8">FSL_CTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
+<tr class="memdesc:ga89b626fd25a5b3bbd511672ff51618f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.3.1. <br/></td></tr>
 <tr class="separator:ga89b626fd25a5b3bbd511672ff51618f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -303,10 +321,10 @@ Initialization and deinitialization</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 PWM setup operations</h2></td></tr>
-<tr class="memitem:gacb1f53d8b6a2b157194983172c448707"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gacb1f53d8b6a2b157194983172c448707">CTIMER_SetupPwmPeriod</a> (CTIMER_Type *base, const <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> pwmPeriodChannel, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> matchChannel, uint32_t pwmPeriod, uint32_t pulsePeriod, bool enableInt)</td></tr>
+<tr class="memitem:gacb1f53d8b6a2b157194983172c448707"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gacb1f53d8b6a2b157194983172c448707">CTIMER_SetupPwmPeriod</a> (CTIMER_Type *base, const <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> pwmPeriodChannel, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> matchChannel, uint32_t pwmPeriod, uint32_t pulsePeriod, bool enableInt)</td></tr>
 <tr class="memdesc:gacb1f53d8b6a2b157194983172c448707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the PWM signal parameters.  <a href="#gacb1f53d8b6a2b157194983172c448707">More...</a><br/></td></tr>
 <tr class="separator:gacb1f53d8b6a2b157194983172c448707"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a70f03b835a36e5b321861d0b0ebb41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga2a70f03b835a36e5b321861d0b0ebb41">CTIMER_SetupPwm</a> (CTIMER_Type *base, const <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> pwmPeriodChannel, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> matchChannel, uint8_t dutyCyclePercent, uint32_t pwmFreq_Hz, uint32_t srcClock_Hz, bool enableInt)</td></tr>
+<tr class="memitem:ga2a70f03b835a36e5b321861d0b0ebb41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga2a70f03b835a36e5b321861d0b0ebb41">CTIMER_SetupPwm</a> (CTIMER_Type *base, const <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> pwmPeriodChannel, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> matchChannel, uint8_t dutyCyclePercent, uint32_t pwmFreq_Hz, uint32_t srcClock_Hz, bool enableInt)</td></tr>
 <tr class="memdesc:ga2a70f03b835a36e5b321861d0b0ebb41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the PWM signal parameters.  <a href="#ga2a70f03b835a36e5b321861d0b0ebb41">More...</a><br/></td></tr>
 <tr class="separator:ga2a70f03b835a36e5b321861d0b0ebb41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad9f4a6073c669662f300d395d66e16bb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gad9f4a6073c669662f300d395d66e16bb">CTIMER_UpdatePwmPulsePeriod</a> (CTIMER_Type *base, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> matchChannel, uint32_t pulsePeriod)</td></tr>
@@ -732,7 +750,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CTIMER_SetupPwmPeriod </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CTIMER_SetupPwmPeriod </td>
           <td>(</td>
           <td class="paramtype">CTIMER_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -795,7 +813,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CTIMER_SetupPwm </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CTIMER_SetupPwm </td>
           <td>(</td>
           <td class="paramtype">CTIMER_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1420,6 +1438,287 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>Ctimer peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacd6bd05573ab1128b8f3feaf30058e32"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void CTIMER_SetPrescale </td>
+          <td>(</td>
+          <td class="paramtype">CTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>prescale</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Specifies the maximum value for the Prescale Counter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Ctimer peripheral base address </td></tr>
+    <tr><td class="paramname">prescale</td><td>Prescale value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad50a3d5668e4b0e9aba06d4d555139b9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t CTIMER_GetCaptureValue </td>
+          <td>(</td>
+          <td class="paramtype">CTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f">ctimer_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>capture</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the counter/timer value on the corresponding capture channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Ctimer peripheral base address </td></tr>
+    <tr><td class="paramname">capture</td><td>Select capture channel</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The timer count capture value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaeb3527b175c6158c02d76e063e2794b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void CTIMER_EnableResetMatchChannel </td>
+          <td>(</td>
+          <td class="paramtype">CTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a>&#160;</td>
+          <td class="paramname"><em>match</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the specified match channel reset operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Ctimer peripheral base address </td></tr>
+    <tr><td class="paramname">match</td><td>match channel used </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable match channel reset operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf575852d70d9db218b0def620a0b7302"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void CTIMER_EnableStopMatchChannel </td>
+          <td>(</td>
+          <td class="paramtype">CTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a>&#160;</td>
+          <td class="paramname"><em>match</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the specified match channel stop operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Ctimer peripheral base address. </td></tr>
+    <tr><td class="paramname">match</td><td>match channel used. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable match channel stop operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0b4954f928c8e278c29325ea10aa7fa5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void CTIMER_EnableRisingEdgeCapture </td>
+          <td>(</td>
+          <td class="paramtype">CTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f">ctimer_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>capture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the specified capture channel for rising edge capture.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Ctimer peripheral base address. </td></tr>
+    <tr><td class="paramname">capture</td><td>capture channel used. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable rising edge capture. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga37f6a866661fa105f4e66e76e02d4236"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void CTIMER_EnableFallingEdgeCapture </td>
+          <td>(</td>
+          <td class="paramtype">CTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f">ctimer_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>capture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the specified capture channel for falling edge capture.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Ctimer peripheral base address. </td></tr>
+    <tr><td class="paramname">capture</td><td>capture channel used. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable falling edge capture. </td></tr>
   </table>
   </dd>
 </dl>

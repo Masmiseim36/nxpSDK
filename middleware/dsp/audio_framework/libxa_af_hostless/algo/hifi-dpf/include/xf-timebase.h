@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -40,10 +40,22 @@
  * ticks of this virtual frequency, must not exceed 2**31 (for otherwise
  * scheduler timestamp comparison function will misbehave).
  */
-#define XF_TIMEBASE_FREQ           ((UWORD64)16 * 4 * 3 * 56448000ULL)
+//#define XF_TIMEBASE_FREQ           ((UWORD64)16 * 4 * 3 * 56448000ULL)
+
+/* ...LCM of all the sample rates supported */
+#define LCM_SAMPLE_RATE         56448000
+
+/* ...LCM of all the channels supported 1 to 16 */
+#define LCM_CHANNELS            720720
+
+/* ...LCM of bytes per sample supported 1 to 4 */
+#define LCM_BYTES_PER_SAMPLE    12
+
+#define XF_TIMEBASE_FREQ        ((UWORD64)LCM_SAMPLE_RATE * LCM_CHANNELS * LCM_BYTES_PER_SAMPLE)
+
 
 /* ...add paranoic check considering maximal audio-buffer duration as 0.1 sec */
-C_BUG((UWORD32)(XF_TIMEBASE_FREQ / 10) >= ((UWORD32)1 << 31));
+//C_BUG((UWORD32)(XF_TIMEBASE_FREQ / 10) >= ((UWORD32)1 << 31));
 
 /* ...supported sampling rates */
 C_BUG(XF_TIMEBASE_FREQ % 4000);
@@ -64,43 +76,43 @@ C_BUG(XF_TIMEBASE_FREQ % 176400);
 C_BUG(XF_TIMEBASE_FREQ % 192000);
 
 /* ...calculate upsampling factor for given sample rate */
-static inline UWORD32 xf_timebase_factor(UWORD32 sample_rate)
+static inline UWORD64 xf_timebase_factor(UWORD32 sample_rate)
 {
     /* ...probably we can tolerate single division */
     switch(sample_rate)
     {
     case 4000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 4000);
+        return (XF_TIMEBASE_FREQ / 4000);
     case 8000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 8000);
+        return (XF_TIMEBASE_FREQ / 8000);
     case 11025:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 11025);
+        return (XF_TIMEBASE_FREQ / 11025);
     case 12000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 12000);
+        return (XF_TIMEBASE_FREQ / 12000);
     case 16000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 16000);
+        return (XF_TIMEBASE_FREQ / 16000);
     case 22050:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 22050);
+        return (XF_TIMEBASE_FREQ / 22050);
     case 24000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 24000);
+        return (XF_TIMEBASE_FREQ / 24000);
     case 32000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 32000);
+        return (XF_TIMEBASE_FREQ / 32000);
     case 44100:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 44100);
+        return (XF_TIMEBASE_FREQ / 44100);
     case 48000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 48000);
+        return (XF_TIMEBASE_FREQ / 48000);
     case 64000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 64000);
+        return (XF_TIMEBASE_FREQ / 64000);
     case 88200:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 88200);
+        return (XF_TIMEBASE_FREQ / 88200);
     case 96000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 96000);
+        return (XF_TIMEBASE_FREQ / 96000);
     case 128000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 128000);
+        return (XF_TIMEBASE_FREQ / 128000);
     case 176400:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 176400);
+        return (XF_TIMEBASE_FREQ / 176400);
     case 192000:
-        return (UWORD32)(XF_TIMEBASE_FREQ / 192000);
+        return (XF_TIMEBASE_FREQ / 192000);
     default:
         return 0;
     }

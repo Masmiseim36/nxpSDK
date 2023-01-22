@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
+ * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -37,11 +39,10 @@
 #define SPM_PART_FLAG_APP_ROT           0x01
 #define SPM_PART_FLAG_PSA_ROT           0x02
 #define SPM_PART_FLAG_IPC               0x04
+#define SPM_PART_FLAG_NS_AGENT          0x08
 
-#define TFM_PRIORITY_HIGH               0
-#define TFM_PRIORITY_NORMAL             0x7F
-#define TFM_PRIORITY_LOW                0xFF
-#define TFM_PRIORITY(LEVEL)             TFM_PRIORITY_##LEVEL
+#define IS_PARTITION_NS_AGENT(static_data)  (!!((static_data)->partition_flags \
+                                                  & SPM_PART_FLAG_NS_AGENT))
 
 enum spm_err_t {
     SPM_ERR_OK = 0,
@@ -108,7 +109,6 @@ struct spm_partition_runtime_data_t {
 struct spm_partition_static_data_t {
     uint32_t partition_id;
     uint32_t partition_flags;
-    uint32_t partition_priority;
     sp_entry_point partition_init;
     uint32_t dependencies_num;
     int32_t *p_dependencies;
@@ -355,6 +355,24 @@ void tfm_spm_psa_eoi(uint32_t *svc_args);
  * \note This function doesn't check if partition_idx is valid.
  */
 uint32_t tfm_spm_partition_get_partition_id(uint32_t partition_idx);
+
+/**
+ * \brief Get the index of an ns_agent partition
+ *
+ * \return Partition index for ns_agent partition
+ *         SPM_INVALID_PARTITION_IDX if not found
+ */
+uint32_t tfm_spm_partition_get_ns_agent_idx(void);
+
+/**
+ * \brief Get the index of the partition with the specified ID
+ *
+ * \param[in] partition_id      Partition ID
+ *
+ * \return Partition index for that partition
+ *         SPM_INVALID_PARTITION_IDX if not found
+ */
+uint32_t tfm_spm_partition_get_partition_idx(uint32_t partition_id);
 
 /**
  * \brief Initialize partition database

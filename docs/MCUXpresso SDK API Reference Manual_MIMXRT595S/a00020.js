@@ -4,7 +4,11 @@ var a00020 =
       [ "inputFormat", "a00020.html#a0c86c3c5b626762f5c1585731eef845d", null ],
       [ "outputFormat", "a00020.html#a87ab24684c2c6244481c048bccdd1dca", null ],
       [ "data", "a00020.html#a45dfc3da3cd70937ce5a547a9afd1190", null ],
+      [ "twoDimension", "a00020.html#ae1f33409760baead535863c34b6c7b48", null ],
       [ "dataSize", "a00020.html#a584613ce92202b68458fffa62c20fa81", null ],
+      [ "minorLoop", "a00020.html#a6bff85752b1944830432d9b6308e0631", null ],
+      [ "minorLoopOffset", "a00020.html#a6aa43cc9a08ce67c87581ad91223dc39", null ],
+      [ "majorLoop", "a00020.html#a25faa09d1f28172dc5cd1c0765e5aa12", null ],
       [ "virtualChannel", "a00020.html#a12c2f52e89b2cde2f24ef8fa9691115a", null ],
       [ "disablePixelByteSwap", "a00020.html#aca02131351ac6aeccab27e85e89e4758", null ]
     ] ],
@@ -14,6 +18,7 @@ var a00020 =
       [ "callback", "a00020.html#a0b7f45920a1a0d176e564dd3ce34fe44", null ],
       [ "userData", "a00020.html#ae1797cc76f8269299b8e1235cb638b9c", null ],
       [ "param", "a00020.html#a5e8bee8418f5118c7173774e5fd0713c", null ],
+      [ "param2d", "a00020.html#aaab5ea4580d6d174dfc62729da7f7c34", null ],
       [ "smartdmaStack", "a00020.html#a46d8c3bd48e51d9e97ad9b94a602c74b", null ]
     ] ],
     [ "dsi_smartdma_callback_t", "a00020.html#ga442ec962a06305495e8d54835cd5964d", null ],

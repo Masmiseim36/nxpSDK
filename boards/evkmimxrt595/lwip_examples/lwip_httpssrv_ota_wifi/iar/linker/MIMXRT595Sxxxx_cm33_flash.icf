@@ -3,9 +3,9 @@
 **     Processors:          MIMXRT595SFAWC_cm33
 **                          MIMXRT595SFFOC_cm33
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    RT500 Reference Manual. Rev.A, 3/2020
-**     Version:             rev. 3.0, 2019-12-10
-**     Build:               b200410
+**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210728
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -44,23 +44,21 @@ if (isdefinedsymbol(__heap_size__)) {
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000180 : 0;
 define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x0000017F : 0;
 
-define symbol m_ota_boot_hdr_start             = 0x08040000;
+define symbol m_interrupts_start               = 0x08040400;
+define symbol m_interrupts_end                 = 0x0804057F;
 
-define symbol m_interrupts_start               = 0x08041000;
-define symbol m_interrupts_end                 = 0x0804117F;
-
-define symbol m_text_start                     = 0x08041180;
+define symbol m_text_start                     = 0x08040580;
 define symbol m_text_end                       = 0x0823FFFF;
 
 /* Reserved area for "mflash_files" */
 define symbol m_mflash_start                   = 0x08700000;
 define symbol m_mflash_end                     = 0x087FFFFF;
 
-define symbol m_interrupts_ram_start           = 0x20080000;
-define symbol m_interrupts_ram_end             = 0x20080000 + __ram_vector_table_offset__;
+define symbol m_interrupts_ram_start           = 0x20280000;
+define symbol m_interrupts_ram_end             = 0x20280000 + __ram_vector_table_offset__;
 
 define symbol m_data_start                     = m_interrupts_ram_start + __ram_vector_table_size__;
-define symbol m_data_end                       = 0x201FFFFF;
+define symbol m_data_end                       = 0x203FFFFF;
 
 define symbol m_usb_sram_start                 = 0x40140000;
 define symbol m_usb_sram_end                   = 0x40143FFF;
@@ -102,8 +100,6 @@ initialize by copy {
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
 
-keep { object ota_bootloader_hdr.o };
-place at address mem:m_ota_boot_hdr_start { object ota_bootloader_hdr.o };
 place at address mem: m_interrupts_start    { readonly section .intvec };
 place in TEXT_region                        { block RO };
 place in m_interrupts_ram_region            { section m_interrupts_ram };

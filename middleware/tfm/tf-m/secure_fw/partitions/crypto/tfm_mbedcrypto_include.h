@@ -15,6 +15,6 @@
  * Mbed Crypto
  */
 #include "crypto_spe.h"
-#include "mbed_psa/crypto.h" //NXP
+#include "mbed_psa/crypto.h" //NXP to avoid file name conficts.
 
 #endif /* __TFM_MBEDCRYPTO_INCLUDE_H__ */

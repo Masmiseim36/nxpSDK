@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  * Copyright 2019-2020 NXP. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,6 +11,7 @@
 #include "tfm_platform_core_api.h"
 #include "target_cfg.h"
 #include "utilities.h"
+#include "exception_info.h"
 
 #include "Driver_Common.h"
 
@@ -18,16 +19,26 @@
 extern const struct memory_region_limits memory_regions;
 
 
-void SEC_VIO_IRQHandler(void)
+void C_SEC_VIO_IRQHandler(void)
 {
 	/* Clear interrupt flag and pending IRQ */
     NVIC_ClearPendingIRQ(SEC_VIO_IRQn);
 
     /* Print fault message and block execution */
-    ERROR_MSG("Oops... MPC fault!!!");
+    ERROR_MSG("Platform Exception: MPC fault!!!");
 
     /* Inform TF-M core that isolation boundary has been violated */
     tfm_access_violation_handler();
+}
+
+__attribute__((naked)) void SEC_VIO_IRQHandler(void)
+{
+    EXCEPTION_INFO(EXCEPTION_TYPE_PLATFORM);
+
+    __ASM volatile(
+        "BL        C_SEC_VIO_IRQHandler    \n"
+        "B         .                       \n"
+    );
 }
 
 uint32_t tfm_spm_hal_get_ns_VTOR(void)
@@ -93,10 +104,8 @@ enum tfm_plat_err_t tfm_spm_hal_configure_default_isolation(
     if (!platform_data) {
         return TFM_PLAT_ERR_INVALID_INPUT;
     }
-    if (platform_data->periph_ppc_bank != PPC_SP_DO_NOT_CONFIGURE) {
-        ppc_configure_to_secure(platform_data->periph_ppc_bank,
+    ppc_configure_to_secure(platform_data->periph_ppc_bank,
                                 platform_data->periph_ppc_loc, privileged);
-    }
     return TFM_PLAT_ERR_SUCCESS;
 }
 #endif /* TFM_PSA_API */

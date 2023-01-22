@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -43,7 +43,7 @@ typedef struct rb_node
     rb_idx_t            parent, left, right;
     
     /* ...node color (least-significant-bit only) */
-    UWORD32                 color;
+    UWORD64                 color;
 
 }   rb_node_t;
 
@@ -96,7 +96,7 @@ static inline rb_idx_t rb_null(rb_tree_t *tree)
 }
 
 /* ...get user-bits stored in node color */
-static inline UWORD32 rb_node_data(rb_tree_t *tree, rb_idx_t n_idx)
+static inline UWORD64 rb_node_data(rb_tree_t *tree, rb_idx_t n_idx)
 {
     return (n_idx->color >> 1);
 }
@@ -152,5 +152,16 @@ extern rb_idx_t rb_next(rb_tree_t *tree, rb_idx_t n_idx);
 
 /* ...backward tree iterator */
 extern rb_idx_t rb_prev(rb_tree_t *tree, rb_idx_t n_idx);
+
+#if XF_LOCAL_IPC_NON_COHERENT
+/* ...insert node into tree as a child of p */
+extern void     rb_insert_shmem(rb_tree_t *tree, rb_idx_t n_idx, rb_idx_t p_idx);
+
+/* ...replace the node with same-key value and fixup tree pointers */
+extern void     rb_replace_shmem(rb_tree_t *tree, rb_idx_t n_idx, rb_idx_t t_idx);
+
+/* ...delete node from the tree and return its in-order predecessor/successor */
+extern rb_idx_t rb_delete_shmem(rb_tree_t *tree, rb_idx_t n_idx);
+#endif //XF_LOCAL_IPC_NON_COHERENT
 
 #endif  /* __RBTREE_H */

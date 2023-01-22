@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -26,6 +26,9 @@
  * TCP-shunt target configuration parameters
  *******************************************************************************/
 
+/* ...number of DSP cores */
+//#define XF_CFG_CORES_NUM                4
+
 /* ...maximal number of clients supported by proxy */
 #define XF_CFG_PROXY_MAX_CLIENTS        256
 
@@ -33,4 +36,8 @@
 #define XF_CFG_REMOTE_IPC_POOL_SIZE     (256 << 10)
 
 /* ...alignment for shared buffers */
+#if (XF_CFG_CORES_NUM > 1)
+#define XF_PROXY_ALIGNMENT              XCHAL_DCACHE_LINESIZE
+#else //(XF_CFG_CORES_NUM > 1)
 #define XF_PROXY_ALIGNMENT              64
+#endif //(XF_CFG_CORES_NUM > 1)

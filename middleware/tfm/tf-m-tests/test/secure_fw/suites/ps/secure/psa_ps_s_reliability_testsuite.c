@@ -8,9 +8,9 @@
 #include "ps_tests.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "psa/protected_storage.h"
-#include "tfm_memory_utils.h"
 #include "s_test_helpers.h"
 #include "test_framework_helpers.h"
 
@@ -85,13 +85,13 @@ static void tfm_ps_test_2001(struct test_result_t *ret)
         }
 
         /* Check that the data has not changed */
-        if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+        if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
             TEST_FAIL("The data should not have changed");
             return;
         }
 
         /* Set the original data into read buffer */
-        tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
+        memcpy(read_data, READ_DATA, sizeof(read_data));
     }
 
     TEST_LOG("\n");
@@ -141,7 +141,7 @@ static void tfm_ps_test_2002(struct test_result_t *ret)
         }
 
         /* Check that the data has not changed */
-        if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+        if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
             TEST_FAIL("The data should not have changed");
             return;
         }
@@ -154,7 +154,7 @@ static void tfm_ps_test_2002(struct test_result_t *ret)
         }
 
         /* Set the original data into read buffer */
-        tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
+        memcpy(read_data, READ_DATA, sizeof(read_data));
     }
 
     TEST_LOG("\n");

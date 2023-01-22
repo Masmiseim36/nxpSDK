@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -46,6 +46,8 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
+#ifdef XA_AAC_DECODER
+
 #define MODULE_TAG                      AACDEC
 
 /*******************************************************************************
@@ -54,7 +56,12 @@
 
 //#include "xf-plugin.h"
 #include "audio/xa-audio-decoder-api.h"
+#ifndef PACK_WS_DUMMY
 #include "xa_aac_dec_api.h"
+#else //PACK_WS_DUMMY
+static XA_ERRORCODE xa_aac_dec(xa_codec_handle_t var1, WORD32 var2, WORD32 var3, pVOID var4){return 0;};
+#endif //PACK_WS_DUMMY
+
 #ifdef XAF_PROFILE
 #include "xaf-clk-test.h"
 extern clk_t aac_dec_cycles;
@@ -66,6 +73,7 @@ extern clk_t aac_dec_cycles;
 static inline XA_ERRORCODE xa_aac_get_config_param(xa_codec_handle_t handle, WORD32 i_idx, pVOID pv_value)
 {
     /* ...translate "standard" parameter index into internal value */
+#ifndef PACK_WS_DUMMY
     switch (i_idx)
     {
     case XA_CODEC_CONFIG_PARAM_CHANNELS:
@@ -83,6 +91,7 @@ static inline XA_ERRORCODE xa_aac_get_config_param(xa_codec_handle_t handle, WOR
         i_idx = XA_AACDEC_CONFIG_PARAM_PCM_WDSZ;
         break;
     }
+#endif //PACK_WS_DUMMY
     
     /* ...pass to library */
     return xa_aac_dec(handle, XA_API_CMD_GET_CONFIG_PARAM, i_idx, pv_value);
@@ -121,3 +130,4 @@ XA_ERRORCODE xa_aac_decoder(xa_codec_handle_t p_xa_module_obj, WORD32 i_cmd, WOR
     }
 	return ret;
 }
+#endif

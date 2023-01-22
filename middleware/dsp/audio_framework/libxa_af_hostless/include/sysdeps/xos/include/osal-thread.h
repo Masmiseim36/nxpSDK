@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -222,5 +222,29 @@ static inline int32_t __xf_thread_get_state (xf_thread_t *thread)
     /* ...return final status */
     return r;
 }
+
+static inline void __xf_disable_preemption(void)
+{
+    xos_preemption_disable();
+}
+
+static inline void __xf_enable_preemption(void)
+{
+    xos_preemption_enable();
+}
+
+static inline int32_t __xf_thread_get_priority (xf_thread_t *thread)
+{
+    return ((int) xos_thread_get_priority(thread ? thread : XOS_THREAD_SELF));
+}
+
+static inline int32_t __xf_thread_set_priority (xf_thread_t *thread, int32_t priority)
+{
+    int r = 0;
+    xos_thread_set_priority(thread ? thread : XOS_THREAD_SELF, priority);
+
+    return r;
+}
+
 
 #endif

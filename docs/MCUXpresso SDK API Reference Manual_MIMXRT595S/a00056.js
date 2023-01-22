@@ -1,6 +1,6 @@
 var a00056 =
 [
-    [ "rtos_usart_config", "a00056.html#a00414", [
+    [ "rtos_usart_config", "a00056.html#a00415", [
       [ "base", "a00056.html#ac2c11e2f563e88fd7235fd1c04c43695", null ],
       [ "srcclk", "a00056.html#a7e5bade020ab0937c336700835e0b534", null ],
       [ "baudrate", "a00056.html#add54d5367186b402624be17d78b85f5c", null ],
@@ -9,7 +9,7 @@ var a00056 =
       [ "buffer", "a00056.html#a7ee13e3eb1fe35fc47e6732632305038", null ],
       [ "buffer_size", "a00056.html#a0a13bc07966a8b84553e6010d4ea0e34", null ]
     ] ],
-    [ "usart_rtos_handle_t", "a00056.html#a00460", [
+    [ "usart_rtos_handle_t", "a00056.html#a00461", [
       [ "base", "a00056.html#aef0ac7c28d3207c4bd2a605d32163987", null ],
       [ "txTransfer", "a00056.html#a86279f6dd6f8e2c16dd9c8d379a83389", null ],
       [ "rxTransfer", "a00056.html#ad7a8276502e409381537bd70e94e94a8", null ],

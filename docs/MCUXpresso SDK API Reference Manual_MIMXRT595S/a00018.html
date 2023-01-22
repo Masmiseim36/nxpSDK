@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('a00018.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">DMIC DMA Driver<div class="ingroups"><a class="el" href="a00238.html">DMIC: Digital Microphone</a></div></div>  </div>
+<div class="title">DMIC DMA Driver<div class="ingroups"><a class="el" href="a00237.html">DMIC: Digital Microphone</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -124,29 +124,29 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga531eba032d30d72f4f0fc691481e1ca6"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a> )(DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:ga531eba032d30d72f4f0fc691481e1ca6"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a> )(DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga531eba032d30d72f4f0fc691481e1ca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC transfer callback function.  <a href="#ga531eba032d30d72f4f0fc691481e1ca6">More...</a><br/></td></tr>
 <tr class="separator:ga531eba032d30d72f4f0fc691481e1ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 DMIC DMA version</h2></td></tr>
 <tr class="memitem:ga812aa4ef8d8da2a21063196062aed5f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga812aa4ef8d8da2a21063196062aed5f0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga812aa4ef8d8da2a21063196062aed5f0">FSL_DMIC_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td></tr>
-<tr class="memdesc:ga812aa4ef8d8da2a21063196062aed5f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC DMA driver version 2.3.0. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga812aa4ef8d8da2a21063196062aed5f0">FSL_DMIC_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
+<tr class="memdesc:ga812aa4ef8d8da2a21063196062aed5f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC DMA driver version 2.3.1. <br/></td></tr>
 <tr class="separator:ga812aa4ef8d8da2a21063196062aed5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 DMA transactional</h2></td></tr>
-<tr class="memitem:ga0908db2059feacc444a7346b42906934"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga0908db2059feacc444a7346b42906934">DMIC_TransferCreateHandleDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00018.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00331">dma_handle_t</a> *rxDmaHandle)</td></tr>
+<tr class="memitem:ga0908db2059feacc444a7346b42906934"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga0908db2059feacc444a7346b42906934">DMIC_TransferCreateHandleDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00018.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00331">dma_handle_t</a> *rxDmaHandle)</td></tr>
 <tr class="memdesc:ga0908db2059feacc444a7346b42906934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DMIC handle which is used in transactional functions.  <a href="#ga0908db2059feacc444a7346b42906934">More...</a><br/></td></tr>
 <tr class="separator:ga0908db2059feacc444a7346b42906934"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga429f14998f6bf0e9d2a2750fb168de11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga429f14998f6bf0e9d2a2750fb168de11">DMIC_TransferReceiveDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00018.html#a00335">dmic_transfer_t</a> *xfer, uint32_t channel)</td></tr>
+<tr class="memitem:ga429f14998f6bf0e9d2a2750fb168de11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga429f14998f6bf0e9d2a2750fb168de11">DMIC_TransferReceiveDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00018.html#a00335">dmic_transfer_t</a> *xfer, uint32_t channel)</td></tr>
 <tr class="memdesc:ga429f14998f6bf0e9d2a2750fb168de11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using DMA.  <a href="#ga429f14998f6bf0e9d2a2750fb168de11">More...</a><br/></td></tr>
 <tr class="separator:ga429f14998f6bf0e9d2a2750fb168de11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac8598bcd4a9a96f96235fc400ebeb2d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gac8598bcd4a9a96f96235fc400ebeb2d2">DMIC_TransferAbortReceiveDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle)</td></tr>
 <tr class="memdesc:gac8598bcd4a9a96f96235fc400ebeb2d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the received data using DMA.  <a href="#gac8598bcd4a9a96f96235fc400ebeb2d2">More...</a><br/></td></tr>
 <tr class="separator:gac8598bcd4a9a96f96235fc400ebeb2d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac132e5ab26920dac8dd4a7df5c8503a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gac132e5ab26920dac8dd4a7df5c8503a5">DMIC_TransferGetReceiveCountDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, uint32_t *count)</td></tr>
+<tr class="memitem:gac132e5ab26920dac8dd4a7df5c8503a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gac132e5ab26920dac8dd4a7df5c8503a5">DMIC_TransferGetReceiveCountDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, uint32_t *count)</td></tr>
 <tr class="memdesc:gac132e5ab26920dac8dd4a7df5c8503a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of bytes that have been received.  <a href="#gac132e5ab26920dac8dd4a7df5c8503a5">More...</a><br/></td></tr>
 <tr class="separator:gac132e5ab26920dac8dd4a7df5c8503a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafcb1572158c78d11c5e389ceacdb3de5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gafcb1572158c78d11c5e389ceacdb3de5">DMIC_InstallDMADescriptorMemory</a> (dmic_dma_handle_t *handle, void *linkAddr, size_t linkNum)</td></tr>
@@ -321,7 +321,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* dmic_dma_transfer_callback_t)(DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* dmic_dma_transfer_callback_t)(DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -334,7 +334,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferCreateHandleDMA </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferCreateHandleDMA </td>
           <td>(</td>
           <td class="paramtype">DMIC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -388,7 +388,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferReceiveDMA </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferReceiveDMA </td>
           <td>(</td>
           <td class="paramtype">DMIC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -476,7 +476,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferGetReceiveCountDMA </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferGetReceiveCountDMA </td>
           <td>(</td>
           <td class="paramtype">DMIC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

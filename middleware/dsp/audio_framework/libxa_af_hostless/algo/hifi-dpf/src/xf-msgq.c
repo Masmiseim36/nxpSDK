@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -52,11 +52,10 @@
 static inline void xf_msg_proxy_put(xf_message_t *m)
 {
     UWORD32                 dst = XF_MSG_DST_CORE(m->id);
-    UWORD32                 src = XF_MSG_SRC_CORE(m->id);
     xf_core_rw_data_t  *rw = XF_CORE_RW_DATA(dst);
 
     /* ...assure memory coherency if needed */
-    if (XF_REMOTE_IPC_NON_COHERENT)
+#if (XF_REMOTE_IPC_NON_COHERENT)
     {
         /* ...invalidate rw-shared memory region */
         XF_PROXY_INVALIDATE(rw, sizeof(*rw));
@@ -68,16 +67,24 @@ static inline void xf_msg_proxy_put(xf_message_t *m)
         XF_PROXY_FLUSH(rw, sizeof(*rw));
         XF_PROXY_FLUSH(m, sizeof(*m));
     }
-    else
+#else
     {
         /* ...no memory coherency concerns; just place a message in the queue */
         xf_sync_enqueue(&rw->remote, m);
     }
+#endif //XF_REMOTE_IPC_NON_COHERENT
 
+#if 1 //AR7
+    //xf_ipi_assert is used only if other cores access rw->remote[core0]
+#else
     /* ...assert IPI interrupt on target ("destination") core if needed */
+    UWORD32  src = XF_MSG_SRC_CORE(m->id);
     if (dst != src) {
         xf_ipi_assert(dst);
-    } else {
+    } else 
+#endif
+    {
+        /* ...assert event on Master core */
         xf_ipi_resume_dsp(dst);
     }
 }
@@ -89,7 +96,7 @@ static inline xf_message_t * xf_msg_proxy_get(UWORD32 core)
     xf_message_t       *m;
 
     /* ...assure memory coherency if needed */
-    if (XF_REMOTE_IPC_NON_COHERENT)
+#if (XF_REMOTE_IPC_NON_COHERENT)
     {
         /* ...invalidate rw-memory */
         XF_PROXY_INVALIDATE(rw, sizeof(*rw));
@@ -106,11 +113,12 @@ static inline xf_message_t * xf_msg_proxy_get(UWORD32 core)
             XF_PROXY_INVALIDATE(m, sizeof(*m));
         }
     }
-    else
+#else
     {
         /* ...just dequeue message from response queue */
         m = xf_sync_dequeue(&rw->remote);
     }
+#endif //XF_REMOTE_IPC_NON_COHERENT
 
     return m;
 }
@@ -154,15 +162,17 @@ static UWORD32 xf_shmem_process_input(UWORD32 core)
         m->id = command.session_id;
         m->opcode = command.opcode;
         m->length = command.length;
+        m->error  = 0;
         m->buffer = xf_ipc_a2b(core, command.address);
 
-        TRACE(CMD, _b("C[%08x]:(%08x,%u,%p)"), m->id, m->opcode, m->length, m->buffer);
+        TRACE(CMD, _b("C[%016llx]:(%08x,%u,%p,%d)"), (UWORD64)m->id, m->opcode, m->length, m->buffer, m->error);
 
         /* ...invalidate message buffer contents as required - not here - tbd */
-        if (XF_REMOTE_IPC_NON_COHERENT)
+#if (XF_REMOTE_IPC_NON_COHERENT)
         {
             (XF_OPCODE_CDATA(m->opcode) ? XF_PROXY_INVALIDATE(m->buffer, m->length) : 0);
         }
+#endif //XF_REMOTE_IPC_NON_COHERENT
         
         /* ...and schedule message execution on proper core */
         xf_msg_submit(m);
@@ -203,15 +213,17 @@ static UWORD32 xf_shmem_process_output(UWORD32 core)
 #endif
 
         /* ...flush message buffer contents to main memory as required - too late - different core - tbd */
-        if (XF_REMOTE_IPC_NON_COHERENT)
+#if (XF_REMOTE_IPC_NON_COHERENT)
         {
             (XF_OPCODE_RDATA(m->opcode) ? XF_PROXY_FLUSH(m->buffer, m->length) : 0);
         }
+#endif //XF_REMOTE_IPC_NON_COHERENT
 
         /* ...put the response message fields */
         response.session_id = m->id;
         response.opcode = m->opcode;
         response.length = m->length;
+        response.error = m->error;
         response.address = xf_ipc_b2a(core, m->buffer);
 
         /* ...put the response in message queue */
@@ -219,7 +231,7 @@ static UWORD32 xf_shmem_process_output(UWORD32 core)
 
         /* v-tbd ...flush the content of the caches to main memory */
 
-        TRACE(RSP, _b("R[%08x]:(%08x,%u,%p)"), m->id, m->opcode, m->length, m->buffer);
+        TRACE(RSP, _b("R[%016llx]:(%08x,%u,%p,%d)"), (UWORD64)m->id, m->opcode, m->length, m->buffer, m->error);
 
         /* ...return message back to the pool */
         xf_msg_pool_put(&XF_CORE_RO_DATA(core)->pool, m);
@@ -272,11 +284,10 @@ int xf_shmem_init(UWORD32 core)
     xf_core_ro_data_t  *ro = XF_CORE_RO_DATA(core);
 
     /* ...initialize local/remote message queues */
-    xf_sync_queue_init(&rw->local);
     xf_sync_queue_init(&rw->remote);
 
     /* ...initialize global message list */
-    XF_CHK_API(xf_msg_pool_init(&ro->pool, XF_CFG_MESSAGE_POOL_SIZE, core));
+    XF_CHK_API(xf_msg_pool_init(&ro->pool, XF_CFG_MESSAGE_POOL_SIZE, core, 1 /* shared */));
 
     /* ...flush memory content as needed */
 #if XF_REMOTE_IPC_NON_COHERENT    
@@ -297,7 +308,6 @@ int xf_shmem_deinit(UWORD32 core)
     xf_core_rw_data_t  *rw = XF_CORE_RW_DATA(core);
 
     /* ...initialize local/remote message queues */
-    xf_sync_queue_deinit(&rw->local);
     xf_sync_queue_deinit(&rw->remote);
 
    /* ...system-specific deinitialization of IPC layer */

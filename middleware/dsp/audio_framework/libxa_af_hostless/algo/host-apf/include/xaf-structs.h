@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -28,6 +28,20 @@
 
 /* ...length of auxiliary pool messages */
 #define XAF_AUX_POOL_MSG_LENGTH             256
+
+/* ...size of config pool for communication with HiFi */
+#define XAF_EXT_CFG_POOL_SIZE               1
+
+/* ... max allowed length of config pool messages */
+#define XAF_MAX_EXT_CFG_BUF_LEN             (1024 * 8)
+
+/* ...Overhead for ext config per param (worst case, non-zero copy option)
+ * sizeof(xf_ext_param_msg_t) + sizeof(xaf_ext_buffer_t) +
+ * sizeof(UWORD32) for holding the buffer + 4 bytes for size alignment */
+#define XAF_EXT_CFG_OVERHEAD                (32)
+
+#define XAF_MAX_EXT_CONFIG_PARAMS           (XAF_AUX_POOL_MSG_LENGTH / XAF_EXT_CFG_OVERHEAD)
+
 #define XAF_MAX_CONFIG_PARAMS               (XAF_AUX_POOL_MSG_LENGTH >> 3)
 
 #define MAX_IO_PORTS                        (XF_CFG_MAX_IN_PORTS + XF_CFG_MAX_OUT_PORTS)
@@ -100,6 +114,9 @@ struct xaf_comp {
 
     xf_pool_t       *inpool;
     xf_pool_t       *outpool;
+    xf_pool_t       *ext_cfg_pool;
+    xf_buffer_t     *p_config_buf;
+    UWORD32          cfg_param_ext_buf_size_max;
     void                *pout_buf[1];
     void                *p_input[XAF_MAX_INBUFS];   //TENA-2196
     UWORD32                ninbuf;
@@ -130,10 +147,10 @@ typedef struct xaf_adev_s {
     UWORD32 n_comp;
 
     void *adev_ptr;
-    void *p_dspMem;
     void *p_apMem;
     void *p_dspLocalBuff;
     void *p_apSharedMem;
+    void *p_dspSharedMem;
 
     xaf_adev_state  adev_state;
 
@@ -145,3 +162,16 @@ typedef struct xaf_adev_s {
 
     UWORD32 dsp_thread_priority;
 } xaf_adev_t;
+
+typedef struct xaf_adsp_s {
+
+    void *adev_ptr;
+    void *p_dspMem;
+    void *p_dspLocalBuff;
+    void *p_dspSharedMem;
+    void *xf_g_dsp;
+
+    xaf_adev_state  adev_state;
+
+    UWORD32 dsp_thread_priority;
+} xaf_adsp_t;

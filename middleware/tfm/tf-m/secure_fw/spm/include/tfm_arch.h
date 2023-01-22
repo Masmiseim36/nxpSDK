@@ -62,12 +62,22 @@ struct full_context_t {
 #define CROSS_RETCODE_EMPTY         0xEEEEEEED
 #define CROSS_RETCODE_UPDATED       0xEEEEEEEE
 
-/* Context control */
+/* Context control.
+ * CAUTION: Assembly references this structure. DO CHECK the below functions
+ * before changing the structure:
+       'PendSV_Handler'
+ */
 struct context_ctrl_t {
-    uint32_t                sp;           /* Stack pointer (higher address)  */
+    uint32_t                sp;           /* Stack pointer (higher address).
+                                           * THIS MUST BE THE FIRST MEMBER OF
+                                           * THE STRUCT.
+                                           */
+    uint32_t                exc_ret;      /* EXC_RETURN pattern.
+                                           * THIS MUST BE THE SECOND MEMBER OF
+                                           * THE STRUCT.
+                                           */
     uint32_t                sp_limit;     /* Stack limit (lower address)     */
-    uint32_t                allocated;    /* Stack alloced bytes (8-aligned) */
-    uint32_t                exc_ret;      /* EXC_RETURN pattern.             */
+    uint32_t                sp_base;      /* Stack usage start (higher addr) */
     uint32_t                cross_frame;  /* Cross call frame position.      */
     uint32_t                retcode_status; /* Cross call retcode status.    */
 };
@@ -95,22 +105,20 @@ struct cross_call_abi_frame_t {
 };
 
 /* Assign stack and stack limit to the context control instance. */
-#define ARCH_CTXCTRL_INIT(x, buf, size) do {                                   \
-            (x)->sp             = ((uint32_t)(buf) + (uint32_t)(size)) & ~0x7; \
-            (x)->sp_limit       = ((uint32_t)(buf) + 7) & ~0x7;                \
-            (x)->allocated      = 0;                                           \
-            (x)->exc_ret        = 0;                                           \
-            (x)->cross_frame    = 0;                                           \
-            (x)->retcode_status = CROSS_RETCODE_EMPTY;                         \
+#define ARCH_CTXCTRL_INIT(x, buf, sz) do {                                   \
+            (x)->sp             = ((uint32_t)(buf) + (uint32_t)(sz)) & ~0x7; \
+            (x)->sp_limit       = ((uint32_t)(buf) + 7) & ~0x7;              \
+            (x)->sp_base        = (x)->sp;                                   \
+            (x)->exc_ret        = 0;                                         \
+            (x)->cross_frame    = 0;                                         \
+            (x)->retcode_status = CROSS_RETCODE_EMPTY;                       \
         } while (0)
 
 /* Allocate 'size' bytes in stack. */
-#define ARCH_CTXCTRL_ALLOCATE_STACK(x, size) do {                         \
-            (x)->allocated += ((size) + 7) & ~0x7;                        \
-            (x)->sp        -= (x)->allocated;                             \
-        } while (0)
+#define ARCH_CTXCTRL_ALLOCATE_STACK(x, size)                                 \
+            ((x)->sp             -= ((size) + 7) & ~0x7)
 
-/* The latest allocated pointer. */
+/* The last allocated pointer. */
 #define ARCH_CTXCTRL_ALLOCATED_PTR(x)         ((x)->sp)
 
 /* Prepare a exception return pattern on the stack. */
@@ -120,6 +128,19 @@ struct cross_call_abi_frame_t {
             (x)->lr = (uint32_t)(pfnlr);                                  \
             (x)->xpsr = XPSR_T32;                                         \
         } while (0)
+
+/*
+ * Claim a statically initialized context control instance.
+ * Make the start stack pointer at 'stack_buf[stack_size]' because
+ * the hardware acts in a 'Decrease-then-store' behaviour.
+ */
+#define ARCH_CLAIM_CTXCTRL_INSTANCE(name, stack_buf, stack_size)          \
+            struct context_ctrl_t name = {                                \
+                .sp        = (uint32_t)&stack_buf[stack_size],            \
+                .sp_base   = (uint32_t)&stack_buf[stack_size],            \
+                .sp_limit  = (uint32_t)stack_buf,                         \
+                .exc_ret   = 0,                                           \
+            }
 
 /**
  * \brief Get Link Register
@@ -170,7 +191,7 @@ __STATIC_INLINE void __set_CONTROL_SPSEL(uint32_t SPSEL)
     __ISB();
 }
 
-#if (CONFIG_TFM_FP >= 1) && CONFIG_TFM_LAZY_STACKING
+#if (CONFIG_TFM_FLOAT_ABI >= 1) && CONFIG_TFM_LAZY_STACKING
 #define ARCH_FLUSH_FP_CONTEXT()  __asm volatile("vmov.f32  s0, s0 \n":::"memory")  //NXP added .f32 for IAR
 #else
 #define ARCH_FLUSH_FP_CONTEXT()
@@ -182,13 +203,8 @@ void tfm_arch_set_secure_exception_priorities(void);
 /* Configure various extensions. */
 void tfm_arch_config_extensions(void);
 
-/* Clear float point status. */
-void tfm_arch_clear_fp_status(void);
-
-#if (CONFIG_TFM_FP >= 1)
-/*
- * Clear float point data.
- */
+#if (CONFIG_TFM_FLOAT_ABI > 0)
+/* Clear float point data. */
 void tfm_arch_clear_fp_data(void);
 #endif
 

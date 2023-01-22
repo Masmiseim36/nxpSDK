@@ -30,12 +30,9 @@ extern "C" {
 #define TFM_CRYPTO_HANDLE                                          (0x40000100U)
 
 /******** TFM_SP_PLATFORM ********/
-#define TFM_SP_PLATFORM_SYSTEM_RESET_SID                           (0x00000040U)
-#define TFM_SP_PLATFORM_SYSTEM_RESET_VERSION                       (1U)
-#define TFM_SP_PLATFORM_IOCTL_SID                                  (0x00000041U)
-#define TFM_SP_PLATFORM_IOCTL_VERSION                              (1U)
-#define TFM_SP_PLATFORM_NV_COUNTER_SID                             (0x00000042U)
-#define TFM_SP_PLATFORM_NV_COUNTER_VERSION                         (1U)
+#define TFM_PLATFORM_SERVICE_SID                                   (0x00000040U)
+#define TFM_PLATFORM_SERVICE_VERSION                               (1U)
+#define TFM_PLATFORM_SERVICE_HANDLE                                (0x40000105U)
 
 /******** TFM_SP_INITIAL_ATTESTATION ********/
 #define TFM_ATTESTATION_SERVICE_SID                                (0x00000020U)
@@ -43,18 +40,9 @@ extern "C" {
 #define TFM_ATTESTATION_SERVICE_HANDLE                             (0x40000103U)
 
 /******** TFM_SP_FWU ********/
-#define TFM_FWU_WRITE_SID                                          (0x000000A0U)
-#define TFM_FWU_WRITE_VERSION                                      (1U)
-#define TFM_FWU_INSTALL_SID                                        (0x000000A1U)
-#define TFM_FWU_INSTALL_VERSION                                    (1U)
-#define TFM_FWU_ABORT_SID                                          (0x000000A2U)
-#define TFM_FWU_ABORT_VERSION                                      (1U)
-#define TFM_FWU_QUERY_SID                                          (0x000000A3U)
-#define TFM_FWU_QUERY_VERSION                                      (1U)
-#define TFM_FWU_REQUEST_REBOOT_SID                                 (0x000000A4U)
-#define TFM_FWU_REQUEST_REBOOT_VERSION                             (1U)
-#define TFM_FWU_ACCEPT_SID                                         (0x000000A5U)
-#define TFM_FWU_ACCEPT_VERSION                                     (1U)
+#define TFM_FIRMWARE_UPDATE_SERVICE_SID                            (0x000000A0U)
+#define TFM_FIRMWARE_UPDATE_SERVICE_VERSION                        (1U)
+#define TFM_FIRMWARE_UPDATE_SERVICE_HANDLE                         (0x40000104U)
 
 /******** TFM_SP_CORE_TEST ********/
 #define SPM_CORE_TEST_INIT_SUCCESS_SID                             (0x0000F020U)
@@ -99,10 +87,10 @@ extern "C" {
 #define IPC_SERVICE_TEST_CLIENT_PROGRAMMER_ERROR_VERSION           (1U)
 #define IPC_SERVICE_TEST_STATELESS_ROT_SID                         (0x0000F085U)
 #define IPC_SERVICE_TEST_STATELESS_ROT_VERSION                     (1U)
-#define IPC_SERVICE_TEST_STATELESS_ROT_HANDLE                      (0x40000104U)
+#define IPC_SERVICE_TEST_STATELESS_ROT_HANDLE                      (0x40000106U)
 #define IPC_SERVICE_TEST_MMIOVEC_SID                               (0x0000F086U)
 #define IPC_SERVICE_TEST_MMIOVEC_VERSION                           (1U)
-#define IPC_SERVICE_TEST_MMIOVEC_HANDLE                            (0x40000105U)
+#define IPC_SERVICE_TEST_MMIOVEC_HANDLE                            (0x40000107U)
 
 /******** TFM_SP_IPC_CLIENT_TEST ********/
 #define IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM_SID                     (0x0000F061U)
@@ -127,24 +115,18 @@ extern "C" {
 /******** TFM_SP_SLIH_TEST ********/
 #define TFM_SLIH_TEST_CASE_SID                                     (0x0000F0A0U)
 #define TFM_SLIH_TEST_CASE_VERSION                                 (1U)
-#define TFM_SLIH_TEST_CASE_HANDLE                                  (0x40000106U)
+#define TFM_SLIH_TEST_CASE_HANDLE                                  (0x40000108U)
 
 /******** TFM_SP_FLIH_TEST ********/
 #define TFM_FLIH_TEST_CASE_SID                                     (0x0000F0B0U)
 #define TFM_FLIH_TEST_CASE_VERSION                                 (1U)
-#define TFM_FLIH_TEST_CASE_HANDLE                                  (0x40000107U)
+#define TFM_FLIH_TEST_CASE_HANDLE                                  (0x40000109U)
 
 /******** TFM_SP_FPU_SERVICE_TEST ********/
-#define TFM_FPU_SERVICE_CLEAR_FP_REGISTER_SID                      (0x0000F090U)
-#define TFM_FPU_SERVICE_CLEAR_FP_REGISTER_VERSION                  (1U)
-#define TFM_FPU_SERVICE_CHECK_FP_REGISTER_SID                      (0x0000F091U)
-#define TFM_FPU_SERVICE_CHECK_FP_REGISTER_VERSION                  (1U)
-#define TFM_FPU_SERVICE_START_S_TIMER_SID                          (0x0000F092U)
-#define TFM_FPU_SERVICE_START_S_TIMER_VERSION                      (1U)
-#define TFM_FPU_SERVICE_CHECK_S_TIMER_TRIGGERED_SID                (0x0000F093U)
-#define TFM_FPU_SERVICE_CHECK_S_TIMER_TRIGGERED_VERSION            (1U)
-#define TFM_FPU_SERVICE_CHECK_NS_INTERRUPT_S_TEST_SID              (0x0000F094U)
-#define TFM_FPU_SERVICE_CHECK_NS_INTERRUPT_S_TEST_VERSION          (1U)
+#define TFM_FPU_CHECK_FP_CALLEE_REGISTER_SID                       (0x0000F091U)
+#define TFM_FPU_CHECK_FP_CALLEE_REGISTER_VERSION                   (1U)
+#define TFM_FPU_TEST_NS_PREEMPT_S_SID                              (0x0000F092U)
+#define TFM_FPU_TEST_NS_PREEMPT_S_VERSION                          (1U)
 
 #ifdef __cplusplus
 }

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: boardkit/evk-mimxrt1015/clock_config.c File Reference</title>
+<title>ISSDK: boardkit/frdm-k32w042/clock_config.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,11 +40,12 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_955806e634ba701fbc47e731f4cdaaa6.html">evk-mimxrt1015</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_2692879e20973b44d33f0adfa9bd527e.html">frdm-k32w042</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -55,14 +56,19 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for clock_config.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a04245.png" border="0" usemap="#boardkit_2evk-mimxrt1015_2clock__config_8c" alt=""/></div>
-<map name="boardkit_2evk-mimxrt1015_2clock__config_8c" id="boardkit_2evk-mimxrt1015_2clock__config_8c">
-<area shape="rect" id="node2" href="a04301.html" title="clock_config.h" alt="" coords="34,95,139,121"/>
+<div class="center"><img src="a04245.png" border="0" usemap="#boardkit_2frdm-k32w042_2clock__config_8c" alt=""/></div>
+<map name="boardkit_2frdm-k32w042_2clock__config_8c" id="boardkit_2frdm-k32w042_2clock__config_8c">
+<area shape="rect" id="node2" href="a04301.html" title="clock_config.h" alt="" coords="29,95,134,121"/>
 </map>
 </div>
 </div>
 <p><a href="a04244_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aaca1879e0759e80e5adb3044c10c7dd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#aaca1879e0759e80e5adb3044c10c7dd0">SCG_LPFLL_DISABLE</a>&#160;&#160;&#160;0U</td></tr>
+<tr class="separator:aaca1879e0759e80e5adb3044c10c7dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a09a9a2026d4c394534e528d519370d3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#a09a9a2026d4c394534e528d519370d3e">BOARD_InitBootClocks</a> (void)</td></tr>
@@ -76,16 +82,38 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:aa3cd3e43291e81e795d642b79b6088e6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#aa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a></td></tr>
 <tr class="separator:aa3cd3e43291e81e795d642b79b6088e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca5fe9b5426f8c656c9c53d7088a4338"><td class="memItemLeft" align="right" valign="top">const clock_enet_pll_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#aca5fe9b5426f8c656c9c53d7088a4338">enetPllConfig_BOARD_BootClockRUN</a></td></tr>
-<tr class="memdesc:aca5fe9b5426f8c656c9c53d7088a4338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enet PLL set for BOARD_BootClockRUN configuration.  <a href="#aca5fe9b5426f8c656c9c53d7088a4338">More...</a><br /></td></tr>
-<tr class="separator:aca5fe9b5426f8c656c9c53d7088a4338"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1eb8739af679f60d21566c74233f2072"><td class="memItemLeft" align="right" valign="top">const clock_sys_pll_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#a1eb8739af679f60d21566c74233f2072">sysPllConfig_BOARD_BootClockRUN</a></td></tr>
-<tr class="memdesc:a1eb8739af679f60d21566c74233f2072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sys PLL for BOARD_BootClockRUN configuration.  <a href="#a1eb8739af679f60d21566c74233f2072">More...</a><br /></td></tr>
-<tr class="separator:a1eb8739af679f60d21566c74233f2072"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d28a505d06fb58d283e270865d17566"><td class="memItemLeft" align="right" valign="top">const clock_usb_pll_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#a9d28a505d06fb58d283e270865d17566">usb1PllConfig_BOARD_BootClockRUN</a></td></tr>
-<tr class="memdesc:a9d28a505d06fb58d283e270865d17566"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usb1 PLL set for BOARD_BootClockRUN configuration.  <a href="#a9d28a505d06fb58d283e270865d17566">More...</a><br /></td></tr>
-<tr class="separator:a9d28a505d06fb58d283e270865d17566"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9608b8d38f9bebc0bd4f50f9d8ce30ab"><td class="memItemLeft" align="right" valign="top">const scg_sys_clk_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#a9608b8d38f9bebc0bd4f50f9d8ce30ab">g_sysClkConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="memdesc:a9608b8d38f9bebc0bd4f50f9d8ce30ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCG set for BOARD_BootClockRUN configuration.  <a href="#a9608b8d38f9bebc0bd4f50f9d8ce30ab">More...</a><br /></td></tr>
+<tr class="separator:a9608b8d38f9bebc0bd4f50f9d8ce30ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43bf8979e09a0a941320583656ed32f7"><td class="memItemLeft" align="right" valign="top">const scg_sosc_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#a43bf8979e09a0a941320583656ed32f7">g_scgSysOscConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="memdesc:a43bf8979e09a0a941320583656ed32f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">System OSC set for BOARD_BootClockRUN configuration.  <a href="#a43bf8979e09a0a941320583656ed32f7">More...</a><br /></td></tr>
+<tr class="separator:a43bf8979e09a0a941320583656ed32f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d90a1ba81948cb43b4ea3bbf1430fa"><td class="memItemLeft" align="right" valign="top">const scg_sirc_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#af4d90a1ba81948cb43b4ea3bbf1430fa">g_scgSircConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="memdesc:af4d90a1ba81948cb43b4ea3bbf1430fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIRC set for BOARD_BootClockRUN configuration.  <a href="#af4d90a1ba81948cb43b4ea3bbf1430fa">More...</a><br /></td></tr>
+<tr class="separator:af4d90a1ba81948cb43b4ea3bbf1430fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11b406d8b361edd1a4bebc8930743a0a"><td class="memItemLeft" align="right" valign="top">const scg_firc_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#a11b406d8b361edd1a4bebc8930743a0a">g_scgFircConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="separator:a11b406d8b361edd1a4bebc8930743a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaba96dcc6379af631b9b3eca820277cd"><td class="memItemLeft" align="right" valign="top">const scg_lpfll_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04244.html#aaba96dcc6379af631b9b3eca820277cd">g_scgLpFllConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="separator:aaba96dcc6379af631b9b3eca820277cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aaca1879e0759e80e5adb3044c10c7dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaca1879e0759e80e5adb3044c10c7dd0">&#9670;&nbsp;</a></span>SCG_LPFLL_DISABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SCG_LPFLL_DISABLE&#160;&#160;&#160;0U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LPFLL clock disabled </p>
+
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00040">40</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a5e69c4eff0fd5236bbb0ff4e1d5a7a7e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e69c4eff0fd5236bbb0ff4e1d5a7a7e">&#9670;&nbsp;</a></span>BOARD_BootClockRUN()</h2>
@@ -113,9 +141,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00133">133</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04268_source.html#l00017">BOARD_XTAL0_CLK_HZ</a>, <a class="el" href="a04280_source.html#l00018">BOARD_XTAL32K_CLK_HZ</a>, <a class="el" href="a04241_source.html#l00130">enetPllConfig_BOARD_BootClockRUN</a>, <a class="el" href="a04241_source.html#l00120">sysPllConfig_BOARD_BootClockRUN</a>, and <a class="el" href="a04241_source.html#l00126">usb1PllConfig_BOARD_BootClockRUN</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00167">167</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
 
 </div>
 </div>
@@ -137,54 +163,104 @@ Variables</h2></td></tr>
 
 <p>This function executes default configuration of clocks. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00047">47</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00099">99</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
 
-<p class="reference">References <a class="el" href="a04211_source.html#l00168">BOARD_BootClockRUN()</a>.</p>
+<p class="reference">References <a class="el" href="a04223_source.html#l00168">BOARD_BootClockRUN()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="a04244_a09a9a2026d4c394534e528d519370d3e_cgraph.png" border="0" usemap="#a04244_a09a9a2026d4c394534e528d519370d3e_cgraph" alt=""/></div>
 <map name="a04244_a09a9a2026d4c394534e528d519370d3e_cgraph" id="a04244_a09a9a2026d4c394534e528d519370d3e_cgraph">
-<area shape="rect" id="node2" href="a04211.html#a5e69c4eff0fd5236bbb0ff4e1d5a7a7e" title="This function executes configuration of clocks. " alt="" coords="212,5,375,32"/>
+<area shape="rect" id="node2" href="a04223.html#a5e69c4eff0fd5236bbb0ff4e1d5a7a7e" title="This function executes configuration of clocks. " alt="" coords="212,5,375,32"/>
 </map>
 </div>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="aca5fe9b5426f8c656c9c53d7088a4338"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca5fe9b5426f8c656c9c53d7088a4338">&#9670;&nbsp;</a></span>enetPllConfig_BOARD_BootClockRUN</h2>
+<a id="a11b406d8b361edd1a4bebc8930743a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11b406d8b361edd1a4bebc8930743a0a">&#9670;&nbsp;</a></span>g_scgFircConfig_BOARD_BootClockRUN</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const clock_enet_pll_config_t enetPllConfig_BOARD_BootClockRUN</td>
+          <td class="memname">const scg_firc_config_t g_scgFircConfig_BOARD_BootClockRUN</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .enableClkOutput500M = <span class="keyword">true</span>,</div><div class="line">}</div></div><!-- fragment -->
-<p>Enet PLL set for BOARD_BootClockRUN configuration. </p>
-
-<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00121">121</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .enableMode = kSCG_FircEnable, </div><div class="line">    .div1 = kSCG_AsyncClkDivBy1,   </div><div class="line">    .div2 = kSCG_AsyncClkDivBy1,   </div><div class="line">    .div3 = kSCG_AsyncClkDivBy1,   </div><div class="line">    .range = kSCG_FircRange48M,    </div><div class="line">    .trimConfig = NULL,            </div><div class="line">}</div></div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00148">148</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
 
 </div>
 </div>
-<a id="a1eb8739af679f60d21566c74233f2072"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1eb8739af679f60d21566c74233f2072">&#9670;&nbsp;</a></span>sysPllConfig_BOARD_BootClockRUN</h2>
+<a id="aaba96dcc6379af631b9b3eca820277cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaba96dcc6379af631b9b3eca820277cd">&#9670;&nbsp;</a></span>g_scgLpFllConfig_BOARD_BootClockRUN</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN</td>
+          <td class="memname">const scg_lpfll_config_t g_scgLpFllConfig_BOARD_BootClockRUN</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .loopDivider = 1, </div><div class="line">}</div></div><!-- fragment -->
-<p>Sys PLL for BOARD_BootClockRUN configuration. </p>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .enableMode = kSCG_LpFllEnable, </div><div class="line">    .div1 = kSCG_AsyncClkDivBy1,    </div><div class="line">    .div2 = kSCG_AsyncClkDisable,   </div><div class="line">    .div3 = kSCG_AsyncClkDisable,   </div><div class="line">    .range = kSCG_LpFllRange72M,    </div><div class="line">    .trimConfig = NULL,</div><div class="line">}</div></div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00156">156</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00124">124</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
+</div>
+</div>
+<a id="af4d90a1ba81948cb43b4ea3bbf1430fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4d90a1ba81948cb43b4ea3bbf1430fa">&#9670;&nbsp;</a></span>g_scgSircConfig_BOARD_BootClockRUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const scg_sirc_config_t g_scgSircConfig_BOARD_BootClockRUN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower, </div><div class="line">    .div1 = kSCG_AsyncClkDisable,                              </div><div class="line">    .div2 = kSCG_AsyncClkDisable,                              </div><div class="line">    .div3 = kSCG_AsyncClkDivBy1,                               </div><div class="line">    .range = kSCG_SircRangeHigh,                               </div><div class="line">}</div></div><!-- fragment -->
+<p>SIRC set for BOARD_BootClockRUN configuration. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00141">141</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
+
+</div>
+</div>
+<a id="a43bf8979e09a0a941320583656ed32f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43bf8979e09a0a941320583656ed32f7">&#9670;&nbsp;</a></span>g_scgSysOscConfig_BOARD_BootClockRUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const scg_sosc_config_t g_scgSysOscConfig_BOARD_BootClockRUN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .freq = 0U,                   </div><div class="line">    .div1 = kSCG_AsyncClkDisable, </div><div class="line">    .div2 = kSCG_AsyncClkDisable, </div><div class="line">    .div3 = kSCG_AsyncClkDisable, </div><div class="line">}</div></div><!-- fragment -->
+<p>System OSC set for BOARD_BootClockRUN configuration. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00135">135</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
+
+</div>
+</div>
+<a id="a9608b8d38f9bebc0bd4f50f9d8ce30ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9608b8d38f9bebc0bd4f50f9d8ce30ab">&#9670;&nbsp;</a></span>g_sysClkConfig_BOARD_BootClockRUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const scg_sys_clk_config_t g_sysClkConfig_BOARD_BootClockRUN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .divSlow = kSCG_SysClkDivBy2, </div><div class="line">    .divBus = kSCG_SysClkDivBy1,  </div><div class="line">    .divExt = kSCG_SysClkDivBy1,  </div><div class="line">    .divCore = kSCG_SysClkDivBy1, </div><div class="line">    .src = kSCG_SysClkSrcFirc,    </div><div class="line">}</div></div><!-- fragment -->
+<p>SCG set for BOARD_BootClockRUN configuration. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00128">128</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
 
 </div>
 </div>
@@ -202,28 +278,10 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a9d28a505d06fb58d283e270865d17566"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d28a505d06fb58d283e270865d17566">&#9670;&nbsp;</a></span>usb1PllConfig_BOARD_BootClockRUN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .loopDivider = 0, </div><div class="line">}</div></div><!-- fragment -->
-<p>Usb1 PLL set for BOARD_BootClockRUN configuration. </p>
-
-<p class="definition">Definition at line <a class="el" href="a04244_source.html#l00127">127</a> of file <a class="el" href="a04244_source.html">clock_config.c</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>
-&copy; Copyright 2016-2020 NXP. All Rights Reserved.
+&copy; Copyright 2016-2022 NXP. All Rights Reserved. SPDX-License-Identifier: BSD-3-Clause
 </small></address>
 </body>
 </html>

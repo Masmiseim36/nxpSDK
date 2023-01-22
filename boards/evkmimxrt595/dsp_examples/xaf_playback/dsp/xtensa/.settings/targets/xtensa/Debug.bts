@@ -12,19 +12,21 @@
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_fusionf1</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/fusionf1/include/aac_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/fusionf1/include/src_pp</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/fusionf1/include/mp3_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_enc/fusionf1/include/mp3_enc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/include/opus_codec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/include/ogg_lib</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/include/sbc_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/include/sbc_enc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/fusionf1/include/vorbis_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/gpio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/audio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/lib</ListEntry>
@@ -41,6 +43,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER</ListEntry>
@@ -58,12 +61,16 @@
               <ListEntry key="XF_DEBUG" value="1"/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="XOS_CLOCK_FREQ" value="198000000"/>
+              <ListEntry key="XF_CORE_ID" value="0"/>
+              <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
               <ListEntry key="XA_MP3_DECODER" value="1"/>
+              <ListEntry key="XA_MP3_ENCODER" value="1"/>
               <ListEntry key="XA_AAC_DECODER" value="1"/>
               <ListEntry key="XA_OPUS_ENCODER" value="1"/>
               <ListEntry key="XA_OPUS_DECODER" value="1"/>
               <ListEntry key="XA_SBC_ENCODER" value="1"/>
               <ListEntry key="XA_SBC_DECODER" value="1"/>
+              <ListEntry key="XA_VORBIS_DECODER" value="1"/>
               <ListEntry key="XA_CLIENT_PROXY" value="1"/>
               <ListEntry key="XA_PCM_GAIN" value="1"/>
               <ListEntry key="XA_SRC_PP_FX" value="1"/>
@@ -136,29 +143,6 @@
       </CompilerOptions>
       <AssemblerOptions/>
       <LinkerOptions>
-        <StringListMapOptions>
-          <StringListMapEntry>
-            <key>LinkerAdditionalOptions</key>
-            <value inheritance="append">
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/fusionf1/lib/xa_asrc_src_pp.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/fusionf1/lib/xa_mp3_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_opus_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT500.a&#13;
--g&#13;
-</ListEntry>
-            </value>
-          </StringListMapEntry>
-          <StringListMapEntry>
-            <key>Libraries</key>
-            <value inheritance="prepend" flag="-l">
-              <ListEntry>m</ListEntry>
-              <ListEntry>xos</ListEntry>
-            </value>
-          </StringListMapEntry>
-        </StringListMapOptions>
         <BooleanMapOptions>
           <BooleanMapEntry>
             <key>CreateMinsize</key>
@@ -170,6 +154,35 @@ ${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_F
           </BooleanMapEntry>
         </BooleanMapOptions>
         <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT595S/xtensa/gdbio"/>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Libraries</key>
+            <value inheritance="prepend" flag="-l">
+              <ListEntry>m</ListEntry>
+              <ListEntry>xos</ListEntry>
+            </value>
+          </StringListMapEntry>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-g&#13;
+-Wl,--start-group&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/fusionf1/lib/xa_asrc_src_pp.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/fusionf1/lib/xa_mp3_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_enc/fusionf1/lib/xa_mp3_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_opus_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_opus_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_opus_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/fusionf1/lib/xa_vorbis_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT500.a&#13;
+-Wl,--end-group&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
       </LinkerOptions>
     </BaseSettings>
     <OverriddenSettings/>

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -49,7 +49,7 @@ typedef struct xf_mem_info
 
 #if XF_CFG_CORES_NUM > 1
 /* ...shared memory pool for communication within DSP-cluster */
-extern xf_mm_pool_t     xf_dsp_shmem_pool;
+//extern xf_mm_pool_t     xf_dsp_shmem_pool;
 #endif
 
 /*******************************************************************************
@@ -77,14 +77,6 @@ static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWO
     void *ptr, *aligned_ptr;
     xf_mem_info_t *mem_info;
 
-#if XF_CFG_CORES_NUM > 1    
-    if (shared)
-    {
-        /* ...if memory is shared, core is dropped */
-        return xf_mm_alloc(&xf_dsp_shmem_pool, size);
-    }
-#endif
-    
     XF_CHK_ERR(align <= XF_MAX_ALIGNMENT, NULL);
 
     /* ... alignment value should be greater than 0 */
@@ -93,7 +85,20 @@ static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWO
     /* ...need extra bytes to store allocation meta data, also size should be properly aligned */
     aligned_size = XF_MM(size + sizeof(xf_mem_info_t) + align-1);
 
-    ptr = xf_mm_alloc(&XF_CORE_DATA(core)->local_pool, aligned_size);
+#if (XF_CFG_CORES_NUM > 1)
+    if (shared)
+    {
+        /* ...cache line aligned size for shmem allocs? */
+        aligned_size = (aligned_size + XF_IPC_CACHE_ALIGNMENT-1) & ~(XF_IPC_CACHE_ALIGNMENT-1);
+
+        /* ...if memory is shared, core is dropped?? */
+        ptr = xf_ipc_mm_alloc(&XF_SHMEM_IPC_HANDLE(core)->xf_dsp_shmem_pool, aligned_size);
+    }
+    else
+#endif
+    {
+        ptr = xf_mm_alloc(&XF_CORE_DATA(core)->local_pool, aligned_size);
+    }
     if (ptr == NULL) return ptr;
 
     /* ...align the buffer pointer */
@@ -110,18 +115,22 @@ static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWO
 /* ...release allocated memory */
 static inline void xf_mem_free(void *p, UWORD32 size, UWORD32 core, UWORD32 shared)
 {
-#if XF_CFG_CORES_NUM > 1    
-    if (shared)
-    {
-        /* ...if memory is shared, core is dropped */
-        xf_mm_free(&xf_dsp_shmem_pool, p, size);
-        return;
-    }
-#endif
-
     /* ...fetch alignment metadata and free */
     xf_mem_info_t *mem_info = (xf_mem_info_t *) ((UWORD32)p + size);
-    xf_mm_free(&XF_CORE_DATA(core)->local_pool, mem_info->buf_ptr, mem_info->alloc_size);
+
+#if (XF_CFG_CORES_NUM > 1)
+    if (shared)
+    {
+        /* ...if memory is shared, core is dropped?? */
+        xf_ipc_mm_free(&(XF_SHMEM_IPC_HANDLE(core))->xf_dsp_shmem_pool, mem_info->buf_ptr, mem_info->alloc_size);
+    }
+    else
+#endif
+    {
+        xf_mm_free(&XF_CORE_DATA(core)->local_pool, mem_info->buf_ptr, mem_info->alloc_size);
+    }
+
+    return;
 }
 
 /* ...allocate AP-DSP shared memory */

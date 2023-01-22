@@ -1,8 +1,8 @@
 var searchData=
 [
   ['usdhc_20host_20adapter_20driver',['USDHC HOST adapter Driver',['../a00061.html',1,'']]],
-  ['usart_3a_20universal_20synchronous_2fasynchronous_20receiver_2ftransmitter_20driver',['USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver',['../a00247.html',1,'']]],
-  ['usart_20cmsis_20driver',['USART CMSIS Driver',['../a00248.html',1,'']]],
+  ['usart_3a_20universal_20synchronous_2fasynchronous_20receiver_2ftransmitter_20driver',['USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver',['../a00246.html',1,'']]],
+  ['usart_20cmsis_20driver',['USART CMSIS Driver',['../a00247.html',1,'']]],
   ['usart_20dma_20driver',['USART DMA Driver',['../a00073.html',1,'']]],
   ['usart_20driver',['USART Driver',['../a00072.html',1,'']]],
   ['usart_20freertos_20driver',['USART FreeRTOS Driver',['../a00056.html',1,'']]],

@@ -47,8 +47,6 @@ add_subdirectory(bootloader/${TFM_FWU_BOOTLOADER_LIB})
 
 target_link_libraries(tfm_psa_rot_partition_fwu
     PRIVATE
-        tfm_secure_api
-        psa_interface
         platform_s
         tfm_sprt
 )
@@ -62,7 +60,7 @@ target_compile_definitions(tfm_psa_rot_partition_fwu
 
 ############################ Secure API ########################################
 
-target_sources(tfm_secure_api
+target_sources(tfm_sprt
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/tfm_fwu_secure_api.c
 )
@@ -92,3 +90,12 @@ target_compile_definitions(tfm_partition_defs
 configure_file(${CMAKE_SOURCE_DIR}/interface/include/psa/fwu_config.h.in
                ${CMAKE_BINARY_DIR}/generated/interface/include/psa/fwu_config.h
                @ONLY)
+
+################ Display the configuration being applied #######################
+
+include(utils)
+dump_options("Firmware Update Partition config"
+"
+    FWU_STACK_SIZE
+"
+)

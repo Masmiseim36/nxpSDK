@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -24,6 +24,7 @@
 #define __XAF_CLK_TEST_H__
 
 #ifdef XAF_PROFILE
+#include "xaf-api.h"
 /* Common clock structures and functions */
 typedef enum 
 {
@@ -38,6 +39,7 @@ clk_t clk_read_start(clk_seln_t seln);
 clk_t clk_read_stop(clk_seln_t seln);
 clk_t clk_diff(clk_t stop, clk_t start);
 clk_t compute_total_frmwrk_cycles();
+int cb_total_frmwrk_cycles(xaf_perf_stats_t *); /* ...variant of thread-cycle update function, used as call-back function by worker DSPs */
 #endif
 
 #endif /* __XAF_CLK_TEST_H__ */

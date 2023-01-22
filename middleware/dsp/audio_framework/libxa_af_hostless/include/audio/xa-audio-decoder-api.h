@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -53,6 +53,12 @@ enum xa_codec_ports {
 enum
 {
     XA_CODEC_EXEC_NO_DATA = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_GENERIC, 0)
+};
+
+/* ...generic codec fatal config error */
+enum
+{
+    XA_CODEC_CONFIG_FATAL_RANGE = XA_ERROR_CODE(xa_severity_fatal, xa_class_config, XA_CODEC_GENERIC, 0)
 };
 
 #endif

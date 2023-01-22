@@ -1343,7 +1343,7 @@ API_RESULT BT_map_add_participant_to_conversation_pl
     CHAR   *tmp_ptr1;
     UCHAR   flag;
     UINT16  count;
-    UCHAR   ver_cntr[] = "version_counter=\"";
+
 
     retval = API_SUCCESS;
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
@@ -1406,7 +1406,7 @@ API_RESULT BT_map_add_participant_to_conversation_pl
         if (NULL != conv_id)
         {
             /* Search for  Version Counter */
-            tmp_ptr1 = BT_str_str(readstr, ver_cntr);
+            tmp_ptr1 = BT_str_str((CHAR *)readstr, "version_counter=\"");
             if (NULL != tmp_ptr1)
             {
                 /* Offset till end of ver_cntr */
@@ -1445,7 +1445,7 @@ API_RESULT BT_map_add_participant_to_conversation_pl
             }
         }
 
-        count = (UINT16)BT_str_len(readstr);
+        count = (UINT16)BT_str_n_len(readstr,sizeof(msg_readline)-1);
         (BT_IGNORE_RETURN_VALUE)BT_fops_file_put(dst_fd, (UCHAR *)readstr, &count);
 
         if (0x01U == flag)
@@ -1453,7 +1453,7 @@ API_RESULT BT_map_add_participant_to_conversation_pl
             /* reset */
             flag = 0x02U;
 
-            count = (UINT16)BT_str_len(readstr);
+            count = (UINT16)BT_str_n_len(readstr,sizeof(msg_readline)-1);
             (BT_IGNORE_RETURN_VALUE)BT_fops_file_put(dst_fd, (UCHAR *)conv_sample_participant_id, &count);
         }
     }
@@ -1715,7 +1715,7 @@ API_RESULT BT_map_update_conversation_participant_fields_pl
             }
         }
 
-        count = (UINT16)BT_str_len(readstr);
+        count = (UINT16)BT_str_n_len(readstr,sizeof(msg_readline)-1);
         (BT_IGNORE_RETURN_VALUE)BT_fops_file_put(dst_fd, (UCHAR *)readstr, &count);
     }
 

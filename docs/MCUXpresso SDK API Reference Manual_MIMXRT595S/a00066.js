@@ -1,14 +1,14 @@
 var a00066 =
 [
-    [ "smartdma_flexio_mculcd_param_t", "a00066.html#a00440", null ],
-    [ "smartdma_flexio_onelane_mculcd_param_t", "a00066.html#a00441", null ],
-    [ "smartdma_dsi_param_t", "a00066.html#a00439", [
+    [ "smartdma_flexio_mculcd_param_t", "a00066.html#a00441", null ],
+    [ "smartdma_flexio_onelane_mculcd_param_t", "a00066.html#a00442", null ],
+    [ "smartdma_dsi_param_t", "a00066.html#a00440", [
       [ "p_buffer", "a00066.html#a35d9912bc77bd698c788ed5343ee03d6", null ],
       [ "buffersize", "a00066.html#a5d1d927902078988bf40b85b8b16f060", null ],
       [ "smartdma_stack", "a00066.html#a810c20a6405868e960d1824c0b09655e", null ],
       [ "disablePixelByteSwap", "a00066.html#a6fd4fd15d869669034fe69d4245e1a3e", null ]
     ] ],
-    [ "smartdma_rgb565_rgb888_param_t", "a00066.html#a00442", null ],
+    [ "smartdma_rgb565_rgb888_param_t", "a00066.html#a00443", null ],
     [ "FSL_SMARTDMA_DRIVER_VERSION", "a00066.html#ga7b5e8b00441c9f9c17e65e207da3996a", null ],
     [ "SMARTDMA_DISPLAY_MEM_ADDR", "a00066.html#gac92722a2c2b3d0719e1d8a58f5b83253", null ],
     [ "SMARTDMA_DISPLAY_FIRMWARE_SIZE", "a00066.html#gafb05655b19a7e403a699761657301141", null ],
@@ -22,10 +22,14 @@ var a00066 =
       [ "kSMARTDMA_FlexIO_DMA_ARGB2RGB_Endian_Swap", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea544f91a79cede114d0185548e0ee19d4", null ],
       [ "kSMARTDMA_FlexIO_DMA_ARGB2RGB_Endian_Swap_Reverse", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea4c6918c356abed32a1a7769515fd770d", null ],
       [ "kSMARTDMA_MIPI_RGB565_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea38b6c774982a1aadfaf0a5905ce83f38", null ],
+      [ "kSMARTDMA_MIPI_RGB565_DMA2D", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea3df51c925b6c36505daaea253c7e2e01", null ],
       [ "kSMARTDMA_MIPI_RGB888_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78eae02ed1ade2edb98aa16215bb8777cff2", null ],
+      [ "kSMARTDMA_MIPI_RGB888_DMA2D", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78eacbf04f2f2d6b1377b7fbf8785aae279a", null ],
       [ "kSMARTDMA_MIPI_XRGB2RGB_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea391ebfc4acb9c597541e8b5212aa6682", null ],
+      [ "kSMARTDMA_MIPI_XRGB2RGB_DMA2D", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78eaed51dab869075773177b122b513aa7cc", null ],
       [ "kSMARTDMA_MIPI_RGB565_R180_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea5359a2860318711b864448cb0662675f", null ],
       [ "kSMARTDMA_MIPI_RGB888_R180_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ead817fde8a544404ab3a998e583992681", null ],
+      [ "kSMARTDMA_MIPI_XRGB2RGB_R180_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea79c2dbe820d9b4e0f528019a69d99df9", null ],
       [ "kSMARTDMA_FlexIO_DMA_ONELANE", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78eace75536eccdc84626f83feb2695fa545", null ]
     ] ],
     [ "SMARTDMA_Init", "a00066.html#ga0160c7e7812b4500e84c918190a405a4", null ],

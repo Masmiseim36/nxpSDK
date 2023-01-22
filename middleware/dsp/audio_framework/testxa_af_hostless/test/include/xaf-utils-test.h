@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -39,11 +39,12 @@
 
 #ifdef __XCC__
 #include <xtensa/hal.h>
+#include <xtensa/config/core-isa.h>
 
 #ifdef __TOOLS_RF2__
 #define TOOLS_SUFFIX    "_RF2"
 #else
-#define TOOLS_SUFFIX    "_RI2"
+#define TOOLS_SUFFIX "_"XTENSA_RELEASE_NAME
 #endif
 
 #if XCHAL_HAVE_FUSION
@@ -81,8 +82,18 @@
 #include "xaf-clk-test.h"
 #endif
 
+#if (XF_CFG_CORES_NUM > 1)
+#include "xf-shared.h"
+#else
+#ifndef XF_SHMEM_SIZE
+#define XF_SHMEM_SIZE  0
+#endif
+extern void *shared_mem;
+extern char perf_stats[];
+#endif
+
 #ifndef STACK_SIZE 
-#define STACK_SIZE          8192
+#define STACK_SIZE          (10 * 1024)
 #endif
 
 #define _MIN(a, b)	(((a) < (b))?(a):(b))
@@ -91,11 +102,13 @@
 #define MAX_NUM_COMP_IN_GRAPH 20
 #define MAX_EVENTS          256
 
+#define ADEV_CLOSE_SIGNAL  -1
+
 #define NUM_THREAD_ARGS     7
 
-#define DEVICE_ID    (0x180201FC) //Vender ID register for realtek board
-#define VENDER_ID    (0x10EC)     //Vender ID value indicating realtek board
-
+#ifndef XF_CORE_ID
+#define XF_CORE_ID          0
+#endif
 
 static inline void runtime_param_usage(void)
 {
@@ -118,6 +131,13 @@ static inline void runtime_param_usage(void)
     fprintf(stdout," \t Start_Time   : Probe start time in milliseconds(absolute time) after pipeline creation \n");
     fprintf(stdout," \t Stop_Time    : Probe stop time in milliseconds(absolute time). Negative value for Stop_Time indicate probe till end \n");
     fprintf(stdout," \t Example      : -probe:2,150,250 -probe:3,200,-1  \n");
+    fprintf(stdout,"\n");    
+    fprintf(stdout, "-core-cfg:<Core_ID>,<Component_ID,Component_ID,..> \n");
+    fprintf(stdout," \t Core_ID      : Core Identifier. Allowed Core_ID's are from 0, upto Number of Cores-1 \n");
+    fprintf(stdout," \t Component_ID : Component Identifier as displayed above. By default components are created on Master Core(default 0) \n");
+    fprintf(stdout," \t Example      : -core-cfg:1,2,3 -core-cfg:2,0,4 \n");
+
+
     fprintf(stdout,"\n");
 }
 
@@ -153,9 +173,14 @@ static inline void runtime_param_reconnect_usage(void)
                   \n \t                   created in application (if required). \n");
     fprintf(stdout," \t Example         : -C:0,1,4,0,200,1 \n");
     fprintf(stdout,"\n");
-    fprintf(stdout,"Note: Runtime disconnect and connect commands must not be issued when data processing pipeline is in flushing or closure state naturally. \
+    fprintf(stdout,"Note 1: Runtime disconnect and connect commands must not be issued when data processing pipeline is in flushing or closure state naturally. \
                   \n      (For e.g. if input over is received on all input ports of components in recorder-usecase or if last active stream connected to mixer is \
                   \n      disconnected in playback-usecase) as these command operations may conflict with pipeline state. \n");
+    fprintf(stdout,"Note 2: If a -D: is issued without a corresponding -C: command involving the same component, DELETE_INFO is changed to 1 internally. \
+                  \n      This is an optimization at application level to teardown the part of pipeline that are not going to be active again. \
+                  \n      Similarly if a -D: command has a corresponding -C: command involving the same component, then the DELETE_INFO of the -C: command is \
+                  \n      assumed for both the commands, which means if a component needs to be re-created, then first it must be deleted and if component \
+                  \n      re-creation is not required, then deletion is not required.\n");
     fprintf(stdout,"\n");
 }
     
@@ -163,6 +188,19 @@ static inline void runtime_param_footnote(void)
 {
     fprintf(stdout,"Note: Ports are numbered starting with zero from first input port to last output port.\n");
     fprintf(stdout,"\n");    
+}
+
+static inline void mixer_component_footnote(void)
+{
+    fprintf(stdout,"Note: Mixer component allows start of processing once at least one of the input ports is connected and valid input is available (among the 4 input ports).\
+                  \nThe connections and data arrival instances on input ports can vary between single-core and multi-core execution, due to which the output of the mixer can differ.\n");
+    fprintf(stdout,"\n");
+}
+
+static inline void mimo_mix_component_footnote(void)
+{
+    fprintf(stdout,"Note: MIMO-Mixer component has 2 input-ports. The component waits for inputs to be available on both the ports before consuming.\n");
+    fprintf(stdout,"\n");
 }
 
 enum
@@ -183,6 +221,15 @@ typedef enum {
 }COMP_STATE;
 
 #define XAF_CFG_CODEC_SCRATCHMEM_SIZE ((UWORD32)56<<10)
+
+typedef struct xaf_format_s {
+    UWORD32             sample_rate;
+    UWORD32             channels;
+    UWORD32             pcm_width;
+    UWORD32             input_length;
+    UWORD32             output_length;
+    UWORD32             output_produced;
+} xaf_format_t;
 
 typedef struct
 {
@@ -222,7 +269,7 @@ typedef struct
 }event_list_t;
 
 /* Types */
-typedef int xa_app_event_handler_fxn_t(event_info_t *event);
+typedef int xa_app_event_handler_fxn_t(event_info_t *event, void *arg);
 
 /* global variable proto */
 extern int g_force_input_over[MAX_NUM_COMP_IN_GRAPH];
@@ -239,6 +286,9 @@ extern UWORD32 worker_thread_scratch_size[XAF_MAX_WORKER_THREADS];
 extern UWORD32 g_enable_error_channel_flag;
 extern UWORD32  g_event_handler_exit;
 #endif
+ /* ...format structure used by the common MCPS calculator function, 
+ * to be updated by the main_task of test-application */
+extern xaf_format_t comp_format_mcps;
 
 /* function proto */
 int parse_runtime_params(void **runtime_params, int argc, char **argv, int num_comp );
@@ -249,7 +299,7 @@ int all_threads_exited(void **comp_threads, int num_threads);
 void set_wbna(int *argc, char **argv);
 int print_verinfo(pUWORD8 ver_info[],pUWORD8 app_name);
 int read_input(void *p_buf, int buf_length, int *read_length, void *p_input, xaf_comp_type comp_type);
-double compute_comp_mcps(unsigned int num_bytes, int comp_cycles, xaf_format_t comp_format, double *strm_duration);
+double compute_comp_mcps(unsigned int num_bytes, long long comp_cycles, xaf_format_t comp_format, double *strm_duration);
 int print_mem_mcps_info(mem_obj_t* mem_handle, int num_comp);
 void *comp_process_entry(void *arg);
 void *comp_process_entry_recorder(void *arg);
@@ -261,15 +311,16 @@ int main_task(int argc, char **argv);
 int submit_action_cmd(int src_cid, int src_port, int dest_cid, int dest_port, int action, int time);
 void xa_app_initialize_event_list(int num_comp);
 int xa_app_receive_events_cb(void *comp, UWORD32 event_id, void *buf, UWORD32 buf_size, UWORD32 comp_error_flag);
-void xa_app_process_events(void);
+void xa_app_process_events(void *arg);
 void xa_app_free_event_list(void);
 
 #ifndef XA_DISABLE_EVENT
-#define TST_CHK_API_COMP_CREATE(p_adev, pp_comp, _comp_id, _num_input_buf, _num_output_buf, _pp_inbuf, _comp_type, error_string) {\
+#define TST_CHK_API_COMP_CREATE(p_adev, _core, pp_comp, _comp_id, _num_input_buf, _num_output_buf, _pp_inbuf, _comp_type, error_string) {\
         xaf_comp_config_t comp_config;\
         TST_CHK_API(xaf_comp_config_default_init(&comp_config), "xaf_comp_config_default_init");\
 		comp_config.error_channel_ctl = g_enable_error_channel_flag;\
 		comp_config.comp_id = _comp_id;\
+		comp_config.core = _core;\
 		comp_config.comp_type = _comp_type;\
 		comp_config.num_input_buffers = _num_input_buf;\
 		comp_config.num_output_buffers = _num_output_buf;\
@@ -279,10 +330,11 @@ void xa_app_free_event_list(void);
 
 #else 
 
-#define TST_CHK_API_COMP_CREATE(p_adev, pp_comp, _comp_id, _num_input_buf, _num_output_buf, _pp_inbuf, _comp_type, error_string) {\
+#define TST_CHK_API_COMP_CREATE(p_adev, _core, pp_comp, _comp_id, _num_input_buf, _num_output_buf, _pp_inbuf, _comp_type, error_string) {\
         xaf_comp_config_t comp_config;\
         TST_CHK_API(xaf_comp_config_default_init(&comp_config), "xaf_comp_config_default_init");\
 		comp_config.comp_id = _comp_id;\
+		comp_config.core = _core;\
 		comp_config.comp_type = _comp_type;\
 		comp_config.num_input_buffers = _num_input_buf;\
 		comp_config.num_output_buffers = _num_output_buf;\
@@ -290,5 +342,19 @@ void xa_app_free_event_list(void);
         TST_CHK_API(xaf_comp_create(p_adev, pp_comp, &comp_config), error_string);\
     }
 #endif
+
+/* ...prevent instructions reordering */
+#define barrier()                           \
+    __asm__ __volatile__("": : : "memory")
+
+/* ...memory barrier */
+#define XF_IPC_BARRIER()                  \
+    __asm__ __volatile__("memw": : : "memory")
+
+#define XF_IPC_FLUSH(buf, length) \
+        ({ if ((length)) { barrier(); xthal_dcache_region_writeback((buf), (length)); XF_IPC_BARRIER(); } buf; })
+
+#define XF_IPC_INVALIDATE(buf, length) \
+        ({ if ((length)) { xthal_dcache_region_invalidate((buf), (length)); barrier(); } buf; })
 
 #endif /* __XAF_UTILS_TEST_H__ */

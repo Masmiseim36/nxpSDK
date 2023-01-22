@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,7 +16,7 @@
 #include "srtm_utils.h"
 #include "srtm_config.h"
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 
 #include "fsl_gpio.h"
 

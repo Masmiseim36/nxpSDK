@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -22,10 +22,20 @@
 */
 /* File contains constants shared between AP and DP sides */
 
-#define XF_CFG_CORES_NUM_DSP                1
+/*******************************************************************************
+* DSP Master Processor ID (software ID)
+*******************************************************************************/
+
+//#define XF_CORE_ID_MASTER               0
+
+#if (XF_CFG_CORES_NUM < 2) && (XF_CORE_ID_MASTER != 0)
+#undef XF_CORE_ID_MASTER
+#define XF_CORE_ID_MASTER               0
+#endif
 
 /* DSP object sizes */
 
+#if 0
 #if defined(HAVE_FREERTOS)
 #define XF_DSP_OBJ_SIZE_CORE_DATA           480
 #define XF_DSP_OBJ_SIZE_DSP_LOCAL_POOL      288
@@ -39,7 +49,7 @@
 #else
 #error Unrecognized OS
 #endif
-
+#endif
 
 /*******************************************************************************
  * Global configuration parameters (changing is to be done carefully)
@@ -70,9 +80,57 @@
 #endif
 
 /*******************************************************************************
+* Global Macros to manage message-ID and bit-masks for Core, Client, Port, Proxy *
+*******************************************************************************/
+/* ...message-ID bits for source or dest, together form 2*XF_MSG_ID_BITS header */
+#define XF_MSG_ID_BITS              32
+
+/* ...DSP-core bits. increase this along with XF_MSG_ID_BITS for the subsystem 
+ * to support larger #of cores */
+#define XF_DSP_CORE_BITS            8
+
+#define XF_DSP_PORT_BITS            4
+#define XF_DSP_CLIENT_BITS          6
+#define XF_DSP_CLIENT_SHIFT_BITS    (XF_DSP_CORE_BITS)
+#define XF_DSP_PORT_SHIFT_BITS      (XF_DSP_CLIENT_BITS + XF_DSP_CORE_BITS)
+
+#define XF_AP_IPC_CLIENT_BITS       4
+#define XF_AP_CLIENT_BITS           9
+
+#if (XF_MSG_ID_BITS > 16)
+typedef UWORD64 xf_msg_id_dtype;
+#else                           
+typedef UWORD32 xf_msg_id_dtype;
+#endif
+
+/* ...enable a parallel response queue mechanism for synchronous commands which can be delayed (eg:unroute) */
+#define DELAYED_SYNC_RESPONSE       1
+
+/*******************************************************************************
 * DSP-thread argument index enums *
 *******************************************************************************/
 
 typedef enum dsp_arg_idx_s{
-    XF_DSP_THREAD_ARG_IDX_WORKER_SCRATCH = 0,
+    XF_DSP_THREAD_ARGS_IDX_DSP_LOCAL_BUF        = 0,
+    XF_DSP_THREAD_ARGS_IDX_DSP_LOCAL_BUF_SIZE   = 1,
+    XF_DSP_THREAD_ARGS_IDX_AP_SHMEM_BUF         = 2,
+    XF_DSP_THREAD_ARGS_IDX_AP_SHMEM_BUF_SIZE    = 3,
+    XF_DSP_THREAD_ARGS_IDX_DSP_SHMEM_BUF        = 4,
+    XF_DSP_THREAD_ARGS_IDX_DSP_SHMEM_BUF_SIZE   = 5,
+    XF_DSP_THREAD_ARGS_IDX_WORKER_SCRATCH_SIZE  = 6,
+    XF_DSP_THREAD_ARGS_IDX_CORE_ID              = 7,
+    XF_DSP_THREAD_ARGS_IDX_STATS_COMP_BUF_PEAK  = 8,
+    XF_DSP_THREAD_ARGS_IDX_STATS_COMP_BUF_CURR  = 9,
+    XF_DSP_THREAD_ARGS_IDX_STATS_FRMWK_BUF_PEAK = 10,
+    XF_DSP_THREAD_ARGS_IDX_STATS_FRMWK_BUF_CURR = 11,
+    XF_DSP_THREAD_ARGS_IDX_STATS_SHMEM_BUF_PEAK = 12,
+    XF_DSP_THREAD_ARGS_IDX_STATS_SHMEM_BUF_CURR = 13,
+    XF_DSP_THREAD_ARGS_IDX_STATS_WORKER_THREAD_STATS = 14,
+    XF_DSP_THREAD_ARGS_IDX_STATS_CB_THREAD_STATS = 15,
+    XF_DSP_THREAD_ARGS_IDX_MAX,
 }dsp_arg_idx_t;
+
+/* sizeof(xf_dsp_t) to be allocated from dspLocalBuffer in xf-main.c */
+//#define XF_DSP_STRUCT_SIZE              (1536 * XF_CFG_CORES_NUM)
+#define XF_DSP_STRUCT_SIZE              (512 + 1536 * XF_CFG_CORES_NUM)
+#define XF_DSP_SHMEM_STRUCT_SIZE        (256 * XF_CFG_CORES_NUM)

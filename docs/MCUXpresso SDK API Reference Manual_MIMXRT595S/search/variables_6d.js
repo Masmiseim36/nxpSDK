@@ -1,6 +1,7 @@
 var searchData=
 [
   ['machineformat',['machineFormat',['../a00054.html#aa637fb7118e5803896e33e2417275e9e',1,'pq_config_t']]],
+  ['majorloop',['majorLoop',['../a00020.html#a25faa09d1f28172dc5cd1c0765e5aa12',1,'dsi_smartdma_write_mem_transfer_t']]],
   ['manufacturerdata',['manufacturerData',['../a00049.html#a086949cd74908854e1002e03f22db375',1,'sd_cid_t::manufacturerData()'],['../a00049.html#a768361e4eca2b618dcb2683914936d64',1,'mmc_cid_t::manufacturerData()']]],
   ['manufacturerid',['manufacturerID',['../a00049.html#a6af4d5980499767cc63ee6995dc0b88e',1,'sd_cid_t::manufacturerID()'],['../a00049.html#a392ff8d6848b9bb3cabb7c4544ea483f',1,'mmc_cid_t::manufacturerID()']]],
   ['master',['master',['../a00014.html#a95951482c89e8729513dc7521ae44ba0',1,'cs42888_config_t::master()'],['../a00070.html#ad21dc0af0f99f5013447ffe11c1499d1',1,'tfa9896_config_t::master()'],['../a00075.html#a1aabe6eeed1fdd3e9f52237c546c84b0',1,'wm8904_config_t::master()']]],
@@ -31,6 +32,8 @@ var searchData=
   ['minimumwriteperformance4bit26mhz',['minimumWritePerformance4Bit26MHz',['../a00049.html#a0d118cb80e77833e4647ccaffc757f68',1,'mmc_extended_csd_t']]],
   ['minimumwriteperformance8bit26mhz4bit52mhz',['minimumWritePerformance8Bit26MHz4Bit52MHz',['../a00049.html#ada954922e1b018131de0117007b3a3e9',1,'mmc_extended_csd_t']]],
   ['minimumwriteperformance8bit52mhz',['minimumWritePerformance8Bit52MHz',['../a00049.html#a503d82b0e4c9a6fb11db4618383948a5',1,'mmc_extended_csd_t']]],
+  ['minorloop',['minorLoop',['../a00020.html#a6bff85752b1944830432d9b6308e0631',1,'dsi_smartdma_write_mem_transfer_t']]],
+  ['minorloopoffset',['minorLoopOffset',['../a00020.html#a6aa43cc9a08ce67c87581ad91223dc39',1,'dsi_smartdma_write_mem_transfer_t']]],
   ['minreadperformance8bitat52mhzddr',['minReadPerformance8bitAt52MHZDDR',['../a00049.html#a54fa078f66ad939cc2b9d46610d0e95b',1,'mmc_extended_csd_t']]],
   ['minusmuxinput',['minusMuxInput',['../a00008.html#a47e25c53ffff810bbcd90517b6e5cbc2',1,'acmp_channel_config_t']]],
   ['minute',['minute',['../a00055.html#aaaeaa89246dcbf7a37b46ad854165285',1,'rtc_datetime_t']]],

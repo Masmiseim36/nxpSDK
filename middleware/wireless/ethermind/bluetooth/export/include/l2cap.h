@@ -87,6 +87,9 @@
 #define L2CAP_CONNECTION_REFUSED_SOME_SRC_CID_ALREADY_ALLOCATED   0x000AU
 #define L2CAP_CONNECTION_REFUSED_UNACCEPTABLE_PARAMETERS          0x000BU
 #define L2CAP_CONNECTION_REFUSED_INVALID_PARAMETERS               0x000CU
+#define L2CAP_ALL_CONNECTIONS_PENDING_NO_FURTHER_INFO             0x000DU
+#define L2CAP_ALL_CONNECTIONS_PENDING_AUTHENTICATION              0x000EU
+#define L2CAP_ALL_CONNECTIONS_PENDING_AUTHORIZATION               0x000FU
 
 /** L2CAP Connect Status */
 #define L2CAP_CONNECTION_NO_FURTHER_INFORMATION         0x0000U
@@ -2858,16 +2861,21 @@ API_RESULT l2ca_ecbfc_reconfig_req
  *  this service interface upon receiving ECBFC Reconfiguration Request.
  *
  *  \param [in] local_cid
- *         TODO: Edit the text below to take care of list of CIDs
- *
- *         This parameter specifies the local L2CAP channel end-points for
- *         this new set of L2CAP channels. On receipt of L2CAP Connect Request command
- *         from the peer, local L2CAP will temporarily create a channel -
- *         this parameter identifies the new channel.
- *         If the upper layer PSM chooses to reject this connection,
- *         this temporary channel will be closed.
+ *         List of CIDs for which the Reconfiguration response is being sent.
+ *         This list of CIDs shall be the exact match of the list of CIDs that
+ *         is informed about through \ref l2ca_reconfig_ind_cb. It is the
+ *         responsibility of the application to match this CID list. L2CAP
+ *         does not maintain a separate context to track the CIDs that are being
+ *         reconfigured.
+
  *  \param [in] local_cid_len
- *         Number of Local CIDs
+ *         Number of Local CIDs which the Reconfiguration response is being sent.
+ *         This Number of CID shall be the exact match of the Number of CIDs that
+ *         is informed about through \ref l2ca_reconfig_ind_cb. It is the
+ *         responsibility of the application to match this CID Number. L2CAP
+ *         does not maintain a separate context to track the CIDs that are being
+ *         reconfigured.
+ *
  *  \param [in] result
  *         Result of the Reconfiguration request
  *

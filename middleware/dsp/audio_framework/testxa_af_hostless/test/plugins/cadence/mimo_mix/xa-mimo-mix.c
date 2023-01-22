@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -141,6 +141,10 @@ typedef struct XAPcmAec
 
     UWORD32                 gain_index;
 #endif
+
+    /* ...input port bypass flag: 0 disabled (default), 1 enabled */
+    UWORD32                 inport_bypass;
+
 }   XAPcmAec;
 
 /****************************************************************************
@@ -187,6 +191,11 @@ static inline void xa_aec_preinit(XAPcmAec *d)
     d->persist_size = XA_MIMO_CFG_PERSIST_SIZE;
     d->scratch_size = XA_MIMO_CFG_SCRATCH_SIZE;
 
+#ifdef XA_INPORT_BYPASS_TEST
+    /* ...enabled at init for testing. To be enabled by set-config to the plugin. */
+    d->inport_bypass = 1;
+#endif
+
 }
 
 /* ...do pcm-gain scaling of stereo PCM-16 streams */
@@ -201,8 +210,8 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
       /* 2 in, 1 out */
       
       /* ...check I/O buffer */
-      XF_CHK_ERR(d->input[0], XA_MIMO_MIX_EXEC_FATAL_STATE);
-      XF_CHK_ERR(d->input[1], XA_MIMO_MIX_EXEC_FATAL_STATE);
+      XF_CHK_ERR(d->input[0], XA_MIMO_MIX_EXEC_NONFATAL_NO_DATA);
+      XF_CHK_ERR(d->input[1], XA_MIMO_MIX_EXEC_NONFATAL_NO_DATA);
       XF_CHK_ERR(d->output[0], XA_MIMO_MIX_EXEC_FATAL_STATE);
 
       WORD32   filled;
@@ -264,6 +273,7 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
         filled = _MAX((WORD32)d->input_length[0], (WORD32)d->input_length[1]);
       }
       
+      filled = (filled > d->out_buffer_size)?d->out_buffer_size:filled;
       nSize = filled >> 1;    //size of each sample is 2 bytes
 
       /* ...Processing loop */
@@ -280,6 +290,9 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
             product = _MIN(MAX_16BIT, _MAX(product, MIN_16BIT));
             *pOut0++ = (WORD16)product;
         }
+        /* ...save total number of consumed bytes */
+        d->consumed[0] = filled;
+        d->consumed[1] = filled;
       }
       else if(d->input_length[1]) //if((d->port_state[0] & XA_AEC_FLAG_COMPLETE))
       {
@@ -294,6 +307,8 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
             product = _MIN(MAX_16BIT, _MAX(product, MIN_16BIT));
             *pOut0++ = (WORD16)product;
         }
+        /* ...save total number of consumed bytes */
+        d->consumed[1] = filled;
       }
       else if(d->input_length[0]) //if((d->port_state[1] & XA_AEC_FLAG_COMPLETE))
       {
@@ -308,12 +323,12 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
             product = _MIN(MAX_16BIT, _MAX(product, MIN_16BIT));
             *pOut0++ = (WORD16)product;
         }
+        /* ...save total number of consumed bytes */
+        d->consumed[0] = filled;
       }
 
       /* ...save total number of consumed bytes */
-      d->consumed[0] = (UWORD32)((void *)pIn0 - d->input[0]);
       d->input_length[0] -= d->consumed[0];
-      d->consumed[1] = (UWORD32)((void *)pIn1 - d->input[1]);
       d->input_length[1] -= d->consumed[1];
 
       /* ...save total number of produced bytes */
@@ -778,8 +793,16 @@ static XA_ERRORCODE xa_aec_get_mem_info_size(XAPcmAec *d, WORD32 i_idx, pVOID pv
     WORD32 n_mems = (d->num_in_ports + d->num_out_ports + 1 + 1);
     if(i_idx < d->num_in_ports)
     {
-        /* ...input buffers */
-        *(WORD32 *)pv_value = d->in_buffer_size;
+        if(d->inport_bypass)
+        {
+            /* ...input buffer length 0 enabling input bypass mode */
+            *(WORD32 *)pv_value = 0;
+        }
+        else
+        {
+            /* ...input buffers */
+            *(WORD32 *)pv_value = d->in_buffer_size;
+        }
     }
     else
     if(i_idx < (d->num_in_ports + d->num_out_ports))

@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -93,18 +93,18 @@ int32_t psa_aead_update_ad_test(caller_security_t caller __UNUSED)
             }
             TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(4));
 
-            /* Set the nonce for an authenticated encryption operation */
-            status = val->crypto_function(VAL_CRYPTO_AEAD_SET_NONCE,
-                                          &operation,
-                                          check1[i].nonce,
-                                          check1[i].nonce_length);
-            TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(5));
-
             /* Declare the lengths of the message and additional data for AEAD */
             status = val->crypto_function(VAL_CRYPTO_AEAD_SET_LENGTHS,
                                           &operation,
                                           check1[i].ad_length,
                                           check1[i].plaintext_length);
+            TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(5));
+
+            /* Set the nonce for an authenticated encryption operation */
+            status = val->crypto_function(VAL_CRYPTO_AEAD_SET_NONCE,
+                                          &operation,
+                                          check1[i].nonce,
+                                          check1[i].nonce_length);
             TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(6));
         }
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FMEAS: Frequency Measure Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Hashcrypt: The Cryptographic Accelerator</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,158 +99,38 @@ $(document).ready(function(){initNavTree('a00250.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">FMEAS: Frequency Measure Driver</div>  </div>
+<div class="title">Hashcrypt: The Cryptographic Accelerator</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Frequency Measure function of MCUXpresso SDK devices' SYSCON module. <br/>
-It measures frequency of any on-chip or off-chip clock signal. The more precise and higher accuracy clock is selected as a reference clock. The resulting frequency is internally computed from the ratio of value of selected target and reference clock counters. <br/>
-</p>
-<h1><a class="anchor" id="FMEASInit"></a>
-Frequency Measure Driver operation</h1>
-<p><a class="el" href="a00257.html#gaa4f141e3874109e45c2a6f9be027e0ee" title="Attaches a signal. ">INPUTMUX_AttachSignal()</a> function has to be used to select reference and target clock signal sources.</p>
-<p><a class="el" href="a00250.html#gaf1392245996cea51e17175085a0c3cef" title="Starts a frequency measurement cycle. ">FMEAS_StartMeasure()</a> function starts the measurement cycle.</p>
-<p><a class="el" href="a00250.html#ga39ff45995edf620470c1397b1edd83b5" title="Indicates when a frequency measurement cycle is complete. ">FMEAS_IsMeasureComplete()</a> can be polled to check if the measurement cycle has finished.</p>
-<p><a class="el" href="a00250.html#gac6ee7be474a37d4c17120b54fc8b856a" title="Returns the computed value for a frequency measurement cycle. ">FMEAS_GetFrequency()</a> returns the frequency of the target clock. Frequency of the reference clock has to be provided as a parameter.</p>
-<h1><a class="anchor" id="FMEASTypUC"></a>
-Typical use case</h1>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/fmeas </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the Hashcrypt peripheral. The Hashcrypt peripheral provides one or more engines to perform specific symmetric crypto algorithms, including hashing and en/decryption. The cryptographic acceleration is normally used in conjunction with pure-hardware blocks for hashing and symmetric cryptography, thereby providing performance and energy efficiency for a range of cryptographic uses.</p>
+<p>Blocking synchronous APIs are provided for selected cryptographic algorithms using Hashcrypt hardware. The driver interface intends to be easily integrated with generic software crypto libraries such as mbedTLS. The Hashcrypt operations are complete (and results are made availabe for further usage) when a function returns. When called, these functions do not return until an Hashcrypt operation is complete. These functions use main CPU for simple polling loops to determine operation complete or error status and also for plaintext or ciphertext data movements. These functions provide typical interface to upper layer or application software. There is one non-blocking function provided for the purpose of background hashing. <a class="el" href="a00251.html#ga19c0131424db9a618d164fdb6ffa470e" title="Create running hash on given data. ">HASHCRYPT_SHA_UpdateNonBlocking()</a> starts hashing of an input message while the CPU can continue executing.</p>
+<h1><a class="anchor" id="HASHCRYPTInit"></a>
+Hashcrypt Driver Initialization and deinitialization</h1>
+<p>Hashcrypt Driver is initialized by calling the <a class="el" href="a00277.html#ga02f8a8a22a0ac96e7ac823da4cacd585" title="Enables clock and disables reset for HASHCRYPT peripheral. ">HASHCRYPT_Init()</a> function, it enables clock and disables reset for Hashcrypt peripheral. Hashcrypt Driver is deinitialized by calling the <a class="el" href="a00277.html#ga2561c8bc17a4b2143a0cc7c46de64fbe" title="Disables clock for HASHCRYPT peripheral. ">HASHCRYPT_Deinit()</a> function, it sisables clock and enables reset.</p>
+<h1><a class="anchor" id="HASHCRYPTRtos"></a>
+Comments about API usage in RTOS</h1>
+<p>Hashcrypt operations provided by this driver are not re-entrant. Thus, application software shall ensure the Hashcrypt module operation is not requested from different tasks or interrupt service routines while an operation is in progress.</p>
+<h1><a class="anchor" id="HASHCRYPTIsr"></a>
+Comments about API usage in interrupt handler</h1>
+<p>APIs can be used from interrupt handler although execution time shall be considered (interrupt latency increases considerably).</p>
+<h1><a class="anchor" id="HASHCRYPTx"></a>
+Hashcrypt Driver Examples</h1>
+<h2><a class="anchor" id="HASHCRYPTSimpleEx"></a>
+Simple examples</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/hashcrypt/ </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00168"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html">fsl_fmeas.h</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00033"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html">Hashcrypt AES</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga7e2e250eaaf238c7cb05de6a5fad038b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#ga7e2e250eaaf238c7cb05de6a5fad038b">FSL_FMEAS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
-<tr class="memdesc:ga7e2e250eaaf238c7cb05de6a5fad038b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines LPC Frequency Measure driver version 2.1.1.  <a href="#ga7e2e250eaaf238c7cb05de6a5fad038b">More...</a><br/></td></tr>
-<tr class="separator:ga7e2e250eaaf238c7cb05de6a5fad038b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-FMEAS Functional Operation</h2></td></tr>
-<tr class="memitem:gaf1392245996cea51e17175085a0c3cef"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#gaf1392245996cea51e17175085a0c3cef">FMEAS_StartMeasure</a> (FMEAS_SYSCON_Type *base)</td></tr>
-<tr class="memdesc:gaf1392245996cea51e17175085a0c3cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a frequency measurement cycle.  <a href="#gaf1392245996cea51e17175085a0c3cef">More...</a><br/></td></tr>
-<tr class="separator:gaf1392245996cea51e17175085a0c3cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39ff45995edf620470c1397b1edd83b5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#ga39ff45995edf620470c1397b1edd83b5">FMEAS_IsMeasureComplete</a> (FMEAS_SYSCON_Type *base)</td></tr>
-<tr class="memdesc:ga39ff45995edf620470c1397b1edd83b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates when a frequency measurement cycle is complete.  <a href="#ga39ff45995edf620470c1397b1edd83b5">More...</a><br/></td></tr>
-<tr class="separator:ga39ff45995edf620470c1397b1edd83b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6ee7be474a37d4c17120b54fc8b856a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#gac6ee7be474a37d4c17120b54fc8b856a">FMEAS_GetFrequency</a> (FMEAS_SYSCON_Type *base, uint32_t refClockRate)</td></tr>
-<tr class="memdesc:gac6ee7be474a37d4c17120b54fc8b856a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the computed value for a frequency measurement cycle.  <a href="#gac6ee7be474a37d4c17120b54fc8b856a">More...</a><br/></td></tr>
-<tr class="separator:gac6ee7be474a37d4c17120b54fc8b856a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00251"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00251.html">Hashcrypt Background HASH</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00034"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html">Hashcrypt HASH</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga7e2e250eaaf238c7cb05de6a5fad038b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_FMEAS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf1392245996cea51e17175085a0c3cef"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void FMEAS_StartMeasure </td>
-          <td>(</td>
-          <td class="paramtype">FMEAS_SYSCON_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>: SYSCON peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Set the reference clock count cycle to 2^20 times </p>
-
-</div>
-</div>
-<a class="anchor" id="ga39ff45995edf620470c1397b1edd83b5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool FMEAS_IsMeasureComplete </td>
-          <td>(</td>
-          <td class="paramtype">FMEAS_SYSCON_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>: SYSCON peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a measurement cycle is active, otherwise false. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac6ee7be474a37d4c17120b54fc8b856a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t FMEAS_GetFrequency </td>
-          <td>(</td>
-          <td class="paramtype">FMEAS_SYSCON_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>refClockRate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>: SYSCON peripheral base address. </td></tr>
-    <tr><td class="paramname">refClockRate</td><td>: Reference clock rate used during the frequency measurement cycle.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Frequency in Hz. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

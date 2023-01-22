@@ -40,7 +40,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/platform/targets/common/nspe/protected_storage
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/storage
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/storage/test_s001

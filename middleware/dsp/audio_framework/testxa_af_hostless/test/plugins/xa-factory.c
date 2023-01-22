@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -73,6 +73,7 @@ extern XA_ERRORCODE xa_aac_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mixer(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_pcm_gain(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_client_proxy(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_voice_seeker(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_vit_pre_proc(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mp3_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_amr_wb_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
@@ -87,6 +88,9 @@ extern XA_ERRORCODE xa_pcm_split(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mimo_mix(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_pcm_stereo(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_opus_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_microspeech_fe(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_microspeech_inference(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_person_detect_inference(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_opus_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_sbc_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_sbc_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
@@ -107,15 +111,15 @@ const char *comp_id[] = {"audio-decoder",
                          "mixer",
                          "pre-proc",
                          "post-proc",
-						 "renderer",
-						 "capturer",
-            			 "mimo-proc12",
-            			 "mimo-proc21",
-            			 "mimo-proc22",
-            			 "mimo-proc23",
-            			 "mimo-proc10",
+                         "renderer",
+                         "capturer",
+                         "mimo-proc12",
+                         "mimo-proc21",
+                         "mimo-proc22",
+                         "mimo-proc23",
+                         "mimo-proc10",
                          "mimo-proc11",
-			};
+            };
 
 /* ...component class id */
 static const xf_component_id_t xf_component_id[] =
@@ -134,6 +138,9 @@ static const xf_component_id_t xf_component_id[] =
 #endif
 #if XA_CLIENT_PROXY
     { "post-proc/client_proxy",      xa_audio_codec_factory,     xa_client_proxy },
+#endif
+#if XA_VOICE_SEEKER
+	{ "pre-proc/voice_seeker",      xa_audio_codec_factory,     xa_voice_seeker },
 #endif
 #if XA_VIT_PRE_PROC
     { "pre-proc/vit_pre_proc",      xa_audio_codec_factory,     xa_vit_pre_proc },
@@ -155,7 +162,7 @@ static const xf_component_id_t xf_component_id[] =
     { "capturer_i2s",              xa_capturer_factory,        xa_capturer_i2s },
 #endif
 #if XA_SRC_PP_FX
-    { "audio-fx/src-pp",        xa_audio_codec_factory,     xa_src_pp_fx },
+    { "post-proc/src-pp",        xa_audio_codec_factory,     xa_src_pp_fx },
 #endif
 #if XA_VORBIS_DECODER
     { "audio-decoder/vorbis",       xa_audio_codec_factory,     xa_vorbis_decoder },
@@ -174,6 +181,13 @@ static const xf_component_id_t xf_component_id[] =
 #endif
 #if XA_OPUS_ENCODER
     { "audio-encoder/opus",       xa_audio_codec_factory,     xa_opus_encoder},
+#endif
+#if XA_TFLM_MICROSPEECH
+    { "post-proc/microspeech_fe",      xa_audio_codec_factory,    xa_microspeech_fe },
+    { "post-proc/microspeech_inference",      xa_audio_codec_factory,    xa_microspeech_inference },
+#endif
+#if XA_TFLM_PERSON_DETECT
+    { "post-proc/person_detect_inference",      xa_audio_codec_factory,    xa_person_detect_inference },
 #endif
 #if XA_OPUS_DECODER
     { "audio-decoder/opus",       xa_audio_codec_factory,     xa_opus_decoder},

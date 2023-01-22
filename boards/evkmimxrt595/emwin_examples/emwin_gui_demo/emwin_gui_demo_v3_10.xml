@@ -126,7 +126,7 @@
     </debug_configurations>
     <include_paths>
       <include_path path="." project_relative_path="board" type="c_include"/>
-      <include_path path="." project_relative_path="evkmimxrt595/emwin_examples/emwin_gui_demo" type="c_include"/>
+      <include_path path="../common" project_relative_path="evkmimxrt595/emwin_examples/emwin_gui_demo" type="c_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="emwin_gui_demo.ewd"/>

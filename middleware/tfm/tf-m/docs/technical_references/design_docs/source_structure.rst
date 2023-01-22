@@ -6,7 +6,7 @@ Trusted Firmware-M Source Structure
 :Contact: tf-m@lists.trustedfirmware.org
 
 .. note::
-  Reference the document :doc:`Glossary </docs/glossary>` for terms
+  Reference the document :doc:`Glossary </glossary>` for terms
   and abbreviations.
 
 ************
@@ -117,8 +117,8 @@ partition runtime utilities provided by TF-M.
 ================================= =============================================
 Folder name                       Purpose
 ================================= =============================================
-lib/sprt/\*                       The SPRTL sources and intermedia files. [1]
-lib/sprt/shared\*                 Sources can be shared by out of SPRTL. [2]
+lib/runtime/\*                    The SPRTL sources and intermedia files. [1]
+lib/runtime/shared\*              Sources can be shared by out of SPRTL. [2]
 <partition_x>/\*                  Files for 'partition_x'.
 <partition_x>/include/\*          RoT Service API headers of 'partition_x'. [3]
 <partition_y>/\*                  Files for 'partition_y'.

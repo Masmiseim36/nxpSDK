@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -47,24 +47,24 @@ typedef rb_node_t   xf_task_t;
  ******************************************************************************/
 
 /* ...retrieve timestamp from task handle */
-static inline UWORD32 xf_task_timestamp(xf_task_t *t)
+static inline UWORD64 xf_task_timestamp(xf_task_t *t)
 {
     /* ...wipe out last bit of "color" */
     return t->color & ~1;
 }
 
 /* ...set task decoding timestamp */
-static inline UWORD32 xf_task_timestamp_set(xf_task_t *t, UWORD32 ts)
+static inline UWORD64 xf_task_timestamp_set(xf_task_t *t, UWORD64 ts)
 {
     /* ...technically, wiping out last bit of timestamp is not needed */
     return t->color = ts;
 }
 
 /* ...compare two timestamps with respect to wrap-around */
-static inline int xf_timestamp_before(UWORD32 t0, UWORD32 t1)
+static inline UWORD64 xf_timestamp_before(UWORD64 t0, UWORD64 t1)
 {
     /* ...distance between active items is never high */
-    return ((WORD32)(t0 - t1) < 0);
+    return ((WORD64)(t0 - t1) < 0);
 }
 
 /*******************************************************************************
@@ -72,7 +72,7 @@ static inline int xf_timestamp_before(UWORD32 t0, UWORD32 t1)
  ******************************************************************************/
 
 /* ...place message into scheduler queue */
-extern void xf_sched_put(xf_sched_t *sched, xf_task_t *t, UWORD32 dts);
+extern void xf_sched_put(xf_sched_t *sched, xf_task_t *t, UWORD64 dts);
 
 /* ...get first item from the scheduler */
 extern xf_task_t * xf_sched_get(xf_sched_t *sched);

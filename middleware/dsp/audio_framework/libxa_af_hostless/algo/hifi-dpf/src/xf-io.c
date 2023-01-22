@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -45,7 +45,7 @@ int xf_input_port_init(xf_input_port_t *port, UWORD32 size, UWORD32 align, UWORD
     if (size)
     {
         /* ...internal buffer is used */
-        XF_CHK_ERR(port->buffer = xf_mem_alloc(size, align, core, 0), XAF_MEMORY_ERR);
+        XF_CHK_ERR(port->buffer = xf_mem_alloc(size, align, core, 0 /* shared */), XAF_MEMORY_ERR);
     }
     else
     {
@@ -107,10 +107,13 @@ int xf_input_port_put(xf_input_port_t *port, xf_message_t *m)
         /* ...first message put - set access pointer and length */
         port->access = m->buffer, port->remaining = m->length;
 
-#if 0
+#if 1
         /* ...if first message is empty, mark port is done */
         /* ...The state change is not required here and is done in input_port_fill */
-        (!port->access ? port->flags ^= XF_INPUT_FLAG_EOS | XF_INPUT_FLAG_DONE : 0);
+        if(xf_input_port_bypass(port))
+        {
+            (!port->access ? port->flags ^= XF_INPUT_FLAG_EOS | XF_INPUT_FLAG_DONE : 0);
+        }
 #endif
 
         /* ...return non-zero to indicate the first buffer is placed into port */
@@ -161,6 +164,36 @@ int xf_input_port_fill(xf_input_port_t *port)
     UWORD32     remaining = port->remaining;
     UWORD32     copied = 0;
     WORD32     n;
+
+    if (xf_input_port_bypass(port))
+    {
+        /* ...port is in bypass mode; advance access pointer */
+        if (port->remaining == 0)
+        {
+            /* ...if there is no message pending, bail out */
+            if (!xf_msg_queue_head(&port->queue))
+            {
+                TRACE(INPUT, _b("Input-port-bypass: no message ready"));
+                return 0;
+            }
+
+            /* ...complete message and try to rearm input port */
+            xf_input_port_complete(port);
+
+            /* ...check if end-of-stream flag is set */
+            if (xf_msg_queue_head(&port->queue) && !port->access)
+            {
+                BUG((port->flags & XF_INPUT_FLAG_EOS) == 0, _x("port[%p]: invalid state: %x"), port, port->flags);
+
+                /* ...mark stream is completed */
+                port->flags ^= XF_INPUT_FLAG_EOS | XF_INPUT_FLAG_DONE;
+
+                TRACE(INPUT, _b("Input-port-bypass[%p]: setting port flag DONE"), port);
+                return 0;
+            }
+        }
+        return (port->remaining); /* non-zero value indicates fill is success */
+    }
 
     /* ...function shall not be called if no internal buffering is used */
     BUG(xf_input_port_bypass(port), _x("Invalid transaction"));
@@ -240,27 +273,20 @@ void xf_input_port_consume(xf_input_port_t *port, UWORD32 n)
     /* ...check whether input port is in bypass mode */
     if (xf_input_port_bypass(port))
     {
-        /* ...port is in bypass mode; advance access pointer */
-        if ((port->remaining -= n) == 0)
+        if (port->remaining >= n)
         {
-            /* ...complete message and try to rearm input port */
-            xf_input_port_complete(port);
+            /* ...port is in bypass mode; advance access pointer */
+            port->remaining -= n;
 
-            /* ...check if end-of-stream flag is set */
-            if (xf_msg_queue_head(&port->queue) && !port->access)
-            {
-                BUG((port->flags & XF_INPUT_FLAG_EOS) == 0, _x("port[%p]: invalid state: %x"), port, port->flags);
-
-                /* ...mark stream is completed */
-                port->flags ^= XF_INPUT_FLAG_EOS | XF_INPUT_FLAG_DONE;
-                
-                TRACE(INPUT, _b("input-port[%p] done"), port);
-            }
+            /* ...advance message buffer pointer */
+            port->access += n;
         }
         else
         {
-            /* ...advance message buffer pointer */
-            port->access += n;
+            TRACE(CRITICAL, _b("input-port[%p] consumed %d is greater than available %d"), port, n, port->remaining);
+            port->access += port->remaining;
+
+            port->remaining = 0;
         }
     }
     else if (port->filled > n)
@@ -321,11 +347,18 @@ void xf_input_port_control_save(xf_input_port_t *port, xf_message_t *m)
 /* ...mark flushing sequence is completed */
 void xf_input_port_purge_done(xf_input_port_t *port)
 {
+    xf_message_t   *m;
+
     /* ...make sure flushing sequence is ongoing */
     BUG((port->flags & XF_INPUT_FLAG_PURGING) == 0, _x("invalid state: %x"), port->flags);
 
+    m = xf_msg_dequeue(&port->queue);
+
+    /* ...message cannot be NULL */
+    BUG(m == NULL, _x("invalid port state"));
+
     /* ...complete saved flow-control message */
-    xf_response_ok(xf_msg_dequeue(&port->queue));
+    xf_response_ok(m);
     
     /* ...clear port purging flag */
     port->flags ^= XF_INPUT_FLAG_PURGING;
@@ -370,7 +403,7 @@ int xf_output_port_init(xf_output_port_t *port, UWORD32 size)
 }
 
 /* ...route output port */
-int xf_output_port_route(xf_output_port_t *port, UWORD32 id, UWORD32 n, UWORD32 length, UWORD32 align)
+int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, UWORD32 length, UWORD32 align)
 {
     UWORD32             core = XF_MSG_DST_CORE(id);
     UWORD32             shared = XF_MSG_SHARED(id);
@@ -378,7 +411,7 @@ int xf_output_port_route(xf_output_port_t *port, UWORD32 id, UWORD32 n, UWORD32 
     UWORD32             i;
     
     /* ...allocate message pool for a port; extra message for control */
-    XF_CHK_API(xf_msg_pool_init(&port->pool, n + 1, core));
+    XF_CHK_API(xf_msg_pool_init(&port->pool, n + 1, core, shared));
 
     /* ...allocate required amount of buffers */
     for (i = 1; i <= n; i++)
@@ -420,7 +453,7 @@ int xf_output_port_route(xf_output_port_t *port, UWORD32 id, UWORD32 n, UWORD32 
     /* ...clear port idle flag */
     port->flags &= ~XF_OUTPUT_FLAG_IDLE;
 
-    TRACE(ROUTE, _b("output-port[%p] routed: %03x -> %03x"), port, XF_MSG_DST(id), XF_MSG_SRC(id));
+    TRACE(ROUTE, _b("output-port[%p] routed: %08x -> %08x"), port, XF_MSG_DST(id), XF_MSG_SRC(id));
 
     return 0;
 
@@ -435,7 +468,7 @@ error:
     }
 
     /* ...destroy pool data */
-    xf_msg_pool_destroy(&port->pool, core);
+    xf_msg_pool_destroy(&port->pool, core, shared);
     
     /* ...reset message queue (it is empty again) */
     xf_msg_queue_init(&port->queue);
@@ -470,6 +503,9 @@ void xf_output_port_unroute_done(xf_output_port_t *port)
     /* ...destroy port buffers */
     xf_output_port_unroute(port);
     
+    /* ...message cannot be NULL */
+    BUG(m == NULL, _x("invalid port state"));
+
     /* ...and pass response to the caller */
     xf_response_ok(m);
 }
@@ -494,7 +530,7 @@ void xf_output_port_unroute(xf_output_port_t *port)
     }
 
     /* ...destroy pool data */
-    xf_msg_pool_destroy(&port->pool, core);
+    xf_msg_pool_destroy(&port->pool, core, shared);
 
     /* ...reset all flags */
     port->flags = XF_OUTPUT_FLAG_CREATED | XF_OUTPUT_FLAG_IDLE;

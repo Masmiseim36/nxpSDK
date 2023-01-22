@@ -1,14 +1,24 @@
 /*
- * Copyright (c) 2006-2020 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
- * These coded instructions, statements, and computer programs are the
- * copyrighted works and confidential proprietary information of
- * Cadence Design Systems Inc.  They may be adapted and modified by bona fide
- * purchasers for internal use, but neither the original nor any adapted
- * or modified version may be disclosed or distributed to third parties
- * in any manner, medium, or form, in whole or in part, without the prior
- * written consent of Cadence Design Systems Inc.  This software and its
- * derivatives are to be executed solely on products incorporating a Cadence
- * Design Systems processor.
+ * Copyright (c) 2006-2022 Cadence Design Systems, Inc.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
@@ -71,6 +81,7 @@ enum xa_config_param_aac_dec {
   ,XA_AACDEC_CONFIG_PARAM_CONCEALMENT_FADE_IN_FRAMES        = 46	 
   ,XA_AACDEC_CONFIG_PARAM_MPEG4_AMENDMENT4_ENABLE           = 47
   ,XA_AACDEC_CONFIG_PARAM_CHANNEL_CONFIG_INFO_FROM_PCE      = 48
+  ,XA_AACDEC_CONFIG_PARAM_RESET_STATE_ON_SYNC_LOSS_ERROR    = 49
 };
 
 /* Types of channel modes (acmod) */
@@ -236,6 +247,7 @@ enum xa_error_nonfatal_execute_aac_dec {
   ,XA_AACDEC_EXECUTE_NONFATAL_PARTIAL_LAST_FRAME                = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_AAC_DEC, 11)
   ,XA_AACDEC_EXECUTE_NONFATAL_EMPTY_INPUT_BUFFER                = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_AAC_DEC, 12)
   ,XA_AACDEC_EXECUTE_NONFATAL_ROUTING_ABSENT_CH_IGNORED         = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_AAC_DEC, 13)
+  ,XA_AACDEC_EXECUTE_NONFATAL_NEXT_SYNC_NOT_FOUND               = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_AAC_DEC, 14)
 };
 /* Fatal Errors */
 enum xa_error_fatal_execute_aac_dec {

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -26,6 +26,7 @@
  *
  * SRC plugin - wrapper around SRC-PP library
  ******************************************************************************/
+#ifdef XA_SRC_PP_FX
 
 #define MODULE_TAG                      SRCPP
 
@@ -35,8 +36,12 @@
 #include <string.h>
 #include "xa_apicmd_standards.h"
 #include "xa_error_standards.h"
-#include "xa_src_pp_api.h"
 #include "audio/xa-audio-decoder-api.h"
+#ifndef PACK_WS_DUMMY
+#include "xa_src_pp_api.h"
+#else //PACK_WS_DUMMY
+static XA_ERRORCODE xa_src_pp(xa_codec_handle_t var1, WORD32 var2, WORD32 var3, pVOID var4){return 0;};
+#endif //PACK_WS_DUMMY
 
 
 #ifdef XAF_PROFILE
@@ -51,6 +56,7 @@ typedef struct xa_src_pp
 {
     VOID *p_inpbuf;
     VOID *p_outbuf;
+    VOID *p_scratch_buf;
     WORD32 in_bytes;
     WORD32 out_bytes;
     WORD32 consumed_bytes;
@@ -75,6 +81,7 @@ static inline XA_ERRORCODE xa_src_pp_get_config_param(xa_src_pp_t *p_src_state, 
         return XA_NO_ERROR;
     }
     
+#ifndef PACK_WS_DUMMY
     /* ...translate "standard" parameter index into internal value */
     switch (i_idx)
     {
@@ -96,6 +103,7 @@ static inline XA_ERRORCODE xa_src_pp_get_config_param(xa_src_pp_t *p_src_state, 
         *(WORD32 *) pv_value = p_src_state->pcm_width_bytes * 8;
         break;
     }
+#endif //PACK_WS_DUMMY
     
     return XA_NO_ERROR;
 }
@@ -106,6 +114,7 @@ static inline XA_ERRORCODE xa_src_pp_get_config_param(xa_src_pp_t *p_src_state, 
 
 static inline XA_ERRORCODE xa_src_pp_set_config_param(xa_src_pp_t *p_src_state, xa_codec_handle_t handle, WORD32 i_idx, pVOID pv_value)
 {
+#ifndef PACK_WS_DUMMY
     if (p_src_state != NULL)
     {
         switch (i_idx)
@@ -131,6 +140,7 @@ static inline XA_ERRORCODE xa_src_pp_set_config_param(xa_src_pp_t *p_src_state, 
             break;
         }
     }
+#endif //PACK_WS_DUMMY
     
     /* ...pass to library */
     return xa_src_pp(handle, XA_API_CMD_SET_CONFIG_PARAM, i_idx, pv_value);       
@@ -180,7 +190,9 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
         insize = insize/p_src_state->in_channels;
         insize = (p_src_state->pcm_width_bytes == 2) ? insize >> 1 : insize >> 2;
 
+#ifndef PACK_WS_DUMMY
         xa_src_pp(p_xa_module_obj, XA_API_CMD_SET_CONFIG_PARAM, XA_SRC_PP_CONFIG_PARAM_INPUT_CHUNK_SIZE, &insize);
+#endif //PACK_WS_DUMMY
 
         /* ... reset states to allow rerun. TENA-2544. */
         p_src_state->exec_done = 0;
@@ -210,6 +222,7 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
             if (i_idx == 3 /*OUTPUT_IDX*/) p_src_state->p_outbuf = pv_value;
         }
 
+#ifndef PACK_WS_DUMMY
         if (i_cmd == XA_API_CMD_EXECUTE && i_idx == XA_CMD_TYPE_DO_EXECUTE)
         {
             p_src_state->out_bytes = 0;
@@ -217,6 +230,7 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
             xa_src_pp(p_xa_module_obj, XA_API_CMD_SET_CONFIG_PARAM, XA_SRC_PP_CONFIG_PARAM_SET_INPUT_BUF_PTR,  p_src_state->p_inpbuf);
             xa_src_pp(p_xa_module_obj, XA_API_CMD_SET_CONFIG_PARAM, XA_SRC_PP_CONFIG_PARAM_SET_OUTPUT_BUF_PTR, p_src_state->p_outbuf);
         }
+#endif //PACK_WS_DUMMY
        
         if (p_src_state != NULL) 
         { 
@@ -237,7 +251,11 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
         {
             WORD32 outsize;
 
+#ifndef PACK_WS_DUMMY
             xa_src_pp(p_xa_module_obj, XA_API_CMD_GET_CONFIG_PARAM, XA_SRC_PP_CONFIG_PARAM_OUTPUT_CHUNK_SIZE, &outsize);
+#else //PACK_WS_DUMMY
+            outsize=0;
+#endif //PACK_WS_DUMMY
 
             outsize = outsize * p_src_state->in_channels;
             outsize = (p_src_state->pcm_width_bytes == 2) ? outsize << 1 : outsize << 2;
@@ -254,7 +272,19 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
             *(WORD32 *) pv_value += (sizeof(xa_src_pp_t) + 7);     
         }
 
+        if((i_cmd == XA_API_CMD_SET_MEM_PTR) && (i_idx == XA_MEMTYPE_SCRATCH) && (ret == XA_NO_ERROR))
+        {
+            if(p_src_state->p_scratch_buf && ((unsigned int)p_src_state->p_scratch_buf != (unsigned int)pv_value))
+            {
+                /* ...necessary for the new scratch pointer changed durig run-time can be propagated 
+                 * into the library, else previous scratch pointer will be used which can lead to 
+                 * undesired side effects. */
+                ret = xa_src_pp(p_xa_module_obj, XA_API_CMD_EXECUTE, XA_CMD_TYPE_DO_RUNTIME_INIT, NULL);
+            }
+            p_src_state->p_scratch_buf = pv_value;
+        }
+
         return ret;
     }
 }
-
+#endif

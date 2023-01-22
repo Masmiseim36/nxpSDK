@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <xtensa/xos.h>
 
+#include "rpmsg_queue.h"
 #if (INIT_DEBUG_CONSOLE == 1)
 #define DSP_PRINTF PRINTF
 #else
@@ -33,7 +34,7 @@ typedef struct _dsp_handle_t
 {
     struct rpmsg_lite_instance *rpmsg;
     struct rpmsg_lite_endpoint *ept;
-    XosMsgQueue *rpmsg_queue;
+    rpmsg_queue_handle rpmsg_queue;
 
     void *audio_device;
     void *comp_codec;

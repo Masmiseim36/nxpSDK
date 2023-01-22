@@ -1,5 +1,5 @@
 /*
- *  Copyright 2021 NXP
+ *  Copyright 2021-2022 NXP
  *  All rights reserved.
  *
  *  SPDX-License-Identifier: BSD-3-Clause
@@ -133,7 +133,7 @@
 #define WIFI_BT_USE_USD_INTERFACE
 #define WLAN_ED_MAC_CTRL                        \
     {                                           \
-        .ed_ctrl_2g = 0x1, .ed_offset_2g = 0x1E \
+        .ed_ctrl_2g = 0x1, .ed_offset_2g = 0x0E \
     }
 
 /* Murata 2DS */
@@ -149,7 +149,7 @@
 #define WIFI_BT_USE_M2_INTERFACE
 #define WLAN_ED_MAC_CTRL                        \
     {                                           \
-        .ed_ctrl_2g = 0x1, .ed_offset_2g = 0x1E \
+        .ed_ctrl_2g = 0x1, .ed_offset_2g = 0x0E \
     }
 
 /* Murata 1XK + Murata uSD-M.2 adapter */

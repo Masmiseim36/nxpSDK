@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2018-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -123,6 +123,10 @@
 
 #define TEST_ASSERT_EQUAL(arg1, arg2, checkpoint)                                   \
     do {                                                                            \
+    	if ((arg1) == PAL_STATUS_UNSUPPORTED_FUNC)                                  \
+        {                                                                           \
+            return RESULT_SKIP(VAL_STATUS_UNSUPPORTED);                             \
+        }                                                                           \
         if ((arg1) != arg2)                                                         \
         {                                                                           \
             val->print(PRINT_ERROR, "\tFailed at Checkpoint: %d\n", checkpoint);    \
@@ -134,18 +138,33 @@
 
 #define TEST_ASSERT_DUAL(arg1, status1, status2, checkpoint)                        \
     do {                                                                            \
+    	if ((arg1) == PAL_STATUS_UNSUPPORTED_FUNC)                                  \
+        {                                                                           \
+            return RESULT_SKIP(VAL_STATUS_UNSUPPORTED);                             \
+        }                                                                           \
         if ((arg1) != status1 && (arg1) != status2)                                 \
         {                                                                           \
             val->print(PRINT_ERROR, "\tFailed at Checkpoint: %d\n", checkpoint);    \
             val->print(PRINT_ERROR, "\tActual: %d\n", arg1);                        \
-            val->print(PRINT_ERROR, "\tExpected: %d", status1);                     \
-            val->print(PRINT_ERROR, "or %d\n", status2);                            \
+            if ((status1) != (status2))                                             \
+            {                                                                       \
+                val->print(PRINT_ERROR, "\tExpected: %d", status1);                 \
+                val->print(PRINT_ERROR, "or %d\n", status2);                        \
+            }                                                                       \
+            else                                                                    \
+            {                                                                       \
+                val->print(PRINT_ERROR, "\tExpected: %d\n", status1);               \
+            }                                                                       \
             return 1;                                                               \
         }                                                                           \
     } while (0)
 
 #define TEST_ASSERT_NOT_EQUAL(arg1, arg2, checkpoint)                               \
     do {                                                                            \
+    	if ((arg1) == PAL_STATUS_UNSUPPORTED_FUNC)                                  \
+        {                                                                           \
+            return RESULT_SKIP(VAL_STATUS_UNSUPPORTED);                             \
+        }                                                                           \
         if ((arg1) == arg2)                                                         \
         {                                                                           \
             val->print(PRINT_ERROR, "\tFailed at Checkpoint: %d\n", checkpoint);    \
@@ -166,6 +185,10 @@
 
 #define TEST_ASSERT_RANGE(arg1, range1, range2, checkpoint)                         \
     do {                                                                            \
+    	if ((arg1) == PAL_STATUS_UNSUPPORTED_FUNC)                                  \
+        {                                                                           \
+            return RESULT_SKIP(VAL_STATUS_UNSUPPORTED);                             \
+        }                                                                           \
         if ((arg1) < range1 || (arg1) > range2)                                     \
         {                                                                           \
             val->print(PRINT_ERROR, "\tFailed at Checkpoint: %d\n", checkpoint);    \
@@ -213,6 +236,10 @@ typedef enum {
      * re-enter the same test and continue executing the same check function
      */
     BOOT_EXPECTED_CONT_TEST_EXEC       = 0x7,
+    /* Test expects reboot for secure/non-secure on second check of test . If reboot happens,
+     * re-enter the same test and execute the next check function
+     */
+    BOOT_EXPECTED_ON_SECOND_CHECK      = 0x8,
 } boot_state_t;
 
 typedef enum {

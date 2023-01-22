@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -30,17 +30,12 @@
 
 #if LV_USE_GPU_NXP_VG_LITE
 #include "vg_lite.h"
-#include "vg_lite_platform.h"
+#include "vglite_support.h"
 #endif
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#if LV_USE_GPU_NXP_VG_LITE
-#define VG_LITE_MAX_CONTIGUOUS_SIZE 0x100000
-#define VG_LITE_COMMAND_BUFFER_SIZE (128 << 10)
-#endif
-
 /*
  * DBI mode panel (or named command mode panel) supports partial refresh and full refresh,
  * DPI mode panel (or named video mode panel) only supports full refresh.
@@ -95,12 +90,6 @@ void BOARD_PullMIPIPanelTouchResetPin(bool pullUp);
 static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode);
 #endif
 
-#if LV_USE_GPU_NXP_VG_LITE
-static status_t BOARD_PrepareVGLiteController(void);
-
-static status_t BOARD_InitVGliteClock(void);
-#endif /* LV_USE_GPU_NXP_VG_LITE */
-
 static void DEMO_WaitBufferSwitchOff(void);
 
 /*******************************************************************************
@@ -151,29 +140,6 @@ static const gt911_config_t s_touchConfig = {
 static int s_touchResolutionX;
 static int s_touchResolutionY;
 #endif
-
-#if LV_USE_GPU_NXP_VG_LITE
-static uint32_t registerMemBase = 0x40240000;
-static uint32_t gpu_mem_base    = 0x0;
-
-/*
- * In case custom VGLite memory parameters are used, the application needs to
- * allocate and publish the VGLite heap base, its size and the size of the
- * command buffer(s) using the following global variables:
- */
-extern void *vglite_heap_base;
-extern uint32_t vglite_heap_size;
-extern uint32_t vglite_cmd_buff_size;
-
-#if (CUSTOM_VGLITE_MEMORY_CONFIG == 0)
-/* VGLite driver heap */
-AT_NONCACHEABLE_SECTION_ALIGN(uint8_t contiguous_mem[VG_LITE_MAX_CONTIGUOUS_SIZE], 64);
-
-void *vglite_heap_base        = &contiguous_mem;
-uint32_t vglite_heap_size     = VG_LITE_MAX_CONTIGUOUS_SIZE;
-uint32_t vglite_cmd_buff_size = VG_LITE_COMMAND_BUFFER_SIZE;
-#endif /* CUSTOM_VGLITE_MEMORY_CONFIG */
-#endif /* LV_USE_GPU_NXP_VG_LITE */
 
 static dc_fb_info_t fbInfo;
 
@@ -298,11 +264,20 @@ void lv_port_disp_init(void)
     lv_disp_drv_register(&disp_drv);
 
 #if LV_USE_GPU_NXP_VG_LITE
-    if (vg_lite_init(64, 64) != VG_LITE_SUCCESS)
+    if (vg_lite_init(DEFAULT_VG_LITE_TW_WIDTH, DEFAULT_VG_LITE_TW_HEIGHT) != VG_LITE_SUCCESS)
     {
         PRINTF("VGLite init error. STOP.");
         vg_lite_close();
-        assert(0);
+        while (1)
+            ;
+    }
+
+    if (vg_lite_set_command_buffer_size(VG_LITE_COMMAND_BUFFER_SIZE) != VG_LITE_SUCCESS)
+    {
+        PRINTF("VGLite set command buffer. STOP.");
+        vg_lite_close();
+        while (1)
+            ;
     }
 #endif
 }
@@ -394,18 +369,35 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
         first_flush = true;
 
-        /*
-         * Change refresh region size.
-         * For partial refresh, the whole line of the damaged area will be sent
-         * to the panel, because low level data send functions does not support
-         * sending non-continuous memory.
-         */
-        fbInfo.height = lv_area_get_height(&damaged);
-        fbInfo.startY = damaged.y1;
+        if ((g_dc.ops->getProperty(&g_dc) & (uint32_t)kDC_FB_TwoDimensionMemoryWrite) == 0U)
+        {
+            /*
+             * Change refresh region size.
+             * For partial refresh, the whole line of the damaged area will be sent
+             * to the panel, because low level data send functions does not support
+             * sending non-continuous memory.
+             */
+            fbInfo.height = lv_area_get_height(&damaged);
+            fbInfo.startY = damaged.y1;
 
-        g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
+            g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 
-        g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)(fb + fbInfo.startY * fbInfo.strideBytes));
+            g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)(fb + fbInfo.startY * fbInfo.strideBytes));
+        }
+        else
+        {
+            /* Change refresh region size. Only updated part of each line is sent to the panel. */
+            fbInfo.height = lv_area_get_height(&damaged);
+            fbInfo.startY = damaged.y1;
+            fbInfo.width  = lv_area_get_width(&damaged);
+            fbInfo.startX = damaged.x1;
+
+            g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
+
+            g_dc.ops->setFrameBuffer(
+                &g_dc, 0,
+                (void *)(fb + fbInfo.startY * fbInfo.strideBytes + fbInfo.startX * DEMO_BUFFER_BYTE_PER_PIXEL));
+        }
     }
     else
     {
@@ -684,48 +676,3 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
     data->point.y = touch_y;
 }
 #endif
-
-#if LV_USE_GPU_NXP_VG_LITE
-void GPU_DriverIRQHandler(void)
-{
-    vg_lite_IRQHandler();
-}
-
-static status_t BOARD_InitVGliteClock(void)
-{
-    SYSCTL0->PDRUNCFG1_CLR = SYSCTL0_PDRUNCFG1_GPU_SRAM_APD_MASK;
-    SYSCTL0->PDRUNCFG1_CLR = SYSCTL0_PDRUNCFG1_GPU_SRAM_PPD_MASK;
-    POWER_ApplyPD();
-
-    CLOCK_AttachClk(kMAIN_CLK_to_GPU_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivGpuClk, 2);
-    CLOCK_EnableClock(kCLOCK_Gpu);
-    CLOCK_EnableClock(kCLOCK_AxiSwitch);
-
-    RESET_ClearPeripheralReset(kGPU_RST_SHIFT_RSTn);
-    RESET_ClearPeripheralReset(kAXI_SWITCH_RST_SHIFT_RSTn);
-
-    NVIC_SetPriority(GPU_IRQn, 3);
-    EnableIRQ((IRQn_Type)GPU_IRQn);
-
-    return kStatus_Success;
-}
-
-status_t BOARD_PrepareVGLiteController(void)
-{
-    status_t status;
-
-    status = BOARD_InitVGliteClock();
-
-    if (kStatus_Success != status)
-    {
-        return status;
-    }
-
-    vg_lite_init_mem(registerMemBase, gpu_mem_base, vglite_heap_base, vglite_heap_size);
-
-    vg_lite_set_command_buffer_size(vglite_cmd_buff_size);
-
-    return kStatus_Success;
-}
-#endif /* LV_USE_GPU_NXP_VG_LITE */

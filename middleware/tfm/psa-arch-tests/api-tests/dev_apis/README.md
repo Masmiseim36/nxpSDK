@@ -14,12 +14,12 @@ This test suite is not a substitute for design verification. To review the test 
 For more information on the architecture test suite framework and methodology to run the tests, refer to the [Validation Methodology](../docs/Arm_PSA_APIs_Arch_Test_Validation_Methodology.pdf) document.
 
 ## This release
- - Code Quality : REL v1.3
+ - Code Quality : REL v1.4
  - This release contains following PSA Functional APIs tests: <br />
 
 | Test Category            | Specification Version                |
 |--------------------------|--------------------------------------|
-| Crypto                   | [PSA Crypto API 1.0.0](../../api-specs/crypto/v1.0.0/doc/)     |
+| Crypto                   | [PSA Crypto API 1.0.1](../../api-specs/crypto/v1.0.1/doc/)     |
 | Storage (PS and ITS)     | [PSA Storage API 1.0.0](../../api-specs/storage/v1.0/doc/) |
 | Attestation              | [PSA Attestation API 1.0.2](../../api-specs/attestation/v1.0.2/doc/)  |
 
@@ -30,6 +30,7 @@ For more information on the architecture test suite framework and methodology to
 
 | Release version | Release tag  | PSA Crypto API | PSA Storage API | PSA Attestation API |
 |-----------------|---------------|----------------|-----------------|---------------------|
+| REL v1.4 | [v22.01_API1.4_ADAC_BETA](https://github.com/ARM-software/psa-arch-tests/tree/v22.01_API1.4_ADAC_BETA/api-tests/dev_apis) | 1.0.1  | 1.0.0 | 1.0.2 |
 | REL v1.3 | [v21.10_API1.3_ADAC_ALPHA-1](https://github.com/ARM-software/psa-arch-tests/tree/v21.10_API1.3_ADAC_ALPHA-1/api-tests/dev_apis) | 1.0.0  | 1.0.0 | 1.0.2 |
 | REL v1.2 | [v21.07_API1.2_ADAC_ALPHA](https://github.com/ARM-software/psa-arch-tests/tree/v21.07_API1.2_ADAC_ALPHA/api-tests/dev_apis) | 1.0.0  | 1.0.0 | 1.0.2 |
 | REL v1.1 | [v20.11_API1.1](https://github.com/ARM-software/psa-arch-tests/tree/v20.11_API1.1/api-tests/dev_apis) | 1.0-Beta3  | 1.0.0 | 1.0.0 |
@@ -79,6 +80,7 @@ To build the test suite for your target platform, execute the following commands
 -   -DCOMPILER_NAME=<compiler_name> Compiler name to be use for selecting compiler. Supported values are gcc. By defualt it will take gcc if not specified.
      Note: -DCOMPILER_NAME only applicable for linux i.e. -DTOOLCHAIN=GCC_LINUX and DTARGET=tgt_dev_apis_linux.
 -   -DPSA_INCLUDE_PATHS="<include_path1>;<include_path2>;...;<include_pathn>" is an additional directory to be included into the compiler search path.You must provide Functional APIs header files implementation to the test suite build system using this option. For example, to compile Crypto tests, the include path must point to the path where **psa/crypto.h** is located in your build system. Bydefault, PSA_INCLUDE_PATHS accepts absolute path. However, relative path can be provided using below format:<br />
+-   -DPSA_TARGET_QCBOR=<path for pre-fetched cbor folder, this is option used where no network connectivity is possible during the build:<br />
 ```
     -DPSA_INCLUDE_PATHS=`readlink -f <relative_include_path>`
 ```
@@ -131,4 +133,4 @@ Arm PSA test suite is distributed under Apache v2.0 License.
 
 --------------
 
-*Copyright (c) 2018-2021, Arm Limited and Contributors. All rights reserved.*
+*Copyright (c) 2018-2022, Arm Limited and Contributors. All rights reserved.*

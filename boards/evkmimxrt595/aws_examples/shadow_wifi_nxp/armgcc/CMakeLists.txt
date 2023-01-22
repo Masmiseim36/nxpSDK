@@ -24,35 +24,40 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(aws_shadow_wifi_nxp)
 
+set(MCUX_BUILD_TYPES flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME aws_shadow_wifi_nxp.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
+"${ProjDirPath}/../aws_dev_mode_key_provisioning.h"
+"${ProjDirPath}/../aws_dev_mode_key_provisioning.c"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_shadow_config.h"
-"${ProjDirPath}/../config_files/core_mqtt_config.h"
-"${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
-"${ProjDirPath}/../config_files/shadow_config.h"
-"${ProjDirPath}/../config_files/shadow_demo_config.h"
-"${ProjDirPath}/../config_files/aws_iot_network_config.h"
 "${ProjDirPath}/../main_wifi.c"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../config_files/aws_wifi_config.h"
-"${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../core_mqtt_config.h"
+"${ProjDirPath}/../core_pkcs11_config.h"
+"${ProjDirPath}/../demo_config.h"
+"${ProjDirPath}/../freertos_tasks_c_additions.h"
+"${ProjDirPath}/../kvstore_config.h"
+"${ProjDirPath}/../shadow_config.h"
+"${ProjDirPath}/../aws_clientcredential.h"
+"${ProjDirPath}/../aws_clientcredential_keys.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -60,13 +65,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../app_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../config_files
-    ${ProjDirPath}/../../..
+    ${SdkRootDirPath}/boards/evkmimxrt595
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common
-    ${ProjDirPath}/../../../../src/aws_examples/common
-    ${ProjDirPath}/../../../../src/aws_examples/common/lwipopts_wifi_nxp
+    ${SdkRootDirPath}/boards/evkmimxrt595/aws_examples/common
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
@@ -78,72 +81,78 @@ if(CMAKE_BUILD_TYPE STREQUAL flash_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../rtos/freertos
-    ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../middleware/wifi_nxp
-    ${ProjDirPath}/../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../components/wifi_bt_module
-    ${ProjDirPath}/../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
-    ${ProjDirPath}/../../../../../components/flash/mflash
-    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt595
-    ${ProjDirPath}/../../../../../components/pca9420
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
-    ${ProjDirPath}/../../../../../components/gpio
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../flash_config
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/osa
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/middleware/wifi_nxp
+    ${SdkRootDirPath}/components/wifi_bt_module
+    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/examples/common/kvstore
+    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/examples/common/logging
+    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/examples/common/mqtt_agent
+    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface
+    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/examples/evkbmimxrt1060/shadow
+    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls
+    ${SdkRootDirPath}/rtos/freertos/coremqtt
+    ${SdkRootDirPath}/rtos/freertos/coremqtt-agent
+    ${SdkRootDirPath}/rtos/freertos/corepkcs11
+    ${SdkRootDirPath}/middleware/edgefast_wifi
+    ${SdkRootDirPath}/middleware/pkcs11
+    ${SdkRootDirPath}/middleware/aws_iot/amazon-freertos
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/middleware/mbedtls
+    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
+    ${SdkRootDirPath}/components/flash/mflash
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt595
+    ${SdkRootDirPath}/components/pca9420
+    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
+    ${SdkRootDirPath}/middleware/sdmmc
+    ${SdkRootDirPath}/components/gpio
+    ${SdkRootDirPath}/devices/MIMXRT595S
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/rtos/freertos/backoffalgorithm
+    ${SdkRootDirPath}/middleware/aws_iot/device-shadow
+    ${SdkRootDirPath}/rtos/freertos/corejson
+    ${SdkRootDirPath}/components/osa
 )
 
 # include modules
-include(middleware_freertos-aws_iot_vendor_nxp_wifi_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_demos_MIMXRT595S_cm33)
-
 include(middleware_lwip_MIMXRT595S_cm33)
 
 include(middleware_wifi_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_demos_shadow_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_sdio_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_common_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_logging_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT595S_cm33)
-
 include(component_wifi_bt_module_tx_pwr_limits_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT595S_cm33)
+include(middleware_iot_reference_kvstore_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT595S_cm33)
+include(middleware_iot_reference_logging_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT595S_cm33)
+include(middleware_iot_reference_mqtt_agent_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT595S_cm33)
+include(middleware_iot_reference_mqtt_agent_interface_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT595S_cm33)
+include(middleware_iot_reference_shadow_tasks_MIMXRT595S_cm33)
+
+include(middleware_iot_reference_transport_mbedtls_MIMXRT595S_cm33)
+
+include(middleware_freertos_coremqtt_MIMXRT595S_cm33)
+
+include(middleware_freertos_coremqtt-agent_MIMXRT595S_cm33)
+
+include(middleware_freertos_corepkcs11_mbedtls_utils_MIMXRT595S_cm33)
+
+include(middleware_edgefast_wifi_nxp_MIMXRT595S_cm33)
+
+include(middleware_pkcs11_MIMXRT595S_cm33)
+
+include(middleware_freertos_corepkcs11_MIMXRT595S_cm33)
+
+include(middleware_freertos_corepkcs11_mbedtls_MIMXRT595S_cm33)
+
+include(middleware_amazon-freertos_vendor_nxp_pkcs11_MIMXRT595S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
 
@@ -176,6 +185,14 @@ include(utility_debug_console_MIMXRT595S_cm33)
 include(middleware_wifi_sdio_MIMXRT595S_cm33)
 
 include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_sdio_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_common_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
 
 include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
@@ -215,35 +232,23 @@ include(driver_lpc_gpio_MIMXRT595S_cm33)
 
 include(driver_reset_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT595S_cm33)
-
 include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
 
 include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT595S_cm33)
+include(middleware_freertos_backoffalgorithm_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT595S_cm33)
+include(middleware_aws_iot_device_shadow_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT595S_cm33)
+include(middleware_freertos_corejson_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT595S_cm33)
+include(middleware_edgefast_wifi_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMXRT595S_cm33)
+include(middleware_amazon-freertos_libraries_freertos_plus_standard_crypto_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT595S_cm33)
+include(component_mflash_common_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_network_manager_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT595S_cm33)
+include(middleware_wifi_sdio-2_MIMXRT595S_cm33)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
 
@@ -251,24 +256,20 @@ include(component_osa_free_rtos_MIMXRT595S_cm33)
 
 include(driver_usdhc_MIMXRT595S_cm33)
 
-include(component_mflash_common_MIMXRT595S_cm33)
-
-include(middleware_wifi_sdio-2_MIMXRT595S_cm33)
+include(middleware_wifi_common_files_MIMXRT595S_cm33)
 
 include(utilities_misc_utilities_MIMXRT595S_cm33)
 
 include(driver_iap_MIMXRT595S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -33,6 +33,8 @@ status_t mbecrypto_mcux_css_init(void)
         {
             css_init_is_done = true;
         }
+        /* Enable GDET interrupt, input event to ITRC */
+        CSS->CSS_INT_ENABLE |= CSS_INT_ENABLE_GDET_INT_EN_Msk;
     }
     else
     {
@@ -508,7 +510,7 @@ int mbedtls_aes_crypt_xts( mbedtls_aes_xts_context *ctx,
 }
 #endif /* MBEDTLS_CIPHER_MODE_XTS */
 
-#if defined(MBEDTLS_CIPHER_MODE_CFB)
+#if defined(MBEDTLS_CIPHER_MODE_CFB) /* Not HW accelerated, just a copy */
 /*
  * AES-CFB128 buffer encryption/decryption
  */
@@ -607,7 +609,7 @@ int mbedtls_aes_crypt_cfb8( mbedtls_aes_context *ctx,
 }
 #endif /* MBEDTLS_CIPHER_MODE_CFB */
 
-#if defined(MBEDTLS_CIPHER_MODE_OFB)
+#if defined(MBEDTLS_CIPHER_MODE_OFB) /* Not HW accelerated, just a copy */
 /*
  * AES-OFB (Output Feedback Mode) buffer encryption/decryption
  */

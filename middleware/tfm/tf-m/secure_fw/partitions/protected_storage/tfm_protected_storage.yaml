@@ -12,7 +12,7 @@
   "priority": "NORMAL",
   "model": "SFN",
   "entry_init": "tfm_ps_entry",
-  "stack_size": "0x800",
+  "stack_size": "PS_STACK_SIZE",
   "secure_functions": [
     {
       "name": "TFM_PS_SET",
@@ -64,6 +64,6 @@
   "dependencies": [
     "TFM_CRYPTO",
     "TFM_INTERNAL_TRUSTED_STORAGE_SERVICE",
-    "TFM_SP_PLATFORM_NV_COUNTER"
+    "TFM_PLATFORM_SERVICE"
   ]
 }

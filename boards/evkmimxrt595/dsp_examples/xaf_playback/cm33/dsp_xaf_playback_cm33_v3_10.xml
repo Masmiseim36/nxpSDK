@@ -85,6 +85,7 @@
           <value>XA_OPUS_DECODER=1</value>
           <value>XA_SBC_ENCODER=1</value>
           <value>XA_SBC_DECODER=1</value>
+          <value>XA_VORBIS_DECODER=1</value>
           <value>XA_PCM_GAIN=1</value>
           <value>XA_SRC_PP_FX=1</value>
           <value>XA_CLIENT_PROXY=1</value>

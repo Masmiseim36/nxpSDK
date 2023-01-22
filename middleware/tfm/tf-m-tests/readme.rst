@@ -16,6 +16,7 @@ Folder Structure
 
 - app - The application code that executes the testing, including both the TF-M
   tests and the `psa-arch-tests`_.
+- docs - The documents about test developments.
 - CMSIS - The libraries of RTX which is the Non-secure RTOS of the tests
 - test - The TF-M test codes including test framework, test suites and test
   services
@@ -30,4 +31,4 @@ Feedback can be submitted via email to
 .. _Trusted Firmware-M: https://git.trustedfirmware.org/TF-M/trusted-firmware-m.git/
 .. _psa-arch-tests: https://github.com/ARM-software/psa-arch-tests
 
-*Copyright (c) 2020, Arm Limited. All rights reserved.*
+*Copyright (c) 2020-2022, Arm Limited. All rights reserved.*

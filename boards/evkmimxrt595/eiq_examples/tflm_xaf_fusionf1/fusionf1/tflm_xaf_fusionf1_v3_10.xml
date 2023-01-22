@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="fusionf1_MIMXRT595S"/>
+    <definition extID="component.usart_adapter.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_usart.MIMXRT595S"/>
+    <definition extID="utility.debug_console_lite.MIMXRT595S"/>
+    <definition extID="platform.utilities.assert_lite.MIMXRT595S"/>
+    <definition extID="platform.drivers.dmic.MIMXRT595S"/>
+    <definition extID="platform.drivers.dmic_dma.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_i2s.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_i2s_dma.MIMXRT595S"/>
+    <definition extID="platform.drivers.inputmux.MIMXRT595S"/>
+    <definition extID="platform.drivers.inputmux_connections.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_dma.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
+    <definition extID="platform.drivers.mu.MIMXRT595S"/>
+    <definition extID="platform.drivers.sema42.MIMXRT595S"/>
+    <definition extID="middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT595S"/>
+    <definition extID="middleware.baremetal.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.evkmimxrt595_fusionf1_bm.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.bm.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.MIMXRT595S"/>
+    <definition extID="device.MIMXRT595S_DSP.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.xtensa.MIMXRT595S"/>
+    <definition extID="platform.drivers.common.MIMXRT595S"/>
+    <definition extID="platform.drivers.reset.MIMXRT595S"/>
+    <definition extID="platform.drivers.clock.MIMXRT595S"/>
+    <definition extID="device.MIMXRT595S_CMSIS.MIMXRT595S"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT595S"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT595S"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="evkmimxrt595_tflm_xaf_fusionf1" name="tflm_xaf_fusionf1" device_core="fusionf1_MIMXRT595S" dependency="component.usart_adapter.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S utility.debug_console_lite.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.drivers.dmic.MIMXRT595S platform.drivers.dmic_dma.MIMXRT595S platform.drivers.flexcomm_i2s.MIMXRT595S platform.drivers.flexcomm_i2s_dma.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.lpc_dma.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.mu.MIMXRT595S platform.drivers.sema42.MIMXRT595S middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT595S middleware.baremetal.MIMXRT595S middleware.multicore.rpmsg_lite.evkmimxrt595_fusionf1_bm.MIMXRT595S middleware.multicore.rpmsg_lite.MIMXRT595S middleware.multicore.rpmsg_lite.bm.MIMXRT595S middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT595S middleware.eiq.tensorflow_lite_micro.MIMXRT595S device.MIMXRT595S_DSP.MIMXRT595S middleware.eiq.tensorflow_lite_micro.xtensa.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.clock.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT595S middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT595S middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT595S middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT595S" category="eiq_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>XF_CFG_CORES_NUM=1</value>
+          <value>XA_CAPTURER=1</value>
+          <value>XA_RENDERER=1</value>
+          <value>XA_TFLITE_MICROSPEECH=1</value>
+          <value>SDK_DEBUGCONSOLE_UART=1</value>
+          <value>XOS_CLOCK_FREQ=198000000</value>
+          <value>HAVE_XOS</value>
+          <value>HIFI_ONLY_XAF</value>
+          <value>TF_LITE_STATIC_MEMORY</value>
+          <value>CPU_MIMXRT595SFFOC_dsp</value>
+          <value>XTENSA</value>
+          <value>HIFI4</value>
+          <value>MCUXPRESSO_SDK</value>
+          <value>NNLIB_V2</value>
+          <value>MODEL_INT16</value>
+          <value>hifi4</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
+          <value>SDK_DEBUGCONSOLE_UART</value>
+          <value>CPU_MIMXRT595SFFOC_dsp</value>
+          <value>TF_LITE_STATIC_MEMORY</value>
+          <value>XTENSA</value>
+          <value>HIFI4</value>
+          <value>MCUXPRESSO_SDK</value>
+          <value>NNLIB_V2</value>
+          <value>MODEL_INT16</value>
+          <value>hifi4</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-Wno-strict-aliasing -mno-mul16 -mno-mul32 -mno-div32 -fsigned-char -mlongcalls -INLINE:requested -Wno-unused -Wno-missing-braces -fmessage-length=0</value>
+        </option>
+        <option id="com.crt.advproject.link.cpp.fpu" type="enum">
+          <value>com.crt.advproject.link.cpp.fpu.none</value>
+        </option>
+        <option id="gnu.cpp.link.option.nostdlibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.cpp.fpu" type="enum">
+          <value>com.crt.advproject.cpp.fpu.none</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.other.other" type="string">
+          <value>-fno-rtti -fno-exceptions -Wno-sign-compare -Wno-strict-aliasing</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf" project_relative_path="source" type="c_include"/>
+      <include_path path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp" project_relative_path="source" type="c_include"/>
+      <include_path path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp/plugins" project_relative_path="source/xaf_plugins" type="c_include"/>
+      <include_path path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp/plugins/microspeech" project_relative_path="source/xaf_plugins/microspeech" type="c_include"/>
+    </include_paths>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board_fusionf1.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board_fusionf1.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board_init.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board_init.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="dsp_config.h"/>
+    </source>
+    <source path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf" project_relative_path="source" type="c_include">
+      <files mask="message.h"/>
+      <files mask="rpmsg_config.h"/>
+    </source>
+    <source path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp" project_relative_path="source" type="src">
+      <files mask="dsp_xaf.c"/>
+      <files mask="main.c"/>
+    </source>
+    <source path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp" project_relative_path="source" type="c_include">
+      <files mask="dsp_xaf.h"/>
+    </source>
+    <source path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp/plugins" project_relative_path="source/xaf_plugins" type="src">
+      <files mask="xa-capturer-dmic.c"/>
+      <files mask="xa-renderer.c"/>
+      <files mask="xa-factory.c"/>
+      <files mask="tflm-inference-api.cpp"/>
+      <files mask="xa-tflm-inference-api.c"/>
+    </source>
+    <source path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp/plugins" project_relative_path="source/xaf_plugins" type="c_include">
+      <files mask="tflm-inference-api.h"/>
+      <files mask="xa-tflm-inference-api.h"/>
+    </source>
+    <source path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp/plugins/microspeech" project_relative_path="source/xaf_plugins/microspeech" type="src">
+      <files mask="microspeech_model_data.c"/>
+      <files mask="xa-microspeech-frontend.c"/>
+      <files mask="microspeech-frontend-wrapper-api.cpp"/>
+      <files mask="microspeech-inference-wrapper-api.cpp"/>
+    </source>
+    <source path="../../../../../middleware/eiq/tensorflow-lite/examples/xaf/dsp/plugins/microspeech" project_relative_path="source/xaf_plugins/microspeech" type="c_include">
+      <files mask="microspeech_model_data.h"/>
+      <files mask="xa-microspeech-frontend-api.h"/>
+      <files mask="xa-microspeech-inference-api.h"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="core_dsp.h"/>
+    </source>
+    <source path="gdbio/ldscripts" project_relative_path="board" type="other">
+      <files mask="elf32xtensa.x"/>
+    </source>
+    <source path="gdbio" project_relative_path="board" type="other">
+      <files mask="specs"/>
+    </source>
+    <source path="min-rt/ldscripts" project_relative_path="board" type="other">
+      <files mask="elf32xtensa.x"/>
+    </source>
+    <source path="min-rt" project_relative_path="board" type="other">
+      <files mask="specs"/>
+    </source>
+  </example>
+</ksdk:examples>

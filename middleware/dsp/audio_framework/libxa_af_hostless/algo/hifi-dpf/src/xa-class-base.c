@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -49,33 +49,34 @@ struct xf_channel_info
     xf_message_t            *delete_msg;
     UWORD32                 event_id_src;
     UWORD32                 event_id_dst;
-    UWORD32                 client_id_dst;
+    xf_msg_id_dtype         port_dst;
     UWORD32                 event_buf_count;
     UWORD32                 buf_size;
+    UWORD32                 shared_channel;
 };
 #endif
 /*******************************************************************************
  * Internal functions definitions
  ******************************************************************************/
 /* ...scratch memory allocation if needed */
-static XA_ERRORCODE xf_scratch_mem_alloc( XACodecBase *base, UWORD32 core )
+static XA_ERRORCODE xf_scratch_mem_alloc( XACodecBase *base, UWORD32 core, UWORD32 priority )
 {
-    if ( (base->component.priority == 0) || (XF_CORE_DATA(core)->n_workers == 0) )
+    if ( (priority == 0) || (XF_CORE_DATA(core)->n_workers == 0) )
     {
         if ( XF_CORE_DATA(core)->scratch == NULL )
         {
-          XF_CHK_ERR( XF_CORE_DATA(core)->scratch = xf_scratch_mem_init(core, base->component.priority), XAF_MEMORY_ERR);  
+          XF_CHK_ERR( XF_CORE_DATA(core)->scratch = xf_scratch_mem_init(core, priority), XAF_MEMORY_ERR);  
         }
         base->scratch = XF_CORE_DATA(core)->scratch;
        
     }
     else
     {   
-        struct xf_worker *worker = XF_CORE_DATA(core)->worker + base->component.priority;
+        struct xf_worker *worker = XF_CORE_DATA(core)->worker + priority;
 
         if ( worker->scratch == NULL )
         {
-            XF_CHK_ERR( worker->scratch = xf_scratch_mem_init(core, base->component.priority), XAF_MEMORY_ERR);
+            XF_CHK_ERR( worker->scratch = xf_scratch_mem_init(core, priority), XAF_MEMORY_ERR);
             
         }   
         base->scratch = worker->scratch;
@@ -158,7 +159,7 @@ static XA_ERRORCODE xa_base_postinit(XACodecBase *base, UWORD32 core)
             XF_CHK_ERR((XF_CFG_CODEC_SCRATCHMEM_ALIGN & (align - 1)) == 0, XA_API_FATAL_MEM_ALIGN);
 
             /* ...Allocate scratch if scratch is not allocated for this thread */
-            XA_CHK( xf_scratch_mem_alloc( base, core));
+            XA_CHK( xf_scratch_mem_alloc( base, core, base->component.priority));
             
             /* ...set the scratch memory pointer */
             XA_API(base, XA_API_CMD_SET_MEM_PTR, i, base->scratch);
@@ -209,14 +210,53 @@ static int is_component_param(WORD32 id)
     return (id == XAF_COMP_CONFIG_PARAM_PRIORITY);
 }
 
+static XA_ERRORCODE xa_send_msg_to_new_priority_queue(xf_core_data_t *cd, XACodecBase *base, UWORD32 curr_priority, UWORD32 new_priority)
+{
+    struct xf_worker *pcurr_worker = cd->worker + curr_priority;
+    struct xf_worker *pnew_worker = cd->worker + new_priority;
+    
+    xf_worker_msg_t marker_msg, msg_tmp;
+
+    /* ...creating a marker message */
+    marker_msg.msg = NULL;
+    marker_msg.component = NULL;
+
+    __xf_msgq_send(pcurr_worker->queue, &marker_msg, sizeof(marker_msg));
+
+    while (1)
+    {
+        int rc = __xf_msgq_recv(pcurr_worker->queue, &msg_tmp, sizeof(msg_tmp)); 
+
+        if(((msg_tmp.component == NULL) && (msg_tmp.msg == NULL)) || rc) 
+        {
+            /* ...break from loop once marker message is received */
+            break;
+        }
+        if(msg_tmp.msg && (msg_tmp.component == &base->component))
+        {
+            TRACE(INFO, _b("Sending message of base:%p with id:%016llx buf:%p opcode:%x from older priority:%u queue to newer priority:%u queue"), base, (UWORD64)msg_tmp.msg->id, msg_tmp.msg->buffer, msg_tmp.msg->opcode, curr_priority, new_priority);
+            __xf_msgq_send(pnew_worker->queue, &msg_tmp, sizeof(msg_tmp));
+        }
+        else 
+        {
+            __xf_msgq_send(pcurr_worker->queue, &msg_tmp, sizeof(msg_tmp));
+        }
+    } 
+
+   return XA_NO_ERROR;
+}
+
 static XA_ERRORCODE xa_component_setparam(XACodecBase *base, WORD32 id, pVOID pv, UWORD32 core)
 {
     UWORD32 *v = pv;
+    xf_core_data_t *cd = XF_CORE_DATA(core);
+
+    UWORD32 curr_priority = base->component.priority; 
 
     switch (id) {
     case XAF_COMP_CONFIG_PARAM_PRIORITY:
     {
-        if(XF_CORE_DATA(core)->n_workers <= 0) return XA_NO_ERROR;
+        if(XF_CORE_DATA(core)->n_workers <= 0) return XAF_INVALIDVAL_ERR;
 
         UWORD32 sched_flag = (base->state & XA_BASE_FLAG_SCHEDULE);
 
@@ -229,23 +269,41 @@ static XA_ERRORCODE xa_component_setparam(XACodecBase *base, WORD32 id, pVOID pv
             xa_base_cancel(base);
         }
 
-        base->component.priority = *v + 1;
+        UWORD32 new_priority = *v + 1;
+
+        /* ...save current priority of thread */
+        UWORD32 rtos_priority = __xf_thread_get_priority(NULL);
+
+        /* ...elevate priority of thread */ 
+        __xf_thread_set_priority(NULL, cd->dsp_thread_priority + 1);
+
+        /* ...send message from current priority queue to new priority queue. */
+        xa_send_msg_to_new_priority_queue(cd, base, curr_priority, new_priority); 
+
         if ( (base->state & XA_BASE_FLAG_POSTINIT) && (base->scratch_idx != -1 ) )
         {
-            XA_CHK( xf_scratch_mem_alloc( base, core));
+            XA_CHK( xf_scratch_mem_alloc( base, core, new_priority));
             
             XA_API(base, XA_API_CMD_SET_MEM_PTR, base->scratch_idx, base->scratch);
         }
+
+        /* ...update the priority to the structure only after the memory allocation (if any)
+         * to avoid changing scratch pointer of a component when its running on a low-priority thread */
+        base->component.priority = new_priority;
 
         if(sched_flag)
         {
             /* ...resubmit the pending process with changed priority. */
             xa_base_schedule(base, 0);
         }
+
+        /* ...put back thread to its older priority */
+        __xf_thread_set_priority(NULL, rtos_priority);
+
         return XA_NO_ERROR;
     }
     default:
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 }
 
@@ -255,6 +313,7 @@ XA_ERRORCODE xa_base_set_param(XACodecBase *base, xf_message_t *m)
     xf_set_param_msg_t     *cmd = m->buffer;
     xf_set_param_item_t    *param = &cmd->item[0];
     WORD32                  n, i;
+    WORD32                  error = 0;
     UWORD32 core = XF_MSG_DST_CORE(m->id);
 
     /* ...calculate total amount of parameters */
@@ -278,19 +337,23 @@ XA_ERRORCODE xa_base_set_param(XACodecBase *base, xf_message_t *m)
             XA_CHK(xa_component_setparam(base, param[i].id, &param[i].value, core));
         } else if (base->setparam)
         {
-            CODEC_API(base, setparam, param[i].id, &param[i].value);
+            error = CODEC_API_CRITICAL(base, setparam, param[i].id, &param[i].value);
         }
         else
         {
-            XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, param[i].id, &param[i].value);
+            error = XA_API_CRITICAL(base, XA_API_CMD_SET_CONFIG_PARAM, param[i].id, &param[i].value);
         }
+
+        /* ...only the first error is captured*/
+        if ((error > 0) && (m->error == 0))
+            m->error = error;
     }
 
     /* ...check if we need to do post-initialization */
     if ((base->state & XA_BASE_FLAG_POSTINIT) == 0)
     {
         /* ...do post-initialization step */
-        XA_CHK(xa_base_postinit(base, XF_MSG_DST_CORE(m->id)));
+        XA_CHK_CRITICAL(xa_base_postinit(base, XF_MSG_DST_CORE(m->id)));
         
         /* ...mark the codec static configuration is set */
         base->state ^= XA_BASE_FLAG_POSTINIT | XA_BASE_FLAG_RUNTIME_INIT;
@@ -309,6 +372,7 @@ XA_ERRORCODE xa_base_get_param(XACodecBase *base, xf_message_t *m)
     UWORD32                *id = &cmd->c.id[0];
     UWORD32                *value = &cmd->r.value[0];
     UWORD32                 n, i;
+    WORD32                  error = 0;
 
     /* ...calculate amount of parameters */
     n = m->length / sizeof(*id);
@@ -322,12 +386,16 @@ XA_ERRORCODE xa_base_get_param(XACodecBase *base, xf_message_t *m)
         /* ...place the result into same location */
         if (base->getparam)
         {
-            CODEC_API(base, getparam, id[i], &value[i]);
+            error = CODEC_API_CRITICAL(base, getparam, id[i], &value[i]);
         }
         else
         {
-            XA_API(base, XA_API_CMD_GET_CONFIG_PARAM, id[i], &value[i]);
+            error = XA_API_CRITICAL(base, XA_API_CMD_GET_CONFIG_PARAM, id[i], &value[i]);
         }
+
+        /* ...only the first error is captured*/
+        if ((error > 0) && (m->error == 0))
+                m->error = error;
     }
 
     /* ...complete message specifying output buffer size */
@@ -340,10 +408,12 @@ XA_ERRORCODE xa_base_get_param(XACodecBase *base, xf_message_t *m)
 XA_ERRORCODE xa_base_set_param_ext(XACodecBase *base, xf_message_t *m)
 {
     xf_ext_param_msg_t *cmd = m->buffer;
-    UWORD16                 length = m->length;
-    UWORD16                 remaining = (length + 3) & ~3;
-    UWORD16                 i;
-    
+    UWORD32                 length = m->length;
+    UWORD32                 remaining = length;
+    WORD32                  error = 0;
+
+#if defined(XF_TRACE)
+    UWORD16                 i;    
     for (i = 0; TRACE_CFG(SETUP) && i < remaining; i += 16)
     {
         TRACE(SETUP, _b("[%03x]: %02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X"),
@@ -357,14 +427,13 @@ XA_ERRORCODE xa_base_set_param_ext(XACodecBase *base, xf_message_t *m)
               ((UWORD8 *)m->buffer)[i + 12], ((UWORD8 *)m->buffer)[i + 13],
               ((UWORD8 *)m->buffer)[i + 14], ((UWORD8 *)m->buffer)[i + 15]);
     }    
+#endif
 
     /* ...process all parameters encapsulated in buffer */
     while (remaining >= sizeof(*cmd))
     {
-        UWORD16     id = cmd->desc.id;
-        UWORD16     dlen = cmd->desc.length;
-        UWORD16     dsize = (dlen + 3) & ~3;
-        UWORD16     pad = dlen & 3;
+        UWORD32     id = cmd->desc.id;
+        UWORD32     dsize= cmd->desc.length;
 
         /* ...cut-off descriptor header */
         remaining -= sizeof(*cmd);
@@ -375,12 +444,22 @@ XA_ERRORCODE xa_base_set_param_ext(XACodecBase *base, xf_message_t *m)
         XF_CHK_ERR(remaining >= dsize, XA_API_FATAL_INVALID_CMD_TYPE);
         
         /* ...pad remaining bytes with zeroes */
-        (pad ? memset(cmd->data + dlen, 0, 4 - pad) : 0);
+//        (pad ? memset(cmd->data + dlen, 0, 4 - pad) : 0);
 
         TRACE(SETUP, _b("set-ext-param[%p]: [%u]:%u - [%02X:%02X:%02X:%02X:...]"), base, id, dsize, cmd->data[0], cmd->data[1], cmd->data[2], cmd->data[3]);
 
-        /* ...apply parameter */
-        XA_API(base, XA_API_CMD_SET_CONFIG_PARAM, id, cmd->data);
+        if (base->setparam)
+        {
+            error = CODEC_API_CRITICAL(base, setparam, id, (void *) *(UWORD32 *)(cmd->data));
+        }
+        else
+        {
+            error = XA_API_CRITICAL(base, XA_API_CMD_SET_CONFIG_PARAM, id, (void *) *(UWORD32 *)(cmd->data));
+        }
+
+        /* ...only the first error is captured*/
+        if ((error > 0) && (m->error == 0))
+            m->error = error;
 
         /* ...move to next item (keep 4-bytes alignment for descriptor) */
         cmd = (xf_ext_param_msg_t *)(&cmd->data[0] + dsize), remaining -= dsize;
@@ -390,12 +469,12 @@ XA_ERRORCODE xa_base_set_param_ext(XACodecBase *base, xf_message_t *m)
     XF_CHK_ERR(remaining == 0, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...complete message processing; output buffer is empty */
-    //xf_response_ok(m);
+    xf_response_ok(m);
 
     /* ...unfortunately, it looks like a bug of the library that updates the memory
      * and leaves it in a dirty state causing subsequent cache inconsistency - tbd
      */
-    xf_response_data(m, length);
+    //xf_response_data(m, length);
 
     return XA_NO_ERROR;
 }
@@ -405,9 +484,11 @@ XA_ERRORCODE xa_base_get_param_ext(XACodecBase *base, xf_message_t *m)
 {
     xf_ext_param_msg_t *cmd = m->buffer;
     UWORD32                 length = m->length;
-    UWORD32                 remaining = (length + 3) & ~3;
-    int                 i;
+    UWORD32                 remaining = length;
+    WORD32                  error = 0;
 
+#if defined(XF_TRACE)
+    int                 i;
     for (i = 0; TRACE_CFG(SETUP) && i < remaining; i += 16)
     {
         TRACE(SETUP, _b("[%03x]: %02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X"),
@@ -421,31 +502,40 @@ XA_ERRORCODE xa_base_get_param_ext(XACodecBase *base, xf_message_t *m)
               ((UWORD8 *)m->buffer)[i + 12], ((UWORD8 *)m->buffer)[i + 13],
               ((UWORD8 *)m->buffer)[i + 14], ((UWORD8 *)m->buffer)[i + 15]);
     }
-    
+#endif
+
     /* ...process all parameters encapsulated in buffer */
     while (remaining >= sizeof(*cmd))
     {
-        UWORD16     id = cmd->desc.id;
-        UWORD16     len = cmd->desc.length;
-        UWORD16     size = (len + 3) & ~3;
-        UWORD8      pad = len & 3;
+        UWORD32     id = cmd->desc.id;
+        UWORD32     dsize = cmd->desc.length;
 
         /* ...cut-off command header */
         remaining -= sizeof(*cmd);
 
         /* ...make sure data buffer has sufficient length */
-        XF_CHK_ERR(remaining >= size, XA_API_FATAL_INVALID_CMD_TYPE);
+        XF_CHK_ERR(remaining >= dsize, XA_API_FATAL_INVALID_CMD_TYPE);
         
-        /* ...retrieve parameter from buffer (care about alignment? - tbd) */
-        XA_API(base, XA_API_CMD_GET_CONFIG_PARAM, id, cmd->data);
+        if (base->getparam)
+        {
+            error = CODEC_API_CRITICAL(base, getparam, id, (void *)*(UWORD32 *)(cmd->data));
+        }
+        else
+        {
+            error = XA_API_CRITICAL(base, XA_API_CMD_GET_CONFIG_PARAM, id, (void *)*(UWORD32 *)(cmd->data));
+        }
+
+        /* ...only the first error is captured*/
+        if ((error > 0) && (m->error == 0))
+            m->error = error;
 
         /* ...pad remaininig bytes with zeroes */
-        (pad ? memset(cmd->data + len, 0, 4 - pad) : 0);
+ //       (pad ? memset(cmd->data + len, 0, 4 - pad) : 0);
 
-        TRACE(SETUP, _b("get-ext-param[%p]: [%u]:%u - [%02X:%02X:%02X:%02X:...]"), base, id, size, cmd->data[0], cmd->data[1], cmd->data[2], cmd->data[3]);
+        TRACE(SETUP, _b("get-ext-param[%p]: [%u]:%u - [%02X:%02X:%02X:%02X:...]"), base, id, dsize, cmd->data[0], cmd->data[1], cmd->data[2], cmd->data[3]);
         
         /* ...move to next item (alignment issues? - tbd) */
-        cmd = (xf_ext_param_msg_t *)(&cmd->data[0] + size), remaining -= size;
+        cmd = (xf_ext_param_msg_t *)(&cmd->data[0] + dsize), remaining -= dsize;
     }
     
     /* ...check the message is fully processed */
@@ -546,8 +636,12 @@ static XA_ERRORCODE xa_base_event_handler(XACodecBase *base, UWORD32 event_id, X
                 continue;
             }
 
+            /* ...reset message error field */
+            m->error = 0;
+
             if (error_code)
             {
+               m->error = error_code;
                *(UWORD32 *)m->buffer = event_id;
                memcpy((void *)(UWORD32)m->buffer + sizeof(channel_info->event_id_src), &error_code, sizeof(error_code));
                channel_info->event_buf_count--;
@@ -575,8 +669,14 @@ static XA_ERRORCODE xa_base_event_handler(XACodecBase *base, UWORD32 event_id, X
         }
         pp_channel_info_curr = &p_channel_info_curr->next;
     }
-    /*... Check if channel is found in channel chain*/
-    XF_CHK_ERR(channel_found >= 1, XAF_INVALIDPTR_ERR);
+
+    if (!channel_found)
+    {
+        TRACE(WARNING, _b("Event not delivered, channel does not exist"));
+
+        /* ...caller should handle this return value appropriately */
+        return XAF_INVALIDVAL_ERR;
+    }
 
     return XAF_NO_ERR;
 }
@@ -623,7 +723,6 @@ static XA_ERRORCODE xa_base_create_event_channel(XACodecBase *base, xf_message_t
     xf_event_channel_msg_t  *cmd = m->buffer;
     xf_message_t            *msg;
     UWORD32                 core = XF_MSG_DST_CORE(m->id);
-    UWORD32                 shared = XF_MSG_SHARED(m->id);
     UWORD32                 i, err = 0;
 
     pp_channel_info_curr = &base->channel_info_chain;
@@ -633,7 +732,7 @@ static XA_ERRORCODE xa_base_create_event_channel(XACodecBase *base, xf_message_t
     {
         p_channel_info_curr = *pp_channel_info_curr;
 
-        if ((p_channel_info_curr->event_id_src == cmd->src_cfg_param) && (p_channel_info_curr->event_id_dst == cmd->dst_cfg_param) && (p_channel_info_curr->client_id_dst == XF_PORT_CLIENT(cmd->dst)))
+        if ((p_channel_info_curr->event_id_src == cmd->src_cfg_param) && (p_channel_info_curr->event_id_dst == cmd->dst_cfg_param) && (p_channel_info_curr->port_dst == cmd->dst))
         {
             break;
         }
@@ -657,7 +756,7 @@ static XA_ERRORCODE xa_base_create_event_channel(XACodecBase *base, xf_message_t
     }
 
     /* ... check if channel info allocation is ok */
-    XF_CHK_ERR(channel_info = (xf_channel_info_t *) xf_mem_alloc(sizeof(xf_channel_info_t), XF_EVENT_CHANNEL_INFO_ALIGNMENT, core, shared), XAF_MEMORY_ERR);
+    XF_CHK_ERR(channel_info = (xf_channel_info_t *) xf_mem_alloc(sizeof(xf_channel_info_t), XF_EVENT_CHANNEL_INFO_ALIGNMENT, core, 0 /* shared */), XAF_MEMORY_ERR);
 
     /* ...initializing channel_info structure */
     memset(channel_info, 0, sizeof(xf_channel_info_t));  
@@ -665,8 +764,9 @@ static XA_ERRORCODE xa_base_create_event_channel(XACodecBase *base, xf_message_t
     channel_info->event_id_src      = cmd->src_cfg_param;
     channel_info->event_id_dst      = cmd->dst_cfg_param;
     channel_info->buf_size          = cmd->alloc_size;
-    channel_info->client_id_dst     = XF_PORT_CLIENT(cmd->dst);
+    channel_info->port_dst          = cmd->dst;
     channel_info->delete_msg        = NULL;
+    channel_info->shared_channel    = (XF_PORT_CORE(cmd->dst) != XF_PORT_CORE(cmd->src));
 
     /* ... reset message queue */
     xf_msg_queue_init(&channel_info->queue);
@@ -679,9 +779,9 @@ static XA_ERRORCODE xa_base_create_event_channel(XACodecBase *base, xf_message_t
         channel_info->event_buf_count   = cmd->alloc_number;
 
         /* ... abort if pool allocation fails */
-        if ((xf_msg_pool_init(&channel_info->pool, channel_info->event_buf_count, core)) < 0) 
+        if ((xf_msg_pool_init(&channel_info->pool, channel_info->event_buf_count, core, channel_info->shared_channel)) < 0) 
         {
-            xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, shared);
+            xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, 0 /* shared */);
 
             return XAF_MEMORY_ERR;
         }
@@ -699,7 +799,7 @@ static XA_ERRORCODE xa_base_create_event_channel(XACodecBase *base, xf_message_t
             msg->id     = __XF_MSG_ID(cmd->dst, cmd->src);
             msg->opcode = XF_EVENT;
             msg->length = channel_info->buf_size;
-            msg->buffer = xf_mem_alloc((msg->length + sizeof(channel_info->event_id_dst)), cmd->alloc_align, core, shared);
+            msg->buffer = xf_mem_alloc((msg->length + sizeof(channel_info->event_id_dst)), cmd->alloc_align, core, channel_info->shared_channel);
 
             /* ...if allocation failed, do a cleanup */
             if (!msg->buffer)
@@ -719,13 +819,13 @@ static XA_ERRORCODE xa_base_create_event_channel(XACodecBase *base, xf_message_t
                 msg = xf_msg_pool_item(&channel_info->pool, i);
 
                 /* ...free item */
-                xf_mem_free(msg->buffer, msg->length + sizeof(channel_info->event_id_dst), core, shared);
+                xf_mem_free(msg->buffer, msg->length + sizeof(channel_info->event_id_dst), core, channel_info->shared_channel);
             }
 
             /* ...destroy pool data */
-            xf_msg_pool_destroy(&channel_info->pool, core);
+            xf_msg_pool_destroy(&channel_info->pool, core, channel_info->shared_channel);
 
-            xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, shared);
+            xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, 0 /* shared */);
 
             return XAF_MEMORY_ERR;
         }
@@ -749,7 +849,6 @@ static XA_ERRORCODE xa_base_delete_event_channel(XACodecBase *base, xf_message_t
     xf_channel_info_t               **pp_channel_info_curr;
     xf_message_t                    *msg;
     UWORD32                         core = XF_MSG_DST_CORE(m->id);
-    UWORD32                         shared = XF_MSG_SHARED(m->id);
     UWORD32                         i;
 
     /* ...channel look-up */
@@ -785,7 +884,7 @@ static XA_ERRORCODE xa_base_delete_event_channel(XACodecBase *base, xf_message_t
         }
         else
         {
-            xf_mem_free(msg->buffer, (channel_info->buf_size + sizeof(channel_info->event_id_dst)), core, shared);
+            xf_mem_free(msg->buffer, (channel_info->buf_size + sizeof(channel_info->event_id_dst)), core, channel_info->shared_channel);
         }
 
         channel_info->event_buf_count--;
@@ -803,7 +902,7 @@ static XA_ERRORCODE xa_base_delete_event_channel(XACodecBase *base, xf_message_t
         if (channel_info->event_id_dst != XF_CFG_ID_EVENT_TO_APP)
         {
             /* ...destroy pool data */
-            xf_msg_pool_destroy(&channel_info->pool, core);
+            xf_msg_pool_destroy(&channel_info->pool, core, channel_info->shared_channel);
         }
 
         --base->num_channels;
@@ -811,7 +910,7 @@ static XA_ERRORCODE xa_base_delete_event_channel(XACodecBase *base, xf_message_t
         /* ...remove channel from the chain */
         *pp_channel_info_curr = p_channel_info_curr->next;
 
-        xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, shared);
+        xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, 0 /* shared */);
 
         /* ...send success response to application */
         xf_response_ok(m);
@@ -824,10 +923,9 @@ static XA_ERRORCODE xa_base_process_event(XACodecBase *base, xf_message_t *m)
 {
     UWORD32     event_id = (UWORD32)*(UWORD32*)m->buffer;
     UWORD32     core = XF_MSG_SRC_CORE(m->id);
-    UWORD32     shared = XF_MSG_SHARED(m->id);
 
     /* ... event processing at dst component */
-    if ((!XF_MSG_SRC_PROXY(m->id)) && (m->length != 0))
+    if ((!XF_MSG_SRC_PROXY(m->id)) && (m->length > 0))
     {
         /* ...even if actual buffer size is 0, extra bytes are allocated to carry the event_id, this check identifies that */
         if (m->length > sizeof(event_id)) 
@@ -855,16 +953,15 @@ static XA_ERRORCODE xa_base_process_event(XACodecBase *base, xf_message_t *m)
         {
             p_channel_info_curr = *pp_channel_info_curr;
 
-            if (((p_channel_info_curr->event_id_dst == event_id) && ((p_channel_info_curr->client_id_dst == XF_MSG_SRC_CLIENT(m->id)) && (!XF_MSG_SRC_PROXY(m->id)))) ||
+            if (((p_channel_info_curr->event_id_dst == event_id) && ((p_channel_info_curr->port_dst == XF_MSG_SRC(m->id)) && (!XF_MSG_SRC_PROXY(m->id)))) ||
                 ((p_channel_info_curr->event_id_dst == XF_CFG_ID_EVENT_TO_APP) && (p_channel_info_curr->event_id_src == event_id))) break;
 
             pp_channel_info_curr = &p_channel_info_curr->next;
         }
    
-        /*... Check if channel is found in channel chain*/
-        XF_CHK_ERR(i < base->num_channels, XAF_INVALIDPTR_ERR);
+        /*... Channel must be found in the channel chain*/
+        BUG(i >= base->num_channels, _x("Event buffer source channel not found"));
 
-        /* ...channel look-up successful */
         channel_info = p_channel_info_curr;
 
         if (channel_info->delete_msg == NULL)
@@ -887,7 +984,7 @@ static XA_ERRORCODE xa_base_process_event(XACodecBase *base, xf_message_t *m)
             }
             else
             {
-                xf_mem_free(m->buffer, (channel_info->buf_size + sizeof(channel_info->event_id_dst)), core, shared);
+                xf_mem_free(m->buffer, (channel_info->buf_size + sizeof(channel_info->event_id_dst)), core, channel_info->shared_channel);
             }
             
             if (--channel_info->event_buf_count == 0)
@@ -898,7 +995,7 @@ static XA_ERRORCODE xa_base_process_event(XACodecBase *base, xf_message_t *m)
                 if (channel_info->event_id_dst != XF_CFG_ID_EVENT_TO_APP)
                 {   
                     /* ...destroy pool data */
-                    xf_msg_pool_destroy(&channel_info->pool, core);
+                    xf_msg_pool_destroy(&channel_info->pool, core, channel_info->shared_channel);
                 }
 
                 --base->num_channels;
@@ -907,7 +1004,7 @@ static XA_ERRORCODE xa_base_process_event(XACodecBase *base, xf_message_t *m)
                 *pp_channel_info_curr = p_channel_info_curr->next;
 
                 /* ...delete channel data */
-                xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, shared);
+                xf_mem_free(channel_info, sizeof(xf_channel_info_t), core, 0 /* shared */);
             }
         }
     }
@@ -977,7 +1074,11 @@ static int xa_base_command(xf_component_t *component, xf_message_t *m)
             base->cdata.cb = NULL;
         }
 #endif
+#ifdef XF_MSG_ERR_HANDLING
+        return XAF_UNREGISTER;    
+#else
         return -1;    
+#endif
     }
     
     /* ...check opcode is valid */
@@ -998,7 +1099,7 @@ static int xa_base_command(xf_component_t *component, xf_message_t *m)
  ******************************************************************************/
 
 /* ...data processing scheduling */
-void xa_base_schedule(XACodecBase *base, UWORD32 dts)
+void xa_base_schedule(XACodecBase *base, UWORD64 dts)
 {
     if ((base->state & XA_BASE_FLAG_SCHEDULE) == 0)
     {
@@ -1011,9 +1112,20 @@ void xa_base_schedule(XACodecBase *base, UWORD32 dts)
         /* ...and put scheduling flag */
         base->state |= XA_BASE_FLAG_SCHEDULE;
 
-        /* ...schedule component task execution */
-        xf_component_schedule(&base->component, dts);
-
+#ifdef LOCAL_SCHED
+        xf_core_data_t *cd = XF_CORE_DATA(xf_component_core(&base->component));
+        if(cd->n_workers)
+        {
+            /* ...schedule component task execution */
+            xf_sched_put(&cd->worker[base->component.priority].sched, &base->component.task, dts);
+            //xf_ipi_resume_dsp_isr(xf_component_core(&base->component));
+        }
+        else
+#endif //LOCAL_SCHED
+        {
+            /* ...schedule component task execution */
+            xf_component_schedule(&base->component, dts);
+        }
     }
     else
     {
@@ -1032,6 +1144,23 @@ void xa_base_cancel(XACodecBase *base)
         base->state &= ~XA_BASE_FLAG_SCHEDULE;
 
         /* ...and cancel scheduled codec task, if node is on the schedule-tree */
+#ifdef LOCAL_SCHED
+        /* ...for local-schedule tree or single DSP-thread, a schedule node must be on the sched-tree and never in the worker queue */
+        if(cd->n_workers)
+        {
+            if(xf_sched_cancel(&cd->worker[base->component.priority].sched, &base->component.task))
+            {
+                TRACE(EXEC, _b("codec[%p] processing cancelled priority:%d"), base, base->component.priority);
+            }
+        }
+        else
+        {
+            if(!xf_sched_cancel(&cd->sched, &base->component.task))
+            {
+                TRACE(EXEC, _b("codec[%p] processing cancelled"), base);
+            }
+        }
+#else //LOCAL_SCHED
         if(xf_sched_cancel(&cd->sched, &base->component.task))
         {
             /* ...node is not on the schedule-tree, then it must be in workerQ */
@@ -1057,6 +1186,7 @@ void xa_base_cancel(XACodecBase *base)
         }
 
         TRACE(EXEC, _b("codec[%p] processing cancelled"), base);
+#endif //LOCAL_SCHED
     }
 }
 

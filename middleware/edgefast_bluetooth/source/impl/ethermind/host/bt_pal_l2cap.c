@@ -65,6 +65,8 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 #define L2CAP_DISC_TIMEOUT  BT_SECONDS(2)
 #define L2CAP_RTX_TIMEOUT   BT_SECONDS(2)
 
+#define L2CAP_SC_CHECK_TIMEOUT	200
+
 /* Dedicated pool for disconnect buffers so they are guaranteed to be send
  * even in case of data congestion due to flooding.
  */
@@ -1410,6 +1412,19 @@ static uint16_t l2cap_check_security(struct bt_conn *conn,
 {
 	const struct bt_keys *keys = bt_keys_find_addr(conn->id, &conn->le.dst);
 	bool ltk_present;
+
+	/* Try L2CAP_SC_CHECK_TIMEOUT to take semaphore to wait until the security level updated. */
+	osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, L2CAP_SC_CHECK_TIMEOUT);
+	if(KOSA_StatusSuccess == status)
+	{
+		(void)OSA_SemaphorePost(conn->sem_security_level_updated);
+	}
+	else
+	{
+		BT_ERR("conn: %p, security level semaphore wait fail %d", conn, status);
+		return BT_L2CAP_LE_ERR_AUTHENTICATION;
+	}
+
 #if (defined(CONFIG_BT_CONN_DISABLE_SECURITY) && ((CONFIG_BT_CONN_DISABLE_SECURITY) > 0U))
 	if (IS_ENABLED(CONFIG_BT_CONN_DISABLE_SECURITY)) {
 		return BT_L2CAP_LE_SUCCESS;
@@ -1652,7 +1667,7 @@ response:
 	ethermind_ecbfc_connect_param.num_cids = req_cid_count;
 	for (uint8_t index = 0; ((index < req_cid_count) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
 	{
-		ethermind_ecbfc_connect_param.cid[index] = lcid[index];
+		ethermind_ecbfc_connect_param.cid[index] = dcid[index];
 	}
 
 	(void)l2ca_ecbfc_connect_rsp
@@ -3758,6 +3773,7 @@ API_RESULT ethermind_l2ca_connect_ind_cb
     struct bt_conn *conn;
 	uint16_t mtu, mps, credits;
 	uint16_t result;
+	uint16_t security_result;
     L2CAP_CBFC_CONNECT_PARAM connect_param;
     API_RESULT retval;
     UINT16 response = L2CAP_CONNECTION_SUCCESSFUL;
@@ -3798,7 +3814,12 @@ API_RESULT ethermind_l2ca_connect_ind_cb
 	if (L2CAP_CONNECTION_SUCCESSFUL == response)
 	{
 		/* Check if connection has minimum required security level */
-		if (BT_L2CAP_LE_SUCCESS != l2cap_check_security(conn, server))
+		security_result = l2cap_check_security(conn, server);
+		if (BT_L2CAP_LE_ERR_ENCRYPTION == security_result)
+		{
+			response = L2CAP_CONNECTION_REFUSED_INSUFFICIENT_ENCRYPTION;
+		}
+		else if (BT_L2CAP_LE_ERR_AUTHENTICATION == security_result)
 		{
 			response = L2CAP_CONNECTION_REFUSED_AUTHENTICATION_INSUFFICIENT;
 		}

@@ -12,7 +12,7 @@
   "priority": "NORMAL",
   "model": "SFN",
   "entry_init": "tfm_its_entry",
-  "stack_size": "0x900",                 # //NXP was "0x680", otherwise stack overflow
+  "stack_size": "ITS_STACK_SIZE",
   "secure_functions": [
     {
       "sfid": "TFM_ITS_SET",
@@ -51,7 +51,8 @@
       "connection_based": false,
       "stateless_handle": 3,
       "version": 1,
-      "version_policy": "STRICT"
+      "version_policy": "STRICT",
+      "mm_iovec": "enable",
     }
   ]
 }

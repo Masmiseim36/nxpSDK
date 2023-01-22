@@ -88,7 +88,7 @@
 #endif /* CSS */
 
 /* Enable PKC */
-#ifdef PKC     
+#ifdef PKC
     #ifndef MBEDTLS_MCUX_PKC
         #define MBEDTLS_MCUX_PKC        (1)     /* Enable use of PKC. */
     #endif
@@ -214,7 +214,7 @@
     #define MBEDTLS_PLATFORM_EXIT_MACRO(x)          do{}while(1)    /* Default exit macro to use, can be undefined */
 #endif
     
-#if !defined(MBEDTLS_PLATFORM_PRINTF_MACRO)
+#if !defined(MBEDTLS_PLATFORM_PRINTF_ALT) && !defined(MBEDTLS_PLATFORM_PRINTF_MACRO)
     #include "fsl_debug_console.h"    
     #define MBEDTLS_PLATFORM_PRINTF_MACRO           PRINTF          /* Default printf macro to use, can be undefined */
 #endif

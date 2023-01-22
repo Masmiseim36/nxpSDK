@@ -156,7 +156,7 @@ The ITS filesystem and flash interfaces and their implementation can be found in
 ``secure_fw/partitions/internal_trusted_storage/flash`` respectively. More
 information about the filesystem and flash interfaces can be found in the
 :doc:`ITS integration guide
-</docs/integration_guide/services/tfm_its_integration_guide>`.
+</integration_guide/services/tfm_its_integration_guide>`.
 
 The ITS service implementation in
 ``secure_fw/partitions/internal_trusted_storage/tfm_internal_trusted_storage.c``,
@@ -260,8 +260,8 @@ The following optional platform definitions may be defined in
   the NAND flash implementation. The buffer must be at least as large as a
   logical filesystem block.
 
-More information about the ``flash_layout.h`` content, not PS related, is
-available in :doc:`platform readme </platform/ext/readme>` along with other
+More information about the ``flash_layout.h`` content, not ITS related, is
+available in :doc:`../platform/platform_ext_folder` along with other
 platform information.
 
 TF-M NV Counter Interface
@@ -291,14 +291,14 @@ TF-M core tracks the current client IDs running in the secure or non-secure
 processing environment. It provides a dedicated API to retrieve the client ID
 which performs the service request.
 
-:doc:`Non-secure Client Extension Integration Guide </docs/integration_guide/non-secure_client_extension_integration_guide>`
+:doc:`Non-secure Client Extension Integration Guide </integration_guide/non-secure_client_extension_integration_guide>`
 provides further details on how client identification works.
 
 PS service uses that TF-M core API to retrieve the client ID and associate it
 as the owner of an asset. Only the owner can read, write or delete that asset
 based on the creation flags.
 
-The :doc:`integration guide </docs/integration_guide/tfm_integration_guide>`
+The :doc:`integration guide </integration_guide/index>`
 provides further details of non-secure implementation requirements for TF-M.
 
 Cryptographic Interface
@@ -383,6 +383,9 @@ definitions is:
   which cannot be decreased again.
   Overriding this flag from its default value of ``OFF`` when not
   building the regression tests is not currently supported.
+- ``PS_STACK_SIZE``- Defines the stack size of the Protected Storage Secure
+  Partition. This value mainly depends on the build type(debug, release and
+  minisizerel) and compiler.
 
 --------------
 

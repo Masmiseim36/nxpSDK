@@ -39,6 +39,15 @@
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
 
+typedef struct xaf_format_s {
+    UWORD32 sample_rate;
+    UWORD32 channels;
+    UWORD32 pcm_width;
+    UWORD32 input_length;
+    UWORD32 output_length;
+    UWORD32 output_produced;
+} xaf_format_t;
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: drivers/gpio/i.mx/gpio_driver_irq.c File Reference</title>
+<title>ISSDK: drivers/gpio/kinetis/gpio_driver.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,63 +40,127 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_14bc92f4b96c8519b376567118ac28b3.html">drivers</a></li><li class="navelem"><a class="el" href="dir_999ea29f6fe13f1ec5dc080b8071f0d8.html">gpio</a></li><li class="navelem"><a class="el" href="dir_fc35740a06f7daf54b8a98171d85a9f4.html">i.mx</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_14bc92f4b96c8519b376567118ac28b3.html">drivers</a></li><li class="navelem"><a class="el" href="dir_999ea29f6fe13f1ec5dc080b8071f0d8.html">gpio</a></li><li class="navelem"><a class="el" href="dir_807d981233a0048c225e9ae0c4de669d.html">kinetis</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">gpio_driver_irq.c File Reference</div>  </div>
+<div class="title">gpio_driver.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;fsl_gpio.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a04835_source.html">gpio_driver.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a04871_source.html">gpio_driver.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for gpio_driver_irq.c:</div>
+Include dependency graph for gpio_driver.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a04851.png" border="0" usemap="#drivers_2gpio_2i_8mx_2gpio__driver__irq_8c" alt=""/></div>
-<map name="drivers_2gpio_2i_8mx_2gpio__driver__irq_8c" id="drivers_2gpio_2i_8mx_2gpio__driver__irq_8c">
-<area shape="rect" id="node3" href="a04835.html" title="gpio_driver.h" alt="" coords="73,95,167,121"/>
+<div class="center"><img src="a04851.png" border="0" usemap="#drivers_2gpio_2kinetis_2gpio__driver_8c" alt=""/></div>
+<map name="drivers_2gpio_2kinetis_2gpio__driver_8c" id="drivers_2gpio_2kinetis_2gpio__driver_8c">
+<area shape="rect" id="node2" href="a04871.html" title="gpio_driver.h" alt="" coords="23,95,117,121"/>
 </map>
 </div>
 </div>
 <p><a href="a04850_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:acce2aa8f9d9a785696196ca1a57225d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#acce2aa8f9d9a785696196ca1a57225d0">GPIO_DRV_VERSION</a>&#160;&#160;&#160;ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* driver version */</td></tr>
+<tr class="separator:acce2aa8f9d9a785696196ca1a57225d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab71b17db10388961c60841dd90fa8b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#adab71b17db10388961c60841dd90fa8b">GPIO_NUMBER_OF_PIN</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:adab71b17db10388961c60841dd90fa8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a83a10ae2ca29dfc2fc68283949e2518b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b">imxsdk_gpio_handle_interrupt</a> (GPIO_Type *base, <a class="el" href="a04835.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a> gpioPortNumber)</td></tr>
-<tr class="separator:a83a10ae2ca29dfc2fc68283949e2518b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa120295265cd1dd6be2e069279517256"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#aa120295265cd1dd6be2e069279517256">GPIO1_Combined_0_15_IRQHandler</a> (void)</td></tr>
-<tr class="separator:aa120295265cd1dd6be2e069279517256"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f11092371b6d0f4c75609a99081c62a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a5f11092371b6d0f4c75609a99081c62a">GPIO1_Combined_16_31_IRQHandler</a> (void)</td></tr>
-<tr class="separator:a5f11092371b6d0f4c75609a99081c62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51cc0508a958d00b67e93045abd1d3ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a51cc0508a958d00b67e93045abd1d3ec">GPIO2_Combined_0_15_IRQHandler</a> (void)</td></tr>
-<tr class="separator:a51cc0508a958d00b67e93045abd1d3ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac31bdc20e9f1464c4dd04b960e954af6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#ac31bdc20e9f1464c4dd04b960e954af6">GPIO2_Combined_16_31_IRQHandler</a> (void)</td></tr>
-<tr class="separator:ac31bdc20e9f1464c4dd04b960e954af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c4cc543e64f2b68cfed6036feb92d8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a3c4cc543e64f2b68cfed6036feb92d8c">GPIO3_Combined_0_15_IRQHandler</a> (void)</td></tr>
-<tr class="separator:a3c4cc543e64f2b68cfed6036feb92d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d1aa0d9d72e9a11449eb796066fd66a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a3d1aa0d9d72e9a11449eb796066fd66a">GPIO3_Combined_16_31_IRQHandler</a> (void)</td></tr>
-<tr class="separator:a3d1aa0d9d72e9a11449eb796066fd66a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f8701f37024cfe30034aa0198432910"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a9f8701f37024cfe30034aa0198432910">GPIO4_Combined_0_15_IRQHandler</a> (void)</td></tr>
-<tr class="separator:a9f8701f37024cfe30034aa0198432910"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6741900f06f2f7562ddde964b3861dc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a6741900f06f2f7562ddde964b3861dc2">GPIO4_Combined_16_31_IRQHandler</a> (void)</td></tr>
-<tr class="separator:a6741900f06f2f7562ddde964b3861dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd79e755aea11e767ea8be5ca5654b88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#afd79e755aea11e767ea8be5ca5654b88">GPIO5_Combined_0_15_IRQHandler</a> (void)</td></tr>
-<tr class="separator:afd79e755aea11e767ea8be5ca5654b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4ef3a5f8f65f70b337efb158329e947"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#ac4ef3a5f8f65f70b337efb158329e947">GPIO5_Combined_16_31_IRQHandler</a> (void)</td></tr>
-<tr class="separator:ac4ef3a5f8f65f70b337efb158329e947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad80c65a3d8e0503b75db243e92cf2161"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00482.html#a7495862c94a8312f1d27be97be4b9931">GENERIC_DRIVER_VERSION</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#ad80c65a3d8e0503b75db243e92cf2161">ksdk_gpio_get_version</a> (void)</td></tr>
+<tr class="separator:ad80c65a3d8e0503b75db243e92cf2161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae91451850d22d11f31c697e31e7105ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#ae91451850d22d11f31c697e31e7105ee">ksdk_gpio_pin_init</a> (<a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a> aPinId, <a class="el" href="a00482.html#a16a748419e746f966071ce8bba0d0b62">gpio_direction_t</a> dir, void *apPinConfig, <a class="el" href="a00482.html#a56bff9ec9179f75450e04d2261b1212f">gpio_isr_handler_t</a> aIsrHandler, void *apUserData)</td></tr>
+<tr class="separator:ae91451850d22d11f31c697e31e7105ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c7d8a40c27ecc40224bf7c5186b7dc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a8c7d8a40c27ecc40224bf7c5186b7dc8">ksdk_gpio_set_pin</a> (<a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a> aPinId)</td></tr>
+<tr class="separator:a8c7d8a40c27ecc40224bf7c5186b7dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9effd05d76123c40a30ac42e0aaea063"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a9effd05d76123c40a30ac42e0aaea063">ksdk_gpio_clr_pin</a> (<a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a> aPinId)</td></tr>
+<tr class="separator:a9effd05d76123c40a30ac42e0aaea063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17b444f92fd6662380f1b2cba264f067"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a17b444f92fd6662380f1b2cba264f067">ksdk_gpio_toggle_pin</a> (<a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a> aPinId)</td></tr>
+<tr class="separator:a17b444f92fd6662380f1b2cba264f067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad99d49a1638890abd4cd89aa486a839a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#ad99d49a1638890abd4cd89aa486a839a">ksdk_gpio_write_pin</a> (<a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a> aPinId, uint8_t aValue)</td></tr>
+<tr class="separator:ad99d49a1638890abd4cd89aa486a839a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace49f068c3205ede795d48f444a35692"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#ace49f068c3205ede795d48f444a35692">ksdk_gpio_read_pin</a> (<a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a> aPinId)</td></tr>
+<tr class="separator:ace49f068c3205ede795d48f444a35692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10bdb8bc6ee15a0e3f1f70107d24e404"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a10bdb8bc6ee15a0e3f1f70107d24e404">ksdk_gpio_handle_interrupt</a> (GPIO_Type *apBase, <a class="el" href="a04862.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a> aPortNumber)</td></tr>
+<tr class="separator:a10bdb8bc6ee15a0e3f1f70107d24e404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a2c39f234913855fad752a8f96f245b27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04850.html#a2c39f234913855fad752a8f96f245b27">Driver_GPIO_KSDK</a></td></tr>
+<tr class="separator:a2c39f234913855fad752a8f96f245b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="acce2aa8f9d9a785696196ca1a57225d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acce2aa8f9d9a785696196ca1a57225d0">&#9670;&nbsp;</a></span>GPIO_DRV_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GPIO_DRV_VERSION&#160;&#160;&#160;ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* driver version */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00019">19</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+</div>
+</div>
+<a id="adab71b17db10388961c60841dd90fa8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adab71b17db10388961c60841dd90fa8b">&#9670;&nbsp;</a></span>GPIO_NUMBER_OF_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GPIO_NUMBER_OF_PIN&#160;&#160;&#160;0x20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00021">21</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a04850_source.html#l00153">ksdk_gpio_handle_interrupt()</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aa120295265cd1dd6be2e069279517256"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa120295265cd1dd6be2e069279517256">&#9670;&nbsp;</a></span>GPIO1_Combined_0_15_IRQHandler()</h2>
+<a id="a9effd05d76123c40a30ac42e0aaea063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9effd05d76123c40a30ac42e0aaea063">&#9670;&nbsp;</a></span>ksdk_gpio_clr_pin()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GPIO1_Combined_0_15_IRQHandler </td>
+          <td class="memname">void ksdk_gpio_clr_pin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a>&#160;</td>
+          <td class="paramname"><em>aPinId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00105">105</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a04871_source.html#l00051">gpioHandleKSDK::base</a>, and <a class="el" href="a04871_source.html#l00054">gpioHandleKSDK::mask</a>.</p>
+
+</div>
+</div>
+<a id="ad80c65a3d8e0503b75db243e92cf2161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad80c65a3d8e0503b75db243e92cf2161">&#9670;&nbsp;</a></span>ksdk_gpio_get_version()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00482.html#a7495862c94a8312f1d27be97be4b9931">GENERIC_DRIVER_VERSION</a> ksdk_gpio_get_version </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -105,307 +169,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00022">22</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00029">GPIO1_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_aa120295265cd1dd6be2e069279517256_cgraph.png" border="0" usemap="#a04850_aa120295265cd1dd6be2e069279517256_cgraph" alt=""/></div>
-<map name="a04850_aa120295265cd1dd6be2e069279517256_cgraph" id="a04850_aa120295265cd1dd6be2e069279517256_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="215,5,355,47"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00043">43</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
 
 </div>
 </div>
-<a id="a5f11092371b6d0f4c75609a99081c62a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f11092371b6d0f4c75609a99081c62a">&#9670;&nbsp;</a></span>GPIO1_Combined_16_31_IRQHandler()</h2>
+<a id="a10bdb8bc6ee15a0e3f1f70107d24e404"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10bdb8bc6ee15a0e3f1f70107d24e404">&#9670;&nbsp;</a></span>ksdk_gpio_handle_interrupt()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GPIO1_Combined_16_31_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00027">27</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00029">GPIO1_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_a5f11092371b6d0f4c75609a99081c62a_cgraph.png" border="0" usemap="#a04850_a5f11092371b6d0f4c75609a99081c62a_cgraph" alt=""/></div>
-<map name="a04850_a5f11092371b6d0f4c75609a99081c62a_cgraph" id="a04850_a5f11092371b6d0f4c75609a99081c62a_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="221,5,361,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a51cc0508a958d00b67e93045abd1d3ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51cc0508a958d00b67e93045abd1d3ec">&#9670;&nbsp;</a></span>GPIO2_Combined_0_15_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO2_Combined_0_15_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00032">32</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00030">GPIO2_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_a51cc0508a958d00b67e93045abd1d3ec_cgraph.png" border="0" usemap="#a04850_a51cc0508a958d00b67e93045abd1d3ec_cgraph" alt=""/></div>
-<map name="a04850_a51cc0508a958d00b67e93045abd1d3ec_cgraph" id="a04850_a51cc0508a958d00b67e93045abd1d3ec_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="215,5,355,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="ac31bdc20e9f1464c4dd04b960e954af6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac31bdc20e9f1464c4dd04b960e954af6">&#9670;&nbsp;</a></span>GPIO2_Combined_16_31_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO2_Combined_16_31_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00037">37</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00030">GPIO2_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_ac31bdc20e9f1464c4dd04b960e954af6_cgraph.png" border="0" usemap="#a04850_ac31bdc20e9f1464c4dd04b960e954af6_cgraph" alt=""/></div>
-<map name="a04850_ac31bdc20e9f1464c4dd04b960e954af6_cgraph" id="a04850_ac31bdc20e9f1464c4dd04b960e954af6_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="221,5,361,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a3c4cc543e64f2b68cfed6036feb92d8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c4cc543e64f2b68cfed6036feb92d8c">&#9670;&nbsp;</a></span>GPIO3_Combined_0_15_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO3_Combined_0_15_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00042">42</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00031">GPIO3_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_a3c4cc543e64f2b68cfed6036feb92d8c_cgraph.png" border="0" usemap="#a04850_a3c4cc543e64f2b68cfed6036feb92d8c_cgraph" alt=""/></div>
-<map name="a04850_a3c4cc543e64f2b68cfed6036feb92d8c_cgraph" id="a04850_a3c4cc543e64f2b68cfed6036feb92d8c_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="215,5,355,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a3d1aa0d9d72e9a11449eb796066fd66a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d1aa0d9d72e9a11449eb796066fd66a">&#9670;&nbsp;</a></span>GPIO3_Combined_16_31_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO3_Combined_16_31_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00047">47</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00031">GPIO3_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_a3d1aa0d9d72e9a11449eb796066fd66a_cgraph.png" border="0" usemap="#a04850_a3d1aa0d9d72e9a11449eb796066fd66a_cgraph" alt=""/></div>
-<map name="a04850_a3d1aa0d9d72e9a11449eb796066fd66a_cgraph" id="a04850_a3d1aa0d9d72e9a11449eb796066fd66a_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="221,5,361,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a9f8701f37024cfe30034aa0198432910"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f8701f37024cfe30034aa0198432910">&#9670;&nbsp;</a></span>GPIO4_Combined_0_15_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO4_Combined_0_15_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00053">53</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00032">GPIO4_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_a9f8701f37024cfe30034aa0198432910_cgraph.png" border="0" usemap="#a04850_a9f8701f37024cfe30034aa0198432910_cgraph" alt=""/></div>
-<map name="a04850_a9f8701f37024cfe30034aa0198432910_cgraph" id="a04850_a9f8701f37024cfe30034aa0198432910_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="215,5,355,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a6741900f06f2f7562ddde964b3861dc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6741900f06f2f7562ddde964b3861dc2">&#9670;&nbsp;</a></span>GPIO4_Combined_16_31_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO4_Combined_16_31_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00058">58</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00032">GPIO4_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_a6741900f06f2f7562ddde964b3861dc2_cgraph.png" border="0" usemap="#a04850_a6741900f06f2f7562ddde964b3861dc2_cgraph" alt=""/></div>
-<map name="a04850_a6741900f06f2f7562ddde964b3861dc2_cgraph" id="a04850_a6741900f06f2f7562ddde964b3861dc2_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="221,5,361,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="afd79e755aea11e767ea8be5ca5654b88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd79e755aea11e767ea8be5ca5654b88">&#9670;&nbsp;</a></span>GPIO5_Combined_0_15_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO5_Combined_0_15_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00064">64</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00033">GPIO5_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_afd79e755aea11e767ea8be5ca5654b88_cgraph.png" border="0" usemap="#a04850_afd79e755aea11e767ea8be5ca5654b88_cgraph" alt=""/></div>
-<map name="a04850_afd79e755aea11e767ea8be5ca5654b88_cgraph" id="a04850_afd79e755aea11e767ea8be5ca5654b88_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="215,5,355,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="ac4ef3a5f8f65f70b337efb158329e947"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4ef3a5f8f65f70b337efb158329e947">&#9670;&nbsp;</a></span>GPIO5_Combined_16_31_IRQHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO5_Combined_16_31_IRQHandler </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00069">69</a> of file <a class="el" href="a04850_source.html">gpio_driver_irq.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a04835_source.html#l00033">GPIO5_NUM</a>, and <a class="el" href="a04820_source.html#l00156">imxsdk_gpio_handle_interrupt()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a04850_ac4ef3a5f8f65f70b337efb158329e947_cgraph.png" border="0" usemap="#a04850_ac4ef3a5f8f65f70b337efb158329e947_cgraph" alt=""/></div>
-<map name="a04850_ac4ef3a5f8f65f70b337efb158329e947_cgraph" id="a04850_ac4ef3a5f8f65f70b337efb158329e947_cgraph">
-<area shape="rect" id="node2" href="a04850.html#a83a10ae2ca29dfc2fc68283949e2518b" title="imxsdk_gpio_handle\l_interrupt" alt="" coords="221,5,361,47"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a83a10ae2ca29dfc2fc68283949e2518b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83a10ae2ca29dfc2fc68283949e2518b">&#9670;&nbsp;</a></span>imxsdk_gpio_handle_interrupt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void imxsdk_gpio_handle_interrupt </td>
+          <td class="memname">void ksdk_gpio_handle_interrupt </td>
           <td>(</td>
           <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramname"><em>apBase</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a04835.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a>&#160;</td>
-          <td class="paramname"><em>gpioPortNumber</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a04862.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a>&#160;</td>
+          <td class="paramname"><em>aPortNumber</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -415,33 +199,194 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a04820_source.html#l00156">156</a> of file <a class="el" href="a04820_source.html">gpio_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00153">153</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a04850_source.html#l00022">GPIO1_Combined_0_15_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00027">GPIO1_Combined_16_31_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00032">GPIO2_Combined_0_15_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00037">GPIO2_Combined_16_31_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00042">GPIO3_Combined_0_15_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00047">GPIO3_Combined_16_31_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00053">GPIO4_Combined_0_15_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00058">GPIO4_Combined_16_31_IRQHandler()</a>, <a class="el" href="a04850_source.html#l00064">GPIO5_Combined_0_15_IRQHandler()</a>, and <a class="el" href="a04850_source.html#l00069">GPIO5_Combined_16_31_IRQHandler()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a04853_source.html#l00141">ksdk_gpio_read_pin()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="a04850_a83a10ae2ca29dfc2fc68283949e2518b_icgraph.png" border="0" usemap="#a04850_a83a10ae2ca29dfc2fc68283949e2518b_icgraph" alt=""/></div>
-<map name="a04850_a83a10ae2ca29dfc2fc68283949e2518b_icgraph" id="a04850_a83a10ae2ca29dfc2fc68283949e2518b_icgraph">
-<area shape="rect" id="node2" href="a04850.html#aa120295265cd1dd6be2e069279517256" title="GPIO1_Combined_0_15\l_IRQHandler" alt="" coords="197,5,358,47"/>
-<area shape="rect" id="node3" href="a04850.html#a5f11092371b6d0f4c75609a99081c62a" title="GPIO1_Combined_16_31\l_IRQHandler" alt="" coords="193,71,361,112"/>
-<area shape="rect" id="node4" href="a04850.html#a51cc0508a958d00b67e93045abd1d3ec" title="GPIO2_Combined_0_15\l_IRQHandler" alt="" coords="197,136,358,177"/>
-<area shape="rect" id="node5" href="a04850.html#ac31bdc20e9f1464c4dd04b960e954af6" title="GPIO2_Combined_16_31\l_IRQHandler" alt="" coords="193,201,361,243"/>
-<area shape="rect" id="node6" href="a04850.html#a3c4cc543e64f2b68cfed6036feb92d8c" title="GPIO3_Combined_0_15\l_IRQHandler" alt="" coords="197,267,358,308"/>
-<area shape="rect" id="node7" href="a04850.html#a3d1aa0d9d72e9a11449eb796066fd66a" title="GPIO3_Combined_16_31\l_IRQHandler" alt="" coords="193,332,361,373"/>
-<area shape="rect" id="node8" href="a04850.html#a9f8701f37024cfe30034aa0198432910" title="GPIO4_Combined_0_15\l_IRQHandler" alt="" coords="197,397,358,439"/>
-<area shape="rect" id="node9" href="a04850.html#a6741900f06f2f7562ddde964b3861dc2" title="GPIO4_Combined_16_31\l_IRQHandler" alt="" coords="193,463,361,504"/>
-<area shape="rect" id="node10" href="a04850.html#afd79e755aea11e767ea8be5ca5654b88" title="GPIO5_Combined_0_15\l_IRQHandler" alt="" coords="197,528,358,569"/>
-<area shape="rect" id="node11" href="a04850.html#ac4ef3a5f8f65f70b337efb158329e947" title="GPIO5_Combined_16_31\l_IRQHandler" alt="" coords="193,593,361,635"/>
+<div class="center"><img src="a04850_a10bdb8bc6ee15a0e3f1f70107d24e404_icgraph.png" border="0" usemap="#a04850_a10bdb8bc6ee15a0e3f1f70107d24e404_icgraph" alt=""/></div>
+<map name="a04850_a10bdb8bc6ee15a0e3f1f70107d24e404_icgraph" id="a04850_a10bdb8bc6ee15a0e3f1f70107d24e404_icgraph">
+<area shape="rect" id="node2" href="a04853.html#ace49f068c3205ede795d48f444a35692" title="ksdk_gpio_read_pin" alt="" coords="233,5,371,32"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="ae91451850d22d11f31c697e31e7105ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae91451850d22d11f31c697e31e7105ee">&#9670;&nbsp;</a></span>ksdk_gpio_pin_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ksdk_gpio_pin_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a>&#160;</td>
+          <td class="paramname"><em>aPinId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00482.html#a16a748419e746f966071ce8bba0d0b62">gpio_direction_t</a>&#160;</td>
+          <td class="paramname"><em>dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>apPinConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00482.html#a56bff9ec9179f75450e04d2261b1212f">gpio_isr_handler_t</a>&#160;</td>
+          <td class="paramname"><em>aIsrHandler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>apUserData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00054">54</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+</div>
+</div>
+<a id="ace49f068c3205ede795d48f444a35692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace49f068c3205ede795d48f444a35692">&#9670;&nbsp;</a></span>ksdk_gpio_read_pin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ksdk_gpio_read_pin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a>&#160;</td>
+          <td class="paramname"><em>aPinId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00141">141</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a04871_source.html#l00051">gpioHandleKSDK::base</a>, and <a class="el" href="a04871_source.html#l00053">gpioHandleKSDK::pinNumber</a>.</p>
+
+</div>
+</div>
+<a id="a8c7d8a40c27ecc40224bf7c5186b7dc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c7d8a40c27ecc40224bf7c5186b7dc8">&#9670;&nbsp;</a></span>ksdk_gpio_set_pin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ksdk_gpio_set_pin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a>&#160;</td>
+          <td class="paramname"><em>aPinId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00093">93</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a04871_source.html#l00051">gpioHandleKSDK::base</a>, and <a class="el" href="a04871_source.html#l00054">gpioHandleKSDK::mask</a>.</p>
+
+</div>
+</div>
+<a id="a17b444f92fd6662380f1b2cba264f067"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17b444f92fd6662380f1b2cba264f067">&#9670;&nbsp;</a></span>ksdk_gpio_toggle_pin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ksdk_gpio_toggle_pin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a>&#160;</td>
+          <td class="paramname"><em>aPinId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00117">117</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a04871_source.html#l00051">gpioHandleKSDK::base</a>, and <a class="el" href="a04871_source.html#l00054">gpioHandleKSDK::mask</a>.</p>
+
+</div>
+</div>
+<a id="ad99d49a1638890abd4cd89aa486a839a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad99d49a1638890abd4cd89aa486a839a">&#9670;&nbsp;</a></span>ksdk_gpio_write_pin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ksdk_gpio_write_pin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a>&#160;</td>
+          <td class="paramname"><em>aPinId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>aValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00129">129</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a04871_source.html#l00051">gpioHandleKSDK::base</a>, and <a class="el" href="a04871_source.html#l00053">gpioHandleKSDK::pinNumber</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a2c39f234913855fad752a8f96f245b27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c39f234913855fad752a8f96f245b27">&#9670;&nbsp;</a></span>Driver_GPIO_KSDK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a> Driver_GPIO_KSDK</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    <a class="code" href="a04850.html#ad80c65a3d8e0503b75db243e92cf2161">ksdk_gpio_get_version</a>, <a class="code" href="a04850.html#ae91451850d22d11f31c697e31e7105ee">ksdk_gpio_pin_init</a>,  <a class="code" href="a04850.html#a8c7d8a40c27ecc40224bf7c5186b7dc8">ksdk_gpio_set_pin</a>,  <a class="code" href="a04850.html#a9effd05d76123c40a30ac42e0aaea063">ksdk_gpio_clr_pin</a>,</div><div class="line">    <a class="code" href="a04850.html#a17b444f92fd6662380f1b2cba264f067">ksdk_gpio_toggle_pin</a>,  <a class="code" href="a04850.html#ad99d49a1638890abd4cd89aa486a839a">ksdk_gpio_write_pin</a>, <a class="code" href="a04850.html#ace49f068c3205ede795d48f444a35692">ksdk_gpio_read_pin</a>,</div><div class="line">}</div><div class="ttc" id="a04850_html_ad99d49a1638890abd4cd89aa486a839a"><div class="ttname"><a href="a04850.html#ad99d49a1638890abd4cd89aa486a839a">ksdk_gpio_write_pin</a></div><div class="ttdeci">void ksdk_gpio_write_pin(pinID_t aPinId, uint8_t aValue)</div><div class="ttdef"><b>Definition:</b> <a href="a04850_source.html#l00129">gpio_driver.c:129</a></div></div>
+<div class="ttc" id="a04850_html_a9effd05d76123c40a30ac42e0aaea063"><div class="ttname"><a href="a04850.html#a9effd05d76123c40a30ac42e0aaea063">ksdk_gpio_clr_pin</a></div><div class="ttdeci">void ksdk_gpio_clr_pin(pinID_t aPinId)</div><div class="ttdef"><b>Definition:</b> <a href="a04850_source.html#l00105">gpio_driver.c:105</a></div></div>
+<div class="ttc" id="a04850_html_a17b444f92fd6662380f1b2cba264f067"><div class="ttname"><a href="a04850.html#a17b444f92fd6662380f1b2cba264f067">ksdk_gpio_toggle_pin</a></div><div class="ttdeci">void ksdk_gpio_toggle_pin(pinID_t aPinId)</div><div class="ttdef"><b>Definition:</b> <a href="a04850_source.html#l00117">gpio_driver.c:117</a></div></div>
+<div class="ttc" id="a04850_html_ace49f068c3205ede795d48f444a35692"><div class="ttname"><a href="a04850.html#ace49f068c3205ede795d48f444a35692">ksdk_gpio_read_pin</a></div><div class="ttdeci">uint32_t ksdk_gpio_read_pin(pinID_t aPinId)</div><div class="ttdef"><b>Definition:</b> <a href="a04850_source.html#l00141">gpio_driver.c:141</a></div></div>
+<div class="ttc" id="a04850_html_a8c7d8a40c27ecc40224bf7c5186b7dc8"><div class="ttname"><a href="a04850.html#a8c7d8a40c27ecc40224bf7c5186b7dc8">ksdk_gpio_set_pin</a></div><div class="ttdeci">void ksdk_gpio_set_pin(pinID_t aPinId)</div><div class="ttdef"><b>Definition:</b> <a href="a04850_source.html#l00093">gpio_driver.c:93</a></div></div>
+<div class="ttc" id="a04850_html_ad80c65a3d8e0503b75db243e92cf2161"><div class="ttname"><a href="a04850.html#ad80c65a3d8e0503b75db243e92cf2161">ksdk_gpio_get_version</a></div><div class="ttdeci">GENERIC_DRIVER_VERSION ksdk_gpio_get_version(void)</div><div class="ttdef"><b>Definition:</b> <a href="a04850_source.html#l00043">gpio_driver.c:43</a></div></div>
+<div class="ttc" id="a04850_html_ae91451850d22d11f31c697e31e7105ee"><div class="ttname"><a href="a04850.html#ae91451850d22d11f31c697e31e7105ee">ksdk_gpio_pin_init</a></div><div class="ttdeci">void ksdk_gpio_pin_init(pinID_t aPinId, gpio_direction_t dir, void *apPinConfig, gpio_isr_handler_t aIsrHandler, void *apUserData)</div><div class="ttdef"><b>Definition:</b> <a href="a04850_source.html#l00054">gpio_driver.c:54</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="a04850_source.html#l00174">174</a> of file <a class="el" href="a04850_source.html">gpio_driver.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>
-&copy; Copyright 2016-2020 NXP. All Rights Reserved.
+&copy; Copyright 2016-2022 NXP. All Rights Reserved. SPDX-License-Identifier: BSD-3-Clause
 </small></address>
 </body>
 </html>

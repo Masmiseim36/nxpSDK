@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,7 +13,7 @@
 
 #include <xtensa/xos.h>
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 #if XA_AAC_DECODER
 #include "xa_aac_dec_api.h"
 #endif
@@ -53,7 +53,7 @@
 #define MP3_DEC_PCM_WIDTH 16
 
 #define OPUS_DEC_NUM_CH             2
-#define OPUS_DEC_SAMPLE_RATE        48000
+#define OPUS_DEC_PCM_WIDTH          16
 #define OPUS_DEC_LOST_FLAG          0
 #define OPUS_DEC_NB_STREAMS         1
 #define OPUS_DEC_NB_COUPLED         1
@@ -63,11 +63,10 @@
 #define VORBIS_DEC_RAW_VORBIS_LAST_PKT_GRANULE_POS -1
 #define VORBIS_DEC_OGG_MAX_PAGE_SIZE               12
 #define VORBIS_DEC_RUNTIME_MEM                     0
+#define VORBIS_DEC_SAMPLE_RATE                     48000
 
 #define RENDERER_FRAME_SIZE (4 * 1024)
-
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
+#define TASK_STACK_SIZE     (11 * 1024)
 
 /*******************************************************************************
  * Component Setup/ Config
@@ -127,7 +126,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     void *p_decoder  = NULL;
     void *p_renderer = NULL;
     XosThread dec_thread;
-    char dec_stack[STACK_SIZE];
+    char dec_stack[TASK_STACK_SIZE];
     xaf_comp_status dec_status;
     int dec_info[4];
     void *dec_inbuf[1];
@@ -136,7 +135,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     xaf_adev_config_t device_config;
     xaf_comp_config_t comp_config;
 
-    int param[14];
+    int param[16];
     int param_num;
     xf_id_t dec_id;
 
@@ -193,19 +192,21 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
         case SRTM_Command_OPUS_DEC:
             param[0]  = XA_OPUS_DEC_CONFIG_PARAM_CHANNELS;
             param[1]  = OPUS_DEC_NUM_CH;
-            param[2]  = XA_OPUS_DEC_CONFIG_PARAM_SAMPLE_RATE;
-            param[3]  = OPUS_DEC_SAMPLE_RATE;
-            param[4]  = XA_OPUS_DEC_CONFIG_PARAM_LOST_FLAG;
+            param[2]  = XA_OPUS_DEC_CONFIG_PARAM_PCM_WIDTH;
+            param[3]  = OPUS_DEC_PCM_WIDTH;
+            param[4]  = XA_OPUS_DEC_CONFIG_PARAM_LOST_PACKET;
             param[5]  = OPUS_DEC_LOST_FLAG;
-            param[6]  = XA_OPUS_DEC_CONFIG_PARAM_NB_STREAMS;
+            param[6]  = XA_OPUS_DEC_CONFIG_PARAM_NUM_STREAMS;
             param[7]  = OPUS_DEC_NB_STREAMS;
-            param[8]  = XA_OPUS_DEC_CONFIG_PARAM_NB_COUPLED;
+            param[8]  = XA_OPUS_DEC_CONFIG_PARAM_NUM_COUPLED_STREAMS;
             param[9]  = OPUS_DEC_NB_COUPLED;
-            param[10] = XA_OPUS_DEC_CONFIG_PARAM_CHANNEL_MAPPING;
+            param[10] = XA_OPUS_DEC_CONFIG_PARAM_CHAN_MAPPING;
             param[11] = OPUS_DEC_CHANNEL_MAPPING;
-            param[12] = XA_OPUS_DEC_CONFIG_PARAM_NO_RANGE_DEC_STATE;
+            param[12] = XA_OPUS_DEC_CONFIG_PARAM_EXCLUDE_RANGE_DEC_STATE;
             param[13] = OPUS_DEC_NO_RANGE_DEC_STATE;
-            param_num = 7;
+            param[14] = XA_OPUS_DEC_CONFIG_PARAM_STREAM_TYPE;
+            param[15] = XA_RAW_OPUS_STREAM;
+            param_num = 8;
             dec_id    = "audio-decoder/opus";
             break;
 #endif
@@ -222,16 +223,23 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
 #endif
 #if XA_VORBIS_DECODER
         case SRTM_Command_VORBIS:
-            param[0]  = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_FILE_MODE;
-            param[1]  = raw_input;
-            param[2]  = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_LAST_PKT_GRANULE_POS;
-            param[3]  = VORBIS_DEC_RAW_VORBIS_LAST_PKT_GRANULE_POS;
-            param[4]  = XA_VORBISDEC_CONFIG_PARAM_OGG_MAX_PAGE_SIZE;
-            param[5]  = VORBIS_DEC_OGG_MAX_PAGE_SIZE;
-            param[6]  = XA_VORBISDEC_CONFIG_PARAM_RUNTIME_MEM;
-            param[7]  = VORBIS_DEC_RUNTIME_MEM;
-            param_num = 4;
-            dec_id    = "audio-decoder/vorbis";
+            param[0] = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_FILE_MODE;
+            param[1] = raw_input;
+            param[2] = XA_VORBISDEC_CONFIG_PARAM_OGG_MAX_PAGE_SIZE;
+            param[3] = VORBIS_DEC_OGG_MAX_PAGE_SIZE;
+            param[4] = XA_VORBISDEC_CONFIG_PARAM_RUNTIME_MEM;
+            param[5] = VORBIS_DEC_RUNTIME_MEM;
+            if (raw_input)
+            {
+                param[6]  = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_LAST_PKT_GRANULE_POS;
+                param[7]  = VORBIS_DEC_RAW_VORBIS_LAST_PKT_GRANULE_POS;
+                param_num = 4;
+            }
+            else
+            {
+                param_num = 3;
+            }
+            dec_id = "audio-decoder/vorbis";
             break;
 #endif
         /* Unknown decoder. */
@@ -362,6 +370,11 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             goto error_cleanup;
         }
 
+        if (dec_name == SRTM_Command_VORBIS)
+        {
+            dec_format.sample_rate = VORBIS_DEC_SAMPLE_RATE;
+        }
+
         /* Setup renderer to match decoded PCM format */
         ret = renderer_setup(p_renderer, &dec_format);
         if (ret != XAF_NO_ERR)
@@ -401,7 +414,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
 
     /* Start processing thread */
     ret = xos_thread_create(&dec_thread, NULL, DSP_ProcessThread, (void *)dsp, "DSP_ProcessThread", dec_stack,
-                            STACK_SIZE, 7, 0, 0);
+                            TASK_STACK_SIZE, 7, 0, 0);
     if (ret != XOS_OK)
     {
         DSP_PRINTF("xos_thread_create failure: %d\r\n", ret);

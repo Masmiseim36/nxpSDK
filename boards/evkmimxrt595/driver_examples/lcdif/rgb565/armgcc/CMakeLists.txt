@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lcdif_rgb565)
 
+set(MCUX_BUILD_TYPES debug release flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME lcdif_rgb565.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -34,34 +40,34 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../lcdif_rgb565.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../lcdif_support.h"
-"${ProjDirPath}/../../lcdif_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt595/driver_examples/lcdif/lcdif_support.h"
+"${SdkRootDirPath}/boards/evkmimxrt595/driver_examples/lcdif/lcdif_support.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../..
+    ${SdkRootDirPath}/boards/evkmimxrt595/driver_examples/lcdif
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
-    ${ProjDirPath}/../../../../../../components/video
-    ${ProjDirPath}/../../../../../../components/video/display
-    ${ProjDirPath}/../../../../../../components/video/display/rm68191
-    ${ProjDirPath}/../../../../../../components/video/display/mipi_dsi_cmd
-    ${ProjDirPath}/../../../../../../components/video/display/rm68200
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../components/video/display/hx8394
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
+    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/components/video/display
+    ${SdkRootDirPath}/components/video/display/rm68191
+    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
+    ${SdkRootDirPath}/components/video/display/rm68200
+    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
+    ${SdkRootDirPath}/devices/MIMXRT595S/utilities/debug_console_lite
+    ${SdkRootDirPath}/components/video/display/hx8394
+    ${SdkRootDirPath}/devices/MIMXRT595S
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -128,15 +134,13 @@ include(utilities_misc_utilities_MIMXRT595S_cm33)
 include(driver_iap_MIMXRT595S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

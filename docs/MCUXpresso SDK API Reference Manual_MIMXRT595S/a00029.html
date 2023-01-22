@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('a00029.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexIO UART Driver<div class="ingroups"><a class="el" href="a00249.html">FlexIO: FlexIO Driver</a></div></div>  </div>
+<div class="title">FlexIO UART Driver<div class="ingroups"><a class="el" href="a00248.html">FlexIO: FlexIO Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -123,7 +123,7 @@ Typical use case</h1>
 FlexIO UART send/receive using a polling method</h2>
 <div class="fragment"><div class="line">uint8_t ch;</div>
 <div class="line"><a class="code" href="a00029.html#a00359">FLEXIO_UART_Type</a> uartDev;</div>
-<div class="line"><a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line"><a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
 <div class="line">flexio_uart_user_config user_config;</div>
 <div class="line"><a class="code" href="a00029.html#gab705f673f07da7b1b385be7edfd2385e">FLEXIO_UART_GetDefaultConfig</a>(&amp;user_config);</div>
 <div class="line">user_config.baudRate_Bps = 115200U;</div>
@@ -139,7 +139,7 @@ FlexIO UART send/receive using a polling method</h2>
 <div class="line"></div>
 <div class="line">result = <a class="code" href="a00029.html#ga8c9e0ca8c3517e21a27f7710d7d4f580">FLEXIO_UART_Init</a>(&amp;uartDev, &amp;user_config, 48000000U);</div>
 <div class="line"><span class="comment">//Check if configuration is correct.</span></div>
-<div class="line"><span class="keywordflow">if</span>(result != <a class="code" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
+<div class="line"><span class="keywordflow">if</span>(result != <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="keywordflow">return</span>;</div>
 <div class="line">}</div>
@@ -162,7 +162,7 @@ FlexIO UART send/receive using an interrupt method</h2>
 <div class="line">uint8_t sendData[] = [<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>];</div>
 <div class="line">uint8_t receiveData[32];</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> FLEXIO_UART_UserCallback(<a class="code" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordtype">void</span> FLEXIO_UART_UserCallback(<a class="code" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
 <div class="line"></div>
@@ -195,7 +195,7 @@ FlexIO UART send/receive using an interrupt method</h2>
 <div class="line"></div>
 <div class="line">    result = <a class="code" href="a00029.html#ga8c9e0ca8c3517e21a27f7710d7d4f580">FLEXIO_UART_Init</a>(&amp;uartDev, &amp;user_config, 120000000U);</div>
 <div class="line">    <span class="comment">//Check if configuration is correct.</span></div>
-<div class="line">    <span class="keywordflow">if</span>(result != <a class="code" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
+<div class="line">    <span class="keywordflow">if</span>(result != <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">return</span>;</div>
 <div class="line">    }</div>
@@ -245,7 +245,7 @@ FlexIO UART receive using the ringbuffer feature</h2>
 <div class="line">uint8_t receiveData[RX_DATA_SIZE];</div>
 <div class="line">uint8_t ringBuffer[RING_BUFFER_SIZE];</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> FLEXIO_UART_UserCallback(<a class="code" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordtype">void</span> FLEXIO_UART_UserCallback(<a class="code" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
 <div class="line"></div>
@@ -274,7 +274,7 @@ FlexIO UART receive using the ringbuffer feature</h2>
 <div class="line"></div>
 <div class="line">    result = <a class="code" href="a00029.html#ga8c9e0ca8c3517e21a27f7710d7d4f580">FLEXIO_UART_Init</a>(&amp;uartDev, &amp;user_config, 48000000U);</div>
 <div class="line">    <span class="comment">//Check if configuration is correct.</span></div>
-<div class="line">    <span class="keywordflow">if</span>(result != <a class="code" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
+<div class="line">    <span class="keywordflow">if</span>(result != <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">return</span>;</div>
 <div class="line">    }</div>
@@ -325,7 +325,7 @@ FlexIO UART send/receive using a DMA method</h2>
 <div class="line">    uint8_t sendData[] = [<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>];</div>
 <div class="line">    uint8_t receiveData[32];</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordtype">void</span> FLEXIO_UART_UserCallback(<a class="code" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">    <span class="keywordtype">void</span> FLEXIO_UART_UserCallback(<a class="code" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">    {</div>
 <div class="line">        userData = userData;</div>
 <div class="line"></div>
@@ -357,7 +357,7 @@ FlexIO UART send/receive using a DMA method</h2>
 <div class="line">        uartDev.<a class="code" href="a00029.html#a69c6696d06f94527af4280dc2921022b">timerIndex</a>[1] = 1U;</div>
 <div class="line">        result = <a class="code" href="a00029.html#ga8c9e0ca8c3517e21a27f7710d7d4f580">FLEXIO_UART_Init</a>(&amp;uartDev, &amp;user_config, 48000000U);</div>
 <div class="line">        <span class="comment">//Check if configuration is correct.</span></div>
-<div class="line">        <span class="keywordflow">if</span>(result != <a class="code" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
+<div class="line">        <span class="keywordflow">if</span>(result != <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
 <div class="line">        {</div>
 <div class="line">            <span class="keywordflow">return</span>;</div>
 <div class="line">        }</div>
@@ -444,7 +444,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga47ba0f819db72b1dc4c043205ba7cb18"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga47ba0f819db72b1dc4c043205ba7cb18">flexio_uart_transfer_callback_t</a> )(<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:ga47ba0f819db72b1dc4c043205ba7cb18"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga47ba0f819db72b1dc4c043205ba7cb18">flexio_uart_transfer_callback_t</a> )(<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga47ba0f819db72b1dc4c043205ba7cb18"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO UART transfer callback function.  <a href="#ga47ba0f819db72b1dc4c043205ba7cb18">More...</a><br/></td></tr>
 <tr class="separator:ga47ba0f819db72b1dc4c043205ba7cb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -503,13 +503,13 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaa668f10e7e0820c4d504f124ef506b59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaa668f10e7e0820c4d504f124ef506b59">FSL_FLEXIO_UART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
+<tr class="memitem:gaa668f10e7e0820c4d504f124ef506b59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaa668f10e7e0820c4d504f124ef506b59">FSL_FLEXIO_UART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
 <tr class="memdesc:gaa668f10e7e0820c4d504f124ef506b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO UART driver version.  <a href="#gaa668f10e7e0820c4d504f124ef506b59">More...</a><br/></td></tr>
 <tr class="separator:gaa668f10e7e0820c4d504f124ef506b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga8c9e0ca8c3517e21a27f7710d7d4f580"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga8c9e0ca8c3517e21a27f7710d7d4f580">FLEXIO_UART_Init</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, const <a class="el" href="a00029.html#a00357">flexio_uart_config_t</a> *userConfig, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:ga8c9e0ca8c3517e21a27f7710d7d4f580"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga8c9e0ca8c3517e21a27f7710d7d4f580">FLEXIO_UART_Init</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, const <a class="el" href="a00029.html#a00357">flexio_uart_config_t</a> *userConfig, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:ga8c9e0ca8c3517e21a27f7710d7d4f580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the FlexIO clock, resets the FlexIO module, configures FlexIO UART hardware, and configures the FlexIO UART with FlexIO UART configuration.  <a href="#ga8c9e0ca8c3517e21a27f7710d7d4f580">More...</a><br/></td></tr>
 <tr class="separator:ga8c9e0ca8c3517e21a27f7710d7d4f580"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga641ed5c6b8588064d82e5690e1994724"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga641ed5c6b8588064d82e5690e1994724">FLEXIO_UART_Deinit</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base)</td></tr>
@@ -563,16 +563,16 @@ Bus Operations</h2></td></tr>
 <tr class="memitem:ga19a7990926d6e3ed6e5799ce9c060c7d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga19a7990926d6e3ed6e5799ce9c060c7d">FLEXIO_UART_ReadByte</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, uint8_t *buffer)</td></tr>
 <tr class="memdesc:ga19a7990926d6e3ed6e5799ce9c060c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads one byte of data.  <a href="#ga19a7990926d6e3ed6e5799ce9c060c7d">More...</a><br/></td></tr>
 <tr class="separator:ga19a7990926d6e3ed6e5799ce9c060c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa97558027d7fdf1475e46b65f0dd4d76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaa97558027d7fdf1475e46b65f0dd4d76">FLEXIO_UART_WriteBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, const uint8_t *txData, size_t txSize)</td></tr>
+<tr class="memitem:gaa97558027d7fdf1475e46b65f0dd4d76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaa97558027d7fdf1475e46b65f0dd4d76">FLEXIO_UART_WriteBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, const uint8_t *txData, size_t txSize)</td></tr>
 <tr class="memdesc:gaa97558027d7fdf1475e46b65f0dd4d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a buffer of data bytes.  <a href="#gaa97558027d7fdf1475e46b65f0dd4d76">More...</a><br/></td></tr>
 <tr class="separator:gaa97558027d7fdf1475e46b65f0dd4d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c6339871092770c2e7409eac3803fa8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga8c6339871092770c2e7409eac3803fa8">FLEXIO_UART_ReadBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, uint8_t *rxData, size_t rxSize)</td></tr>
+<tr class="memitem:ga8c6339871092770c2e7409eac3803fa8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga8c6339871092770c2e7409eac3803fa8">FLEXIO_UART_ReadBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, uint8_t *rxData, size_t rxSize)</td></tr>
 <tr class="memdesc:ga8c6339871092770c2e7409eac3803fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a buffer of bytes.  <a href="#ga8c6339871092770c2e7409eac3803fa8">More...</a><br/></td></tr>
 <tr class="separator:ga8c6339871092770c2e7409eac3803fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:gadf3c35f0256cb25b15cb4005393b3431"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gadf3c35f0256cb25b15cb4005393b3431">FLEXIO_UART_TransferCreateHandle</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00029.html#ga47ba0f819db72b1dc4c043205ba7cb18">flexio_uart_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:gadf3c35f0256cb25b15cb4005393b3431"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gadf3c35f0256cb25b15cb4005393b3431">FLEXIO_UART_TransferCreateHandle</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00029.html#ga47ba0f819db72b1dc4c043205ba7cb18">flexio_uart_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gadf3c35f0256cb25b15cb4005393b3431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the UART handle.  <a href="#gadf3c35f0256cb25b15cb4005393b3431">More...</a><br/></td></tr>
 <tr class="separator:gadf3c35f0256cb25b15cb4005393b3431"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1c52d22628dd2ed7e843fc1cd5fb304c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga1c52d22628dd2ed7e843fc1cd5fb304c">FLEXIO_UART_TransferStartRingBuffer</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, uint8_t *ringBuffer, size_t ringBufferSize)</td></tr>
@@ -581,22 +581,22 @@ Transactional</h2></td></tr>
 <tr class="memitem:gaaabdc1cafc996c709cb5fc29b5de31bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaaabdc1cafc996c709cb5fc29b5de31bc">FLEXIO_UART_TransferStopRingBuffer</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle)</td></tr>
 <tr class="memdesc:gaaabdc1cafc996c709cb5fc29b5de31bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the background transfer and uninstalls the ring buffer.  <a href="#gaaabdc1cafc996c709cb5fc29b5de31bc">More...</a><br/></td></tr>
 <tr class="separator:gaaabdc1cafc996c709cb5fc29b5de31bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1b90ca93c8e65eac0e1e62ce93e3b9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gab1b90ca93c8e65eac0e1e62ce93e3b9d">FLEXIO_UART_TransferSendNonBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00029.html#a00358">flexio_uart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gab1b90ca93c8e65eac0e1e62ce93e3b9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gab1b90ca93c8e65eac0e1e62ce93e3b9d">FLEXIO_UART_TransferSendNonBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00029.html#a00358">flexio_uart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gab1b90ca93c8e65eac0e1e62ce93e3b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a buffer of data using the interrupt method.  <a href="#gab1b90ca93c8e65eac0e1e62ce93e3b9d">More...</a><br/></td></tr>
 <tr class="separator:gab1b90ca93c8e65eac0e1e62ce93e3b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga141086618b4642de97e46fb92ce297be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga141086618b4642de97e46fb92ce297be">FLEXIO_UART_TransferAbortSend</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle)</td></tr>
 <tr class="memdesc:ga141086618b4642de97e46fb92ce297be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the interrupt-driven data transmit.  <a href="#ga141086618b4642de97e46fb92ce297be">More...</a><br/></td></tr>
 <tr class="separator:ga141086618b4642de97e46fb92ce297be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e5937c17d139c33470e80c33db082bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3e5937c17d139c33470e80c33db082bd">FLEXIO_UART_TransferGetSendCount</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga3e5937c17d139c33470e80c33db082bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3e5937c17d139c33470e80c33db082bd">FLEXIO_UART_TransferGetSendCount</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga3e5937c17d139c33470e80c33db082bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes sent.  <a href="#ga3e5937c17d139c33470e80c33db082bd">More...</a><br/></td></tr>
 <tr class="separator:ga3e5937c17d139c33470e80c33db082bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab42bbc26c0a6a8186d7b0d7373861bd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gab42bbc26c0a6a8186d7b0d7373861bd4">FLEXIO_UART_TransferReceiveNonBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00029.html#a00358">flexio_uart_transfer_t</a> *xfer, size_t *receivedBytes)</td></tr>
+<tr class="memitem:gab42bbc26c0a6a8186d7b0d7373861bd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gab42bbc26c0a6a8186d7b0d7373861bd4">FLEXIO_UART_TransferReceiveNonBlocking</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00029.html#a00358">flexio_uart_transfer_t</a> *xfer, size_t *receivedBytes)</td></tr>
 <tr class="memdesc:gab42bbc26c0a6a8186d7b0d7373861bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a buffer of data using the interrupt method.  <a href="#gab42bbc26c0a6a8186d7b0d7373861bd4">More...</a><br/></td></tr>
 <tr class="separator:gab42bbc26c0a6a8186d7b0d7373861bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3530ff683b0a4a0c2c2822c1e3626aab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3530ff683b0a4a0c2c2822c1e3626aab">FLEXIO_UART_TransferAbortReceive</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle)</td></tr>
 <tr class="memdesc:ga3530ff683b0a4a0c2c2822c1e3626aab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the receive data which was using IRQ.  <a href="#ga3530ff683b0a4a0c2c2822c1e3626aab">More...</a><br/></td></tr>
 <tr class="separator:ga3530ff683b0a4a0c2c2822c1e3626aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3bc3658a7fb5825e12d2a74e879b9930"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3bc3658a7fb5825e12d2a74e879b9930">FLEXIO_UART_TransferGetReceiveCount</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga3bc3658a7fb5825e12d2a74e879b9930"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3bc3658a7fb5825e12d2a74e879b9930">FLEXIO_UART_TransferGetReceiveCount</a> (<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga3bc3658a7fb5825e12d2a74e879b9930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes received.  <a href="#ga3bc3658a7fb5825e12d2a74e879b9930">More...</a><br/></td></tr>
 <tr class="separator:ga3bc3658a7fb5825e12d2a74e879b9930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c30d66f4471bfebd2021a8a3f1a1f04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3c30d66f4471bfebd2021a8a3f1a1f04">FLEXIO_UART_TransferHandleIRQ</a> (void *uartType, void *uartHandle)</td></tr>
@@ -1055,7 +1055,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_UART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td>
+          <td class="memname">#define FSL_FLEXIO_UART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1080,7 +1080,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* flexio_uart_transfer_callback_t)(<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* flexio_uart_transfer_callback_t)(<a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *base, flexio_uart_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1201,7 +1201,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_Init </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_Init </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1715,7 +1715,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_WriteBlocking </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_WriteBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1763,7 +1763,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_ReadBlocking </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_ReadBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1811,7 +1811,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferCreateHandle </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferCreateHandle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1951,7 +1951,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferSendNonBlocking </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferSendNonBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2034,7 +2034,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetSendCount </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetSendCount </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2082,7 +2082,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferReceiveNonBlocking </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferReceiveNonBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2171,7 +2171,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetReceiveCount </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetReceiveCount </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00029.html#a00359">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

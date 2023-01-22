@@ -1005,6 +1005,13 @@
 #define BT_SNOOP
 
 /*
+ *  BT_SUPPORT_ERR_IND_CALLBACK
+ *
+ *  This flag enables common error indication callback accross modules.
+ */
+#define BT_SUPPORT_ERR_IND_CALLBACK
+
+/*
  *  BT_SECURITY_VU_VALIDATION
  *
  *  This flag enables hooks to simulate security vulnerabilities.
@@ -1353,6 +1360,7 @@
 #define HCI_SUPPORT_LE_CONN_FAILURE_EVENT_WITH_NO_ADDR
 
 #ifdef BT_5_2
+#ifdef BT_LE
 /*
  *  HCI_ISO_DATA
  *
@@ -1373,6 +1381,7 @@
  *  Dependency: BT_5_2 must be defined.
  */
 #define HCI_SUPPORT_ISO_WRITE_PDU
+#endif /* BT_LE */
 #endif /* BT_5_2 */
 
 /*
@@ -4304,6 +4313,16 @@
  *  Dependency: BT_LE && SMP
  */
 #define SMP_SAVE_REMOTE_IOCAP
+
+/*
+ *  SMP_DISABLE_AUTHRSP_CALLBACK
+ *
+ *  This flag disables the SMP Authentication Response callback
+ *  to the application when in Master role.
+ *
+ *  Dependency: BT_LE && SMP
+ */
+/* #define SMP_DISABLE_AUTHRSP_CALLBACK */
 #endif /* SMP */
 
 

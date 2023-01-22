@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2019 Cadence Design Systems, Inc.
+ * Copyright (c) 2022 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -625,6 +625,14 @@ XA_ERRORCODE
     WORD32 id3_v2_found = 0, id3_v2_complete = 0;
     id3v2_struct id3v2;
 #endif
+#ifdef SCRATCH_TRASH_TEST
+    WORD32 scratch_size;
+    void *p_scratch;
+#endif
+#ifdef OUTPUT_PING_PONG
+    WORD8 *p_output_buffer_ping, *p_output_buffer_pong;
+    WORD32 out_idx;
+#endif /* #ifdef OUTPUT_PING_PONG */
 
     /* The process API function */
     xa_codec_func_t *p_xa_process_api;
@@ -678,7 +686,7 @@ XA_ERRORCODE
 
     /* Display the Tensilica identification message */
     fprintf(stdout, "\n%s version %s\n", pb_process_name, pb_lib_version);
-    fprintf(stdout, "Tensilica, Inc. http://www.tensilica.com\n\n");
+    fprintf(stdout, "Cadence Design Systems, Inc. https://ip.cadence.com\n\n");
 #endif
 
     /* ******************************************************************/
@@ -849,7 +857,23 @@ XA_ERRORCODE
         }
         if(ui_type == XA_MEMTYPE_OUTPUT) {
             pb_out_buf = (pWORD8) pv_alloc_ptr;
+#ifdef OUTPUT_PING_PONG
+            p_output_buffer_ping = (pWORD8)pv_alloc_ptr;
+            out_idx = i;
+            g_pv_arr_alloc_memory[g_w_malloc_count] = malloc(ui_size);
+            assert((g_pv_arr_alloc_memory[g_w_malloc_count]) != NULL);
+            p_output_buffer_pong = (pWORD8) g_pv_arr_alloc_memory[g_w_malloc_count];
+            g_w_malloc_count++;
+#endif /* #ifdef OUTPUT_PING_PONG */
+
         }
+
+#ifdef SCRATCH_TRASH_TEST
+        if(ui_type == XA_MEMTYPE_SCRATCH) {
+            scratch_size = ui_size;
+            p_scratch = (void *)pv_alloc_ptr;
+        }
+#endif /* #ifdef SCRATCH_TRASH_TEST */
 
 #if SHOW_SIZES
         switch (ui_type) {
@@ -1278,6 +1302,9 @@ REINIT_POINT:
 
         _XA_HANDLE_ERROR(p_proc_err_info, "", err_code);
 
+#ifdef SCRATCH_TRASH_TEST
+        memset(p_scratch, 0xca, scratch_size);
+#endif /* #ifdef SCRATCH_TRASH_TEST */
 #if PROFILE
         xt_iss_client_command("all", "enable");
         times(&start);
@@ -1470,6 +1497,11 @@ REINIT_POINT:
             &i_pcm_wd_sz);
         _XA_HANDLE_ERROR(p_proc_err_info, "", err_code);
 
+#ifdef DISPLAY_CONFIG_PER_FRAME
+        fprintf(stdout, "\nData Rate: %d kbps\n", i_bitrate);
+        fprintf(stdout, "Sample Rate: %d Hz\n", i_samp_freq);
+        fprintf(stdout, "Number of Channels: %d\n", i_num_chan);
+#endif /*DISPLAY_CONFIG_PER_FRAME*/
 
         ui_nsamples = (i_out_bytes / output_wordsize(i_pcm_wd_sz));
         if (24 == i_pcm_wd_sz)
@@ -1507,7 +1539,15 @@ REINIT_POINT:
             }
         }
 #endif /* STEP_PLAY */
-
+#ifdef OUTPUT_PING_PONG
+        if(pb_out_buf == p_output_buffer_pong)
+            pb_out_buf = p_output_buffer_ping;
+        else
+            pb_out_buf = p_output_buffer_pong;
+        /* Set the buffer pointers */
+        err_code = (*p_xa_process_api)(xa_process_handle, XA_API_CMD_SET_MEM_PTR,
+					out_idx, pb_out_buf);
+#endif /* #ifdef OUTPUT_PING_PONG */
 #if defined(FRAMES) && (FRAMES > 0)
         if (frame >= FRAMES)
             break;
@@ -1517,9 +1557,9 @@ REINIT_POINT:
     } while(!ui_exec_done);
 
 #if PROFILE
-    fprintf(stdout,"\nPeak MCPS = %7.1f\n", Peak);
+    fprintf(stdout,"\nPeak MCPS = %7.2f\n", Peak);
     fprintf(stdout,"Peak frame = %d\n", Peak_frame);
-    fprintf(stdout,"Average MCPS = %7.1f\n", Ave);
+    fprintf(stdout,"Average MCPS = %7.2f\n", Ave);
 #endif
 
 #ifdef STREAM_CHANGE_REINIT_TEST
@@ -1812,7 +1852,7 @@ void MP3DecDisplayCmdLine(void)
     printf("\n");
     printf("The following optional arguments can be given:\n");
     printf("\t[-pcmsz:]  PCM word size 16 or 24. Default value is 16\n");
-    printf("\t[-crc:]    Flag to enable header CRC check. Default value is 0\n");
+    printf("\t[-crc:]    Flag to enable header CRC check. Default value is 0 (No CRC check support for Layer III) \n");
     printf("\t[-mch:]    Flag to enable/disable Multi-Channel decoding. (available only on mp3mch_dec) Default value is 1\n");
     printf("\t[-nonstd:] Relax the standard validity checks for streams. Supported values are:\n");
     printf("\t               0: No relaxation in standard validity checks (Default) \n");

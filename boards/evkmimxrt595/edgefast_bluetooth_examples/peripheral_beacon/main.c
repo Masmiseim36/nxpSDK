@@ -22,7 +22,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_adapter_uart.h"
-#include "controller.h"
+#include "controller_hci_uart.h"
 #include "fsl_power.h"
 #include "usb_host_config.h"
 #include "usb_phy.h"
@@ -139,7 +139,6 @@ void USB_HostClockInit(void)
     /* Make sure USDHC ram buffer and usb1 phy has power up */
     POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
-    POWER_DisablePD(kPDRUNCFG_LP_HSPAD_FSPI0_VDET);
     POWER_ApplyPD();
 
     RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
@@ -228,17 +227,4 @@ void USB_HostIsrEnable(void)
     vTaskStartScheduler();
     for (;;)
         ;
-}
-
-void *pvPortCalloc(size_t xNum, size_t xSize)
-{
-    void *pvReturn;
-
-    pvReturn = pvPortMalloc(xNum * xSize);
-    if (pvReturn != NULL)
-    {
-        memset(pvReturn, 0x00, xNum * xSize);
-    }
-
-    return pvReturn;
 }

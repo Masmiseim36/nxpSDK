@@ -33,7 +33,7 @@ __PACKED_STRUCT flash_otp_nv_counters_region_t {
         uint8_t boot_seed[32];
         uint8_t lcs[4];
         uint8_t implementation_id[32];
-        uint8_t hw_version[32];
+        uint8_t cert_ref[32];
         uint8_t verification_service_url[32];
         uint8_t profile_definition[32];
 
@@ -43,15 +43,27 @@ __PACKED_STRUCT flash_otp_nv_counters_region_t {
 
         uint8_t bl2_nv_counter_0[64];
         uint8_t bl2_nv_counter_1[64];
-
         uint8_t bl2_nv_counter_2[64];
+        uint8_t bl2_nv_counter_3[64];
+
         uint8_t bl2_rotpk_2[32];
+        uint8_t bl2_rotpk_3[32];
 #endif /* BL2 */
 
 #ifdef BL1
         uint8_t bl1_rotpk_0[32];
         uint8_t bl1_nv_counter_0[16];
 #endif /* BL1 */
+
+#if (PLATFORM_NS_NV_COUNTERS > 0)
+        uint8_t ns_nv_counter_0[64];
+#endif
+#if (PLATFORM_NS_NV_COUNTERS > 1)
+        uint8_t ns_nv_counter_1[64];
+#endif
+#if (PLATFORM_NS_NV_COUNTERS > 2)
+        uint8_t ns_nv_counter_2[64];
+#endif
 
         uint8_t entropy_seed[64];
 

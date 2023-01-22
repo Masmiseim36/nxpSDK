@@ -8,25 +8,44 @@
 #include "tfm_its_req_mngr.h"
 
 #include <stdint.h>
+#include <string.h>
+#include <stdbool.h>
 
 #include "psa/storage_common.h"
 #include "tfm_internal_trusted_storage.h"
 #include "its_utils.h"
 
 #ifdef TFM_PSA_API
+#include "psa/framework_feature.h"
 #include "psa/service.h"
 #include "psa_manifest/tfm_internal_trusted_storage.h"
 #include "tfm_its_defs.h"
+#if PSA_FRAMEWORK_HAS_MM_IOVEC != 1
+#include "flash/its_flash.h"
+#endif /* PSA_FRAMEWORK_HAS_MM_IOVEC != 1 */
 #else
 #include <stdbool.h>
 #include "tfm_secure_api.h"
-#include "tfm_memory_utils.h"
 #include "tfm_api.h"
 #endif
 
-#ifndef TFM_PSA_API
-static uint8_t *p_data;
+#if defined(TFM_PSA_API) && PSA_FRAMEWORK_HAS_MM_IOVEC != 1
+#ifndef ITS_BUF_SIZE
+/* By default, set the ITS buffer size to the max asset size so that all
+ * requests can be handled in one iteration.
+ */
+#define ITS_BUF_SIZE ITS_MAX_ASSET_SIZE
+#endif
 
+/* Buffer to store asset data from the caller.
+ * Note: size must be aligned to the max flash program unit to meet the
+ * alignment requirement of the filesystem.
+ */
+static uint8_t asset_data[ITS_UTILS_ALIGN(ITS_BUF_SIZE,
+                                          ITS_FLASH_MAX_ALIGNMENT)];
+#endif
+
+#ifndef TFM_PSA_API
 /**
  * \brief Indicates whether ITS has been initialised.
  */
@@ -36,8 +55,10 @@ psa_status_t tfm_its_set_req(psa_invec *in_vec, size_t in_len,
                              psa_outvec *out_vec, size_t out_len)
 {
     psa_storage_uid_t uid;
+    uint8_t *p_data;
     size_t data_length;
     psa_storage_create_flags_t create_flags;
+    struct its_asset_info asset_info;
     int32_t client_id;
 
     (void)out_vec;
@@ -69,13 +90,20 @@ psa_status_t tfm_its_set_req(psa_invec *in_vec, size_t in_len,
         return PSA_ERROR_PROGRAMMER_ERROR;
     }
 
-    return tfm_its_set(client_id, uid, data_length, create_flags);
+    asset_info.uid = uid;
+    asset_info.client_id = client_id;
+    asset_info.create_flags = create_flags;
+
+    return tfm_its_set(&asset_info, p_data, data_length,
+                       data_length, 0);
 }
 
 psa_status_t tfm_its_get_req(psa_invec *in_vec, size_t in_len,
                              psa_outvec *out_vec, size_t out_len)
 {
     psa_storage_uid_t uid;
+    struct its_asset_info asset_info;
+    uint8_t *p_data;
     size_t data_offset;
     size_t data_size;
     size_t *p_data_length;
@@ -110,7 +138,11 @@ psa_status_t tfm_its_get_req(psa_invec *in_vec, size_t in_len,
         return PSA_ERROR_PROGRAMMER_ERROR;
     }
 
-    return tfm_its_get(client_id, uid, data_offset, data_size, p_data_length);
+    asset_info.uid = uid;
+    asset_info.client_id = client_id;
+
+    return tfm_its_get(&asset_info, p_data, data_size,
+                       data_offset, p_data_length, true);
 }
 
 psa_status_t tfm_its_get_info_req(psa_invec *in_vec, size_t in_len,
@@ -180,13 +212,15 @@ psa_status_t tfm_its_remove_req(psa_invec *in_vec, size_t in_len,
 }
 
 #else /* !defined(TFM_PSA_API) */
-static const psa_msg_t *p_msg;
-
 static psa_status_t tfm_its_set_req(const psa_msg_t *msg)
 {
+    psa_status_t status;
     psa_storage_uid_t uid;
-    size_t data_length;
+    uint8_t *data_buf;
+    size_t size_remaining;
+    size_t offset;
     psa_storage_create_flags_t create_flags;
+    struct its_asset_info asset_info;
     size_t num;
 
     if (msg->in_size[0] != sizeof(uid) ||
@@ -194,8 +228,6 @@ static psa_status_t tfm_its_set_req(const psa_msg_t *msg)
         /* The size of one of the arguments is incorrect */
         return PSA_ERROR_PROGRAMMER_ERROR;
     }
-
-    data_length = msg->in_size[1];
 
     num = psa_read(msg->handle, 0, &uid, sizeof(uid));
     if (num != sizeof(uid)) {
@@ -207,24 +239,61 @@ static psa_status_t tfm_its_set_req(const psa_msg_t *msg)
         return PSA_ERROR_PROGRAMMER_ERROR;
     }
 
-    return tfm_its_set(msg->client_id, uid, data_length, create_flags);
+    asset_info.uid = uid;
+    asset_info.client_id = msg->client_id;
+    asset_info.create_flags = create_flags;
+
+    size_remaining = msg->in_size[1];
+    offset = 0;
+
+#if PSA_FRAMEWORK_HAS_MM_IOVEC == 1
+    if (size_remaining != 0) {
+        data_buf = (uint8_t *)psa_map_invec(msg->handle, 1);
+    } else {
+        /* zero-size asset is supported */
+        data_buf = NULL;
+    }
+
+    status = tfm_its_set(&asset_info, data_buf, size_remaining,
+                         size_remaining, offset);
+#else
+    data_buf = asset_data;
+    do {
+        num = psa_read(msg->handle, 1, asset_data,
+                       ITS_UTILS_MIN(size_remaining, sizeof(asset_data)));
+
+        status = tfm_its_set(&asset_info, data_buf, size_remaining,
+                             num, offset);
+        if (status != PSA_SUCCESS) {
+            return status;
+        }
+
+        size_remaining -= num;
+        offset += num;
+    } while (size_remaining);
+#endif
+
+    return status;
 }
 
 static psa_status_t tfm_its_get_req(const psa_msg_t *msg)
 {
+    psa_status_t status;
     psa_storage_uid_t uid;
+    uint8_t *data_buf;
+    size_t size_to_read;
     size_t data_offset;
-    size_t data_size;
-    size_t data_length;
+    size_t out_size;
+    size_t size_read;
     size_t num;
+    struct its_asset_info asset_info;
+    bool first_get;
 
     if (msg->in_size[0] != sizeof(uid) ||
         msg->in_size[1] != sizeof(data_offset)) {
         /* The size of one of the arguments is incorrect */
         return PSA_ERROR_PROGRAMMER_ERROR;
     }
-
-    data_size = msg->out_size[0];
 
     num = psa_read(msg->handle, 0, &uid, sizeof(uid));
     if (num != sizeof(uid)) {
@@ -236,8 +305,49 @@ static psa_status_t tfm_its_get_req(const psa_msg_t *msg)
         return PSA_ERROR_PROGRAMMER_ERROR;
     }
 
-    return tfm_its_get(msg->client_id, uid, data_offset, data_size,
-                       &data_length);
+    asset_info.uid = uid;
+    asset_info.client_id = msg->client_id;
+    out_size = msg->out_size[0];
+    first_get = true;
+
+#if PSA_FRAMEWORK_HAS_MM_IOVEC == 1
+    size_to_read = msg->out_size[0];
+    if (size_to_read != 0) {
+        data_buf = (uint8_t *)psa_map_outvec(msg->handle, 0);
+    } else {
+        data_buf = NULL;
+    }
+
+    status = tfm_its_get(&asset_info, data_buf, size_to_read,
+                         data_offset, &size_read, first_get);
+    if (status == PSA_SUCCESS && size_to_read != 0) {
+        /* Unmap to update caller’s outvec with the number of bytes written  */
+        psa_unmap_outvec(msg->handle, 0, size_read);
+    }
+#else
+    /* Fill in the outvec unless no data left */
+    data_buf = asset_data;
+    do {
+        size_to_read = ITS_UTILS_MIN(out_size, sizeof(asset_data));
+        status = tfm_its_get(&asset_info, data_buf, size_to_read,
+                             data_offset, &size_read, first_get);
+        if (status != PSA_SUCCESS) {
+            return status;
+        }
+        if (size_read == 0) {
+            /* No more data */
+            return PSA_SUCCESS;
+        }
+
+        psa_write(msg->handle, 0, data_buf, size_read);
+
+        first_get = false;
+        out_size -= size_read;
+        data_offset += size_read;
+    } while (out_size > 0);
+#endif
+
+    return status;
 }
 
 static psa_status_t tfm_its_get_info_req(const psa_msg_t *msg)
@@ -302,8 +412,6 @@ psa_status_t tfm_its_entry(void)
 #ifdef TFM_PSA_API
 psa_status_t tfm_internal_trusted_storage_service_sfn(const psa_msg_t *msg)
 {
-    p_msg = msg;
-
     switch (msg->type) {
     case TFM_ITS_SET:
         return tfm_its_set_req(msg);
@@ -320,24 +428,3 @@ psa_status_t tfm_internal_trusted_storage_service_sfn(const psa_msg_t *msg)
     return PSA_ERROR_GENERIC_ERROR;
 }
 #endif /* TFM_PSA_API */
-
-size_t its_req_mngr_read(uint8_t *buf, size_t num_bytes)
-{
-#ifdef TFM_PSA_API
-    return psa_read(p_msg->handle, 1, buf, num_bytes);
-#else
-    (void)tfm_memcpy(buf, p_data, num_bytes);
-    p_data += num_bytes;
-    return num_bytes;
-#endif
-}
-
-void its_req_mngr_write(const uint8_t *buf, size_t num_bytes)
-{
-#ifdef TFM_PSA_API
-    psa_write(p_msg->handle, 0, buf, num_bytes);
-#else
-    (void)tfm_memcpy(p_data, buf, num_bytes);
-    p_data += num_bytes;
-#endif
-}

@@ -164,6 +164,20 @@ void SPI6_SignalEvent_t(uint32_t event);
 void SPI7_SignalEvent_t(uint32_t event);
 #endif
 
+#if defined(SPI8)
+/*! @brief The SPI8 device index. */
+#define SPI8_INDEX 8
+
+/*! @brief       Defines the SPI signal event handler.
+ *  @details     The Signal Event Handler function required by register_io_i2c.c.
+ *  @param[in]   event The SPI event that occured.
+ *  @Constraints None
+ *  @Reentrant   Yes
+ *  @return      void
+ */
+void SPI8_SignalEvent_t(uint32_t event);
+#endif
+
 /*!
  * @brief The interface function to block write to a sensor register.
  *

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -273,7 +273,7 @@ extern int  xf_output_port_put(xf_output_port_t *port, xf_message_t *m);
 extern void * xf_output_port_data(xf_output_port_t *port);
 
 /* ...route output port */
-extern int xf_output_port_route(xf_output_port_t *port, UWORD32 id, UWORD32 n, UWORD32 length, UWORD32 align);
+extern int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, UWORD32 length, UWORD32 align);
 
 /* ...unroute output port */
 extern void xf_output_port_unroute(xf_output_port_t *port);

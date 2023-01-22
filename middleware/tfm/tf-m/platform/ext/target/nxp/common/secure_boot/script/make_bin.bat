@@ -108,12 +108,12 @@ if "%OUTPUT_FILE%" == "" (
   echo:
   goto usage
 )
-if "%ALIGN_ADDRESS%" == "" (
-  :align_address_missed
-  echo [ERR] ^<0xAlign_Address^> is missed
-  echo:
-  goto usage
-)
+REM if "%ALIGN_ADDRESS%" == "" (
+  REM :align_address_missed
+  REM echo [ERR] ^<0xAlign_Address^> is missed
+  REM echo:
+  REM goto usage
+REM )
 
 echo Concatenating...
 echo ^<Secure_File.hex^> = %S_FILE%
@@ -121,9 +121,16 @@ echo ^<Non_Secure_File.hex^> = %NS_FILE%
 echo ^<Output_Binary_File.bin^> = %OUTPUT_FILE%
 echo ^<0xAlign_Address^> = %ALIGN_ADDRESS%
 
+if "%ALIGN_ADDRESS%" == "" (
+@echo on
+..\tools\srec_cat %S_FILE% -Intel -offset - -minimum-addr %S_FILE% -Intel %NS_FILE% -Intel -o %OUTPUT_FILE% -Binary
+@echo off
+) else (
 @echo on
 ..\tools\srec_cat %S_FILE% -Intel -offset - -minimum-addr %S_FILE% -Intel %NS_FILE% -Intel -fill 0xAB -maximum-addr %NS_FILE% -Intel %ALIGN_ADDRESS% -o %OUTPUT_FILE% -Binary
 @echo off
+)
+
 rem -Intel -line-length=44
 
 goto end_make

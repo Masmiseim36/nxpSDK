@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -115,7 +115,7 @@ typedef struct XAMixer
     UWORD32                     sample_size;
 
     /* ...audio byte duration */
-    UWORD32                     factor;
+    UWORD64                     factor;
 
     /* ...presentation timestamp (in samples; local mixer scope) */
     UWORD32                 pts;
@@ -211,7 +211,7 @@ static inline XA_ERRORCODE xa_mixer_prepare_runtime(XAMixer *mixer)
     xf_message_t   *m = xf_msg_queue_head(&mixer->output.queue);
     xf_start_msg_t *msg = m->buffer;
     UWORD32             frame_size;
-    UWORD32             factor;
+    UWORD64             factor;
     
     /* ...query mixer parameters */
     XA_API(base, XA_API_CMD_GET_CONFIG_PARAM, XA_MIXER_CONFIG_PARAM_SAMPLE_RATE, &msg->sample_rate);
@@ -227,7 +227,7 @@ static inline XA_ERRORCODE xa_mixer_prepare_runtime(XAMixer *mixer)
     TRACE(INIT, _b("mixer[%p]::runtime init: f=%u, c=%u, w=%u, i=%u, o=%u"), mixer, msg->sample_rate, msg->channels, msg->pcm_width, msg->input_length[0], msg->output_length[0]);
 
     /* ...save sample size in bytes */
-    mixer->sample_size = msg->channels * (msg->pcm_width == 16 ? 2 : 4);
+    mixer->sample_size = msg->channels * ((msg->pcm_width == 8) ? 1 :((msg->pcm_width == 16) ? 2 : 4));
 
     /* ...calculate mixer frame duration; get upsample factor */
     XF_CHK_ERR(factor = xf_timebase_factor(msg->sample_rate), XA_MIXER_CONFIG_FATAL_RANGE);
@@ -238,9 +238,10 @@ static inline XA_ERRORCODE xa_mixer_prepare_runtime(XAMixer *mixer)
     /* ...set frame duration factor (converts number of bytes into timebase units) */
     mixer->factor = factor / mixer->sample_size;
 
-    TRACE(INIT, _b("ts-factor: %u (%u)"), mixer->factor, factor);
+    TRACE(INIT, _b("ts-factor: %llu (%llu)"), mixer->factor, factor);
 
-    BUG((mixer->factor * mixer->sample_size) != factor, _x("Freq mismatch: %u vs %u"), (mixer->factor * mixer->sample_size), factor);
+    /* ...factor must be a multiple */
+    XF_CHK_ERR(mixer->factor * mixer->sample_size == factor, XA_MIXER_CONFIG_FATAL_RANGE);
 
     /* ...set mixer frame duration */
     mixer->frame_duration = frame_size * factor; /* Note: mixer->factor, factor is for samples */
@@ -421,13 +422,14 @@ static XA_ERRORCODE xa_mixer_fill_this_buffer(XACodecBase *base, xf_message_t *m
 
          return XA_NO_ERROR;
     }
-    else if (m->length != 0) /* ...EOS response */
+    else
     {
-        /* ...message must have exactly expected size (there is no ordered abortion) */
-        XF_CHK_ERR(m->length == mixer->output.length, XA_MIXER_EXEC_FATAL_STATE);
-
         if ((base->state & XA_BASE_FLAG_COMPLETED) && !xf_output_port_routed(&mixer->output))
         {
+
+            /* ...message must have exactly expected size (there is no ordered abortion) */
+            XF_CHK_ERR(m->length == mixer->output.length, XA_MIXER_EXEC_FATAL_STATE);
+
             /* ...return message arrived from application immediately */
             xf_response_ok(m);
         
@@ -435,6 +437,12 @@ static XA_ERRORCODE xa_mixer_fill_this_buffer(XACodecBase *base, xf_message_t *m
         
             return XA_NO_ERROR;
         }
+        else
+        {
+            /* ...adjust message length (may be shorter than original) [TENA-2957] */
+            m->length = mixer->output.length;
+        }
+
     }
 
     TRACE(OUTPUT, _b("received output buffer [%p]:%u"), m->buffer, m->length);
@@ -761,8 +769,11 @@ static XA_ERRORCODE xa_mixer_memtab(XACodecBase *base, WORD32 idx, WORD32 type, 
         /* ...create input port for a track */
         XF_CHK_ERR(xf_input_port_init(&track->input, size, align, core) == 0, XA_API_FATAL_MEM_ALLOC);
 
-        /* ...set input port buffer */
-        XA_API(base, XA_API_CMD_SET_MEM_PTR, idx, track->input.buffer);
+        if(size)
+        {
+            /* ...set input port buffer */
+            XA_API(base, XA_API_CMD_SET_MEM_PTR, idx, track->input.buffer);
+        }
 
         /* ...put track into idle state (will start as soon as we receive data) */
         xa_track_set_flags(track, XA_TRACK_FLAG_IDLE);
@@ -803,6 +814,13 @@ static XA_ERRORCODE xa_mixer_memtab(XACodecBase *base, WORD32 idx, WORD32 type, 
         {
             if ((io_ports_created &= xf_input_port_created(&track->input)) == 0)
                 break;
+
+            /*... return error if probe is enabled for input port with input bypass enabled. */
+            if((xf_input_port_bypass(&track->input) && (XF_CHK_PORT_MASK(mixer->probe_enabled, i))))
+            {
+                TRACE(ERROR, _x("Probe buffer-length error on port[%d] with input bypass"), i);
+                return XAF_INVALIDVAL_ERR;
+            }
 
             probe_size += XF_CHK_PORT_MASK(mixer->probe_enabled, i) ?  (XF_ALIGNED_PROBE_SIZE(mixer->track[i].input.length)) : 0;
         }
@@ -918,19 +936,45 @@ static XA_ERRORCODE xa_mixer_preprocess(XACodecBase *base)
         /* ...if track presentation timestamp is in the future, do nothing yet really */
         if (!xf_time_after(track->pts, mixer->pts))
         {
-            UWORD32     filled;
+            UWORD32     filled = 0;
             
-            /* ...take actual data from input port (mixer is always using internal buffer) */
-            if (!xf_input_port_fill(&track->input))
+            if (xf_input_port_bypass(&track->input))
             {
-                /* ...failed to prefill input buffer - no sufficient data yet */
-                inport_nodata_flag = 1; 
-                continue;
+                void *input;
+
+                /* ...port is in bypass mode; try to update the buffer pointer, remaining bytes if necessary */
+                xf_input_port_fill(&track->input);
+
+                /* ...use input buffer directly; check if there is data available */
+                if ((input = xf_input_port_data(&track->input)) != NULL)
+                {
+                    /* ...set input data buffer pointer */
+                    XA_API(base, XA_API_CMD_SET_MEM_PTR, i, input);
+            
+                    /* ...retrieve number of input bytes */
+                    filled = xf_input_port_length(&track->input);
+                }
+                else if (!xf_input_port_done(&track->input))
+                {
+                    /* ...failed to prefill input buffer - no sufficient data yet */
+                    inport_nodata_flag = 1; 
+                    continue;
+                }
             }
             else
             {
-                /* ...retrieve number of bytes available */
-                filled = xf_input_port_level(&track->input);
+                /* ...take actual data from input port (mixer is always using internal buffer) */
+                if (!xf_input_port_fill(&track->input))
+                {
+                    /* ...failed to prefill input buffer - no sufficient data yet */
+                    inport_nodata_flag = 1; 
+                    continue;
+                }
+                else
+                {
+                    /* ...retrieve number of bytes available */
+                    filled = xf_input_port_level(&track->input);
+                }
             }
 
             /* ...check if input stream is over */
@@ -1165,6 +1209,10 @@ static XA_ERRORCODE (* const xa_mixer_cmd[])(XACodecBase *, xf_message_t *) =
     [XF_OPCODE_TYPE(XF_SET_PARAM)] = xa_base_set_param,
     [XF_OPCODE_TYPE(XF_GET_PARAM)] = xa_base_get_param,
 
+    /* ...extended set-get-config parameter */
+    [XF_OPCODE_TYPE(XF_SET_PARAM_EXT)] = xa_base_set_param_ext,
+    [XF_OPCODE_TYPE(XF_GET_PARAM_EXT)] = xa_base_get_param_ext,
+
     /* ...output port routing/unrouting */
     [XF_OPCODE_TYPE(XF_ROUTE)] = xa_mixer_port_route,
     [XF_OPCODE_TYPE(XF_UNROUTE)] = xa_mixer_port_unroute,
@@ -1195,7 +1243,7 @@ static int xa_mixer_terminate(xf_component_t *component, xf_message_t *m)
     {
         /* ...ignore component processing during component termination(rare case) */
         TRACE(OUTPUT, _b("component processing ignored.."));
-        return -1;
+        return 0;
     }
 
     if (m == xf_output_port_control_msg(&mixer->output))
@@ -1203,7 +1251,11 @@ static int xa_mixer_terminate(xf_component_t *component, xf_message_t *m)
         /* ...output port flushing complete; mark port is idle and terminate */
         xf_output_port_flush_done(&mixer->output);
         TRACE(OUTPUT, _b("mixer[%p] flush completed in terminate"), mixer);
+#ifdef XF_MSG_ERR_HANDLING
+        return XAF_UNREGISTER;
+#else
         return -1;
+#endif
     }
     else if (m->opcode == XF_FILL_THIS_BUFFER && xf_output_port_routed(&mixer->output))
     {
@@ -1255,8 +1307,11 @@ static int xa_mixer_destroy(xf_component_t *component, xf_message_t *m)
     /* ...destroy base object */
     xa_base_destroy(&mixer->base, XF_MM(sizeof(*mixer)), core);
 
-    /* ...complete the command with response */
-    xf_response_err(m_resp);
+    if (m_resp != NULL)
+    {
+        /* ...complete the command with response */
+        xf_response_err(m_resp);
+    }
 
     TRACE(INIT, _b("mixer[%p] destroyed"), mixer);
 

@@ -1,8 +1,9 @@
 var a00043 =
 [
     [ "I3C FreeRTOS Driver", "a00254.html", null ],
-    [ "I3C Master DMA Driver", "a00253.html", null ],
+    [ "I3C Master DMA Driver", "a00252.html", null ],
     [ "I3C Master Driver", "a00041.html", "a00041" ],
+    [ "I3C Slave DMA Driver", "a00253.html", null ],
     [ "I3C Slave Driver", "a00044.html", "a00044" ],
     [ "i3c_device_info_t", "a00043.html#a00380", [
       [ "dynamicAddr", "a00043.html#a8d2a160d24239705091dd376479ed1f0", null ],

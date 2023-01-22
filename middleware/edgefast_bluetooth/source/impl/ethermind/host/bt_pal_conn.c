@@ -264,6 +264,25 @@ struct bt_conn *bt_conn_new(struct bt_conn *conns, size_t size)
 
 	(void)memset(conn, 0, offsetof(struct bt_conn, ref));
 
+	/* Init security level semaphore resource. */
+	if (NULL == conn->sem_security_level_updated)
+    {
+        osa_status_t ret = OSA_SemaphoreCreateBinary((osa_semaphore_handle_t)conn->sem_security_level_updated_handle);
+        assert(KOSA_StatusSuccess == ret);
+
+        if (KOSA_StatusSuccess == ret)
+        {
+            conn->sem_security_level_updated = (osa_semaphore_handle_t)conn->sem_security_level_updated_handle;
+			(void)OSA_SemaphorePost(conn->sem_security_level_updated);
+        }
+		else
+		{
+			BT_ERR("conn: %p, security level semaphore wait fail %d", conn, status);
+			bt_conn_unref(conn);
+			return NULL;
+		}
+    }
+
 #if (defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0))
 	k_work_init_delayable(&conn->deferred_work, deferred_work);
 #endif /* CONFIG_BT_CONN */
@@ -1269,6 +1288,12 @@ void bt_conn_unref(struct bt_conn *conn)
 	__ASSERT(old > 0, "Conn reference counter is 0");
 
 	(void)old;
+
+	if ((atomic_get(&conn->ref) == 0) && (NULL != conn->sem_security_level_updated))
+	{
+		(void)OSA_SemaphoreDestroy(conn->sem_security_level_updated);
+		conn->sem_security_level_updated = NULL;
+	}
 
 	if (IS_ENABLED(CONFIG_BT_PERIPHERAL) && conn->type == BT_CONN_TYPE_LE &&
 	    atomic_get(&conn->ref) == 0) {

@@ -1,6 +1,6 @@
 var a00053 =
 [
-    [ "power_pad_vrange_t", "a00053.html#a00406", [
+    [ "power_pad_vrange_t", "a00053.html#a00407", [
       [ "Vdde0Range", "a00053.html#ab028a393646771ab91ec06036fae2851", null ],
       [ "Vdde1Range", "a00053.html#ad59ee29d625573694a590b9bc5a1758b", null ],
       [ "Vdde2Range", "a00053.html#acd79506cc3e460c5bb4af56b02fecdb4", null ],

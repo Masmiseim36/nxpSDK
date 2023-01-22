@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -54,7 +54,10 @@ typedef struct xf_core_ro_data
 typedef struct xf_core_rw_data
 {
     /* ...message queue containing local commands/responses */
+#if 1 //AR3, AR7
+#else
     xf_sync_queue_t     local;
+#endif
 
     /* ...message queue containing responses to App Interface Layer (if enabled) */
     xf_sync_queue_t     remote;
@@ -73,10 +76,12 @@ XF_MAX_CACHE_ALIGNED_TYPEDEF(xf_core_rw_data_t, __xf_core_rw_data_t);
 
 
 /* ...shared read-only memory access */
-#define XF_CORE_RO_DATA(core)   ((xf_core_ro_data_t *)(&(xf_g_dsp->xf_core_ro_data[(core)])))
+//#define XF_CORE_RO_DATA(core)   ((xf_core_ro_data_t *)(&(xf_g_dsp->xf_core_ro_data[(core)])))
+#define XF_CORE_RO_DATA(core)   ((xf_core_ro_data_t *)(&(xf_g_dsp->xf_core_ro_data[(0)])))
 
 /* ...shared read-write memory access */
-#define XF_CORE_RW_DATA(core)   ((xf_core_rw_data_t *)(&(xf_g_dsp->xf_core_rw_data[(core)])))
+//#define XF_CORE_RW_DATA(core)   ((xf_core_rw_data_t *)(&(xf_g_dsp->xf_core_rw_data[(core)])))
+#define XF_CORE_RW_DATA(core)   ((xf_core_rw_data_t *)(&(xf_g_dsp->xf_core_rw_data[(0)])))
 
 /*******************************************************************************
  * Local core data (not accessible from remote cores)
@@ -99,8 +104,15 @@ struct xf_worker {
     xf_msgq_t queue;
     xf_thread_t thread;
     UWORD32 core;
+#ifdef LOCAL_MSGQ
+    xf_msg_queue_t local_msg_queue;
+#endif
+#ifdef LOCAL_SCHED
+    xf_sched_t          sched;
+#else
     xf_msg_queue_t base_cancel_queue;
     xf_msg_pool_t base_cancel_pool;
+#endif
 };
 
 /* ...per-core local data */
@@ -144,12 +156,42 @@ typedef struct xf_core_data
     /* ...any debugging information? for memory allocation etc... ? */
 
     /* ...the default priority to be set on component creation, before its actual priority can be assigned */
-    UWORD32 component_default_priority;
+    UWORD32 component_default_priority_idx;
 
     /* ...worker thread scratch sizes */
     UWORD32 worker_thread_scratch_size[XAF_MAX_WORKER_THREADS];
 
+#if (XF_CFG_CORES_NUM > 1)
+    /* ...DSP-DSP shmem MSG queue */
+    xf_msg_queue_t dsp_dsp_shmem_queue;
+
+    /* ...DSP-DSP shmem MSG pool */
+    xf_msg_pool_t   dsp_dsp_shmem_pool;
+#endif
+
+    /* ...dsp thread priority */
+    UWORD32 dsp_thread_priority;
+
 }   xf_core_data_t;
+
+#if (XF_CFG_CORES_NUM > 1)
+/* ...shared memmory allocator data */
+typedef struct __xf_shared_mm_pool
+{
+    /* ...platform specific lock */
+    xf_ipc_lock_t   *lock;
+
+    /* ...free blocks map sorted by block length */
+    rb_tree_t       l_map;
+    /* ...free blocks map sorted by address of the block */
+    rb_tree_t       a_map;
+    /* ...address of memory pool (32-bytes aligned at least); */
+    void           *addr;
+    /* ...length of the pool (multiple of descriptor size); */
+    UWORD32             size;
+
+}   xf_shared_mm_pool_t;
+#endif
 
 /*******************************************************************************
  * Global data definition
@@ -157,43 +199,50 @@ typedef struct xf_core_data
 
 typedef struct {
     /* ...per-core execution data */
-    xf_core_data_t          xf_core_data[XF_CFG_CORES_NUM];
+    //xf_core_data_t          xf_core_data[XF_CFG_CORES_NUM];
+    xf_core_data_t          xf_core_data[1];
 
     /* ...AP-DSP shared memory pool */
     //xf_mm_pool_t            xf_ap_shmem_pool;
 
     /* ...per-core local memory pool */
-    xf_mm_pool_t            xf_dsp_local_pool[XF_CFG_CORES_NUM];
+    //xf_mm_pool_t            xf_dsp_local_pool[XF_CFG_CORES_NUM]; //unused
 
-#if XF_CFG_CORES_NUM > 1
+#if (XF_CFG_CORES_NUM > 1)
     /* ...DSP cluster shared memory pool */
-    xf_mm_pool_t            xf_dsp_shmem_pool;
+    //xf_shared_mm_pool_t        xf_dsp_shmem_pool;
 #endif    // #if XF_CFG_CORES_NUM > 1
 
     /* ...per-core shared memory with read-only access */
-    __xf_core_ro_data_t     xf_core_ro_data[XF_CFG_CORES_NUM];
+    //__xf_core_ro_data_t     xf_core_ro_data[XF_CFG_CORES_NUM];
+    __xf_core_ro_data_t     xf_core_ro_data[1];
 
     /* ...per-core shared memory with read-write access */
-    __xf_core_rw_data_t     xf_core_rw_data[XF_CFG_CORES_NUM];
+    //__xf_core_rw_data_t     xf_core_rw_data[XF_CFG_CORES_NUM];
+    __xf_core_rw_data_t     xf_core_rw_data[1];
 
     UWORD8 *xf_ap_shmem_buffer;
     WORD32 xf_ap_shmem_buffer_size;
 
 #if XF_CFG_CORES_NUM > 1
     UWORD8 *xf_dsp_shmem_buffer;
-    UWORD16 xf_dsp_shmem_buffer_size;
+    UWORD32 xf_dsp_shmem_buffer_size;
 #endif    // #if XF_CFG_CORES_NUM > 1
 
     UWORD8 *xf_dsp_local_buffer;
     WORD32 xf_dsp_local_buffer_size;
-    WORD32 dsp_comp_buf_size_peak;  /* cumulative buffer size used in bytes from audio_comp_buf_size */
-    WORD32 dsp_frmwk_buf_size_peak;  /* cumulative buffer size used in bytes from audio_frmwk_buf_size */
-    WORD32 dsp_comp_buf_size_curr;   /* current usage from audio_comp_buf_size in bytes */
-    WORD32 dsp_frmwk_buf_size_curr;  /* current usage from audio_frmwk_buf_size in bytes */  
 
-    void *dsp_thread_args[XAF_NUM_THREAD_ARGS];
+    WORD32 *pdsp_comp_buf_size_peak;    /* cumulative buffer size used in bytes from audio_comp_buf_size */
+    WORD32 *pdsp_frmwk_buf_size_peak;   /* cumulative buffer size used in bytes from audio_frmwk_buf_size */
+    WORD32 *pdsp_comp_buf_size_curr;    /* current usage from audio_comp_buf_size in bytes */
+    WORD32 *pdsp_frmwk_buf_size_curr;   /* current usage from audio_frmwk_buf_size in bytes */  
+    xaf_perf_stats_t *pdsp_cb_stats;                /* ...for cumulative execution cycles of all worker threads of a core */
+    int (*cb_compute_cycles)(xaf_perf_stats_t*);    /* ...call-back function used by DSP to update MCPS stats before DSP thread is deleted */
 
-    UWORD32 worker_thread_scratch_size[XAF_MAX_WORKER_THREADS]; /* ...user configurable worker scratch size */
+#if (XF_CFG_CORES_NUM > 1)
+    xf_event_t msgq_event;
+    xf_event_t *pmsgq_event;
+#endif
 
 } xf_dsp_t;
 

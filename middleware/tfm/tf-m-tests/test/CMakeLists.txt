@@ -33,3 +33,7 @@ endif()
 if(TEST_BL2)
     add_subdirectory(bl2)
 endif()
+
+if(TEST_BL1_1 OR TEST_BL1_2)
+    add_subdirectory(bl1)
+endif()

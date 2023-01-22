@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('a00280.html','');});
 <dd>Do not use this function. It has been superceded by <a class="el" href="a00017.html#ga66c5df77aaa4c4dd4a0448ba3ea19ff2">DMIC_EnableChannelInterrupt</a>, <a class="el" href="a00017.html#ga55a76465d0f8449b4cc1ff347c570290">DMIC_EnableChannelDma</a>.  </dd>
 <dt><a class="anchor" id="_deprecated000002"></a>Global <a class="el" href="a00035.html#ga437271ffb955b77df0a5dee9ea80cc63">I2C_MasterClearStatusFlags</a>  (I2C_Type *base, uint32_t statusMask)</dt>
 <dd>Do not use this function. It has been superceded by <a class="el" href="a00035.html#ga92a916f2d297de52d3a54f8bd0befb07">I2C_ClearStatusFlags</a> The following status register flags can be cleared:<ul>
-<li><a class="el" href="a00242.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda7b487779b58af99a7a8c179545f78ccd" title="The arbitration of the bus was lost. ">kI2C_MasterArbitrationLostFlag</a></li>
-<li><a class="el" href="a00242.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdab5cec1d9be7dc5fb2c106e2b87889517" title="There was an error during start or stop phase of the transaction. ">kI2C_MasterStartStopErrorFlag</a> </li>
+<li><a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda7b487779b58af99a7a8c179545f78ccd" title="The arbitration of the bus was lost. ">kI2C_MasterArbitrationLostFlag</a></li>
+<li><a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdab5cec1d9be7dc5fb2c106e2b87889517" title="There was an error during start or stop phase of the transaction. ">kI2C_MasterStartStopErrorFlag</a> </li>
 </ul>
 </dd>
 <dt><a class="anchor" id="_deprecated000016"></a>Global <a class="el" href="a00050.html#ga4f61aee1889a7a09e6dea3735714b1ce">MMC_HostReset</a>  (SDMMCHOST_CONFIG *host)</dt>
@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('a00280.html','');});
 <dd>Do not use this function. It has been superceded by <a class="el" href="a00032.html#ga2a1113d96cdf973bb5b1eade3521adf8">GPIO_PinWrite</a>. <a class="el" href="a00066.html#gaa5de2415d7b9aa7b9c46140d70a2502a">SMARTDMA_InitWithoutFirmware</a> and <a class="el" href="a00066.html#ga4cfe75e9b746829e9ed1227ba97681e1">SMARTDMA_InstallFirmware</a>.  </dd>
 <dt><a class="anchor" id="_deprecated000014"></a>Global <a class="el" href="a00074.html#ga76ddc18e837f7f690f8cddd326b9ef0a">USDHC_AdjustDelayForManualTuning</a>  (USDHC_Type *base, uint32_t delay)</dt>
 <dd>Do not use this function. It has been superceded by USDHC_SetTuingDelay  </dd>
-<dt><a class="anchor" id="_deprecated000018"></a>Global <a class="el" href="a00075.html#gadeea472d9fe2a59a194780b5ae1244d2">WM8904_SetMasterSlave</a>  (<a class="el" href="a00075.html#a00478" title="wm8904 codec handler ">wm8904_handle_t</a> *handle, bool master)</dt>
+<dt><a class="anchor" id="_deprecated000018"></a>Global <a class="el" href="a00075.html#gadeea472d9fe2a59a194780b5ae1244d2">WM8904_SetMasterSlave</a>  (<a class="el" href="a00075.html#a00479" title="wm8904 codec handler ">wm8904_handle_t</a> *handle, bool master)</dt>
 <dd>DO NOT USE THIS API ANYMORE. IT HAS BEEN SUPERCEDED BY <a class="el" href="a00075.html#gac7d7d664d5f08cc532887ef3b3a87868">WM8904_SetMasterClock</a>  </dd>
 <dt><a class="anchor" id="_deprecated000015"></a>Global <a class="el" href="a00076.html#ga358bab6648d05345bda057a72cfb5547">WWDT_Disable</a>  (WWDT_Type *base)</dt>
 <dd>Do not use this function. It will be deleted in next release version, for once the bit field of WDEN written with a 1, it can not be re-written with a 0.</dd>

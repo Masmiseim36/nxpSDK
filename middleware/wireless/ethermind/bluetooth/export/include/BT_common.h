@@ -971,7 +971,38 @@ typedef struct _BT_DEVICE_ADDR
 
 } BT_DEVICE_ADDR;
 
+#ifdef BT_SUPPORT_ERR_IND_CALLBACK
+typedef struct _BT_ERROR_MSG
+{
+    /* Fixed Part */
 
+    /**
+     *  Identifies the remote device/connection, for which the error
+     *  is being reported.
+     *
+     *  Note: If there is no remote device/connection involved,
+     * the connection handle will be invalid (0xFFFF)
+     */
+    UINT16   connection_handle;
+
+    /* Variable Part */
+
+    /**
+     * Error specific information, typically as a module specific
+     * data structure.
+     */
+    void* error_info;
+
+    /**
+     * Length of error specific information.
+     *
+     * Note: For some of the module specific data structure,
+     * the length field might not be used.
+     */
+    UINT16  length;
+
+} BT_ERROR_MSG;
+#endif /* BT_SUPPORT_ERR_IND_CALLBACK */
 /** \} */
 
 /** \} */
@@ -1083,6 +1114,44 @@ API_RESULT BT_bluetooth_off
  */
 API_RESULT BT_bluetooth_get_stack_init_state (/* OUT */ UCHAR *state);
 #endif /* BT_SUPPORT_GET_STACK_INIT_STATE */
+
+#ifdef BT_SUPPORT_ERR_IND_CALLBACK
+/**
+ *  API for registering common the error Indication Callback.
+ *
+ *  \param: [in] Function Pointer: callback_ptr
+ *
+ *  \return
+ *       \ref API_RESULT On successful registration of the callback pointer.
+ */
+API_RESULT BT_ethermind_register_error_indication_callback
+           (
+               API_RESULT (* callback_ptr)
+                          (
+                              UINT32    module_id,
+                              UINT16   error_code,
+                              void   * error_msg
+                          )
+           );
+
+/**
+ *  API for Core Modules to report their Errors to Upper layers through the
+ *  Error Indication callback.
+ *
+ *  \param: [in] module_id   Bluetooth Module ID
+ *  \param: [in] error_code  Identifier of the reported error
+ *  \param: [in] error_msg   Information associated with the reported error
+ *
+ *  \return
+ *       \ref API_RESULT Return value
+ */
+API_RESULT BT_error_indication_callback
+           (
+               UINT32   module_id,
+               UINT16   error_code,
+               void   * error_msg
+           );
+#endif /* BT_SUPPORT_ERR_IND_CALLBACK */
 
 #ifdef __cplusplus
 };

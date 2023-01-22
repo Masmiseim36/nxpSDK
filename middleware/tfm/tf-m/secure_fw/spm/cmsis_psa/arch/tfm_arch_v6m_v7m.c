@@ -9,7 +9,6 @@
 #include "compiler_ext_defs.h"
 #include "spm_ipc.h"
 #include "tfm_arch.h"
-#include "tfm_core_utils.h"
 #include "tfm_hal_device_header.h"
 #include "tfm_svcalls.h"
 #include "svc_num.h"
@@ -25,7 +24,7 @@ uint32_t scheduler_lock = SCHEDULER_UNLOCKED;
 /* IAR Specific */
 #if defined(__ICCARM__)
 
-#pragma required = do_schedule
+#pragma required = ipc_schedule
 #pragma required = scheduler_lock
 #pragma required = tfm_core_svc_handler
 
@@ -78,6 +77,7 @@ __naked void arch_non_preempt_call(uintptr_t fn_addr, uintptr_t frame_addr,
 
 #endif /* CONFIG_TFM_PSA_API_CROSS_CALL == 1*/
 
+#if CONFIG_TFM_SPM_BACKEND_IPC == 1
 __attribute__((naked)) void PendSV_Handler(void)
 {
     __ASM volatile(
@@ -85,7 +85,7 @@ __attribute__((naked)) void PendSV_Handler(void)
         ".syntax unified                    \n"
 #endif
         "   push    {r0, lr}                \n"
-        "   bl      do_schedule             \n"
+        "   bl      ipc_schedule             \n"
         "   pop     {r2, r3}                \n"
         "   mov     lr, r3                  \n"
         "   cmp     r0, r1                  \n" /* ctx of curr and next thrd */
@@ -99,11 +99,11 @@ __attribute__((naked)) void PendSV_Handler(void)
         "   mov     r6, r10                 \n"
         "   mov     r7, r11                 \n"
         "   stm     r2!, {r4-r7}            \n"
-        "   mov     r5, lr                  \n"
+        "   mov     r3, lr                  \n"
         "   subs    r2, #32                 \n" /* reset r2(SP) to top */
-        "   stm     r0!, {r2, r3, r4, r5}   \n" /* Save struct context_ctrl_t */
-        "   ldm     r1!, {r2, r3, r4, r5}   \n" /* Load ctx of next thread */
-        "   mov     lr, r5                  \n"
+        "   stm     r0!, {r2, r3}           \n" /* Save struct context_ctrl_t */
+        "   ldm     r1!, {r2, r3}           \n" /* Load ctx of next thread */
+        "   mov     lr, r3                  \n"
         "   adds    r2, #16                 \n" /* Start of popping r4-r11 */
         "   ldm     r2!, {r4-r7}            \n"
         "   mov     r8, r4                  \n"
@@ -119,6 +119,7 @@ __attribute__((naked)) void PendSV_Handler(void)
         "   bx      lr                      \n"
     );
 }
+#endif
 
 __attribute__((naked)) void SVC_Handler(void)
 {
@@ -189,7 +190,7 @@ void tfm_arch_config_extensions(void)
 {
     /* There are no coprocessors in Armv6-M implementations */
 #ifndef __ARM_ARCH_6M__
-#if defined(__FPU_USED) && (__FPU_USED == 1U)
+#if defined(CONFIG_TFM_ENABLE_CP10CP11)
     /* Enable privileged and unprivilged access to the floating-point
      * coprocessor.
      */
@@ -198,22 +199,3 @@ void tfm_arch_config_extensions(void)
 #endif
 #endif
 }
-
-/* There is no FPCA in v6m */
-#ifndef __ARM_ARCH_6M__
-__attribute__((naked, noinline)) void tfm_arch_clear_fp_status(void)
-{
-    __ASM volatile(
-                   ".syntax unified          \n"
-                   "mrs  r0, control         \n"
-                   "bics r0, r0, #4          \n"
-                   "msr  control, r0         \n"
-                   "isb                      \n"
-                   "bx   lr                  \n"
-                  );
-}
-#else
-void tfm_arch_clear_fp_status(void)
-{
-}
-#endif

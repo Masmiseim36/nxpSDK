@@ -17,8 +17,6 @@
     <definition extID="platform.drivers.lpc_dma.MIMXRT595S"/>
     <definition extID="middleware.multicore.rpmsg_lite.evkmimxrt595_fusionf1_bm.MIMXRT595S"/>
     <definition extID="platform.drivers.memory.MIMXRT595S"/>
-    <definition extID="middleware.multicore.rpmsg_lite.MIMXRT595S"/>
-    <definition extID="middleware.multicore.rpmsg_lite.bm.MIMXRT595S"/>
     <definition extID="utility.debug_console_lite.MIMXRT595S"/>
     <definition extID="platform.utilities.assert_lite.MIMXRT595S"/>
     <definition extID="platform.drivers.pint.MIMXRT595S"/>
@@ -30,6 +28,8 @@
     <definition extID="platform.drivers.flexcomm_usart_dma.MIMXRT595S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
     <definition extID="middleware.baremetal.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.bm.MIMXRT595S"/>
     <definition extID="middleware.dsp_nn.fusionf1_nn_dsp.MIMXRT595S"/>
     <definition extID="platform.drivers.clock.MIMXRT595S"/>
     <definition extID="platform.drivers.reset.MIMXRT595S"/>
@@ -41,7 +41,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_dsp_nn_demo_fusionf1" name="dsp_nn_demo_fusionf1" device_core="fusionf1_MIMXRT595S" dependency="platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexcomm_i2c_dma.MIMXRT595S platform.drivers.flexcomm_i2s.MIMXRT595S platform.drivers.flexcomm_i2s_dma.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.mu.MIMXRT595S platform.drivers.sema42.MIMXRT595S platform.drivers.flexcomm_spi.MIMXRT595S platform.drivers.flexcomm_spi_dma.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.ctimer.MIMXRT595S platform.drivers.lpc_dma.MIMXRT595S middleware.multicore.rpmsg_lite.evkmimxrt595_fusionf1_bm.MIMXRT595S platform.drivers.memory.MIMXRT595S middleware.multicore.rpmsg_lite.MIMXRT595S middleware.multicore.rpmsg_lite.bm.MIMXRT595S utility.debug_console_lite.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.drivers.pint.MIMXRT595S platform.drivers.dmic.MIMXRT595S platform.drivers.dmic_dma.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.common.MIMXRT595S component.lists.MIMXRT595S platform.drivers.flexcomm_usart_dma.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S middleware.baremetal.MIMXRT595S middleware.dsp_nn.fusionf1_nn_dsp.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_DSP.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S" category="eiq_examples">
+  <example id="evkmimxrt595_dsp_nn_demo_fusionf1" name="dsp_nn_demo_fusionf1" device_core="fusionf1_MIMXRT595S" dependency="platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexcomm_i2c_dma.MIMXRT595S platform.drivers.flexcomm_i2s.MIMXRT595S platform.drivers.flexcomm_i2s_dma.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.mu.MIMXRT595S platform.drivers.sema42.MIMXRT595S platform.drivers.flexcomm_spi.MIMXRT595S platform.drivers.flexcomm_spi_dma.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.ctimer.MIMXRT595S platform.drivers.lpc_dma.MIMXRT595S middleware.multicore.rpmsg_lite.evkmimxrt595_fusionf1_bm.MIMXRT595S platform.drivers.memory.MIMXRT595S utility.debug_console_lite.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.drivers.pint.MIMXRT595S platform.drivers.dmic.MIMXRT595S platform.drivers.dmic_dma.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.common.MIMXRT595S component.lists.MIMXRT595S platform.drivers.flexcomm_usart_dma.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S middleware.baremetal.MIMXRT595S middleware.multicore.rpmsg_lite.MIMXRT595S middleware.multicore.rpmsg_lite.bm.MIMXRT595S middleware.dsp_nn.fusionf1_nn_dsp.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_DSP.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S" category="eiq_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -51,6 +51,8 @@
           <value>XOS_DEBUG_ALL=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XOS_CLOCK_FREQ=198000000</value>
+          <value>XF_CORE_ID=0</value>
+          <value>XF_CFG_CORES_NUM=1</value>
           <value>CPU_MIMXRT595SFFOC_dsp</value>
           <value>NNLIB_V2</value>
           <value>MCUXPRESSO_SDK</value>

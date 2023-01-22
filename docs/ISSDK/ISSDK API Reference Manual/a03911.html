@@ -50,7 +50,7 @@ $(function() {
 <p>The GPIO pin handle for i.MX SDK.  
  <a href="a03911.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a04835_source.html">gpio_driver.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a04862_source.html">gpio_driver.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for gpioHandleiMXSDK:</div>
 <div class="dyncontent">
@@ -67,18 +67,20 @@ Data Fields</h2></td></tr>
 <tr class="separator:ad3bee21df6875eeccd25d3c577e0600a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabb5fb6b74f6ccfc49944c4bdfe83a3a"><td class="memItemLeft" align="right" valign="top">IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03911.html#aabb5fb6b74f6ccfc49944c4bdfe83a3a">irq</a></td></tr>
 <tr class="separator:aabb5fb6b74f6ccfc49944c4bdfe83a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d5fcd46665c689f37da26dc6fc1916c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03911.html#a1d5fcd46665c689f37da26dc6fc1916c">portNumber</a></td></tr>
+<tr class="memitem:a1d5fcd46665c689f37da26dc6fc1916c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04862.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03911.html#a1d5fcd46665c689f37da26dc6fc1916c">portNumber</a></td></tr>
 <tr class="separator:a1d5fcd46665c689f37da26dc6fc1916c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeba73de92218b1090be78fedd1e8ebb9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03911.html#aeba73de92218b1090be78fedd1e8ebb9">pinStatus</a></td></tr>
 <tr class="separator:aeba73de92218b1090be78fedd1e8ebb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a327ca042a4c47fd57e92f0510209475f"><td class="memItemLeft" align="right" valign="top">RGPIO_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03911.html#a327ca042a4c47fd57e92f0510209475f">base</a></td></tr>
+<tr class="separator:a327ca042a4c47fd57e92f0510209475f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The GPIO pin handle for i.MX SDK. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00049">49</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00049">49</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a7809f27c779965fc1da0bf11663b8877"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7809f27c779965fc1da0bf11663b8877">&#9670;&nbsp;</a></span>base</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7809f27c779965fc1da0bf11663b8877">&#9670;&nbsp;</a></span>base <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -90,9 +92,26 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Base address of the GPIO Port. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00051">51</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00051">51</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a04820_source.html#l00098">imxsdk_gpio_clr_pin()</a>, <a class="el" href="a04820_source.html#l00144">imxsdk_gpio_read_pin()</a>, <a class="el" href="a04820_source.html#l00085">imxsdk_gpio_set_pin()</a>, and <a class="el" href="a04820_source.html#l00132">imxsdk_gpio_write_pin()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a04841_source.html#l00098">imxsdk_gpio_clr_pin()</a>, <a class="el" href="a04841_source.html#l00144">imxsdk_gpio_read_pin()</a>, <a class="el" href="a04841_source.html#l00085">imxsdk_gpio_set_pin()</a>, and <a class="el" href="a04841_source.html#l00132">imxsdk_gpio_write_pin()</a>.</p>
+
+</div>
+</div>
+<a id="a327ca042a4c47fd57e92f0510209475f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a327ca042a4c47fd57e92f0510209475f">&#9670;&nbsp;</a></span>base <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RGPIO_Type* base</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Base address of the GPIO Port. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04865_source.html#l00052">52</a> of file <a class="el" href="a04865_source.html">gpio_driver.h</a>.</p>
 
 </div>
 </div>
@@ -109,7 +128,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>IRQ Number for the port. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00054">54</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00054">54</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 
 </div>
 </div>
@@ -126,7 +145,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>mask value for a pin. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00053">53</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00053">53</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 
 </div>
 </div>
@@ -143,9 +162,9 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>pin number start from 0 -31. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00052">52</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00052">52</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a04820_source.html#l00098">imxsdk_gpio_clr_pin()</a>, <a class="el" href="a04820_source.html#l00144">imxsdk_gpio_read_pin()</a>, <a class="el" href="a04820_source.html#l00085">imxsdk_gpio_set_pin()</a>, and <a class="el" href="a04820_source.html#l00132">imxsdk_gpio_write_pin()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a04841_source.html#l00098">imxsdk_gpio_clr_pin()</a>, <a class="el" href="a04841_source.html#l00144">imxsdk_gpio_read_pin()</a>, <a class="el" href="a04841_source.html#l00085">imxsdk_gpio_set_pin()</a>, and <a class="el" href="a04841_source.html#l00132">imxsdk_gpio_write_pin()</a>.</p>
 
 </div>
 </div>
@@ -162,9 +181,9 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>pin status. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00056">56</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00056">56</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a04820_source.html#l00098">imxsdk_gpio_clr_pin()</a>, <a class="el" href="a04820_source.html#l00085">imxsdk_gpio_set_pin()</a>, and <a class="el" href="a04820_source.html#l00111">imxsdk_gpio_toggle_pin()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a04841_source.html#l00098">imxsdk_gpio_clr_pin()</a>, <a class="el" href="a04841_source.html#l00085">imxsdk_gpio_set_pin()</a>, and <a class="el" href="a04841_source.html#l00111">imxsdk_gpio_toggle_pin()</a>.</p>
 
 </div>
 </div>
@@ -175,25 +194,25 @@ Data Fields</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04835.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a> portNumber</td>
+          <td class="memname"><a class="el" href="a04862.html#a99ae455326e5aab598f6f2130150a1b1">port_number_t</a> portNumber</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Port Number for the port. </p>
 
-<p class="definition">Definition at line <a class="el" href="a04835_source.html#l00055">55</a> of file <a class="el" href="a04835_source.html">gpio_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04862_source.html#l00055">55</a> of file <a class="el" href="a04862_source.html">gpio_driver.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a04823_source.html#l00100">imxsdk_gpio_clr_pin()</a>, and <a class="el" href="a04823_source.html#l00087">imxsdk_gpio_set_pin()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a04847_source.html#l00100">imxsdk_gpio_clr_pin()</a>, and <a class="el" href="a04847_source.html#l00087">imxsdk_gpio_set_pin()</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>drivers/gpio/i.mx/<a class="el" href="a04835_source.html">gpio_driver.h</a></li>
+<li>drivers/gpio/i.mx/<a class="el" href="a04862_source.html">gpio_driver.h</a></li>
 </ul>
 </div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>
-&copy; Copyright 2016-2020 NXP. All Rights Reserved.
+&copy; Copyright 2016-2022 NXP. All Rights Reserved. SPDX-License-Identifier: BSD-3-Clause
 </small></address>
 </body>
 </html>

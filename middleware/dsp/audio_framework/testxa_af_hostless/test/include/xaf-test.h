@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -47,6 +47,8 @@ typedef struct _api_err_t{
 
 
 /* ...check the API call succeeds */
+/* ...xaf_adev_close should not be called if xaf_adev_open fails. */
+#if ((XF_NUM_CFG_CORES == 1) || (XF_CORE_ID == XF_CORE_ID_MASTER))
 #define TST_CHK_API(cond, func_name)                                              \
 ({                                                                                \
     int __ret;                                                                    \
@@ -59,18 +61,39 @@ typedef struct _api_err_t{
         for(i=0; i<XA_NUM_API_ERRS; i++){                                         \
             if(error_map_table_api[i].err == __ret){                              \
                 FIO_PRINTF(stderr,"%s failed, Error code : %d (%s at %s:%d)\n\n", func_name, __ret, error_map_table_api[i].perr, __FILE__, __LINE__);\
-                if(xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE) == XAF_NO_ERR)    \
+                if(strcmp(func_name, "xaf_adev_open") && (xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE) == XAF_NO_ERR)) \
                     abort_blocked_threads();                                      \
                 return __ret;                                                     \
             }\
         }\
         FIO_PRINTF(stderr,"%s failed, Error code : %d\n\n", func_name, __ret);    \
-        if(xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE) == XAF_NO_ERR)            \
+        if(strcmp(func_name, "xaf_adev_open") && (xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE) == XAF_NO_ERR)) \
             abort_blocked_threads();                                              \
         return __ret;                                                             \
     }                                                                             \
     __ret;                                                                        \
 })
+#else //((XF_NUM_CFG_CORES == 1) || (XF_CORE_ID == XF_CORE_ID_MASTER))
+#define TST_CHK_API(cond, func_name)                                              \
+({                                                                                \
+    int __ret;                                                                    \
+                                                                                  \
+    if ((__ret = (int)(cond)) < 0)                                                \
+    {                                                                             \
+        extern _XA_API_ERR_MAP error_map_table_api[];                             \
+        int i;                                                                    \
+        for(i=0; i<XA_NUM_API_ERRS; i++){                                         \
+            if(error_map_table_api[i].err == __ret){                              \
+                FIO_PRINTF(stderr,"c[%d] %s failed, Error code : %d (%s at %s:%d)\n\n", XF_CORE_ID, func_name, __ret, error_map_table_api[i].perr, __FILE__, __LINE__);\
+                return __ret;                                                     \
+            }\
+        }\
+        FIO_PRINTF(stderr,"c[%d] %s failed, Error code : %d\n\n", XF_CORE_ID, func_name, __ret);    \
+        return __ret;                                                             \
+    }                                                                             \
+    __ret;                                                                        \
+})
+#endif //((XF_NUM_CFG_CORES == 1) || (XF_CORE_ID == XF_CORE_ID_MASTER))
 
 /* ...check null pointer */ 
 #define TST_CHK_PTR(ptr, func_name)                                                    \

@@ -111,7 +111,7 @@ uint8_t llhttp_get_upgrade(llhttp_t* parser) {
 
 
 void llhttp_reset(llhttp_t* parser) {
-  llhttp_type_t type = (llhttp_type_t) parser->type;
+  llhttp_type_t type = parser->type;
   const llhttp_settings_t* settings = parser->settings;
   void* data = parser->data;
   uint8_t lenient_flags = parser->lenient_flags;
@@ -126,7 +126,7 @@ void llhttp_reset(llhttp_t* parser) {
 
 
 llhttp_errno_t llhttp_execute(llhttp_t* parser, const char* data, size_t len) {
-  return (llhttp_errno_t) llhttp__internal_execute(parser, data, data + len);
+  return llhttp__internal_execute(parser, data, data + len);
 }
 
 
@@ -140,13 +140,13 @@ llhttp_errno_t llhttp_finish(llhttp_t* parser) {
 
   /* We're in an error state. Don't bother doing anything. */
   if (parser->error != 0) {
-    return (llhttp_errno_t) 0;
+    return 0;
   }
 
   switch (parser->finish) {
     case HTTP_FINISH_SAFE_WITH_CB:
       CALLBACK_MAYBE(parser, on_message_complete);
-      if (err != HPE_OK) return (llhttp_errno_t) err;
+      if (err != HPE_OK) return err;
 
     /* FALLTHROUGH */
     case HTTP_FINISH_SAFE:
@@ -189,7 +189,7 @@ void llhttp_resume_after_upgrade(llhttp_t* parser) {
 
 
 llhttp_errno_t llhttp_get_errno(const llhttp_t* parser) {
-  return (llhttp_errno_t) parser->error;
+  return parser->error;
 }
 
 

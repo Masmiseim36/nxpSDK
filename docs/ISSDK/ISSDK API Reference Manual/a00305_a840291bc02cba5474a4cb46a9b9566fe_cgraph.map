@@ -1,5 +1,5 @@
 <map id="main" name="main">
-<area shape="rect" id="node2" href="$a04097.html#a4c84ccb952cb083367d7040cf9de3db8" title="BOARD_InitDebugConsole" alt="" coords="105,5,281,32"/>
+<area shape="rect" id="node2" href="$a04109.html#a4c84ccb952cb083367d7040cf9de3db8" title="BOARD_InitDebugConsole" alt="" coords="105,5,281,32"/>
 <area shape="rect" id="node3" href="$a00959.html#ga2c9fe54b6b84723fbaa590a6f4576966" title="Configures pin routing and optionally pin electrical features. " alt="" coords="134,56,253,83"/>
 <area shape="rect" id="node4" href="$a00521.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="331,183,392,209"/>
 <area shape="rect" id="node5" href="$a00161.html#a8dce7c0e6c9d7ef6cf9c6c2fd3c093ae" title="The interface function to configure he sensor. " alt="" coords="111,157,275,184"/>

@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=1, DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -493,6 +493,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -754,16 +764,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -772,6 +772,16 @@
               <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux_connections.h</FileName>
@@ -984,11 +994,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1002,16 +1007,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1388,7 +1383,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1547,6 +1542,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1808,16 +1813,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -1826,6 +1821,16 @@
               <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux_connections.h</FileName>
@@ -2038,11 +2043,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2056,16 +2056,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2442,7 +2432,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2601,6 +2591,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -2862,16 +2862,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -2880,6 +2870,16 @@
               <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux_connections.h</FileName>
@@ -3092,11 +3092,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3110,16 +3105,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3496,7 +3481,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../middleware/usb/pd;../../../../../../components/osa;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../../evkmimxrt595/flash_config;../../../../../../components/i2c;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3655,6 +3640,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -3916,16 +3911,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -3934,6 +3919,16 @@
               <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux_connections.h</FileName>
@@ -4146,11 +4141,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4164,16 +4154,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

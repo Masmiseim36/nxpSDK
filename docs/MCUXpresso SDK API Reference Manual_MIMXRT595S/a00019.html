@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -179,20 +179,20 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga5e70c4a718e5e14453e7afea0754b91e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga5e70c4a718e5e14453e7afea0754b91e">dsi_callback_t</a> )(MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:ga5e70c4a718e5e14453e7afea0754b91e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga5e70c4a718e5e14453e7afea0754b91e">dsi_callback_t</a> )(MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga5e70c4a718e5e14453e7afea0754b91e"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI callback for finished transfer.  <a href="#ga5e70c4a718e5e14453e7afea0754b91e">More...</a><br/></td></tr>
 <tr class="separator:ga5e70c4a718e5e14453e7afea0754b91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga84627a72058502328269676b81780f89"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89a6dc42631dd13b3a386ccc97d918c2020">kStatus_DSI_Busy</a> = MAKE_STATUS(kStatusGroup_MIPI_DSI, 0), 
+&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89a6dc42631dd13b3a386ccc97d918c2020">kStatus_DSI_Busy</a> = MAKE_STATUS((int32_t)kStatusGroup_MIPI_DSI, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89acd8b3eeb40ff906e95c567b9826de7e6">kStatus_DSI_RxDataError</a> = MAKE_STATUS(kStatusGroup_MIPI_DSI, 1), 
+&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89acd8b3eeb40ff906e95c567b9826de7e6">kStatus_DSI_RxDataError</a> = MAKE_STATUS((int32_t)kStatusGroup_MIPI_DSI, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89abdf7231314f285596b023c7f5a9fa676">kStatus_DSI_ErrorReportReceived</a> = MAKE_STATUS(kStatusGroup_MIPI_DSI, 2), 
+&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89abdf7231314f285596b023c7f5a9fa676">kStatus_DSI_ErrorReportReceived</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89a4aa4ed83710e911e39f923c177581c60">kStatus_DSI_NotSupported</a> = MAKE_STATUS(kStatusGroup_MIPI_DSI, 3)
+&#160;&#160;<a class="el" href="a00019.html#gga84627a72058502328269676b81780f89a4aa4ed83710e911e39f923c177581c60">kStatus_DSI_NotSupported</a> = MAKE_STATUS((int32_t)kStatusGroup_MIPI_DSI, 3)
 <br/>
  }</td></tr>
 <tr class="memdesc:ga84627a72058502328269676b81780f89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes for the MIPI DSI driver.  <a href="a00019.html#ga84627a72058502328269676b81780f89">More...</a><br/></td></tr>
@@ -258,149 +258,149 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:ga213c2b4811d05c4179169bbba1897453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Behavior in BLLP (Blanking or Low-Power Interval).  <a href="a00019.html#ga213c2b4811d05c4179169bbba1897453">More...</a><br/></td></tr>
 <tr class="separator:ga213c2b4811d05c4179169bbba1897453"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae8a3b6a5d0d3244ed73924ab2421a0d0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a6923cf7eab105bb817593d692a6fc056">kDSI_ApbNotIdle</a> = (1U &lt;&lt; 0U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a6923cf7eab105bb817593d692a6fc056">kDSI_ApbNotIdle</a> = (1UL &lt;&lt; 0U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a432175f8fb65d43f474fd884ffb0e3fa">kDSI_ApbTxDone</a> = (1U &lt;&lt; 1U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a432175f8fb65d43f474fd884ffb0e3fa">kDSI_ApbTxDone</a> = (1UL &lt;&lt; 1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a0907a630356601ecc243ce461f76c98f">kDSI_ApbRxControl</a> = (1U &lt;&lt; 2U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a0907a630356601ecc243ce461f76c98f">kDSI_ApbRxControl</a> = (1UL &lt;&lt; 2U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae958a0b78426f083d36e356b6fd4a8f7">kDSI_ApbTxOverflow</a> = (1U &lt;&lt; 3U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae958a0b78426f083d36e356b6fd4a8f7">kDSI_ApbTxOverflow</a> = (1UL &lt;&lt; 3U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a17e12fd894942f8fe9a50209133d8413">kDSI_ApbTxUnderflow</a> = (1U &lt;&lt; 4U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a17e12fd894942f8fe9a50209133d8413">kDSI_ApbTxUnderflow</a> = (1UL &lt;&lt; 4U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a9a3e29e9fdf7fdb0c4e6003732c1574f">kDSI_ApbRxOverflow</a> = (1U &lt;&lt; 5U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a9a3e29e9fdf7fdb0c4e6003732c1574f">kDSI_ApbRxOverflow</a> = (1UL &lt;&lt; 5U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ab199a82243f818329d5edd1ee066d206">kDSI_ApbRxUnderflow</a> = (1U &lt;&lt; 6U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ab199a82243f818329d5edd1ee066d206">kDSI_ApbRxUnderflow</a> = (1UL &lt;&lt; 6U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae902872ec9fc5ed1711b1ec73ae2c573">kDSI_ApbRxHeaderReceived</a> = (1U &lt;&lt; 7U), 
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae902872ec9fc5ed1711b1ec73ae2c573">kDSI_ApbRxHeaderReceived</a> = (1UL &lt;&lt; 7U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae8228b974c366c49e0a62b1efa5b9f96">kDSI_ApbRxPacketReceived</a> = (1U &lt;&lt; 8U)
+&#160;&#160;<a class="el" href="a00019.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae8228b974c366c49e0a62b1efa5b9f96">kDSI_ApbRxPacketReceived</a> = (1UL &lt;&lt; 8U)
 <br/>
  }</td></tr>
 <tr class="memdesc:gae8a3b6a5d0d3244ed73924ab2421a0d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">_dsi_apb_status Status of APB to packet interface.  <a href="a00019.html#gae8a3b6a5d0d3244ed73924ab2421a0d0">More...</a><br/></td></tr>
 <tr class="separator:gae8a3b6a5d0d3244ed73924ab2421a0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf715e26dfffd1f8de1c18449e2770cff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffae5dbd23e0df466c8115f1d3edf9b8c4e">kDSI_RxErrorEccOneBit</a> = (1U &lt;&lt; 0U), 
+&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffae5dbd23e0df466c8115f1d3edf9b8c4e">kDSI_RxErrorEccOneBit</a> = (1UL &lt;&lt; 0U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffa970f1375c7520d35acb9b71212aa2d8d">kDSI_RxErrorEccMultiBit</a> = (1U &lt;&lt; 1U), 
+&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffa970f1375c7520d35acb9b71212aa2d8d">kDSI_RxErrorEccMultiBit</a> = (1UL &lt;&lt; 1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffa0660ee4a09247fe383aa41ae885259c7">kDSI_RxErrorCrc</a> = (1U &lt;&lt; 7U), 
+&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffa0660ee4a09247fe383aa41ae885259c7">kDSI_RxErrorCrc</a> = (1UL &lt;&lt; 7U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffaf84dbbd049c2d983ba9ddfd7034b7958">kDSI_RxErrorHtxTo</a> = (1U &lt;&lt; 8U), 
+&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffaf84dbbd049c2d983ba9ddfd7034b7958">kDSI_RxErrorHtxTo</a> = (1UL &lt;&lt; 8U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffae3acd18f59a9f77dc894e2763fe62d39">kDSI_RxErrorLrxTo</a> = (1U &lt;&lt; 9U), 
+&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffae3acd18f59a9f77dc894e2763fe62d39">kDSI_RxErrorLrxTo</a> = (1UL &lt;&lt; 9U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffae77bd659a4201f0a8ddc3f2f73c8abca">kDSI_RxErrorBtaTo</a> = (1U &lt;&lt; 10U)
+&#160;&#160;<a class="el" href="a00019.html#ggaf715e26dfffd1f8de1c18449e2770cffae77bd659a4201f0a8ddc3f2f73c8abca">kDSI_RxErrorBtaTo</a> = (1UL &lt;&lt; 10U)
 <br/>
  }</td></tr>
 <tr class="memdesc:gaf715e26dfffd1f8de1c18449e2770cff"><td class="mdescLeft">&#160;</td><td class="mdescRight">_dsi_rx_error_status Host receive error status.  <a href="a00019.html#gaf715e26dfffd1f8de1c18449e2770cff">More...</a><br/></td></tr>
 <tr class="separator:gaf715e26dfffd1f8de1c18449e2770cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2285120a015be7eb8a83fee095ef5bbf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga2285120a015be7eb8a83fee095ef5bbf">_dsi_host_status</a> { <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfae9ed021588f72d138504f52d98b49019">kDSI_HostSoTError</a> = (1U &lt;&lt; 0U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfae9ed021588f72d138504f52d98b49019">kDSI_HostSoTError</a> = (1UL &lt;&lt; 0U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfacbf453d8bbb4ab48ee9cb3003b53eef9">kDSI_HostSoTSyncError</a> = (1U &lt;&lt; 1U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfacbf453d8bbb4ab48ee9cb3003b53eef9">kDSI_HostSoTSyncError</a> = (1UL &lt;&lt; 1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaef8c147ade9076b9d6606a92ba00601f">kDSI_HostEoTSyncError</a> = (1U &lt;&lt; 2U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaef8c147ade9076b9d6606a92ba00601f">kDSI_HostEoTSyncError</a> = (1UL &lt;&lt; 2U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfacef4acc80e3449384c769f1da181ada3">kDSI_HostEscEntryCmdError</a> = (1U &lt;&lt; 3U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfacef4acc80e3449384c769f1da181ada3">kDSI_HostEscEntryCmdError</a> = (1UL &lt;&lt; 3U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa3595cfabb32aec7cb4a0ff168199fd0f">kDSI_HostLpTxSyncError</a> = (1U &lt;&lt; 4U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa3595cfabb32aec7cb4a0ff168199fd0f">kDSI_HostLpTxSyncError</a> = (1UL &lt;&lt; 4U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa7dad4a5c7713e54be6be7de976c499f3">kDSI_HostPeriphToError</a> = (1U &lt;&lt; 5U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa7dad4a5c7713e54be6be7de976c499f3">kDSI_HostPeriphToError</a> = (1UL &lt;&lt; 5U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaf39f7e3799b2f8c916082b790e55d002">kDSI_HostFalseControlError</a> = (1U &lt;&lt; 6U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaf39f7e3799b2f8c916082b790e55d002">kDSI_HostFalseControlError</a> = (1UL &lt;&lt; 6U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa4b3b53046e5a916c01875ca7f0de6fb5">kDSI_HostContentionDetected</a> = (1U &lt;&lt; 7U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa4b3b53046e5a916c01875ca7f0de6fb5">kDSI_HostContentionDetected</a> = (1UL &lt;&lt; 7U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa3ec3b159633dce4251d87e0143b3ca88">kDSI_HostEccErrorOneBit</a> = (1U &lt;&lt; 8U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa3ec3b159633dce4251d87e0143b3ca88">kDSI_HostEccErrorOneBit</a> = (1UL &lt;&lt; 8U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa48131f2472756835b1bb1d46b770bf60">kDSI_HostEccErrorMultiBit</a> = (1U &lt;&lt; 9U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa48131f2472756835b1bb1d46b770bf60">kDSI_HostEccErrorMultiBit</a> = (1UL &lt;&lt; 9U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa54f47d5ef5a3d87191ee69d8dd93522f">kDSI_HostChecksumError</a> = (1U &lt;&lt; 10U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa54f47d5ef5a3d87191ee69d8dd93522f">kDSI_HostChecksumError</a> = (1UL &lt;&lt; 10U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa0667092000212b97d0684f9f513caccc">kDSI_HostInvalidDataType</a> = (1U &lt;&lt; 11U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa0667092000212b97d0684f9f513caccc">kDSI_HostInvalidDataType</a> = (1UL &lt;&lt; 11U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaf746c54c2b60554f0c746b2e413dae65">kDSI_HostInvalidVcId</a> = (1U &lt;&lt; 12U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaf746c54c2b60554f0c746b2e413dae65">kDSI_HostInvalidVcId</a> = (1UL &lt;&lt; 12U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa97f1969d09072c52113212475884c9ce">kDSI_HostInvalidTxLength</a> = (1U &lt;&lt; 13U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa97f1969d09072c52113212475884c9ce">kDSI_HostInvalidTxLength</a> = (1UL &lt;&lt; 13U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa6ba48328af4313ffa4e7bf1fb3f7b88b">kDSI_HostProtocalViolation</a> = (1U &lt;&lt; 15U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfa6ba48328af4313ffa4e7bf1fb3f7b88b">kDSI_HostProtocalViolation</a> = (1UL &lt;&lt; 15U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfac28187f7c4cafb5f70e7c19047cbb795">kDSI_HostResetTriggerReceived</a> = (1U &lt;&lt; 16U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfac28187f7c4cafb5f70e7c19047cbb795">kDSI_HostResetTriggerReceived</a> = (1UL &lt;&lt; 16U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaad783f0de8c1261dd5f187f33e47bf2a">kDSI_HostTearTriggerReceived</a> = (1U &lt;&lt; 17U), 
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaad783f0de8c1261dd5f187f33e47bf2a">kDSI_HostTearTriggerReceived</a> = (1UL &lt;&lt; 17U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaffa96afa709e801b652ebaf96b7b4207">kDSI_HostAckTriggerReceived</a> = (1U &lt;&lt; 18U)
+&#160;&#160;<a class="el" href="a00019.html#gga2285120a015be7eb8a83fee095ef5bbfaffa96afa709e801b652ebaf96b7b4207">kDSI_HostAckTriggerReceived</a> = (1UL &lt;&lt; 18U)
 <br/>
  }</td></tr>
 <tr class="memdesc:ga2285120a015be7eb8a83fee095ef5bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">DSI host controller status (status_out)  <a href="a00019.html#ga2285120a015be7eb8a83fee095ef5bbf">More...</a><br/></td></tr>
 <tr class="separator:ga2285120a015be7eb8a83fee095ef5bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb730582952b7ceec73d7dc9bf7bef39"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39aebdadd046af13291e3aef276d94a29aa">kDSI_InterruptGroup1ApbNotIdle</a> = (1U &lt;&lt; 0U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39aebdadd046af13291e3aef276d94a29aa">kDSI_InterruptGroup1ApbNotIdle</a> = (1UL &lt;&lt; 0U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a68a59f20db306589cccae1c2d215fc2a">kDSI_InterruptGroup1ApbTxDone</a> = (1U &lt;&lt; 1U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a68a59f20db306589cccae1c2d215fc2a">kDSI_InterruptGroup1ApbTxDone</a> = (1UL &lt;&lt; 1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39aace45f1527e890b35eb033a606ff71ab">kDSI_InterruptGroup1ApbRxControl</a> = (1U &lt;&lt; 2U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39aace45f1527e890b35eb033a606ff71ab">kDSI_InterruptGroup1ApbRxControl</a> = (1UL &lt;&lt; 2U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a066218007d7396537bbfce5192077879">kDSI_InterruptGroup1ApbTxOverflow</a> = (1U &lt;&lt; 3U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a066218007d7396537bbfce5192077879">kDSI_InterruptGroup1ApbTxOverflow</a> = (1UL &lt;&lt; 3U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a2de7d012fcbb5a97594bc2c8d65b88e8">kDSI_InterruptGroup1ApbTxUnderflow</a> = (1U &lt;&lt; 4U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a2de7d012fcbb5a97594bc2c8d65b88e8">kDSI_InterruptGroup1ApbTxUnderflow</a> = (1UL &lt;&lt; 4U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ae169f0187f72f7bc45768ee490ae0d28">kDSI_InterruptGroup1ApbRxOverflow</a> = (1U &lt;&lt; 5U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ae169f0187f72f7bc45768ee490ae0d28">kDSI_InterruptGroup1ApbRxOverflow</a> = (1UL &lt;&lt; 5U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a0e9e6c75709fa98d2848eb221bba3f7d">kDSI_InterruptGroup1ApbRxUnderflow</a> = (1U &lt;&lt; 6U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a0e9e6c75709fa98d2848eb221bba3f7d">kDSI_InterruptGroup1ApbRxUnderflow</a> = (1UL &lt;&lt; 6U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ab280d0815c06fec822fcd1db3178eb3c">kDSI_InterruptGroup1ApbRxHeaderReceived</a> = (1U &lt;&lt; 7U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ab280d0815c06fec822fcd1db3178eb3c">kDSI_InterruptGroup1ApbRxHeaderReceived</a> = (1UL &lt;&lt; 7U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a6e4a41f0fc6ae84bfb3926c2fb05c051">kDSI_InterruptGroup1ApbRxPacketReceived</a> = (1U &lt;&lt; 8U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a6e4a41f0fc6ae84bfb3926c2fb05c051">kDSI_InterruptGroup1ApbRxPacketReceived</a> = (1UL &lt;&lt; 8U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a339330d2f5fbd91cde854c0ca9377dda">kDSI_InterruptGroup1SoTError</a> = (1U &lt;&lt; 9U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a339330d2f5fbd91cde854c0ca9377dda">kDSI_InterruptGroup1SoTError</a> = (1UL &lt;&lt; 9U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39aab65dc4b3f122067a4423c6fa8ccc7b9">kDSI_InterruptGroup1SoTSyncError</a> = (1U &lt;&lt; 10U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39aab65dc4b3f122067a4423c6fa8ccc7b9">kDSI_InterruptGroup1SoTSyncError</a> = (1UL &lt;&lt; 10U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a39f9f0880d48baf374b3aa6d3e1a769c">kDSI_InterruptGroup1EoTSyncError</a> = (1U &lt;&lt; 11U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a39f9f0880d48baf374b3aa6d3e1a769c">kDSI_InterruptGroup1EoTSyncError</a> = (1UL &lt;&lt; 11U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39adebcddea2024108e824551d0d13653ee">kDSI_InterruptGroup1EscEntryCmdError</a> = (1U &lt;&lt; 12U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39adebcddea2024108e824551d0d13653ee">kDSI_InterruptGroup1EscEntryCmdError</a> = (1UL &lt;&lt; 12U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a61a66da32600fa52696717683ba720d8">kDSI_InterruptGroup1LpTxSyncError</a> = (1U &lt;&lt; 13U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a61a66da32600fa52696717683ba720d8">kDSI_InterruptGroup1LpTxSyncError</a> = (1UL &lt;&lt; 13U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a9bae83a71b6332f4d0694d68dd4575dc">kDSI_InterruptGroup1PeriphToError</a> = (1U &lt;&lt; 14U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a9bae83a71b6332f4d0694d68dd4575dc">kDSI_InterruptGroup1PeriphToError</a> = (1UL &lt;&lt; 14U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ab2dc9fd805d97024f1ef67ea2d7a510b">kDSI_InterruptGroup1FalseControlError</a> = (1U &lt;&lt; 15U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ab2dc9fd805d97024f1ef67ea2d7a510b">kDSI_InterruptGroup1FalseControlError</a> = (1UL &lt;&lt; 15U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a074cfcbd72043f75ba0f9d4c49108b9e">kDSI_InterruptGroup1ContentionDetected</a> = (1U &lt;&lt; 16U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a074cfcbd72043f75ba0f9d4c49108b9e">kDSI_InterruptGroup1ContentionDetected</a> = (1UL &lt;&lt; 16U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39af2a20f9ec5930b5b140a8f3758894ef6">kDSI_InterruptGroup1EccErrorOneBit</a> = (1U &lt;&lt; 17U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39af2a20f9ec5930b5b140a8f3758894ef6">kDSI_InterruptGroup1EccErrorOneBit</a> = (1UL &lt;&lt; 17U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ac8d9c1fd2104921dd12f5369c589c920">kDSI_InterruptGroup1EccErrorMultiBit</a> = (1U &lt;&lt; 18U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ac8d9c1fd2104921dd12f5369c589c920">kDSI_InterruptGroup1EccErrorMultiBit</a> = (1UL &lt;&lt; 18U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ab5cbec7cf76f00486689308c33b6f073">kDSI_InterruptGroup1ChecksumError</a> = (1U &lt;&lt; 19U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ab5cbec7cf76f00486689308c33b6f073">kDSI_InterruptGroup1ChecksumError</a> = (1UL &lt;&lt; 19U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a547fc492134a94934ea0144d7329ef4b">kDSI_InterruptGroup1InvalidDataType</a> = (1U &lt;&lt; 20U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a547fc492134a94934ea0144d7329ef4b">kDSI_InterruptGroup1InvalidDataType</a> = (1UL &lt;&lt; 20U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a16d1f59e9658e059e1ae960cc528b158">kDSI_InterruptGroup1InvalidVcId</a> = (1U &lt;&lt; 21U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a16d1f59e9658e059e1ae960cc528b158">kDSI_InterruptGroup1InvalidVcId</a> = (1UL &lt;&lt; 21U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a0542a8b7455ebe6981b9423863ff455f">kDSI_InterruptGroup1InvalidTxLength</a> = (1U &lt;&lt; 22U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a0542a8b7455ebe6981b9423863ff455f">kDSI_InterruptGroup1InvalidTxLength</a> = (1UL &lt;&lt; 22U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a61bdb684e4e25f8b15598139da492b4e">kDSI_InterruptGroup1ProtocalViolation</a> = (1U &lt;&lt; 24U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a61bdb684e4e25f8b15598139da492b4e">kDSI_InterruptGroup1ProtocalViolation</a> = (1UL &lt;&lt; 24U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a411cac218c2764f485e408a97903b066">kDSI_InterruptGroup1ResetTriggerReceived</a> = (1U &lt;&lt; 25U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a411cac218c2764f485e408a97903b066">kDSI_InterruptGroup1ResetTriggerReceived</a> = (1UL &lt;&lt; 25U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39afae054ac43338379336c29bccba646de">kDSI_InterruptGroup1TearTriggerReceived</a> = (1U &lt;&lt; 26U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39afae054ac43338379336c29bccba646de">kDSI_InterruptGroup1TearTriggerReceived</a> = (1UL &lt;&lt; 26U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ae0b7afccc68486aa726ff0fb92688f59">kDSI_InterruptGroup1AckTriggerReceived</a> = (1U &lt;&lt; 27U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ae0b7afccc68486aa726ff0fb92688f59">kDSI_InterruptGroup1AckTriggerReceived</a> = (1UL &lt;&lt; 27U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39acba7ecb3bdce3bfe08af42e081a15c5d">kDSI_InterruptGroup1HtxTo</a> = (1U &lt;&lt; 29U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39acba7ecb3bdce3bfe08af42e081a15c5d">kDSI_InterruptGroup1HtxTo</a> = (1UL &lt;&lt; 29U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a693ab658bade360e42d09d777c83889f">kDSI_InterruptGroup1LrxTo</a> = (1U &lt;&lt; 30U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a693ab658bade360e42d09d777c83889f">kDSI_InterruptGroup1LrxTo</a> = (1UL &lt;&lt; 30U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a1bd84e09200ae1a0b8e74296a5605421">kDSI_InterruptGroup1BtaTo</a> = (1U &lt;&lt; 31U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a1bd84e09200ae1a0b8e74296a5605421">kDSI_InterruptGroup1BtaTo</a> = (1UL &lt;&lt; 31U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ac8d081946b220f4a70015602365c9677">kDSI_InterruptGroup2EccOneBit</a> = (1U &lt;&lt; 0U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39ac8d081946b220f4a70015602365c9677">kDSI_InterruptGroup2EccOneBit</a> = (1UL &lt;&lt; 0U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a32c33e8f15222ebdd23d8b403ca92403">kDSI_InterruptGroup2EccMultiBit</a> = (1U &lt;&lt; 1U), 
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a32c33e8f15222ebdd23d8b403ca92403">kDSI_InterruptGroup2EccMultiBit</a> = (1UL &lt;&lt; 1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a139b069215d5b38b6b586a9c0c51321e">kDSI_InterruptGroup2CrcError</a> = (1U &lt;&lt; 2U)
+&#160;&#160;<a class="el" href="a00019.html#ggafb730582952b7ceec73d7dc9bf7bef39a139b069215d5b38b6b586a9c0c51321e">kDSI_InterruptGroup2CrcError</a> = (1UL &lt;&lt; 2U)
 <br/>
  }</td></tr>
 <tr class="memdesc:gafb730582952b7ceec73d7dc9bf7bef39"><td class="mdescLeft">&#160;</td><td class="mdescRight">_dsi_interrupt DSI interrupt.  <a href="a00019.html#gafb730582952b7ceec73d7dc9bf7bef39">More...</a><br/></td></tr>
@@ -507,7 +507,7 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gadff12c22c272d75eb22abfd2b7b09146"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadff12c22c272d75eb22abfd2b7b09146"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_MIPI_DSI_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_MIPI_DSI_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 4))</td></tr>
 <tr class="separator:gadff12c22c272d75eb22abfd2b7b09146"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -560,9 +560,9 @@ MIPI DSI APB</h2></td></tr>
 <tr class="memitem:gac1371a58b6086a50c29fa07cb27a8bd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#gac1371a58b6086a50c29fa07cb27a8bd5">DSI_WriteApbTxPayload</a> (MIPI_DSI_HOST_Type *base, const uint8_t *payload, uint16_t payloadSize)</td></tr>
 <tr class="memdesc:gac1371a58b6086a50c29fa07cb27a8bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the long APB packet payload.  <a href="#gac1371a58b6086a50c29fa07cb27a8bd5">More...</a><br/></td></tr>
 <tr class="separator:gac1371a58b6086a50c29fa07cb27a8bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga108f653398ba34bbac9902f2184c1eeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga108f653398ba34bbac9902f2184c1eeb">DSI_WriteApbTxPayloadExt</a> (MIPI_DSI_HOST_Type *base, const uint8_t *payload, uint16_t payloadSize, bool sendDscCmd, uint8_t dscCmd)</td></tr>
-<tr class="memdesc:ga108f653398ba34bbac9902f2184c1eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended function to fill the payload to TX FIFO.  <a href="#ga108f653398ba34bbac9902f2184c1eeb">More...</a><br/></td></tr>
-<tr class="separator:ga108f653398ba34bbac9902f2184c1eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9edb9522d8a6e44f3cc27a2b91a2cc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#gaa9edb9522d8a6e44f3cc27a2b91a2cc4">DSI_WriteApbTxPayloadExt</a> (MIPI_DSI_HOST_Type *base, const uint8_t *payload, uint16_t payloadSize, bool sendDcsCmd, uint8_t dcsCmd)</td></tr>
+<tr class="memdesc:gaa9edb9522d8a6e44f3cc27a2b91a2cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended function to fill the payload to TX FIFO.  <a href="#gaa9edb9522d8a6e44f3cc27a2b91a2cc4">More...</a><br/></td></tr>
+<tr class="separator:gaa9edb9522d8a6e44f3cc27a2b91a2cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga292fdbc2d57c2838e4c408ffad780f39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga292fdbc2d57c2838e4c408ffad780f39">DSI_ReadApbRxPayload</a> (MIPI_DSI_HOST_Type *base, uint8_t *payload, uint16_t payloadSize)</td></tr>
 <tr class="memdesc:ga292fdbc2d57c2838e4c408ffad780f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the long APB packet payload.  <a href="#ga292fdbc2d57c2838e4c408ffad780f39">More...</a><br/></td></tr>
 <tr class="separator:ga292fdbc2d57c2838e4c408ffad780f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -593,16 +593,16 @@ MIPI DSI APB</h2></td></tr>
 <tr class="memitem:ga0974af0093c2cff509789fc92d55d6b4"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga0974af0093c2cff509789fc92d55d6b4">DSI_GetRxPacketVirtualChannel</a> (uint32_t rxPktHeader)</td></tr>
 <tr class="memdesc:ga0974af0093c2cff509789fc92d55d6b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the RX packet virtual channel from the packet header.  <a href="#ga0974af0093c2cff509789fc92d55d6b4">More...</a><br/></td></tr>
 <tr class="separator:ga0974af0093c2cff509789fc92d55d6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5fc6ddbcd31962e5702f4c12b75068a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga5fc6ddbcd31962e5702f4c12b75068a1">DSI_TransferBlocking</a> (MIPI_DSI_HOST_Type *base, <a class="el" href="a00019.html#a00340">dsi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga5fc6ddbcd31962e5702f4c12b75068a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga5fc6ddbcd31962e5702f4c12b75068a1">DSI_TransferBlocking</a> (MIPI_DSI_HOST_Type *base, <a class="el" href="a00019.html#a00340">dsi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga5fc6ddbcd31962e5702f4c12b75068a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">APB data transfer using blocking method.  <a href="#ga5fc6ddbcd31962e5702f4c12b75068a1">More...</a><br/></td></tr>
 <tr class="separator:ga5fc6ddbcd31962e5702f4c12b75068a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:gadd43af4912e248818365466b7909864f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#gadd43af4912e248818365466b7909864f">DSI_TransferCreateHandle</a> (MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00019.html#ga5e70c4a718e5e14453e7afea0754b91e">dsi_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:gadd43af4912e248818365466b7909864f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#gadd43af4912e248818365466b7909864f">DSI_TransferCreateHandle</a> (MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00019.html#ga5e70c4a718e5e14453e7afea0754b91e">dsi_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gadd43af4912e248818365466b7909864f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the MIPI DSI handle.  <a href="#gadd43af4912e248818365466b7909864f">More...</a><br/></td></tr>
 <tr class="separator:gadd43af4912e248818365466b7909864f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d5088d235bb676e25cb153e9c3c9266"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga4d5088d235bb676e25cb153e9c3c9266">DSI_TransferNonBlocking</a> (MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00019.html#a00340">dsi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga4d5088d235bb676e25cb153e9c3c9266"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga4d5088d235bb676e25cb153e9c3c9266">DSI_TransferNonBlocking</a> (MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00019.html#a00340">dsi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga4d5088d235bb676e25cb153e9c3c9266"><td class="mdescLeft">&#160;</td><td class="mdescRight">APB data transfer using interrupt method.  <a href="#ga4d5088d235bb676e25cb153e9c3c9266">More...</a><br/></td></tr>
 <tr class="separator:ga4d5088d235bb676e25cb153e9c3c9266"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3731803737ab8addb6e448773b5a62cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ga3731803737ab8addb6e448773b5a62cb">DSI_TransferAbort</a> (MIPI_DSI_HOST_Type *base, dsi_handle_t *handle)</td></tr>
@@ -1145,7 +1145,7 @@ Transactional</h2></td></tr>
 <tr class="memdesc:a1f26e713f6aaf1be22a5574462c60b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">The TX data buffer.  <a href="#a1f26e713f6aaf1be22a5574462c60b58">More...</a><br/></td></tr>
 <tr class="separator:a1f26e713f6aaf1be22a5574462c60b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1a2371ba1baaef8714cb0cb9b24b93e"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#ab1a2371ba1baaef8714cb0cb9b24b93e">rxData</a></td></tr>
-<tr class="memdesc:ab1a2371ba1baaef8714cb0cb9b24b93e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The TX data buffer.  <a href="#ab1a2371ba1baaef8714cb0cb9b24b93e">More...</a><br/></td></tr>
+<tr class="memdesc:ab1a2371ba1baaef8714cb0cb9b24b93e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The RX data buffer.  <a href="#ab1a2371ba1baaef8714cb0cb9b24b93e">More...</a><br/></td></tr>
 <tr class="separator:ab1a2371ba1baaef8714cb0cb9b24b93e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d90e479b4d953b1fe49faeb04a2af67"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#a0d90e479b4d953b1fe49faeb04a2af67">txDataSize</a></td></tr>
 <tr class="memdesc:a0d90e479b4d953b1fe49faeb04a2af67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the TX data.  <a href="#a0d90e479b4d953b1fe49faeb04a2af67">More...</a><br/></td></tr>
@@ -1154,10 +1154,10 @@ Transactional</h2></td></tr>
 <tr class="memdesc:a9dcae4fd886d5164b95e8eb3e3db5673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the RX data.  <a href="#a9dcae4fd886d5164b95e8eb3e3db5673">More...</a><br/></td></tr>
 <tr class="separator:a9dcae4fd886d5164b95e8eb3e3db5673"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f50ba570de872fd9cdab070cff0ac59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#a7f50ba570de872fd9cdab070cff0ac59">sendDscCmd</a></td></tr>
-<tr class="memdesc:a7f50ba570de872fd9cdab070cff0ac59"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, the DSC command is specified by <a class="el" href="a00019.html#a85b91d7639b1a4b8bccbfacc43b8fcfa">dscCmd</a>, otherwise the DSC command is included in the <a class="el" href="a00019.html#a1f26e713f6aaf1be22a5574462c60b58">txData</a>.  <a href="#a7f50ba570de872fd9cdab070cff0ac59">More...</a><br/></td></tr>
+<tr class="memdesc:a7f50ba570de872fd9cdab070cff0ac59"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, the DCS command is specified by <a class="el" href="a00019.html#a85b91d7639b1a4b8bccbfacc43b8fcfa">dscCmd</a>, otherwise the DCS command is included in the <a class="el" href="a00019.html#a1f26e713f6aaf1be22a5574462c60b58">txData</a>.  <a href="#a7f50ba570de872fd9cdab070cff0ac59">More...</a><br/></td></tr>
 <tr class="separator:a7f50ba570de872fd9cdab070cff0ac59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b91d7639b1a4b8bccbfacc43b8fcfa"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html#a85b91d7639b1a4b8bccbfacc43b8fcfa">dscCmd</a></td></tr>
-<tr class="memdesc:a85b91d7639b1a4b8bccbfacc43b8fcfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DSC command to send, only valid when <a class="el" href="a00019.html#a7f50ba570de872fd9cdab070cff0ac59">sendDscCmd</a> is true.  <a href="#a85b91d7639b1a4b8bccbfacc43b8fcfa">More...</a><br/></td></tr>
+<tr class="memdesc:a85b91d7639b1a4b8bccbfacc43b8fcfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DCS command to send, only valid when <a class="el" href="a00019.html#a7f50ba570de872fd9cdab070cff0ac59">sendDscCmd</a> is true.  <a href="#a85b91d7639b1a4b8bccbfacc43b8fcfa">More...</a><br/></td></tr>
 <tr class="separator:a85b91d7639b1a4b8bccbfacc43b8fcfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
@@ -1333,17 +1333,17 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* dsi_callback_t)(MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* dsi_callback_t)(MIPI_DSI_HOST_Type *base, dsi_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>When transfer finished, one of these status values will be passed to the user:</p>
 <ul>
-<li><a class="el" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> Data transfer finished with no error.</li>
-<li><a class="el" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5adf7f172a5d4f1a44d5cb8a1121dcafcb">kStatus_Timeout</a> Transfer failed because of timeout.</li>
+<li><a class="el" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> Data transfer finished with no error.</li>
+<li><a class="el" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5adf7f172a5d4f1a44d5cb8a1121dcafcb">kStatus_Timeout</a> Transfer failed because of timeout.</li>
 <li><a class="el" href="a00019.html#gga84627a72058502328269676b81780f89acd8b3eeb40ff906e95c567b9826de7e6">kStatus_DSI_RxDataError</a> RX data error, user could use <a class="el" href="a00019.html#ga55d8060f70877d74493b3fa0020cf5cf">DSI_GetRxErrorStatus</a> to check the error details.</li>
 <li><a class="el" href="a00019.html#gga84627a72058502328269676b81780f89abdf7231314f285596b023c7f5a9fa676">kStatus_DSI_ErrorReportReceived</a> Error Report packet received, user could use <a class="el" href="a00019.html#gac9b6f00f9b96df587a63ffe31abaf0f8">DSI_GetAndClearHostStatus</a> to check the error report status.</li>
-<li><a class="el" href="a00237.html#gga99fb83031ce9923c84392b4e92f956b5a8692e71089c7e81bd5f4503ff55035db">kStatus_Fail</a> Transfer failed for other reasons. </li>
+<li><a class="el" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a8692e71089c7e81bd5f4503ff55035db">kStatus_Fail</a> Transfer failed for other reasons. </li>
 </ul>
 
 </div>
@@ -2428,7 +2428,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a class="anchor" id="ga108f653398ba34bbac9902f2184c1eeb"></a>
+<a class="anchor" id="gaa9edb9522d8a6e44f3cc27a2b91a2cc4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2454,13 +2454,13 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>sendDscCmd</em>, </td>
+          <td class="paramname"><em>sendDcsCmd</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>dscCmd</em>&#160;</td>
+          <td class="paramname"><em>dcsCmd</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2471,16 +2471,16 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <p>Write the long packet payload to TX FIFO. This function could be used in two ways</p>
 <ol type="1">
-<li>Include the DSC command in parameter <code>payload</code>. In this case, the DSC command is the first byte of <code>payload</code>. The parameter <code>sendDscCmd</code> is set to false, the <code>dscCmd</code> is not used. This function is the same as <a class="el" href="a00019.html#gac1371a58b6086a50c29fa07cb27a8bd5">DSI_WriteApbTxPayload</a> when used in this way.</li>
-<li>The DSC command in not in parameter <code>payload</code>, but specified by parameter <code>dscCmd</code>. In this case, the parameter <code>sendDscCmd</code> is set to true, the <code>dscCmd</code> is the DSC command to send. The <code>payload</code> is sent after <code>dscCmd</code>.</li>
+<li>Include the DCS command in parameter <code>payload</code>. In this case, the DCS command is the first byte of <code>payload</code>. The parameter <code>sendDcsCmd</code> is set to false, the <code>dcsCmd</code> is not used. This function is the same as <a class="el" href="a00019.html#gac1371a58b6086a50c29fa07cb27a8bd5">DSI_WriteApbTxPayload</a> when used in this way.</li>
+<li>The DCS command in not in parameter <code>payload</code>, but specified by parameter <code>dcsCmd</code>. In this case, the parameter <code>sendDcsCmd</code> is set to true, the <code>dcsCmd</code> is the DCS command to send. The <code>payload</code> is sent after <code>dcsCmd</code>.</li>
 </ol>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>MIPI DSI host peripheral base address. </td></tr>
     <tr><td class="paramname">payload</td><td>Pointer to the payload. </td></tr>
     <tr><td class="paramname">payloadSize</td><td>Payload size in byte. </td></tr>
-    <tr><td class="paramname">sendDscCmd</td><td>If set to true, the DSC command is specified by <code>dscCmd</code>, otherwise the DSC command is included in the <code>payload</code>. </td></tr>
-    <tr><td class="paramname">dscCmd</td><td>The DSC command to send, only used when <code>sendDscCmd</code> is true. </td></tr>
+    <tr><td class="paramname">sendDcsCmd</td><td>If set to true, the DCS command is specified by <code>dcsCmd</code>, otherwise the DCS command is included in the <code>payload</code>. </td></tr>
+    <tr><td class="paramname">dcsCmd</td><td>The DCS command to send, only used when <code>sendDCSCmd</code> is true. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2825,7 +2825,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferBlocking </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferBlocking </td>
           <td>(</td>
           <td class="paramtype">MIPI_DSI_HOST_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2871,7 +2871,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferCreateHandle </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferCreateHandle </td>
           <td>(</td>
           <td class="paramtype">MIPI_DSI_HOST_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2919,7 +2919,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferNonBlocking </td>
           <td>(</td>
           <td class="paramtype">MIPI_DSI_HOST_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

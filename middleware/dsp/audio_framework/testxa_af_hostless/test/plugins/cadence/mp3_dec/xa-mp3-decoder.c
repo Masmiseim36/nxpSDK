@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -25,6 +25,7 @@
  *
  * MP3 decoder plugin - thin wrapper around MP3DEC library
  ******************************************************************************/
+#ifdef XA_MP3_DECODER
 
 #define MODULE_TAG                      MP3DEC
 
@@ -32,9 +33,12 @@
  * Includes
  ******************************************************************************/
 
-#include "xa_mp3_dec_api.h"
 #include "audio/xa-audio-decoder-api.h"
-
+#ifndef PACK_WS_DUMMY
+#include "xa_mp3_dec_api.h"
+#else //PACK_WS_DUMMY
+static XA_ERRORCODE xa_mp3_dec(xa_codec_handle_t var1, WORD32 var2, WORD32 var3, pVOID var4){return 0;};
+#endif //PACK_WS_DUMMY
 
 #ifdef XAF_PROFILE
 #include "xaf-clk-test.h"
@@ -47,6 +51,7 @@ extern clk_t dec_cycles;
 
 static inline XA_ERRORCODE xa_mp3_get_config_param(xa_codec_handle_t handle, WORD32 i_idx, pVOID pv_value)
 {
+#ifndef PACK_WS_DUMMY
     /* ...translate "standard" parameter index into internal value */
     switch (i_idx)
     {
@@ -65,7 +70,7 @@ static inline XA_ERRORCODE xa_mp3_get_config_param(xa_codec_handle_t handle, WOR
         i_idx = XA_MP3DEC_CONFIG_PARAM_PCM_WDSZ;
         break;
     }
-    
+#endif //PACK_WS_DUMMY
     /* ...pass to library */
     return xa_mp3_dec(handle, XA_API_CMD_GET_CONFIG_PARAM, i_idx, pv_value);       
 }
@@ -100,4 +105,4 @@ XA_ERRORCODE xa_mp3_decoder(xa_codec_handle_t p_xa_module_obj, WORD32 i_cmd, WOR
         return ret;
     }
 }
-
+#endif

@@ -10,6 +10,7 @@
               <ListEntry>${xt_project_loc}/..</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
@@ -25,6 +26,8 @@
               <ListEntry key="DEBUG" value=""/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="XOS_CLOCK_FREQ" value="198000000"/>
+              <ListEntry key="XF_CORE_ID" value="0"/>
+              <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
             </value>
@@ -69,16 +72,6 @@
       </CompilerOptions>
       <AssemblerOptions/>
       <LinkerOptions>
-        <StringListMapOptions>
-          <StringListMapEntry>
-            <key>LinkerAdditionalOptions</key>
-            <value inheritance="append">
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a&#13;
--g&#13;
-</ListEntry>
-            </value>
-          </StringListMapEntry>
-        </StringListMapOptions>
         <BooleanMapOptions>
           <BooleanMapEntry>
             <key>CreateMinsize</key>
@@ -90,6 +83,18 @@
           </BooleanMapEntry>
         </BooleanMapOptions>
         <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT595S/xtensa/gdbio"/>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-g&#13;
+-Wl,--start-group&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a&#13;
+-Wl,--end-group&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
       </LinkerOptions>
     </BaseSettings>
     <OverriddenSettings/>

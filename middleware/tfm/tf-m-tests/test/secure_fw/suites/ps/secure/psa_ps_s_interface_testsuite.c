@@ -8,9 +8,9 @@
 #include "ps_tests.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "s_test_helpers.h"
-#include "tfm_memory_utils.h"
 #include "psa/protected_storage.h"
 #include "test_framework_helpers.h"
 
@@ -311,7 +311,7 @@ static void tfm_ps_test_1005(struct test_result_t *ret)
     }
 
     /* Check that write once data has not changed */
-    if (tfm_memcmp(read_data, WRITE_ONCE_RESULT_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, WRITE_ONCE_RESULT_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Write once data should not have changed");
         return;
     }
@@ -351,13 +351,13 @@ static void tfm_ps_test_1006(struct test_result_t *ret)
     }
 
     /* Check that the data is correct, including no illegal pre- or post-data */
-    if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to result data");
         return;
     }
 
     /* Reset read data */
-    tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
+    memcpy(read_data, READ_DATA, sizeof(read_data));
 
     /* Read from offset 2 to 2 bytes before end of the data */
     offset = 2;
@@ -371,21 +371,21 @@ static void tfm_ps_test_1006(struct test_result_t *ret)
     }
 
     /* Check that the correct data was read */
-    if (tfm_memcmp(p_read_data, "____", HALF_PADDING_SIZE) != 0) {
+    if (memcmp(p_read_data, "____", HALF_PADDING_SIZE) != 0) {
         TEST_FAIL("Read data contains illegal pre-data");
         return;
     }
 
     p_read_data += HALF_PADDING_SIZE;
 
-    if (tfm_memcmp(p_read_data, write_data + offset, data_len) != 0) {
+    if (memcmp(p_read_data, write_data + offset, data_len) != 0) {
         TEST_FAIL("Read data incorrect");
         return;
     }
 
     p_read_data += data_len;
 
-    if (tfm_memcmp(p_read_data, "____", HALF_PADDING_SIZE) != 0) {
+    if (memcmp(p_read_data, "____", HALF_PADDING_SIZE) != 0) {
         TEST_FAIL("Read data contains illegal post-data");
         return;
     }
@@ -432,7 +432,7 @@ static void tfm_ps_test_1007(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }
@@ -448,7 +448,7 @@ static void tfm_ps_test_1007(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }
@@ -486,7 +486,7 @@ static void tfm_ps_test_1008(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data not equal to original read data");
         return;
     }
@@ -500,7 +500,7 @@ static void tfm_ps_test_1008(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data not equal to original read data");
         return;
     }
@@ -545,7 +545,7 @@ static void tfm_ps_test_1009(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }
@@ -568,7 +568,7 @@ static void tfm_ps_test_1009(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }
@@ -580,7 +580,7 @@ static void tfm_ps_test_1009(struct test_result_t *ret)
     offset = 1;
 
     /* Reset read_data to original READ_DATA */
-    tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
+    memcpy(read_data, READ_DATA, sizeof(read_data));
 
     status = psa_ps_get(uid, offset, read_len, read_data + HALF_PADDING_SIZE,
                         &read_data_len);
@@ -597,7 +597,7 @@ static void tfm_ps_test_1009(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, OFFSET_RESULT_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, OFFSET_RESULT_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }
@@ -608,7 +608,7 @@ static void tfm_ps_test_1009(struct test_result_t *ret)
     offset = INVALID_OFFSET;
 
     /* Reset read_data to original READ_DATA */
-    tfm_memcpy(read_data, READ_DATA, sizeof(read_data));
+    memcpy(read_data, READ_DATA, sizeof(read_data));
 
     /* A parameter with a buffer pointer where its data length is longer than
      * maximum permitted, it is treated as a secure violation.
@@ -625,7 +625,7 @@ static void tfm_ps_test_1009(struct test_result_t *ret)
     }
 
     /* Check that the read data is unchanged */
-    if (tfm_memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, READ_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read data should be equal to original read data");
         return;
     }
@@ -998,7 +998,7 @@ static void tfm_ps_test_1018(struct test_result_t *ret)
         return;
     }
 
-    if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read buffer has incorrect data");
         return;
     }
@@ -1048,7 +1048,7 @@ static void tfm_ps_test_1019(struct test_result_t *ret)
         ++offset;
     }
 
-    if (tfm_memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
+    if (memcmp(read_data, RESULT_DATA, sizeof(read_data)) != 0) {
         TEST_FAIL("Read buffer has incorrect data");
         return;
     }
@@ -1107,7 +1107,7 @@ static void tfm_ps_test_1020(struct test_result_t *ret)
     }
 
     /* Check that get returns the last data to be set */
-    if (tfm_memcmp(read_data, write_data_3, sizeof(write_data_3)) != 0) {
+    if (memcmp(read_data, write_data_3, sizeof(write_data_3)) != 0) {
         TEST_FAIL("Read buffer has incorrect data");
         return;
     }
@@ -1163,7 +1163,7 @@ static void tfm_ps_test_1022(struct test_result_t *ret)
         psa_storage_uid_t uid = test_uid[cycle];
         struct psa_storage_info_t info = {0};
 
-        tfm_memset(read_asset_data, 0x00, sizeof(read_asset_data));
+        memset(read_asset_data, 0x00, sizeof(read_asset_data));
 
         /* Set with data and no flags and a valid UID */
         status = psa_ps_set(uid,
@@ -1202,7 +1202,7 @@ static void tfm_ps_test_1022(struct test_result_t *ret)
         }
 
         /* Check that thread's UID data has not been modified */
-        if (tfm_memcmp(read_asset_data, write_asset_data, data_size) != 0) {
+        if (memcmp(read_asset_data, write_asset_data, data_size) != 0) {
             TEST_FAIL("Read data should be equal to original write data");
             return;
         }

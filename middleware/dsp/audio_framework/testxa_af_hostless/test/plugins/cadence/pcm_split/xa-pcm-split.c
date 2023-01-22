@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -39,6 +39,8 @@
 
 /* ...debugging facility */
 #include "xf-debug.h"
+
+#include "xaf-api.h"
 
 #ifdef XAF_PROFILE
 #include "xaf-clk-test.h"
@@ -113,6 +115,9 @@ typedef struct XAPcmAec
 
     WORD16		    port_state[XA_MIMO_IN_PORTS + XA_MIMO_OUT_PORTS];
 
+    /* ...input port bypass flag: 0 disabled (default), 1 enabled */
+    UWORD32                 inport_bypass;
+
 }   XAPcmAec;
 
 /*******************************************************************************
@@ -151,6 +156,11 @@ static inline void xa_aec_preinit(XAPcmAec *d)
     d->persist_size = XA_MIMO_CFG_PERSIST_SIZE;
     d->scratch_size = XA_MIMO_CFG_SCRATCH_SIZE;
 
+#ifdef XA_INPORT_BYPASS_TEST
+    /* ...enabled at init for testing. To be enabled by set-config to the plugin. */
+    d->inport_bypass = 1;
+#endif
+
 }
 
 /* ...do pcm-gain scaling of stereo PCM-16 streams */
@@ -186,14 +196,15 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
 
         for (i = 0;i < (d->num_in_ports + d->num_out_ports); i++)
         {
-          if((d->port_state[i] & XA_AEC_FLAG_PORT_PAUSED))
+          if((d->port_state[i] & XA_AEC_FLAG_PORT_PAUSED) || (!(d->port_state[i] & XA_AEC_FLAG_PORT_CONNECTED)))
           {
-              /* non-fatal error if ANY output port is paused */
-              TRACE(PROCESS, _b("Port:%d is paused"), i);
+              /* non-fatal error if one of the port is paused or not connected*/
+              TRACE(PROCESS, _b("Port:%d is paused or not connected"), i);
               return XA_PCM_SPLIT_EXEC_NONFATAL_NO_DATA;
           }
         }
 
+        filled = (filled > d->out_buffer_size) ? d->out_buffer_size : filled;
         nSize = filled >> 1;    //size of each sample is 2 bytes    
 
         /* ...Processing loop */
@@ -215,7 +226,8 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
        	  d->state |= XA_AEC_FLAG_OUTPUT;
         
         /* ...save total number of consumed bytes */
-        d->consumed[0] = (UWORD32)((void *)pIn0 - d->input[0]);
+        //d->consumed[0] = (UWORD32)((void *)pIn0 - d->input[0]);
+        d->consumed[0] = filled;
         d->input_length[0] -= d->consumed[0];
 
       	if(d->port_state[0] & XA_AEC_FLAG_COMPLETE) 
@@ -242,8 +254,11 @@ static XA_ERRORCODE xa_aec_do_runtime_init(XAPcmAec *d)
     int i, num_ports;
 
     num_ports = XA_MIMO_IN_PORTS + XA_MIMO_OUT_PORTS;
+    /*... resetting input over state */
     for (i=0; i<num_ports; i++) 
-        d->port_state[i] = 0;
+    {
+        d->port_state[i] &= ~XA_AEC_FLAG_COMPLETE;
+    }
 
     d->state = XA_AEC_FLAG_PREINIT_DONE | XA_AEC_FLAG_POSTINIT_DONE | XA_AEC_FLAG_RUNNING;
     /* ...no special processing is needed here */
@@ -452,6 +467,16 @@ static XA_ERRORCODE xa_aec_get_config_param(XAPcmAec *d, WORD32 i_idx, pVOID pv_
         *(WORD32 *)pv_value = d->channels;
         return XA_NO_ERROR;
 
+#ifdef XA_EXT_CONFIG_TEST 
+    case XA_PCM_SPLIT_CONFIG_PARAM_PRODUCED:
+    {
+        xaf_ext_buffer_t *ext_buf = (xaf_ext_buffer_t *) pv_value;
+        memcpy(ext_buf->data, &d->produced, sizeof(d->produced));
+        ext_buf->valid_data_size = sizeof(d->produced);
+        return XA_NO_ERROR;
+    }
+#endif
+
     default:
         TRACE(ERROR, _x("Invalid parameter: %X"), i_idx);
         return XA_API_FATAL_INVALID_CMD_TYPE;
@@ -654,8 +679,16 @@ static XA_ERRORCODE xa_aec_get_mem_info_size(XAPcmAec *d, WORD32 i_idx, pVOID pv
     WORD32 n_mems = (d->num_in_ports + d->num_out_ports + 1 + 1);
     if(i_idx < d->num_in_ports)
     {
-        /* ...input buffers */
-        *(WORD32 *)pv_value = d->in_buffer_size;
+        if(d->inport_bypass)
+        {
+            /* ...input buffer length 0 enabling input bypass mode */
+            *(WORD32 *)pv_value = 0;
+        }
+        else
+        {
+            /* ...input buffers */
+            *(WORD32 *)pv_value = d->in_buffer_size;
+        }
     }
     else
     if(i_idx < (d->num_in_ports + d->num_out_ports))

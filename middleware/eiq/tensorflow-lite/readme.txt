@@ -1,4 +1,4 @@
-eIQ TensorFlow Lite for Microcontrollers library 22-02-16
+eIQ TensorFlow Lite for Microcontrollers library 22-09-19
 
 Content
 -------
@@ -18,7 +18,7 @@ FlatBuffers format with the TensorFlow Lite Converter (available in
 the TensorFlow distributions). Converted .tflite files can be then downloaded
 into an embedded device. The eIQ TensorFlow Lite for Microcontrollers library
 is based on TensorFlow Lite for Microcontrollers, state from
-the 16th of February 2022, and is therefore fully compatible.
+the 19th of September 2022, and is therefore fully compatible.
 Note: TensorFlow Lite supports only a subset of operators available in
       TensorFlow. The conversion tool reports any unsupported operators during
       the conversion.
@@ -28,26 +28,26 @@ Note: TensorFlow Lite supports only a subset of operators available in
 <MCUXpresso-SDK-root>
 |-- boards
 |   -- <board>
-|      -- eiq_examples                         - Example build projects
-|         -- tensorflow_lite_micro_adt         - Anomaly detection example
-|         -- tensorflow_lite_micro_cifar10     - CIFAR-10 image recognition example
-|         -- tensorflow_lite_micro_kws         - Keyword spotting example
-|         -- tensorflow_lite_micro_label_image - Image recognition example
+|      -- eiq_examples        - Example build projects
+|         -- tflm_adt         - Anomaly detection example
+|         -- tflm_cifar10     - CIFAR-10 image recognition example
+|         -- tflm_kws         - Keyword spotting example
+|         -- tflm_label_image - Image recognition example
 |-- middleware
     -- eiq
        -- tensorflow-lite
-          -- examples                  - Example source codes
-          -- tensorflow                - Library source codes
-          -- third_party               - 3rd party library source codes
+          -- examples         - Example source codes
+          -- tensorflow       - Library source codes
+          -- third_party      - 3rd party library source codes
 
 3. eIQ TensorFlow Lite examples
 -------------------------------
 The package contains several example applications using
 the eIQ TensorFlow Lite for Microcontrollers library. The build projects can
-be found in the /boards/<board>/eiq_examples/tensorflow_lite_micro_* folders.
-The following boards are currently supported: evkbimxrt1050, evkmimxrt1060,
-evkbimxrt1060, evkmimxrt1064, evkmimxrt1160, evkmimxrt1170, evkmimxrt595,
-evkmimxrt685, mimxrt685audevk.
+be found in the /boards/<board>/eiq_examples/tflm_* folders.
+The following boards are currently supported: evkmimxrt1040, evkbimxrt1050,
+evkmimxrt1060, evkbimxrt1060, evkmimxrt1064, evkmimxrt1160, evkmimxrt1170,
+evkmimxrt595, evkmimxrt685, mimxrt685audevk.
 The following toolchains are currently supported:
 MCUXpresso IDE, IAR Embedded Workbench, Keil MDK, GNU ARM Embedded Toolchain
 
@@ -62,49 +62,58 @@ MCUXpresso IDE, IAR Embedded Workbench, Keil MDK, GNU ARM Embedded Toolchain
 ----------------
 List of hardware optimized operators:
 
-Operator         |Operator  |i.MX RT685  |i.MX RT595     |i.MX RT1170
-                 |input type|(HiFi4 core)|(FusionF1 core)|i.MX RT1160
-                 |          |            |               |i.MX RT1064
-                 |          |            |               |i.MX RT1060
-                 |          |            |               |i.MX RT1050
-                 |          |            |               |i.MX RT685 (Cortex-M33 core)
-                 |          |            |               |i.MX RT595 (Cortex-M33 core)
------------------+----------+------------+---------------+----------------------------
-ADD              |FP        |No          |No             |No
-                 |PTQ       |No          |No             |No
-                 |PCQ       |No          |No             |Yes
------------------+----------+------------+---------------+----------------------------
-AVERAGE_POOL_2D  |FP        |No          |No             |No
-                 |PTQ       |No          |No             |No
-                 |PCQ       |No          |No             |Yes
------------------+----------+------------+---------------+----------------------------
-CONV_2D          |FP        |Yes         |No             |No
-                 |PTQ       |No          |No             |No
-                 |PCQ       |Yes         |Yes            |Yes
------------------+----------+------------+---------------+----------------------------
-DEPTHWISE_CONV_2D|FP        |Yes         |No             |No
-                 |PTQ       |No          |No             |Yes
-                 |PCQ       |Yes         |Yes            |Yes
------------------+----------+------------+---------------+----------------------------
-FULLY_CONNECTED  |FP        |Yes         |No             |No
-                 |PTQ       |No          |No             |No
-                 |PCQ       |Yes         |Yes            |Yes
------------------+----------+------------+---------------+----------------------------
-MAX_POOL_2D      |FP        |No          |No             |No
-                 |PTQ       |No          |No             |No
-                 |PCQ       |No          |No             |Yes
------------------+----------+------------+---------------+----------------------------
-MUL              |FP        |No          |No             |No
-                 |PTQ       |No          |No             |No
-                 |PCQ       |No          |No             |Yes
------------------+----------+------------+---------------+----------------------------
-SOFTMAX          |FP        |No          |No             |No
-                 |PTQ       |No          |No             |No
-                 |PCQ       |Yes         |Yes            |Yes
------------------+----------+------------+---------------+----------------------------
-SVDF             |FP        |No          |No             |No
-                 |PTQ       |N/A         |N/A            |N/A
-                 |PCQ       |Yes         |Yes            |Yes
+Operator                    |Operator  |i.MX RT595 (FusionF1 core)|i.MX RT1040
+                            |input type|i.MX RT685 (HiFi4 core)   |i.MX RT1050
+                            |          |                          |i.MX RT1060
+                            |          |                          |i.MX RT1064
+                            |          |                          |i.MX RT1160
+                            |          |                          |i.MX RT1170
+                            |          |                          |i.MX RT595 (Cortex-M33 core)
+                            |          |                          |i.MX RT685 (Cortex-M33 core)
+----------------------------+----------+--------------------------+----------------------------
+ADD                         |FP        |No                        |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |No                        |Yes
+----------------------------+----------+--------------------------+----------------------------
+AVERAGE_POOL_2D             |FP        |No                        |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |No                        |Yes
+----------------------------+----------+--------------------------+----------------------------
+CONV_2D                     |FP        |N/A                       |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |Yes                       |Yes
+----------------------------+----------+--------------------------+----------------------------
+DEPTHWISE_CONV_2D           |FP        |N/A                       |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |Yes                       |Yes
+----------------------------+----------+--------------------------+----------------------------
+FULLY_CONNECTED             |FP        |N/A                       |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |Yes                       |Yes
+----------------------------+----------+--------------------------+----------------------------
+UNIDIRECTIONAL_SEQUENCE_LSTM|FP        |N/A                       |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |Yes                       |No
+----------------------------+----------+--------------------------+----------------------------
+LOGISTIC                    |FP        |Yes (on i.MX RT685)       |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |Yes                       |No
+----------------------------+----------+--------------------------+----------------------------
+MAX_POOL_2D                 |FP        |No                        |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |No                        |Yes
+----------------------------+----------+--------------------------+----------------------------
+MUL                         |FP        |No                        |No
+                            |PTQ       |No                        |N/A
+                            |PCQ       |No                        |Yes
+----------------------------+----------+--------------------------+----------------------------
+SOFTMAX                     |FP        |No                        |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |Yes                       |Yes
+----------------------------+----------+--------------------------+----------------------------
+SVDF                        |FP        |No                        |No
+                            |PTQ       |N/A                       |N/A
+                            |PCQ       |Yes                       |Yes
 
 FP - 32-bit floating point
 PTQ - per-tensor quantized (asymmetric 8-bit quantization)
@@ -118,19 +127,19 @@ Optimized kernels for Cadence Xtensa cores leverage the Xtensa HiFi4 NN library.
 6. Release notes
 ----------------
 The library is based on TensorFlow Lite for Microcontrollers (TFLM) from
-the 16th of February 2022 available at https://github.com/tensorflow/tflite-micro/commit/9efa395baa7d85db5807202b3420550300d9297d.
+the 19th of September 2022 available at https://github.com/tensorflow/tflite-micro/commits/cdc3a3203f7721d17f6058979385a79cbd217551.
 Main modifications introduced to the original library source code:
   * Removed files not containing the TFLM library source codes
     or not needed for building the TFLM library
   * Added third party library source codes
-    * CMSIS-NN (https://github.com/ARM-software/CMSIS_5/archive/977abe9849781a2e788b02282986480ff4e25ea6.zip)
+    * CMSIS-NN (http://github.com/ARM-software/CMSIS_5/archive/6a18a74b46ac1501a7a750dd83b8bfb06fb24504.zip)
       * Removed files not needed for compiling the TFLM library
-    * Xtensa HiFi4 NN (https://github.com/foss-xtensa/nnlib-hifi4/blob/master/archive/xa_nnlib_hifi4_11_09_2021.zip)
+    * Xtensa HiFi4 NN (http://github.com/foss-xtensa/nnlib-hifi4/raw/master/archive/xa_nnlib_hifi4_05_11_2022.zip)
     * FFT2D (http://mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz)
       * Removed files not needed for compiling the TFLM library
     * KissFFT (https://github.com/mborgerding/kissfft/archive/refs/tags/v130.zip)
       * Removed files not needed for compiling the TFLM library
-    * FlatBuffers (https://github.com/google/flatbuffers/archive/f28c2b29364970e23c8ba3d751ca188f8a08c71e.zip)
+    * FlatBuffers (https://github.com/google/flatbuffers/archive/a66de58af9565586832c276fbb4251fc416bf07f.zip)
       * Removed files not needed for compiling the TFLM library
     * Gemmlowp (https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip)
       * Removed files not needed for compiling the TFLM library

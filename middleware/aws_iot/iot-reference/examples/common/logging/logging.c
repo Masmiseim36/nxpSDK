@@ -137,7 +137,7 @@ static void prvLoggingPrintfCommon( uint8_t usLoggingLevel,
                                     const char * pcFormat,
                                     va_list args )
 {
-    size_t xLength = 0, xIndex = 0;
+    size_t xLength = 0;
     char * pcPrintString = NULL;
 
     configASSERT( usLoggingLevel <= LOG_DEBUG );
@@ -362,7 +362,7 @@ void vLoggingPrintf( const char * pcFormat,
 void vLoggingPrint( const char * pcMessage )
 {
     char * pcPrintString = NULL;
-    size_t xLength = 0, xIndex = 0;
+    size_t xLength = 0;
 
     xLength = strlen( pcMessage ) + 1;
     pcPrintString = pvPortMalloc( xLength );

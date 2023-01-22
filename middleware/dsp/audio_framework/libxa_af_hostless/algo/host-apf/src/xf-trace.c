@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -82,6 +82,8 @@ int xf_trace(const char *format, ...)
 
     /* ...output timestamp */
     b += sprintf(b, "[%08u] ", xf_timenow());
+
+    b += sprintf(b, "c[%d]", XT_RSR_PRID());
 
     /* ...output format string */
     va_start(args, format);

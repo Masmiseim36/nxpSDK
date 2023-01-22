@@ -48,7 +48,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
         memset(token_buffer, 0, sizeof(token_buffer));
 
         status = val->attestation_function(VAL_INITIAL_ATTEST_GET_TOKEN_SIZE,
-                     challenge_size, &token_buffer_size);
+                     challenge_size, &token_buffer_size); //NXP
         if (status != PSA_SUCCESS)
         {
             if (challenge_size != PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32 ||

@@ -1,0 +1,122 @@
+#
+# Copyright (c) 2006-2020 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# Top-level makefile for binary and source licensees to generate
+# example test programs for the Vorbis decoder library
+
+ROOTDIR = ..
+
+WARNING_AS_ERROR ?=1
+ifeq ($(WARNING_AS_ERROR), 1)
+WERROR_FLAG=-Werror
+endif
+
+RM_R = rm -rf
+MKPATH = mkdir -p
+CP = cp -f
+
+#FLOOR0 = 1
+# Uncomment this line for Floor0 and 1 combined build
+#F01_COMBINED = 1
+
+ifeq ($(FLOOR0),1)
+F01=_f01
+DEF_FLOOR=-DFLOOR0=1
+else
+ifeq ($(F01_COMBINED),1)
+F01=_f1
+else
+F01=
+endif
+DEF_FLOOR=
+endif
+
+
+ifeq ($(CPU), gcc)
+	VORBISLIBNAME = xgcc_vorbis$(F01)_dec.a
+	VORBISDECBIN = xgcc_vorbis$(F01)_dec_test
+else
+	VORBISLIBNAME = xa_vorbis$(F01)_dec.a
+	VORBISDECBIN = xa_vorbis$(F01)_dec_test
+endif
+
+ifeq ($(CPU), gcc)
+	CC = g++ -m32
+else
+	CC = xt-xcc
+	ISS = xt-run
+	CONFIGDIR := $(shell $(ISS) --show-config=config)
+	include $(CONFIGDIR)/misc/hostenv.mk
+endif
+
+ifeq ($(DEBUG),1)
+	CFLAGS = -O0 -g -D__PROFILE__ -Wall -I$(ROOTDIR)/include $(EXTRA_CFLAGS)
+else
+	CFLAGS = -O2 -D__PROFILE__ -Wall -I$(ROOTDIR)/include $(EXTRA_CFLAGS)
+endif
+
+ISSFLAGS = $(EXTRA_ISSFLAGS)
+
+ifeq ($(CPU), gcc)
+	CFLAGS += -D__XTENSA_EL__=1 -DCSTUB_HIFI2 -I$(ROOTDIR)/../algo/include 
+else	
+	CFLAGS += $(WERROR_FLAG)
+endif
+
+ifdef END_FRAME
+  CFLAGS += -DEND_FRAME=$(END_FRAME)
+endif
+
+
+SRCDIR = $(ROOTDIR)/src
+TESTINPDIR = $(ROOTDIR)/test_inp
+TESTOUTDIR = $(ROOTDIR)/test_out
+TESTREFDIR = $(ROOTDIR)/test_ref
+
+LIBS = $(ROOTDIR)/../lib/$(VORBISLIBNAME)
+
+INCLUDE = -I$(ROOTDIR)/../include
+
+OBJDIR = objs
+
+OBJS = \
+	xa_vorbis_dec_test.o \
+	xa_vorbis_dec_error_handler.o
+
+OBJS_OBJS = $(addprefix $(OBJDIR)/,$(OBJS))
+
+all: xa_vorbis_dec_test_bin
+xa_vorbis_dec_test_bin:$(VORBISDECBIN)
+
+$(VORBISDECBIN): $(OBJDIR) $(OBJS_OBJS) $(LIBS)
+	$(CC) -o $@ $(OBJS_OBJS) $(LIBS) $(EXTRA_LDFLAGS)
+
+$(OBJDIR):
+	-$(MKPATH) $(OBJDIR)
+
+$(OBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ $<
+
+clean:
+	-$(RM) $(VORBISDECBIN)
+	-$(RM_R) $(OBJDIR)

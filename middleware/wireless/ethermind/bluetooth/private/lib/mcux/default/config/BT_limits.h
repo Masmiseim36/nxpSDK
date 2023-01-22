@@ -1205,6 +1205,82 @@
  */
 #define DB_MAX_UUID_SERVICE_SEARCH                      (12U)
 
+#ifdef SDP_DYNAMIC_DB
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum number of records in the SDP database.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_RECORDS                                  (32U)
+
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum number of attributes in any of the SDP database record.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_REC_ATTR                                 (25U)
+
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum number of UUIDs in any of the SDP database record.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_REC_UUID                                 (10U)
+
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum number of UUIDs in the SDP database.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_DYN_UUIDS                                (100U)
+
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum length of any attribure in the SDP database.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_ATTR_LEN                                 (400U)
+
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum number of indicies of Service Class UUIDs in the SDP database.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_SERVICE_CLASS_UUID_INDICES               (100U)
+
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum number of elements in a protocol description list
+ *  in any of the SDP database record.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_LIST_ELEMS                               (5U)
+
+/*
+ *  The following value is used in the sdp database interface.
+ *  This is maximum number of parameters in any elements in a protocol description list
+ *  in any of the SDP database record.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  depends on application requirement
+ */
+#define DB_MAX_PROTOCOL_PARAMS                          (5U)
+#endif /* SDP_DYNAMIC_DB */
+
 
 /* ----------------------------------------------------------------------- */
 /* =============================  BNEP  ================================== */
@@ -1666,10 +1742,12 @@
 #define MCAP_MAX_DATA_CHANNELS                          2U
 
 /*
- *  TODO
+ * MCAP_RESPONSE_TIMEOUT
  *
- *  Minimum value: TODO
- *  Maximum value: TODO
+ * MCAP Response - Response TimeOut Value.
+ *
+ * Minimum Value : 30 Seconds.
+ * Maximum Value : 30 Seconds.
  */
 #define MCAP_RESPONSE_TIMEOUT                           30U
 

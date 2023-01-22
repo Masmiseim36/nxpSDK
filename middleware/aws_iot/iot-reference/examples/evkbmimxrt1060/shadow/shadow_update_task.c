@@ -147,7 +147,7 @@
  * functions. shadowexampleMS_TO_WAIT_FOR_NOTIFICATION defines the time, in ticks,
  * to wait for such a callback.
  */
-#define shadowexampleMS_TO_WAIT_FOR_NOTIFICATION       ( 5000 )
+#define shadowexampleMS_TO_WAIT_FOR_NOTIFICATION       ( 15000 )
 
 /**
  * @brief The maximum amount of time in milliseconds to wait for the commands

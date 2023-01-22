@@ -21,15 +21,9 @@
  * this can be removed once the TFM fix available
  */
 #define PSA_ALG_MD4 ((psa_algorithm_t)0x02000002)
+
 static uint32_t         public_key_registered = 0; //NXP
 static psa_key_handle_t public_key_handle;
-
-#if 1 //NXP
-/* Dummy Initial Attestation public key exported by TF-M for test */
-extern const psa_ecc_family_t initial_attest_curve_type;
-extern const uint8_t initial_attest_pub_key[];
-extern const uint32_t initial_attest_pub_key_size;
-#endif //NXP
 
 static inline struct q_useful_buf_c useful_buf_head(struct q_useful_buf_c buf,
                                                   size_t amount)
@@ -214,26 +208,10 @@ static int32_t pal_attest_get_public_key(uint8_t          *public_key_buff,
     memcpy(public_key_buff, (void *)&attest_public_key, *public_key_len);
     status = PSA_SUCCESS;
 #else
-
-#if 0 //NXP
     status = tfm_initial_attest_get_public_key(public_key_buff,
                                                public_key_buf_size,
                                                public_key_len,
                                                elliptic_family_type);
-#else //NXP
-    if (initial_attest_curve_type != PSA_ECC_FAMILY_SECP_R1)
-        return PAL_ATTEST_ERR_KEY_FAIL;
-
-    if (public_key_buf_size < initial_attest_pub_key_size)
-        return PAL_ATTEST_ERR_SMALL_BUFFER;
-
-    memcpy(public_key_buff, initial_attest_pub_key,
-           initial_attest_pub_key_size);
-    *public_key_len = initial_attest_pub_key_size;
-    *elliptic_family_type = initial_attest_curve_type;
-
-    status = PSA_SUCCESS;    
-#endif //NXP
 #endif
 
     return status;

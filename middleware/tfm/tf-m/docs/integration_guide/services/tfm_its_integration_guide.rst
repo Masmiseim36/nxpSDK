@@ -254,7 +254,7 @@ The following optional platform definitions may be defined in
   value will increase the memory footprint of the service.
 
 More information about the ``flash_layout.h`` content, not ITS related, is
-available in :doc:`platform readme </platform/ext/readme>` along with other
+available in :doc:`../platform/platform_ext_folder` along with other
 platform information.
 
 ITS Service Build Definitions
@@ -311,8 +311,11 @@ build definitions is:
   expense of latency, as data will be copied in multiple iterations. *Note:*
   when data is copied in multiple iterations, the atomicity property of the
   filesystem is lost in the case of an asynchronous power failure.
+- ``ITS_STACK_SIZE``- Defines the stack size of the Internal Trusted Storage
+  Secure Partition. This value mainly depends on the platform specific flash
+  drivers, the build type(debug, release and minisizerel) and compiler.
 
 --------------
 
-*Copyright (c) 2019-2021, Arm Limited. All rights reserved.*
+*Copyright (c) 2019-2022, Arm Limited. All rights reserved.*
 *Copyright (c) 2020, Cypress Semiconductor Corporation. All rights reserved.*

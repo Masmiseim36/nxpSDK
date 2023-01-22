@@ -1,0 +1,81 @@
+#
+# Copyright (c) 2022 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+CPU = xtensa_hifi2
+ROOTDIR = ../..
+
+ifeq ($(CPU), xtensa_hifi2)
+  CC = xt-clang $(XTCORE)
+  ISS = xt-run $(XTCORE)
+  CONFIGDIR := $(shell $(ISS) --show-config=config)
+  include $(CONFIGDIR)/misc/hostenv.mk
+
+  CFLAGS = -Wall -c -D__XTENSA_HIFI2__ -I$(ROOTDIR)/include $(EXTRA_CFLAGS)
+
+  TRUEHDLIBNAME = xa_mp3_enc.a
+  TRUEHDBIN = xa_mp3_enc_test
+else
+  CC = gcc
+  MKPATH = mkdir -p
+  RM = rm -f
+  RM_R = rm -rf
+  LDFLAGS = -lm
+
+  CFLAGS = -Wall -c -I$(ROOTDIR)/include $(EXTRA_CFLAGS)
+
+  TRUEHDLIBNAME = gcc_mp3_enc_lib.a
+  TRUEHDBIN = gcc_mp3_enc_test
+endif
+
+ifeq ($(DEBUG),1)
+  OPT_O2 = -O0 -g
+else
+  OPT_O2 = -O2
+endif
+
+SRCDIR = $(ROOTDIR)/test/src
+
+LIBS = $(ROOTDIR)/lib/$(TRUEHDLIBNAME)
+
+OBJDIR = objs
+
+OBJS = \
+	xa_mp3_enc_sample_testbench.o \
+	xa_mp3_enc_error_handler.o
+
+OBJS_OBJS = $(addprefix $(OBJDIR)/,$(OBJS))
+
+all: $(TRUEHDBIN)
+
+$(TRUEHDBIN): $(OBJDIR) $(OBJS_OBJS) $(LIBS)
+	$(CC) -o $@ $(OBJS_OBJS) $(LIBS) $(LDFLAGS) $(EXTRA_LIBS) $(EXTRA_LDFLAGS)
+
+$(OBJDIR):
+	-$(MKPATH) $(OBJDIR)
+
+$(OBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
+
+clean:
+	-$(RM) $(TRUEHDBIN)
+	-$(RM_R) $(OBJDIR)

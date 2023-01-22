@@ -1,0 +1,34 @@
+include_guard()
+message("middleware_amazon-freertos_demos_ota_mqtt component is included.")
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/demos/ota/ota_demo_core_mqtt/ota_demo_core_mqtt.c
+)
+
+
+include(middleware_amazon-freertos_demos_ota_demo_helpers_MIMXRT595S_cm33)
+
+include(middleware_freertos_backoffalgorithm_MIMXRT595S_cm33)
+
+include(middleware_amazon-freertos_libraries_abstractions_mqtt_agent_MIMXRT595S_cm33)
+
+include(middleware_amazon-freertos_libraries_abstractions_platform_MIMXRT595S_cm33)
+
+include(middleware_amazon-freertos_libraries_abstractions_transport_MIMXRT595S_cm33)
+
+include(middleware_amazon-freertos_libraries_c_sdk_standard_common_MIMXRT595S_cm33)
+
+include(middleware_freertos_coremqtt_MIMXRT595S_cm33)
+
+include(middleware_freertos_coremqtt-agent_MIMXRT595S_cm33)
+
+include(middleware_aws_iot_ota_MIMXRT595S_cm33)
+
+include(middleware_aws_iot_ota_freertos_MIMXRT595S_cm33)
+
+include(middleware_amazon-freertos_pkcs11_helpers_MIMXRT595S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT595S_cm33)
+
+include(middleware_amazon-freertos_demos_common_mqtt_subscription_manager_MIMXRT595S_cm33)
+

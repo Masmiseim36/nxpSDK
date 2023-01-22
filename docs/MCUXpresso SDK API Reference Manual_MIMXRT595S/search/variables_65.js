@@ -52,7 +52,6 @@ var searchData=
   ['enablerx',['enableRx',['../a00072.html#a8b9813693fdfd2116e0d6019ea39b41d',1,'usart_config_t']]],
   ['enablesameconfigforall',['enableSameConfigForAll',['../a00030.html#a6b92b43578a6461b8a2790bdb3f6ef6d',1,'flexspi_config_t']]],
   ['enablesample',['enableSample',['../a00008.html#a8976a836edc291ae9f224ccfb0380456',1,'acmp_filter_config_t']]],
-  ['enablesckbdiffopt',['enableSckBDiffOpt',['../a00030.html#adb81f059fd762c30013c130f4672a89e',1,'flexspi_config_t']]],
   ['enablesckfreerunning',['enableSckFreeRunning',['../a00030.html#aff3b7741db982d0de6b123e449173fea',1,'flexspi_config_t']]],
   ['enablesignextend',['enableSignExtend',['../a00017.html#a4e2c7eed41397d529c3d083e18ff1340',1,'dmic_channel_config_t']]],
   ['enableslave',['enableSlave',['../a00038.html#a92d20835618a946b8f7702455877ef7a',1,'i2c_slave_config_t::enableSlave()'],['../a00067.html#a9fcd3fae6d886c7dfd0c3fd4cd51e6fe',1,'spi_slave_config_t::enableSlave()'],['../a00028.html#a5fcf34758ddd907b1860679305858de1',1,'flexio_spi_slave_config_t::enableSlave()'],['../a00044.html#ae2c684a0c8d014cc95005a69a9098234',1,'i3c_slave_config_t::enableSlave()'],['../a00042.html#a11b2561ca65e74fe702265242b2aa37a',1,'i3c_config_t::enableSlave()']]],

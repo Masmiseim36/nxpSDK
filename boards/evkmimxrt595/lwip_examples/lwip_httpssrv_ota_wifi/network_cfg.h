@@ -16,6 +16,8 @@
  ******************************************************************************/
 /*${macro:start}*/
 
+/* @TEST_ANCHOR */
+
 /* Common WiFi parameters */
 #ifndef WIFI_SSID
 #define WIFI_SSID "nxp-ota"

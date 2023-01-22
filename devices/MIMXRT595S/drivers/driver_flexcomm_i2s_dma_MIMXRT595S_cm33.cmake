@@ -6,12 +6,12 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/.
 )
 
 
-include(driver_flexcomm_i2s_MIMXRT595S_cm33)
-
 include(driver_lpc_dma_MIMXRT595S_cm33)
+
+include(driver_flexcomm_i2s_MIMXRT595S_cm33)
 

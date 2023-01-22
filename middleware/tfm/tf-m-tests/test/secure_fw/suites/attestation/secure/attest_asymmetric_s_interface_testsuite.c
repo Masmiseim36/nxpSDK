@@ -7,7 +7,6 @@
 
 #include "attest_s_tests.h"
 #include "psa/initial_attestation.h"
-#include "attest.h"
 #include "../attest_tests_common.h"
 #include "../attest_token_test_values.h"
 #include "../attest_token_test.h"
@@ -18,7 +17,7 @@ static const uint8_t challenge_buffer[TEST_CHALLENGE_OBJ_SIZE] = {
 
 /* Define test suite for attestation service tests */
 /* List of tests */
-#ifdef INCLUDE_TEST_CODE /* Remove them from release build */
+#ifdef INCLUDE_TEST_CODE
 static void tfm_attest_test_1001(struct test_result_t *ret);
 static void tfm_attest_test_1002(struct test_result_t *ret);
 static void tfm_attest_test_1003(struct test_result_t *ret);
@@ -27,7 +26,7 @@ static void tfm_attest_test_1004(struct test_result_t *ret);
 static void tfm_attest_test_1005(struct test_result_t *ret);
 
 static struct test_t attestation_interface_tests[] = {
-#ifdef INCLUDE_TEST_CODE /* Remove them from release build */
+#ifdef INCLUDE_TEST_CODE
     {&tfm_attest_test_1001, "TFM_S_ATTEST_TEST_1001",
      "Minimal token test of attest token"},
     {&tfm_attest_test_1002, "TFM_S_ATTEST_TEST_1002",
@@ -54,7 +53,7 @@ register_testsuite_s_attestation_interface(struct test_suite_t *p_test_suite)
                   attestation_interface_tests, list_size, p_test_suite);
 }
 
-#ifdef INCLUDE_TEST_CODE /* Remove them from release build */
+#ifdef INCLUDE_TEST_CODE
 /*!
  * \brief Get minimal token, only include a hard coded challenge, but omit the
  *        rest of the claims

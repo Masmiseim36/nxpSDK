@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
-
+#include <string.h>
 #include "psa/crypto.h"
 #include "tfm_sp_log.h"
 #include "bootutil_priv.h"
@@ -12,12 +12,14 @@
 #include "bootutil/image.h"
 #include "flash_map_backend/flash_map_backend.h"
 #include "sysflash/sysflash.h"
+#include "tfm_api.h"
 #include "tfm_bootloader_fwu_abstraction.h"
 #include "tfm_fwu_req_mngr.h"
 #include "tfm_boot_status.h"
 #include "service_api.h"
-#include "tfm_memory_utils.h"
+#ifndef TFM_PSA_API
 #include "tfm_secure_api.h"
+#endif
 
 #if (MCUBOOT_IMAGE_NUMBER == 1)
 #define MAX_IMAGE_INFO_LENGTH    (sizeof(struct image_version) + \
@@ -50,7 +52,7 @@ typedef struct tfm_fwu_mcuboot_ctx_s {
 } tfm_fwu_mcuboot_ctx_t;
 
 static tfm_fwu_mcuboot_ctx_t mcuboot_ctx[TFM_FWU_MAX_IMAGES];
-static fwu_image_info_data_t boot_shared_data;
+static fwu_image_info_data_t __attribute__((aligned(4))) boot_shared_data;
 
 static int convert_id_from_bl_to_mcuboot(bl_image_id_t bl_image_id,
                                          uint8_t *mcuboot_image_id)
@@ -179,7 +181,8 @@ psa_status_t fwu_bootloader_init(void)
     if (fwu_bootloader_get_shared_data() != TFM_SUCCESS) {
         return PSA_ERROR_GENERIC_ERROR;
     }
-
+    /* add Init of specific flash driver */
+    flash_area_driver_init();
     return PSA_SUCCESS;
 }
 
@@ -614,7 +617,7 @@ static psa_status_t get_secondary_image_info(uint8_t image_id,
 
     if (util_img_hash(fap, data_size, hash, (size_t)PSA_FWU_MAX_DIGEST_SIZE,
                       &hash_size) == PSA_SUCCESS) {
-        tfm_memcpy(info->digest, hash, hash_size);
+        memcpy(info->digest, hash, hash_size);
         ret = PSA_SUCCESS;
     } else {
         ret = PSA_ERROR_GENERIC_ERROR;

@@ -269,6 +269,9 @@ static void xa_hw_renderer_stop(XARenderer *d)
         while ((i2s_device_map[d->i2s_device]->FIFOSTAT & I2S_FIFOSTAT_TXEMPTY_MASK) == 0U)
         {
         }
+        while ((i2s_device_map[d->i2s_device]->FIFOSTAT & I2S_FIFOSTAT_TXERR_MASK) == 0U)
+        {
+        }
     }
 
     /* ...disable I2S DMA after FIFO data is flushed */
@@ -350,6 +353,12 @@ static void TxRenderCallbackISR(struct _dma_handle *handle, void *userData, bool
 
     if (transferDone)
     {
+        if (d->exec_done)
+        {
+            xa_hw_renderer_stop(d);
+            d->state ^= XA_RENDERER_FLAG_RUNNING | XA_RENDERER_FLAG_IDLE;
+            return;
+        }
         /* ...submit null buffer until renderer has actual data */
         if (d->submit_flag & RENDERER_SUBMIT_NULL)
         {
@@ -550,6 +559,7 @@ static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
 {
     UWORD32 bytes_write, i;
     UWORD32 buffer_available;
+    UWORD32 zfill = 0;
     UWORD8 *input_buffer = b;
     UWORD8 *fifo_head = d->fifo_head[d->submitted % 2];
     UWORD8 input_buffer_step, fifo_head_step, k;
@@ -563,6 +573,7 @@ static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
 
     buffer_available = (2 - (d->submitted - d->rendered)) * d->frame_size;
     bytes_write = (n > buffer_available ? buffer_available : n);
+    zfill = d->frame_size - n;
 
     if (bytes_write > 0)
     {
@@ -571,6 +582,10 @@ static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
         {
             /*... For the same num of channels and pcm_width values copy data with faster method */
             memcpy(fifo_head, input_buffer, bytes_write);
+            if(zfill > 0)
+            {
+                memset(fifo_head + bytes_write, 0, zfill);
+            }
         }
         else
         {
@@ -619,11 +634,6 @@ static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
 
     /* ...declare exec done on input over and if no more valid data is available */
     d->exec_done = (d->input_over && (n == 0));
-    if (d->exec_done)
-    {
-        /* Flush DMA and shutdown output */
-        xa_hw_renderer_stop(d);
-    }
 
     /* ...move to INIT state if renderer was transferring empty data */
     if (d->submit_flag == RENDERER_SUBMIT_NULL)
@@ -1167,9 +1177,6 @@ static XA_ERRORCODE xa_renderer_get_curidx_input_buf(XARenderer *d, WORD32 i_idx
 
     /* ...renderer must be in post-init state */
     XF_CHK_ERR(d->state & XA_RENDERER_FLAG_POSTINIT_DONE, XA_RENDERER_EXEC_FATAL_STATE);
-
-    /* ...input buffer must exist */
-//    XF_CHK_ERR(d->input, XA_RENDERER_EXEC_FATAL_INPUT);
 
     /* ...return number of bytes consumed */
     *(WORD32 *)pv_value = d->consumed;

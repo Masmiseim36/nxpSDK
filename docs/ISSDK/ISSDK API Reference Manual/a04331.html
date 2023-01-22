@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: boardkit/frdm-k64f/frdm-fxs-mult2-b/issdk_hal.h File Reference</title>
+<title>ISSDK: boardkit/evk-mimxrt1064/clock_config.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,28 +40,31 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_3614a3810f3c4eeaffe2259fdfef6294.html">frdm-k64f</a></li><li class="navelem"><a class="el" href="dir_7c065f7c1c3c4ee35c11b063655269b3.html">frdm-fxs-mult2-b</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_992809400ee97e2aed6ab35d100d1993.html">evk-mimxrt1064</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">issdk_hal.h File Reference</div>  </div>
+<div class="title">clock_config.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;fsl_i2c_cmsis.h&quot;</code><br />
-<code>#include &quot;fsl_dspi_cmsis.h&quot;</code><br />
-<code>#include &quot;fsl_uart_cmsis.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00578_source.html">frdm_k64f.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a04325_source.html">frdm_fxs_mult2b_shield.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;fsl_common.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for issdk_hal.h:</div>
+Include dependency graph for clock_config.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="a04332.png" border="0" usemap="#boardkit_2frdm-k64f_2frdm-fxs-mult2-b_2issdk__hal_8h" alt=""/></div>
-<map name="boardkit_2frdm-k64f_2frdm-fxs-mult2-b_2issdk__hal_8h" id="boardkit_2frdm-k64f_2frdm-fxs-mult2-b_2issdk__hal_8h">
-<area shape="rect" id="node5" href="a00578.html" title="The frdm_k64f.h file defines GPIO pin mappings for FRDM&#45;K64F board. " alt="" coords="427,95,517,121"/>
-<area shape="rect" id="node6" href="a04325.html" title="frdm_fxs_mult2b_shield.h" alt="" coords="541,95,710,121"/>
+<div class="center"><img src="a04332.png" border="0" usemap="#boardkit_2evk-mimxrt1064_2clock__config_8h" alt=""/></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="a04333.png" border="0" usemap="#boardkit_2evk-mimxrt1064_2clock__config_8hdep" alt=""/></div>
+<map name="boardkit_2evk-mimxrt1064_2clock__config_8hdep" id="boardkit_2evk-mimxrt1064_2clock__config_8hdep">
+<area shape="rect" id="node2" href="a04217.html" title="boardkit/evk&#45;mimxrt1064\l/board.h" alt="" coords="5,95,168,136"/>
+<area shape="rect" id="node3" href="a04274.html" title="boardkit/evk&#45;mimxrt1064\l/clock_config.c" alt="" coords="192,95,355,136"/>
 </map>
 </div>
 </div>
@@ -69,108 +72,204 @@ Include dependency graph for issdk_hal.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a056129f2401373c6de6789620b159a50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a056129f2401373c6de6789620b159a50">I2C_S_SCL_PIN</a>&#160;&#160;&#160;<a class="el" href="a00752.html#ac20db32b6dce4784f120ee4744bf5047">I2C_S1_SCL_PIN</a></td></tr>
-<tr class="separator:a056129f2401373c6de6789620b159a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7678def03f836f34694c88f6ce75ac84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a7678def03f836f34694c88f6ce75ac84">I2C_S_SDA_PIN</a>&#160;&#160;&#160;<a class="el" href="a00752.html#a7805d6b2f29ddeea8f531d253013d0ee">I2C_S1_SDA_PIN</a></td></tr>
-<tr class="separator:a7678def03f836f34694c88f6ce75ac84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6a14737695a4218d07182b86b21f570"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#ad6a14737695a4218d07182b86b21f570">I2C_S_DRIVER</a>&#160;&#160;&#160;<a class="el" href="a00752.html#a2eca6eeb6669462eb49b726a107007d7">I2C_S1_DRIVER</a></td></tr>
-<tr class="separator:ad6a14737695a4218d07182b86b21f570"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60ac2e3bb32ae33e2fd542f607a58ac4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a60ac2e3bb32ae33e2fd542f607a58ac4">I2C_S_SIGNAL_EVENT</a>&#160;&#160;&#160;<a class="el" href="a00752.html#af2fbfb76ce822d073231ed1693143df2">I2C_S1_SIGNAL_EVENT</a></td></tr>
-<tr class="separator:a60ac2e3bb32ae33e2fd542f607a58ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0c7969a7fffaabe78d43db2b12ad840"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#ab0c7969a7fffaabe78d43db2b12ad840">I2C_S_DEVICE_INDEX</a>&#160;&#160;&#160;<a class="el" href="a00752.html#a443b7fa870a185d189dcc6b8ec5b6747">I2C_S1_DEVICE_INDEX</a></td></tr>
-<tr class="separator:ab0c7969a7fffaabe78d43db2b12ad840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad09513e3c601985fc61136ef6c0678f9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#ad09513e3c601985fc61136ef6c0678f9">BOARD_XTAL0_CLK_HZ</a>&#160;&#160;&#160;24000000U</td></tr>
+<tr class="separator:ad09513e3c601985fc61136ef6c0678f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2b7bb542e5cb061aec9ac2c07ec20a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#ac2b7bb542e5cb061aec9ac2c07ec20a0">BOARD_XTAL32K_CLK_HZ</a>&#160;&#160;&#160;32768U</td></tr>
+<tr class="separator:ac2b7bb542e5cb061aec9ac2c07ec20a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ae55dea13be64e40de107ee288779f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a6ae55dea13be64e40de107ee288779f3">BOARD_BOOTCLOCKRUN_CORE_CLOCK</a>&#160;&#160;&#160;600000000U</td></tr>
+<tr class="separator:a6ae55dea13be64e40de107ee288779f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a09a9a2026d4c394534e528d519370d3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a09a9a2026d4c394534e528d519370d3e">BOARD_InitBootClocks</a> (void)</td></tr>
+<tr class="memdesc:a09a9a2026d4c394534e528d519370d3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function executes default configuration of clocks.  <a href="#a09a9a2026d4c394534e528d519370d3e">More...</a><br /></td></tr>
+<tr class="separator:a09a9a2026d4c394534e528d519370d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e69c4eff0fd5236bbb0ff4e1d5a7a7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a5e69c4eff0fd5236bbb0ff4e1d5a7a7e">BOARD_BootClockRUN</a> (void)</td></tr>
+<tr class="memdesc:a5e69c4eff0fd5236bbb0ff4e1d5a7a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function executes configuration of clocks.  <a href="#a5e69c4eff0fd5236bbb0ff4e1d5a7a7e">More...</a><br /></td></tr>
+<tr class="separator:a5e69c4eff0fd5236bbb0ff4e1d5a7a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a223592ac069015ea636dfde55e49ef0f"><td class="memItemLeft" align="right" valign="top">const clock_arm_pll_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a223592ac069015ea636dfde55e49ef0f">armPllConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="memdesc:a223592ac069015ea636dfde55e49ef0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arm PLL set for BOARD_BootClockRUN configuration.  <a href="#a223592ac069015ea636dfde55e49ef0f">More...</a><br /></td></tr>
+<tr class="separator:a223592ac069015ea636dfde55e49ef0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d28a505d06fb58d283e270865d17566"><td class="memItemLeft" align="right" valign="top">const clock_usb_pll_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a9d28a505d06fb58d283e270865d17566">usb1PllConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="memdesc:a9d28a505d06fb58d283e270865d17566"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usb1 PLL set for BOARD_BootClockRUN configuration.  <a href="#a9d28a505d06fb58d283e270865d17566">More...</a><br /></td></tr>
+<tr class="separator:a9d28a505d06fb58d283e270865d17566"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1eb8739af679f60d21566c74233f2072"><td class="memItemLeft" align="right" valign="top">const clock_sys_pll_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04331.html#a1eb8739af679f60d21566c74233f2072">sysPllConfig_BOARD_BootClockRUN</a></td></tr>
+<tr class="memdesc:a1eb8739af679f60d21566c74233f2072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sys PLL for BOARD_BootClockRUN configuration.  <a href="#a1eb8739af679f60d21566c74233f2072">More...</a><br /></td></tr>
+<tr class="separator:a1eb8739af679f60d21566c74233f2072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ab0c7969a7fffaabe78d43db2b12ad840"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0c7969a7fffaabe78d43db2b12ad840">&#9670;&nbsp;</a></span>I2C_S_DEVICE_INDEX</h2>
+<a id="a6ae55dea13be64e40de107ee288779f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae55dea13be64e40de107ee288779f3">&#9670;&nbsp;</a></span>BOARD_BOOTCLOCKRUN_CORE_CLOCK</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I2C_S_DEVICE_INDEX&#160;&#160;&#160;<a class="el" href="a00752.html#a443b7fa870a185d189dcc6b8ec5b6747">I2C_S1_DEVICE_INDEX</a></td>
+          <td class="memname">#define BOARD_BOOTCLOCKRUN_CORE_CLOCK&#160;&#160;&#160;600000000U</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Core clock frequency: 600000000Hz </p>
 
-<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00035">35</a> of file <a class="el" href="a04331_source.html">issdk_hal.h</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00419_source.html#l00118">fxlc95000_enSensor()</a>, <a class="el" href="a00929_source.html#l00103">main()</a>, and <a class="el" href="a00419_source.html#l00154">process_host_command()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00043">43</a> of file <a class="el" href="a04331_source.html">clock_config.h</a>.</p>
 
 </div>
 </div>
-<a id="ad6a14737695a4218d07182b86b21f570"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6a14737695a4218d07182b86b21f570">&#9670;&nbsp;</a></span>I2C_S_DRIVER</h2>
+<a id="ad09513e3c601985fc61136ef6c0678f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad09513e3c601985fc61136ef6c0678f9">&#9670;&nbsp;</a></span>BOARD_XTAL0_CLK_HZ</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I2C_S_DRIVER&#160;&#160;&#160;<a class="el" href="a00752.html#a2eca6eeb6669462eb49b726a107007d7">I2C_S1_DRIVER</a></td>
+          <td class="memname">#define BOARD_XTAL0_CLK_HZ&#160;&#160;&#160;24000000U</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Board xtal0 frequency in Hz </p>
 
-<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00033">33</a> of file <a class="el" href="a04331_source.html">issdk_hal.h</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00419_source.html#l00118">fxlc95000_enSensor()</a>, <a class="el" href="a00929_source.html#l00103">main()</a>, <a class="el" href="a00338_source.html#l00911">perform_selftest()</a>, and <a class="el" href="a00419_source.html#l00154">process_host_command()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00016">16</a> of file <a class="el" href="a04331_source.html">clock_config.h</a>.</p>
 
 </div>
 </div>
-<a id="a056129f2401373c6de6789620b159a50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a056129f2401373c6de6789620b159a50">&#9670;&nbsp;</a></span>I2C_S_SCL_PIN</h2>
+<a id="ac2b7bb542e5cb061aec9ac2c07ec20a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2b7bb542e5cb061aec9ac2c07ec20a0">&#9670;&nbsp;</a></span>BOARD_XTAL32K_CLK_HZ</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I2C_S_SCL_PIN&#160;&#160;&#160;<a class="el" href="a00752.html#ac20db32b6dce4784f120ee4744bf5047">I2C_S1_SCL_PIN</a></td>
+          <td class="memname">#define BOARD_XTAL32K_CLK_HZ&#160;&#160;&#160;32768U</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Board xtal32k frequency in Hz </p>
 
-<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00031">31</a> of file <a class="el" href="a04331_source.html">issdk_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00018">18</a> of file <a class="el" href="a04331_source.html">clock_config.h</a>.</p>
 
 </div>
 </div>
-<a id="a7678def03f836f34694c88f6ce75ac84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7678def03f836f34694c88f6ce75ac84">&#9670;&nbsp;</a></span>I2C_S_SDA_PIN</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a5e69c4eff0fd5236bbb0ff4e1d5a7a7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e69c4eff0fd5236bbb0ff4e1d5a7a7e">&#9670;&nbsp;</a></span>BOARD_BootClockRUN()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I2C_S_SDA_PIN&#160;&#160;&#160;<a class="el" href="a00752.html#a7805d6b2f29ddeea8f531d253013d0ee">I2C_S1_SDA_PIN</a></td>
+          <td class="memname">void BOARD_BootClockRUN </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00032">32</a> of file <a class="el" href="a04331_source.html">issdk_hal.h</a>.</p>
+<p>This function executes configuration of clocks. </p>
+<p>This function executes configuration of clocks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">void</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="a04223_source.html#l00168">168</a> of file <a class="el" href="a04223_source.html">clock_config.c</a>.</p>
 
 </div>
 </div>
-<a id="a60ac2e3bb32ae33e2fd542f607a58ac4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60ac2e3bb32ae33e2fd542f607a58ac4">&#9670;&nbsp;</a></span>I2C_S_SIGNAL_EVENT</h2>
+<a id="a09a9a2026d4c394534e528d519370d3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09a9a2026d4c394534e528d519370d3e">&#9670;&nbsp;</a></span>BOARD_InitBootClocks()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I2C_S_SIGNAL_EVENT&#160;&#160;&#160;<a class="el" href="a00752.html#af2fbfb76ce822d073231ed1693143df2">I2C_S1_SIGNAL_EVENT</a></td>
+          <td class="memname">void BOARD_InitBootClocks </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a04331_source.html#l00034">34</a> of file <a class="el" href="a04331_source.html">issdk_hal.h</a>.</p>
+<p>This function executes default configuration of clocks. </p>
 
-<p class="reference">Referenced by <a class="el" href="a00929_source.html#l00103">main()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a04238_source.html#l00052">52</a> of file <a class="el" href="a04238_source.html">clock_config.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a223592ac069015ea636dfde55e49ef0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a223592ac069015ea636dfde55e49ef0f">&#9670;&nbsp;</a></span>armPllConfig_BOARD_BootClockRUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const clock_arm_pll_config_t armPllConfig_BOARD_BootClockRUN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Arm PLL set for BOARD_BootClockRUN configuration. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04271_source.html#l00133">133</a> of file <a class="el" href="a04271_source.html">clock_config.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a04271_source.html#l00153">BOARD_BootClockRUN()</a>.</p>
+
+</div>
+</div>
+<a id="a1eb8739af679f60d21566c74233f2072"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1eb8739af679f60d21566c74233f2072">&#9670;&nbsp;</a></span>sysPllConfig_BOARD_BootClockRUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sys PLL for BOARD_BootClockRUN configuration. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04253_source.html#l00120">120</a> of file <a class="el" href="a04253_source.html">clock_config.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a04253_source.html#l00137">BOARD_BootClockRUN()</a>.</p>
+
+</div>
+</div>
+<a id="a9d28a505d06fb58d283e270865d17566"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d28a505d06fb58d283e270865d17566">&#9670;&nbsp;</a></span>usb1PllConfig_BOARD_BootClockRUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Usb1 PLL set for BOARD_BootClockRUN configuration. </p>
+
+<p class="definition">Definition at line <a class="el" href="a04253_source.html#l00126">126</a> of file <a class="el" href="a04253_source.html">clock_config.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a04253_source.html#l00137">BOARD_BootClockRUN()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>
-&copy; Copyright 2016-2020 NXP. All Rights Reserved.
+&copy; Copyright 2016-2022 NXP. All Rights Reserved. SPDX-License-Identifier: BSD-3-Clause
 </small></address>
 </body>
 </html>

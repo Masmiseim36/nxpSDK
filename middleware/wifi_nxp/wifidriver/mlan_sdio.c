@@ -191,10 +191,12 @@ static int sdio_card_init(void)
             wm_g_sd.usrParam.ioVoltage->func(kSDMMC_OperationVoltage180V);
         }
     }
+#if SDMMCHOST_SUPPORT_VOLTAGE_CONTROL
     else if ((wm_g_sd.usrParam.ioVoltage != NULL) && (wm_g_sd.usrParam.ioVoltage->type == kSD_IOVoltageCtrlByHost))
     {
         SDMMCHOST_SwitchToVoltage(wm_g_sd.host, (uint32_t)kSDMMC_OperationVoltage180V);
     }
+#endif
     else
     {
         /* Do Nothing */

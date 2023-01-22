@@ -61,8 +61,8 @@
     <definition extID="platform.drivers.iap.MIMXRT595S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
@@ -158,6 +158,7 @@
       <include_path path="generated/guider_fonts" project_relative_path="generated/guider_fonts" type="c_include"/>
       <include_path path=".." project_relative_path="evkmimxrt595/lvgl_examples/lvgl_guider" type="c_include"/>
       <include_path path=".." project_relative_path="board" type="c_include"/>
+      <include_path path=".." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -179,10 +180,6 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
       <files mask="build_flash_debug.bat"/>
       <files mask="build_flash_debug.sh"/>
       <files mask="build_flash_release.bat"/>
@@ -197,6 +194,12 @@
       <files mask="display_support.c"/>
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="vglite_support.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="vglite_support.c"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="lvgl_guider.c"/>
@@ -233,6 +236,14 @@
     <source path="custom" project_relative_path="custom" type="c_include">
       <files mask="custom.h"/>
     </source>
+    <source path=".." project_relative_path="source" type="c_include">
+      <files mask="lvgl_freertos.h"/>
+      <files mask="lvgl_demo_utils.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="src">
+      <files mask="lvgl_freertos.c"/>
+      <files mask="lvgl_demo_utils.c"/>
+    </source>
     <source path=".." project_relative_path="board" type="c_include">
       <files mask="lvgl_support.h"/>
     </source>
@@ -243,15 +254,12 @@
       <files mask="readme.txt"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT595S/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.icf"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.icf"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT595S/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.scf"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.scf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT595S/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.ld"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.ld"/>
     </source>
     <source path="mdk" project_relative_path="generator/templates/mdk/app_evkmimxrt595" type="configuration" toolchain="mdk">

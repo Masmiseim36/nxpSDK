@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -260,6 +260,22 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
           }
       }
 
+#if 1
+      if((d->input_length[0] == 0) && (d->input_length[1] == 0))
+      {
+        if( ((d->port_state[0] & XA_AEC_FLAG_COMPLETE) || (d->port_state[0] & XA_AEC_FLAG_INPUT_OVER)) &&
+            ((d->port_state[1] & XA_AEC_FLAG_COMPLETE) || (d->port_state[1] & XA_AEC_FLAG_INPUT_OVER))
+        )
+        {
+            d->port_state[0] |= XA_AEC_FLAG_COMPLETE;
+            d->port_state[1] |= XA_AEC_FLAG_COMPLETE;
+	        d->state         |= XA_AEC_FLAG_EXEC_DONE;
+            return XA_NO_ERROR;
+        }
+        /* ... to avoid producing output if relax schedule is set on both input ports and input length on both ports are 0*/
+        return XA_AEC23_EXEC_NONFATAL_NO_DATA;
+      }
+#else
       if( (((d->port_state[0] & XA_AEC_FLAG_COMPLETE) || (d->port_state[0] & XA_AEC_FLAG_INPUT_OVER)) && (d->input_length[0] == 0)) &&
           (((d->port_state[1] & XA_AEC_FLAG_COMPLETE) || (d->port_state[1] & XA_AEC_FLAG_INPUT_OVER)) && (d->input_length[1] == 0))
       )
@@ -268,6 +284,15 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
         d->port_state[1] |= XA_AEC_FLAG_COMPLETE;
 	    d->state         |= XA_AEC_FLAG_EXEC_DONE;
         return XA_NO_ERROR;
+      }
+#endif
+
+      for (i = 0;i < (d->num_out_ports); i++)
+      {
+            if((d->output[i] == NULL) && (d->port_state[i + d->num_in_ports] & XA_AEC_FLAG_PORT_CONNECTED)) 
+            {
+                return XA_AEC23_EXEC_NONFATAL_NO_DATA;
+            }
       }
 
       nSize = XA_MIMO_CFG_FRAME_SIZE_BYTES >> 1;    //size of each sample is 2 bytes    
@@ -868,7 +893,7 @@ static XA_ERRORCODE xa_aec_get_mem_info_type(XAPcmAec *d, WORD32 i_idx, pVOID pv
 static XA_ERRORCODE xa_aec_set_mem_ptr(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 {
     /* ...basic sanity check */
-    XF_CHK_ERR(d && pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
+    XF_CHK_ERR(d, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...codec must be initialized */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_POSTINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
@@ -890,12 +915,18 @@ static XA_ERRORCODE xa_aec_set_mem_ptr(XAPcmAec *d, WORD32 i_idx, pVOID pv_value
     {
         /* ...persistent buffer */
         d->persist = pv_value;
+
+        /* ...basic sanity check */
+        XF_CHK_ERR(pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
     }
     else
     if(i_idx < (n_mems))
     {
         /* ...scratch buffer */
         d->scratch = pv_value;
+
+        /* ...basic sanity check */
+        XF_CHK_ERR(pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
     }
     else{
 	return XA_API_FATAL_INVALID_CMD_TYPE;

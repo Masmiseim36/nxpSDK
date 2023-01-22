@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -33,7 +33,7 @@
 /*******************************************************************************
  * Macro definitions
  ******************************************************************************/
-#define XF_MSG_LENGTH_INVALID   0xFFFFFFFF
+#define XF_MSG_LENGTH_INVALID               0xFFFFFFFF
 
 /*******************************************************************************
  * Types definitions
@@ -49,7 +49,7 @@ struct xf_message
     xf_message_t       *next;
 
     /* ...shmem session_id */
-    UWORD32                 id;
+    xf_msg_id_dtype         id;
 
     /* ...operation code */
     UWORD32                 opcode;
@@ -59,6 +59,9 @@ struct xf_message
 
     /* ...message buffer (translated virtual address) */
     void               *buffer;
+
+    /* ...error response*/
+    WORD32                 error;
 };
 
 /* ...cache-line aligned message buffer */
@@ -245,7 +248,7 @@ extern void xf_msg_cancel(xf_message_t *m);
 extern void xf_msg_complete(xf_message_t *m);
 
 /* ...allocate message pool on specific core */
-extern int  xf_msg_pool_init(xf_msg_pool_t *pool, UWORD32 n, UWORD32 core);
+extern int  xf_msg_pool_init(xf_msg_pool_t *pool, UWORD32 n, UWORD32 core, UWORD32 shared);
 
 /* ...allocate message from a pool (no concurrent access from other cores) */
 extern xf_message_t * xf_msg_pool_get(xf_msg_pool_t *pool);
@@ -254,7 +257,7 @@ extern xf_message_t * xf_msg_pool_get(xf_msg_pool_t *pool);
 extern void xf_msg_pool_put(xf_msg_pool_t *pool, xf_message_t *m);
 
 /* ...destroy message pool */
-extern void xf_msg_pool_destroy(xf_msg_pool_t *pool, UWORD32 core);
+extern void xf_msg_pool_destroy(xf_msg_pool_t *pool, UWORD32 core, UWORD32 shared);
 
 /* ...indicate whether pool of free messages is empty */
 extern int  xf_message_pool_empty(void);

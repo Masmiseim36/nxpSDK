@@ -97,18 +97,17 @@ static OtaPalStatus_t prvPAL_CheckFileSignature(OtaFileContext_t *const C)
     char *cert = NULL;
     uint32_t certsize;
 
+    int ret;
+    size_t size;
+    uint32_t offset;
+    uint32_t buf[128 / sizeof(uint32_t)];
+
     LogDebug(("[OTA-NXP] CheckFileSignature"));
 
     PalFileContext = prvPAL_GetPALFileContext(C);
     if (PalFileContext == NULL)
     {
         return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 1);
-    }
-
-    file_data = mflash_drv_phys2log(PalFileContext->partition_phys_addr, PalFileContext->file_size);
-    if (file_data == NULL)
-    {
-        return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 2);
     }
 
     cert = prvPAL_GetCertificate((const uint8_t *)C->pCertFilepath, &certsize);
@@ -123,7 +122,38 @@ static OtaPalStatus_t prvPAL_CheckFileSignature(OtaFileContext_t *const C)
         return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 3);
     }
 
-    CRYPTO_SignatureVerificationUpdate(VerificationContext, file_data, PalFileContext->file_size );
+    /* On MCU's that support Flash Remap the flash content must be read using physical
+     * address. This is because when remap is active the area used for download is not
+     * accessible through a logical address (memory pointer).
+     */
+
+    offset = PalFileContext->partition_phys_addr;
+    size = PalFileContext->file_size;
+
+    if (offset % 4)
+    {
+        /* mflash has limitation for unaligned access */
+        return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 5);
+    }
+
+    while (size > 0)
+    {
+        size_t chunk = (size > sizeof(buf)) ? sizeof(buf) : size;
+
+        /* mflash demands size to be in multiples of 4 */
+        size_t chunkAlign4 = (chunk + 3) & (~3);
+
+        ret = mflash_drv_read(offset, buf, chunkAlign4);
+        if (ret != kStatus_Success)
+        {
+            return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 6);
+        }
+
+        CRYPTO_SignatureVerificationUpdate(VerificationContext, (uint8_t *)buf, chunk);
+
+        size -= chunk;
+        offset += chunk;
+    }
 
     if (CRYPTO_SignatureVerificationFinal(VerificationContext, cert, certsize, C->pSignature->data,
                                           C->pSignature->size) != pdTRUE)

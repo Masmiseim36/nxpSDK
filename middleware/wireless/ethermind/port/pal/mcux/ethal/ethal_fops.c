@@ -74,7 +74,7 @@ static void fops_file_write_buffer_queue_init(void)
 {
     fops_file_write_buffer_node_t *node;
     uint32_t index = 0U;
-    uint32_t regMask;
+    uint32_t regMask = 0U;
     osa_status_t ret = KOSA_StatusSuccess;
 
     OSA_EnterCritical(&regMask);
@@ -658,7 +658,7 @@ EM_RESULT EM_fops_file_write
 #if EM_FOPS_FILE_SYNC_IN_IDLE
     fops_file_handle_t * fHandleP;
     fops_file_handle_t * fHandleQ;
-    uint32_t regMask;
+    uint32_t regMask = 0U;
     osa_status_t ret;
     uint32_t length;
 
@@ -1154,7 +1154,7 @@ EM_RESULT EM_fops_file_close
 #if EM_FOPS_FILE_SYNC_IN_IDLE
     fops_file_handle_t * fHandleP;
     fops_file_handle_t * fHandleQ;
-    uint32_t regMask;
+    uint32_t regMask = 0U;
 #endif
     FRESULT ret;
     EM_RESULT retval;

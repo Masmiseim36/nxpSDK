@@ -730,9 +730,9 @@ void USB0_IRQHandler(void)
 {
     serial_usb_cdc_state_t *serialUsbCdc = s_UsbCdcHead;
 
-    while (serialUsbCdc)
+    while (NULL != serialUsbCdc)
     {
-        if ((kSerialManager_UsbControllerLpcIp3511Fs0 == serialUsbCdc->instance))
+        if (((uint8_t)kSerialManager_UsbControllerLpcIp3511Fs0 == serialUsbCdc->instance))
         {
             USB_DeviceLpcIp3511IsrFunction(serialUsbCdc->deviceHandle);
         }

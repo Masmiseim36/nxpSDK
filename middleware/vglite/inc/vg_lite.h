@@ -41,7 +41,7 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-#define VGLITE_RELEASE_VERSION   0x201000
+#define VGLITE_RELEASE_VERSION   0x03000f
 
 #define VGLITE_HEADER_VERSION    6
 
@@ -610,7 +610,7 @@ extern "C" {
         void *path;                         /*! Pointer to the physical description of the path. */
         int8_t path_changed;               /* Indicate whether path data is synced with command buffer (uploaded) or not. */
         int8_t pdata_internal;             /*! Indicate whether path data memory is allocated by driver. */
-        vg_lite_stroke_conversion_t stroke_conversion; /*! Refer to the definition by <code>vg_lite_stroke_conversion_t</code>.*/
+        vg_lite_stroke_conversion_t *stroke_conversion; /*! Refer to the definition by <code>vg_lite_stroke_conversion_t</code>.*/
         vg_lite_draw_path_type_t path_type;            /*! Refer to the definition by <code>vg_lite_draw_path_type_t</code>. */
         void *stroke_path_data;            /*! Pointer to the physical description of the stroke path. */
         int32_t stroke_path_size;          /*! Number of bytes in the stroke path data. */
@@ -1909,20 +1909,6 @@ extern "C" {
      Pointer to a <code>vg_lite_matrix_t</code> structure that will be rotated.
      */
     void vg_lite_rotate(vg_lite_float_t degrees, vg_lite_matrix_t *matrix);
-
-    /*!
-     @abstract projective transformation.
-
-     @discussion
-     set perspective matrix.
-
-     @param degrees
-     px: indicate w0 of perspective transformation matrix
-     py: indicate w1 of perspective transformation matrix
-     @param matrix
-     Pointer to a <code>vg_lite_matrix_t</code> structure that will be rotated.
-     */
-    void vg_lite_perspective(vg_lite_float_t px, vg_lite_float_t py, vg_lite_matrix_t *matrix);
 
     /*!
      @abstract Set the command buffer size.

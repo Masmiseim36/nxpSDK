@@ -1,6 +1,8 @@
 /*
  * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
- * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
+ * Copyright (c) 2021-2022 Cypress Semiconductor Corporation (an Infineon
+ * company) or an affiliate of Cypress Semiconductor Corporation. All rights
+ * reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -22,7 +24,7 @@
 #include "psa_manifest/sid.h"
 #include "psa_manifest/tfm_secure_client_service.h"
 
-#define TFM_SP_SECURE_TEST_PARTITION_NDEPS                      (25)
+#define TFM_SP_SECURE_TEST_PARTITION_NDEPS                      (21)
 #define TFM_SP_SECURE_TEST_PARTITION_NSERVS                     (1)
 #if TFM_LVL == 3
 #define TFM_SP_SECURE_TEST_PARTITION_NASSETS                    (1 + 1)
@@ -36,6 +38,7 @@
 REGION_DECLARE(Image$$, PT_TFM_SP_SECURE_TEST_PARTITION_PRIVATE, _DATA_START$$Base);
 REGION_DECLARE(Image$$, PT_TFM_SP_SECURE_TEST_PARTITION_PRIVATE, _DATA_END$$Base);
 #endif
+
 extern uint8_t tfm_sp_secure_test_partition_stack[];
 
 /* Entrypoint function declaration */
@@ -61,11 +64,11 @@ struct partition_tfm_sp_secure_test_partition_load_info_t {
 
 /* Partition load, deps, service load data. Put to a dedicated section. */
 #if defined(__ICCARM__)
-#pragma location = ".part_load"
+#pragma location = ".part_load_priority_low"
 __root
 #endif /* __ICCARM__ */
 const struct partition_tfm_sp_secure_test_partition_load_info_t tfm_sp_secure_test_partition_load
-    __attribute__((used, section(".part_load"))) = {
+    __attribute__((used, section(".part_load_priority_low"))) = {
     .load_info = {
         .psa_ff_ver                 = 0x0101 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_SECURE_TEST_PARTITION,
@@ -100,29 +103,11 @@ const struct partition_tfm_sp_secure_test_partition_load_info_t tfm_sp_secure_te
 #ifdef TFM_PS_TEST_PREPARE_SID
         TFM_PS_TEST_PREPARE_SID,
 #endif
-#ifdef TFM_SP_PLATFORM_SYSTEM_RESET_SID
-        TFM_SP_PLATFORM_SYSTEM_RESET_SID,
+#ifdef TFM_PLATFORM_SERVICE_SID
+        TFM_PLATFORM_SERVICE_SID,
 #endif
-#ifdef TFM_SP_PLATFORM_IOCTL_SID
-        TFM_SP_PLATFORM_IOCTL_SID,
-#endif
-#ifdef TFM_FWU_WRITE_SID
-        TFM_FWU_WRITE_SID,
-#endif
-#ifdef TFM_FWU_INSTALL_SID
-        TFM_FWU_INSTALL_SID,
-#endif
-#ifdef TFM_FWU_ABORT_SID
-        TFM_FWU_ABORT_SID,
-#endif
-#ifdef TFM_FWU_QUERY_SID
-        TFM_FWU_QUERY_SID,
-#endif
-#ifdef TFM_FWU_REQUEST_REBOOT_SID
-        TFM_FWU_REQUEST_REBOOT_SID,
-#endif
-#ifdef TFM_FWU_ACCEPT_SID
-        TFM_FWU_ACCEPT_SID,
+#ifdef TFM_FIRMWARE_UPDATE_SERVICE_SID
+        TFM_FIRMWARE_UPDATE_SERVICE_SID,
 #endif
 #ifdef IPC_SERVICE_TEST_BASIC_SID
         IPC_SERVICE_TEST_BASIC_SID,
@@ -130,11 +115,11 @@ const struct partition_tfm_sp_secure_test_partition_load_info_t tfm_sp_secure_te
 #ifdef IPC_SERVICE_TEST_STATELESS_ROT_SID
         IPC_SERVICE_TEST_STATELESS_ROT_SID,
 #endif
-#ifdef TFM_FPU_SERVICE_CLEAR_FP_REGISTER_SID
-        TFM_FPU_SERVICE_CLEAR_FP_REGISTER_SID,
+#ifdef TFM_FPU_CHECK_FP_CALLEE_REGISTER_SID
+        TFM_FPU_CHECK_FP_CALLEE_REGISTER_SID,
 #endif
-#ifdef TFM_FPU_SERVICE_CHECK_FP_REGISTER_SID
-        TFM_FPU_SERVICE_CHECK_FP_REGISTER_SID,
+#ifdef TFM_FPU_TEST_NS_PREEMPT_S_SID
+        TFM_FPU_TEST_NS_PREEMPT_S_SID,
 #endif
 #ifdef IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM_SID
         IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM_SID,
@@ -157,14 +142,19 @@ const struct partition_tfm_sp_secure_test_partition_load_info_t tfm_sp_secure_te
 #ifdef SFN_TEST_CONNECTION_BASED_SID
         SFN_TEST_CONNECTION_BASED_SID,
 #endif
+#ifdef TFM_DELEGATED_ATTESTATION_SID
+        TFM_DELEGATED_ATTESTATION_SID,
+#endif
+#ifdef TFM_MEASURED_BOOT_SID
+        TFM_MEASURED_BOOT_SID,
+#endif
     },
     .services = {
         {
             .name_strid             = STRING_PTR_TO_STRID("TFM_SECURE_CLIENT_SRV_DUMMY"),
             .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = TFM_SECURE_CLIENT_SRV_DUMMY_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
             .sid                    = 0x0000F000,
             .flags                  = 0
                                     | SERVICE_VERSION_POLICY_STRICT,
@@ -197,14 +187,14 @@ const struct partition_tfm_sp_secure_test_partition_load_info_t tfm_sp_secure_te
 
 /* Placeholder for partition and service runtime space. Do not reference it. */
 #if defined(__ICCARM__)
-#pragma location=".bss.part_runtime"
+#pragma location=".bss.part_runtime_priority_low"
 __root
 #endif /* __ICCARM__ */
 static struct partition_t tfm_sp_secure_test_partition_partition_runtime_item
-    __attribute__((used, section(".bss.part_runtime")));
+    __attribute__((used, section(".bss.part_runtime_priority_low")));
 #if defined(__ICCARM__)
-#pragma location = ".bss.serv_runtime"
+#pragma location = ".bss.serv_runtime_priority_low"
 __root
 #endif /* __ICCARM__ */
 static struct service_t tfm_sp_secure_test_partition_service_runtime_item[TFM_SP_SECURE_TEST_PARTITION_NSERVS]
-    __attribute__((used, section(".bss.serv_runtime")));
+    __attribute__((used, section(".bss.serv_runtime_priority_low")));

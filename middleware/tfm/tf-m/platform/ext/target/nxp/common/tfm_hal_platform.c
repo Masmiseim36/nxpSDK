@@ -16,6 +16,34 @@
 
 extern const struct memory_region_limits memory_regions;
 
+#ifdef PLAT_HAS_ITRC /* Intrusion and Tamper Response Controller (ITRC) */
+#include "fsl_itrc.h"
+static enum tfm_plat_err_t init_itrc(void)
+{
+    /* Clear all possible pending Event/Action statuses */
+    ITRC_ClearAllStatus(ITRC);
+
+    /* Lock all events in ITRC (except Sw Events). */
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_CssGlitch, kITRC_Lock, kITRC_Enable);
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_RtcTamper, kITRC_Lock, kITRC_Enable);
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Cdog, kITRC_Lock, kITRC_Enable);
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_BodVbat, kITRC_Lock, kITRC_Enable);
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_BodVdd, kITRC_Lock, kITRC_Enable);
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Watchdog, kITRC_Lock, kITRC_Enable);
+#if 0 /* Disabled, to avoid HW reset on debug mail box start, reading erased memory. */
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_FlashEcc, kITRC_Lock, kITRC_Enable);
+#endif
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Ahb, kITRC_Lock, kITRC_Enable);
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_CssErr, kITRC_Lock, kITRC_Enable);
+#if defined(FSL_FEATURE_ITRC_HAS_SYSCON_GLITCH) && (FSL_FEATURE_ITRC_HAS_SYSCON_GLITCH > 0)
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_SysconGlitch, kITRC_Lock, kITRC_Enable);
+#endif
+    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Pkc, kITRC_Lock, kITRC_Enable);
+
+    return TFM_PLAT_ERR_SUCCESS;
+}
+#endif /* PLAT_HAS_ITRC */
+
 #ifdef TFM_FIH_PROFILE_ON
 fih_int tfm_hal_platform_init(void)
 #else
@@ -25,7 +53,14 @@ enum tfm_hal_status_t tfm_hal_platform_init(void)
     enum tfm_plat_err_t plat_err = TFM_PLAT_ERR_SYSTEM_ERR;
 
     stdio_init();
-    
+
+#ifdef PLAT_HAS_ITRC /* Intrusion and Tamper Response Controller (ITRC) */
+    plat_err = init_itrc();
+    if (plat_err != TFM_PLAT_ERR_SUCCESS) {
+        FIH_RET(fih_int_encode(TFM_HAL_ERROR_GENERIC));
+    }
+#endif
+
     plat_err = enable_fault_handlers();
     if (plat_err != TFM_PLAT_ERR_SUCCESS) {
         FIH_RET(fih_int_encode(TFM_HAL_ERROR_GENERIC));
@@ -80,21 +115,19 @@ uint32_t tfm_hal_get_ns_entry_point(void)
 static mbedtls_entropy_context fih_entropy_ctx;
 static mbedtls_ctr_drbg_context fih_drbg_ctx;
 
-int32_t tfm_hal_random_init(void)
+fih_int tfm_fih_random_init(void)
 {
     mbedtls_entropy_init(&fih_entropy_ctx);
     mbedtls_ctr_drbg_init(&fih_drbg_ctx);
     mbedtls_ctr_drbg_seed(&fih_drbg_ctx , mbedtls_entropy_func,
                           &fih_entropy_ctx, NULL, 0);
 
-    return TFM_HAL_SUCCESS;
+    return FIH_SUCCESS;
 }
 
-int32_t tfm_hal_random_generate(uint8_t *rand, size_t size)
+void tfm_fih_random_generate(uint8_t *rand)
 {
-    mbedtls_ctr_drbg_random(&fih_drbg_ctx,(unsigned char*) rand, size);
-
-    return TFM_HAL_SUCCESS;
+    mbedtls_ctr_drbg_random(&fih_drbg_ctx, (unsigned char*) rand, sizeof(uint8_t));
 }
 
 #endif /* FIH_ENABLE_DELAY */

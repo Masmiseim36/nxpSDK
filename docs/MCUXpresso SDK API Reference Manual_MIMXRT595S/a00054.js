@@ -1,11 +1,11 @@
 var a00054 =
 [
-    [ "pq_prescale_t", "a00054.html#a00412", [
+    [ "pq_prescale_t", "a00054.html#a00413", [
       [ "inputPrescale", "a00054.html#aaeb2ce65b19c6c83a752e899b9def942", null ],
       [ "outputPrescale", "a00054.html#abd109972c1d75809d38b0b461aba2319", null ],
       [ "outputSaturate", "a00054.html#a9df386ce33fd8233bdccdb744e68cd35", null ]
     ] ],
-    [ "pq_config_t", "a00054.html#a00410", [
+    [ "pq_config_t", "a00054.html#a00411", [
       [ "inputAFormat", "a00054.html#adbf583e02dee6b954bf1a50e64621e64", null ],
       [ "inputAPrescale", "a00054.html#af562376169b59f05ce67208111e41264", null ],
       [ "inputBFormat", "a00054.html#a780fe123c2f494996b4dcb95095f9103", null ],
@@ -17,7 +17,7 @@ var a00054 =
       [ "machineFormat", "a00054.html#aa637fb7118e5803896e33e2417275e9e", null ],
       [ "tmpBase", "a00054.html#a5a883485872c6c229020ad0df0267adc", null ]
     ] ],
-    [ "pq_biquad_param_t", "a00054.html#a00408", [
+    [ "pq_biquad_param_t", "a00054.html#a00409", [
       [ "v_n_1", "a00054.html#a078065dc66934bae9862b01102ad6224", null ],
       [ "v_n", "a00054.html#a580f579beedafb1867cbfae2811d7371", null ],
       [ "a_1", "a00054.html#a68208deb20e82d04b70ea427d4dfce1d", null ],
@@ -26,15 +26,15 @@ var a00054 =
       [ "b_1", "a00054.html#a7968ccb44e07689df32bcc87ee2f739d", null ],
       [ "b_2", "a00054.html#a0f5b79cba289c326aa72bf99d2e32076", null ]
     ] ],
-    [ "pq_biquad_state_t", "a00054.html#a00409", [
+    [ "pq_biquad_state_t", "a00054.html#a00410", [
       [ "param", "a00054.html#a6e0c4b7d01ba3f7f44d2a988096b4e11", null ],
       [ "compreg", "a00054.html#a63b7c4782cdd100b9f8c5e26648d7b03", null ]
     ] ],
-    [ "pq_biquad_cascade_df2_instance", "a00054.html#a00407", [
+    [ "pq_biquad_cascade_df2_instance", "a00054.html#a00408", [
       [ "numStages", "a00054.html#a5e1778feb63d1236c1243e0f500e63ac", null ],
       [ "pState", "a00054.html#a5242f86b4d36fc8ae4639ed144e79226", null ]
     ] ],
-    [ "pq_float_t", "a00054.html#a00411", [
+    [ "pq_float_t", "a00054.html#a00412", [
       [ "floatX", "a00054.html#a22508fdc137ac3fe040aaff8549b3f50", null ],
       [ "integerX", "a00054.html#ae6024461e02a5fac5d24d73518daa1e0", null ]
     ] ],
@@ -64,9 +64,9 @@ var a00054 =
     [ "PQ_Vector8BiquadDf2Fixed16", "a00054.html#gaa1d8ac38e0020dc361ffd735059e0861", null ],
     [ "PQ_DF2_Cascade_Vector8_FP", "a00054.html#ga7e806c6c1943b5c3a478783e00ad1e8f", null ],
     [ "PQ_DF2_Cascade_Vector8_FX", "a00054.html#ga77057ab4509e43674d32f5abfa9b4395", null ],
-    [ "PQ_Vector8BiqaudDf2CascadeF32", "a00054.html#ga32787b498b4a235a37209cfffdb5c27d", null ],
-    [ "PQ_Vector8BiqaudDf2CascadeFixed32", "a00054.html#gabcaac0eede152b4f5c6e0dfa9685ad7c", null ],
-    [ "PQ_Vector8BiqaudDf2CascadeFixed16", "a00054.html#ga4042b95864f233cfb16fd3f6b2ae2cae", null ],
+    [ "PQ_Vector8BiquadDf2CascadeF32", "a00054.html#ga2c7c1c38f4ce322d1de2a5ef947deffd", null ],
+    [ "PQ_Vector8BiquadDf2CascadeFixed32", "a00054.html#gac2439b0cc5c77b083017aa3c4df856db", null ],
+    [ "PQ_Vector8BiquadDf2CascadeFixed16", "a00054.html#ga8ae1f1e35df439be3003469f7dae9757", null ],
     [ "POWERQUAD_MAKE_MATRIX_LEN", "a00054.html#ga4d08cbe0f3c3f9171f629c2bead85055", null ],
     [ "PQ_Q31_2_FLOAT", "a00054.html#ga2c01985168b1d74c55673248ab225b34", null ],
     [ "PQ_Q15_2_FLOAT", "a00054.html#ga78f4a938590926308c2e9f19f97ea54c", null ],
@@ -140,12 +140,12 @@ var a00054 =
     [ "PQ_VectorInvSqrtFixed16", "a00054.html#ga80ed9657e58f008bca1c59fbf1ddebfe", null ],
     [ "PQ_VectorEtoxFixed16", "a00054.html#ga743866afd02445314c90059c60311b15", null ],
     [ "PQ_VectorEtonxFixed16", "a00054.html#ga4ce3e5d89e54efa199c7da9e38637493", null ],
-    [ "PQ_VectorBiqaudDf2F32", "a00054.html#gaaa824245a09244f075f282448f4e507e", null ],
-    [ "PQ_VectorBiqaudDf2Fixed32", "a00054.html#ga9edeb34d261f492c192d0ce711d2a9ba", null ],
-    [ "PQ_VectorBiqaudDf2Fixed16", "a00054.html#ga5ced8d709bd337cce2f83fe2df85f9b2", null ],
-    [ "PQ_VectorBiqaudCascadeDf2F32", "a00054.html#ga00187bb833a226b8cb318bde3056ad31", null ],
-    [ "PQ_VectorBiqaudCascadeDf2Fixed32", "a00054.html#gae4d284e6bcf93b7fc592e83a76a85a8b", null ],
-    [ "PQ_VectorBiqaudCascadeDf2Fixed16", "a00054.html#ga23f354c18d1526df020bfbe56aeb7af9", null ],
+    [ "PQ_VectorBiquadDf2F32", "a00054.html#ga6ea014099f5d9a19350dcbd9fb8ade2c", null ],
+    [ "PQ_VectorBiquadDf2Fixed32", "a00054.html#gabe95d48b9f47669007e237dc882c3abe", null ],
+    [ "PQ_VectorBiquadDf2Fixed16", "a00054.html#ga305453a7d8d798de0395c6330521a0fd", null ],
+    [ "PQ_VectorBiquadCascadeDf2F32", "a00054.html#gab6d817bfac834660f4bacbf30959f444", null ],
+    [ "PQ_VectorBiquadCascadeDf2Fixed32", "a00054.html#gab79d94233685423de526f8b718ed1061", null ],
+    [ "PQ_VectorBiquadCascadeDf2Fixed16", "a00054.html#gabeeb1d9cbb1688354a7c0fe0b2a8c353", null ],
     [ "PQ_ArctanFixed", "a00054.html#gaefb8a5b4b929880b99e389b3065253db", null ],
     [ "PQ_ArctanhFixed", "a00054.html#ga424ac03742b4a4a97a3aba92bff4d7e0", null ],
     [ "PQ_Biquad1Fixed", "a00054.html#gaa1324b993444d429200057a3f84bde20", null ],

@@ -252,6 +252,10 @@ struct bt_conn {
 #endif
 	/* ethermind status */
 	uint8_t deviceId;
+	/* security level sync semaphore. */
+	osa_semaphore_handle_t sem_security_level_updated;
+	OSA_SEMAPHORE_HANDLE_DEFINE(sem_security_level_updated_handle);
+
 	/* Must be at the end so that everything else in the structure can be
 	 * memset to zero without affecting the ref.
 	 */

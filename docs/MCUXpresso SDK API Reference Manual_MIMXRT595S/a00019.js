@@ -222,7 +222,7 @@ var a00019 =
     [ "DSI_GetAndClearInterruptStatus", "a00019.html#gaebb82b7c65de10e4520e4957c858d6c6", null ],
     [ "DSI_SetApbPacketControl", "a00019.html#ga0d03504e1c34404c3600eddf7ad2498d", null ],
     [ "DSI_WriteApbTxPayload", "a00019.html#gac1371a58b6086a50c29fa07cb27a8bd5", null ],
-    [ "DSI_WriteApbTxPayloadExt", "a00019.html#ga108f653398ba34bbac9902f2184c1eeb", null ],
+    [ "DSI_WriteApbTxPayloadExt", "a00019.html#gaa9edb9522d8a6e44f3cc27a2b91a2cc4", null ],
     [ "DSI_ReadApbRxPayload", "a00019.html#ga292fdbc2d57c2838e4c408ffad780f39", null ],
     [ "DSI_SendApbPacket", "a00019.html#ga173169f9158396f860bcabc2b8400550", null ],
     [ "DSI_GetApbStatus", "a00019.html#ga53967467203c97bb5506c26dcad0d402", null ],

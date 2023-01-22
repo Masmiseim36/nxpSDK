@@ -9,10 +9,10 @@
 
 #include "psa_manifest/pid.h"
 
-#ifdef TFM_MULTI_CORE_TOPOLOGY  //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX  //NXP
 #error "Framework version greater than 1.0 is not supported"
 #define                                                         (1U << (31))
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 #ifdef TEST_NS_SLIH_IRQ  //NXP
 #error "Framework version greater than 1.0 is not supported"
 #define                                                         (1U << (31))
@@ -24,9 +24,9 @@
 
 /* Definitions of the signals of the IRQs */
 const struct tfm_core_irq_signal_data_t tfm_core_irq_signals[] = {
-#ifdef TFM_MULTI_CORE_TOPOLOGY   //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX   //NXP
     { TFM_NS_MAILBOX_AGENT, , MAILBOX_IRQ },
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 #ifdef TEST_NS_SLIH_IRQ   //NXP
     { TFM_SP_SLIH_TEST, , TFM_TIMER0_IRQ },
 #endif /* TEST_NS_SLIH_IRQ */ //NXP
@@ -45,9 +45,9 @@ extern void priv_irq_handler_main(uint32_t partition_id,
                                   uint32_t irq_line);
 
 /* Forward declarations of unpriv IRQ handlers*/
-#ifdef TFM_MULTI_CORE_TOPOLOGY ///NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX ///NXP
 extern void _isr(void);
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
 #ifdef TEST_NS_SLIH_IRQ ///NXP
 extern void _isr(void);
@@ -59,7 +59,7 @@ extern void _isr(void);
 
 
 /* Definitions of privileged IRQ handlers */
-#ifdef TFM_MULTI_CORE_TOPOLOGY //NXP
+#ifdef TFM_PARTITION_NS_AGENT_MAILBOX //NXP
 void MAILBOX_IRQ_Handler(void)
 {
     priv_irq_handler_main(TFM_NS_MAILBOX_AGENT,
@@ -68,7 +68,7 @@ void MAILBOX_IRQ_Handler(void)
                           MAILBOX_IRQ);
 }
 
-#endif /* TFM_MULTI_CORE_TOPOLOGY */ //NXP
+#endif /* TFM_PARTITION_NS_AGENT_MAILBOX */ //NXP
 
 #ifdef TEST_NS_SLIH_IRQ //NXP
 void TFM_TIMER0_IRQ_Handler(void)

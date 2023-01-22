@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
- * Copyright (c) 2019-2022 NXP. All rights reserved.
+ * Copyright (c) 2013-2022 ARM Limited. All rights reserved.
+ * Copyright 2019-2022 NXP. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,7 +15,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-
  */
 
 #include "target_cfg.h"
@@ -24,7 +23,6 @@
 #include "flash_layout.h"
 #include "fsl_iap.h"
 #include "fsl_cache.h"
-#include "tfm_memory_utils.h"
 #include "tfm_spm_log.h"
 
 #ifndef ARG_UNUSED
@@ -34,10 +32,12 @@
 /* Driver version */
 #define ARM_FLASH_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(1, 0)
 
-/* ARM FLASH device structure */
+/**
+ * \brief Arm Flash device structure.
+ */
 struct arm_flash_dev_t {
-    ARM_FLASH_INFO *data;         /*!< FLASH data */
-    flexspi_nor_config_t flash_config; /*!< FLASH config*/
+    ARM_FLASH_INFO       *data;         /*!< FLASH data */
+    flexspi_nor_config_t flash_config;  /*!< FLASH config*/
 };
 
 /* Flash Status */
@@ -387,7 +387,7 @@ static int32_t ARM_Flash_ProgramData(uint32_t addr, const void *data, uint32_t c
         }
         else
         {
-            src = tfm_memcpy(write_buffer, data, FLASH0_PAGE_SIZE);
+            src = memcpy(write_buffer, data, FLASH0_PAGE_SIZE);
         }
 
         status = IAP_FlexspiNorPageProgram(NOR_FLASH_INSTANCE, &FLASH0_DEV->flash_config, addr, src);

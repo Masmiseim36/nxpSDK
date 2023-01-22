@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -29,6 +29,12 @@
 #ifndef __XF_H
 #error "xf-shmem.h mustn't be included directly"
 #endif
+
+/*******************************************************************************
+ * Macros/Constants 
+ ******************************************************************************/
+
+#define XF_SHMEM_DATA_ALIGNMENT 4096
 
 /*******************************************************************************
  * Memory structures
@@ -72,7 +78,7 @@ typedef struct xf_shmem_data
     struct xf_proxy_dsp_data    local       __xf_shmem__;
 
     /* ...shared memory pool (page-aligned; why? we map memory to user-space) */
-    UWORD8                          buffer[XF_CFG_REMOTE_IPC_POOL_SIZE]   __attribute__((__aligned__(4096)));
+    UWORD8                          buffer[XF_CFG_REMOTE_IPC_POOL_SIZE]   __attribute__((__aligned__(XF_SHMEM_DATA_ALIGNMENT)));
 
 }   xf_shmem_data_t;
 
@@ -80,6 +86,7 @@ typedef struct xf_shmem_data
  * Shared memory accessors
  ******************************************************************************/
 
+#if 0
 /* ...shared memory pointer for a core */
 #define XF_SHMEM_DATA(core)                         \
     ((xf_shmem_data_t *)XF_CORE_DATA(core)->shmem)
@@ -133,13 +140,15 @@ typedef struct xf_shmem_data
 #define XF_PROXY_RESPONSE(core, idx)                \
     (&XF_SHMEM_DATA((core))->local.response[(idx)])
 
+#endif
+
 /*******************************************************************************
  * Platform-specific SHMEM enable status
  ******************************************************************************/
 
 static inline int xf_shmem_enabled(UWORD32 core)
 {
-    return (core == 0);
+    return (core == XF_CORE_ID_MASTER);
 }
 
 /*******************************************************************************

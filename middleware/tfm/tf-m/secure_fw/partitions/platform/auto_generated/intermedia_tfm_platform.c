@@ -9,4 +9,4 @@
 
 #include <stdint.h>
 
-uint8_t tfm_sp_platform_stack[0x0500] __attribute__((aligned(8)));
+uint8_t tfm_sp_platform_stack[0x500] __attribute__((aligned(8)));

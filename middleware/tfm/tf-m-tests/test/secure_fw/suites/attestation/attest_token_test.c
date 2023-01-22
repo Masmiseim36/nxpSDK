@@ -2,7 +2,7 @@
  * attest_token_test.c
  *
  * Copyright (c) 2018-2019, Laurence Lundblade.
- * Copyright (c) 2020, Arm Limited.
+ * Copyright (c) 2020-2022, Arm Limited.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -15,6 +15,7 @@
 #include "attest_token_decode.h"
 #include "attest_token_test_values.h"
 #include "psa/crypto.h"
+#include "test_log.h"
 
 
 /**
@@ -35,6 +36,24 @@
  * values.
  */
 
+#ifdef DUMP_TOKEN
+static void dump_token(struct q_useful_buf_c *token)
+{
+    int i;
+    unsigned char num;
+
+    TEST_LOG("\r\n");
+    TEST_LOG("########### token(len: %d): ###########\r\n", token->len);
+    for (i = 0; i < token->len; ++i) {
+        num = ((unsigned char *)token->ptr)[i];
+        TEST_LOG(" 0x%X%X", (num & 0xF0) >> 4, num & 0x0F);
+        if (((i + 1) % 8) == 0) {
+            TEST_LOG("\r\n");
+        }
+    }
+    TEST_LOG("\r\n############## token end  ##############\r\n");
+}
+#endif
 
 /**
  * \brief An alternate token_main() that packs the option flags into the nonce.
@@ -60,7 +79,7 @@ int token_main_alt(uint32_t option_flags,
     struct q_useful_buf_c        actual_nonce;
     Q_USEFUL_BUF_MAKE_STACK_UB(  actual_nonce_storage, 64);
 
-    if(nonce.len == 64 && q_useful_buf_is_value(nonce, 0)) {
+    if(nonce.len == 64 && (q_useful_buf_is_value(nonce, 0) == SIZE_MAX)) {
         /* Go into special option-packed nonce mode */
         actual_nonce = q_useful_buf_copy(actual_nonce_storage, nonce);
         /* Use memcpy as it always works and avoids type punning */
@@ -77,119 +96,21 @@ int token_main_alt(uint32_t option_flags,
                                                 buffer.ptr,
                                                 token_buf_size,
                                                 &completed_token_size);
-
     *completed_token =
         (struct q_useful_buf_c){buffer.ptr, completed_token_size};
-
     if (return_value != PSA_SUCCESS) {
         return (int)return_value;
     }
 
+#ifdef DUMP_TOKEN
+    dump_token(completed_token);
+#endif
+
     return 0;
 }
 
-#ifdef INCLUDE_TEST_CODE /* Remove them from release build */
-#ifdef SYMMETRIC_INITIAL_ATTESTATION
-/**
- * This is the expected output for the minimal test. It is the result
- * of creating a token with \ref TOKEN_OPT_SHORT_CIRCUIT_SIGN and \ref
- * TOKEN_OPT_OMIT_CLAIMS set. The nonce is the above constant string
- * \ref nonce_bytes.  The token output is completely deterministic.
- *
- *     17(
- *       [
- *           / protected / h'A10105' / {
- *               \ alg \ 1:5 \ HMAC-SHA256 \
- *             } /,
- *           / unprotected / {},
- *           / payload / h'A13A000124FF5840000000C0000000000000000000000
- *           00000000000000000000000000000000000000000000000000000000000
- *           0000000000000000000000000000000000000000' / {
- *               / arm_psa_nonce / -75008: h'000000C00000000000000000000
- *               0000000000000000000000000000000000000000000000000000000
- *               0000000000000000000000000000000000000000000000,
- *           } /,
- *           / tag / h'966840FC0A60AE968F906D7092E57B205D3BBE83ED47EBBC2
- *           AD9D1CFB41C87F3'
- *       ]
- *     )
- *
- * The above is in CBOR Diagnostic notation. See RFC 8152.
- */
-static const uint8_t expected_minimal_token_bytes[] = {
-    0xD1, 0x84, 0x43, 0xA1, 0x01, 0x05, 0xA0, 0x58,
-    0x48, 0xA1, 0x3A, 0x00, 0x01, 0x24, 0xFF, 0x58,
-    0x40, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x58, 0x20, 0x96, 0x68, 0x40, 0xFC, 0x0A,
-    0x60, 0xAE, 0x96, 0x8F, 0x90, 0x6D, 0x70, 0x92,
-    0xE5, 0x7B, 0x20, 0x5D, 0x3B, 0xBE, 0x83, 0xED,
-    0x47, 0xEB, 0xBC, 0x2A, 0xD9, 0xD1, 0xCF, 0xB4,
-    0x1C, 0x87, 0xF3
-};
-#else /* SYMMETRIC_INITIAL_ATTESTATION */
-/**
- * This is the expected output for the minimal test. It is the result
- * of creating a token with \ref TOKEN_OPT_SHORT_CIRCUIT_SIGN and \ref
- * TOKEN_OPT_OMIT_CLAIMS set. The nonce is the above constant string
- * \ref nonce_bytes.  The token output is completely deterministic.
- *
- * The implementation of TOKEN_OPT_SHORT_CIRCUIT_SIGN always uses the
- * kid
- * EF954B4BD9BDF670D0336082F5EF152AF8F35B6A6C00EFA6A9A71F49517E18C6.
- *
- *     18(
- *       [
- *           h'A10126', // protected headers
- *           { // unprotected headers
- *               4: h'EF954B4BD9BDF670D0336082F5EF152AF8F35B6A6C00EFA6A9
- *                    A71F49517E18C6'
- *           },
- *           h'A13A000124FF5840000000C0000000000000000000000000000000000
- *             000000000000000000000000000000000000000000000000000000000
- *             000000000000000000000000000000',
- *           h'CE52E46D564F1A6DBCEE106341CC80CDC0A3480999AFA8067747CA255
- *             EEDFD8BCE52E46D564F1A6DBCEE106341CC80CDC0A3480999AFA80677
- *             47CA255EEDFD8B'
- *       ]
- *     )
- *
- * The above is in CBOR Diagnostic notation. See RFC 8152.
- */
-static const uint8_t expected_minimal_token_bytes[] = {
-    0xD2, 0x84, 0x43, 0xA1, 0x01, 0x26, 0xA1, 0x04,
-    0x58, 0x20, 0xEF, 0x95, 0x4B, 0x4B, 0xD9, 0xBD,
-    0xF6, 0x70, 0xD0, 0x33, 0x60, 0x82, 0xF5, 0xEF,
-    0x15, 0x2A, 0xF8, 0xF3, 0x5B, 0x6A, 0x6C, 0x00,
-    0xEF, 0xA6, 0xA9, 0xA7, 0x1F, 0x49, 0x51, 0x7E,
-    0x18, 0xC6, 0x58, 0x48, 0xA1, 0x3A, 0x00, 0x01,
-    0x24, 0xFF, 0x58, 0x40, 0x00, 0x00, 0x00, 0xC0,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x58, 0x40, 0x45, 0x0B,
-    0x2C, 0x09, 0x68, 0xA1, 0x92, 0xA8, 0x85, 0xBE,
-    0x59, 0xE5, 0xA0, 0x9B, 0xDA, 0x4A, 0x8B, 0xA3,
-    0xA6, 0xFC, 0x7F, 0x51, 0x90, 0x35, 0x2D, 0x3A,
-    0x16, 0xBC, 0x30, 0x7B, 0x50, 0x3D, 0x45, 0x0B,
-    0x2C, 0x09, 0x68, 0xA1, 0x92, 0xA8, 0x85, 0xBE,
-    0x59, 0xE5, 0xA0, 0x9B, 0xDA, 0x4A, 0x8B, 0xA3,
-    0xA6, 0xFC, 0x7F, 0x51, 0x90, 0x35, 0x2D, 0x3A,
-    0x16, 0xBC, 0x30, 0x7B, 0x50, 0x3D
-};
-#endif /* SYMMETRIC_INITIAL_ATTESTATION */
-
-
+#ifdef INCLUDE_TEST_CODE
+static const uint8_t expected_minimal_token_bytes[] = {MINIMAL_TOKEN};
 /*
  * Public function. See token_test.h
  */
@@ -367,10 +288,10 @@ static int_fast16_t check_simple_claims(
         }
     }
 
-    /* -- check value of the UEID claim -- */
-    if(!IS_ITEM_FLAG_SET(UEID_FLAG, simple_claims->item_flags)) {
+    /* -- check value of the instance ID claim -- */
+    if(!IS_ITEM_FLAG_SET(INSTANCE_ID_FLAG, simple_claims->item_flags)) {
         /* Claim is not present in token */
-        if(TOKEN_TEST_REQUIRE_UEID) {
+        if(TOKEN_TEST_REQUIRE_INSTANCE_ID) {
             /* It should have been present */
             return_value = -52;
             goto Done;
@@ -378,9 +299,9 @@ static int_fast16_t check_simple_claims(
     } else {
         /* Claim is present */
         /* Don't have to check if its presence is required */
-        tmp = TOKEN_TEST_VALUE_UEID;
+        tmp = TOKEN_TEST_VALUE_INSTANCE_ID;
         if(!q_useful_buf_c_is_null(tmp) &&
-           q_useful_buf_compare(simple_claims->ueid, tmp)) {
+           q_useful_buf_compare(simple_claims->instance_id, tmp)) {
             /* Check of its value was requested and failed */
             return_value = -53;
             goto Done;
@@ -407,10 +328,10 @@ static int_fast16_t check_simple_claims(
         }
     }
 
-    /* -- check value of the hw_version claim -- */
-    if(!IS_ITEM_FLAG_SET(HW_VERSION_FLAG, simple_claims->item_flags)) {
+    /* -- check value of the cert_ref claim -- */
+    if(!IS_ITEM_FLAG_SET(CERT_REF_FLAG, simple_claims->item_flags)) {
         /* Claim is not present in token */
-        if(TOKEN_TEST_REQUIRE_HW_VERSION) {
+        if(TOKEN_TEST_REQUIRE_CERT_REF) {
             /* It should have been present */
             return_value = -56;
             goto Done;
@@ -418,10 +339,10 @@ static int_fast16_t check_simple_claims(
     } else {
         /* Claim is present */
         /* Don't have to check if its presence is required */
-        tmp_string = TOKEN_TEST_VALUE_HW_VERSION;
+        tmp_string = TOKEN_TEST_VALUE_CERT_REF;
         if(tmp_string != NULL) {
-            tmp = Q_USEFUL_BUF_FROM_SZ_LITERAL(TOKEN_TEST_VALUE_HW_VERSION);
-            if(q_useful_buf_compare(simple_claims->hw_version, tmp)) {
+            tmp = Q_USEFUL_BUF_FROM_SZ_LITERAL(TOKEN_TEST_VALUE_CERT_REF);
+            if(q_useful_buf_compare(simple_claims->cert_ref, tmp)) {
                 /* Check of its value was requested and failed */
                 return_value = -57;
                 goto Done;
@@ -516,10 +437,10 @@ static int_fast16_t check_simple_claims(
         }
     }
 
-    /* -- check value of the origination claim -- */
-    if(!IS_ITEM_FLAG_SET(ORIGINATION_FLAG, simple_claims->item_flags)) {
+    /* -- check value of the verification_service claim -- */
+    if(!IS_ITEM_FLAG_SET(VERIFICATION_SERVICE_FLAG, simple_claims->item_flags)) {
         /* Claim is not present in token */
-        if(TOKEN_TEST_REQUIRE_ORIGINATION) {
+        if(TOKEN_TEST_REQUIRE_VERIFICATION_SERVICE) {
             /* It should have been present */
             return_value = -66;
             goto Done;
@@ -527,10 +448,10 @@ static int_fast16_t check_simple_claims(
     } else {
         /* Claim is present */
         /* Don't have to check if its presence is required */
-        tmp_string = TOKEN_TEST_VALUE_ORIGINATION;
+        tmp_string = TOKEN_TEST_VALUE_VERIFICATION_SERVICE;
         if(tmp_string != NULL) {
-            tmp = Q_USEFUL_BUF_FROM_SZ_LITERAL(TOKEN_TEST_VALUE_ORIGINATION);
-            if(q_useful_buf_compare(simple_claims->origination, tmp)) {
+            tmp = Q_USEFUL_BUF_FROM_SZ_LITERAL(TOKEN_TEST_VALUE_VERIFICATION_SERVICE);
+            if(q_useful_buf_compare(simple_claims->verif_serv, tmp)) {
                 /* Check of its value was requested and failed */
                 return_value = -67;
                 goto Done;

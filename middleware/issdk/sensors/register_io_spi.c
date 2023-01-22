@@ -132,6 +132,17 @@ void SPI7_SignalEvent_t(uint32_t event)
     b_SPI_CompletionFlag[7] = true;
 }
 #endif
+#if defined(SPI8)
+/* The SPI7 Signal Event Handler function. */
+void SPI8_SignalEvent_t(uint32_t event)
+{
+    if (event != ARM_SPI_EVENT_TRANSFER_COMPLETE)
+    {
+        g_SPI_ErrorEvent[8] = event;
+    }
+    b_SPI_CompletionFlag[8] = true;
+}
+#endif
 #endif
 
 /* Control Slave Select based on inactive/active and active low/high. */

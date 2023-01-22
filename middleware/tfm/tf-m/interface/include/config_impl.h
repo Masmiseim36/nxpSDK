@@ -19,12 +19,17 @@
 #define CONFIG_TFM_PSA_API_SUPERVISOR_CALL                       1
 
 #define CONFIG_TFM_CONNECTION_BASED_SERVICE_API                  1
+#define CONFIG_TFM_MMIO_REGION_ENABLE                            1
 #define CONFIG_TFM_FLIH_API                                      1
-#define CONFIG_TFM_SLIH_API                                      0
+#define CONFIG_TFM_SLIH_API                                      1
 
 #if CONFIG_TFM_SPM_BACKEND_IPC == 1
 /* Trustzone NS agent working stack size. */
+#if defined(TFM_FIH_PROFILE_ON) && TFM_LVL == 1
+#define CONFIG_TFM_NS_AGENT_TZ_STACK_SIZE                        1256
+#else
 #define CONFIG_TFM_NS_AGENT_TZ_STACK_SIZE                        1024
+#endif
 
 /* SPM re-uses Trustzone NS agent stack. */
 #define CONFIG_TFM_SPM_THREAD_STACK_SIZE                             \
@@ -43,11 +48,11 @@
  */
 #define CONFIG_TFM_NS_AGENT_TZ_STK_SIZE_SHIFT_FACTOR             1
 #define CONFIG_TFM_NS_AGENT_TZ_STACK_SIZE                         \
-    (((0x7ca0 >> CONFIG_TFM_NS_AGENT_TZ_STK_SIZE_SHIFT_FACTOR) + 0x7) & (~0x7))
+    (((0x7920 >> CONFIG_TFM_NS_AGENT_TZ_STK_SIZE_SHIFT_FACTOR) + 0x7) & (~0x7))
 
 #endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
 
-#if (CONFIG_TFM_FP > 0) && (CONFIG_TFM_SPM_BACKEND_SFN == 1)
+#if (CONFIG_TFM_FLOAT_ABI > 0) && (CONFIG_TFM_SPM_BACKEND_SFN == 1)
 #error "FP is not supported for SFN model."
 #endif
 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -174,9 +174,6 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa355501ba0bfb05cc9be452396f92bce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gaa355501ba0bfb05cc9be452396f92bce">DMA_DESCRIPTOR_END_ADDRESS</a>(start, inc, bytes, width)&#160;&#160;&#160;((uint32_t *)((uint32_t)(start) + (inc) * (bytes) - (inc) * (width)))</td></tr>
 <tr class="memdesc:gaa355501ba0bfb05cc9be452396f92bce"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA descriptor end address calculate.  <a href="#gaa355501ba0bfb05cc9be452396f92bce">More...</a><br/></td></tr>
 <tr class="separator:gaa355501ba0bfb05cc9be452396f92bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e10dd7fac0c8a71b801cfff2d21d1fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes)</td></tr>
-<tr class="memdesc:ga2e10dd7fac0c8a71b801cfff2d21d1fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA channel transfer configurations macro.  <a href="#ga2e10dd7fac0c8a71b801cfff2d21d1fa">More...</a><br/></td></tr>
-<tr class="separator:ga2e10dd7fac0c8a71b801cfff2d21d1fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -339,7 +336,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gac68c8082b53756a7e58ec6d5f25117d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gac68c8082b53756a7e58ec6d5f25117d2">FSL_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 4))</td></tr>
+<tr class="memitem:gac68c8082b53756a7e58ec6d5f25117d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gac68c8082b53756a7e58ec6d5f25117d2">FSL_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
 <tr class="memdesc:gac68c8082b53756a7e58ec6d5f25117d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA driver version.  <a href="#gac68c8082b53756a7e58ec6d5f25117d2">More...</a><br/></td></tr>
 <tr class="separator:gac68c8082b53756a7e58ec6d5f25117d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -387,6 +384,9 @@ DMA Channel Operation</h2></td></tr>
 <tr class="memitem:gafc795a7c0b3e5f4bbf32c1eed3a9ea47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gafc795a7c0b3e5f4bbf32c1eed3a9ea47">DMA_SetChannelConfig</a> (DMA_Type *base, uint32_t channel, <a class="el" href="a00016.html#a00329">dma_channel_trigger_t</a> *trigger, bool isPeriph)</td></tr>
 <tr class="memdesc:gafc795a7c0b3e5f4bbf32c1eed3a9ea47"><td class="mdescLeft">&#160;</td><td class="mdescRight">set channel config.  <a href="#gafc795a7c0b3e5f4bbf32c1eed3a9ea47">More...</a><br/></td></tr>
 <tr class="separator:gafc795a7c0b3e5f4bbf32c1eed3a9ea47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed498d0e17c40aa2899869626c238507"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gaed498d0e17c40aa2899869626c238507">DMA_SetChannelXferConfig</a> (bool reload, bool clrTrig, bool intA, bool intB, uint8_t width, uint8_t srcInc, uint8_t dstInc, uint32_t bytes)</td></tr>
+<tr class="memdesc:gaed498d0e17c40aa2899869626c238507"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA channel xfer transfer configurations.  <a href="#gaed498d0e17c40aa2899869626c238507">More...</a><br/></td></tr>
+<tr class="separator:gaed498d0e17c40aa2899869626c238507"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0197c674ce188bf214c13bc7be43e14"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gaf0197c674ce188bf214c13bc7be43e14">DMA_GetRemainingBytes</a> (DMA_Type *base, uint32_t channel)</td></tr>
 <tr class="memdesc:gaf0197c674ce188bf214c13bc7be43e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remaining bytes of the current DMA descriptor transfer.  <a href="#gaf0197c674ce188bf214c13bc7be43e14">More...</a><br/></td></tr>
 <tr class="separator:gaf0197c674ce188bf214c13bc7be43e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -435,7 +435,7 @@ DMA Transactional Operation</h2></td></tr>
 <tr class="memitem:gad29055b5d8b160f94bb18abce476af7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gad29055b5d8b160f94bb18abce476af7d">DMA_PrepareChannelTransfer</a> (<a class="el" href="a00016.html#a00328">dma_channel_config_t</a> *config, void *srcStartAddr, void *dstStartAddr, uint32_t xferCfg, <a class="el" href="a00016.html#ga9cb7087af6efc80106c1033f80d60219">dma_transfer_type_t</a> type, <a class="el" href="a00016.html#a00329">dma_channel_trigger_t</a> *trigger, void *nextDesc)</td></tr>
 <tr class="memdesc:gad29055b5d8b160f94bb18abce476af7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare channel transfer configurations.  <a href="#gad29055b5d8b160f94bb18abce476af7d">More...</a><br/></td></tr>
 <tr class="separator:gad29055b5d8b160f94bb18abce476af7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade169c9d37d6a2ff949546268ba1c382"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gade169c9d37d6a2ff949546268ba1c382">DMA_SubmitTransfer</a> (<a class="el" href="a00016.html#a00331">dma_handle_t</a> *handle, <a class="el" href="a00016.html#a00332">dma_transfer_config_t</a> *config)</td></tr>
+<tr class="memitem:gade169c9d37d6a2ff949546268ba1c382"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gade169c9d37d6a2ff949546268ba1c382">DMA_SubmitTransfer</a> (<a class="el" href="a00016.html#a00331">dma_handle_t</a> *handle, <a class="el" href="a00016.html#a00332">dma_transfer_config_t</a> *config)</td></tr>
 <tr class="memdesc:gade169c9d37d6a2ff949546268ba1c382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submits the DMA transfer request.  <a href="#gade169c9d37d6a2ff949546268ba1c382">More...</a><br/></td></tr>
 <tr class="separator:gade169c9d37d6a2ff949546268ba1c382"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55d406dd20fa70d7cca25601bae20777"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#ga55d406dd20fa70d7cca25601bae20777">DMA_SubmitChannelTransferParameter</a> (<a class="el" href="a00016.html#a00331">dma_handle_t</a> *handle, uint32_t xferCfg, void *srcStartAddr, void *dstStartAddr, void *nextDesc)</td></tr>
@@ -444,7 +444,7 @@ DMA Transactional Operation</h2></td></tr>
 <tr class="memitem:gabf72e148a82d885b8b4ab3cffd549cc3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gabf72e148a82d885b8b4ab3cffd549cc3">DMA_SubmitChannelDescriptor</a> (<a class="el" href="a00016.html#a00331">dma_handle_t</a> *handle, <a class="el" href="a00016.html#a00330">dma_descriptor_t</a> *descriptor)</td></tr>
 <tr class="memdesc:gabf72e148a82d885b8b4ab3cffd549cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit channel descriptor.  <a href="#gabf72e148a82d885b8b4ab3cffd549cc3">More...</a><br/></td></tr>
 <tr class="separator:gabf72e148a82d885b8b4ab3cffd549cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae702541c17430371d54c7aea5dbef084"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gae702541c17430371d54c7aea5dbef084">DMA_SubmitChannelTransfer</a> (<a class="el" href="a00016.html#a00331">dma_handle_t</a> *handle, <a class="el" href="a00016.html#a00328">dma_channel_config_t</a> *config)</td></tr>
+<tr class="memitem:gae702541c17430371d54c7aea5dbef084"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gae702541c17430371d54c7aea5dbef084">DMA_SubmitChannelTransfer</a> (<a class="el" href="a00016.html#a00331">dma_handle_t</a> *handle, <a class="el" href="a00016.html#a00328">dma_channel_config_t</a> *config)</td></tr>
 <tr class="memdesc:gae702541c17430371d54c7aea5dbef084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submits the DMA channel transfer request.  <a href="#gae702541c17430371d54c7aea5dbef084">More...</a><br/></td></tr>
 <tr class="separator:gae702541c17430371d54c7aea5dbef084"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6fb3f30e13c937cc00fe11218e6ec76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html#gac6fb3f30e13c937cc00fe11218e6ec76">DMA_StartTransfer</a> (<a class="el" href="a00016.html#a00331">dma_handle_t</a> *handle)</td></tr>
@@ -739,11 +739,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 4))</td>
+          <td class="memname">#define FSL_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Version 2.4.4. </p>
+<p>Version 2.5.0. </p>
 
 </div>
 </div>
@@ -933,88 +933,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
     <tr><td class="paramname">inc</td><td>address interleave size </td></tr>
     <tr><td class="paramname">bytes</td><td>transfer bytes </td></tr>
     <tr><td class="paramname">width</td><td>transfer width </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2e10dd7fac0c8a71b801cfff2d21d1fa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DMA_CHANNEL_XFER</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">reload, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">clrTrig, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">intA, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">intB, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">width, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">srcInc, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">dstInc, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">bytes&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">DMA_CHANNEL_XFERCFG_CFGVALID_MASK | DMA_CHANNEL_XFERCFG_RELOAD(reload) | DMA_CHANNEL_XFERCFG_CLRTRIG(clrTrig) | \</div>
-<div class="line">        DMA_CHANNEL_XFERCFG_SETINTA(intA) | DMA_CHANNEL_XFERCFG_SETINTB(intB) |                                     \</div>
-<div class="line">        DMA_CHANNEL_XFERCFG_WIDTH(width == 4UL ? 2UL : (width - 1UL)) |                                             \</div>
-<div class="line">        DMA_CHANNEL_XFERCFG_SRCINC(srcInc == (uint32_t)<a class="code" href="a00016.html#ggac205be2172292384dd687b5471a87eddaecf2cec42cd7819983e265710c691888">kDMA_AddressInterleave4xWidth</a> ? (srcInc - 1UL) : srcInc) |   \</div>
-<div class="line">        DMA_CHANNEL_XFERCFG_DSTINC(dstInc == (uint32_t)<a class="code" href="a00016.html#ggac205be2172292384dd687b5471a87eddaecf2cec42cd7819983e265710c691888">kDMA_AddressInterleave4xWidth</a> ? (dstInc - 1UL) : dstInc) |   \</div>
-<div class="line">        DMA_CHANNEL_XFERCFG_XFERCOUNT(bytes / width - 1UL)</div>
-<div class="ttc" id="a00016_html_ggac205be2172292384dd687b5471a87eddaecf2cec42cd7819983e265710c691888"><div class="ttname"><a href="a00016.html#ggac205be2172292384dd687b5471a87eddaecf2cec42cd7819983e265710c691888">kDMA_AddressInterleave4xWidth</a></div><div class="ttdoc">dma source/destination address interleave 3xwidth </div><div class="ttdef"><b>Definition:</b> fsl_dma.h:130</div></div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reload</td><td>true is reload link descriptor after current exhaust, false is not </td></tr>
-    <tr><td class="paramname">clrTrig</td><td>true is clear trigger status, wait software trigger, false is not </td></tr>
-    <tr><td class="paramname">intA</td><td>enable interruptA </td></tr>
-    <tr><td class="paramname">intB</td><td>enable interruptB </td></tr>
-    <tr><td class="paramname">width</td><td>transfer width </td></tr>
-    <tr><td class="paramname">srcInc</td><td>source address interleave size </td></tr>
-    <tr><td class="paramname">dstInc</td><td>destination address interleave size </td></tr>
-    <tr><td class="paramname">bytes</td><td>transfer bytes </td></tr>
   </table>
   </dd>
 </dl>
@@ -1844,6 +1762,90 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
+<a class="anchor" id="gaed498d0e17c40aa2899869626c238507"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t DMA_SetChannelXferConfig </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reload</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>clrTrig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>intA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>intB</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>srcInc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>dstInc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reload</td><td>true is reload link descriptor after current exhaust, false is not </td></tr>
+    <tr><td class="paramname">clrTrig</td><td>true is clear trigger status, wait software trigger, false is not </td></tr>
+    <tr><td class="paramname">intA</td><td>enable interruptA </td></tr>
+    <tr><td class="paramname">intB</td><td>enable interruptB </td></tr>
+    <tr><td class="paramname">width</td><td>transfer width </td></tr>
+    <tr><td class="paramname">srcInc</td><td>source address interleave size </td></tr>
+    <tr><td class="paramname">dstInc</td><td>destination address interleave size </td></tr>
+    <tr><td class="paramname">bytes</td><td>transfer bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The vaule of xfer config </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="gaf0197c674ce188bf214c13bc7be43e14"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2578,7 +2580,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMA_SubmitTransfer </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMA_SubmitTransfer </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -2661,7 +2663,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <ol type="1">
 <li>for the single transfer, application doesn't need to allocate descriptor table, the head descriptor can be used for it. <div class="fragment"><div class="line">   <a class="code" href="a00016.html#gafc795a7c0b3e5f4bbf32c1eed3a9ea47">DMA_SetChannelConfig</a>(base, channel, trigger, isPeriph);</div>
 <div class="line">   <a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(handle, base, channel)</div>
-<div class="line">   <a class="code" href="a00016.html#ga55d406dd20fa70d7cca25601bae20777">DMA_SubmitChannelTransferParameter</a>(handle, <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc,</div>
+<div class="line">   <a class="code" href="a00016.html#ga55d406dd20fa70d7cca25601bae20777">DMA_SubmitChannelTransferParameter</a>(handle, DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc,</div>
 <div class="line">bytes), srcStartAddr, dstStartAddr, NULL);</div>
 <div class="line">   <a class="code" href="a00016.html#gac6fb3f30e13c937cc00fe11218e6ec76">DMA_StartTransfer</a>(handle)</div>
 <div class="line">* </div>
@@ -2669,15 +2671,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <li>for the linked transfer, application should responsible for link descriptor, for example, if 4 transfer is required, then application should prepare three descriptor table with macro , the head descriptor in driver can be used for the first transfer descriptor. <div class="fragment"><div class="line">   define link descriptor table in application with macro</div>
 <div class="line">   DMA_ALLOCATE_LINK_DESCRIPTOR(nextDesc[3]);</div>
 <div class="line"></div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc1);</div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc2);</div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc2,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc2,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, NULL);</div>
 <div class="line">   <a class="code" href="a00016.html#gafc795a7c0b3e5f4bbf32c1eed3a9ea47">DMA_SetChannelConfig</a>(base, channel, trigger, isPeriph);</div>
 <div class="line">   <a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(handle, base, channel)</div>
-<div class="line">   <a class="code" href="a00016.html#ga55d406dd20fa70d7cca25601bae20777">DMA_SubmitChannelTransferParameter</a>(handle, <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc,</div>
+<div class="line">   <a class="code" href="a00016.html#ga55d406dd20fa70d7cca25601bae20777">DMA_SubmitChannelTransferParameter</a>(handle, DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc,</div>
 <div class="line">bytes), srcStartAddr, dstStartAddr, nextDesc0);</div>
 <div class="line">   <a class="code" href="a00016.html#gac6fb3f30e13c937cc00fe11218e6ec76">DMA_StartTransfer</a>(handle);</div>
 <div class="line">* </div>
@@ -2724,9 +2726,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <li>for the ping pong case, application should responsible for the descriptor, for example, application should prepare two descriptor table with macro. <div class="fragment"><div class="line">   define link descriptor table in application with macro</div>
 <div class="line">   DMA_ALLOCATE_LINK_DESCRIPTOR(nextDesc[2]);</div>
 <div class="line"></div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc1);</div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc0);</div>
 <div class="line">   <a class="code" href="a00016.html#gafc795a7c0b3e5f4bbf32c1eed3a9ea47">DMA_SetChannelConfig</a>(base, channel, trigger, isPeriph);</div>
 <div class="line">   <a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(handle, base, channel)</div>
@@ -2750,7 +2752,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMA_SubmitChannelTransfer </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMA_SubmitChannelTransfer </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -2778,11 +2780,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><!-- fragment --></li>
 <li>for the linked transfer, application should responsible for link descriptor, for example, if 4 transfer is required, then application should prepare three descriptor table with macro , the head descriptor in driver can be used for the first transfer descriptor. <div class="fragment"><div class="line">   define link descriptor table in application with macro</div>
 <div class="line">   DMA_ALLOCATE_LINK_DESCRIPTOR(nextDesc);</div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc1);</div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc2);</div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc2,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc2,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, NULL);</div>
 <div class="line">   <a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(handle, base, channel)</div>
 <div class="line">   <a class="code" href="a00016.html#gad29055b5d8b160f94bb18abce476af7d">DMA_PrepareChannelTransfer</a>(config,srcStartAddr,dstStartAddr,xferCfg,type,trigger,nextDesc0);</div>
@@ -2793,9 +2795,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <li>for the ping pong case, application should responsible for link descriptor, for example, application should prepare two descriptor table with macro , the head descriptor in driver can be used for the first transfer descriptor. <div class="fragment"><div class="line">   define link descriptor table in application with macro</div>
 <div class="line">   DMA_ALLOCATE_LINK_DESCRIPTOR(nextDesc);</div>
 <div class="line"></div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc0,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc1);</div>
-<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  <a class="code" href="a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa">DMA_CHANNEL_XFER</a>(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
+<div class="line">   <a class="code" href="a00016.html#gabbdbf43b54f0a0029cd27c09c094de36">DMA_SetupDescriptor</a>(nextDesc1,  DMA_CHANNEL_XFER(reload, clrTrig, intA, intB, width, srcInc, dstInc, bytes),</div>
 <div class="line">srcStartAddr, dstStartAddr, nextDesc0);</div>
 <div class="line">   <a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(handle, base, channel)</div>
 <div class="line">   <a class="code" href="a00016.html#gad29055b5d8b160f94bb18abce476af7d">DMA_PrepareChannelTransfer</a>(config,srcStartAddr,dstStartAddr,xferCfg,type,trigger,nextDesc0);</div>

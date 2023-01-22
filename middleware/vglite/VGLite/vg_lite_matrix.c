@@ -111,14 +111,3 @@ void vg_lite_rotate(vg_lite_float_t degrees, vg_lite_matrix_t * matrix)
     /* Multiply with current matrix. */
     multiply(matrix, &r);
 }
-
-void vg_lite_perspective(vg_lite_float_t px, vg_lite_float_t py, vg_lite_matrix_t * matrix)
-{
-    /* set prespective matrix */
-    vg_lite_matrix_t p = { { {1.0f, 0.0f, 0.0f},
-        {0.0f, 1.0f, 0.0f},
-        {px, py, 1.0f}
-    } };
-    /* Multiply with current matrix. */
-    multiply(matrix, &p);
-}

@@ -1,3 +1,4 @@
+
 /* Copyright 2021 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,8 +35,14 @@ namespace {
 
 void* Init(TfLiteContext* context, const char* buffer, size_t length) {
   TFLITE_DCHECK(context->AllocatePersistentBuffer != nullptr);
-  return context->AllocatePersistentBuffer(context,
-                                           sizeof(XtensaDepthwiseConvOpData));
+  void* data = context->AllocatePersistentBuffer(
+      context, sizeof(XtensaDepthwiseConvOpData));
+#if defined(VISION_P6)
+  if (InitXtensaContext()) {
+    return nullptr;
+  }
+#endif  // defined(VISION_P6)
+  return data;
 }
 
 TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
@@ -43,7 +50,11 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
 
 #if defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
   TF_LITE_ENSURE_OK(context, DepthwiseConvPrepareHifi(context, node));
-#endif  // defined(FUISON_F1) || defined(HIFI5)
+#endif  // defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
+
+#if defined(VISION_P6)
+  TF_LITE_ENSURE_OK(context, DepthwiseConvPrepareVision(context, node));
+#endif  // VISION_P6
   return kTfLiteOk;
 }
 
@@ -71,6 +82,9 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 #if defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
       DepthwiseConvEvalHifi(context, node, params, op_data, input, filter, bias,
                             output);
+#elif defined(VISION_P6)
+      DepthwiseConvEvalVision(context, node, params, op_data, input, filter,
+                              bias, output);
 #else
       reference_integer_ops::DepthwiseConvPerChannel(
           DepthwiseConvParamsQuantized(params, op_data.reference_op_data),
@@ -88,8 +102,8 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
       break;
     }
     default:
-      TF_LITE_KERNEL_LOG(context, "Type %s (%d) not supported.",
-                         TfLiteTypeGetName(input->type), input->type);
+      MicroPrintf("Type %s (%d) not supported.", TfLiteTypeGetName(input->type),
+                  input->type);
       return kTfLiteError;
   }
   return kTfLiteOk;
@@ -98,14 +112,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 }  // namespace
 
 TfLiteRegistration Register_DEPTHWISE_CONV_2D() {
-  return {/*init=*/Init,
-          /*free=*/nullptr,
-          /*prepare=*/Prepare,
-          /*invoke=*/Eval,
-          /*profiling_string=*/nullptr,
-          /*builtin_code=*/0,
-          /*custom_name=*/nullptr,
-          /*version=*/0};
+  return tflite::micro::RegisterOp(Init, Prepare, Eval);
 }
 
 }  // namespace tflite

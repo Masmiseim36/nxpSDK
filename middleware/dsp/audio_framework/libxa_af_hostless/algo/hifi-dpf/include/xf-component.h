@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -34,6 +34,13 @@
  * Types definitions
  ******************************************************************************/
 
+#ifdef XF_MSG_ERR_HANDLING
+typedef enum {
+    XAF_UNREGISTER      = XAF_NUM_ERRS - 1,
+} XAF_INTERNAL_ERR_CODE;
+#endif
+
+
 /* ...component descriptor (base structure) */
 typedef struct xf_component
 {
@@ -41,7 +48,7 @@ typedef struct xf_component
     xf_task_t               task;
 
     /* ...component id */
-    UWORD32                     id;
+    xf_msg_id_dtype         id;
 
     /* ...component processing priority */
     UWORD32                 priority;

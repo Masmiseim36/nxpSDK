@@ -264,13 +264,6 @@
 #define MEMP_NUM_REASSDATA 8
 
 /**
- * MEMP_NUM_TCPIP_MSG_INPKT: the number of struct tcpip_msg, which are used
- * for incoming packets.
- * (only needed if you use tcpip.c)
- */
-#define MEMP_NUM_TCPIP_MSG_INPKT 16
-
-/**
  * IP_REASS_MAXAGE: Maximum time (in multiples of IP_TMR_INTERVAL - so seconds, normally)
  * a fragmented IP packet waits for all fragments to arrive. If not all fragments arrived
  * in this time, the whole packet is discarded.
@@ -305,18 +298,6 @@
  * LWIP_RAW==1: Enable application layer to hook into the IP layer itself.
  */
 #define LWIP_RAW 1
-
-#ifdef CONFIG_IPV6
-#define LWIP_IPV6 1
-
-/**
- * LWIP_NETIF_IPV6_STATUS_CALLBACK==1: Support a callback function
- * whenever IPv6 address state is changed - Invalid, valid, preferred,
- * tentative, deprecated
- */
-
-#define LWIP_NETIF_IPV6_STATUS_CALLBACK LWIP_IPV6
-#endif
 
 /* Enable IPv4 Auto IP	*/
 #ifdef CONFIG_AUTOIP
@@ -386,8 +367,8 @@
 /**
  * LWIP_DHCP==1: Enable DHCP module.
  */
-#define LWIP_DHCP                  1
-#define LWIP_NETIF_STATUS_CALLBACK 1
+#define LWIP_DHCP                      1
+#define LWIP_NETIF_EXT_STATUS_CALLBACK 1
 
 /**
  * DNS related options, revisit later to fine tune.

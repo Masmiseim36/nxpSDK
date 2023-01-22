@@ -167,39 +167,39 @@ typedef enum _osa_status
 
 /*! @brief Priority setting for OSA. */
 #ifndef OSA_PRIORITY_IDLE
-#define OSA_PRIORITY_IDLE (6)
+#define OSA_PRIORITY_IDLE (6U)
 #endif
 
 #ifndef OSA_PRIORITY_LOW
-#define OSA_PRIORITY_LOW (5)
+#define OSA_PRIORITY_LOW (5U)
 #endif
 
 #ifndef OSA_PRIORITY_BELOW_NORMAL
-#define OSA_PRIORITY_BELOW_NORMAL (4)
+#define OSA_PRIORITY_BELOW_NORMAL (4U)
 #endif
 
 #ifndef OSA_PRIORITY_NORMAL
-#define OSA_PRIORITY_NORMAL (3)
+#define OSA_PRIORITY_NORMAL (3U)
 #endif
 
 #ifndef OSA_PRIORITY_ABOVE_NORMAL
-#define OSA_PRIORITY_ABOVE_NORMAL (2)
+#define OSA_PRIORITY_ABOVE_NORMAL (2U)
 #endif
 
 #ifndef OSA_PRIORITY_HIGH
-#define OSA_PRIORITY_HIGH (1)
+#define OSA_PRIORITY_HIGH (1U)
 #endif
 
 #ifndef OSA_PRIORITY_REAL_TIME
-#define OSA_PRIORITY_REAL_TIME (0)
+#define OSA_PRIORITY_REAL_TIME (0U)
 #endif
 
 #ifndef OSA_TASK_PRIORITY_MAX
-#define OSA_TASK_PRIORITY_MAX (0)
+#define OSA_TASK_PRIORITY_MAX (0U)
 #endif
 
 #ifndef OSA_TASK_PRIORITY_MIN
-#define OSA_TASK_PRIORITY_MIN (15)
+#define OSA_TASK_PRIORITY_MIN (15U)
 #endif
 
 #define SIZE_IN_UINT32_UNITS(size) (((size) + sizeof(uint32_t) - 1) / sizeof(uint32_t))

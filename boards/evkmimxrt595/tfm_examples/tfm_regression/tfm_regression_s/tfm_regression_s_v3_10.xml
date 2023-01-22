@@ -25,6 +25,7 @@
     <definition extID="middleware.tfm.s.ps.MIMXRT595S"/>
     <definition extID="middleware.tfm.s.test.ps.MIMXRT595S"/>
     <definition extID="middleware.tfm.s.profile_medium.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.test.irq_slih.MIMXRT595S"/>
     <definition extID="platform.drivers.common.MIMXRT595S"/>
     <definition extID="platform.drivers.clock.MIMXRT595S"/>
     <definition extID="platform.drivers.power.MIMXRT595S"/>
@@ -46,7 +47,6 @@
     <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
     <definition extID="platform.drivers.iap.MIMXRT595S"/>
     <definition extID="middleware.tfm.s.MIMXRT595S"/>
-    <definition extID="middleware.tfm.memory_utils.MIMXRT595S"/>
     <definition extID="middleware.tfm.t_cose.sign1_verify.MIMXRT595S"/>
     <definition extID="middleware.tfm.platform_test.MIMXRT595S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
@@ -58,7 +58,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_tfm_regression_s" name="tfm_regression_s" device_core="cm33_MIMXRT595S" dependency="platform.drivers.casper.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.ctimer.MIMXRT595S middleware.tfm.flash_iap.MIMXRT595S middleware.mbedcrypto.MIMXRT595S middleware.tfm.s.evkmimxrt595.MIMXRT595S middleware.tfm.s.its.MIMXRT595S middleware.tfm.s.crypto.MIMXRT595S middleware.tfm.s.initial_attestation.MIMXRT595S middleware.tfm.s.platform.MIMXRT595S middleware.tfm.s.test.MIMXRT595S middleware.tfm.s.test.its.MIMXRT595S middleware.tfm.s.test.attestation.MIMXRT595S middleware.tfm.s.test.crypto.MIMXRT595S middleware.tfm.s.test.platform.MIMXRT595S middleware.tfm.s.ipc_api.MIMXRT595S middleware.tfm.s.test.ipc.MIMXRT595S middleware.tfm.s.test.core.MIMXRT595S middleware.tfm.s.ps.MIMXRT595S middleware.tfm.s.test.ps.MIMXRT595S middleware.tfm.s.profile_medium.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S utility.debug_console.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.evkmimxrt595.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.drivers.iap.MIMXRT595S middleware.tfm.s.MIMXRT595S middleware.tfm.memory_utils.MIMXRT595S middleware.tfm.t_cose.sign1_verify.MIMXRT595S middleware.tfm.platform_test.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S" linked_projects="evkmimxrt595_tfm_regression_ns" category="tfm_examples">
+  <example id="evkmimxrt595_tfm_regression_s" name="tfm_regression_s" device_core="cm33_MIMXRT595S" dependency="platform.drivers.casper.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.ctimer.MIMXRT595S middleware.tfm.flash_iap.MIMXRT595S middleware.mbedcrypto.MIMXRT595S middleware.tfm.s.evkmimxrt595.MIMXRT595S middleware.tfm.s.its.MIMXRT595S middleware.tfm.s.crypto.MIMXRT595S middleware.tfm.s.initial_attestation.MIMXRT595S middleware.tfm.s.platform.MIMXRT595S middleware.tfm.s.test.MIMXRT595S middleware.tfm.s.test.its.MIMXRT595S middleware.tfm.s.test.attestation.MIMXRT595S middleware.tfm.s.test.crypto.MIMXRT595S middleware.tfm.s.test.platform.MIMXRT595S middleware.tfm.s.ipc_api.MIMXRT595S middleware.tfm.s.test.ipc.MIMXRT595S middleware.tfm.s.test.core.MIMXRT595S middleware.tfm.s.ps.MIMXRT595S middleware.tfm.s.test.ps.MIMXRT595S middleware.tfm.s.profile_medium.MIMXRT595S middleware.tfm.s.test.irq_slih.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S utility.debug_console.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.evkmimxrt595.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.drivers.iap.MIMXRT595S middleware.tfm.s.MIMXRT595S middleware.tfm.t_cose.sign1_verify.MIMXRT595S middleware.tfm.platform_test.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S" linked_projects="evkmimxrt595_tfm_regression_ns" category="tfm_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -70,7 +70,7 @@
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <buildSteps>
-          <preBuildStep>arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DTFM_PARTITION_TEST_SECURE_SERVICES -DCONFIG_TFM_PARTITION_META -E -P -xc -I../tf-m/platform/ext/target/nxp/evkmimxrt595/partition ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld</preBuildStep>
+          <preBuildStep>arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DTFM_PARTITION_TEST_SECURE_SERVICES -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -E -P -xc -I../tf-m/platform/ext/target/nxp/evkmimxrt595/partition ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld</preBuildStep>
         </buildSteps>
         <option id="com.crt.advproject.debugger.security.nonsecureimage" type="string">
           <value>${linked:evkmimxrt595_tfm_regression_ns}</value>
@@ -122,14 +122,17 @@
           <value>ITS_WIPE_ALL</value>
           <value>CONFIG_TFM_CONN_HANDLE_MAX_NUM=8</value>
           <value>DAUTH_CHIP_DEFAULT</value>
-          <value>INCLUDE_TEST_CODE_AND_KEY_ID</value>
           <value>__SEMIHOST_HARDFAULT_DISABLE</value>
           <value>TFM_CRYPTO_TEST_ALG_CCM</value>
-          <value>TFM_CRYPTO_TEST_ALG_GCM</value>
           <value>TFM_CRYPTO_TEST_HKDF</value>
           <value>CRYPTO_HW_ACCELERATOR</value>
           <value>TFM_PARTITION_INTERNAL_TRUSTED_STORAGE</value>
           <value>TFM_PARTITION_CRYPTO</value>
+          <value>PLATFORM_DEFAULT_CRYPTO_KEYS</value>
+          <value>MBEDTLS_PSA_CRYPTO_DRIVERS</value>
+          <value>MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS</value>
+          <value>PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY</value>
+          <value>PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER</value>
           <value>TFM_PARTITION_INITIAL_ATTESTATION</value>
           <value>T_COSE_USE_PSA_CRYPTO</value>
           <value>TFM_PARTITION_PLATFORM</value>
@@ -139,8 +142,9 @@
           <value>TEST_S_ATTESTATION</value>
           <value>TEST_S_CRYPTO</value>
           <value>TEST_S_PLATFORM</value>
-          <value>TFM_PSA_API</value>
+          <value>TFM_PSA_API=1</value>
           <value>CONFIG_TFM_ENABLE_MEMORY_PROTECT</value>
+          <value>TFM_PARTITION_NS_AGENT_TZ</value>
           <value>TFM_PARTITION_IPC_TEST</value>
           <value>TEST_S_IPC</value>
           <value>TEST_NS_CORE</value>
@@ -151,8 +155,10 @@
           <value>TFM_PARTITION_TEST_PS</value>
           <value>TEST_S_PS</value>
           <value>MBEDTLS_CONFIG_FILE='"tfm_mbedcrypto_config_profile_medium.h"'</value>
-          <value>MBEDTLS_USER_CONFIG_FILE='"mbedcrypto_user_config.h"'</value>
+          <value>MBEDTLS_PSA_CRYPTO_CONFIG_FILE='"crypto_config_profile_medium.h"'</value>
           <value>TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED</value>
+          <value>PS_CRYPTO_AEAD_ALG=PSA_ALG_CCM</value>
+          <value>TEST_NS_SLIH_IRQ</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>CONFIG_TFM_BUILDING_SPE=1</value>
           <value>PLATFORM_DEFAULT_NV_COUNTERS</value>
@@ -162,8 +168,14 @@
           <value>TFM_DUMMY_PROVISIONING</value>
           <value>CONFIG_TFM_PSA_API_SUPERVISOR_CALL</value>
           <value>CONFIG_TFM_PARTITION_META</value>
-          <value>CONFIG_TFM_FP=2</value>
+          <value>CONFIG_TFM_FLOAT_ABI=2</value>
+          <value>CONFIG_TFM_ENABLE_CP10CP11</value>
           <value>CONFIG_TFM_LAZY_STACKING</value>
+          <value>CONFIG_TFM_HALT_ON_CORE_PANIC</value>
+          <value>CONFIG_TFM_USE_TRUSTZONE</value>
+          <value>ATTEST_TOKEN_PROFILE_PSA_IOT_1</value>
+          <value>ATTEST_KEY_BITS=256</value>
+          <value>TFM_PARTITION_TEST_SECURE_SERVICES</value>
           <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">

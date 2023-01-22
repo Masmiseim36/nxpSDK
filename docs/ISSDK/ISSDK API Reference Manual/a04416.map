@@ -1,4 +1,4 @@
-<map id="boardkit/frdm&#45;ke15z/frdm&#45;stba&#45;pd7250/issdk_hal.h" name="boardkit/frdm&#45;ke15z/frdm&#45;stba&#45;pd7250/issdk_hal.h">
-<area shape="rect" id="node5" href="$a00674.html" title="The frdm_ke15z.h file defines GPIO pin mappings for FRDM&#45;KE15Z board. " alt="" coords="450,95,550,121"/>
-<area shape="rect" id="node6" href="$a00659.html" title="frdm&#45;stba&#45;pd7250_shield.h" alt="" coords="574,95,749,121"/>
+<map id="boardkit/lpcxpresso55s16/frdm&#45;stba&#45;a896x/issdk_hal.h" name="boardkit/lpcxpresso55s16/frdm&#45;stba&#45;a896x/issdk_hal.h">
+<area shape="rect" id="node5" href="$a00647.html" title="The lpc55s16.h file defines GPIO pin mappings for LPCXpresso55S16 board. " alt="" coords="427,95,512,121"/>
+<area shape="rect" id="node6" href="$a04091.html" title="frdm_stba_a896x_shield.h" alt="" coords="536,95,709,121"/>
 </map>

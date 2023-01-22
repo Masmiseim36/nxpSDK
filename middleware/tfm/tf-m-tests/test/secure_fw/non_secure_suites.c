@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2017-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2022, Cypress Semiconductor Corporation (an Infineon company)
+ * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -46,7 +48,7 @@
 #endif /* TFM_PSA_API */
 #ifdef TEST_NS_MULTI_CORE
 #include "multi_core_ns_test.h"
-#endif /* TFM_MULTI_CORE_TOPOLOGY */
+#endif /* TEST_NS_MULTI_CORE */
 #ifdef TFM_FUZZER_TOOL_TESTS
 #include "tf_fuzz_testsuite.h"
 #endif /* TFM_FUZZER_TOOL_TESTS */

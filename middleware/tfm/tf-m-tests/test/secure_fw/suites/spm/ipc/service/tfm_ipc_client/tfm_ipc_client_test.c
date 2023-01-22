@@ -155,11 +155,16 @@ static int ipc_client_mem_check_test(void)
 #endif
 
 #ifdef TFM_IPC_ISOLATION_3_RETRIEVE_APP_MEM
+/*
+ * Fixme: Temporarily using a predefined boundary value.
+ * will replace it later.
+ */
+#define AROT_BOUNDARY   0
+
 static int ipc_client_retrieve_app_mem_test(void)
 {
     psa_handle_t handle;
     psa_status_t status;
-    uint32_t attr = 0;
     uint8_t *outvec_data[1] = {0};
     struct psa_outvec outvecs[1] = {{outvec_data, sizeof(outvec_data[0])}};
 
@@ -180,10 +185,8 @@ static int ipc_client_retrieve_app_mem_test(void)
          */
         uint8_t *psa_data_p = outvec_data[0];
         if (psa_data_p) {
-            attr |= (TFM_HAL_ACCESS_READABLE | TFM_HAL_ACCESS_WRITABLE
-                     | TFM_HAL_ACCESS_UNPRIVILEGED);
-            if (tfm_hal_memory_has_access((uintptr_t)psa_data_p, 1, attr) ==
-                                                      TFM_HAL_ERROR_MEM_FAULT) {
+            if (tfm_hal_memory_check(AROT_BOUNDARY, (uintptr_t)psa_data_p, 1,
+                         TFM_HAL_ACCESS_READWRITE) == TFM_HAL_ERROR_MEM_FAULT) {
                 return IPC_SP_TEST_SUCCESS;
             } else {
                 return IPC_SP_TEST_FAILED;

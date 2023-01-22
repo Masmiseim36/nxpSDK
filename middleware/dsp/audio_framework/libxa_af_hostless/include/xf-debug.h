@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -137,10 +137,11 @@ TRACE_TAG(0, 0);
 /* ...unconditionally ON */
 TRACE_TAG(1, 1);
 
-/* ...error output - on by default */
-TRACE_TAG(ERROR, 1);
+/* ...critical error output - on by default */
+TRACE_TAG(CRITICAL, 1);
 
 #if (XF_TRACE == 1)
+TRACE_TAG(ERROR, 1);
 TRACE_TAG(BUFFER, 1);
 TRACE_TAG(CMD, 1);
 TRACE_TAG(DEBUG, 1);
@@ -164,6 +165,7 @@ TRACE_TAG(SETUP, 1);
 TRACE_TAG(UNDERRUN, 1);
 TRACE_TAG(WARNING, 1);
 #elif (XF_TRACE > 1)
+TRACE_TAG(ERROR, 1);
 TRACE_TAG(BUFFER, 0);
 TRACE_TAG(CMD, 1);
 TRACE_TAG(DEBUG, 0);
@@ -241,6 +243,20 @@ while (0)
     __ret;                                              \
 })
 
+/* ...check the API call succeeds */
+#define XF_CHK_API_LOCK(cond, lock_ptr)                 \
+({                                                      \
+    int __ret;                                          \
+                                                        \
+    if ((__ret = (int)(cond)) < 0)                      \
+    {                                                   \
+        TRACE(ERROR, _x("API error: %d"), __ret);       \
+        __xf_unlock(lock_ptr);                          \
+        return __ret;                                   \
+    }                                                   \
+    __ret;                                              \
+})
+
 /* ...check the condition is true */
 #define XF_CHK_ERR(cond, error)                 \
 ({                                              \
@@ -249,6 +265,20 @@ while (0)
     if (!(__ret = (intptr_t)(cond)))            \
     {                                           \
         TRACE(ERROR, _x("check failed"));       \
+        return (error);                         \
+    }                                           \
+    (int)__ret;                                 \
+})
+
+/* ...check the condition is true */
+#define XF_CHK_ERR_LOCK(cond, error, lock_ptr)  \
+({                                              \
+    intptr_t __ret;                             \
+                                                \
+    if (!(__ret = (intptr_t)(cond)))            \
+    {                                           \
+        TRACE(ERROR, _x("check failed"));       \
+        __xf_unlock(lock_ptr);                  \
         return (error);                         \
     }                                           \
     (int)__ret;                                 \

@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(tiger_freertos)
 
+set(MCUX_BUILD_TYPES debug release flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME tiger_freertos.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -35,10 +41,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../tiger_freertos.c"
 "${ProjDirPath}/../display_support.h"
 "${ProjDirPath}/../display_support.c"
-"${ProjDirPath}/../../vglite_support/vglite_support.h"
-"${ProjDirPath}/../../vglite_support/vglite_support.c"
-"${ProjDirPath}/../../vglite_window/vglite_window.h"
-"${ProjDirPath}/../../vglite_window/vglite_window.c"
+"${SdkRootDirPath}/boards/evkmimxrt595/vglite_examples/vglite_support/vglite_support.h"
+"${SdkRootDirPath}/boards/evkmimxrt595/vglite_examples/vglite_support/vglite_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt595/vglite_examples/vglite_window/vglite_window.h"
+"${SdkRootDirPath}/boards/evkmimxrt595/vglite_examples/vglite_window/vglite_window.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
@@ -48,38 +54,38 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../vglite_support
-    ${ProjDirPath}/../../vglite_window
+    ${SdkRootDirPath}/boards/evkmimxrt595/vglite_examples/vglite_support
+    ${SdkRootDirPath}/boards/evkmimxrt595/vglite_examples/vglite_window
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
-    ${ProjDirPath}/../../../../../components/ssd1963
-    ${ProjDirPath}/../../../../../components/video/display/dbi
-    ${ProjDirPath}/../../../../../components/video/display/dbi/flexio
-    ${ProjDirPath}/../../../../../components/video/display/dc/ssd1963
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../middleware/vglite
-    ${ProjDirPath}/../../../../../components/video/display/dc/lcdif
-    ${ProjDirPath}/../../../../../components/video/display
-    ${ProjDirPath}/../../../../../components/video/display/rm68191
-    ${ProjDirPath}/../../../../../components/video/display/mipi_dsi_cmd
-    ${ProjDirPath}/../../../../../components/video/display/rm68200
-    ${ProjDirPath}/../../../../../components/video/display/rm67162
-    ${ProjDirPath}/../../../../../components/video/display/dc/dsi_cmd
-    ${ProjDirPath}/../../../../../components/video/display/hx8394
-    ${ProjDirPath}/../../../../../components/video/display/fbdev
-    ${ProjDirPath}/../../../../../components/video
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../flash_config
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/video/display/dc
+    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
+    ${SdkRootDirPath}/components/ssd1963
+    ${SdkRootDirPath}/components/video/display/dbi
+    ${SdkRootDirPath}/components/video/display/dbi/flexio
+    ${SdkRootDirPath}/components/video/display/dc/ssd1963
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/middleware/vglite
+    ${SdkRootDirPath}/components/video/display/dc/lcdif
+    ${SdkRootDirPath}/components/video/display
+    ${SdkRootDirPath}/components/video/display/rm68191
+    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
+    ${SdkRootDirPath}/components/video/display/rm68200
+    ${SdkRootDirPath}/components/video/display/rm67162
+    ${SdkRootDirPath}/components/video/display/dc/dsi_cmd
+    ${SdkRootDirPath}/components/video/display/hx8394
+    ${SdkRootDirPath}/components/video/display/fbdev
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/devices/MIMXRT595S
+    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/video/display/dc
 )
 
 # include modules
@@ -190,15 +196,13 @@ include(utilities_misc_utilities_MIMXRT595S_cm33)
 include(driver_iap_MIMXRT595S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

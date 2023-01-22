@@ -587,7 +587,7 @@ static inline XA_ERRORCODE xa_hw_capturer_control(XACapturer *d, UWORD32 state)
     {
         case XA_CAPTURER_STATE_START:
             /* ...capturer must be in idle state */
-            XF_CHK_ERR(d->state & XA_CAPTURER_FLAG_IDLE, XA_CAPTURER_EXEC_NONFATAL_STATE);
+            //XF_CHK_ERR(d->state & XA_CAPTURER_FLAG_IDLE, XA_CAPTURER_EXEC_NONFATAL_STATE);
 
             /* ...mark capturer is runnning */
             d->state ^= XA_CAPTURER_FLAG_IDLE | XA_CAPTURER_FLAG_RUNNING;
@@ -990,188 +990,36 @@ static inline UWORD32 xa_hw_capturer_read_FIFO(XACapturer *d)
     d->over_flow_flag = 0;
     out_buffer_ptr    = d->output;
 
-    if (d->channels == 1)
-    {
-        for (i = 0; i < BUFFER_LENGTH; i++)
-        {
-            *((unsigned short *)out_buffer_ptr) =
-                d->circular_buf_h.buffer[REF_MIC0 * 2 + d->circular_buf_h.pingpong][i];
-            out_buffer_ptr++;
-        }
+	if (d->interleave == 1)
+	{
+		for (i = 0; i < BUFFER_LENGTH; i++)
+		{
+			for (int mic = 0; mic < d->channels; mic++)
+			{
+				*((unsigned short *)out_buffer_ptr) =
+					d->circular_buf_h.buffer[mic * 2 + d->circular_buf_h.pingpong][i];
+				out_buffer_ptr++;
+			}
+		}
+	}
+	else
+	{
+		for (int mic = 0; mic < d->channels; mic++)
+		{
+			for (i = 0; i < BUFFER_LENGTH; i++)
+			{
+				*((unsigned short *)out_buffer_ptr) =
+					d->circular_buf_h.buffer[mic * 2 + d->circular_buf_h.pingpong][i];
+				out_buffer_ptr++;
+			}
+		}
+	}
 
-        d->circular_buf_h.full = false;
-        d->circular_buf_h.pingpong ^= 1;
+	d->circular_buf_h.full = false;
+	d->circular_buf_h.pingpong ^= 1;
 
-        return (BUFFER_LENGTH << 1);
-    }
-    else if (d->channels == 2)
-    {
-        if (d->interleave == 1)
-        {
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC0 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC1 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-        }
-        else
-        {
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC0 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC1 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-        }
+	return (BUFFER_LENGTH * d->channels * 2);
 
-        d->circular_buf_h.full = false;
-        d->circular_buf_h.pingpong ^= 1;
-
-        return (BUFFER_LENGTH << 2);
-    }
-    else if (d->channels == 3)
-    {
-        if (d->interleave == 1)
-        {
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC0 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC1 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC2 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-        }
-        else
-        {
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC0 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC1 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC2 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-        }
-
-        d->circular_buf_h.full = false;
-        d->circular_buf_h.pingpong ^= 1;
-
-        return (BUFFER_LENGTH * d->channels * 2);
-    }
-    else if (d->channels == 8)
-    {
-        if (d->interleave == 1)
-        {
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC0 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC1 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC2 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC3 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC4 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC5 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC6 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC7 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-        }
-        else
-        {
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC0 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC1 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC2 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC3 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC4 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC5 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC6 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-            for (i = 0; i < BUFFER_LENGTH; i++)
-            {
-                *((unsigned short *)out_buffer_ptr) =
-                    d->circular_buf_h.buffer[REF_MIC7 * 2 + d->circular_buf_h.pingpong][i];
-                out_buffer_ptr++;
-            }
-        }
-
-        d->circular_buf_h.full = false;
-        d->circular_buf_h.pingpong ^= 1;
-
-        return (BUFFER_LENGTH * d->channels * 2);
-    }
 
     /* Should not get here - error in number of DMIC channels. */
     return 0;

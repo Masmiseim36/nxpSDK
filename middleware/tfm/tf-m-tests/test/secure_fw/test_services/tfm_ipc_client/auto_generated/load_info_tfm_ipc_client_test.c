@@ -1,6 +1,8 @@
 /*
  * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
- * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
+ * Copyright (c) 2021-2022 Cypress Semiconductor Corporation (an Infineon
+ * company) or an affiliate of Cypress Semiconductor Corporation. All rights
+ * reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -36,6 +38,7 @@
 REGION_DECLARE(Image$$, PT_TFM_SP_IPC_CLIENT_TEST_PRIVATE, _DATA_START$$Base);
 REGION_DECLARE(Image$$, PT_TFM_SP_IPC_CLIENT_TEST_PRIVATE, _DATA_END$$Base);
 #endif
+
 extern uint8_t tfm_sp_ipc_client_test_stack[];
 
 /* Entrypoint function declaration */
@@ -60,11 +63,11 @@ struct partition_tfm_sp_ipc_client_test_load_info_t {
 
 /* Partition load, deps, service load data. Put to a dedicated section. */
 #if defined(__ICCARM__)
-#pragma location = ".part_load"
+#pragma location = ".part_load_priority_normal"
 __root
 #endif /* __ICCARM__ */
 const struct partition_tfm_sp_ipc_client_test_load_info_t tfm_sp_ipc_client_test_load
-    __attribute__((used, section(".part_load"))) = {
+    __attribute__((used, section(".part_load_priority_normal"))) = {
     .load_info = {
         .psa_ff_ver                 = 0x0100 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_IPC_CLIENT_TEST,
@@ -94,9 +97,8 @@ const struct partition_tfm_sp_ipc_client_test_load_info_t tfm_sp_ipc_client_test
         {
             .name_strid             = STRING_PTR_TO_STRID("IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM"),
             .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
             .sid                    = 0x0000F061,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
@@ -106,9 +108,8 @@ const struct partition_tfm_sp_ipc_client_test_load_info_t tfm_sp_ipc_client_test
         {
             .name_strid             = STRING_PTR_TO_STRID("IPC_CLIENT_TEST_PSA_ACCESS_APP_READ_ONLY_MEM"),
             .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = IPC_CLIENT_TEST_PSA_ACCESS_APP_READ_ONLY_MEM_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
             .sid                    = 0x0000F062,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
@@ -118,9 +119,8 @@ const struct partition_tfm_sp_ipc_client_test_load_info_t tfm_sp_ipc_client_test
         {
             .name_strid             = STRING_PTR_TO_STRID("IPC_CLIENT_TEST_APP_ACCESS_PSA_MEM"),
             .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = IPC_CLIENT_TEST_APP_ACCESS_PSA_MEM_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
             .sid                    = 0x0000F063,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
@@ -130,9 +130,8 @@ const struct partition_tfm_sp_ipc_client_test_load_info_t tfm_sp_ipc_client_test
         {
             .name_strid             = STRING_PTR_TO_STRID("IPC_CLIENT_TEST_MEM_CHECK"),
             .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = IPC_CLIENT_TEST_MEM_CHECK_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
             .sid                    = 0x0000F064,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
@@ -142,9 +141,8 @@ const struct partition_tfm_sp_ipc_client_test_load_info_t tfm_sp_ipc_client_test
         {
             .name_strid             = STRING_PTR_TO_STRID("IPC_CLIENT_TEST_RETRIEVE_APP_MEM"),
             .sfn                    = 0,
-#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = IPC_CLIENT_TEST_RETRIEVE_APP_MEM_SIGNAL,
-#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
             .sid                    = 0x0000F065,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
@@ -166,14 +164,14 @@ const struct partition_tfm_sp_ipc_client_test_load_info_t tfm_sp_ipc_client_test
 
 /* Placeholder for partition and service runtime space. Do not reference it. */
 #if defined(__ICCARM__)
-#pragma location=".bss.part_runtime"
+#pragma location=".bss.part_runtime_priority_normal"
 __root
 #endif /* __ICCARM__ */
 static struct partition_t tfm_sp_ipc_client_test_partition_runtime_item
-    __attribute__((used, section(".bss.part_runtime")));
+    __attribute__((used, section(".bss.part_runtime_priority_normal")));
 #if defined(__ICCARM__)
-#pragma location = ".bss.serv_runtime"
+#pragma location = ".bss.serv_runtime_priority_normal"
 __root
 #endif /* __ICCARM__ */
 static struct service_t tfm_sp_ipc_client_test_service_runtime_item[TFM_SP_IPC_CLIENT_TEST_NSERVS]
-    __attribute__((used, section(".bss.serv_runtime")));
+    __attribute__((used, section(".bss.serv_runtime_priority_normal")));

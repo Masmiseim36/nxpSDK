@@ -170,6 +170,9 @@ struct bt_smp {
 	/* Delayed work for auth start handling */
 	struct k_work_delayable		auth_starting;
 
+	/* Delayed work for id add */
+	struct k_work_delayable		id_add;
+
 	/* status of auth complete */
 	API_RESULT 					status;
 
@@ -2097,6 +2100,19 @@ static void smp_auth_complete(struct k_work *work)
 			/* bt_conn_disconnect(conn, hci_err_get(security_err)); */
 		}
 	}
+
+	/* Give the semaphore back, security level updated. */
+	(void)OSA_SemaphorePost(conn->sem_security_level_updated);
+}
+
+static void smp_id_add(struct k_work *work)
+{
+	struct bt_smp *smp = CONTAINER_OF(work, struct bt_smp, id_add);
+	struct bt_conn *conn;
+
+	conn = smp->chan.chan.conn;
+
+	bt_id_add(conn->le.keys);
 }
 
 static void smp_send(struct bt_smp *smp, struct net_buf *buf,
@@ -4840,6 +4856,7 @@ static void bt_smp_connected(struct bt_l2cap_chan *chan)
 #endif
 	k_work_init_delayable(&smp->auth_complete, smp_auth_complete);
 	k_work_init_delayable(&smp->auth_starting, smp_auth_starting);
+	k_work_init_delayable(&smp->id_add, smp_id_add);
 	smp_reset(smp);
 
 	atomic_ptr_set(&smp->auth_cb, BT_SMP_AUTH_CB_UNINITIALIZED);
@@ -4868,6 +4885,7 @@ static void bt_smp_disconnected(struct bt_l2cap_chan *chan)
 
 	k_work_cancel_delayable(&smp->auth_complete);
 	k_work_cancel_delayable(&smp->auth_starting);
+	k_work_cancel_delayable(&smp->id_add);
 	if (keys) {
 		/*
 		 * If debug keys were used for pairing remove them.
@@ -6705,7 +6723,9 @@ static void bt_smp_get_auth_info(struct bt_conn *conn)
 					bt_keys_store(conn->le.keys);
 					if (BT_SMP_KEYS_REMOTE_IDKEY & p_keys)
 					{
-						bt_id_add(conn->le.keys);
+						/* bt_id_add moved to a delay task to previent HCI sync command block this task context,
+							which will affect security level update timing. */
+						k_work_schedule(&smp->id_add, BT_MSEC(1));
 					}
 				}
 			}
@@ -6954,6 +6974,12 @@ static void hci_acl_smp_handler(struct net_buf *buf)
 
         smp->status = hdr->pdu.status;
 		k_work_schedule(&smp->auth_complete, BT_MSEC(1));
+		/* Take the semaphore until security level updated, don't need wait too long. */
+		osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, 1);
+		if(KOSA_StatusSuccess != status)
+		{
+			BT_ERR("conn: %p, security level semaphore wait fail %d", conn, status);
+		}
         break;
 
 	case SMP_AUTHENTICATION_ERROR:

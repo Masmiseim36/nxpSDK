@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -42,10 +42,13 @@ target_include_directories(tfm_partitions
 target_link_libraries(tfm_psa_rot_partition_platform
     PRIVATE
         platform_s
-        psa_interface
-        tfm_secure_api
-        tfm_arch
-        tfm_spm
+        tfm_sprt
+)
+
+target_compile_definitions(tfm_psa_rot_partition_platform
+    PRIVATE
+        INPUT_BUFFER_SIZE=${PLATFORM_SERVICE_INPUT_BUFFER_SIZE}
+        OUTPUT_BUFFER_SIZE=${PLATFORM_SERVICE_OUTPUT_BUFFER_SIZE}
 )
 
 ############################ Secure API ########################################
@@ -75,4 +78,13 @@ target_link_libraries(tfm_partitions
 target_compile_definitions(tfm_partition_defs
     INTERFACE
         TFM_PARTITION_PLATFORM
+)
+
+################ Display the configuration being applied #######################
+
+include(utils)
+dump_options("Platform Partition config"
+"
+    PLATFORM_SP_STACK_SIZE
+"
 )

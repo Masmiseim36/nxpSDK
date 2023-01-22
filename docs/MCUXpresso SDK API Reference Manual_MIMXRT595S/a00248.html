@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: USART CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: FlexIO: FlexIO Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,61 +98,29 @@ $(document).ready(function(){initNavTree('a00248.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">USART CMSIS Driver<div class="ingroups"><a class="el" href="a00247.html">USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
+<div class="title">FlexIO: FlexIO Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the USART Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<p>The USART driver includes transactional APIs.</p>
-<p>Transactional APIs can be used to enable the peripheral quickly and in the application if the code size and performance of transactional APIs can satisfy the requirements. If the code size and performance are critical requirements please write custom code.</p>
-<h1><a class="anchor" id="USARTSendMethods"></a>
-USART Send Methods</h1>
-<h2><a class="anchor" id="USARTCaseInterrupt"></a>
-USART Send/receive using an interrupt method</h2>
-<div class="fragment"><div class="line"><span class="comment">/* USART  callback */</span></div>
-<div class="line"><span class="keywordtype">void</span> USART_Callback(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_USART_EVENT_SEND_COMPLETE)</div>
-<div class="line">    {</div>
-<div class="line">        txOnGoing = <span class="keyword">false</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line">Driver_USART0.Initialize(USART_Callback);</div>
-<div class="line">Driver_USART0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"><span class="comment">/* Send g_tipString out. */</span></div>
-<div class="line">txOnGoing = <span class="keyword">true</span>;</div>
-<div class="line">Driver_USART0.Send(g_tipString, <span class="keyword">sizeof</span>(g_tipString) - 1);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Wait send finished */</span></div>
-<div class="line"><span class="keywordflow">while</span> (txOnGoing)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="USARTCaseDma"></a>
-USART Send/Receive using the DMA method</h2>
-<div class="fragment"><div class="line"><span class="comment">/* USART  callback */</span></div>
-<div class="line"><span class="keywordtype">void</span> USART_Callback(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_USART_EVENT_SEND_COMPLETE)</div>
-<div class="line">    {</div>
-<div class="line">        txOnGoing = <span class="keyword">false</span>;</div>
-<div class="line">    }</div>
-<div class="line"></div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Driver_USART0.Initialize(USART_Callback);</div>
-<div class="line"><a class="code" href="a00016.html#gade1b5efa61054ce538b37b181dd075bb">DMA_Init</a>(DMA0);</div>
-<div class="line">Driver_USART0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Send g_tipString out. */</span></div>
-<div class="line">txOnGoing = <span class="keyword">true</span>;</div>
-<div class="line"></div>
-<div class="line">Driver_USART0.Send(g_tipString, <span class="keyword">sizeof</span>(g_tipString) - 1);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Wait send finished */</span></div>
-<div class="line"><span class="keywordflow">while</span> (txOnGoing)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-</div><!-- fragment --> </div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a generic driver and multiple protocol-specific FlexIO drivers for the FlexIO module of MCUXpresso SDK devices. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00023"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html">FlexIO Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00024"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html">FlexIO I2C Master Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00025"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html">FlexIO MCU Interface LCD Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00028"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html">FlexIO SPI Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html">FlexIO UART Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

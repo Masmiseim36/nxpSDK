@@ -188,7 +188,7 @@ the interrupt.
 
 The platform's ``region_defs.h`` file should define a macro ``MAILBOX_IRQ`` that
 identifies the interrupt being used. The platform must also provide a function
-``mailbox_init_irq()`` that initialises the interrupt as described in [2]_.
+``mailbox_irq_init()`` that initialises the interrupt as described in [2]_.
 
 Platform specific driver should put Inter-Processor Communication interrupt into
 a proper exception priority, according to system and application requirements.
@@ -699,7 +699,7 @@ Reference
 *********
 
 .. [1] :doc:`Mailbox Design in TF-M on Dual-core System <./mailbox_design_on_dual_core_system>`
-.. [2] :doc:`Secure Interrupt Integration Guide </docs/integration_guide/tfm_secure_irq_integration_guide>`
+.. [2] :doc:`Secure Interrupt Integration Guide </integration_guide/tfm_secure_irq_integration_guide>`
 
 ----------------
 

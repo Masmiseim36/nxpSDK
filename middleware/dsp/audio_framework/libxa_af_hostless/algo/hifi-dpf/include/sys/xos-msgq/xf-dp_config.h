@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright (c) 2015-2022 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -27,13 +27,16 @@
  *******************************************************************************/
 
 /* ...number of DSP cores */
-#define XF_CFG_CORES_NUM                1
+//#define XF_CFG_CORES_NUM                1
 
 /* ...size of the internal message pool (make it equal to at least ring-buffer) */
 #define XF_CFG_MESSAGE_POOL_SIZE        256
 
 /* ...local IPC is coherent (say) */
+#ifndef XF_LOCAL_IPC_NON_COHERENT
+/* ...local IPC (shared memory) is coherent by default */
 #define XF_LOCAL_IPC_NON_COHERENT       0
+#endif
 
 /* ...remote IPC is coherent for hostless xaf (say) */
 #define XF_REMOTE_IPC_NON_COHERENT      0

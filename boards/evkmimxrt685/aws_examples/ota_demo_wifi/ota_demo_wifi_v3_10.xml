@@ -20,25 +20,24 @@
     <definition extID="middleware.sdmmc.host.usdhc.MIMXRT685S"/>
     <definition extID="middleware.sdmmc.host.usdhc.freertos.MIMXRT685S"/>
     <definition extID="component.rt_gpio_adapter.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.demos.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.demos.ota_mqtt.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.ota_for_aws.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.vendor.nxp.wifi.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.vendor.nxp.ota_pal.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.demos.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.demos.dev_mode_key_provisioning.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.demos.ota_mqtt.MIMXRT685S"/>
+    <definition extID="middleware.aws_iot.ota.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.vendor.nxp.secure_sockets.lwip.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.vendor.nxp.wifi.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.vendor.nxp.ota_pal.MIMXRT685S"/>
     <definition extID="middleware.lwip.MIMXRT685S"/>
     <definition extID="middleware.wifi.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.transport.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.logging.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.abstractions.transport.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.abstractions.secure_sockets.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.logging.MIMXRT685S"/>
+    <definition extID="middleware.freertos.coremqtt.MIMXRT685S"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT685S"/>
+    <definition extID="middleware.pkcs11.MIMXRT685S"/>
+    <definition extID="middleware.freertos.corepkcs11.MIMXRT685S"/>
+    <definition extID="middleware.freertos.corepkcs11.mbedtls.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.vendor.nxp.pkcs11.MIMXRT685S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT685S"/>
     <definition extID="platform.drivers.clock.MIMXRT685S"/>
     <definition extID="platform.drivers.common.MIMXRT685S"/>
@@ -67,22 +66,25 @@
     <definition extID="middleware.sdmmc.osa.freertos.MIMXRT685S"/>
     <definition extID="component.osa_free_rtos.MIMXRT685S"/>
     <definition extID="platform.drivers.usdhc.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.network_manager.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.demos.ota_demo_helpers.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.corejason.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.tinycbor.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.mqtt_agent.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt-agent.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.pkcs11_helpers.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.demos.common.mqtt_subscription_manager.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT685S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT685S"/>
+    <definition extID="middleware.wifi.common_files.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.abstractions.platform.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.c_sdk.standard.common.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.c_sdk.standard.common.include.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.network_manager.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.demos.ota_demo_helpers.MIMXRT685S"/>
+    <definition extID="middleware.freertos.corejson.MIMXRT685S"/>
+    <definition extID="middleware.tinycbor.MIMXRT685S"/>
+    <definition extID="middleware.freertos.backoffalgorithm.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.abstractions.mqtt_agent.MIMXRT685S"/>
+    <definition extID="middleware.freertos.coremqtt-agent.MIMXRT685S"/>
+    <definition extID="middleware.aws_iot.ota.freertos.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.pkcs11_helpers.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.demos.common.mqtt_subscription_manager.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.freertos_plus.standard.tls.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.3rdparty.mbedtls_utils.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.freertos_plus.standard.crypto.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.freertos_plus.standard.utils.MIMXRT685S"/>
+    <definition extID="middleware.amazon-freertos.libraries.abstractions.wifi.MIMXRT685S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -92,7 +94,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_ota_demo_wifi" name="ota_demo_wifi" device_core="cm33_MIMXRT685S" dependency="middleware.mbedtls.MIMXRT685S middleware.mbedtls.port.ksdk.MIMXRT685S middleware.mbedtls.rt1.MIMXRT685S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S driver.pca9420.MIMXRT685S component.mflash_file.MIMXRT685S component.mflash.rt685.MIMXRT685S middleware.wifi.wifidriver.MIMXRT685S middleware.freertos-kernel.MIMXRT685S utility.debug_console.MIMXRT685S middleware.wifi.sdio.MIMXRT685S middleware.wifi.fwdnld.MIMXRT685S middleware.sdmmc.sdio.MIMXRT685S middleware.sdmmc.common.MIMXRT685S middleware.sdmmc.host.usdhc.MIMXRT685S middleware.sdmmc.host.usdhc.freertos.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S middleware.freertos-aws_iot.demos.MIMXRT685S middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT685S middleware.freertos-aws_iot.demos.ota_mqtt.MIMXRT685S middleware.freertos-aws_iot.ota_for_aws.MIMXRT685S middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT685S middleware.freertos-aws_iot.vendor.nxp.wifi.MIMXRT685S middleware.freertos-aws_iot.vendor.nxp.ota_pal.MIMXRT685S middleware.lwip.MIMXRT685S middleware.wifi.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.transport.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT685S middleware.freertos-aws_iot.libraries.logging.MIMXRT685S middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT685S component.wifi_bt_module.tx_pwr_limits.MIMXRT685S middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT685S middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT685S middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S middleware.freertos-kernel.extension.MIMXRT685S component.mflash.common.MIMXRT685S middleware.wifi.sdio-2.MIMXRT685S middleware.sdmmc.osa.freertos.MIMXRT685S component.osa_free_rtos.MIMXRT685S platform.drivers.usdhc.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT685S middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT685S middleware.freertos-aws_iot.network_manager.MIMXRT685S middleware.freertos-aws_iot.demos.ota_demo_helpers.MIMXRT685S middleware.freertos-aws_iot.libraries.corejason.MIMXRT685S middleware.freertos-aws_iot.libraries.3rdparty.tinycbor.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.mqtt_agent.MIMXRT685S middleware.freertos-aws_iot.libraries.coremqtt-agent.MIMXRT685S middleware.freertos-aws_iot.pkcs11_helpers.MIMXRT685S middleware.freertos-aws_iot.demos.common.mqtt_subscription_manager.MIMXRT685S middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT685S middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT685S middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT685S middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT685S middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" category="aws_examples">
+  <example id="evkmimxrt685_ota_demo_wifi" name="ota_demo_wifi" device_core="cm33_MIMXRT685S" dependency="middleware.mbedtls.MIMXRT685S middleware.mbedtls.port.ksdk.MIMXRT685S middleware.mbedtls.rt1.MIMXRT685S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S driver.pca9420.MIMXRT685S component.mflash_file.MIMXRT685S component.mflash.rt685.MIMXRT685S middleware.wifi.wifidriver.MIMXRT685S middleware.freertos-kernel.MIMXRT685S utility.debug_console.MIMXRT685S middleware.wifi.sdio.MIMXRT685S middleware.wifi.fwdnld.MIMXRT685S middleware.sdmmc.sdio.MIMXRT685S middleware.sdmmc.common.MIMXRT685S middleware.sdmmc.host.usdhc.MIMXRT685S middleware.sdmmc.host.usdhc.freertos.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S middleware.amazon-freertos.demos.MIMXRT685S middleware.amazon-freertos.demos.dev_mode_key_provisioning.MIMXRT685S middleware.amazon-freertos.demos.ota_mqtt.MIMXRT685S middleware.aws_iot.ota.MIMXRT685S middleware.amazon-freertos.vendor.nxp.secure_sockets.lwip.MIMXRT685S middleware.amazon-freertos.vendor.nxp.wifi.MIMXRT685S middleware.amazon-freertos.vendor.nxp.ota_pal.MIMXRT685S middleware.lwip.MIMXRT685S middleware.wifi.MIMXRT685S middleware.amazon-freertos.libraries.abstractions.transport.MIMXRT685S middleware.amazon-freertos.libraries.abstractions.secure_sockets.MIMXRT685S middleware.amazon-freertos.libraries.logging.MIMXRT685S middleware.freertos.coremqtt.MIMXRT685S component.wifi_bt_module.tx_pwr_limits.MIMXRT685S middleware.pkcs11.MIMXRT685S middleware.freertos.corepkcs11.MIMXRT685S middleware.freertos.corepkcs11.mbedtls.MIMXRT685S middleware.amazon-freertos.vendor.nxp.pkcs11.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S middleware.freertos-kernel.extension.MIMXRT685S component.mflash.common.MIMXRT685S middleware.wifi.sdio-2.MIMXRT685S middleware.sdmmc.osa.freertos.MIMXRT685S component.osa_free_rtos.MIMXRT685S platform.drivers.usdhc.MIMXRT685S middleware.wifi.common_files.MIMXRT685S middleware.amazon-freertos.libraries.abstractions.platform.MIMXRT685S middleware.amazon-freertos.libraries.c_sdk.standard.common.MIMXRT685S middleware.amazon-freertos.libraries.c_sdk.standard.common.include.MIMXRT685S middleware.amazon-freertos.network_manager.MIMXRT685S middleware.amazon-freertos.demos.ota_demo_helpers.MIMXRT685S middleware.freertos.corejson.MIMXRT685S middleware.tinycbor.MIMXRT685S middleware.freertos.backoffalgorithm.MIMXRT685S middleware.amazon-freertos.libraries.abstractions.mqtt_agent.MIMXRT685S middleware.freertos.coremqtt-agent.MIMXRT685S middleware.aws_iot.ota.freertos.MIMXRT685S middleware.amazon-freertos.pkcs11_helpers.MIMXRT685S middleware.amazon-freertos.demos.common.mqtt_subscription_manager.MIMXRT685S middleware.amazon-freertos.libraries.freertos_plus.standard.tls.MIMXRT685S middleware.amazon-freertos.libraries.3rdparty.mbedtls_utils.MIMXRT685S middleware.amazon-freertos.libraries.freertos_plus.standard.crypto.MIMXRT685S middleware.amazon-freertos.libraries.freertos_plus.standard.utils.MIMXRT685S middleware.amazon-freertos.libraries.abstractions.wifi.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -116,6 +118,7 @@
           <value>SDK_OS_FREE_RTOS</value>
           <value>SDIO_ENABLED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG</value>
           <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
@@ -179,11 +182,15 @@
     <include_paths>
       <include_path path="." project_relative_path="board" type="c_include"/>
       <include_path path="config_files" project_relative_path="config_files" type="c_include"/>
-      <include_path path="../.." project_relative_path="config_files" type="c_include"/>
       <include_path path="../common" project_relative_path="board" type="c_include"/>
       <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="bootutil_port" project_relative_path="bootutil_port" type="c_include"/>
+      <include_path path="bootutil_port/mcuboot_config" project_relative_path="bootutil_port/mcuboot_config" type="c_include"/>
+      <include_path path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include"/>
+      <include_path path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include"/>
+      <include_path path="../.." project_relative_path="freertos/config_files" type="c_include"/>
       <include_path path="config_files" project_relative_path="config_files" type="asm_include"/>
-      <include_path path="../.." project_relative_path="config_files" type="asm_include"/>
+      <include_path path="../.." project_relative_path="freertos/config_files" type="asm_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="ota_demo_wifi.ewd"/>
@@ -281,8 +288,25 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="mcuboot_app_support.h"/>
     </source>
-    <source path="." project_relative_path="board" type="c_include">
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include">
       <files mask="flash_partitioning.h"/>
+    </source>
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="src">
+      <files mask="flash_partitioning.c"/>
+    </source>
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include">
+      <files mask="sblconfig.h"/>
+    </source>
+    <source path="bootutil_port/mcuboot_config" project_relative_path="bootutil_port/mcuboot_config" type="c_include">
+      <files mask="mcuboot_config.h"/>
+      <files mask="mcuboot_logging.h"/>
+    </source>
+    <source path="bootutil_port" project_relative_path="bootutil_port" type="c_include">
+      <files mask="flash_map.h"/>
+      <files mask="sbldef.h"/>
+    </source>
+    <source path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include">
+      <files mask="sysflash.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc" exclude="true">
       <files mask="readme_modules.txt"/>

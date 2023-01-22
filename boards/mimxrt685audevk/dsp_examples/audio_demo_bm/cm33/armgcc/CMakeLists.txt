@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(dsp_audio_demo_bm_cm33)
 
+set(MCUX_BUILD_TYPES flash_debug flash_release debug release)
+
 set(MCUX_SDK_PROJECT_NAME dsp_audio_demo_bm_cm33.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -44,30 +50,30 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../dsp/binary/dsp_text_release.bin"
-"${ProjDirPath}/../../dsp/binary/dsp_data_release.bin"
-"${ProjDirPath}/../../dsp/binary/dsp_ncache_release.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_text_release.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_ncache_release.bin"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../dsp/binary
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    ${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../../../components/pca9420
-    ${ProjDirPath}/../../../../../../components/codec/cs42448
-    ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/i2c
-    ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/components/pca9420
+    ${SdkRootDirPath}/components/codec/cs42448
+    ${SdkRootDirPath}/components/codec
+    ${SdkRootDirPath}/components/codec/i2c
+    ${SdkRootDirPath}/components/i2c
+    ${SdkRootDirPath}/devices/MIMXRT685S
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/boards/mimxrt685audevk/flash_config
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -136,15 +142,13 @@ include(driver_inputmux_connections_MIMXRT685S_cm33)
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

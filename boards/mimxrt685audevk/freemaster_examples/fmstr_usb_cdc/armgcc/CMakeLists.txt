@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(fmstr_example_usb_cdc)
 
+set(MCUX_BUILD_TYPES debug release flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME fmstr_example_usb_cdc.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -37,22 +43,22 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../freemaster_cfg.h"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
-"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c"
-"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h"
-"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
-"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
-"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h"
-"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/freemaster_example.c"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/freemaster_example.h"
+"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c"
+"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h"
+"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
+"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
+"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h"
+"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
-"${ProjDirPath}/../../common/fmstr_example/example_data.h"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/data_example_pmp.h"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/data_img_logo.h"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/data_img_file.h"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/data_img_fmstrlogo.h"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/data_html_index.h"
+"${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example/example_data.h"
 "${ProjDirPath}/../usb_device_ch9.c"
 "${ProjDirPath}/../usb_device_ch9.h"
 "${ProjDirPath}/../usb_device_class.c"
@@ -61,25 +67,25 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usb_device_cdc_acm.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common/fmstr_example
-    ${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb
+    ${SdkRootDirPath}/boards/mimxrt685audevk/freemaster_examples/common/fmstr_example
+    ${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../middleware
-    ${ProjDirPath}/../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../components/osa
-    ${ProjDirPath}/../../../../../middleware/freemaster
-    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT685S
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../flash_config
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/middleware/freemaster
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities/debug_console_lite
+    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
+    ${SdkRootDirPath}/devices/MIMXRT685S
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/boards/mimxrt685audevk/flash_config
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -140,15 +146,13 @@ include(middleware_usb_device_common_header_MIMXRT685S_cm33)
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -20,7 +20,7 @@
 #include "xa_nnlib_standards.h"
 #include "dsp_resizenearest.h"
 #if NN_ENABLE_xa_nn_inference == 1
-#include "glow_bundle/model.h"
+#include "model.h"
 #endif
 
 #if (defined(CPU_MIMXRT595SFAWC_dsp) || defined(CPU_MIMXRT595SFFOC_dsp))

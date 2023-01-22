@@ -988,24 +988,44 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/rpmsg_lite/porting/environment</name>
+      <name>rpmsg_lite/env/xos</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/rpmsg_lite/porting/environment/rpmsg_env_bm.c</name>
+      <name>rpmsg_lite/env/xos/rpmsg_env_xos.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/include/environment/bm</name>
+      <name>rpmsg_lite</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/include/environment/bm/rpmsg_env_specific.h</name>
+      <name>rpmsg_lite/rpmsg_queue.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos/rpmsg_queue.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/xos/rpmsg_env_specific.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
@@ -1103,6 +1123,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipc-if.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipc-if.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</locationURI>
@@ -1126,6 +1156,16 @@
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem-ipc.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem-ipc.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
@@ -1386,6 +1426,26 @@
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_types.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_types.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-ipc-if.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-ipc-if.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem-ipc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem-ipc.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
@@ -1863,6 +1923,26 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-frontend-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-frontend-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-inference-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-inference-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h</locationURI>
@@ -1916,6 +1996,16 @@
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-person-detect-inference-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-person-detect-inference-api.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
@@ -1978,14 +2068,54 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_dec/xa-mp3-decoder.c</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus/xa-opus-encoder.c</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc/xa-mp3-encoder.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus/xa-opus-encoder.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc/xa-mp3-encoder.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/xa-opus-decoder.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/xa-opus-decoder.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc/xa-opus-encoder.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc/xa-opus-encoder.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/pcm_gain</name>
@@ -2078,14 +2208,24 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.h</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus/xa-opus-decoder.c</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus/xa-opus-decoder.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo</name>
@@ -2386,76 +2526,6 @@
       <name>device/system_MIMXRT685S_dsp.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_armcc.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armcc.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_armclang.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_armclang_ltm.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang_ltm.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_compiler.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_compiler.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_gcc.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_gcc.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_iccarm.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_iccarm.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_version.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_version.h</locationURI>
     </link>
     <link>
       <name>EAP/EAP_Includes</name>

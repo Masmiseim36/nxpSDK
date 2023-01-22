@@ -618,146 +618,6 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/nn/nnlib/inc/xa_type_def.h</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/rpmsg_lite.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/rpmsg_ns.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/llist.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/llist.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/rpmsg_default_config.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/virtio_ring.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/virtqueue.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/rpmsg_compiler.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/common</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/common/llist.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/common/llist.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite/rpmsg_lite.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite/rpmsg_ns.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/virtio</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/virtio/virtqueue.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/rpmsg_env.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite/porting/environment</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite/porting/environment/rpmsg_env_bm.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/environment/bm</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/environment/bm/rpmsg_env_specific.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</locationURI>
-    </link>
-    <link>
       <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -978,6 +838,166 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_iopctl.h</locationURI>
     </link>
     <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_lite.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_ns.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/llist.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/llist.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_default_config.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/virtio_ring.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/virtqueue.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_compiler.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/common</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/common/llist.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/common/llist.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite/rpmsg_lite.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite/rpmsg_ns.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/virtio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/virtio/virtqueue.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_env.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos/rpmsg_env_xos.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_queue.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos/rpmsg_queue.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/xos/rpmsg_env_specific.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -1073,6 +1093,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipc-if.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipc-if.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</locationURI>
@@ -1096,6 +1126,16 @@
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem-ipc.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem-ipc.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
@@ -1356,6 +1396,26 @@
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_types.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_types.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-ipc-if.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-ipc-if.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem-ipc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem-ipc.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
@@ -1833,6 +1893,26 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-frontend-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-frontend-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-inference-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-inference-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h</locationURI>
@@ -1886,6 +1966,16 @@
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-person-detect-inference-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-person-detect-inference-api.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
@@ -1948,14 +2038,54 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_dec/xa-mp3-decoder.c</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus/xa-opus-encoder.c</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc/xa-mp3-encoder.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus/xa-opus-encoder.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc/xa-mp3-encoder.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/xa-opus-decoder.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/xa-opus-decoder.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc/xa-opus-encoder.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc/xa-opus-encoder.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/pcm_gain</name>
@@ -2048,14 +2178,24 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.h</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus/xa-opus-decoder.c</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus/xa-opus-decoder.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo</name>
@@ -2256,6 +2396,46 @@
       <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include/RdspCycleCounter.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/RT685_HiFi4/include/RdspCycleCounter.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include/RdspDeviceConfig.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/RT685_HiFi4/include/RdspDeviceConfig.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include/RdspStatusCodes.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/RT685_HiFi4/include/RdspStatusCodes.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/RT685_HiFi4/include/libVoiceSeekerLight.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/RT685_HiFi4/include/libVoiceSeekerLight.h</locationURI>
     </link>
     <link>
       <name>dsp/naturedsp/hifi4</name>
@@ -2538,76 +2718,6 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.h</locationURI>
     </link>
     <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_armcc.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armcc.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_armclang.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_armclang_ltm.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang_ltm.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_compiler.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_compiler.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_gcc.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_gcc.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_iccarm.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_iccarm.h</locationURI>
-    </link>
-    <link>
-      <name>CMSIS</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>CMSIS/cmsis_version.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_version.h</locationURI>
-    </link>
-    <link>
       <name>EAP/EAP_Includes</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2616,6 +2726,66 @@
       <name>EAP/EAP_Includes/EAP16.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/EAP_Includes/EAP16.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/include/RdspPlatforms.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/rdsp_utilities_public/include/RdspPlatforms.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/include/RdspTypes.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/rdsp_utilities_public/include/RdspTypes.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c</locationURI>
     </link>
   </linkedResources>
 </projectDescription>

@@ -11,10 +11,11 @@ var searchData=
   ['i3c_5fconfig_5ft',['i3c_config_t',['../a00033.html#a00324',1,'']]],
   ['i3c_5fdevice_5finfo_5ft',['i3c_device_info_t',['../a00034.html#a00325',1,'']]],
   ['i3c_5fmaster_5fconfig_5ft',['i3c_master_config_t',['../a00032.html#a00326',1,'']]],
-  ['i3c_5fmaster_5ftransfer_5fcallback_5ft',['i3c_master_transfer_callback_t',['../a00032.html#a00327',1,'']]],
-  ['i3c_5fregister_5fibi_5faddr_5ft',['i3c_register_ibi_addr_t',['../a00032.html#a00328',1,'']]],
-  ['i3c_5fslave_5fconfig_5ft',['i3c_slave_config_t',['../a00035.html#a00329',1,'']]],
-  ['i3c_5fslave_5ftransfer_5ft',['i3c_slave_transfer_t',['../a00035.html#a00330',1,'']]],
-  ['iap_5fboot_5foption_5ft',['iap_boot_option_t',['../a00036.html#a00331',1,'']]],
-  ['iopctl_5fgroup_5ft',['iopctl_group_t',['../a00037.html#a00332',1,'']]]
+  ['i3c_5fmaster_5fdaa_5fbaudrate_5ft',['i3c_master_daa_baudrate_t',['../a00032.html#a00327',1,'']]],
+  ['i3c_5fmaster_5ftransfer_5fcallback_5ft',['i3c_master_transfer_callback_t',['../a00032.html#a00328',1,'']]],
+  ['i3c_5fregister_5fibi_5faddr_5ft',['i3c_register_ibi_addr_t',['../a00032.html#a00329',1,'']]],
+  ['i3c_5fslave_5fconfig_5ft',['i3c_slave_config_t',['../a00035.html#a00330',1,'']]],
+  ['i3c_5fslave_5ftransfer_5ft',['i3c_slave_transfer_t',['../a00035.html#a00331',1,'']]],
+  ['iap_5fboot_5foption_5ft',['iap_boot_option_t',['../a00036.html#a00332',1,'']]],
+  ['iopctl_5fgroup_5ft',['iopctl_group_t',['../a00037.html#a00333',1,'']]]
 ];

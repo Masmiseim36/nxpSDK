@@ -4,13 +4,13 @@ The mcuboot_opensource is a second stage bootloader based on MCUBoot project. It
 to demonstrate functionality of application self-upgrade.
 
 Flash memory layout
+-------------------
 Flash memory is divided into multiple regions to allocate space for bootloader, main application
 and application update:
 
  - MCUBoot partition (reserved for bootloader itself, starts at the beginning of the FLASH memory)
  - Primary application partition (active application image)
  - Secondrary application partition (candidate application - place to download OTA image to be used for update)
- - Scratch area (temporary storage for swapping data between primary and secondary application partition during the update)
 
 The partitioning is defined by definitions in flash_partitioning.h header file.
 The MCUBoot partition starts at the very beginning of the FLASH memory and spans up to BOOT_FLASH_ACT_APP.
@@ -21,7 +21,25 @@ The rest of the memory may be used by the application for arbitrary purposes.
 Important notice: should you need to change the partitioning please make sure to update also the header file used by the OTA application!
 If the partitioning information used by the bootloader and the application is not in sync, it may lead to malfunction of boot/OTA process or to upredictable behavior.
 
+Flash remapping functionality
+The default upgrade mechanism in MCUBoot is SWAP algorithm. There are several NXP processors which support flash remapping functionality what can be used to speed up the OTA update process and prolong the flash memory wear process by just switching the valid images.
+The boards with such processors have example projects configured to use this feature. This is achieved by using MCUBoot DIRECT-XIP mechanism and by activating flash remapping when needed. 
+Both projects (MCUBoot and evaluated OTA example) using the flash remapping funcionality can be also configured to use and evaluate default SWAP mechanism if needed. 
+For more information see "MCUBoot upgrade mode" in sblconfig.h (MCUBoot project).
+
+IMPORTANT NOTE:
+Signed application images directly programmed into flash memory by a programmer require additional "--pad --confirm" parameter for imgtool. This parameter adds additional trailer to the signed image and is required by bootloader direct-xip process (see MCUBoot documentation for more information). Signed images used in OTA process do not require "-pad" parameter.
+
+List of boards with projects supporting flash remapping function:
+    - MIMXRT1040-EVK
+    - MIMXRT1060-EVK
+    - MIMXRT1060-EVKB
+    - MIMXRT1064-EVK
+    - MIMXRT1170-EVK
+
+
 Signing the application image
+-----------------------------
 MCUBoot expects signed application image in specific format to be present in the primary partition.
 The very same image format it also used for OTA updates.
 
@@ -45,7 +63,7 @@ To sign an application binary, imgtool must be provided with respective private 
 	      --pad-header
 	      --slot-size 0x200000
 	      --max-sectors 800
-	      --version "1.0"
+	      --version "1.0.0-0"
 	      app_binary.bin
 	      app_binary_SIGNED.bin 
 
@@ -57,8 +75,8 @@ https://docs.mcuboot.com/imgtool.html
 
 Toolchain supported
 ===================
-- MCUXpresso  11.6.0
-- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
 

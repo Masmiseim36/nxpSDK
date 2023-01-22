@@ -1,14 +1,24 @@
 /*
- * Copyright (c) 2006-2020 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
- * These coded instructions, statements, and computer programs are the
- * copyrighted works and confidential proprietary information of
- * Cadence Design Systems Inc.  They may be adapted and modified by bona fide
- * purchasers for internal use, but neither the original nor any adapted
- * or modified version may be disclosed or distributed to third parties
- * in any manner, medium, or form, in whole or in part, without the prior
- * written consent of Cadence Design Systems Inc.  This software and its
- * derivatives are to be executed solely on products incorporating a Cadence
- * Design Systems processor.
+ * Copyright (c) 2022 Cadence Design Systems, Inc.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
@@ -50,24 +60,24 @@ typedef unsigned long long  *   pUWORD64;/* puh     pUWORD64 puh_count  8   */
 
 typedef float                   FLOAT32 ;/* f       FLOAT32  f_count    4   */
 typedef float               *   pFLOAT32;/* pf      pFLOAT32 pf_count   4   */
-typedef double                  FLOAT64 ;/* d       UFLOAT64 d_count    8   */
-typedef double              *   pFlOAT64;/* pd      pFLOAT64 pd_count   8   */
+typedef double                  FLOAT64 ;/* d       FLOAT64  d_count    8   */
+typedef double              *   pFLOAT64;/* pd      pFLOAT64 pd_count   8   */
 
 typedef void                    VOID    ;/* v       VOID     v_flag     4   */
 typedef void                *   pVOID   ;/* pv      pVOID    pv_flag    4   */
 
 /* variable size types: platform optimized implementation */
 typedef signed int              BOOL    ;/* bool    BOOL     bool_true      */
-typedef unsigned int            UBOOL   ;/* ubool   BOOL     ubool_true     */
+typedef unsigned int            UBOOL   ;/* ubool   UBOOL    ubool_true     */
 typedef signed int              FLAG    ;/* flag    FLAG     flag_false     */
-typedef unsigned int            UFLAG   ;/* uflag   FLAG     uflag_false    */
+typedef unsigned int            UFLAG   ;/* uflag   UFLAG    uflag_false    */
 typedef signed int              LOOPIDX ;/* lp      LOOPIDX  lp_index       */
-typedef unsigned int            ULOOPIDX;/* ulp     SLOOPIDX ulp_index      */
-typedef signed int              WORD    ;/* lp      LOOPIDX  lp_index       */
-typedef unsigned int            UWORD   ;/* ulp     SLOOPIDX ulp_index      */
+typedef unsigned int            ULOOPIDX;/* ulp     ULOOPIDX ulp_index      */
+typedef signed int              WORD    ;/* g       WORD     g_count        */
+typedef unsigned int            UWORD   ;/* ug      UWORD    ug_count       */
 
-typedef LOOPIDX                 LOOPINDEX; /* lp    LOOPIDX  lp_index       */
-typedef ULOOPIDX                ULOOPINDEX;/* ulp   SLOOPIDX ulp_index      */
+typedef LOOPIDX                 LOOPINDEX; /* lp    LOOPINDEX  lp_index       */
+typedef ULOOPIDX                ULOOPINDEX;/* ulp   ULOOPINDEX ulp_index      */
 
 #define PLATFORM_INLINE __inline
 

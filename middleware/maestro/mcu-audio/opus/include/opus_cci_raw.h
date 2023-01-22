@@ -3,7 +3,6 @@
 //! @{
 //
 // Copyright (c) 2013-2020 NXP
-// @todo which license goes in this file?
 //
 //! \file opus_cci_raw.h
 //! \brief Contains OPUS CCI RAW defines and data structures

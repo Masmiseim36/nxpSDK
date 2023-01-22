@@ -54,7 +54,6 @@ var a00016 =
     [ "DMA_ALLOCATE_DATA_TRANSFER_BUFFER", "a00016.html#ga79665a4079015c9420f1dd82e15f4b30", null ],
     [ "DMA_COMMON_REG_GET", "a00016.html#ga17d8b80c6e8d8c3ac95c2424f26e723f", null ],
     [ "DMA_DESCRIPTOR_END_ADDRESS", "a00016.html#gaa355501ba0bfb05cc9be452396f92bce", null ],
-    [ "DMA_CHANNEL_XFER", "a00016.html#ga2e10dd7fac0c8a71b801cfff2d21d1fa", null ],
     [ "dma_callback", "a00016.html#gab844237884d5badd07ac902a9be34275", [
       [ "kStatus_DMA_Busy", "a00016.html#gga458e651af6690959efa2afb96be7d609a9b95dc670083f57c33f96b0c10d0c8ba", null ],
       [ "kDMA_AddressInterleave0xWidth", "a00016.html#gga1f9aebf1de3ebbf4283a4dcf73308562ad9802a5e2f1df9d748838e6e23e0279b", null ],
@@ -138,6 +137,7 @@ var a00016 =
     [ "DMA_DisableChannelPeriphRq", "a00016.html#gab2d2f88ed16097b2974d1955c725a5dc", null ],
     [ "DMA_ConfigureChannelTrigger", "a00016.html#ga04d2004d7d054b4f36676304bc2cd8ad", null ],
     [ "DMA_SetChannelConfig", "a00016.html#gafc795a7c0b3e5f4bbf32c1eed3a9ea47", null ],
+    [ "DMA_SetChannelXferConfig", "a00016.html#gaed498d0e17c40aa2899869626c238507", null ],
     [ "DMA_GetRemainingBytes", "a00016.html#gaf0197c674ce188bf214c13bc7be43e14", null ],
     [ "DMA_SetChannelPriority", "a00016.html#gad8ae76fc5d858b97de3362100af86df6", null ],
     [ "DMA_GetChannelPriority", "a00016.html#ga1a5311b6ad708e230db517fb04f98a5f", null ],

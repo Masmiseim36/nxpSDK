@@ -24,16 +24,22 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(tfm_demo_s)
 
+set(MCUX_BUILD_TYPES debug release)
+
 set(MCUX_SDK_PROJECT_NAME tfm_demo_s.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/Device/Source/armgcc/startup_MIMXRT685S_cm33_s.S"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h"
+"${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/Device/Source/armgcc/startup_MIMXRT685S_cm33_s.S"
+"${SdkRootDirPath}/devices/MIMXRT685S/system_MIMXRT685S_cm33.c"
+"${SdkRootDirPath}/devices/MIMXRT685S/system_MIMXRT685S_cm33.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
@@ -44,34 +50,34 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    ${SdkRootDirPath}/devices/MIMXRT685S
     ${ProjDirPath}/..
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="tfm_mbedcrypto_config_profile_medium.h" MBEDTLS_USER_CONFIG_FILE="mbedcrypto_user_config.h")
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="tfm_mbedcrypto_config_profile_medium.h" MBEDTLS_PSA_CRYPTO_CONFIG_FILE="crypto_config_profile_medium.h")
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="tfm_mbedcrypto_config_profile_medium.h" MBEDTLS_USER_CONFIG_FILE="mbedcrypto_user_config.h")
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="tfm_mbedcrypto_config_profile_medium.h" MBEDTLS_PSA_CRYPTO_CONFIG_FILE="crypto_config_profile_medium.h")
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} PRE_BUILD COMMAND
-${TOOLCHAIN_DIR}/bin/arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DCONFIG_TFM_PARTITION_META -E -P -xc -I${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/partition ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld
+${TOOLCHAIN_DIR}/bin/arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -E -P -xc -I${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/partition ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../middleware/tfm/tf-m
-    ${ProjDirPath}/../../../../../../middleware/tfm/mbed-crypto
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
+    ${SdkRootDirPath}/middleware/tfm/tf-m
+    ${SdkRootDirPath}/middleware/tfm/mbed-crypto
+    ${SdkRootDirPath}/devices/MIMXRT685S
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/boards/evkmimxrt685/flash_config
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -145,20 +151,16 @@ include(driver_iap_MIMXRT685S_cm33)
 
 include(middleware_tfm_s_MIMXRT685S_cm33)
 
-include(middleware_tfm_memory_utils_MIMXRT685S_cm33)
-
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

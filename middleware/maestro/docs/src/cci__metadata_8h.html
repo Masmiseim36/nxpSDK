@@ -483,13 +483,13 @@ Functions</h2></td></tr>
           <td class="memname">int32_t codec_extract_metadata_aac </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structfile__meta__data__t.html">file_meta_data_t</a> *&#160;</td>
-          <td class="paramname"><em>MetaData</em>, </td>
+          <td class="paramname"><em>meta_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structCCI__Ctx.html">CCI_Ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>&#160;</td>
+          <td class="paramname"><em>Ctx</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -505,25 +505,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int32_t</dd></dl>
-<p>Extract the meta data from the file.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*MetaData</td><td>this structure will be filled in by the function </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*ctx</td><td>CCI Context Structure </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">SUCCESS</td><td></td></tr>
-    <tr><td class="paramname">CODEC_METADATA_NOT_FOUND</td><td>&ndash; metadata failed </td></tr>
-    <tr><td class="paramname">ERROR_ASI_DFFI_METADATA_NOT_FOUND</td><td>- metadata was not found </td></tr>
-    <tr><td class="paramname">ERROR_OS_FILESYSTEM_FILE_OPEN</td><td>&ndash; the file failed to open </td></tr>
-    <tr><td class="paramname">CODEC_FSEEK_FAILED</td><td>- fseek call failed </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>int32_t </dd></dl>
 
 </div>
 </div>

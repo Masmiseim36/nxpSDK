@@ -1,22 +1,26 @@
 
 ----------------------------------------------------------------------
-REL 05.06.00 - LA_OPT_NXP_Software_License
+REL 04.07.05 - LA_OPT_NXP_Software_License
 ----------------------------------------------------------------------
-VIT integrating LP_VAD, 2/3 MICs AFE, WakeWordEngine Text2Model and Voice Commands Text2Model features.
+VIT integrating LP_VAD, WakeWordEngine Text2Model and Voice Commands Text2Model features.
 Core supported : HIFI4
 Library validated on RT600 platform
 
-Languages supported : English - Mandarin
+Languages supported by the VIT library: English - Mandarin - Spanish - German - Japanese
 
+2 Models provided : English and Mandarin
 English WakeWord supported : "HEY NXP", "HEY TV"
 Mandarin  WakeWord supported : " 你好 恩 智 浦 ", "你好 电视"
-See VIT_Model.h for the list of commands supported.
+See VIT_Model.h for the list of commands supported by the different models.
 
 Dependency : 
     - HIFI4 NN lib : libxa_nnlib library (with no TF uLite support)
     - HIFI4 naturedsp lib : libhifi4_library
 
 New features :
-    - Multi WakeWord support (up to 3) - see VIT.h for description and VIT_ExApp.c for usage
-    - Multi Turn Voice Commands : see VIT Integration Guide for description and usage
-    - New VIT Control parameter "Command_Time_Span" : see VIT.h for description and VIT_ExApp.c for usage
+    - 30ms input frame support
+    
+Main changes :
+    - VIT APIs updates - see VIT.h and ExApp.c for usage
+    
+Notes : VIT lib is supporting 1 MIC only

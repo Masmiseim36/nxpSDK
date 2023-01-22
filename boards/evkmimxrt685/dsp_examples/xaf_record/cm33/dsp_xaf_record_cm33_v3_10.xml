@@ -70,6 +70,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>XA_PCM_GAIN=1</value>
           <value>XA_VIT_PRE_PROC=1</value>
+          <value>XA_VOICE_SEEKER=1</value>
           <value>XA_RENDERER=1</value>
           <value>XA_CAPTURER=1</value>
           <value>DSP_NCACHE</value>

@@ -30,6 +30,8 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XOS_CLOCK_FREQ=594000000</value>
+          <value>XF_CORE_ID=0</value>
+          <value>XF_CFG_CORES_NUM=1</value>
           <value>CPU_MIMXRT685SFVKB_dsp</value>
           <value>MCUXPRESSO_SDK</value>
         </option>

@@ -38,7 +38,6 @@
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
     <definition extID="platform.drivers.iap.MIMXRT685S"/>
     <definition extID="middleware.tfm.s.MIMXRT685S"/>
-    <definition extID="middleware.tfm.memory_utils.MIMXRT685S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
@@ -48,7 +47,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_tfm_demo_s" name="tfm_demo_s" device_core="cm33_MIMXRT685S" dependency="platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S platform.drivers.ctimer.MIMXRT685S middleware.tfm.flash_iap.MIMXRT685S middleware.mbedcrypto.MIMXRT685S middleware.tfm.s.mimxrt685audevk.MIMXRT685S middleware.tfm.s.ipc_api.MIMXRT685S middleware.tfm.s.crypto.MIMXRT685S middleware.tfm.s.initial_attestation.MIMXRT685S middleware.tfm.s.its.MIMXRT685S middleware.tfm.s.ps.MIMXRT685S middleware.tfm.s.platform.MIMXRT685S middleware.tfm.s.profile_medium.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S platform.drivers.iap.MIMXRT685S middleware.tfm.s.MIMXRT685S middleware.tfm.memory_utils.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" linked_projects="mimxrt685audevk_tfm_demo_ns" category="tfm_examples">
+  <example id="mimxrt685audevk_tfm_demo_s" name="tfm_demo_s" device_core="cm33_MIMXRT685S" dependency="platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S platform.drivers.ctimer.MIMXRT685S middleware.tfm.flash_iap.MIMXRT685S middleware.mbedcrypto.MIMXRT685S middleware.tfm.s.mimxrt685audevk.MIMXRT685S middleware.tfm.s.ipc_api.MIMXRT685S middleware.tfm.s.crypto.MIMXRT685S middleware.tfm.s.initial_attestation.MIMXRT685S middleware.tfm.s.its.MIMXRT685S middleware.tfm.s.ps.MIMXRT685S middleware.tfm.s.platform.MIMXRT685S middleware.tfm.s.profile_medium.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S platform.drivers.iap.MIMXRT685S middleware.tfm.s.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" linked_projects="mimxrt685audevk_tfm_demo_ns" category="tfm_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -60,7 +59,7 @@
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <buildSteps>
-          <preBuildStep>arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DCONFIG_TFM_PARTITION_META -E -P -xc -I../tf-m/platform/ext/target/nxp/mimxrt685audevk/partition ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld</preBuildStep>
+          <preBuildStep>arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -E -P -xc -I../tf-m/platform/ext/target/nxp/mimxrt685audevk/partition ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld</preBuildStep>
         </buildSteps>
         <option id="com.crt.advproject.debugger.security.nonsecureimage" type="string">
           <value>${linked:mimxrt685audevk_tfm_demo_ns}</value>
@@ -111,10 +110,17 @@
           <value>OTP_NV_COUNTERS_RAM_EMULATION</value>
           <value>DAUTH_CHIP_DEFAULT</value>
           <value>__SEMIHOST_HARDFAULT_DISABLE</value>
+          <value>ENABLE_HEAP</value>
           <value>CRYPTO_HW_ACCELERATOR</value>
-          <value>TFM_PSA_API</value>
+          <value>TFM_PSA_API=1</value>
           <value>CONFIG_TFM_ENABLE_MEMORY_PROTECT</value>
+          <value>TFM_PARTITION_NS_AGENT_TZ</value>
           <value>TFM_PARTITION_CRYPTO</value>
+          <value>PLATFORM_DEFAULT_CRYPTO_KEYS</value>
+          <value>MBEDTLS_PSA_CRYPTO_DRIVERS</value>
+          <value>MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS</value>
+          <value>PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY</value>
+          <value>PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER</value>
           <value>TFM_PARTITION_INITIAL_ATTESTATION</value>
           <value>T_COSE_USE_PSA_CRYPTO</value>
           <value>TFM_PARTITION_INTERNAL_TRUSTED_STORAGE</value>
@@ -123,8 +129,9 @@
           <value>PS_ROLLBACK_PROTECTION</value>
           <value>TFM_PARTITION_PLATFORM</value>
           <value>MBEDTLS_CONFIG_FILE='"tfm_mbedcrypto_config_profile_medium.h"'</value>
-          <value>MBEDTLS_USER_CONFIG_FILE='"mbedcrypto_user_config.h"'</value>
+          <value>MBEDTLS_PSA_CRYPTO_CONFIG_FILE='"crypto_config_profile_medium.h"'</value>
           <value>TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED</value>
+          <value>PS_CRYPTO_AEAD_ALG=PSA_ALG_CCM</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>CONFIG_TFM_BUILDING_SPE=1</value>
           <value>PLATFORM_DEFAULT_NV_COUNTERS</value>
@@ -134,8 +141,14 @@
           <value>TFM_DUMMY_PROVISIONING</value>
           <value>CONFIG_TFM_PSA_API_SUPERVISOR_CALL</value>
           <value>CONFIG_TFM_PARTITION_META</value>
-          <value>CONFIG_TFM_FP=2</value>
+          <value>CONFIG_TFM_FLOAT_ABI=2</value>
+          <value>CONFIG_TFM_ENABLE_CP10CP11</value>
           <value>CONFIG_TFM_LAZY_STACKING</value>
+          <value>CONFIG_TFM_HALT_ON_CORE_PANIC</value>
+          <value>CONFIG_TFM_USE_TRUSTZONE</value>
+          <value>ATTEST_TOKEN_PROFILE_PSA_IOT_1</value>
+          <value>ATTEST_KEY_BITS=256</value>
+          <value>TFM_PARTITION_TEST_SECURE_SERVICES</value>
           <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">

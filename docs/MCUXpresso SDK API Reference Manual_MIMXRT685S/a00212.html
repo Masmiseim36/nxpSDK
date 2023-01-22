@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: casper_driver</title>
+<title>MCUXpresso SDK API Reference Manual: casper_driver_pkha</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,288 +99,555 @@ $(document).ready(function(){initNavTree('a00212.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">casper_driver<div class="ingroups"><a class="el" href="a00211.html">CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</a></div></div>  </div>
+<div class="title">casper_driver_pkha<div class="ingroups"><a class="el" href="a00210.html">CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaf965305106f4a638921120e2f1acc385"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gaf965305106f4a638921120e2f1acc385">casper_operation_t</a> { , <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385ab5a78d5173f379c5149add08650f14c5">kCASPER_OpMul6464Sum</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385ad04571c7b185686fd776a80806d6524d">kCASPER_OpMul6464FullSum</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385ad0fbf9a74a2cb155f031bc3c2caa251f">kCASPER_OpMul6464Reduce</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385ac73be9788e2abbbf2b011b7a3ad0ee25">kCASPER_OpAdd64</a> = 0x08, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a46c350d401f6bb4c3fac8b5ca7df66b1">kCASPER_OpSub64</a> = 0x09, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385ac6ffac25f046cb6c565ce7ffa543dbe0">kCASPER_OpDouble64</a> = 0x0A, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a80db615b18d5ed2319c85a4fe6caa2eb">kCASPER_OpXor64</a> = 0x0B, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a007fe02bbaf6b290d2024beaf9618e33">kCASPER_OpRSub64</a> = 0x0C, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a405a717b5a196ce6f0c5167d43f6e08e">kCASPER_OpShiftLeft32</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a61a1a07e6c0adc7b367ef5dc195adc22">kCASPER_OpShiftRight32</a> = 0x11, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a5b64b93e087ab8b9002440b264cad30d">kCASPER_OpCopy</a> = 0x14, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a8e860749586cc0a33405334a931f291e">kCASPER_OpRemask</a> = 0x15, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385abdc1e3361e8415354fac33b3993b1491">kCASPER_OpFill</a> = 0x16, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a34940e0777601a076a1715f859228f88">kCASPER_OpZero</a> = 0x17, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a9507d1f5ad0b8219f9bd461eeb27752e">kCASPER_OpCompare</a> = 0x18, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggaf965305106f4a638921120e2f1acc385a10df9918e9754e22740900ecc145c43d">kCASPER_OpCompareFast</a> = 0x19
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf965305106f4a638921120e2f1acc385"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="a00212.html#gaf965305106f4a638921120e2f1acc385">More...</a><br/></td></tr>
-<tr class="separator:gaf965305106f4a638921120e2f1acc385"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60876721ddc68aea63524d3078b59185"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga60876721ddc68aea63524d3078b59185">casper_algo_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00212.html#gga60876721ddc68aea63524d3078b59185a8e86050a24be31a0c3e4c7f0fc801045">kCASPER_ECC_P256</a> = 0x01, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#gga60876721ddc68aea63524d3078b59185a3fbcdf27711f1c8c8271899ac4aaab89">kCASPER_ECC_P384</a> = 0x02, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#gga60876721ddc68aea63524d3078b59185a4a45988d4ca3b926783296346a862ad2">kCASPER_ECC_P521</a> = 0x03
-<br/>
- }</td></tr>
-<tr class="memdesc:ga60876721ddc68aea63524d3078b59185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation.  <a href="a00212.html#ga60876721ddc68aea63524d3078b59185">More...</a><br/></td></tr>
-<tr class="separator:ga60876721ddc68aea63524d3078b59185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa1948fcf9c7301808a765341b4fa72a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gaa1948fcf9c7301808a765341b4fa72a8">CASPER_Init</a> (CASPER_Type *base)</td></tr>
-<tr class="memdesc:gaa1948fcf9c7301808a765341b4fa72a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables clock and disables reset for CASPER peripheral.  <a href="#gaa1948fcf9c7301808a765341b4fa72a8">More...</a><br/></td></tr>
-<tr class="separator:gaa1948fcf9c7301808a765341b4fa72a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga44e39a60b2116a93d89fb2d06ec8c290">CASPER_Deinit</a> (CASPER_Type *base)</td></tr>
-<tr class="memdesc:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables clock for CASPER peripheral.  <a href="#ga44e39a60b2116a93d89fb2d06ec8c290">More...</a><br/></td></tr>
-<tr class="separator:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga38fa16be20cbb761a11dea0791a186fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga38fa16be20cbb761a11dea0791a186fe">FSL_CASPER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 3))</td></tr>
-<tr class="memdesc:ga38fa16be20cbb761a11dea0791a186fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER driver version.  <a href="#ga38fa16be20cbb761a11dea0791a186fe">More...</a><br/></td></tr>
-<tr class="separator:ga38fa16be20cbb761a11dea0791a186fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae23f6641bd6344e7ed2b6daf34be6ab4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gae23f6641bd6344e7ed2b6daf34be6ab4">CASPER_ModExp</a> (CASPER_Type *base, const uint8_t *signature, const uint8_t *pubN, size_t wordLen, uint32_t pubE, uint8_t *plaintext)</td></tr>
+<tr class="memdesc:gae23f6641bd6344e7ed2b6daf34be6ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular exponentiation - (A^E) mod N.  <a href="#gae23f6641bd6344e7ed2b6daf34be6ab4">More...</a><br/></td></tr>
+<tr class="separator:gae23f6641bd6344e7ed2b6daf34be6ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56316671d80e86e7a17fbaa73cd074cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga56316671d80e86e7a17fbaa73cd074cd">CASPER_ecc_init</a> (<a class="el" href="a00211.html#ga60876721ddc68aea63524d3078b59185">casper_algo_t</a> curve)</td></tr>
+<tr class="memdesc:ga56316671d80e86e7a17fbaa73cd074cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize prime modulus mod in Casper memory .  <a href="#ga56316671d80e86e7a17fbaa73cd074cd">More...</a><br/></td></tr>
+<tr class="separator:ga56316671d80e86e7a17fbaa73cd074cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac491ade7e7adfc6326e5c2f0a88ab88a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gac491ade7e7adfc6326e5c2f0a88ab88a">CASPER_ECC_SECP256R1_Mul</a> (CASPER_Type *base, uint32_t resX[8], uint32_t resY[8], uint32_t X[8], uint32_t Y[8], uint32_t scalar[8])</td></tr>
+<tr class="memdesc:gac491ade7e7adfc6326e5c2f0a88ab88a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs ECC secp256r1 point single scalar multiplication.  <a href="#gac491ade7e7adfc6326e5c2f0a88ab88a">More...</a><br/></td></tr>
+<tr class="separator:gac491ade7e7adfc6326e5c2f0a88ab88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8945a091e4852097e8be400c20c7e683"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga8945a091e4852097e8be400c20c7e683">CASPER_ECC_SECP256R1_MulAdd</a> (CASPER_Type *base, uint32_t resX[8], uint32_t resY[8], uint32_t X1[8], uint32_t Y1[8], uint32_t scalar1[8], uint32_t X2[8], uint32_t Y2[8], uint32_t scalar2[8])</td></tr>
+<tr class="memdesc:ga8945a091e4852097e8be400c20c7e683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs ECC secp256r1 point double scalar multiplication.  <a href="#ga8945a091e4852097e8be400c20c7e683">More...</a><br/></td></tr>
+<tr class="separator:ga8945a091e4852097e8be400c20c7e683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab51cd9db278d376a0fd37407d19893b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gab51cd9db278d376a0fd37407d19893b0">CASPER_ECC_SECP384R1_Mul</a> (CASPER_Type *base, uint32_t resX[12], uint32_t resY[12], uint32_t X[12], uint32_t Y[12], uint32_t scalar[12])</td></tr>
+<tr class="memdesc:gab51cd9db278d376a0fd37407d19893b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs ECC secp384r1 point single scalar multiplication.  <a href="#gab51cd9db278d376a0fd37407d19893b0">More...</a><br/></td></tr>
+<tr class="separator:gab51cd9db278d376a0fd37407d19893b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69fac3671477c8bcd9ccf1ed0f70a4e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga69fac3671477c8bcd9ccf1ed0f70a4e9">CASPER_ECC_SECP384R1_MulAdd</a> (CASPER_Type *base, uint32_t resX[12], uint32_t resY[12], uint32_t X1[12], uint32_t Y1[12], uint32_t scalar1[12], uint32_t X2[12], uint32_t Y2[12], uint32_t scalar2[12])</td></tr>
+<tr class="memdesc:ga69fac3671477c8bcd9ccf1ed0f70a4e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs ECC secp384r1 point double scalar multiplication.  <a href="#ga69fac3671477c8bcd9ccf1ed0f70a4e9">More...</a><br/></td></tr>
+<tr class="separator:ga69fac3671477c8bcd9ccf1ed0f70a4e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb1e9d71e66f066201612a09b933efbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gacb1e9d71e66f066201612a09b933efbb">CASPER_ECC_SECP521R1_Mul</a> (CASPER_Type *base, uint32_t resX[18], uint32_t resY[18], uint32_t X[18], uint32_t Y[18], uint32_t scalar[18])</td></tr>
+<tr class="memdesc:gacb1e9d71e66f066201612a09b933efbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs ECC secp521r1 point single scalar multiplication.  <a href="#gacb1e9d71e66f066201612a09b933efbb">More...</a><br/></td></tr>
+<tr class="separator:gacb1e9d71e66f066201612a09b933efbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae82edbc3987d06b88a3313f0fbde10f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gae82edbc3987d06b88a3313f0fbde10f4">CASPER_ECC_SECP521R1_MulAdd</a> (CASPER_Type *base, uint32_t resX[18], uint32_t resY[18], uint32_t X1[18], uint32_t Y1[18], uint32_t scalar1[18], uint32_t X2[18], uint32_t Y2[18], uint32_t scalar2[18])</td></tr>
+<tr class="memdesc:gae82edbc3987d06b88a3313f0fbde10f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs ECC secp521r1 point double scalar multiplication.  <a href="#gae82edbc3987d06b88a3313f0fbde10f4">More...</a><br/></td></tr>
+<tr class="separator:gae82edbc3987d06b88a3313f0fbde10f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga38fa16be20cbb761a11dea0791a186fe"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_CASPER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 3))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Version 2.2.3.</p>
-<p>Current version: 2.2.3</p>
-<p>Change log:</p>
-<ul>
-<li>Version 2.0.0<ul>
-<li>Initial version</li>
-</ul>
-</li>
-<li>Version 2.0.1<ul>
-<li>Bug fix KPSDK-24531 double_scalar_multiplication() result may be all zeroes for some specific input</li>
-</ul>
-</li>
-<li>Version 2.0.2<ul>
-<li>Bug fix KPSDK-25015 CASPER_MEMCPY hard-fault on LPC55xx when both source and destination buffers are outside of CASPER_RAM</li>
-</ul>
-</li>
-<li>Version 2.0.3<ul>
-<li>Bug fix KPSDK-28107 RSUB, FILL and ZERO operations not implemented in enum _casper_operation.</li>
-</ul>
-</li>
-<li>Version 2.0.4<ul>
-<li>For GCC compiler, enforce O1 optimize level, specifically to remove strict-aliasing option. This driver is very specific and requires -fno-strict-aliasing.</li>
-</ul>
-</li>
-<li>Version 2.0.5<ul>
-<li>Fix sign-compare warning.</li>
-</ul>
-</li>
-<li>Version 2.0.6<ul>
-<li>Fix IAR Pa082 warning.</li>
-</ul>
-</li>
-<li>Version 2.0.7<ul>
-<li>Fix MISRA-C 2012 issue.</li>
-</ul>
-</li>
-<li>Version 2.0.8<ul>
-<li>Add feature macro for CASPER_RAM_OFFSET.</li>
-</ul>
-</li>
-<li>Version 2.0.9<ul>
-<li>Remove unused function Jac_oncurve().</li>
-<li>Fix ECC384 build.</li>
-</ul>
-</li>
-<li>Version 2.0.10<ul>
-<li>Fix MISRA-C 2012 issue.</li>
-</ul>
-</li>
-<li>Version 2.1.0<ul>
-<li>Add ECC NIST P-521 elliptic curve.</li>
-</ul>
-</li>
-<li>Version 2.2.0<ul>
-<li>Rework driver to support multiple curves at once.</li>
-</ul>
-</li>
-<li>Version 2.2.1<ul>
-<li>Fix MISRA-C 2012 issue.</li>
-</ul>
-</li>
-<li>Version 2.2.2<ul>
-<li>Enable hardware interleaving to RAMX0 and RAMX1 for CASPER by feature macro FSL_FEATURE_CASPER_RAM_HW_INTERLEAVE</li>
-</ul>
-</li>
-<li>Version 2.2.3<ul>
-<li>Added macro into CASPER_Init and CASPER_Deinit to support devices without clock and reset control. </li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf965305106f4a638921120e2f1acc385"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00212.html#gaf965305106f4a638921120e2f1acc385">casper_operation_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ab5a78d5173f379c5149add08650f14c5"></a>kCASPER_OpMul6464Sum</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing r=a*b using 64x64=128. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ad04571c7b185686fd776a80806d6524d"></a>kCASPER_OpMul6464FullSum</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but assume inner j loop. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ad0fbf9a74a2cb155f031bc3c2caa251f"></a>kCASPER_OpMul6464Reduce</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but sum all of w. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ac73be9788e2abbbf2b011b7a3ad0ee25"></a>kCASPER_OpAdd64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing c,r[-1]=r+a*b using 64x64=128, but skip 1st write. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a46c350d401f6bb4c3fac8b5ca7df66b1"></a>kCASPER_OpSub64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking add with off_AB, and in/out off_RES doing c,r=r+a+c using 64+64=65. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ac6ffac25f046cb6c565ce7ffa543dbe0"></a>kCASPER_OpDouble64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking subtract with off_AB, and in/out off_RES doing r=r-a using 64-64=64, with last borrow implicit if any. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a80db615b18d5ed2319c85a4fe6caa2eb"></a>kCASPER_OpXor64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking add to self with off_RES doing c,r=r+r+c using 64+64=65. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a007fe02bbaf6b290d2024beaf9618e33"></a>kCASPER_OpRSub64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking XOR with off_AB, and in/out off_RES doing r=r^a using 64^64=64. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a405a717b5a196ce6f0c5167d43f6e08e"></a>kCASPER_OpShiftLeft32</em>&nbsp;</td><td class="fielddoc">
-<p>Walking subtract with off_AB, and in/out off_RES using r=a-r. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a61a1a07e6c0adc7b367ef5dc195adc22"></a>kCASPER_OpShiftRight32</em>&nbsp;</td><td class="fielddoc">
-<p>Walking shift left doing r1,r=(b*D)|r1, where D is 2^amt and is loaded by app (off_CD not used) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a5b64b93e087ab8b9002440b264cad30d"></a>kCASPER_OpCopy</em>&nbsp;</td><td class="fielddoc">
-<p>Walking shift right doing r,r1=(b*D)|r1, where D is 2^(32-amt) and is loaded by app (off_CD not used) and off_RES starts at MSW. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a8e860749586cc0a33405334a931f291e"></a>kCASPER_OpRemask</em>&nbsp;</td><td class="fielddoc">
-<p>Copy from ABoff to resoff, 64b at a time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385abdc1e3361e8415354fac33b3993b1491"></a>kCASPER_OpFill</em>&nbsp;</td><td class="fielddoc">
-<p>Copy and mask from ABoff to resoff, 64b at a time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a34940e0777601a076a1715f859228f88"></a>kCASPER_OpZero</em>&nbsp;</td><td class="fielddoc">
-<p>Fill RESOFF using 64 bits at a time with value in A and B. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a9507d1f5ad0b8219f9bd461eeb27752e"></a>kCASPER_OpCompare</em>&nbsp;</td><td class="fielddoc">
-<p>Fill RESOFF using 64 bits at a time of 0s. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a10df9918e9754e22740900ecc145c43d"></a>kCASPER_OpCompareFast</em>&nbsp;</td><td class="fielddoc">
-<p>Compare two arrays, running all the way to the end. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga60876721ddc68aea63524d3078b59185"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00212.html#ga60876721ddc68aea63524d3078b59185">casper_algo_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga60876721ddc68aea63524d3078b59185a8e86050a24be31a0c3e4c7f0fc801045"></a>kCASPER_ECC_P256</em>&nbsp;</td><td class="fielddoc">
-<p>ECC_P256. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga60876721ddc68aea63524d3078b59185a3fbcdf27711f1c8c8271899ac4aaab89"></a>kCASPER_ECC_P384</em>&nbsp;</td><td class="fielddoc">
-<p>ECC_P384. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga60876721ddc68aea63524d3078b59185a4a45988d4ca3b926783296346a862ad2"></a>kCASPER_ECC_P521</em>&nbsp;</td><td class="fielddoc">
-<p>ECC_P521. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa1948fcf9c7301808a765341b4fa72a8"></a>
+<a class="anchor" id="gae23f6641bd6344e7ed2b6daf34be6ab4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CASPER_Init </td>
+          <td class="memname">void CASPER_ModExp </td>
           <td>(</td>
           <td class="paramtype">CASPER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>signature</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>pubN</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>wordLen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pubE</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable clock and disable reset for CASPER.</p>
+<p>This function performs modular exponentiation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">signature</td><td>first addend (in little endian format) </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">pubN</td><td>modulus (in little endian format) </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">wordLen</td><td>Size of pubN in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">pubE</td><td>exponent </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output array to store result of operation (in little endian format) </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga44e39a60b2116a93d89fb2d06ec8c290"></a>
+<a class="anchor" id="ga56316671d80e86e7a17fbaa73cd074cd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CASPER_Deinit </td>
+          <td class="memname">void CASPER_ecc_init </td>
           <td>(</td>
-          <td class="paramtype">CASPER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00211.html#ga60876721ddc68aea63524d3078b59185">casper_algo_t</a>&#160;</td>
+          <td class="paramname"><em>curve</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disable clock and enable reset.</p>
+<p>Set the prime modulus mod in Casper memory and set N_wordlen according to selected algorithm.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramname">curve</td><td>elliptic curve algoritm </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac491ade7e7adfc6326e5c2f0a88ab88a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CASPER_ECC_SECP256R1_Mul </td>
+          <td>(</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resX</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resY</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar</em>[8]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function performs ECC secp256r1 point single scalar multiplication [resX; resY] = scalar * [X; Y] Coordinates are affine in normal form, little endian. Scalars are little endian. All arrays are little endian byte arrays, uint32_t type is used only to enforce the 32-bit alignment (0-mod-4 address).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resX</td><td>Output X affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resY</td><td>Output Y affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X</td><td>Input X affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y</td><td>Input Y affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar</td><td>Input scalar integer, in normal form, little endian. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8945a091e4852097e8be400c20c7e683"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CASPER_ECC_SECP256R1_MulAdd </td>
+          <td>(</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resX</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resY</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X1</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y1</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar1</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X2</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y2</em>[8], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar2</em>[8]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function performs ECC secp256r1 point double scalar multiplication [resX; resY] = scalar1 * [X1; Y1] + scalar2 * [X2; Y2] Coordinates are affine in normal form, little endian. Scalars are little endian. All arrays are little endian byte arrays, uint32_t type is used only to enforce the 32-bit alignment (0-mod-4 address).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resX</td><td>Output X affine coordinate. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resY</td><td>Output Y affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X1</td><td>Input X1 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y1</td><td>Input Y1 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar1</td><td>Input scalar1 integer. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X2</td><td>Input X2 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y2</td><td>Input Y2 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar2</td><td>Input scalar2 integer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab51cd9db278d376a0fd37407d19893b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CASPER_ECC_SECP384R1_Mul </td>
+          <td>(</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resX</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resY</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar</em>[12]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function performs ECC secp384r1 point single scalar multiplication [resX; resY] = scalar * [X; Y] Coordinates are affine in normal form, little endian. Scalars are little endian. All arrays are little endian byte arrays, uint32_t type is used only to enforce the 32-bit alignment (0-mod-4 address).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resX</td><td>Output X affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resY</td><td>Output Y affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X</td><td>Input X affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y</td><td>Input Y affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar</td><td>Input scalar integer, in normal form, little endian. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga69fac3671477c8bcd9ccf1ed0f70a4e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CASPER_ECC_SECP384R1_MulAdd </td>
+          <td>(</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resX</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resY</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X1</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y1</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar1</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X2</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y2</em>[12], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar2</em>[12]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function performs ECC secp384r1 point double scalar multiplication [resX; resY] = scalar1 * [X1; Y1] + scalar2 * [X2; Y2] Coordinates are affine in normal form, little endian. Scalars are little endian. All arrays are little endian byte arrays, uint32_t type is used only to enforce the 32-bit alignment (0-mod-4 address).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resX</td><td>Output X affine coordinate. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resY</td><td>Output Y affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X1</td><td>Input X1 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y1</td><td>Input Y1 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar1</td><td>Input scalar1 integer. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X2</td><td>Input X2 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y2</td><td>Input Y2 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar2</td><td>Input scalar2 integer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacb1e9d71e66f066201612a09b933efbb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CASPER_ECC_SECP521R1_Mul </td>
+          <td>(</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resX</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resY</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar</em>[18]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function performs ECC secp521r1 point single scalar multiplication [resX; resY] = scalar * [X; Y] Coordinates are affine in normal form, little endian. Scalars are little endian. All arrays are little endian byte arrays, uint32_t type is used only to enforce the 32-bit alignment (0-mod-4 address).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resX</td><td>Output X affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resY</td><td>Output Y affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X</td><td>Input X affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y</td><td>Input Y affine coordinate in normal form, little endian. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar</td><td>Input scalar integer, in normal form, little endian. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae82edbc3987d06b88a3313f0fbde10f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CASPER_ECC_SECP521R1_MulAdd </td>
+          <td>(</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resX</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resY</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X1</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y1</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar1</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>X2</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>Y2</em>[18], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>scalar2</em>[18]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function performs ECC secp521r1 point double scalar multiplication [resX; resY] = scalar1 * [X1; Y1] + scalar2 * [X2; Y2] Coordinates are affine in normal form, little endian. Scalars are little endian. All arrays are little endian byte arrays, uint32_t type is used only to enforce the 32-bit alignment (0-mod-4 address).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CASPER base address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resX</td><td>Output X affine coordinate. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">resY</td><td>Output Y affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X1</td><td>Input X1 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y1</td><td>Input Y1 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar1</td><td>Input scalar1 integer. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">X2</td><td>Input X2 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">Y2</td><td>Input Y2 affine coordinate. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scalar2</td><td>Input scalar2 integer. </td></tr>
   </table>
   </dd>
 </dl>

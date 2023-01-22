@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(mcuboot_opensource)
 
+set(MCUX_BUILD_TYPES flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME mcuboot_opensource.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -33,6 +39,7 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../boot.c"
 "${ProjDirPath}/../boot.h"
+"${ProjDirPath}/../bootutil_hooks.c"
 "${ProjDirPath}/../keys.c"
 "${ProjDirPath}/../os.c"
 "${ProjDirPath}/../sbl_boot.c"
@@ -46,19 +53,19 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../include/os/os_malloc.h"
 "${ProjDirPath}/../include/sysflash/sysflash.h"
 "${ProjDirPath}/../flashiap/flash_api.c"
-"${ProjDirPath}/../flashiap/flash_info.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../sblconfig.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../flash_partitioning.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
     ${ProjDirPath}/../include
     ${ProjDirPath}/../include/mcuboot_config
@@ -76,23 +83,21 @@ if(CMAKE_BUILD_TYPE STREQUAL flash_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../middleware/mcuboot_opensource/boot/bootutil
-    ${ProjDirPath}/../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../components/flash/mflash/mimxrt685
-    ${ProjDirPath}/../../../../devices/MIMXRT685S
-    ${ProjDirPath}/../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../components/uart
-    ${ProjDirPath}/../../flash_config
-    ${ProjDirPath}/../../../../components/serial_manager
-    ${ProjDirPath}/../../../../components/lists
-    ${ProjDirPath}/../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../components/flash/mflash
+    ${SdkRootDirPath}/middleware/mcuboot_opensource/boot/bootutil
+    ${SdkRootDirPath}/middleware/mbedtls
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt685
+    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
+    ${SdkRootDirPath}/devices/MIMXRT685S
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/boards/evkmimxrt685/flash_config
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/flash/mflash
 )
 
 # include modules
-include(driver_flexspi_MIMXRT685S_cm33)
-
 include(middleware_mcuboot_bootutil_MIMXRT685S_cm33)
 
 include(middleware_mbedtls_MIMXRT685S_cm33)
@@ -119,6 +124,8 @@ include(driver_power_MIMXRT685S_cm33)
 
 include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
+include(driver_flexspi_MIMXRT685S_cm33)
+
 include(driver_cache_cache64_MIMXRT685S_cm33)
 
 include(component_serial_manager_MIMXRT685S_cm33)
@@ -139,9 +146,9 @@ include(driver_lpc_gpio_MIMXRT685S_cm33)
 
 include(driver_reset_MIMXRT685S_cm33)
 
-include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
-
 include(driver_casper_MIMXRT685S_cm33)
+
+include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
 
 include(driver_hashcrypt_MIMXRT685S_cm33)
 
@@ -152,15 +159,13 @@ include(component_mflash_common_MIMXRT685S_cm33)
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

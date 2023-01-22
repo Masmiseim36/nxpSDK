@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include <xtensa/xos.h>
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 #include "xa_error_standards.h"
 
 #include "audio/xa-pcm-gain-api.h"
@@ -32,9 +32,6 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
-
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
 
 #define PCM_GAIN_FRAME_SIZE (192)
 #define RENDERER_FRAME_SIZE (192)

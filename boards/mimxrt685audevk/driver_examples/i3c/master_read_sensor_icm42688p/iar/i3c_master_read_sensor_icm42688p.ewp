@@ -225,6 +225,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -347,6 +348,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/i3c_bus</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
@@ -1304,6 +1306,7 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1426,6 +1429,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/i3c_bus</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
@@ -2382,6 +2386,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -2504,6 +2509,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/i3c_bus</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
@@ -3461,6 +3467,7 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -3583,6 +3590,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/i3c_bus</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
@@ -4350,6 +4358,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4524,19 +4538,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

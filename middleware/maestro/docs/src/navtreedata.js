@@ -75,19 +75,39 @@ var NAVTREE =
       [ "Element properties", "md_CeiEncoder.html#autotoc_md40", null ],
       [ "CEI definition - implementing your own encoder", "md_CeiEncoder.html#autotoc_md41", null ]
     ] ],
+    [ "AAC decoder", "aacdec_start.html", [
+      [ "AAC decoder features", "aacdec_start.html#autotoc_md42", null ],
+      [ "Specification and reference", "aacdec_start.html#autotoc_md43", null ],
+      [ "Performance", "aacdec_start.html#autotoc_md44", [
+        [ "Memory information", "aacdec_start.html#autotoc_md45", null ],
+        [ "CPU usage", "aacdec_start.html#autotoc_md46", null ]
+      ] ]
+    ] ],
+    [ "FLAC decoder", "flacdec_start.html", [
+      [ "FLAC decoder features", "flacdec_start.html#autotoc_md47", null ],
+      [ "Specification and reference", "flacdec_start.html#autotoc_md48", [
+        [ "Official website", "flacdec_start.html#autotoc_md49", null ],
+        [ "Inbound licensing", "flacdec_start.html#autotoc_md50", null ]
+      ] ],
+      [ "Performance", "flacdec_start.html#autotoc_md51", [
+        [ "Memory information", "flacdec_start.html#autotoc_md52", null ],
+        [ "CPU usage", "flacdec_start.html#autotoc_md53", null ],
+        [ "Following test cases are performed:", "flacdec_start.html#autotoc_md54", null ]
+      ] ]
+    ] ],
     [ "MP3 decoder", "mp3dec_start.html", [
-      [ "MP3 decoder features", "mp3dec_start.html#autotoc_md42", null ],
-      [ "Performance", "mp3dec_start.html#autotoc_md43", [
-        [ "Memory information", "mp3dec_start.html#autotoc_md44", null ],
-        [ "CPU usage", "mp3dec_start.html#autotoc_md45", null ]
+      [ "MP3 decoder features", "mp3dec_start.html#autotoc_md55", null ],
+      [ "Performance", "mp3dec_start.html#autotoc_md56", [
+        [ "Memory information", "mp3dec_start.html#autotoc_md57", null ],
+        [ "CPU usage", "mp3dec_start.html#autotoc_md58", null ]
       ] ]
     ] ],
     [ "WAV decoder", "md_wavdec.html", [
-      [ "WAV decoder features", "md_wavdec.html#autotoc_md47", null ],
-      [ "Performance", "md_wavdec.html#autotoc_md48", [
-        [ "Memory information", "md_wavdec.html#autotoc_md49", null ],
-        [ "CPU usage", "md_wavdec.html#autotoc_md50", null ],
-        [ "Following test cases were performed:", "md_wavdec.html#autotoc_md51", null ]
+      [ "WAV decoder features", "md_wavdec.html#autotoc_md60", null ],
+      [ "Performance", "md_wavdec.html#autotoc_md61", [
+        [ "Memory information", "md_wavdec.html#autotoc_md62", null ],
+        [ "CPU usage", "md_wavdec.html#autotoc_md63", null ],
+        [ "Following test cases were performed:", "md_wavdec.html#autotoc_md64", null ]
       ] ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
@@ -116,14 +136,15 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"ccidec_8h.html#ab2cbfcdf160ad0f203a61af626733234",
-"functions_e.html",
-"mem__src_8c.html",
-"streamer_8h.html#a10bb96e3e42859111013e1eec363f06e",
-"streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652afdae589f641d50d58d0cc39923cdaadd",
-"structElementEncoder.html#a7caae42ad9994fff51173368c0cde65c",
-"struct__ElementDecoder.html#a0b244bcb27fb6e28894dc63de35be883"
+"aacdec_start.html",
+"ccidec_8c.html#ad7730ed66cf9813a01ffc22e414fbbe8",
+"files.html",
+"mem__sink_8c.html",
+"streamer_8c.html#aa88e33f84253c92449d3727f67e77b4b",
+"streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dafec1ea0e119a9861bc1f8ad738faeed8",
+"structElementEncoder.html",
+"struct__ElementAudioSrc.html#a80f864da999e3733bab2814640203d3c",
+"vit__sink_8h.html#ae665679a0976513f1453652edf93ca6d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

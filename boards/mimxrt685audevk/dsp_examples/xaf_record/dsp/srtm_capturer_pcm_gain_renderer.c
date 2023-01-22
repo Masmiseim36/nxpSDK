@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,7 +14,7 @@
 
 #include "fsl_i2s.h"
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 #include "audio/xa-renderer-api.h"
 #include "audio/xa-pcm-gain-api.h"
 #include "audio/xa-capturer-api.h"
@@ -23,6 +23,9 @@
 #include "srtm_utils.h"
 
 #if XA_VIT_PRE_PROC
+#if XA_VOICE_SEEKER
+#include "voice_seeker.h"
+#endif
 #include "vit_pre_proc.h"
 #endif
 
@@ -30,7 +33,7 @@
  * Definitions
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (32 * 1024)
-#define AUDIO_COMP_BUF_SIZE  (128 * 1024)
+#define AUDIO_COMP_BUF_SIZE  (140 * 1024)
 
 enum
 {
@@ -38,6 +41,10 @@ enum
     XA_CAPTURER_0,
     XA_GAIN_0,
 #if XA_VIT_PRE_PROC
+#if XA_VOICE_SEEKER
+    XA_VOICE_SEEKER_0,
+#endif
+
     XA_VIT_PRE_PROC_0,
 #endif
     XA_RENDERER_0,
@@ -46,6 +53,9 @@ enum
 
 const int comp_create_order[] = {XA_CAPTURER_0, XA_GAIN_0,
 #if XA_VIT_PRE_PROC
+#if XA_VOICE_SEEKER
+                                 XA_VOICE_SEEKER_0,
+#endif
                                  XA_VIT_PRE_PROC_0,
 #endif
                                  XA_RENDERER_0};
@@ -56,8 +66,10 @@ const int comp_create_order[] = {XA_CAPTURER_0, XA_GAIN_0,
 #define MAX_CHANNELS  8
 #define MAX_WIDTH     32
 
-#if XA_VIT_PRE_PROC
-#define XA_VIT_PRE_PROC_FRAME_SIZE_US 10000
+#if XA_VOICE_SEEKER
+#define FRAME_SIZE_MS (30)
+#else
+#define FRAME_SIZE_MS (10)
 #endif
 
 /*******************************************************************************
@@ -68,16 +80,22 @@ static int renderer_setup(void *p_renderer, xaf_format_t *format, bool i2s)
     int param[26];
     int numParam;
 
+#if XA_VIT_PRE_PROC
+    int numChannels = 1;
+#else
+    int numChannels = format->channels;
+#endif
+
     numParam = 7;
 
     param[0]  = XA_RENDERER_CONFIG_PARAM_PCM_WIDTH;
     param[1]  = format->pcm_width;
     param[2]  = XA_RENDERER_CONFIG_PARAM_CHANNELS;
-    param[3]  = format->channels;
+    param[3]  = numChannels;
     param[4]  = XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE;
     param[5]  = format->sample_rate;
     param[6]  = XA_RENDERER_CONFIG_PARAM_FRAME_SIZE;
-    param[7]  = (format->pcm_width / 8) * format->channels * (format->sample_rate / 100);
+    param[7]  = (format->pcm_width / 8) * numChannels * (format->sample_rate * FRAME_SIZE_MS / 1000);
     param[8]  = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1;
     param[9]  = (int)DSP_AUDIO_BUFFER_1_PING;
     param[10] = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2;
@@ -85,7 +103,7 @@ static int renderer_setup(void *p_renderer, xaf_format_t *format, bool i2s)
     param[12] = XA_RENDERER_CONFIG_PARAM_I2S_INTERFACE;
     param[13] = AUDIO_I2S_RENDERER_DEVICE;
 
-    if (format->channels > 2)
+    if (numChannels > 2)
     {
         numParam = 13;
 
@@ -100,27 +118,42 @@ static int renderer_setup(void *p_renderer, xaf_format_t *format, bool i2s)
         param[22] = XA_RENDERER_CONFIG_PARAM_CODEC_CHANNELS;
         param[23] = MAX_CHANNELS;
         param[24] = XA_RENDERER_CONFIG_PARAM_CODEC_FRAME_SIZE;
-        param[25] = (MAX_WIDTH >> 3) * MAX_CHANNELS * (format->sample_rate / 100);
+        param[25] = (MAX_WIDTH >> 3) * MAX_CHANNELS * (format->sample_rate * FRAME_SIZE_MS / 1000);
     }
 
     return xaf_comp_set_config(p_renderer, numParam, &param[0]);
 }
 
 #if XA_VIT_PRE_PROC
-static int vit_pre_proc_setup(void *p_comp, xaf_format_t *format, bool i2s)
+#if XA_VOICE_SEEKER
+static int voice_seeker_setup(void *p_comp, xaf_format_t *format, bool i2s)
 {
-    int param[10];
+    int param[8];
 
-    param[0] = XA_VIT_PRE_PROC_CONFIG_PARAM_CHANNELS;
+    param[0] = XA_VOICE_SEEKER_CONFIG_PARAM_CHANNELS;
     param[1] = format->channels;
-    param[2] = XA_VIT_PRE_PROC_CONFIG_PARAM_SAMPLE_RATE;
+    param[2] = XA_VOICE_SEEKER_CONFIG_PARAM_SAMPLE_RATE;
     param[3] = format->sample_rate;
-    param[4] = XA_VIT_PRE_PROC_CONFIG_PARAM_PCM_WIDTH;
+    param[4] = XA_VOICE_SEEKER_CONFIG_PARAM_PCM_WIDTH;
     param[5] = format->pcm_width;
-    param[6] = XA_VIT_PRE_PROC_CONFIG_PARAM_INPUT_FRAME_SIZE_US;
-    param[7] = XA_VIT_PRE_PROC_FRAME_SIZE_US;
+    param[6] = XA_VOICE_SEEKER_CONFIG_PARAM_INPUT_FRAME_SIZE_US;
+    param[7] = FRAME_SIZE_MS * 1000;
 
     return xaf_comp_set_config(p_comp, 4, &param[0]);
+}
+#endif
+static int vit_pre_proc_setup(void *p_comp, xaf_format_t *format, bool i2s)
+{
+    int param[6];
+
+    param[0] = XA_VIT_PRE_PROC_CONFIG_PARAM_SAMPLE_RATE;
+    param[1] = format->sample_rate;
+    param[2] = XA_VIT_PRE_PROC_CONFIG_PARAM_PCM_WIDTH;
+    param[3] = format->pcm_width;
+    param[4] = XA_VIT_PRE_PROC_CONFIG_PARAM_INPUT_FRAME_SIZE_US;
+    param[5] = FRAME_SIZE_MS * 1000;
+
+    return xaf_comp_set_config(p_comp, 3, &param[0]);
 }
 #endif
 
@@ -135,12 +168,13 @@ static int pcm_gain_setup(void *p_comp, xaf_format_t *format, bool i2s)
     param[4] = XA_PCM_GAIN_CONFIG_PARAM_PCM_WIDTH;
     param[5] = format->pcm_width;
     param[6] = XA_PCM_GAIN_CONFIG_PARAM_FRAME_SIZE;
-    param[7] = (format->pcm_width >> 3) * format->channels * (format->sample_rate / 100);
+    param[7] = (format->pcm_width >> 3) * format->channels * (format->sample_rate * FRAME_SIZE_MS / 1000);
     param[8] = XA_PCM_GAIN_CONFIG_PARAM_GAIN_FACTOR;
     param[9] = 1;
 
     return xaf_comp_set_config(p_comp, 5, &param[0]);
 }
+
 static int capturer_setup(void *p_capturer, xaf_format_t *format, bool i2s)
 {
     int param[22];
@@ -256,6 +290,16 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
                 break;
 
 #if XA_VIT_PRE_PROC
+#if XA_VOICE_SEEKER
+            case XA_VOICE_SEEKER_0:
+                comp_format[cid].sample_rate = sampling_rate;
+                comp_format[cid].channels    = channels;
+                comp_format[cid].pcm_width   = width;
+                comp_setup[cid]              = voice_seeker_setup;
+                comp_type[cid]               = XAF_PRE_PROC;
+                comp_id[cid]                 = "pre-proc/voice_seeker";
+                break;
+#endif
             case XA_VIT_PRE_PROC_0:
                 comp_format[cid].sample_rate = sampling_rate;
                 comp_format[cid].channels    = channels;
@@ -323,7 +367,12 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
             return -1;
         }
 
-        comp_setup[cid](p_comp[cid], &comp_format[cid], i2s);
+        ret = comp_setup[cid](p_comp[cid], &comp_format[cid], i2s);
+        if (ret != XAF_NO_ERR)
+        {
+            DSP_PRINTF("comp_setup failure: %d\r\n", ret);
+            return -1;
+        }
     }
 
     /* Start capturer */
@@ -388,14 +437,50 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     }
 
 #if XA_VIT_PRE_PROC
-    ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_VIT_PRE_PROC_0], 0, 4);
+#if XA_VOICE_SEEKER
+    ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_VOICE_SEEKER_0], 0, 4);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_connect CAPTURER_0 -> VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        DSP_PRINTF("xaf_connect XA_GAIN_0 -> XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("connected CAPTURER -> XA_VIT_PRE_PROC_0\n\r");
+    DSP_PRINTF("connected XA_GAIN_0 -> XA_VOICE_SEEKER_0\n\r");
+
+    /* Start VoiceSeeker pre processing */
+    ret = xaf_comp_process(p_adev, p_comp[XA_VOICE_SEEKER_0], NULL, 0, XAF_START_FLAG);
+    if (ret != XAF_NO_ERR)
+    {
+        DSP_PRINTF("xaf_comp_process XAF_START_FLAG XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
+        return -1;
+    }
+
+    ret = xaf_comp_get_status(p_adev, p_comp[XA_VOICE_SEEKER_0], &comp_status, &info[0]);
+    if (ret != XAF_NO_ERR)
+    {
+        DSP_PRINTF("xaf_comp_get_status XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
+        return -1;
+    }
+
+    ret = xaf_connect(p_comp[XA_VOICE_SEEKER_0], 1, p_comp[XA_VIT_PRE_PROC_0], 0, 4);
+    if (ret != XAF_NO_ERR)
+    {
+        DSP_PRINTF("xaf_connect XA_VOICE_SEEKER_0 -> XA_VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        return -1;
+    }
+
+    DSP_PRINTF("connected XA_VOICE_SEEKER_0 -> XA_VIT_PRE_PROC_0\n\r");
+
+#else
+    ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_VIT_PRE_PROC_0], 0, 4);
+    if (ret != XAF_NO_ERR)
+    {
+        DSP_PRINTF("xaf_connect XA_GAIN_0 -> VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        return -1;
+    }
+
+    DSP_PRINTF("connected XA_GAIN_0 -> XA_VIT_PRE_PROC_0\n\r");
+#endif
 
     /* Start VIT pre processing */
     ret = xaf_comp_process(p_adev, p_comp[XA_VIT_PRE_PROC_0], NULL, 0, XAF_START_FLAG);

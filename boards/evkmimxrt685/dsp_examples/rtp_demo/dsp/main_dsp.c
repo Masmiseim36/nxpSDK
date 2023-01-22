@@ -12,6 +12,7 @@
 #include "dsp_xaf.h"
 #include "message.h"
 #include "rpmsg_lite.h"
+#include "rpmsg_queue.h"
 #include "rtp.h"
 
 #include "fsl_common.h"
@@ -93,52 +94,11 @@ static void XOS_Init(void)
 
 
 /*!
- * @brief Invoked when message is received from RPMsg-Lite
- */
-static int rpmsg_callback(void *payload, uint32_t payload_len, uint32_t src, void *priv)
-{
-    XosMsgQueue *queue = (XosMsgQueue *)priv;
-    int status;
-
-    if (payload_len == sizeof(message_t))
-    {
-        status = xos_msgq_put(queue, payload);
-        if (status != XOS_OK)
-        {
-            xos_fatal_error(status, "Failed to put RPMsg message into queue.\r\n");
-        }
-    }
-    else
-    {
-        /* Error / invalid message received. */
-        xos_fatal_error(XOS_ERR_INVALID_PARAMETER,
-                        "RPMsg message with invalid length received from the other core.\r\n");
-    }
-
-    return RL_RELEASE;
-}
-
-/*!
  * @brief Initializes RPMsg-Lite communication and wait until link with another core is up
  */
 static void rpmsg_lite_init(dsp_handle_t *dsp)
 {
-    static struct rpmsg_lite_ept_static_context ept_ctx;
-    static struct rpmsg_lite_instance rpmsg_ctx;
     void *rpmsg_shmem_base;
-    int status;
-
-    dsp->rpmsg_queue = malloc(XOS_MSGQ_SIZE(RPMSG_QUEUE_SIZE, sizeof(message_t)));
-    if (dsp->rpmsg_queue == NULL)
-    {
-        xos_fatal_error(status, "Failed to allocate RPMsg queue memory.\r\n");
-    }
-
-    status = xos_msgq_create(dsp->rpmsg_queue, RPMSG_QUEUE_SIZE, sizeof(message_t), XOS_MSGQ_WAIT_PRIORITY);
-    if (status != XOS_OK)
-    {
-        xos_fatal_error(status, "Failed to create RPMsg queue.\r\n");
-    }
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
     rpmsg_shmem_base = (void *)MEMORY_ConvertMemoryMapAddress((uint32_t)RPMSG_LITE_SHMEM_BASE, kMEMORY_Local2DMA);
@@ -146,16 +106,14 @@ static void rpmsg_lite_init(dsp_handle_t *dsp)
     rpmsg_shmem_base = RPMSG_LITE_SHMEM_BASE;
 #endif
 
-    dsp->rpmsg = rpmsg_lite_remote_init(rpmsg_shmem_base, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctx);
+    dsp->rpmsg       = rpmsg_lite_remote_init(rpmsg_shmem_base, RPMSG_LITE_LINK_ID, RL_NO_FLAGS);
+    dsp->rpmsg_queue = rpmsg_queue_create(dsp->rpmsg);
 
-    while (RL_TRUE != rpmsg_lite_is_link_up(dsp->rpmsg))
-    {
-    }
+    rpmsg_lite_wait_for_link_up(dsp->rpmsg, RL_BLOCK);
 
     DSP_PRINTF("[main_dsp] established RPMsg link\r\n");
 
-    dsp->ept = rpmsg_lite_create_ept(dsp->rpmsg, DSP_EPT_ADDR, (rl_ept_rx_cb_t)rpmsg_callback, (void *)dsp->rpmsg_queue,
-                                     &ept_ctx);
+    dsp->ept = rpmsg_lite_create_ept(dsp->rpmsg, DSP_EPT_ADDR, rpmsg_queue_rx_cb, (void *)dsp->rpmsg_queue);
 }
 
 /*!
@@ -231,7 +189,7 @@ static int dsp_main_thread(void *arg, int wake_value)
 {
     dsp_handle_t *dsp = (dsp_handle_t *)arg;
     message_t msg;
-    int status;
+    int32_t status;
 
     DSP_PRINTF("[main_dsp] start\r\n");
 
@@ -254,12 +212,11 @@ static int dsp_main_thread(void *arg, int wake_value)
     while (true)
     {
         /* Block until received message from ARM core */
-        status = xos_msgq_get(dsp->rpmsg_queue, (uint32_t *)&msg);
-        if (status != XOS_OK)
+        status = rpmsg_queue_recv(dsp->rpmsg, dsp->rpmsg_queue, NULL, (char *)&msg, sizeof(message_t), NULL, RL_BLOCK);
+        if (status != RL_SUCCESS)
         {
             xos_fatal_error(status, "Failed to get item from RPMsg queue.\r\n");
         }
-
         /* Process request */
         handle_message(dsp, &msg);
     }

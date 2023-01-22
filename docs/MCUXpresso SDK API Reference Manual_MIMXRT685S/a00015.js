@@ -87,5 +87,13 @@ var a00015 =
     [ "CTIMER_ClearStatusFlags", "a00015.html#ga43b7410d9c6aab6aad466bd481b9222b", null ],
     [ "CTIMER_StartTimer", "a00015.html#gae9a75a0e18a696baa795ae67aa30a120", null ],
     [ "CTIMER_StopTimer", "a00015.html#ga3c7e8e1eb12e5f48ecca04c8128a9545", null ],
-    [ "CTIMER_Reset", "a00015.html#ga7ea373165af081e0e1700f7a3ba56642", null ]
+    [ "CTIMER_Reset", "a00015.html#ga7ea373165af081e0e1700f7a3ba56642", null ],
+    [ "CTIMER_SetPrescale", "a00015.html#gacd6bd05573ab1128b8f3feaf30058e32", null ],
+    [ "CTIMER_GetCaptureValue", "a00015.html#gad50a3d5668e4b0e9aba06d4d555139b9", null ],
+    [ "CTIMER_EnableResetMatchChannel", "a00015.html#gaeb3527b175c6158c02d76e063e2794b5", null ],
+    [ "CTIMER_EnableStopMatchChannel", "a00015.html#gaf575852d70d9db218b0def620a0b7302", null ],
+    [ "CTIMER_EnableMatchChannelReload", "a00015.html#ga47db49d83551ef1e38375570f29e5f0e", null ],
+    [ "CTIMER_EnableRisingEdgeCapture", "a00015.html#ga0b4954f928c8e278c29325ea10aa7fa5", null ],
+    [ "CTIMER_EnableFallingEdgeCapture", "a00015.html#ga37f6a866661fa105f4e66e76e02d4236", null ],
+    [ "CTIMER_SetShadowValue", "a00015.html#gabe141933756553c5fcbb23160f065b00", null ]
 ];

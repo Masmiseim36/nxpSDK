@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -156,12 +156,12 @@ Files</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00355"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#a00355">sctimer_pwm_signal_param_t</a></td></tr>
-<tr class="memdesc:a00355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options to configure a SCTimer PWM signal.  <a href="a00047.html#a00355">More...</a><br/></td></tr>
+<tr class="memitem:a00356"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#a00356">sctimer_pwm_signal_param_t</a></td></tr>
+<tr class="memdesc:a00356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options to configure a SCTimer PWM signal.  <a href="a00047.html#a00356">More...</a><br/></td></tr>
+<tr class="separator:a00356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00355"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#a00355">sctimer_config_t</a></td></tr>
+<tr class="memdesc:a00355"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCTimer configuration structure.  <a href="a00047.html#a00355">More...</a><br/></td></tr>
 <tr class="separator:a00355"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00354"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#a00354">sctimer_config_t</a></td></tr>
-<tr class="memdesc:a00354"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCTimer configuration structure.  <a href="a00047.html#a00354">More...</a><br/></td></tr>
-<tr class="separator:a00354"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -382,25 +382,25 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga3d7deebbb8cb3899c51bbef999113fdf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3d7deebbb8cb3899c51bbef999113fdf"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga3d7deebbb8cb3899c51bbef999113fdf">FSL_SCTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 4))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga3d7deebbb8cb3899c51bbef999113fdf">FSL_SCTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 8))</td></tr>
 <tr class="memdesc:ga3d7deebbb8cb3899c51bbef999113fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version. <br/></td></tr>
 <tr class="separator:ga3d7deebbb8cb3899c51bbef999113fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga44111f6438ee9d11f5c3b26e3c049e47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga44111f6438ee9d11f5c3b26e3c049e47">SCTIMER_Init</a> (SCT_Type *base, const <a class="el" href="a00047.html#a00354">sctimer_config_t</a> *config)</td></tr>
+<tr class="memitem:ga44111f6438ee9d11f5c3b26e3c049e47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga44111f6438ee9d11f5c3b26e3c049e47">SCTIMER_Init</a> (SCT_Type *base, const <a class="el" href="a00047.html#a00355">sctimer_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga44111f6438ee9d11f5c3b26e3c049e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the SCTimer clock and configures the peripheral for basic operation.  <a href="#ga44111f6438ee9d11f5c3b26e3c049e47">More...</a><br/></td></tr>
 <tr class="separator:ga44111f6438ee9d11f5c3b26e3c049e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga467e692ef9a508c75d2dff4d3bb3587e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga467e692ef9a508c75d2dff4d3bb3587e">SCTIMER_Deinit</a> (SCT_Type *base)</td></tr>
 <tr class="memdesc:ga467e692ef9a508c75d2dff4d3bb3587e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gates the SCTimer clock.  <a href="#ga467e692ef9a508c75d2dff4d3bb3587e">More...</a><br/></td></tr>
 <tr class="separator:ga467e692ef9a508c75d2dff4d3bb3587e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga926706158370867f6a1827af9899c5e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga926706158370867f6a1827af9899c5e4">SCTIMER_GetDefaultConfig</a> (<a class="el" href="a00047.html#a00354">sctimer_config_t</a> *config)</td></tr>
+<tr class="memitem:ga926706158370867f6a1827af9899c5e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga926706158370867f6a1827af9899c5e4">SCTIMER_GetDefaultConfig</a> (<a class="el" href="a00047.html#a00355">sctimer_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga926706158370867f6a1827af9899c5e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SCTimer configuration structure with the default settings.  <a href="#ga926706158370867f6a1827af9899c5e4">More...</a><br/></td></tr>
 <tr class="separator:ga926706158370867f6a1827af9899c5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 PWM setup operations</h2></td></tr>
-<tr class="memitem:ga8f372273782f269956227b810e56a844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga8f372273782f269956227b810e56a844">SCTIMER_SetupPwm</a> (SCT_Type *base, const <a class="el" href="a00047.html#a00355">sctimer_pwm_signal_param_t</a> *pwmParams, <a class="el" href="a00047.html#ga76b1c419363e09d4861880f25f63979d">sctimer_pwm_mode_t</a> mode, uint32_t pwmFreq_Hz, uint32_t srcClock_Hz, uint32_t *event)</td></tr>
+<tr class="memitem:ga8f372273782f269956227b810e56a844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga8f372273782f269956227b810e56a844">SCTIMER_SetupPwm</a> (SCT_Type *base, const <a class="el" href="a00047.html#a00356">sctimer_pwm_signal_param_t</a> *pwmParams, <a class="el" href="a00047.html#ga76b1c419363e09d4861880f25f63979d">sctimer_pwm_mode_t</a> mode, uint32_t pwmFreq_Hz, uint32_t srcClock_Hz, uint32_t *event)</td></tr>
 <tr class="memdesc:ga8f372273782f269956227b810e56a844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the PWM signal parameters.  <a href="#ga8f372273782f269956227b810e56a844">More...</a><br/></td></tr>
 <tr class="separator:ga8f372273782f269956227b810e56a844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga745f5f328599202df06a81b6fe307b63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga745f5f328599202df06a81b6fe307b63">SCTIMER_UpdatePwmDutycycle</a> (SCT_Type *base, <a class="el" href="a00047.html#ga2befef3e54e22f0624ddb1b016f10148">sctimer_out_t</a> output, uint8_t dutyCyclePercent, uint32_t event)</td></tr>
@@ -439,13 +439,13 @@ Counter Start and Stop</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Functions to create a new event and manage the state logic</h2></td></tr>
-<tr class="memitem:ga2fc1121a0f6dd3f5bc822516f85f096c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga2fc1121a0f6dd3f5bc822516f85f096c">SCTIMER_CreateAndScheduleEvent</a> (SCT_Type *base, <a class="el" href="a00047.html#ga8d902ebc4b569d71c88754a49ccf0650">sctimer_event_t</a> howToMonitor, uint32_t matchValue, uint32_t whichIO, <a class="el" href="a00047.html#ga8df83543fac389c6e3b212d58695f034">sctimer_counter_t</a> whichCounter, uint32_t *event)</td></tr>
+<tr class="memitem:ga2fc1121a0f6dd3f5bc822516f85f096c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga2fc1121a0f6dd3f5bc822516f85f096c">SCTIMER_CreateAndScheduleEvent</a> (SCT_Type *base, <a class="el" href="a00047.html#ga8d902ebc4b569d71c88754a49ccf0650">sctimer_event_t</a> howToMonitor, uint32_t matchValue, uint32_t whichIO, <a class="el" href="a00047.html#ga8df83543fac389c6e3b212d58695f034">sctimer_counter_t</a> whichCounter, uint32_t *event)</td></tr>
 <tr class="memdesc:ga2fc1121a0f6dd3f5bc822516f85f096c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an event that is triggered on a match or IO and schedule in current state.  <a href="#ga2fc1121a0f6dd3f5bc822516f85f096c">More...</a><br/></td></tr>
 <tr class="separator:ga2fc1121a0f6dd3f5bc822516f85f096c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga54f3ea55cf8cab5a78e26a522536d2fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga54f3ea55cf8cab5a78e26a522536d2fe">SCTIMER_ScheduleEvent</a> (SCT_Type *base, uint32_t event)</td></tr>
 <tr class="memdesc:ga54f3ea55cf8cab5a78e26a522536d2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable an event in the current state.  <a href="#ga54f3ea55cf8cab5a78e26a522536d2fe">More...</a><br/></td></tr>
 <tr class="separator:ga54f3ea55cf8cab5a78e26a522536d2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga211359f9ee3b67eaa96d73b23ce1650d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga211359f9ee3b67eaa96d73b23ce1650d">SCTIMER_IncreaseState</a> (SCT_Type *base)</td></tr>
+<tr class="memitem:ga211359f9ee3b67eaa96d73b23ce1650d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga211359f9ee3b67eaa96d73b23ce1650d">SCTIMER_IncreaseState</a> (SCT_Type *base)</td></tr>
 <tr class="memdesc:ga211359f9ee3b67eaa96d73b23ce1650d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the state by 1.  <a href="#ga211359f9ee3b67eaa96d73b23ce1650d">More...</a><br/></td></tr>
 <tr class="separator:ga211359f9ee3b67eaa96d73b23ce1650d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7548cb37efdba143e5c312f7b4461cf7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga7548cb37efdba143e5c312f7b4461cf7">SCTIMER_GetCurrentState</a> (SCT_Type *base)</td></tr>
@@ -460,7 +460,7 @@ Functions to create a new event and manage the state logic</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Actions to take in response to an event</h2></td></tr>
-<tr class="memitem:ga6217a77dba0bc787acde88eabbe4ba55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga6217a77dba0bc787acde88eabbe4ba55">SCTIMER_SetupCaptureAction</a> (SCT_Type *base, <a class="el" href="a00047.html#ga8df83543fac389c6e3b212d58695f034">sctimer_counter_t</a> whichCounter, uint32_t *captureRegister, uint32_t event)</td></tr>
+<tr class="memitem:ga6217a77dba0bc787acde88eabbe4ba55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga6217a77dba0bc787acde88eabbe4ba55">SCTIMER_SetupCaptureAction</a> (SCT_Type *base, <a class="el" href="a00047.html#ga8df83543fac389c6e3b212d58695f034">sctimer_counter_t</a> whichCounter, uint32_t *captureRegister, uint32_t event)</td></tr>
 <tr class="memdesc:ga6217a77dba0bc787acde88eabbe4ba55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup capture of the counter value on trigger of a selected event.  <a href="#ga6217a77dba0bc787acde88eabbe4ba55">More...</a><br/></td></tr>
 <tr class="separator:ga6217a77dba0bc787acde88eabbe4ba55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9b685c1dd4fbc33496d5e6445c4d08c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00047.html#ga9b685c1dd4fbc33496d5e6445c4d08c7">SCTIMER_SetCallback</a> (SCT_Type *base, <a class="el" href="a00047.html#ga9522e37a144ad51ffb1f5d035f1b4489">sctimer_event_callback_t</a> callback, uint32_t event)</td></tr>
@@ -522,7 +522,7 @@ Actions to take in response to an event</h2></td></tr>
 <tr class="separator:ga265b0765ff1337a4d13328351b3cebdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00355" id="a00355"></a>
+<a name="a00356" id="a00356"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -572,7 +572,7 @@ Actions to take in response to an event</h2></td></tr>
 
 </div>
 </div>
-<a name="a00354" id="a00354"></a>
+<a name="a00355" id="a00355"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1089,7 +1089,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_Init </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_Init </td>
           <td>(</td>
           <td class="paramtype">SCT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1097,7 +1097,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00047.html#a00354">sctimer_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00047.html#a00355">sctimer_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1148,7 +1148,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void SCTIMER_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00047.html#a00354">sctimer_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00047.html#a00355">sctimer_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1179,7 +1179,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_SetupPwm </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_SetupPwm </td>
           <td>(</td>
           <td class="paramtype">SCT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1187,7 +1187,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00047.html#a00355">sctimer_pwm_signal_param_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00047.html#a00356">sctimer_pwm_signal_param_t</a> *&#160;</td>
           <td class="paramname"><em>pwmParams</em>, </td>
         </tr>
         <tr>
@@ -1559,7 +1559,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_CreateAndScheduleEvent </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_CreateAndScheduleEvent </td>
           <td>(</td>
           <td class="paramtype">SCT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1656,7 +1656,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_IncreaseState </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_IncreaseState </td>
           <td>(</td>
           <td class="paramtype">SCT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
@@ -1796,7 +1796,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_SetupCaptureAction </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SCTIMER_SetupCaptureAction </td>
           <td>(</td>
           <td class="paramtype">SCT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

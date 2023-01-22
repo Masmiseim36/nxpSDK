@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Cadence Design Systems, Inc.
+ * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -133,8 +133,8 @@ int profile_frame = 0;//1;//2822;//5488;
 #include <xtensa/hal.h>
 #endif
 
-#define XA_MAX_CMD_LINE_LENGTH 300
-#define XA_MAX_ARGS 20
+#define XA_MAX_CMD_LINE_LENGTH 1024
+#define XA_MAX_ARGS 50
 #define PARAMFILE "paramfilesimple_decode.txt"
 
 /* Application and testbench error handler */
@@ -186,7 +186,7 @@ static WORD32 word16_swap(WORD32 data)
 
 static void print_usage( char* argv[] )
 {
-    printf( "Usage: %s -fs:<sampling rate (8000/12000/16000/24000/48000) Hz> -numch:<channels (1-8)> "
+    printf( "Usage: %s -fs:<sampling rate (8000/12000/16000/24000/48000) Hz; default: 48000> -numch:<channels (1-8); default: 2> "
         "[options] -ifile:<input_file> -ofile:<output_file>\n\n", argv[0]);
     printf( "Options:\n" );
     printf( "-inbandfec:<fec_flag (0/1)>  : enable or disable SILK inband FEC (non-zero value is treated as 1)\n" );
@@ -281,7 +281,7 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
     pWORD8 payloadEnd = NULL, payloadToDec = NULL;
     WORD16 nBytesPerPacket[ XA_OPUS_MAX_PACKET_IN_INP_BUF ];
     pWORD16 outPtr= NULL;
-    char speechOutFileName[ 150 ], bitInFileName[ 150 ];
+    char speechOutFileName[ 1024 ] = "NULL", bitInFileName[ 1024 ] = "NULL";
     FILE *bitInFile= NULL, *speechOutFile=NULL;
     WORD32 frames = 0, frame = 0, lost;
     
@@ -404,12 +404,24 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
         if( strncmp( argv[ args ], "-fs:",4 ) == 0 )
         {
             sscanf( argv[ args ] + 4, "%d", &dec_control.API_sampleRate );
+			if (dec_control.API_sampleRate != 8000  && dec_control.API_sampleRate != 12000 &&
+			dec_control.API_sampleRate != 16000 && dec_control.API_sampleRate != 24000 &&
+			dec_control.API_sampleRate != 48000)
+			{
+				fprintf(stderr, "Sampling frequency not supported: %d\n", dec_control.API_sampleRate);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-numch:",7 ) == 0 )
         {
             sscanf( argv[ args ] + 7, "%d", &dec_control.API_numChannels );
             args++;
+			if(dec_control.API_numChannels < 1 || dec_control.API_numChannels > 8)
+			{
+				printf("Error: Invalid number of channels setting: %d\n", dec_control.API_numChannels);
+				exit(0);
+			}	
         }
         else if( strncmp( argv[ args ], "-inbandfec:",11 ) == 0 )
         {
@@ -429,11 +441,21 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
         } 
         else if( strncmp( argv[ args ], "-ifile:",7 ) == 0 ) 
         {
+			if((strlen(argv[ args ])-7) > 1024) 
+   			{
+        		printf( "Error: Input file name length too large, max allowed length is 1024\n");
+        		exit( 0 );
+    		}
             sscanf( argv[ args ] + 7, "%s", bitInFileName );
             args++;
         } 
         else if( strncmp( argv[ args ], "-ofile:",7 ) == 0 ) 
         {
+			if((strlen(argv[ args ])-7) > 1024) 
+   			{
+        		printf( "Error: Output file name length too large, max allowed length is 1024\n");
+        		exit( 0 );
+    		}
             sscanf( argv[ args ] + 7, "%s", speechOutFileName );
             args++;
         }
@@ -452,6 +474,11 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
         else if( strncmp( argv[ args ], "-maxpage:",9 ) == 0 )
         {
             sscanf( argv[ args ] + 9, "%d", &ogg_cfg.max_page_size );
+			if (ogg_cfg.max_page_size < 1 || ogg_cfg.max_page_size > 1024) 
+            {
+                printf("Error: Max Ogg page size setting: %d\n", ogg_cfg.max_page_size);
+                exit (0);
+            }
             args++;
         }
         else if( strncmp( argv[ args ], "-strmap:",8 ) == 0 )
@@ -1403,9 +1430,6 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
         }
     }
 
-#ifdef SCRATCH_ANALYSIS
-    fprintf(stdout, "Max scratch usage is %d\n", scratch_max_size);
-#endif
 #ifdef __PROFILE__
     fprintf(stdout, "Peak MCPS = %f\n", mcps_peak);
     fprintf(stdout, "Peak frame = %d\n", peak_frame);
@@ -1413,6 +1437,9 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
     fprintf(stdout, "Total frames  = %d\n", frame);
 #endif
 
+#ifdef SCRATCH_ANALYSIS
+    fprintf(stdout, "Max scratch usage = %d\n", scratch_max_size);
+#endif
 
     /* Close files */
     fclose( speechOutFile );

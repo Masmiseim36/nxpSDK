@@ -51,7 +51,7 @@ var searchData=
   ['sleepcurrentvccq',['sleepCurrentVCCQ',['../a00039.html#af91f93080c2af72681bb6a38ca9470cc',1,'mmc_extended_csd_t']]],
   ['slowclock_5fhz',['slowClock_Hz',['../a00033.html#a87636d65387981401ccb483cfac0f7aa',1,'i3c_config_t']]],
   ['source',['source',['../a00065.html#a8f428fb7c12a19ade6f5e1256eb2d3ab',1,'wm8904_fll_config_t']]],
-  ['sourceclock_5fhz',['sourceClock_Hz',['../a00064.html#a09d0d482636c704b9e9f77dbde06822c',1,'usdhc_host_t']]],
+  ['sourceclock_5fhz',['sourceClock_Hz',['../a00032.html#a36cc72e0f803e1f4a53a820dd94009f5',1,'i3c_master_daa_baudrate_t::sourceClock_Hz()'],['../a00064.html#a09d0d482636c704b9e9f77dbde06822c',1,'usdhc_host_t::sourceClock_Hz()']]],
   ['sparsebitlimit',['sparseBitLimit',['../a00061.html#aa13e97aea012bac044c8b468b96a346a',1,'trng_config_t']]],
   ['speedclass',['speedClass',['../a00039.html#a897c49cd598ad25e03b9a04f9cc1d199',1,'sd_status_t']]],
   ['srcaddr',['srcAddr',['../a00016.html#a2a315d0141311dd82dd6ac1a3523671b',1,'dma_transfer_config_t']]],

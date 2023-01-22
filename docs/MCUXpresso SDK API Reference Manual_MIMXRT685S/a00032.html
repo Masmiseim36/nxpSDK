@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,18 +110,21 @@ $(document).ready(function(){initNavTree('a00032.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00328"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00328">i3c_register_ibi_addr_t</a></td></tr>
-<tr class="memdesc:a00328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with setting master IBI rules and slave registry.  <a href="a00032.html#a00328">More...</a><br/></td></tr>
-<tr class="separator:a00328"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00329"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00329">i3c_register_ibi_addr_t</a></td></tr>
+<tr class="memdesc:a00329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with setting master IBI rules and slave registry.  <a href="a00032.html#a00329">More...</a><br/></td></tr>
+<tr class="separator:a00329"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00323"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00323">i3c_baudrate_hz_t</a></td></tr>
 <tr class="memdesc:a00323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with I3C baudrate settings.  <a href="a00032.html#a00323">More...</a><br/></td></tr>
 <tr class="separator:a00323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00327"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00327">i3c_master_daa_baudrate_t</a></td></tr>
+<tr class="memdesc:a00327"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C DAA baud rate configuration.  <a href="a00032.html#a00327">More...</a><br/></td></tr>
+<tr class="separator:a00327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00326"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00326">i3c_master_config_t</a></td></tr>
 <tr class="memdesc:a00326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C master module.  <a href="a00032.html#a00326">More...</a><br/></td></tr>
 <tr class="separator:a00326"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00327"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00327">i3c_master_transfer_callback_t</a></td></tr>
-<tr class="memdesc:a00327"><td class="mdescLeft">&#160;</td><td class="mdescRight">i3c master callback functions.  <a href="a00032.html#a00327">More...</a><br/></td></tr>
-<tr class="separator:a00327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00328"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00328">i3c_master_transfer_callback_t</a></td></tr>
+<tr class="memdesc:a00328"><td class="mdescLeft">&#160;</td><td class="mdescRight">i3c master callback functions.  <a href="a00032.html#a00328">More...</a><br/></td></tr>
+<tr class="separator:a00328"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00268"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00268">i3c_master_transfer_t</a></td></tr>
 <tr class="memdesc:a00268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-blocking transfer descriptor structure.  <a href="a00032.html#a00268">More...</a><br/></td></tr>
 <tr class="separator:a00268"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,9 +134,9 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga8ae14ad9c81ffec45e65b6683d47755b"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga8ae14ad9c81ffec45e65b6683d47755b">i3c_master_isr_t</a> )(I3C_Type *base, i3c_master_handle_t *handle)</td></tr>
-<tr class="memdesc:ga8ae14ad9c81ffec45e65b6683d47755b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for master interrupt handler.  <a href="#ga8ae14ad9c81ffec45e65b6683d47755b">More...</a><br/></td></tr>
-<tr class="separator:ga8ae14ad9c81ffec45e65b6683d47755b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9709b1e39593b1dd808d7e7aa88ddc11"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga9709b1e39593b1dd808d7e7aa88ddc11">i3c_master_isr_t</a> )(I3C_Type *base, void *handle)</td></tr>
+<tr class="memdesc:ga9709b1e39593b1dd808d7e7aa88ddc11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for master interrupt handler.  <a href="#ga9709b1e39593b1dd808d7e7aa88ddc11">More...</a><br/></td></tr>
+<tr class="separator:ga9709b1e39593b1dd808d7e7aa88ddc11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -330,7 +333,9 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00032.html#ggae6afbe5acf604875c68cf03b5d733a94adbdc132591ba66ce34e9c2eb441265c9">kI3C_TransferNoStopFlag</a> = 0x04U, 
 <br/>
-&#160;&#160;<a class="el" href="a00032.html#ggae6afbe5acf604875c68cf03b5d733a94ada0a0ce241c2430131f6038ab249f67f">kI3C_TransferWordsFlag</a> = 0x08U
+&#160;&#160;<a class="el" href="a00032.html#ggae6afbe5acf604875c68cf03b5d733a94ada0a0ce241c2430131f6038ab249f67f">kI3C_TransferWordsFlag</a> = 0x08U, 
+<br/>
+&#160;&#160;<a class="el" href="a00032.html#ggae6afbe5acf604875c68cf03b5d733a94abb3ba4d9ca750f94d7a5652df0ee0f52">kI3C_TransferRxAutoTermFlag</a>
 <br/>
  }</td></tr>
 <tr class="memdesc:gae6afbe5acf604875c68cf03b5d733a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer option flags.  <a href="a00032.html#gae6afbe5acf604875c68cf03b5d733a94">More...</a><br/></td></tr>
@@ -348,18 +353,18 @@ Initialization and deinitialization</h2></td></tr>
 <tr class="memdesc:ga6b5cdc9977f3d568132d84cb011cb69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the I3C master peripheral.  <a href="#ga6b5cdc9977f3d568132d84cb011cb69b">More...</a><br/></td></tr>
 <tr class="separator:ga6b5cdc9977f3d568132d84cb011cb69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7e1a9d0e48d724b8eefdfcda1091e19f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7e1a9d0e48d724b8eefdfcda1091e19f"></a>
-<a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>I3C_MasterCheckAndClearError</b> (I3C_Type *base, uint32_t status)</td></tr>
+<a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>I3C_MasterCheckAndClearError</b> (I3C_Type *base, uint32_t status)</td></tr>
 <tr class="separator:ga7e1a9d0e48d724b8eefdfcda1091e19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga38288a6a8329c3021dc1b9b2c238d5b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga38288a6a8329c3021dc1b9b2c238d5b8"></a>
-<a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>I3C_CheckForBusyBus</b> (I3C_Type *base)</td></tr>
+<a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>I3C_CheckForBusyBus</b> (I3C_Type *base)</td></tr>
 <tr class="separator:ga38288a6a8329c3021dc1b9b2c238d5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7124a74e4a514c069b31728a4ea64af8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga7124a74e4a514c069b31728a4ea64af8">I3C_MasterEnable</a> (I3C_Type *base, <a class="el" href="a00032.html#ga62d1c8f4eab5009b4a6ab4605efde92c">i3c_master_enable_t</a> enable)</td></tr>
 <tr class="memdesc:ga7124a74e4a514c069b31728a4ea64af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set I3C module master mode.  <a href="#ga7124a74e4a514c069b31728a4ea64af8">More...</a><br/></td></tr>
 <tr class="separator:ga7124a74e4a514c069b31728a4ea64af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gada6de6140ea7a8fd8f9b188f6ca8d561">I3C_SlaveGetDefaultConfig</a> (<a class="el" href="a00035.html#a00329">i3c_slave_config_t</a> *slaveConfig)</td></tr>
+<tr class="memitem:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gada6de6140ea7a8fd8f9b188f6ca8d561">I3C_SlaveGetDefaultConfig</a> (<a class="el" href="a00035.html#a00330">i3c_slave_config_t</a> *slaveConfig)</td></tr>
 <tr class="memdesc:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I3C slave peripheral.  <a href="#gada6de6140ea7a8fd8f9b188f6ca8d561">More...</a><br/></td></tr>
 <tr class="separator:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga6cbdffff9439d0b1ee27682a5c592c34">I3C_SlaveInit</a> (I3C_Type *base, const <a class="el" href="a00035.html#a00329">i3c_slave_config_t</a> *slaveConfig, uint32_t slowClock_Hz)</td></tr>
+<tr class="memitem:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga6cbdffff9439d0b1ee27682a5c592c34">I3C_SlaveInit</a> (I3C_Type *base, const <a class="el" href="a00035.html#a00330">i3c_slave_config_t</a> *slaveConfig, uint32_t slowClock_Hz)</td></tr>
 <tr class="memdesc:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I3C slave peripheral.  <a href="#ga6cbdffff9439d0b1ee27682a5c592c34">More...</a><br/></td></tr>
 <tr class="separator:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaf8b8a5e1974d969dfb4769ece3f2d0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaaf8b8a5e1974d969dfb4769ece3f2d0c">I3C_SlaveDeinit</a> (I3C_Type *base)</td></tr>
@@ -401,6 +406,9 @@ Status</h2></td></tr>
 <tr class="memitem:gab93bd6b3583b8382d1d5f40795004f73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00035.html#ga3acce2b23e62894f993dba8044f41ded">i3c_slave_activity_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gab93bd6b3583b8382d1d5f40795004f73">I3C_SlaveGetActivityState</a> (I3C_Type *base)</td></tr>
 <tr class="memdesc:gab93bd6b3583b8382d1d5f40795004f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the I3C slave state.  <a href="#gab93bd6b3583b8382d1d5f40795004f73">More...</a><br/></td></tr>
 <tr class="separator:gab93bd6b3583b8382d1d5f40795004f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf71eca6432d37c8def30786a031d6fec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf71eca6432d37c8def30786a031d6fec"></a>
+<a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>I3C_SlaveCheckAndClearError</b> (I3C_Type *base, uint32_t status)</td></tr>
+<tr class="separator:gaf71eca6432d37c8def30786a031d6fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts</h2></td></tr>
@@ -473,22 +481,25 @@ Bus operations</h2></td></tr>
 <tr class="memitem:gaf67ff2106e6626441b3118b496a627a2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaf67ff2106e6626441b3118b496a627a2">I3C_MasterGetBusIdleState</a> (I3C_Type *base)</td></tr>
 <tr class="memdesc:gaf67ff2106e6626441b3118b496a627a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the bus is idle.  <a href="#gaf67ff2106e6626441b3118b496a627a2">More...</a><br/></td></tr>
 <tr class="separator:gaf67ff2106e6626441b3118b496a627a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71f75340c40fce0d0ec093f848366df2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga71f75340c40fce0d0ec093f848366df2">I3C_MasterStart</a> (I3C_Type *base, <a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a> type, uint8_t address, <a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a> dir)</td></tr>
+<tr class="memitem:ga3fa919db6c8f1664b7307ee3554eb527"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga3fa919db6c8f1664b7307ee3554eb527">I3C_MasterStartWithRxSize</a> (I3C_Type *base, <a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a> type, uint8_t address, <a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a> dir, uint8_t rxSize)</td></tr>
+<tr class="memdesc:ga3fa919db6c8f1664b7307ee3554eb527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a START signal and slave address on the I2C/I3C bus, receive size is also specified in the call.  <a href="#ga3fa919db6c8f1664b7307ee3554eb527">More...</a><br/></td></tr>
+<tr class="separator:ga3fa919db6c8f1664b7307ee3554eb527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71f75340c40fce0d0ec093f848366df2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga71f75340c40fce0d0ec093f848366df2">I3C_MasterStart</a> (I3C_Type *base, <a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a> type, uint8_t address, <a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a> dir)</td></tr>
 <tr class="memdesc:ga71f75340c40fce0d0ec093f848366df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a START signal and slave address on the I2C/I3C bus.  <a href="#ga71f75340c40fce0d0ec093f848366df2">More...</a><br/></td></tr>
 <tr class="separator:ga71f75340c40fce0d0ec093f848366df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ba470989a3d1a53fda1bdf802ca0b5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga7ba470989a3d1a53fda1bdf802ca0b5a">I3C_MasterRepeatedStart</a> (I3C_Type *base, <a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a> type, uint8_t address, <a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a> dir)</td></tr>
-<tr class="memdesc:ga7ba470989a3d1a53fda1bdf802ca0b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a repeated START signal and slave address on the I2C/I3C bus.  <a href="#ga7ba470989a3d1a53fda1bdf802ca0b5a">More...</a><br/></td></tr>
-<tr class="separator:ga7ba470989a3d1a53fda1bdf802ca0b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f35768eca781b95557aa95213099417"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga5f35768eca781b95557aa95213099417">I3C_MasterRepeatedStartWithRxSize</a> (I3C_Type *base, <a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a> type, uint8_t address, <a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a> dir, uint8_t rxSize)</td></tr>
+<tr class="memitem:ga5f35768eca781b95557aa95213099417"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga5f35768eca781b95557aa95213099417">I3C_MasterRepeatedStartWithRxSize</a> (I3C_Type *base, <a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a> type, uint8_t address, <a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a> dir, uint8_t rxSize)</td></tr>
 <tr class="memdesc:ga5f35768eca781b95557aa95213099417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a repeated START signal and slave address on the I2C/I3C bus, receive size is also specified in the call.  <a href="#ga5f35768eca781b95557aa95213099417">More...</a><br/></td></tr>
 <tr class="separator:ga5f35768eca781b95557aa95213099417"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d5de44d3975df49c4e4dff51ebece90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga6d5de44d3975df49c4e4dff51ebece90">I3C_MasterSend</a> (I3C_Type *base, const void *txBuff, size_t txSize, uint32_t flags)</td></tr>
+<tr class="memitem:ga3c9aa71f760f394ad612fce359ca72c6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga3c9aa71f760f394ad612fce359ca72c6">I3C_MasterRepeatedStart</a> (I3C_Type *base, <a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a> type, uint8_t address, <a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a> dir)</td></tr>
+<tr class="memdesc:ga3c9aa71f760f394ad612fce359ca72c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a repeated START signal and slave address on the I2C/I3C bus.  <a href="#ga3c9aa71f760f394ad612fce359ca72c6">More...</a><br/></td></tr>
+<tr class="separator:ga3c9aa71f760f394ad612fce359ca72c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d5de44d3975df49c4e4dff51ebece90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga6d5de44d3975df49c4e4dff51ebece90">I3C_MasterSend</a> (I3C_Type *base, const void *txBuff, size_t txSize, uint32_t flags)</td></tr>
 <tr class="memdesc:ga6d5de44d3975df49c4e4dff51ebece90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I2C/I3C bus.  <a href="#ga6d5de44d3975df49c4e4dff51ebece90">More...</a><br/></td></tr>
 <tr class="separator:ga6d5de44d3975df49c4e4dff51ebece90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f28b5ee102b91f2cffeb6c2f146c123"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga4f28b5ee102b91f2cffeb6c2f146c123">I3C_MasterReceive</a> (I3C_Type *base, void *rxBuff, size_t rxSize, uint32_t flags)</td></tr>
+<tr class="memitem:ga4f28b5ee102b91f2cffeb6c2f146c123"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga4f28b5ee102b91f2cffeb6c2f146c123">I3C_MasterReceive</a> (I3C_Type *base, void *rxBuff, size_t rxSize, uint32_t flags)</td></tr>
 <tr class="memdesc:ga4f28b5ee102b91f2cffeb6c2f146c123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I2C/I3C bus.  <a href="#ga4f28b5ee102b91f2cffeb6c2f146c123">More...</a><br/></td></tr>
 <tr class="separator:ga4f28b5ee102b91f2cffeb6c2f146c123"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2ebea68fea7844aeb022ac0923fdfebb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga2ebea68fea7844aeb022ac0923fdfebb">I3C_MasterStop</a> (I3C_Type *base)</td></tr>
+<tr class="memitem:ga2ebea68fea7844aeb022ac0923fdfebb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga2ebea68fea7844aeb022ac0923fdfebb">I3C_MasterStop</a> (I3C_Type *base)</td></tr>
 <tr class="memdesc:ga2ebea68fea7844aeb022ac0923fdfebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a STOP signal on the I2C/I3C bus.  <a href="#ga2ebea68fea7844aeb022ac0923fdfebb">More...</a><br/></td></tr>
 <tr class="separator:ga2ebea68fea7844aeb022ac0923fdfebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga692d278a6223eafd86098c0554b09dcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga692d278a6223eafd86098c0554b09dcc">I3C_MasterEmitRequest</a> (I3C_Type *base, <a class="el" href="a00032.html#gada557697fe6a91af58427b97ede0105b">i3c_bus_request_t</a> masterReq)</td></tr>
@@ -497,37 +508,49 @@ Bus operations</h2></td></tr>
 <tr class="memitem:ga4c977aa668686d0e4067fad3f6bac533"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga4c977aa668686d0e4067fad3f6bac533">I3C_MasterEmitIBIResponse</a> (I3C_Type *base, <a class="el" href="a00032.html#ga90b015a217582a74e0514d134a8bcce6">i3c_ibi_response_t</a> ibiResponse)</td></tr>
 <tr class="memdesc:ga4c977aa668686d0e4067fad3f6bac533"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C master emit request.  <a href="#ga4c977aa668686d0e4067fad3f6bac533">More...</a><br/></td></tr>
 <tr class="separator:ga4c977aa668686d0e4067fad3f6bac533"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacae9d09c717d6b77b1e333a8dfadbfce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gacae9d09c717d6b77b1e333a8dfadbfce">I3C_MasterRegisterIBI</a> (I3C_Type *base, <a class="el" href="a00032.html#a00328">i3c_register_ibi_addr_t</a> *ibiRule)</td></tr>
+<tr class="memitem:gacae9d09c717d6b77b1e333a8dfadbfce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gacae9d09c717d6b77b1e333a8dfadbfce">I3C_MasterRegisterIBI</a> (I3C_Type *base, <a class="el" href="a00032.html#a00329">i3c_register_ibi_addr_t</a> *ibiRule)</td></tr>
 <tr class="memdesc:gacae9d09c717d6b77b1e333a8dfadbfce"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C master register IBI rule.  <a href="#gacae9d09c717d6b77b1e333a8dfadbfce">More...</a><br/></td></tr>
 <tr class="separator:gacae9d09c717d6b77b1e333a8dfadbfce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad773adc7b026c0cbeab0e44de77ca11c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gad773adc7b026c0cbeab0e44de77ca11c">I3C_MasterGetIBIRules</a> (I3C_Type *base, <a class="el" href="a00032.html#a00328">i3c_register_ibi_addr_t</a> *ibiRule)</td></tr>
+<tr class="memitem:gad773adc7b026c0cbeab0e44de77ca11c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gad773adc7b026c0cbeab0e44de77ca11c">I3C_MasterGetIBIRules</a> (I3C_Type *base, <a class="el" href="a00032.html#a00329">i3c_register_ibi_addr_t</a> *ibiRule)</td></tr>
 <tr class="memdesc:gad773adc7b026c0cbeab0e44de77ca11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C master get IBI rule.  <a href="#gad773adc7b026c0cbeab0e44de77ca11c">More...</a><br/></td></tr>
 <tr class="separator:gad773adc7b026c0cbeab0e44de77ca11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafcac95b489b0693850322138db6c8c61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gafcac95b489b0693850322138db6c8c61">I3C_MasterProcessDAA</a> (I3C_Type *base, uint8_t *addressList, uint32_t count)</td></tr>
-<tr class="memdesc:gafcac95b489b0693850322138db6c8c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a DAA in the i3c bus.  <a href="#gafcac95b489b0693850322138db6c8c61">More...</a><br/></td></tr>
-<tr class="separator:gafcac95b489b0693850322138db6c8c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2cc7155dd51d87ad0bf3c05cbaed378f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga2cc7155dd51d87ad0bf3c05cbaed378f">I3C_MasterTransferBlocking</a> (I3C_Type *base, i3c_master_transfer_t *transfer)</td></tr>
+<tr class="memitem:ga740390ecc60b2ed7190647db309fb073"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#ga81ac58196d67e74a0a3702c3e760ede7">i3c_ibi_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga740390ecc60b2ed7190647db309fb073">I3C_GetIBIType</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:ga740390ecc60b2ed7190647db309fb073"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C master get IBI Type.  <a href="#ga740390ecc60b2ed7190647db309fb073">More...</a><br/></td></tr>
+<tr class="separator:ga740390ecc60b2ed7190647db309fb073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66f03ec1545324a19fe3c7cb52815d6a"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga66f03ec1545324a19fe3c7cb52815d6a">I3C_GetIBIAddress</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:ga66f03ec1545324a19fe3c7cb52815d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C master get IBI Address.  <a href="#ga66f03ec1545324a19fe3c7cb52815d6a">More...</a><br/></td></tr>
+<tr class="separator:ga66f03ec1545324a19fe3c7cb52815d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18e16e1bff4b0a22c318afe40c64533d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga18e16e1bff4b0a22c318afe40c64533d">I3C_MasterProcessDAASpecifiedBaudrate</a> (I3C_Type *base, uint8_t *addressList, uint32_t count, <a class="el" href="a00032.html#a00327">i3c_master_daa_baudrate_t</a> *daaBaudRate)</td></tr>
+<tr class="memdesc:ga18e16e1bff4b0a22c318afe40c64533d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a DAA in the i3c bus with specified temporary baud rate.  <a href="#ga18e16e1bff4b0a22c318afe40c64533d">More...</a><br/></td></tr>
+<tr class="separator:ga18e16e1bff4b0a22c318afe40c64533d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f255c6e7329d1824bbea2a032fc390c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga9f255c6e7329d1824bbea2a032fc390c">I3C_MasterProcessDAA</a> (I3C_Type *base, uint8_t *addressList, uint32_t count)</td></tr>
+<tr class="memdesc:ga9f255c6e7329d1824bbea2a032fc390c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a DAA in the i3c bus.  <a href="#ga9f255c6e7329d1824bbea2a032fc390c">More...</a><br/></td></tr>
+<tr class="separator:ga9f255c6e7329d1824bbea2a032fc390c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf626e02575e8921bc5da951d4e60485"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00034.html#a00325">i3c_device_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gabf626e02575e8921bc5da951d4e60485">I3C_MasterGetDeviceListAfterDAA</a> (I3C_Type *base, uint8_t *count)</td></tr>
+<tr class="memdesc:gabf626e02575e8921bc5da951d4e60485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device information list after DAA process is done.  <a href="#gabf626e02575e8921bc5da951d4e60485">More...</a><br/></td></tr>
+<tr class="separator:gabf626e02575e8921bc5da951d4e60485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2cc7155dd51d87ad0bf3c05cbaed378f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga2cc7155dd51d87ad0bf3c05cbaed378f">I3C_MasterTransferBlocking</a> (I3C_Type *base, i3c_master_transfer_t *transfer)</td></tr>
 <tr class="memdesc:ga2cc7155dd51d87ad0bf3c05cbaed378f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a master polling transfer on the I2C/I3C bus.  <a href="#ga2cc7155dd51d87ad0bf3c05cbaed378f">More...</a><br/></td></tr>
 <tr class="separator:ga2cc7155dd51d87ad0bf3c05cbaed378f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab024187605c4c4bf9256a36e4e217b2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gab024187605c4c4bf9256a36e4e217b2e">I3C_SlaveRequestEvent</a> (I3C_Type *base, <a class="el" href="a00035.html#ga83516aaf2d5af1d6f01bfe90c51155ff">i3c_slave_event_t</a> event)</td></tr>
 <tr class="memdesc:gab024187605c4c4bf9256a36e4e217b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave request event.  <a href="#gab024187605c4c4bf9256a36e4e217b2e">More...</a><br/></td></tr>
 <tr class="separator:gab024187605c4c4bf9256a36e4e217b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada1fa684cab9859f17724bc800b35b19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gada1fa684cab9859f17724bc800b35b19">I3C_SlaveSend</a> (I3C_Type *base, const void *txBuff, size_t txSize)</td></tr>
+<tr class="memitem:gada1fa684cab9859f17724bc800b35b19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gada1fa684cab9859f17724bc800b35b19">I3C_SlaveSend</a> (I3C_Type *base, const void *txBuff, size_t txSize)</td></tr>
 <tr class="memdesc:gada1fa684cab9859f17724bc800b35b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I3C bus.  <a href="#gada1fa684cab9859f17724bc800b35b19">More...</a><br/></td></tr>
 <tr class="separator:gada1fa684cab9859f17724bc800b35b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab35cd6ef6042ccbd3534a4b57a3dcf37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gab35cd6ef6042ccbd3534a4b57a3dcf37">I3C_SlaveReceive</a> (I3C_Type *base, void *rxBuff, size_t rxSize)</td></tr>
+<tr class="memitem:gab35cd6ef6042ccbd3534a4b57a3dcf37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gab35cd6ef6042ccbd3534a4b57a3dcf37">I3C_SlaveReceive</a> (I3C_Type *base, void *rxBuff, size_t rxSize)</td></tr>
 <tr class="memdesc:gab35cd6ef6042ccbd3534a4b57a3dcf37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I3C bus.  <a href="#gab35cd6ef6042ccbd3534a4b57a3dcf37">More...</a><br/></td></tr>
 <tr class="separator:gab35cd6ef6042ccbd3534a4b57a3dcf37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Non-blocking</h2></td></tr>
-<tr class="memitem:gaed9f9136344f725a16c614699f6e0030"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaed9f9136344f725a16c614699f6e0030">I3C_MasterTransferCreateHandle</a> (I3C_Type *base, i3c_master_handle_t *handle, const <a class="el" href="a00032.html#a00327">i3c_master_transfer_callback_t</a> *callback, void *userData)</td></tr>
+<tr class="memitem:gaed9f9136344f725a16c614699f6e0030"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaed9f9136344f725a16c614699f6e0030">I3C_MasterTransferCreateHandle</a> (I3C_Type *base, i3c_master_handle_t *handle, const <a class="el" href="a00032.html#a00328">i3c_master_transfer_callback_t</a> *callback, void *userData)</td></tr>
 <tr class="memdesc:gaed9f9136344f725a16c614699f6e0030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new handle for the I3C master non-blocking APIs.  <a href="#gaed9f9136344f725a16c614699f6e0030">More...</a><br/></td></tr>
 <tr class="separator:gaed9f9136344f725a16c614699f6e0030"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57beac3187ce8a47e46d1dbb5abd496f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga57beac3187ce8a47e46d1dbb5abd496f">I3C_MasterTransferNonBlocking</a> (I3C_Type *base, i3c_master_handle_t *handle, i3c_master_transfer_t *transfer)</td></tr>
+<tr class="memitem:ga57beac3187ce8a47e46d1dbb5abd496f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga57beac3187ce8a47e46d1dbb5abd496f">I3C_MasterTransferNonBlocking</a> (I3C_Type *base, i3c_master_handle_t *handle, i3c_master_transfer_t *transfer)</td></tr>
 <tr class="memdesc:ga57beac3187ce8a47e46d1dbb5abd496f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking transaction on the I2C/I3C bus.  <a href="#ga57beac3187ce8a47e46d1dbb5abd496f">More...</a><br/></td></tr>
 <tr class="separator:ga57beac3187ce8a47e46d1dbb5abd496f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3db6f43bcce34cd952f01e37b3f19d2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga3db6f43bcce34cd952f01e37b3f19d2a">I3C_MasterTransferGetCount</a> (I3C_Type *base, i3c_master_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga3db6f43bcce34cd952f01e37b3f19d2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga3db6f43bcce34cd952f01e37b3f19d2a">I3C_MasterTransferGetCount</a> (I3C_Type *base, i3c_master_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga3db6f43bcce34cd952f01e37b3f19d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of bytes transferred so far.  <a href="#ga3db6f43bcce34cd952f01e37b3f19d2a">More...</a><br/></td></tr>
 <tr class="separator:ga3db6f43bcce34cd952f01e37b3f19d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gade7b19f9c3161dc3daac43b5e6156cd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gade7b19f9c3161dc3daac43b5e6156cd9">I3C_MasterTransferAbort</a> (I3C_Type *base, i3c_master_handle_t *handle)</td></tr>
@@ -536,12 +559,12 @@ Non-blocking</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 IRQ handler</h2></td></tr>
-<tr class="memitem:ga029e91b1f4b9ad2c90644749c3e6b2a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga029e91b1f4b9ad2c90644749c3e6b2a9">I3C_MasterTransferHandleIRQ</a> (I3C_Type *base, i3c_master_handle_t *handle)</td></tr>
-<tr class="memdesc:ga029e91b1f4b9ad2c90644749c3e6b2a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle master interrupts.  <a href="#ga029e91b1f4b9ad2c90644749c3e6b2a9">More...</a><br/></td></tr>
-<tr class="separator:ga029e91b1f4b9ad2c90644749c3e6b2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed06a0e11ac43bef086aaa47e1d42e39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaed06a0e11ac43bef086aaa47e1d42e39">I3C_MasterTransferHandleIRQ</a> (I3C_Type *base, void *intHandle)</td></tr>
+<tr class="memdesc:gaed06a0e11ac43bef086aaa47e1d42e39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle master interrupts.  <a href="#gaed06a0e11ac43bef086aaa47e1d42e39">More...</a><br/></td></tr>
+<tr class="separator:gaed06a0e11ac43bef086aaa47e1d42e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00328" id="a00328"></a>
+<a name="a00329" id="a00329"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -639,6 +662,67 @@ IRQ handler</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">uint32_t i3c_baudrate_hz_t::i3cOpenDrainBaud</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00327" id="a00327"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct i3c_master_daa_baudrate_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a36cc72e0f803e1f4a53a820dd94009f5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a36cc72e0f803e1f4a53a820dd94009f5">sourceClock_Hz</a></td></tr>
+<tr class="memdesc:a36cc72e0f803e1f4a53a820dd94009f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">FCLK, function clock in Hertz.  <a href="#a36cc72e0f803e1f4a53a820dd94009f5">More...</a><br/></td></tr>
+<tr class="separator:a36cc72e0f803e1f4a53a820dd94009f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3a9616e5d60d0a755bb8e7d6156c8c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#aa3a9616e5d60d0a755bb8e7d6156c8c2">i3cPushPullBaud</a></td></tr>
+<tr class="memdesc:aa3a9616e5d60d0a755bb8e7d6156c8c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired I3C push-pull baud rate in Hertz.  <a href="#aa3a9616e5d60d0a755bb8e7d6156c8c2">More...</a><br/></td></tr>
+<tr class="separator:aa3a9616e5d60d0a755bb8e7d6156c8c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa33f2104d43a930ad948fa9c8b43e441"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#aa33f2104d43a930ad948fa9c8b43e441">i3cOpenDrainBaud</a></td></tr>
+<tr class="memdesc:aa33f2104d43a930ad948fa9c8b43e441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired I3C open-drain baud rate in Hertz.  <a href="#aa33f2104d43a930ad948fa9c8b43e441">More...</a><br/></td></tr>
+<tr class="separator:aa33f2104d43a930ad948fa9c8b43e441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a36cc72e0f803e1f4a53a820dd94009f5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t i3c_master_daa_baudrate_t::sourceClock_Hz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa3a9616e5d60d0a755bb8e7d6156c8c2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t i3c_master_daa_baudrate_t::i3cPushPullBaud</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa33f2104d43a930ad948fa9c8b43e441"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t i3c_master_daa_baudrate_t::i3cOpenDrainBaud</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -756,7 +840,7 @@ IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a name="a00327" id="a00327"></a>
+<a name="a00328" id="a00328"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -776,7 +860,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memdesc:a6d42aad3611beb397bcc8ec4184def61"><td class="mdescLeft">&#160;</td><td class="mdescRight">IBI event callback. <br/></td></tr>
 <tr class="separator:a6d42aad3611beb397bcc8ec4184def61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa40d4a35313debc5c67134bc953d50e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa40d4a35313debc5c67134bc953d50e0"></a>
-void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#aa40d4a35313debc5c67134bc953d50e0">transferComplete</a> )(I3C_Type *base, i3c_master_handle_t *handle, <a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#aa40d4a35313debc5c67134bc953d50e0">transferComplete</a> )(I3C_Type *base, i3c_master_handle_t *handle, <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
 <tr class="memdesc:aa40d4a35313debc5c67134bc953d50e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer complete callback. <br/></td></tr>
 <tr class="separator:aa40d4a35313debc5c67134bc953d50e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -956,9 +1040,9 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:a4f67af21e75862ddda5f0e98f35c15da"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a4f67af21e75862ddda5f0e98f35c15da">remainingBytes</a></td></tr>
 <tr class="memdesc:a4f67af21e75862ddda5f0e98f35c15da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remaining byte count in current state.  <a href="#a4f67af21e75862ddda5f0e98f35c15da">More...</a><br/></td></tr>
 <tr class="separator:a4f67af21e75862ddda5f0e98f35c15da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac89ead0f9ab8ad4abd308fcd3c618d5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ac89ead0f9ab8ad4abd308fcd3c618d5f">isReadTerm</a></td></tr>
-<tr class="memdesc:ac89ead0f9ab8ad4abd308fcd3c618d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is readterm configured.  <a href="#ac89ead0f9ab8ad4abd308fcd3c618d5f">More...</a><br/></td></tr>
-<tr class="separator:ac89ead0f9ab8ad4abd308fcd3c618d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34daf5f0b3f851b99ff3573e3e38effc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a34daf5f0b3f851b99ff3573e3e38effc">isRxAutoTerm</a></td></tr>
+<tr class="memdesc:a34daf5f0b3f851b99ff3573e3e38effc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is read auto-termination configured.  <a href="#a34daf5f0b3f851b99ff3573e3e38effc">More...</a><br/></td></tr>
+<tr class="separator:a34daf5f0b3f851b99ff3573e3e38effc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd7811659db203b29917081f05064b19"><td class="memItemLeft" align="right" valign="top">i3c_master_transfer_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#acd7811659db203b29917081f05064b19">transfer</a></td></tr>
 <tr class="memdesc:acd7811659db203b29917081f05064b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy of the current transfer info.  <a href="#acd7811659db203b29917081f05064b19">More...</a><br/></td></tr>
 <tr class="separator:acd7811659db203b29917081f05064b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -974,7 +1058,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:ab7796be272d61442760ac3be1a1f2dd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#ga81ac58196d67e74a0a3702c3e760ede7">i3c_ibi_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ab7796be272d61442760ac3be1a1f2dd8">ibiType</a></td></tr>
 <tr class="memdesc:ab7796be272d61442760ac3be1a1f2dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">IBI type.  <a href="#ab7796be272d61442760ac3be1a1f2dd8">More...</a><br/></td></tr>
 <tr class="separator:ab7796be272d61442760ac3be1a1f2dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2b8cec2ec91853b7c2afb57ae8f8147"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#a00327">i3c_master_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ae2b8cec2ec91853b7c2afb57ae8f8147">callback</a></td></tr>
+<tr class="memitem:ae2b8cec2ec91853b7c2afb57ae8f8147"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#a00328">i3c_master_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ae2b8cec2ec91853b7c2afb57ae8f8147">callback</a></td></tr>
 <tr class="memdesc:ae2b8cec2ec91853b7c2afb57ae8f8147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback functions pointer.  <a href="#ae2b8cec2ec91853b7c2afb57ae8f8147">More...</a><br/></td></tr>
 <tr class="separator:ae2b8cec2ec91853b7c2afb57ae8f8147"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6b49e4c9a9a7384bf94217687a76b0b"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#aa6b49e4c9a9a7384bf94217687a76b0b">userData</a></td></tr>
@@ -1006,12 +1090,12 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a class="anchor" id="ac89ead0f9ab8ad4abd308fcd3c618d5f"></a>
+<a class="anchor" id="a34daf5f0b3f851b99ff3573e3e38effc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool i3c_master_handle_t::isReadTerm</td>
+          <td class="memname">bool i3c_master_handle_t::isRxAutoTerm</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1083,7 +1167,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00032.html#a00327">i3c_master_transfer_callback_t</a> i3c_master_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00032.html#a00328">i3c_master_transfer_callback_t</a> i3c_master_handle_t::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1106,12 +1190,12 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga8ae14ad9c81ffec45e65b6683d47755b"></a>
+<a class="anchor" id="ga9709b1e39593b1dd808d7e7aa88ddc11"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* i3c_master_isr_t)(I3C_Type *base, i3c_master_handle_t *handle)</td>
+          <td class="memname">typedef void(* i3c_master_isr_t)(I3C_Type *base, void *handle)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1536,6 +1620,10 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggae6afbe5acf604875c68cf03b5d733a94ada0a0ce241c2430131f6038ab249f67f"></a>kI3C_TransferWordsFlag</em>&nbsp;</td><td class="fielddoc">
 <p>Transfer in words, else transfer in bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6afbe5acf604875c68cf03b5d733a94abb3ba4d9ca750f94d7a5652df0ee0f52"></a>kI3C_TransferRxAutoTermFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Set Rx auto-termination. </p>
+<p>Note: It's adaptive based on Rx size except in I3C_MasterReceive. </p>
 </td></tr>
 </table>
 
@@ -2343,12 +2431,74 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
+<a class="anchor" id="ga3fa919db6c8f1664b7307ee3554eb527"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterStartWithRxSize </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a>&#160;</td>
+          <td class="paramname"><em>dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>rxSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to initiate a new master mode transfer. First, the bus state is checked to ensure that another master is not occupying the bus. Then a START signal is transmitted, followed by the 7-bit address specified in the a address parameter. Note that this function does not actually wait until the START and address are successfully sent on the bus before returning.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">type</td><td>The bus type to use in this transaction. </td></tr>
+    <tr><td class="paramname">address</td><td>7-bit slave device address, in bits [6:0]. </td></tr>
+    <tr><td class="paramname">dir</td><td>Master transfer direction, either <a class="el" href="a00032.html#ggaddaff079d09512f9b359796b33c2df9babc5f006e698ffdd4f3b59ac988eeb717" title="Master receive. ">kI3C_Read</a> or <a class="el" href="a00032.html#ggaddaff079d09512f9b359796b33c2df9ba04b8a24a8e847c1d15d8c2d7ffe5e2ec" title="Master transmit. ">kI3C_Write</a>. This parameter is used to set the R/w bit (bit 0) in the transmitted slave address. </td></tr>
+    <tr><td class="paramname">rxSize</td><td>Read terminate size for the followed read transfer, limit to 255 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ga71f75340c40fce0d0ec093f848366df2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterStart </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterStart </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2390,63 +2540,8 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7ba470989a3d1a53fda1bdf802ca0b5a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterRepeatedStart </td>
-          <td>(</td>
-          <td class="paramtype">I3C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a>&#160;</td>
-          <td class="paramname"><em>dir</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to send a Repeated START signal when a transfer is already in progress. Like <a class="el" href="a00032.html#ga71f75340c40fce0d0ec093f848366df2" title="Sends a START signal and slave address on the I2C/I3C bus. ">I3C_MasterStart()</a>, it also sends the specified 7-bit address.</p>
-<dl class="section note"><dt>Note</dt><dd>This function exists primarily to maintain compatible APIs between I3C and I2C drivers, as well as to better document the intent of code that uses these APIs.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
-    <tr><td class="paramname">type</td><td>The bus type to use in this transaction. </td></tr>
-    <tr><td class="paramname">address</td><td>7-bit slave device address, in bits [6:0]. </td></tr>
-    <tr><td class="paramname">dir</td><td>Master transfer direction, either <a class="el" href="a00032.html#ggaddaff079d09512f9b359796b33c2df9babc5f006e698ffdd4f3b59ac988eeb717" title="Master receive. ">kI3C_Read</a> or <a class="el" href="a00032.html#ggaddaff079d09512f9b359796b33c2df9ba04b8a24a8e847c1d15d8c2d7ffe5e2ec" title="Master transmit. ">kI3C_Write</a>. This parameter is used to set the R/w bit (bit 0) in the transmitted slave address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Repeated START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2458,7 +2553,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterRepeatedStartWithRxSize </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterRepeatedStartWithRxSize </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2508,7 +2603,70 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Repeated START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Repeated START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3c9aa71f760f394ad612fce359ca72c6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterRepeatedStart </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00032.html#ga577aa3f3b418d0ee796bac0387aedb39">i3c_bus_type_t</a>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00032.html#gaddaff079d09512f9b359796b33c2df9b">i3c_direction_t</a>&#160;</td>
+          <td class="paramname"><em>dir</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function is used to send a Repeated START signal when a transfer is already in progress. Like <a class="el" href="a00032.html#ga71f75340c40fce0d0ec093f848366df2" title="Sends a START signal and slave address on the I2C/I3C bus. ">I3C_MasterStart()</a>, it also sends the specified 7-bit address.</p>
+<dl class="section note"><dt>Note</dt><dd>This function exists primarily to maintain compatible APIs between I3C and I2C drivers, as well as to better document the intent of code that uses these APIs.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">type</td><td>The bus type to use in this transaction. </td></tr>
+    <tr><td class="paramname">address</td><td>7-bit slave device address, in bits [6:0]. </td></tr>
+    <tr><td class="paramname">dir</td><td>Master transfer direction, either <a class="el" href="a00032.html#ggaddaff079d09512f9b359796b33c2df9babc5f006e698ffdd4f3b59ac988eeb717" title="Master receive. ">kI3C_Read</a> or <a class="el" href="a00032.html#ggaddaff079d09512f9b359796b33c2df9ba04b8a24a8e847c1d15d8c2d7ffe5e2ec" title="Master transmit. ">kI3C_Write</a>. This parameter is used to set the R/w bit (bit 0) in the transmitted slave address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Repeated START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2520,7 +2678,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterSend </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterSend </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2562,7 +2720,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Data was sent successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Data was sent successfully. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25abb073c687a177100617e94d117ce51f3" title="The module has stalled too long in a frame. ">kStatus_I3C_Timeout</a></td><td>The module has stalled too long in a frame. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3ed2939c8d83d81804512322d001e740" title="The slave device sent a NAK in response to an address. ">kStatus_I3C_Nak</a></td><td>The slave device sent a NAK in response to an address. </td></tr>
@@ -2581,7 +2739,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterReceive </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterReceive </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2622,7 +2780,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Data was received successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Data was received successfully. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25abb073c687a177100617e94d117ce51f3" title="The module has stalled too long in a frame. ">kStatus_I3C_Timeout</a></td><td>The module has stalled too long in a frame. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a44213e1f693b99a95b397ab886f4639b" title="The master terminates slave read. ">kStatus_I3C_Term</a></td><td>The master terminates slave read. </td></tr>
@@ -2642,7 +2800,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterStop </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterStop </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
@@ -2659,7 +2817,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>The STOP signal was successfully sent on the bus and the transaction terminated. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>The STOP signal was successfully sent on the bus and the transaction terminated. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25abb073c687a177100617e94d117ce51f3" title="The module has stalled too long in a frame. ">kStatus_I3C_Timeout</a></td><td>The module has stalled too long in a frame. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25abc69734a51e6c32e7da9e14efeb0df47" title="Invalid use of request. ">kStatus_I3C_InvalidReq</a></td><td>Invalid use of request. </td></tr>
@@ -2756,7 +2914,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00032.html#a00328">i3c_register_ibi_addr_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00032.html#a00329">i3c_register_ibi_addr_t</a> *&#160;</td>
           <td class="paramname"><em>ibiRule</em>&#160;</td>
         </tr>
         <tr>
@@ -2769,7 +2927,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
-    <tr><td class="paramname">ibiRule</td><td>Pointer to ibi rule description of type <a class="el" href="a00032.html#a00328" title="Structure with setting master IBI rules and slave registry. ">i3c_register_ibi_addr_t</a> </td></tr>
+    <tr><td class="paramname">ibiRule</td><td>Pointer to ibi rule description of type <a class="el" href="a00032.html#a00329" title="Structure with setting master IBI rules and slave registry. ">i3c_register_ibi_addr_t</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -2789,7 +2947,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00032.html#a00328">i3c_register_ibi_addr_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00032.html#a00329">i3c_register_ibi_addr_t</a> *&#160;</td>
           <td class="paramname"><em>ibiRule</em>&#160;</td>
         </tr>
         <tr>
@@ -2809,12 +2967,134 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a class="anchor" id="gafcac95b489b0693850322138db6c8c61"></a>
+<a class="anchor" id="ga740390ecc60b2ed7190647db309fb073"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterProcessDAA </td>
+          <td class="memname"><a class="el" href="a00032.html#ga81ac58196d67e74a0a3702c3e760ede7">i3c_ibi_type_t</a> I3C_GetIBIType </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">i3c_ibi_type_t</td><td>Type of <a class="el" href="a00032.html#ga81ac58196d67e74a0a3702c3e760ede7" title="IBI type. ">i3c_ibi_type_t</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga66f03ec1545324a19fe3c7cb52815d6a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint8_t I3C_GetIBIAddress </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">The</td><td>8-bit IBI address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga18e16e1bff4b0a22c318afe40c64533d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterProcessDAASpecifiedBaudrate </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>addressList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00032.html#a00327">i3c_master_daa_baudrate_t</a> *&#160;</td>
+          <td class="paramname"><em>daaBaudRate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">addressList</td><td>The pointer for address list which is used to do DAA. </td></tr>
+    <tr><td class="paramname">count</td><td>The address count in the address list. </td></tr>
+    <tr><td class="paramname">daaBaudRate</td><td>The temporary baud rate in DAA process, NULL for using initial setting. The initial setting is set back between the completion of the DAA and the return of this function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>The transaction was started successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Either another master is currently utilizing the bus, or a non-blocking transaction is already in progress. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a73076eb00a2c6f4c3d6205d66c980526" title="The I3C slave count has exceed the definition in I3C_MAX_DEVCNT. ">kStatus_I3C_SlaveCountExceed</a></td><td>The I3C slave count has exceed the definition in I3C_MAX_DEVCNT. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9f255c6e7329d1824bbea2a032fc390c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterProcessDAA </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2837,18 +3117,23 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
     <tr><td class="paramname">addressList</td><td>The pointer for address list which is used to do DAA. </td></tr>
-    <tr><td class="paramname">count</td><td>The address count in the address list. </td></tr>
+    <tr><td class="paramname">count</td><td>The address count in the address list. The initial setting is set back between the completion of the DAA and the return of this function. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>The transaction was started successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>The transaction was started successfully. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Either another master is currently utilizing the bus, or a non-blocking transaction is already in progress. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a73076eb00a2c6f4c3d6205d66c980526" title="The I3C slave count has exceed the definition in I3C_MAX_DEVCNT. ">kStatus_I3C_SlaveCountExceed</a></td><td>The I3C slave count has exceed the definition in I3C_MAX_DEVCNT. </td></tr>
   </table>
@@ -2857,12 +3142,46 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
+<a class="anchor" id="gabf626e02575e8921bc5da951d4e60485"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00034.html#a00325">i3c_device_info_t</a>* I3C_MasterGetDeviceListAfterDAA </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">count</td><td>The pointer to store the available device count. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the <a class="el" href="a00034.html#a00325" title="I3C device information. ">i3c_device_info_t</a> array. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ga2cc7155dd51d87ad0bf3c05cbaed378f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterTransferBlocking </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterTransferBlocking </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2890,7 +3209,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Data was received successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Data was received successfully. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a11ff36d41103f38710773355924d7104" title="The I3C slave event IBI or MR or HJ won the arbitration on a header address. ">kStatus_I3C_IBIWon</a></td><td>The I3C slave event IBI or MR or HJ won the arbitration on a header address. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25abb073c687a177100617e94d117ce51f3" title="The module has stalled too long in a frame. ">kStatus_I3C_Timeout</a></td><td>The module has stalled too long in a frame. </td></tr>
@@ -2928,7 +3247,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00032.html#a00327">i3c_master_transfer_callback_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00032.html#a00328">i3c_master_transfer_callback_t</a> *&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -2963,7 +3282,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterTransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterTransferNonBlocking </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2997,7 +3316,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>The transaction was started successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>The transaction was started successfully. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Either another master is currently utilizing the bus, or a non-blocking transaction is already in progress. </td></tr>
   </table>
   </dd>
@@ -3010,7 +3329,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterTransferGetCount </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_MasterTransferGetCount </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3044,8 +3363,8 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td></td></tr>
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a82fc7f2a425a9c3cfcf6636b8c05c06c" title="Generic status for no transfer in progress. ">kStatus_NoTransferInProgress</a></td><td>There is not a non-blocking transaction currently in progress. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td></td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a82fc7f2a425a9c3cfcf6636b8c05c06c" title="Generic status for no transfer in progress. ">kStatus_NoTransferInProgress</a></td><td>There is not a non-blocking transaction currently in progress. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3085,7 +3404,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>A transaction was successfully aborted. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00213.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>A transaction was successfully aborted. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a121e7eccc4bdafa890313b8c0b08c49d" title="The slave driver is idle. ">kStatus_I3C_Idle</a></td><td>There is not a non-blocking transaction currently in progress. </td></tr>
   </table>
   </dd>
@@ -3093,7 +3412,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a class="anchor" id="ga029e91b1f4b9ad2c90644749c3e6b2a9"></a>
+<a class="anchor" id="gaed06a0e11ac43bef086aaa47e1d42e39"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -3106,8 +3425,8 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">i3c_master_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>intHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3134,7 +3453,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void I3C_SlaveGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00035.html#a00329">i3c_slave_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00035.html#a00330">i3c_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em></td><td>)</td>
           <td></td>
         </tr>
@@ -3146,7 +3465,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the slave driver with <a class="el" href="a00032.html#ga6cbdffff9439d0b1ee27682a5c592c34" title="Initializes the I3C slave peripheral. ">I3C_SlaveInit()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00035.html#a00329" title="Structure with settings to initialize the I3C slave module. ">i3c_slave_config_t</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00035.html#a00330" title="Structure with settings to initialize the I3C slave module. ">i3c_slave_config_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3166,7 +3485,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00035.html#a00329">i3c_slave_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00035.html#a00330">i3c_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em>, </td>
         </tr>
         <tr>
@@ -3905,7 +4224,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveSend </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveSend </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3946,7 +4265,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveReceive </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveReceive </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

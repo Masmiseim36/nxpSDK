@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -115,14 +115,14 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga73d546185a94e607e30be578d0261ebd"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga73d546185a94e607e30be578d0261ebd">i2s_dma_transfer_callback_t</a> )(I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
+<tr class="memitem:ga73d546185a94e607e30be578d0261ebd"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga73d546185a94e607e30be578d0261ebd">i2s_dma_transfer_callback_t</a> )(I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
 <tr class="memdesc:ga73d546185a94e607e30be578d0261ebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function invoked from DMA API on completion.  <a href="#ga73d546185a94e607e30be578d0261ebd">More...</a><br/></td></tr>
 <tr class="separator:ga73d546185a94e607e30be578d0261ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga2b305c0405773d74678809268100037f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2b305c0405773d74678809268100037f">FSL_I2S_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
-<tr class="memdesc:ga2b305c0405773d74678809268100037f"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2S DMA driver version 2.3.1.  <a href="#ga2b305c0405773d74678809268100037f">More...</a><br/></td></tr>
+<tr class="memitem:ga2b305c0405773d74678809268100037f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2b305c0405773d74678809268100037f">FSL_I2S_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
+<tr class="memdesc:ga2b305c0405773d74678809268100037f"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2S DMA driver version 2.3.2.  <a href="#ga2b305c0405773d74678809268100037f">More...</a><br/></td></tr>
 <tr class="separator:ga2b305c0405773d74678809268100037f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -130,7 +130,7 @@ DMA API</h2></td></tr>
 <tr class="memitem:gab367abb21d0180a8327c3408efa06bd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gab367abb21d0180a8327c3408efa06bd8">I2S_TxTransferCreateHandleDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00016.html#a00298">dma_handle_t</a> *dmaHandle, <a class="el" href="a00031.html#ga73d546185a94e607e30be578d0261ebd">i2s_dma_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gab367abb21d0180a8327c3408efa06bd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes handle for transfer of audio data.  <a href="#gab367abb21d0180a8327c3408efa06bd8">More...</a><br/></td></tr>
 <tr class="separator:gab367abb21d0180a8327c3408efa06bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f0ee69bcc210dc1519a99e2d9403e67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga7f0ee69bcc210dc1519a99e2d9403e67">I2S_TxTransferSendDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
+<tr class="memitem:ga7f0ee69bcc210dc1519a99e2d9403e67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga7f0ee69bcc210dc1519a99e2d9403e67">I2S_TxTransferSendDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
 <tr class="memdesc:ga7f0ee69bcc210dc1519a99e2d9403e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins or queue sending of the given data.  <a href="#ga7f0ee69bcc210dc1519a99e2d9403e67">More...</a><br/></td></tr>
 <tr class="separator:ga7f0ee69bcc210dc1519a99e2d9403e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59beaf115701e7b97ffd517a83e6b611"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga59beaf115701e7b97ffd517a83e6b611">I2S_TransferAbortDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle)</td></tr>
@@ -139,7 +139,7 @@ DMA API</h2></td></tr>
 <tr class="memitem:gabf7c9bdafbd7e7aac4b265dace33f9e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gabf7c9bdafbd7e7aac4b265dace33f9e6">I2S_RxTransferCreateHandleDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00016.html#a00298">dma_handle_t</a> *dmaHandle, <a class="el" href="a00031.html#ga73d546185a94e607e30be578d0261ebd">i2s_dma_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gabf7c9bdafbd7e7aac4b265dace33f9e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes handle for reception of audio data.  <a href="#gabf7c9bdafbd7e7aac4b265dace33f9e6">More...</a><br/></td></tr>
 <tr class="separator:gabf7c9bdafbd7e7aac4b265dace33f9e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae8c0cacf997b6d4642c6c4e26dccf5aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gae8c0cacf997b6d4642c6c4e26dccf5aa">I2S_RxTransferReceiveDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
+<tr class="memitem:gae8c0cacf997b6d4642c6c4e26dccf5aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gae8c0cacf997b6d4642c6c4e26dccf5aa">I2S_RxTransferReceiveDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
 <tr class="memdesc:gae8c0cacf997b6d4642c6c4e26dccf5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins or queue reception of data into given buffer.  <a href="#gae8c0cacf997b6d4642c6c4e26dccf5aa">More...</a><br/></td></tr>
 <tr class="separator:gae8c0cacf997b6d4642c6c4e26dccf5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac9f82a576dc3a2d10df9cade5ce57a42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gac9f82a576dc3a2d10df9cade5ce57a42">I2S_DMACallback</a> (<a class="el" href="a00016.html#a00298">dma_handle_t</a> *handle, void *userData, bool transferDone, uint32_t tcds)</td></tr>
@@ -148,10 +148,10 @@ DMA API</h2></td></tr>
 <tr class="memitem:gaf1fea3431c968b6a3c73217a99aaaaae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gaf1fea3431c968b6a3c73217a99aaaaae">I2S_TransferInstallLoopDMADescriptorMemory</a> (i2s_dma_handle_t *handle, void *dmaDescriptorAddr, size_t dmaDescriptorNum)</td></tr>
 <tr class="memdesc:gaf1fea3431c968b6a3c73217a99aaaaae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Install DMA descriptor memory for loop transfer only.  <a href="#gaf1fea3431c968b6a3c73217a99aaaaae">More...</a><br/></td></tr>
 <tr class="separator:gaf1fea3431c968b6a3c73217a99aaaaae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f0cb7b25ee1bab1f52b586bec674132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6f0cb7b25ee1bab1f52b586bec674132">I2S_TransferSendLoopDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
+<tr class="memitem:ga6f0cb7b25ee1bab1f52b586bec674132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6f0cb7b25ee1bab1f52b586bec674132">I2S_TransferSendLoopDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
 <tr class="memdesc:ga6f0cb7b25ee1bab1f52b586bec674132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send link transfer data using DMA.  <a href="#ga6f0cb7b25ee1bab1f52b586bec674132">More...</a><br/></td></tr>
 <tr class="separator:ga6f0cb7b25ee1bab1f52b586bec674132"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad46745926f6536c374e7c6610a5ccd57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gad46745926f6536c374e7c6610a5ccd57">I2S_TransferReceiveLoopDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
+<tr class="memitem:gad46745926f6536c374e7c6610a5ccd57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gad46745926f6536c374e7c6610a5ccd57">I2S_TransferReceiveLoopDMA</a> (I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
 <tr class="memdesc:gad46745926f6536c374e7c6610a5ccd57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive link transfer data using DMA.  <a href="#gad46745926f6536c374e7c6610a5ccd57">More...</a><br/></td></tr>
 <tr class="separator:gad46745926f6536c374e7c6610a5ccd57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -218,7 +218,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_I2S_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
+          <td class="memname">#define FSL_I2S_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -231,7 +231,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* i2s_dma_transfer_callback_t)(I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td>
+          <td class="memname">typedef void(* i2s_dma_transfer_callback_t)(I2S_Type *base, i2s_dma_handle_t *handle, <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -307,7 +307,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TxTransferSendDMA </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TxTransferSendDMA </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -441,7 +441,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_RxTransferReceiveDMA </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_RxTransferReceiveDMA </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -578,7 +578,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferSendLoopDMA </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferSendLoopDMA </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -634,7 +634,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferReceiveLoopDMA </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferReceiveLoopDMA </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

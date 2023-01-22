@@ -2,7 +2,7 @@ include_guard()
 message("middleware_eiq_tensorflow_lite_micro component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/c/common.c
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/c/common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/error_reporter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/flatbuffer_conversions.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/op_resolver.cpp
@@ -15,25 +15,27 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/fake_micro_context.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/flatbuffer_utils.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/memory_helpers.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_allocation_info.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_allocator.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_context.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_error_reporter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_graph.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_interpreter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_log.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_profiler.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_resource_variable.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_string.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_time.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_utils.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/recording_micro_allocator.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/recording_simple_memory_allocator.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/simple_memory_allocator.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/activations_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/add_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/add_n.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/arg_min_max.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/assign_variable.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/broadcast_args.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/broadcast_to.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/call_once.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cast.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/ceil.cpp
@@ -48,9 +50,9 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/dequantize.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/dequantize_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/detection_postprocess.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/div.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/elementwise.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/elu.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/ethosu.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/exp.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/expand_dims.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/fill.cpp
@@ -71,21 +73,21 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/logical_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/logistic_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/maximum_minimum.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/micro_tensor_utils.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/mirror_pad.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/mul_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/neg.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/pack.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/pad.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/pooling_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/prelu.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/prelu_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/quantize_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/read_variable.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reduce.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reshape.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reduce_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/resize_bilinear.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/resize_nearest_neighbor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/round.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/select.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/shape.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/slice.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/softmax_common.cpp
@@ -93,16 +95,20 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/space_to_depth.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/split.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/split_v.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/squared_difference.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/squeeze.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/strided_slice.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/sub.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/sub_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/svdf_common.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/tanh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/transpose.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/unpack.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/var_handle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/while.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/zeros_like.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/memory_planner/greedy_memory_planner.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/memory_planner/linear_memory_planner.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cpp
@@ -110,7 +116,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/.
 )
 

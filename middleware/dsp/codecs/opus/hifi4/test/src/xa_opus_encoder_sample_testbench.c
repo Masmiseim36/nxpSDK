@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Cadence Design Systems, Inc.
+ * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -20,7 +20,6 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 
 /***********************************************************************
 Copyright (c) 2006-2011, Skype Limited. All rights reserved.
@@ -115,8 +114,8 @@ int profile_frame = 0;
 #include <xtensa/hal.h>
 #endif
 
-#define XA_MAX_CMD_LINE_LENGTH 300
-#define XA_MAX_ARGS 20
+#define XA_MAX_CMD_LINE_LENGTH 1024
+#define XA_MAX_ARGS 50
 #define PARAMFILE "paramfilesimple_encode.txt"
 
 #define OPUS_RAND(seed)                   ((WORD64)(((WORD64)907633515) +  (WORD32)(seed * 196314165)))
@@ -137,7 +136,7 @@ extern  xa_error_info_struct xa_testbench_error_info;
 #define MAX_LBRR_DELAY              2
 #define FRAME_LENGTH_MS             20
 #define MAX_API_FS_KHZ              48
-#define MAX_IO_FILE_NAME_SIZE      150 
+#define MAX_IO_FILE_NAME_SIZE      1024 
 
 
 static const int silk8_test[][4] = {
@@ -316,7 +315,7 @@ void get_new_random_framesize(int *frame_size, int targetRate_bps, int sweep_bps
         case 4: *newsize = enc_control->API_sampleRate/25;   break;
         case 5: *newsize = 3*enc_control->API_sampleRate/50; break;
         }
-        while (*newsize < enc_control->API_sampleRate/25 && targetRate_bps-fabs(sweep_bps) <= 3*12*enc_control->API_sampleRate/(*newsize))
+        while (*newsize < enc_control->API_sampleRate/25 && targetRate_bps-abs(sweep_bps) <= 3*12*enc_control->API_sampleRate/(*newsize))
             *newsize *= 2;
         if (*newsize < enc_control->API_sampleRate/100 && *frame_size >= enc_control->API_sampleRate/100)
         {
@@ -352,7 +351,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     WORD16      counter = 0;
     WORD32      args =0, totPackets =0;
     WORD16      out_bytes=0;
-    char       speechInFileName[ MAX_IO_FILE_NAME_SIZE ], bitOutFileName[ MAX_IO_FILE_NAME_SIZE ];
+    char       speechInFileName[ MAX_IO_FILE_NAME_SIZE ] = "NULL", bitOutFileName[ MAX_IO_FILE_NAME_SIZE ] = "NULL";
     FILE       *bitOutFile=NULL, *speechInFile=NULL;
 
 #ifdef _SYSTEM_IS_BIG_ENDIAN
@@ -407,6 +406,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 #endif
 
     WORD32 frame_size;
+	float frame_size_ms;
     WORD32 targetRate_bps;
 
 
@@ -428,7 +428,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
             xa_opus_get_lib_name_string(),
             xa_opus_get_lib_version_string());
     fprintf(stderr, "API version: %s\n", xa_opus_get_lib_api_version_string());
-    fprintf(stderr, "Tensilica, Inc. http://www.tensilica.com\n");
+    fprintf(stderr, "Cadence Design Systems, Inc. http://www.cadence.com\n");
     fprintf(stderr, "\n");
 
     if( argc < 3 ) 
@@ -449,12 +449,11 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     /* Default settings */
     frame_size = 0;
     enc_control.max_payload = XA_OPUS_MAX_BYTES_ENCODED_PACKET - 4;
-    /* Same value as 1.1.3 reference testbench, library default value is 9 in 1.1.3 reference */
+    /* Same value as 1.3.1 reference testbench, library default value is 9 in 1.1.3 reference */
     enc_control.complexity = 10;
 
     /* get arguments */
     args = 1;
-
     while( args < argc ) 
     {
         if( strncmp( argv[ args ], "-app:",5 ) == 0 )
@@ -474,11 +473,23 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         else if( strncmp( argv[ args ], "-fs:",4 ) == 0 )
         {
             sscanf( argv[ args ] + 4, "%d", &enc_control.API_sampleRate );
-            args++;
+			if (enc_control.API_sampleRate != 8000  && enc_control.API_sampleRate != 12000 &&
+			enc_control.API_sampleRate != 16000 && enc_control.API_sampleRate != 24000 &&
+			enc_control.API_sampleRate != 48000)
+			{
+				fprintf(stderr, "Sampling frequency not supported: %d\n", enc_control.API_sampleRate);
+                exit(0);
+			}
+			args++;
         } 
         else if( strncmp( argv[ args ], "-numch:",7 ) == 0 )
         {
             sscanf( argv[ args ] + 7, "%d", &enc_control.API_numChannels );
+			if (enc_control.API_numChannels != 1  && enc_control.API_numChannels != 2)
+			{
+				fprintf(stderr, "Number of channel not supported: %d\n", enc_control.API_numChannels);
+                exit(0);
+			}
             args++;
         }
         else if( strncmp( argv[ args ], "-bps:",5 ) == 0 )
@@ -505,11 +516,21 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         else if( strncmp( argv[ args ], "-cbr:",5) == 0 ) 
         {
             sscanf( argv[ args ] + 5, "%d", &enc_control.cbr );
+			if (enc_control.cbr < 0  || enc_control.cbr > 1)
+			{
+				fprintf(stderr, "Constant Bitrate Setting not supported: %d\n", enc_control.cbr);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-cvbr:", 6 ) == 0 ) 
         {
             sscanf( argv[ args ] + 6, "%d", &enc_control.cvbr );
+			if (enc_control.cvbr < 0  || enc_control.cvbr > 1)
+			{
+				fprintf(stderr, "Constrained Variable Bitrate Setting not supported: %d\n", enc_control.cvbr);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-bandwidth:",11) == 0 ) 
@@ -534,6 +555,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         } 
         else if( strncmp( argv[ args ], "-framesize:", 11 ) == 0 ) 
         {
+            sscanf( argv[ args ] + 11, "%f", &frame_size_ms );
             if (strcmp(argv[ args ] + 11, "2.5")==0)
                 frame_size = enc_control.API_sampleRate/400;
             else if (strcmp(argv[ args ] + 11, "5")==0)
@@ -563,40 +585,79 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         else if( strncmp( argv[ args ], "-max_payload:", 13 ) == 0 ) 
         {
             sscanf( argv[ args ] + 13, "%d", &enc_control.max_payload );
+			if (enc_control.max_payload < 0  || enc_control.max_payload > XA_OPUS_MAX_BYTES_ENCODED_PACKET-4)
+			{
+				fprintf(stderr, "Maximum Payload Size not supported: %d, Considered Default: 1500\n", enc_control.max_payload);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-complexity:", 12 ) == 0 ) 
         {
             sscanf( argv[ args ] + 12, "%d", &enc_control.complexity );
+			if (enc_control.complexity < 0  || enc_control.complexity > 10)
+			{
+				fprintf(stderr, "Complexity Setting not supported: %d\n", enc_control.complexity);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-inbandfec:", 11 ) == 0 ) 
         {
             sscanf( argv[ args ] + 11, "%d", &enc_control.SILK_InBandFEC_enabled );
+			if (enc_control.SILK_InBandFEC_enabled != 1  && enc_control.SILK_InBandFEC_enabled != 0)
+			{
+				fprintf(stderr, "SILK inband FEC Setting not supported: %d\n", enc_control.SILK_InBandFEC_enabled);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-forcemono:", 11 ) == 0 ) 
         {
             sscanf( argv[ args ] + 11, "%d", &enc_control.force_numChannels);
+			if (enc_control.force_numChannels != 1  && enc_control.force_numChannels != 0)
+			{
+				fprintf(stderr, "Force Mono Encoding Setting not supported: %d\n", enc_control.force_numChannels);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-dtx:", 5) == 0 ) 
         {
             sscanf( argv[ args ] + 5, "%d", &enc_control.SILK_DTX_enabled);
+			if (enc_control.SILK_DTX_enabled != 1  && enc_control.SILK_DTX_enabled != 0)
+			{
+				fprintf(stderr, "SILK DTX Setting not supported: %d\n", enc_control.SILK_DTX_enabled);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-loss:",6 ) == 0 ) 
         {
             sscanf( argv[ args ] + 6, "%d", &enc_control.packetLossPercentage );
+			if (enc_control.packetLossPercentage < 0  || enc_control.packetLossPercentage > 100)
+			{
+				fprintf(stderr, "Uplink Loss Estimate Percentage not supported: %d\n", enc_control.packetLossPercentage);
+                exit(0);
+			}
             args++;
         } 
         else if( strncmp( argv[ args ], "-ifile:",7 ) == 0 ) 
         {
+			if((strlen(argv[ args ])-7) > 1024) 
+   			{
+        		printf( "Error: Input file name length too large, max allowed length is 1024\n");
+        		exit( 0 );
+    		}
             sscanf( argv[ args ] + 7, "%s", speechInFileName );
             args++;
         } 
         else if( strncmp( argv[ args ], "-ofile:",7 ) == 0 ) 
         {
+		    if((strlen(argv[ args ])-7) > 1024) 
+   			{
+        		printf( "Error: Output file name length too large, max allowed length is 1024\n");
+        		exit( 0 );
+    		}
             sscanf( argv[ args ] + 7, "%s", bitOutFileName );
             args++;
         } 
@@ -729,10 +790,12 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         }
     }
 
-
     /* Set frame size if it is not set through command line */
     if (frame_size == 0)
+	{
         frame_size = enc_control.API_sampleRate / 50;
+		frame_size_ms = 20;
+	}
      
     if(enc_control.force_mode == XA_OPUS_MODE_CELT_ONLY)
     {
@@ -752,6 +815,12 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 
     targetRate_bps = enc_control.bitRate;
 
+		if(enc_control.API_sampleRate < 1)
+		{
+			printf("Error: Invalid value of sampling rate : %d\n", enc_control.API_sampleRate);
+			printf("Supported sampling rates are 8000, 12000, 16000, 24000 and 48000.\n");
+			exit(0);
+		}	
     /* Print options */
     printf("******************* Opus Encoder ****************\n");
     printf("******************* Compiled for %d bit cpu ********* \n", (int)sizeof(void*) * 8 );
@@ -764,7 +833,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     printf( "Enable constant bitrate:                       %d\n",     enc_control.cbr );
     printf( "Enable constrained variable bitrate:           %d\n",     enc_control.cvbr );
     printf( "Audio bandwidth:                               %d\n",     enc_control.bandwidth );
-    printf( "Framesize in ms:                               %d\n",     frame_size );
+    printf( "Framesize in ms:                               %1.1f\n",  frame_size_ms );
     printf( "Maximum payload size in bytes:                 %d\n",     enc_control.max_payload );
     printf( "Complexity:                                    %d\n",     enc_control.complexity );
     printf( "Enable SILK inband FEC:                        %d\n",     enc_control.SILK_InBandFEC_enabled );
@@ -868,23 +937,27 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 
     /*Output buffer */
 #ifndef OUTPUT_PING_PONG
-    enc_speech = (pUWORD8)malloc(enc_speech_size+12);
-    if(enc_speech == NULL) 
+    enc_speech = (pUWORD8)malloc(enc_speech_size + 12);
+    if (enc_speech == NULL)
     {
         _XA_HANDLE_ERROR(p_proc_testbench_err_info, "API output alloc", XA_TESTBENCH_FATAL_MEM_ALLOC_FAILED);
     }
 #else
-    enc_speech_ping = (pUWORD8)malloc(enc_speech_size+12);
-    if(enc_speech_ping == NULL) 
+    enc_speech_ping = (pUWORD8)malloc(enc_speech_size + 12);
+    if (enc_speech_ping == NULL)
     {
         _XA_HANDLE_ERROR(p_proc_testbench_err_info, "API output alloc", XA_TESTBENCH_FATAL_MEM_ALLOC_FAILED);
     }
-    enc_speech_pong = (pUWORD8)malloc(enc_speech_size+12);
-    if(enc_speech_pong == NULL) 
+    enc_speech_pong = (pUWORD8)malloc(enc_speech_size + 12);
+    if (enc_speech_pong == NULL)
     {
         _XA_HANDLE_ERROR(p_proc_testbench_err_info, "API output alloc", XA_TESTBENCH_FATAL_MEM_ALLOC_FAILED);
     }
     enc_speech = enc_speech_ping;
+#endif
+
+#ifndef FERRET_WARNINGS
+    memset(enc_speech, 0x7f, enc_speech_size + 12);
 #endif
 
       /**********************************************************************
@@ -1076,14 +1149,14 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     }
 #endif
 
-#ifdef SCRATCH_ANALYSIS
-    fprintf(stdout, "Max scratch usage is %d\n", scratch_max_size);
-#endif
-
 #ifdef __PROFILE__
     fprintf(stdout, "Peak MCPS = %f\n", mcps_peak);
     fprintf(stdout, "Peak frame = %d\n", peak_frame);
     fprintf(stdout, "Average MCPS = %f\n", mcps_ave);
+#endif
+
+#ifdef SCRATCH_ANALYSIS
+    fprintf(stdout, "Max scratch usage = %d\n", scratch_max_size);
 #endif
 
 
@@ -1277,3 +1350,4 @@ int main (int   argc, char *argv[])
         return err_code;
     }
 }
+

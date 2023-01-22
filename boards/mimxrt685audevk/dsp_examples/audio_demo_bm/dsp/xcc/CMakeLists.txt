@@ -233,13 +233,6 @@ add_executable(dsp_audio_demo_bm_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_version.h"
 )
 
 

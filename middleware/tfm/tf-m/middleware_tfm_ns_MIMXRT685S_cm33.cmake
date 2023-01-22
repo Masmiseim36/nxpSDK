@@ -7,7 +7,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/platform/include
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common
@@ -15,6 +15,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/Device/Config
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/Device/Include
     ${CMAKE_CURRENT_LIST_DIR}/interface/include
+    ${CMAKE_CURRENT_LIST_DIR}/interface/include/crypto_keys
     ${CMAKE_CURRENT_LIST_DIR}/interface/include/psa
     ${CMAKE_CURRENT_LIST_DIR}/bl2/include
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/spm/include

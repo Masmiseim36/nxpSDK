@@ -111,9 +111,11 @@
 #define SOCKETS_DEBUG    LWIP_DBG_OFF // | LWIP_DBG_MASK_LEVEL
 
 #define IP_DEBUG         LWIP_DBG_OFF
+
 #define IP6_DEBUG        LWIP_DBG_OFF
 #define ICMP6_DEBUG      LWIP_DBG_OFF
 #define DHCP6_DEBUG      LWIP_DBG_OFF
+
 #define ETHARP_DEBUG     LWIP_DBG_OFF
 #define NETIF_DEBUG      LWIP_DBG_OFF
 #define PBUF_DEBUG       LWIP_DBG_OFF

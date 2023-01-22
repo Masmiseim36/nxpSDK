@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,7 +13,7 @@
 
 #include <xtensa/xos.h>
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 #include "xa_error_standards.h"
 #include "xa_src_pp_api.h"
 #if XA_MP3_DECODER
@@ -55,8 +55,6 @@
  */
 #define CLIENT_PROXY_FRAME_SIZE_US (10000)
 #define OUTPUT_SAMPLE_RATE         (48000)
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
 
 static char dec_stack[STACK_SIZE];
 static char buffer_stack[STACK_SIZE];
@@ -445,7 +443,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
     {
         xaf_comp_config_default_init(&comp_config);
 
-        comp_config.comp_id            = "audio-fx/src-pp";
+        comp_config.comp_id            = "post-proc/src-pp";
         comp_config.num_input_buffers  = 0;
         comp_config.num_output_buffers = 0;
         comp_config.pp_inbuf           = NULL;

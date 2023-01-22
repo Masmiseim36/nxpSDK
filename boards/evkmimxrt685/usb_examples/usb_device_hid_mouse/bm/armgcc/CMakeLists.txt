@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(dev_hid_mouse_bm)
 
+set(MCUX_BUILD_TYPES release flash_release debug flash_debug)
+
 set(MCUX_SDK_PROJECT_NAME dev_hid_mouse_bm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -43,9 +49,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/usb/dcd/usb_hsdcd.c"
-"${ProjDirPath}/../../../../../../middleware/usb/dcd/usb_hsdcd.h"
-"${ProjDirPath}/../../../../../../middleware/usb/dcd/usb_charger_detect.h"
+"${SdkRootDirPath}/middleware/usb/dcd/usb_hsdcd.c"
+"${SdkRootDirPath}/middleware/usb/dcd/usb_hsdcd.h"
+"${SdkRootDirPath}/middleware/usb/dcd/usb_charger_detect.h"
 "${ProjDirPath}/../usb_device_ch9.c"
 "${ProjDirPath}/../usb_device_ch9.h"
 "${ProjDirPath}/../usb_device_class.c"
@@ -54,23 +60,23 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usb_device_hid.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../../middleware/usb/dcd
+    ${SdkRootDirPath}/middleware/usb/dcd
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../middleware
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
+    ${SdkRootDirPath}/devices/MIMXRT685S
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/boards/evkmimxrt685/flash_config
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -127,15 +133,13 @@ include(middleware_usb_device_common_header_MIMXRT685S_cm33)
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

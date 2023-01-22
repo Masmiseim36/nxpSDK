@@ -14,7 +14,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/ipc/secure
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/test_services/tfm_ipc_service/psa_manifest
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/test_services/tfm_ipc_service

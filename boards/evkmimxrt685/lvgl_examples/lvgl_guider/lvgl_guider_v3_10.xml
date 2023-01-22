@@ -134,6 +134,7 @@
       <include_path path="generated/guider_customer_fonts" project_relative_path="generated/guider_customer_fonts" type="c_include"/>
       <include_path path="generated/guider_fonts" project_relative_path="generated/guider_fonts" type="c_include"/>
       <include_path path=".." project_relative_path="evkmimxrt685/lvgl_examples/lvgl_guider" type="c_include"/>
+      <include_path path=".." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -203,6 +204,14 @@
     </source>
     <source path="custom" project_relative_path="custom" type="c_include">
       <files mask="custom.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="c_include">
+      <files mask="lvgl_freertos.h"/>
+      <files mask="lvgl_demo_utils.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="src">
+      <files mask="lvgl_freertos.c"/>
+      <files mask="lvgl_demo_utils.c"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>

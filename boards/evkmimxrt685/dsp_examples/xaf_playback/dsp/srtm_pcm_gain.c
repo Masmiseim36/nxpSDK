@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,7 +12,7 @@
 
 #include <xtensa/xos.h>
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 
 #include "audio/xa-pcm-gain-api.h"
 
@@ -28,9 +28,6 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (256 * 256)
 #define AUDIO_COMP_BUF_SIZE  (128 * 1024)
-
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
 
 // component parameters
 static unsigned int SRTM_PCM_GAIN_SAMPLE_WIDTH = 16;

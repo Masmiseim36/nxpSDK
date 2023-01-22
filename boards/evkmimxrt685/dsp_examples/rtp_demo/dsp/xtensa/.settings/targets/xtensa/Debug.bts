@@ -21,12 +21,12 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/include/sbc_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/include/sbc_enc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/include/vorbis_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/gpio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/audio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/lib</ListEntry>
@@ -43,6 +43,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
@@ -61,6 +62,8 @@
               <ListEntry key="XA_SRC_PP_FX" value="1"/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
+              <ListEntry key="XF_CORE_ID" value="0"/>
+              <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
               <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
@@ -112,29 +115,6 @@
       </CompilerOptions>
       <AssemblerOptions/>
       <LinkerOptions>
-        <StringListMapOptions>
-          <StringListMapEntry>
-            <key>LinkerAdditionalOptions</key>
-            <value inheritance="append">
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a&#13;
--g&#13;
-</ListEntry>
-            </value>
-          </StringListMapEntry>
-          <StringListMapEntry>
-            <key>Libraries</key>
-            <value inheritance="prepend" flag="-l">
-              <ListEntry>xos</ListEntry>
-            </value>
-          </StringListMapEntry>
-        </StringListMapOptions>
         <BooleanMapOptions>
           <BooleanMapEntry>
             <key>CreateMinsize</key>
@@ -146,6 +126,33 @@ ${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/x
           </BooleanMapEntry>
         </BooleanMapOptions>
         <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT685S/xtensa/gdbio"/>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Libraries</key>
+            <value inheritance="prepend" flag="-l">
+              <ListEntry>xos</ListEntry>
+            </value>
+          </StringListMapEntry>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-g&#13;
+-Wl,--start-group&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a&#13;
+-Wl,--end-group&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
       </LinkerOptions>
     </BaseSettings>
     <OverriddenSettings/>

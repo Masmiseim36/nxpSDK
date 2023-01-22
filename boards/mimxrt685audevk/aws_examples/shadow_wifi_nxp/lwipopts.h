@@ -44,7 +44,7 @@
 #define MAX_SOCKETS_UDP           2
 #define TCP_SND_BUF_COUNT         2
 #define TCPIP_STACK_TX_HEAP_SIZE  0
-#define LWIP_COMPAT_SOCKETS       2
+//#define LWIP_COMPAT_SOCKETS       2
 
 /**
  * Loopback demo related options.
@@ -412,7 +412,13 @@
  * SO_RCVTIMEO processing.
  */
 #define LWIP_SO_RCVTIMEO 1
-#define LWIP_SO_SNDTIMEO 1
+
+/**
+ * LWIP_SO_SNDRCVTIMEO_NONSTANDARD==1: SO_RCVTIMEO/SO_SNDTIMEO take an int
+ * (milliseconds, much like winsock does) instead of a struct timeval (default).
+ */
+#define LWIP_SO_SNDRCVTIMEO_NONSTANDARD 1
+
 /**
  * TCP_LISTEN_BACKLOG==1: Handle backlog connections.
  */

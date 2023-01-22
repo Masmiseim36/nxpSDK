@@ -10,6 +10,7 @@
               <ListEntry>${xt_project_loc}/..</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
@@ -23,6 +24,8 @@
             <value flag="-D">
               <ListEntry key="NDEBUG" value=""/>
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
+              <ListEntry key="XF_CORE_ID" value="0"/>
+              <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>

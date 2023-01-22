@@ -33,7 +33,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXF_DEBUG=1")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_DMIC_NUM=3")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDMIC_BOARD_CONNECTED=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_PCM_GAIN=1")
 
@@ -43,11 +43,17 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_CAPTURER=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_VIT_PRE_PROC=1")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_VOICE_SEEKER=1")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_DISABLE_EVENT=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXOS_CLOCK_FREQ=594000000")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXF_CORE_ID=0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXF_CFG_CORES_NUM=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEVICE_ID=VIT_IMXRT600")
 
@@ -97,7 +103,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_DMIC_NUM=3")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDMIC_BOARD_CONNECTED=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_PCM_GAIN=1")
 
@@ -107,11 +113,17 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_CAPTURER=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_VIT_PRE_PROC=1")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_VOICE_SEEKER=1")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_DISABLE_EVENT=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXOS_CLOCK_FREQ=594000000")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXF_CORE_ID=0")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXF_CFG_CORES_NUM=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEVICE_ID=VIT_IMXRT600")
 
@@ -239,24 +251,6 @@ include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/include/src_pp)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/g711/hifi4/include/g711_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/include/mp3_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/opus/hifi4/include/opus_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/opus/hifi4/include/ogg_lib)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/include/sbc_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/include/sbc_enc)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/include/vorbis_dec)
-
 include_directories(${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/Inc)
@@ -271,7 +265,7 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilitie
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm)
+include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include)
 
@@ -305,6 +299,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framew
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc)
 
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker)
+
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities)
@@ -313,6 +309,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/EAP/Example_Appl
 
 include_directories(${ProjDirPath}/../../../../../../middleware/EAP/EAP_Includes)
 
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include)
+
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private)
@@ -320,6 +318,10 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hi
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public)
 
 IF(${CMAKE_BUILD_TYPE} STREQUAL debug)
 add_executable(dsp_xaf_record_hifi4.elf 
@@ -413,8 +415,10 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/rbtree.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-audio-codec.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-base.c"
@@ -424,9 +428,11 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-renderer.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-core.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-io.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipc-if.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-isr.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem-ipc.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c"
@@ -453,6 +459,8 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_ipc.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_runtime.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_types.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-ipc-if.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem-ipc.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-shmem.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h"
@@ -500,19 +508,26 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-utils-test.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-aec22-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-aec23-api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-frontend-api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-inference-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-decoder-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-encoder-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-gain-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-split-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-person-detect-inference-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_amr_wb_dec_definitions.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/xa-gain-factor-event.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/xa-factory.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/aac_dec/xa-aac-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mixer/xa-mixer.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_dec/xa-mp3-decoder.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus/xa-opus-encoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc/xa-mp3-encoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/xa-opus-decoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc/xa-opus-encoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/pcm_gain/xa-pcm-gain.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/src-pp/xa-src-pp.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/vorbis_dec/xa-vorbis-decoder.c"
@@ -522,7 +537,8 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus/xa-opus-decoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo/xa-pcm-stereo.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c"
@@ -543,6 +559,10 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ToneGenerator.h"
 "${ProjDirPath}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer.h"
 "${ProjDirPath}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspCycleCounter.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspDeviceConfig.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspStatusCodes.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/libVoiceSeekerLight.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/feature.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/math_stdlib.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/version.c"
@@ -571,14 +591,13 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_version.h"
 "${ProjDirPath}/../../../../../../middleware/EAP/EAP_Includes/EAP16.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspPlatforms.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspTypes.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c"
 "${ProjDirPath}/../srtm_capturer_pcm_gain_renderer.c"
 "${ProjDirPath}/../srtm_utils.c"
 "${ProjDirPath}/../srtm_utils.h"
@@ -677,8 +696,10 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/rbtree.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-audio-codec.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-base.c"
@@ -688,9 +709,11 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-renderer.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-core.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-io.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipc-if.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-isr.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem-ipc.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c"
@@ -717,6 +740,8 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_ipc.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_runtime.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_types.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-ipc-if.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem-ipc.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-mem.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-shmem.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h"
@@ -764,19 +789,26 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-utils-test.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-aec22-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-aec23-api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-frontend-api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-microspeech-inference-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-decoder-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-encoder-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-gain-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-split-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-person-detect-inference-api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_amr_wb_dec_definitions.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/xa-gain-factor-event.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/xa-factory.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/aac_dec/xa-aac-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mixer/xa-mixer.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_dec/xa-mp3-decoder.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus/xa-opus-encoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_enc/xa-mp3-encoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/xa-opus-decoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_dec/opus_header.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus_enc/xa-opus-encoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/pcm_gain/xa-pcm-gain.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/src-pp/xa-src-pp.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/vorbis_dec/xa-vorbis-decoder.c"
@@ -786,7 +818,8 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus/xa-opus-decoder.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo/xa-pcm-stereo.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c"
@@ -807,6 +840,10 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ToneGenerator.h"
 "${ProjDirPath}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer.h"
 "${ProjDirPath}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspCycleCounter.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspDeviceConfig.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspStatusCodes.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/libVoiceSeekerLight.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/feature.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/math_stdlib.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/version.c"
@@ -835,14 +872,13 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_version.h"
 "${ProjDirPath}/../../../../../../middleware/EAP/EAP_Includes/EAP16.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspPlatforms.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspTypes.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c"
 "${ProjDirPath}/../srtm_capturer_pcm_gain_renderer.c"
 "${ProjDirPath}/../srtm_utils.c"
 "${ProjDirPath}/../srtm_utils.h"
@@ -864,31 +900,7 @@ target_link_libraries(dsp_xaf_record_hifi4.elf optimized xtutil)
 target_link_libraries(dsp_xaf_record_hifi4.elf optimized m)
 
 
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_codec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v05_06_00.a)
+target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v04_07_05.a)
 
 
 target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a)
@@ -897,40 +909,22 @@ target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../
 target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT600.a)
 
 
+target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/lib/libvoiceseeker_no_aec.a)
+
+
 target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/libnaturedsp.a)
 
 
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_codec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a)
-
-
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v05_06_00.a)
+target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v04_07_05.a)
 
 
 target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a)
 
 
 target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT600.a)
+
+
+target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/lib/libvoiceseeker_no_aec.a)
 
 
 target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/libnaturedsp.a)

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FLEXCOMM: FLEXCOMM Driver</title>
+<title>MCUXpresso SDK API Reference Manual: FLEXCOMM Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,19 +99,213 @@ $(document).ready(function(){initNavTree('a00216.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">FLEXCOMM: FLEXCOMM Driver</div>  </div>
+<div class="title">FLEXCOMM Driver<div class="ingroups"><a class="el" href="a00215.html">FLEXCOMM: FLEXCOMM Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a generic driver and multiple protocol-specific FLEXCOMM drivers for the FLEXCOMM module of MCUXpresso SDK devices. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00217"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html">FLEXCOMM Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gacc9fdd92a043129607c887924fb5091e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#gacc9fdd92a043129607c887924fb5091e">flexcomm_irq_handler_t</a> )(void *base, void *handle)</td></tr>
+<tr class="memdesc:gacc9fdd92a043129607c887924fb5091e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for interrupt handler.  <a href="#gacc9fdd92a043129607c887924fb5091e">More...</a><br/></td></tr>
+<tr class="separator:gacc9fdd92a043129607c887924fb5091e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga41eebbb4c49103c4d42f91c8f542c2c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#ga41eebbb4c49103c4d42f91c8f542c2c7">FLEXCOMM_PERIPH_T</a> { <br/>
+&#160;&#160;<a class="el" href="a00216.html#gga41eebbb4c49103c4d42f91c8f542c2c7a5267e78e8168917f02771e148263ae39">FLEXCOMM_PERIPH_NONE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00216.html#gga41eebbb4c49103c4d42f91c8f542c2c7a521e81a10b97ae653b96bffa0599ddb7">FLEXCOMM_PERIPH_USART</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00216.html#gga41eebbb4c49103c4d42f91c8f542c2c7a2b729c2b97777dfed1160f0c575405ae">FLEXCOMM_PERIPH_SPI</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00216.html#gga41eebbb4c49103c4d42f91c8f542c2c7a40c0d12edb101f8a14391ff9ae913d5a">FLEXCOMM_PERIPH_I2C</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00216.html#gga41eebbb4c49103c4d42f91c8f542c2c7a76a11c2952b8cd493e9b4cbab0caf26f">FLEXCOMM_PERIPH_I2S_TX</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00216.html#gga41eebbb4c49103c4d42f91c8f542c2c7a0992c9fae611def028d88282a684337f">FLEXCOMM_PERIPH_I2S_RX</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga41eebbb4c49103c4d42f91c8f542c2c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXCOMM peripheral modes.  <a href="a00216.html#ga41eebbb4c49103c4d42f91c8f542c2c7">More...</a><br/></td></tr>
+<tr class="separator:ga41eebbb4c49103c4d42f91c8f542c2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga59338c42d2715c76e95c4dc2c1190f08"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#ga59338c42d2715c76e95c4dc2c1190f08">FLEXCOMM_GetInstance</a> (void *base)</td></tr>
+<tr class="memdesc:ga59338c42d2715c76e95c4dc2c1190f08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns instance number for FLEXCOMM module with given base address.  <a href="#ga59338c42d2715c76e95c4dc2c1190f08">More...</a><br/></td></tr>
+<tr class="separator:ga59338c42d2715c76e95c4dc2c1190f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff39b352ed7517521dfcece68ba34327"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#gaff39b352ed7517521dfcece68ba34327">FLEXCOMM_Init</a> (void *base, <a class="el" href="a00216.html#ga41eebbb4c49103c4d42f91c8f542c2c7">FLEXCOMM_PERIPH_T</a> periph)</td></tr>
+<tr class="memdesc:gaff39b352ed7517521dfcece68ba34327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes FLEXCOMM and selects peripheral mode according to the second parameter.  <a href="#gaff39b352ed7517521dfcece68ba34327">More...</a><br/></td></tr>
+<tr class="separator:gaff39b352ed7517521dfcece68ba34327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedf64691b871a2b0ea6a68fab284376a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#gaedf64691b871a2b0ea6a68fab284376a">FLEXCOMM_SetIRQHandler</a> (void *base, <a class="el" href="a00216.html#gacc9fdd92a043129607c887924fb5091e">flexcomm_irq_handler_t</a> handler, void *flexcommHandle)</td></tr>
+<tr class="memdesc:gaedf64691b871a2b0ea6a68fab284376a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets IRQ handler for given FLEXCOMM module.  <a href="#gaedf64691b871a2b0ea6a68fab284376a">More...</a><br/></td></tr>
+<tr class="separator:gaedf64691b871a2b0ea6a68fab284376a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gaabebf81a3461faf8346ce8c8365d09e8"><td class="memItemLeft" align="right" valign="top">IRQn_Type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#gaabebf81a3461faf8346ce8c8365d09e8">kFlexcommIrqs</a> []</td></tr>
+<tr class="memdesc:gaabebf81a3461faf8346ce8c8365d09e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array with IRQ number for each FLEXCOMM module.  <a href="#gaabebf81a3461faf8346ce8c8365d09e8">More...</a><br/></td></tr>
+<tr class="separator:gaabebf81a3461faf8346ce8c8365d09e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:gadc55e534f6ccd8ba097cdefb6e669c50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#gadc55e534f6ccd8ba097cdefb6e669c50">FSL_FLEXCOMM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td></tr>
+<tr class="memdesc:gadc55e534f6ccd8ba097cdefb6e669c50"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCOMM driver version 2.0.2.  <a href="#gadc55e534f6ccd8ba097cdefb6e669c50">More...</a><br/></td></tr>
+<tr class="separator:gadc55e534f6ccd8ba097cdefb6e669c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gadc55e534f6ccd8ba097cdefb6e669c50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_FLEXCOMM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gacc9fdd92a043129607c887924fb5091e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* flexcomm_irq_handler_t)(void *base, void *handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga41eebbb4c49103c4d42f91c8f542c2c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00216.html#ga41eebbb4c49103c4d42f91c8f542c2c7">FLEXCOMM_PERIPH_T</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga41eebbb4c49103c4d42f91c8f542c2c7a5267e78e8168917f02771e148263ae39"></a>FLEXCOMM_PERIPH_NONE</em>&nbsp;</td><td class="fielddoc">
+<p>No peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eebbb4c49103c4d42f91c8f542c2c7a521e81a10b97ae653b96bffa0599ddb7"></a>FLEXCOMM_PERIPH_USART</em>&nbsp;</td><td class="fielddoc">
+<p>USART peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eebbb4c49103c4d42f91c8f542c2c7a2b729c2b97777dfed1160f0c575405ae"></a>FLEXCOMM_PERIPH_SPI</em>&nbsp;</td><td class="fielddoc">
+<p>SPI Peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eebbb4c49103c4d42f91c8f542c2c7a40c0d12edb101f8a14391ff9ae913d5a"></a>FLEXCOMM_PERIPH_I2C</em>&nbsp;</td><td class="fielddoc">
+<p>I2C Peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eebbb4c49103c4d42f91c8f542c2c7a76a11c2952b8cd493e9b4cbab0caf26f"></a>FLEXCOMM_PERIPH_I2S_TX</em>&nbsp;</td><td class="fielddoc">
+<p>I2S TX Peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eebbb4c49103c4d42f91c8f542c2c7a0992c9fae611def028d88282a684337f"></a>FLEXCOMM_PERIPH_I2S_RX</em>&nbsp;</td><td class="fielddoc">
+<p>I2S RX Peripheral. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga59338c42d2715c76e95c4dc2c1190f08"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t FLEXCOMM_GetInstance </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaff39b352ed7517521dfcece68ba34327"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCOMM_Init </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00216.html#ga41eebbb4c49103c4d42f91c8f542c2c7">FLEXCOMM_PERIPH_T</a>&#160;</td>
+          <td class="paramname"><em>periph</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaedf64691b871a2b0ea6a68fab284376a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FLEXCOMM_SetIRQHandler </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00216.html#gacc9fdd92a043129607c887924fb5091e">flexcomm_irq_handler_t</a>&#160;</td>
+          <td class="paramname"><em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>flexcommHandle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>It is used by drivers register IRQ handler according to FLEXCOMM mode </p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="gaabebf81a3461faf8346ce8c8365d09e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IRQn_Type const kFlexcommIrqs[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

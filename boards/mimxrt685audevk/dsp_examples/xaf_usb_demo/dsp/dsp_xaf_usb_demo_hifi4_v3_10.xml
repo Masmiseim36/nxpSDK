@@ -32,7 +32,7 @@
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT685S"/>
     <definition extID="middleware.baremetal.MIMXRT685S"/>
     <definition extID="middleware.multicore.rpmsg_lite.MIMXRT685S"/>
-    <definition extID="middleware.multicore.rpmsg_lite.bm.MIMXRT685S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.xos.MIMXRT685S"/>
     <definition extID="middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT685S"/>
     <definition extID="middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT685S"/>
     <definition extID="utility.shell.MIMXRT685S"/>
@@ -43,11 +43,12 @@
     <definition extID="device.MIMXRT685S_CMSIS.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
     <definition extID="middleware.eap16.header.MIMXRT685S"/>
+    <definition extID="middleware.eap.exapp.MIMXRT685S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_dsp_xaf_usb_demo_hifi4" name="dsp_xaf_usb_demo_hifi4" device_core="hifi4_MIMXRT685S" dependency="platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexcomm_i2c_dma.MIMXRT685S platform.drivers.flexcomm_i2s.MIMXRT685S platform.drivers.flexcomm_i2s_dma.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.drivers.flexcomm_spi.MIMXRT685S platform.drivers.flexcomm_spi_dma.MIMXRT685S component.usart_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.ctimer.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S middleware.multicore.rpmsg_lite.mimxrt685audevk_hifi4_bm.MIMXRT685S middleware.dsp_audio_streamer.hifi4_dec.MIMXRT685S middleware.dsp_nn.hifi4_nn_dsp.MIMXRT685S middleware.eap.hifi4.lib.MIMXRT685S platform.drivers.pint.MIMXRT685S platform.drivers.dmic.MIMXRT685S platform.drivers.dmic_dma.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.common.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm_usart_dma.MIMXRT685S utility.debug_console.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S middleware.baremetal.MIMXRT685S middleware.multicore.rpmsg_lite.MIMXRT685S middleware.multicore.rpmsg_lite.bm.MIMXRT685S middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT685S middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT685S utility.shell.MIMXRT685S middleware.eap.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S middleware.eap16.header.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" category="dsp_examples">
+  <example id="mimxrt685audevk_dsp_xaf_usb_demo_hifi4" name="dsp_xaf_usb_demo_hifi4" device_core="hifi4_MIMXRT685S" dependency="platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexcomm_i2c_dma.MIMXRT685S platform.drivers.flexcomm_i2s.MIMXRT685S platform.drivers.flexcomm_i2s_dma.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.drivers.flexcomm_spi.MIMXRT685S platform.drivers.flexcomm_spi_dma.MIMXRT685S component.usart_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.ctimer.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S middleware.multicore.rpmsg_lite.mimxrt685audevk_hifi4_bm.MIMXRT685S middleware.dsp_audio_streamer.hifi4_dec.MIMXRT685S middleware.dsp_nn.hifi4_nn_dsp.MIMXRT685S middleware.eap.hifi4.lib.MIMXRT685S platform.drivers.pint.MIMXRT685S platform.drivers.dmic.MIMXRT685S platform.drivers.dmic_dma.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.common.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm_usart_dma.MIMXRT685S utility.debug_console.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S middleware.baremetal.MIMXRT685S middleware.multicore.rpmsg_lite.MIMXRT685S middleware.multicore.rpmsg_lite.xos.MIMXRT685S middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT685S middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT685S utility.shell.MIMXRT685S middleware.eap.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S middleware.eap16.header.MIMXRT685S middleware.eap.exapp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -73,6 +74,8 @@
           <value>XA_RENDERER=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XOS_CLOCK_FREQ=594000000</value>
+          <value>XF_CORE_ID=0</value>
+          <value>XF_CFG_CORES_NUM=1</value>
           <value>ALGORITHM_CS=1</value>
           <value>ALGORITHM_XO=1</value>
           <value>PLATFORM_ID=LVM_IMXRT600</value>

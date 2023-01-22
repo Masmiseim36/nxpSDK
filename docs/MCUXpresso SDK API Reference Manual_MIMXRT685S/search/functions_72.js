@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['reset_5fclearperipheralreset',['RESET_ClearPeripheralReset',['../a00210.html#ga3f9c431d066e700ee9e2ab83c11aaed8',1,'fsl_reset.h']]],
-  ['reset_5fperipheralreset',['RESET_PeripheralReset',['../a00210.html#gac33f3428cb55ce07ae67802e5f534ffc',1,'fsl_reset.h']]],
-  ['reset_5fsetperipheralreset',['RESET_SetPeripheralReset',['../a00210.html#gad9df042d0736710d46dcdd0d52d80f85',1,'fsl_reset.h']]],
+  ['reset_5fclearperipheralreset',['RESET_ClearPeripheralReset',['../a00209.html#ga3f9c431d066e700ee9e2ab83c11aaed8',1,'fsl_reset.h']]],
+  ['reset_5fperipheralreset',['RESET_PeripheralReset',['../a00209.html#gac33f3428cb55ce07ae67802e5f534ffc',1,'fsl_reset.h']]],
+  ['reset_5fsetperipheralreset',['RESET_SetPeripheralReset',['../a00209.html#gad9df042d0736710d46dcdd0d52d80f85',1,'fsl_reset.h']]],
   ['rtc_5fclearstatusflags',['RTC_ClearStatusFlags',['../a00045.html#ga69bd3151f6c6b8cf21a74cc11a9f4900',1,'fsl_rtc.h']]],
   ['rtc_5fdeinit',['RTC_Deinit',['../a00045.html#ga0f365b0df0c2e61b07a7e178bd0f1581',1,'fsl_rtc.h']]],
   ['rtc_5fdisableinterrupts',['RTC_DisableInterrupts',['../a00045.html#gad12d4e10c5601f53d1626a5ae71691b9',1,'fsl_rtc.h']]],

@@ -1,6 +1,6 @@
 var a00051 =
 [
-    [ "sdmmchost_t", "a00051.html#a00371", [
+    [ "sdmmchost_t", "a00051.html#a00372", [
       [ "kCODEC_WM8904", "a00253.html#gga10e74d65d7876276a8f6061c71dcf469acb2ee31cd4ee06712e3cf445e12cb389", null ],
       [ "kCODEC_WM8960", "a00253.html#gga10e74d65d7876276a8f6061c71dcf469aa15237d33f0b971a6596458ef7aa8d99", null ],
       [ "kCODEC_WM8524", "a00253.html#gga10e74d65d7876276a8f6061c71dcf469a57b2941cff245c37272e1ea4598c3ab0", null ],

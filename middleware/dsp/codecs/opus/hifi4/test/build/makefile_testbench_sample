@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2014-2019 Cadence Design Systems, Inc.
+# Copyright (c) 2014-2022 Cadence Design Systems, Inc.
 # 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -20,8 +20,7 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-
-.PHONY: all clean opus
+.PHONY: all clean opus opus_codec opus_enc opus_dec xa_opus_dec_test xa_opus_enc_test
 
 ROOTDIR = ../..
 
@@ -34,13 +33,12 @@ ifeq "$(CPU)" "gcc"
 	NOSTRIP  = 0
     ISS      =
 else
-	CC       = xt-xcc
+	CC       = xt-clang
 	AR       = xt-ar $(XTCORE)
 	OBJCOPY  = xt-objcopy $(XTCORE)
 	RM_R     = rm -rf
     ISS      = xt-run --turbo
 endif
-
 
 ifeq "$(OSNAME)" "Linux"
 	LIBDIR = ../lib
@@ -56,13 +54,11 @@ else
 	CP     = xcopy 
 endif
 
-
 ifeq ($(DEBUG),1)
   OPT_O2 = -O0 -g
 else
   OPT_O2 = -O2
 endif
-
 
 ifeq "$(CPU)" "gcc"
   CFLAGS  = -m32
@@ -76,9 +72,27 @@ endif
 CFLAGS += -DENABLE_OGG_SUPPORT
 
 # Include directory paths added.
-CFLAGS += $(EXTRA_CFLAGS)
+CFLAGS  += $(EXTRA_CFLAGS)
 CFLAGS  += -DHAVE_CONFIG_H -DDISABLE_FLOAT_API
+# CFLAGS  += -DSCRATCH_PING_PONG -DINPUT_PING_PONG -DIOUTPUT_PING_PONG
+
+ifeq ($(MAKECMDGOALS),opus_enc)
+  CFLAGS += -DOPUS_ENC
+else ifeq ($(MAKECMDGOALS),xa_opus_enc_test)
+  CFLAGS += -DOPUS_ENC
+else ifeq ($(MAKECMDGOALS),opus_dec)
+  CFLAGS += -DOPUS_DEC
+else ifeq ($(MAKECMDGOALS),xa_opus_dec_test)
+  CFLAGS += -DOPUS_DEC
+else
+  CFLAGS += -DOPUS_ENC -DOPUS_DEC
+endif
+
 CFLAGS += -I$(ROOTDIR)/include -I$(ROOTDIR)/include/opus_codec -I$(ROOTDIR)/test/include
+
+# -----------------------------------------------------------
+# CFLAGS += -DSCRATCH_ANALYSIS
+# -----------------------------------------------------------
 
 ifneq ($(MEASURE_STACK),1)
   LDFLAGS += $(EXTRA_LDFLAGS)
@@ -86,16 +100,33 @@ else
   LDFLAGS += -Wl,-u -Wl,malloc -lferret $(EXTRA_LDFLAGS)
 endif
 
-
 # Variable definitions
 ifneq "$(CPU)" "gcc"
-  LIB_NAME = xa_opus_codec.a
   DEC_BIN_NAME = xa_opus_dec_test
   ENC_BIN_NAME = xa_opus_enc_test
+  ifeq ($(MAKECMDGOALS),opus_enc)
+    LIB_ENC_NAME = xa_opus_enc.a
+  else ifeq ($(MAKECMDGOALS),xa_opus_enc_test)
+    LIB_ENC_NAME = xa_opus_enc.a
+  else ifeq ($(MAKECMDGOALS),opus_dec)
+    LIB_DEC_NAME = xa_opus_dec.a
+  else ifeq ($(MAKECMDGOALS),xa_opus_dec_test)
+    LIB_DEC_NAME = xa_opus_dec.a
+  else
+    LIB_DEC_NAME = xa_opus_codec.a
+    LIB_ENC_NAME = xa_opus_codec.a
+  endif  
 else
-  LIB_NAME = xgcc_opus_codec.a
   DEC_BIN_NAME = xgcc_opus_dec_test
   ENC_BIN_NAME = xgcc_opus_enc_test
+  ifeq ($(MAKECMDGOALS),opus_enc)
+    LIB_ENC_NAME = xagcc__opus_enc.a
+  else ifeq ($(MAKECMDGOALS),opus_dec)
+    LIB_DEC_NAME = xagcc__opus_dec.a
+  else
+    LIB_DEC_NAME = xagcc__opus_codec.a
+    LIB_ENC_NAME = xagcc__opus_codec.a
+  endif 
 endif
 
 SRCDIR = $(ROOTDIR)/test/src
@@ -103,19 +134,24 @@ OBJDIRDEC = objsDec
 OBJDIRENC = objsEnc
 LIBDIR = $(ROOTDIR)/lib
 
+
 # List of objs to be generated.
 ENCODER_O = xa_opus_encoder_sample_testbench.o xa_opus_codec_error_handler.o xa_common_error_handler.o
-DECODER_O = xa_opus_decoder_sample_testbench.o xa_opus_codec_error_handler.o xa_common_error_handler.o xa_ogg_lib_error_handler.o opus_header.o
+DECODER_O = xa_opus_decoder_sample_testbench.o xa_opus_codec_error_handler.o xa_common_error_handler.o xa_ogg_lib_error_handler.o opus_header.o 
 
 ENCODER_OBJS = $(addprefix $(OBJDIRENC)/,$(ENCODER_O))
 DECODER_OBJS = $(addprefix $(OBJDIRDEC)/,$(DECODER_O))
-LIBS	     = $(addprefix $(LIBDIR)/,$(LIB_NAME))
+LIB_DEC	     = $(addprefix $(LIBDIR)/,$(LIB_DEC_NAME))
+LIB_ENC	     = $(addprefix $(LIBDIR)/,$(LIB_ENC_NAME))
 
 # Rules
 opus:all
 xa_opus_codec_test:all
+#xa_opus_dec_test:opus_dec
+#xa_opus_enc_test:opus_enc
 
 # Rule for creating testbench app binaries.
+opus_codec: all
 all:       $(OBJDIRDEC) $(OBJDIRENC) $(ENC_BIN_NAME) $(DEC_BIN_NAME)
 opus_dec:  $(OBJDIRDEC) $(DEC_BIN_NAME)
 opus_enc:  $(OBJDIRENC) $(ENC_BIN_NAME)
@@ -123,9 +159,9 @@ opus_enc:  $(OBJDIRENC) $(ENC_BIN_NAME)
 # Create the objs directory if not present.
 $(OBJDIRDEC):
 	-$(MKPATH) $@
-	
+
 $(OBJDIRENC):
-	-$(MKPATH) $@	
+	-$(MKPATH) $@
 
 # Rules for creating encoder/decoder obj files.
 $(ENCODER_OBJS): $(OBJDIRENC)/%.o: $(SRCDIR)/%.c
@@ -134,14 +170,22 @@ $(ENCODER_OBJS): $(OBJDIRENC)/%.o: $(SRCDIR)/%.c
 $(DECODER_OBJS): $(OBJDIRDEC)/%.o: $(SRCDIR)/%.c
 	$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
 
-$(ENC_BIN_NAME): $(ENCODER_OBJS) $(LIBS)
-	$(CC) -o $(ENC_BIN_NAME) $(ENCODER_OBJS) $(LIBS) $(LDFLAGS) 
 
-$(DEC_BIN_NAME): $(DECODER_OBJS) $(LIBS)	
-	$(CC) -o $(DEC_BIN_NAME) $(DECODER_OBJS) $(LIBS) $(LDFLAGS) 
+$(ENC_BIN_NAME): $(ENCODER_OBJS) $(LIB_ENC)
+	$(CC) -o $(ENC_BIN_NAME) $(ENCODER_OBJS) $(LIB_ENC) $(LDFLAGS)
+
+$(DEC_BIN_NAME): $(DECODER_OBJS) $(LIB_DEC)
+	$(CC) -o $(DEC_BIN_NAME) $(DECODER_OBJS) $(LIB_DEC) $(LDFLAGS)
+
 
 run:
 	$(ISS) ./$(DEC_BIN_NAME)
+	$(ISS) ./$(ENC_BIN_NAME)
+
+run_dec:
+	$(ISS) ./$(DEC_BIN_NAME)
+
+run_enc:
 	$(ISS) ./$(ENC_BIN_NAME)
     
 clean:

@@ -49,6 +49,8 @@
           <value>XOS_DEBUG_ALL=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XOS_CLOCK_FREQ=594000000</value>
+          <value>XF_CORE_ID=0</value>
+          <value>XF_CFG_CORES_NUM=1</value>
           <value>NN_ENABLE_xa_nn_inference=0</value>
           <value>NNLIB_V2</value>
           <value>CPU_MIMXRT685SFVKB_dsp</value>

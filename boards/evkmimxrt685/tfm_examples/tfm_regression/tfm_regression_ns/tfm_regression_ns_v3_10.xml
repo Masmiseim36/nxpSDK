@@ -16,6 +16,7 @@
     <definition extID="middleware.tfm.ns.test.ipc.MIMXRT685S"/>
     <definition extID="middleware.tfm.ns.ipc_api.MIMXRT685S"/>
     <definition extID="middleware.tfm.ns.test.core.MIMXRT685S"/>
+    <definition extID="middleware.tfm.ns.test.irq_slih.MIMXRT685S"/>
     <definition extID="platform.drivers.common.MIMXRT685S"/>
     <definition extID="platform.drivers.clock.MIMXRT685S"/>
     <definition extID="platform.drivers.power.MIMXRT685S"/>
@@ -41,7 +42,6 @@
     <definition extID="CMSIS_RTOS2_Common.MIMXRT685S"/>
     <definition extID="CMSIS_Device_API_OSTick.MIMXRT685S"/>
     <definition extID="CMSIS_Device_API_RTOS2.MIMXRT685S"/>
-    <definition extID="middleware.tfm.memory_utils.MIMXRT685S"/>
     <definition extID="middleware.tfm.t_cose.sign1_verify.MIMXRT685S"/>
     <definition extID="middleware.tfmtests.ns.test.attestation.MIMXRT685S"/>
     <definition extID="middleware.tfm.platform_test.MIMXRT685S"/>
@@ -54,7 +54,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_tfm_regression_ns" name="tfm_regression_ns" device_core="cm33_MIMXRT685S" dependency="platform.drivers.ctimer.MIMXRT685S middleware.tfm.ns.evkmimxrt685.MIMXRT685S middleware.tfm.ns.test.MIMXRT685S middleware.tfm.ns.test.s.MIMXRT685S middleware.tfm.ns.test.its.MIMXRT685S middleware.tfm.ns.test.ps.MIMXRT685S middleware.tfm.ns.test.platform.MIMXRT685S middleware.tfm.ns.test.attestation.MIMXRT685S middleware.tfm.ns.test.crypto.MIMXRT685S middleware.tfm.ns.test.qcbor.MIMXRT685S middleware.tfm.ns.test.ipc.MIMXRT685S middleware.tfm.ns.ipc_api.MIMXRT685S middleware.tfm.ns.test.core.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.evkmimxrt685.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S middleware.tfm.ns.MIMXRT685S middleware.tfmtests.ns.MIMXRT685S CMSIS_RTOS2_NonSecure.MIMXRT685S CMSIS_RTOS2_Common.MIMXRT685S CMSIS_Device_API_OSTick.MIMXRT685S CMSIS_Device_API_RTOS2.MIMXRT685S middleware.tfm.memory_utils.MIMXRT685S middleware.tfm.t_cose.sign1_verify.MIMXRT685S middleware.tfmtests.ns.test.attestation.MIMXRT685S middleware.tfm.platform_test.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" linked_projects="evkmimxrt685_tfm_regression_s" category="tfm_examples">
+  <example id="evkmimxrt685_tfm_regression_ns" name="tfm_regression_ns" device_core="cm33_MIMXRT685S" dependency="platform.drivers.ctimer.MIMXRT685S middleware.tfm.ns.evkmimxrt685.MIMXRT685S middleware.tfm.ns.test.MIMXRT685S middleware.tfm.ns.test.s.MIMXRT685S middleware.tfm.ns.test.its.MIMXRT685S middleware.tfm.ns.test.ps.MIMXRT685S middleware.tfm.ns.test.platform.MIMXRT685S middleware.tfm.ns.test.attestation.MIMXRT685S middleware.tfm.ns.test.crypto.MIMXRT685S middleware.tfm.ns.test.qcbor.MIMXRT685S middleware.tfm.ns.test.ipc.MIMXRT685S middleware.tfm.ns.ipc_api.MIMXRT685S middleware.tfm.ns.test.core.MIMXRT685S middleware.tfm.ns.test.irq_slih.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.evkmimxrt685.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S middleware.tfm.ns.MIMXRT685S middleware.tfmtests.ns.MIMXRT685S CMSIS_RTOS2_NonSecure.MIMXRT685S CMSIS_RTOS2_Common.MIMXRT685S CMSIS_Device_API_OSTick.MIMXRT685S CMSIS_Device_API_RTOS2.MIMXRT685S middleware.tfm.t_cose.sign1_verify.MIMXRT685S middleware.tfmtests.ns.test.attestation.MIMXRT685S middleware.tfm.platform_test.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" linked_projects="evkmimxrt685_tfm_regression_s" category="tfm_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -101,7 +101,6 @@
           <value>PS_MAX_ASSET_SIZE=512</value>
           <value>OS_DYNAMIC_MEM_SIZE=7168</value>
           <value>TFM_CRYPTO_TEST_ALG_CCM</value>
-          <value>TFM_CRYPTO_TEST_ALG_GCM</value>
           <value>TFM_CRYPTO_TEST_HKDF</value>
           <value>TEST_FRAMEWORK_NS</value>
           <value>TEST_FRAMEWORK_S</value>
@@ -110,17 +109,23 @@
           <value>TEST_NS_PLATFORM</value>
           <value>T_COSE_USE_PSA_CRYPTO</value>
           <value>TEST_NS_CRYPTO</value>
+          <value>TFM_PARTITION_INTERNAL_TRUSTED_STORAGE</value>
           <value>TEST_NS_QCBOR</value>
           <value>TFM_PARTITION_IPC_TEST</value>
           <value>TEST_NS_IPC</value>
           <value>TFM_PSA_API</value>
           <value>TEST_NS_CORE</value>
           <value>TFM_ENABLE_PERIPH_ACCESS_TEST</value>
+          <value>TEST_NS_SLIH_IRQ</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>CONFIG_TFM_FP=2</value>
+          <value>CONFIG_TFM_FLOAT_ABI=2</value>
+          <value>CONFIG_TFM_ENABLE_CP10CP11</value>
           <value>CONFIG_TFM_LAZY_STACKING</value>
           <value>__DOMAIN_NS=1</value>
           <value>DOMAIN_NS=1</value>
+          <value>CONFIG_TFM_USE_TRUSTZONE</value>
+          <value>ATTEST_TOKEN_PROFILE_PSA_IOT_1</value>
+          <value>PLATFORM_DEFAULT_CRYPTO_KEYS</value>
           <value>TEST_NS_ATTESTATION</value>
           <value>MCUXPRESSO_SDK</value>
         </option>

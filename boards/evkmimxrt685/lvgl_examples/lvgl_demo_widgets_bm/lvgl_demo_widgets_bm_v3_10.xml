@@ -128,6 +128,7 @@
       <include_path path="../../../../middleware/lvgl/lvgl/demos/widgets/assets" project_relative_path="lvgl/lvgl/demos/widgets/assets" type="c_include"/>
       <include_path path="../../../../middleware/lvgl/lvgl/demos" project_relative_path="lvgl/lvgl/demos" type="c_include"/>
       <include_path path=".." project_relative_path="evkmimxrt685/lvgl_examples/lvgl_demo_widgets_bm" type="c_include"/>
+      <include_path path=".." project_relative_path="source" type="c_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="lvgl_demo_widgets_bm.ewd"/>
@@ -198,6 +199,12 @@
     </source>
     <source path=".." project_relative_path="board" type="src">
       <files mask="lvgl_support.c"/>
+    </source>
+    <source path=".." project_relative_path="source" type="c_include">
+      <files mask="lvgl_demo_utils.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="src">
+      <files mask="lvgl_demo_utils.c"/>
     </source>
     <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

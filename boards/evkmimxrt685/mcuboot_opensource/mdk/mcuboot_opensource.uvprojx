@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MFLASH_FILE_BASEADDR=7340032, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../devices/MIMXRT685S/drivers;../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../middleware/mbedtls/include;../../../../middleware/mbedtls/library;../../../../middleware/mbedtls/port/ksdk;../../../../components/flash/mflash/mimxrt685;../../../../devices/MIMXRT685S;../../../../devices/MIMXRT685S/utilities/str;../../../../devices/MIMXRT685S/utilities/debug_console;../../../../components/uart;../../flash_config;../../../../components/serial_manager;../../../../components/lists;../../../../CMSIS/Core/Include;../../../../components/flash/mflash</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../middleware/mbedtls/include;../../../../middleware/mbedtls/library;../../../../middleware/mbedtls/port/ksdk;../../../../components/flash/mflash/mimxrt685;../../../../devices/MIMXRT685S/drivers;../../../../devices/MIMXRT685S;../../../../devices/MIMXRT685S/utilities/str;../../../../devices/MIMXRT685S/utilities/debug_console;../../../../components/uart;../../flash_config;../../../../components/serial_manager;../../../../components/lists;../../../../CMSIS/Core/Include;../../../../components/flash/mflash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,6 +389,11 @@
               <FilePath>../boot.h</FilePath>
             </File>
             <File>
+              <FileName>bootutil_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../bootutil_hooks.c</FilePath>
+            </File>
+            <File>
               <FileName>keys.c</FileName>
               <FileType>1</FileType>
               <FilePath>../keys.c</FilePath>
@@ -407,11 +412,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
-            </File>
-            <File>
-              <FileName>sblconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sblconfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -493,16 +493,16 @@
               <FileType>1</FileType>
               <FilePath>../flashiap/flash_api.c</FilePath>
             </File>
-            <File>
-              <FileName>flash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../flashiap/flash_info.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
+            <File>
+              <FileName>sblconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sblconfig.h</FilePath>
+            </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
@@ -517,6 +517,11 @@
               <FileName>flash_partitioning.h</FileName>
               <FileType>5</FileType>
               <FilePath>../flash_partitioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../flash_partitioning.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -547,146 +552,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_power.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_power.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iopctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_casper.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_casper.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hashcrypt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hashcrypt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2126,6 +1991,146 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexcomm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexcomm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iopctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -2284,11 +2289,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2302,16 +2302,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2678,7 +2668,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MFLASH_FILE_BASEADDR=7340032, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../devices/MIMXRT685S/drivers;../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../middleware/mbedtls/include;../../../../middleware/mbedtls/library;../../../../middleware/mbedtls/port/ksdk;../../../../components/flash/mflash/mimxrt685;../../../../devices/MIMXRT685S;../../../../devices/MIMXRT685S/utilities/str;../../../../devices/MIMXRT685S/utilities/debug_console;../../../../components/uart;../../flash_config;../../../../components/serial_manager;../../../../components/lists;../../../../CMSIS/Core/Include;../../../../components/flash/mflash</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashiap;../secure;../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../middleware/mbedtls/include;../../../../middleware/mbedtls/library;../../../../middleware/mbedtls/port/ksdk;../../../../components/flash/mflash/mimxrt685;../../../../devices/MIMXRT685S/drivers;../../../../devices/MIMXRT685S;../../../../devices/MIMXRT685S/utilities/str;../../../../devices/MIMXRT685S/utilities/debug_console;../../../../components/uart;../../flash_config;../../../../components/serial_manager;../../../../components/lists;../../../../CMSIS/Core/Include;../../../../components/flash/mflash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2733,6 +2723,11 @@
               <FilePath>../boot.h</FilePath>
             </File>
             <File>
+              <FileName>bootutil_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../bootutil_hooks.c</FilePath>
+            </File>
+            <File>
               <FileName>keys.c</FileName>
               <FileType>1</FileType>
               <FilePath>../keys.c</FilePath>
@@ -2751,11 +2746,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
-            </File>
-            <File>
-              <FileName>sblconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sblconfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2837,16 +2827,16 @@
               <FileType>1</FileType>
               <FilePath>../flashiap/flash_api.c</FilePath>
             </File>
-            <File>
-              <FileName>flash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../flashiap/flash_info.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
+            <File>
+              <FileName>sblconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sblconfig.h</FilePath>
+            </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
@@ -2861,6 +2851,11 @@
               <FileName>flash_partitioning.h</FileName>
               <FileType>5</FileType>
               <FilePath>../flash_partitioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../flash_partitioning.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2891,146 +2886,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_power.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_power.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iopctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_casper.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_casper.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hashcrypt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hashcrypt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4470,6 +4325,146 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexcomm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexcomm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iopctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -4628,11 +4623,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4646,16 +4636,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_PSA_API, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_PSA_API, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -369,7 +369,7 @@
             <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../tfm_demo_s/mdk/debug/tfm_demo_s_CMSE_Lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../tfm_demo_s/mdk/debug/tfm_demo_s_CMSE_lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -962,6 +962,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_builtin_key_ids.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/interface/include/psa</GroupName>
           <Files>
             <File>
@@ -1080,24 +1090,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/os_wrapper_cmsis_rtos_v2.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_integ_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_integ_test.h</FilePath>
-            </File>
-            <File>
               <FileName>main_ns.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/main_ns.c</FilePath>
             </File>
             <File>
-              <FileName>psa_api_test.c</FileName>
+              <FileName>test_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.c</FilePath>
             </File>
             <File>
-              <FileName>psa_api_test.h</FileName>
+              <FileName>test_app.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.h</FilePath>
             </File>
             <File>
               <FileName>tfm_log.h</FileName>
@@ -1260,11 +1265,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1278,16 +1278,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1643,9 +1633,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_PSA_API, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_PSA_API, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1679,7 +1669,7 @@
             <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../tfm_demo_s/mdk/release/tfm_demo_s_CMSE_Lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../tfm_demo_s/mdk/release/tfm_demo_s_CMSE_lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2272,6 +2262,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_builtin_key_ids.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/interface/include/psa</GroupName>
           <Files>
             <File>
@@ -2390,24 +2390,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/os_wrapper_cmsis_rtos_v2.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_integ_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_integ_test.h</FilePath>
-            </File>
-            <File>
               <FileName>main_ns.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/main_ns.c</FilePath>
             </File>
             <File>
-              <FileName>psa_api_test.c</FileName>
+              <FileName>test_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.c</FilePath>
             </File>
             <File>
-              <FileName>psa_api_test.h</FileName>
+              <FileName>test_app.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.h</FilePath>
             </File>
             <File>
               <FileName>tfm_log.h</FileName>
@@ -2570,11 +2565,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2588,16 +2578,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

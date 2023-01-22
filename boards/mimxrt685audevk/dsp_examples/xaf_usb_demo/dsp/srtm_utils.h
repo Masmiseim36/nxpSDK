@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,6 +12,7 @@
 #include <xtensa/xos.h>
 
 #include "ringbuffer.h"
+#include "rpmsg_queue.h"
 
 #if (INIT_DEBUG_CONSOLE == 1)
 #define DSP_PRINTF PRINTF
@@ -35,7 +36,7 @@ typedef struct _dsp_handle_t
 {
     struct rpmsg_lite_instance *rpmsg;
     struct rpmsg_lite_endpoint *ept;
-    XosMsgQueue *rpmsg_queue;
+    rpmsg_queue_handle rpmsg_queue;
 
     void *audio_device;
     void *comp;

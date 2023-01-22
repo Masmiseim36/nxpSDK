@@ -1,20 +1,30 @@
+IF(NOT DEFINED FPU)  
+    SET(FPU "-mfloat-abi=hard -mfpu=fpv5-sp-d16")  
+ENDIF()  
+
+IF(NOT DEFINED SPECS)  
+    SET(SPECS "--specs=nano.specs --specs=nosys.specs")  
+ENDIF()  
+
+IF(NOT DEFINED DEBUG_CONSOLE_CONFIG)  
+    SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE=1")  
+ENDIF()  
+
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
@@ -27,7 +37,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DPS_MAX_ASSET_SIZE=512 \
     -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DTFM_CRYPTO_TEST_ALG_CCM \
-    -DTFM_CRYPTO_TEST_ALG_GCM \
     -DTFM_CRYPTO_TEST_HKDF \
     -DTEST_FRAMEWORK_NS \
     -DTEST_FRAMEWORK_S \
@@ -36,17 +45,23 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DTEST_NS_PLATFORM \
     -DT_COSE_USE_PSA_CRYPTO \
     -DTEST_NS_CRYPTO \
+    -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE \
     -DTEST_NS_QCBOR \
     -DTFM_PARTITION_IPC_TEST \
     -DTEST_NS_IPC \
     -DTFM_PSA_API \
     -DTEST_NS_CORE \
     -DTFM_ENABLE_PERIPH_ACCESS_TEST \
+    -DTEST_NS_SLIH_IRQ \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DCONFIG_TFM_FP=2 \
+    -DCONFIG_TFM_FLOAT_ABI=2 \
+    -DCONFIG_TFM_ENABLE_CP10CP11 \
     -DCONFIG_TFM_LAZY_STACKING \
     -D__DOMAIN_NS=1 \
     -DDOMAIN_NS=1 \
+    -DCONFIG_TFM_USE_TRUSTZONE \
+    -DATTEST_TOKEN_PROFILE_PSA_IOT_1 \
+    -DPLATFORM_DEFAULT_CRYPTO_KEYS \
     -DTEST_NS_ATTESTATION \
     -DMCUXPRESSO_SDK \
     -O1 \
@@ -57,8 +72,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -Wno-return-type \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -69,6 +82,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
@@ -81,7 +96,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DPS_MAX_ASSET_SIZE=512 \
     -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DTFM_CRYPTO_TEST_ALG_CCM \
-    -DTFM_CRYPTO_TEST_ALG_GCM \
     -DTFM_CRYPTO_TEST_HKDF \
     -DTEST_FRAMEWORK_NS \
     -DTEST_FRAMEWORK_S \
@@ -90,17 +104,23 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DTEST_NS_PLATFORM \
     -DT_COSE_USE_PSA_CRYPTO \
     -DTEST_NS_CRYPTO \
+    -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE \
     -DTEST_NS_QCBOR \
     -DTFM_PARTITION_IPC_TEST \
     -DTEST_NS_IPC \
     -DTFM_PSA_API \
     -DTEST_NS_CORE \
     -DTFM_ENABLE_PERIPH_ACCESS_TEST \
+    -DTEST_NS_SLIH_IRQ \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DCONFIG_TFM_FP=2 \
+    -DCONFIG_TFM_FLOAT_ABI=2 \
+    -DCONFIG_TFM_ENABLE_CP10CP11 \
     -DCONFIG_TFM_LAZY_STACKING \
     -D__DOMAIN_NS=1 \
     -DDOMAIN_NS=1 \
+    -DCONFIG_TFM_USE_TRUSTZONE \
+    -DATTEST_TOKEN_PROFILE_PSA_IOT_1 \
+    -DPLATFORM_DEFAULT_CRYPTO_KEYS \
     -DTEST_NS_ATTESTATION \
     -DMCUXPRESSO_SDK \
     -Os \
@@ -109,8 +129,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -Wno-return-type \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -121,6 +139,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
@@ -133,8 +153,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -O0 \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -146,6 +164,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
@@ -157,8 +177,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -170,16 +188,14 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -g \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -198,16 +214,14 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns_pre.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -226,5 +240,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns_pre.ld -static \
 ")

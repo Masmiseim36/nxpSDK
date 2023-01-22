@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(dsp_xaf_record_cm33)
 
+set(MCUX_BUILD_TYPES flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME dsp_xaf_record_cm33.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -58,34 +64,35 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../dsp/binary/dsp_text_release.bin"
-"${ProjDirPath}/../../dsp/binary/dsp_data_release.bin"
-"${ProjDirPath}/../../dsp/binary/dsp_ncache_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_text_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_ncache_release.bin"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../dsp/binary
-    ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib
-    ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/Inc
+    ${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary
+    ${SdkRootDirPath}/middleware/vit/HIFI4/Lib
+    ${SdkRootDirPath}/middleware/vit/HIFI4/Lib/Inc
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../middleware/multicore
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../../../components/pca9420
-    ${ProjDirPath}/../../../../../../components/codec/wm8904
-    ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/i2c
-    ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
+    ${SdkRootDirPath}/middleware/multicore
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/components/pca9420
+    ${SdkRootDirPath}/components/codec/wm8904
+    ${SdkRootDirPath}/components/codec
+    ${SdkRootDirPath}/components/codec/
+    ${SdkRootDirPath}/components/codec/i2c
+    ${SdkRootDirPath}/components/i2c
+    ${SdkRootDirPath}/devices/MIMXRT685S
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/boards/evkmimxrt685/flash_config
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -172,15 +179,13 @@ include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

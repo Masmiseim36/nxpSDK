@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">Getting started with Maestro framework </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_C___ddm_mcu_sdk_2_0_middleware_maestro_README"></a> </p>
+<div class="textblock"><p ><a class="anchor" id="md_C___ddm_bugfix_middleware_maestro_README"></a> </p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Introduction</h1>
 <p >This document describes the basic usage of the Maestro Audio Framework. This framework intends to enable the chaining of basic audio processing blocks (called "elements"). These blocks then form stream processing objects ("pipeline"). This pipeline can be used for multiple audio processing use cases. The processing blocks can include (but are not limited to) different audio sources (for example file or microphone), decoders or encoders, filters or effects, and audio sinks. For detailed description of the Maestro framework, please refer to the <a class="el" href="md_ProgrammersGuide.html">programmer's guide</a>.</p>
@@ -140,7 +140,7 @@ maestro_record</h2>
 <li><b>record_mic</b>: records MIC audio and either:<ul>
 <li><em>audio</em>: playback on a codec (line-out/speaker)</li>
 <li><em>file [file_name]</em>: store samples from onboard microphone to a file on sd card</li>
-<li><em>vit</em>: perform voice recognition (VIT)</li>
+<li><em>vit</em>: on supported boards perform VoiceSeeker pre-processing, then perform voice recognition (VIT)</li>
 </ul>
 </li>
 <li><b>opus_encode</b>: perform opus encoding on a sample pcm file and compare with a reference</li>
@@ -175,15 +175,15 @@ version</h2>
 <p >Prints component versions</p>
 <h2><a class="anchor" id="autotoc_md11"></a>
 file</h2>
-<p ><code>File</code> command is supported in the maestro_playback and maestro_playback_8ch_96kHz examples. In maestro_playback the <code>file</code> command creates a streamer pipeline described in function <code>STREAMER_file_Create</code> in file <code>app_streamer.c</code>. The crucial part in this is defining pipeline type as <code>STREAM_PIPELINE_FILESYSTEM</code> or <code>STREAM_PIPELINE_EAP</code>. Depending on whether the <code>EAP_PROC</code> is defined this sets up the processing chain from file source to audio sink with decoder and potentially EAP processing in between. Playback itself can be started with <code>STREAMER_Start</code> function. The pipeline can consist of the following elements:</p>
+<p ><code>File</code> command is supported in the maestro_playback and maestro_playback_8ch_96kHz examples. In maestro_playback the <code>file</code> command creates a streamer pipeline described in function <code>STREAMER_file_Create</code> in file <code>app_streamer.c</code>. The crucial part in this is defining pipeline type as <code>STREAM_PIPELINE_FILESYSTEM</code> or <code>STREAM_PIPELINE_AUDIO_PROC</code>. Depending on whether the <code>EAP_PROC</code> is defined this sets up the processing chain from file source to audio sink with decoder and potentially EAP processing in between. Playback itself can be started with <code>STREAMER_Start</code> function. The pipeline can consist of the following elements:</p>
 <ul>
 <li>TYPE_ELEMENT_FILE_SRC</li>
 <li>TYPE_ELEMENT_DECODER</li>
-<li>TYPE_ELEMENT_EAP (if <code>EAP_PROC</code> is defined)</li>
+<li>TYPE_ELEMENT_AUDIO_PROC (if <code>EAP_PROC</code> is defined)</li>
 <li>TYPE_ELEMENT_AUDIO_SINK</li>
 </ul>
 <p >Other possible element types could be found in the <code><a class="el" href="streamer__api_8h.html" title="Streamer API header. Public APIs for using the maestro streamer framework.">streamer_api.h</a></code>.</p>
-<p >In maestro_playback_8ch_96kHz the <code>file</code> command creates a pipeline with PCM file source and audio sink. EAP processing is used for stereo files only with stereo output. If 8 channel PCM file is provided it is output to all 8 channels. Using this command user starts the creation of the pipeline with the <code>STREAMER_PCM_Create</code> function in <code>app_streamer.c</code>. Depending on if EAP is used, the pipeline type is either <code>STREAM_PIPELINE_PCM_EAP_AUDIO</code> or <code>STREAM_PIPELINE_PCM_AUDIO</code>. The properties of the PCM file are set in the <code>app_streamer.c</code> file using file source properties sent to the streamer: <code>PROP_FILESRC_SET_SAMPLE_RATE</code> - default value is 96000 [Hz] <code>PROP_FILESRC_SET_NUM_CHANNELS</code> - default value is 8 <code>PROP_FILESRC_SET_BIT_WIDTH</code> - default value is 32</p>
+<p >In maestro_playback_8ch_96kHz the <code>file</code> command creates a pipeline with PCM file source and audio sink. EAP processing is used for stereo files only with stereo output. If 8 channel PCM file is provided it is output to all 8 channels. Using this command user starts the creation of the pipeline with the <code>STREAMER_PCM_Create</code> function in <code>app_streamer.c</code>. Depending on if EAP is used, the pipeline type is either <code>STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO</code> or <code>STREAM_PIPELINE_PCM_AUDIO</code>. The properties of the PCM file are set in the <code>app_streamer.c</code> file using file source properties sent to the streamer: <code>PROP_FILESRC_SET_SAMPLE_RATE</code> - default value is 96000 [Hz] <code>PROP_FILESRC_SET_NUM_CHANNELS</code> - default value is 8 <code>PROP_FILESRC_SET_BIT_WIDTH</code> - default value is 32</p>
 <p >Each of the elements has several properties that can be accessed using <code>streamer_get_property</code>. These properties allow a user to change the values of the appropriate elements. The list of properties can be found in <code><a class="el" href="streamer__element__properties_8h.html" title="Header for streamer element properties.">streamer_element_properties.h</a></code>. See the example of setting property value in the following piece of code from <code>app_streamer.c</code>:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structELEMENT__PROPERTY__T.html">ELEMENT_PROPERTY_T</a> prop;</div>
 <div class="line">eap_args.preset_num          = *eap_par;</div>
@@ -233,10 +233,10 @@ Configuration options</h1>
 <li><code>STREAM_PIPELINE_FILESYSTEM</code></li>
 <li><code>STREAM_PIPELINE_MIC2FILE</code></li>
 <li><code>STREAM_PIPELINE_VIT</code></li>
-<li><code>STREAM_PIPELINE_EAP</code></li>
+<li><code>STREAM_PIPELINE_AUDIO_PROC</code></li>
 <li><code>STREAM_PIPELINE_MEM</code></li>
 <li><code>STREAM_PIPELINE_OPUS_MEM2MEM</code></li>
-<li><code>STREAM_PIPELINE_PCM_EAP_AUDIO</code></li>
+<li><code>STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO</code></li>
 <li><code>STREAM_PIPELINE_PCM_AUDIO</code></li>
 </ul>
 <p >In order to create a user defined pipeline, please see the <a class="el" href="md_ProgrammersGuide.html">programmer's guide</a>.</p>
@@ -250,20 +250,24 @@ Codecs</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Decoder   </th><th class="markdownTableHeadNone">Sample rates [kHz]   </th><th class="markdownTableHeadNone">Number of channels   </th><th class="markdownTableHeadNone">Bit depth    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">MP3   </td><td class="markdownTableBodyNone">8, 11.025, 16, 22.050, 24, 32, 44.1, 48   </td><td class="markdownTableBodyNone">1, 2 (mono/stereo)   </td><td class="markdownTableBodyNone">16    </td></tr>
+<td class="markdownTableBodyNone">AAC   </td><td class="markdownTableBodyNone">8, 11.025, 16, 22.050, 24, 32, 44.1, 48   </td><td class="markdownTableBodyNone">1, 2 (mono/stereo)   </td><td class="markdownTableBodyNone">16    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">FLAC   </td><td class="markdownTableBodyNone">8, 11.025, 16, 22.050, 24, 32, 44.1, 48   </td><td class="markdownTableBodyNone">1, 2 (mono/stereo)   </td><td class="markdownTableBodyNone">16    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">MP3   </td><td class="markdownTableBodyNone">8, 11.025, 16, 22.050, 32, 44.1, 48   </td><td class="markdownTableBodyNone">1, 2 (mono/stereo)   </td><td class="markdownTableBodyNone">16    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">opus   </td><td class="markdownTableBodyNone">8, 16, 24, 48   </td><td class="markdownTableBodyNone">1, 2 (mono/stereo)   </td><td class="markdownTableBodyNone">16    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">WAV   </td><td class="markdownTableBodyNone">8, 11.025, 16, 22.050, 32, 44.1, 48   </td><td class="markdownTableBodyNone">1, 2 (mono/stereo)   </td><td class="markdownTableBodyNone">8, 16, 24   </td></tr>
 </table>
-<p >For more details about the codecs please see <a class="el" href="mp3dec_start.html#md_mp3dec">MP3 decoder</a>, <a href="https://opus-codec.org/docs/opus_api-1.3.1/">opus</a> and <a class="el" href="md_wavdec.html">WAV decoder</a> documents. WAV decoder is currently not demonstrated in any example.</p>
+<p >For more details about the codecs please see following documents: <a class="el" href="aacdec_start.html#md_aacdec">AAC decoder</a>,<a class="el" href="flacdec_start.html#md_flacdec">FLAC decoder</a>,<a class="el" href="mp3dec_start.html#md_mp3dec">MP3 decoder</a>,<a href="https://opus-codec.org/docs/opus_api-1.3.1/">opus</a>,<a class="el" href="md_wavdec.html">WAV decoder</a></p>
 <p >Using maestro_playback_8ch_96kHz example users can play PCM files from the SD card and output either 2 or 8 channels with 96kHz sampling rate and 32bit depth (just RT1060-EVKB with AUD-EXP-42448 expansion board supported).</p>
 <h2><a class="anchor" id="autotoc_md18"></a>
 VIT</h2>
 <p >VIT can be enabled for the <code>record_mic</code> command using the <code>vit</code> option. In the <code>STREAMER_mic_Create</code> function in the <code>app_streamer.c</code> file, the <code>VIT_PROC</code> preprocessor define ensures the creation of pipeline with VIT (<code>STREAM_PIPELINE_VIT</code>). More details about VIT are available in the VIT package, which is located in <code>middleware\vit\{platform}\Doc\</code>(depending on the platform) or via following <a href="https://nxp.com/vit">link</a>.</p>
 <h2><a class="anchor" id="autotoc_md19"></a>
 EAP</h2>
-<p >EAP can be enabled with <code>EAP_PROC</code> or <code>EAP32_PROC</code> preprocessor define for the respective EAP version. With the <code>file</code> command using the <code>set</code> or <code>update</code> option user can switch the different EAP presets as mentioned in the <code>maestro_playback</code> section. In the <code>STREAMER_file_Create</code> function in the <code>app_streamer.c</code> file, the <code>EAP_PROC</code> definition ensures the creation of pipeline with EAP (<code>STREAMER_PIPELINE_EAP</code>). For the platforms that support EAP32 (RT1060-EVKB) users can create the pipeline with <code>EAP32_PROC</code> defined. The function that creates the streamer is <code>STREAMER_PCM_Create</code> in the <code>app_streamer.c</code>. Created pipeline has <code>STREAM_PIPELINE_PCM_EAP_AUDIO</code> type. More details about EAP are available in the EAP package, which is located in <code>middleware\EAP\Doc\</code> or via following <a href="https://nxp.com/eap">link</a>. </p>
+<p >EAP can be enabled with <code>EAP_PROC</code> or <code>EAP32_PROC</code> preprocessor define for the respective EAP version. With the <code>file</code> command using the <code>set</code> or <code>update</code> option user can switch the different EAP presets as mentioned in the <code>maestro_playback</code> section. In the <code>STREAMER_file_Create</code> function in the <code>app_streamer.c</code> file, the <code>EAP_PROC</code> definition ensures the creation of pipeline with EAP (<code>STREAMER_PIPELINE_AUDIO_PROC</code>). For the platforms that support EAP32 (RT1060-EVKB) users can create the pipeline with <code>EAP32_PROC</code> defined. The function that creates the streamer is <code>STREAMER_PCM_Create</code> in the <code>app_streamer.c</code>. Created pipeline has <code>STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO</code> type. More details about EAP are available in the EAP package, which is located in <code>middleware\EAP\Doc\</code> or via following <a href="https://nxp.com/eap">link</a>. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

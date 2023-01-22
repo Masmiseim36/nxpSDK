@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "rpmsg_lite.h"
+#include "rpmsg_queue.h"
 #include "srtm_config.h"
 #include "srtm_utils.h"
 
@@ -41,7 +42,7 @@
 #define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
 #define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
 #define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
-#define DSP_THREAD_STACK_SIZE (8 * 1024)
+#define DSP_THREAD_STACK_SIZE (10 * 1024)
 #define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
 #define AUDIO_BUFFER_SIZE (32 * 1024)
@@ -124,22 +125,6 @@ static void DSP_XAF_Init(dsp_handle_t *dsp)
     DSP_PRINTF("  Library Version : %s\r\n", version[1]);
     DSP_PRINTF("  API Version     : %s\r\n", version[2]);
     DSP_PRINTF("\r\n");
-}
-
-static int rpmsg_callback(void *payload, uint32_t payload_len, uint32_t src, void *priv)
-{
-    XosMsgQueue *queue = (XosMsgQueue *)priv;
-
-    if (payload_len == sizeof(srtm_message))
-    {
-        xos_msgq_put(queue, payload);
-    }
-    else
-    {
-        /* Error / invalid message received. */
-    }
-
-    return RL_RELEASE;
 }
 
 static int handleMSG_GENERAL(dsp_handle_t *dsp, srtm_message *msg)
@@ -359,8 +344,6 @@ static int DSP_MSG_Process(dsp_handle_t *dsp, srtm_message *msg)
 int DSP_Main(void *arg, int wake_value)
 {
     dsp_handle_t *dsp = (dsp_handle_t *)arg;
-    struct rpmsg_lite_ept_static_context ept_ctx;
-    struct rpmsg_lite_instance rpmsg_ctx;
     void *rpmsg_shmem_base;
     srtm_message msg;
     int status;
@@ -369,30 +352,30 @@ int DSP_Main(void *arg, int wake_value)
 
     DSP_PRINTF("[DSP_Main] start\r\n");
 
-    dsp->rpmsg_queue = malloc(XOS_MSGQ_SIZE(10, sizeof(srtm_message)));
-    xos_msgq_create(dsp->rpmsg_queue, 10, sizeof(srtm_message), XOS_MSGQ_WAIT_PRIORITY);
-
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
     rpmsg_shmem_base = (void *)MEMORY_ConvertMemoryMapAddress((uint32_t)RPMSG_LITE_SHMEM_BASE, kMEMORY_Local2DMA);
 #else
     rpmsg_shmem_base = RPMSG_LITE_SHMEM_BASE;
 #endif
 
-    dsp->rpmsg = rpmsg_lite_remote_init(rpmsg_shmem_base, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctx);
+    dsp->rpmsg       = rpmsg_lite_remote_init(rpmsg_shmem_base, RPMSG_LITE_LINK_ID, RL_NO_FLAGS);
+    dsp->rpmsg_queue = rpmsg_queue_create(dsp->rpmsg);
 
-    while (RL_TRUE != rpmsg_lite_is_link_up(dsp->rpmsg))
-    {
-    }
+    rpmsg_lite_wait_for_link_up(dsp->rpmsg, RL_BLOCK);
 
     DSP_PRINTF("[DSP_Main] established RPMsg link\r\n");
 
-    dsp->ept = rpmsg_lite_create_ept(dsp->rpmsg, DSP_EPT_ADDR, (rl_ept_rx_cb_t)rpmsg_callback, (void *)dsp->rpmsg_queue,
-                                     &ept_ctx);
+    dsp->ept = rpmsg_lite_create_ept(dsp->rpmsg, DSP_EPT_ADDR, rpmsg_queue_rx_cb, (void *)dsp->rpmsg_queue);
 
     while (1)
     {
         /* Block until receive message from ARM core */
-        xos_msgq_get(dsp->rpmsg_queue, (uint32_t *)&msg);
+        status =
+            rpmsg_queue_recv(dsp->rpmsg, dsp->rpmsg_queue, NULL, (char *)&msg, sizeof(srtm_message), NULL, RL_BLOCK);
+        if (status != RL_SUCCESS)
+        {
+            xos_fatal_error(status, "Failed to get item from RPMsg queue.\r\n");
+        }
 
         /* Process request */
         status = DSP_MSG_Process(dsp, &msg);

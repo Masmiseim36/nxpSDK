@@ -1,38 +1,46 @@
+IF(NOT DEFINED FPU)  
+    SET(FPU "-mfloat-abi=hard -mfpu=fpv5-sp-d16")  
+ENDIF()  
+
+IF(NOT DEFINED SPECS)  
+    SET(SPECS "--specs=nano.specs --specs=nosys.specs")  
+ENDIF()  
+
+IF(NOT DEFINED DEBUG_CONSOLE_CONFIG)  
+    SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE=1")  
+ENDIF()  
+
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
+    ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
@@ -48,8 +56,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -60,6 +66,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
@@ -74,8 +82,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -86,6 +92,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
@@ -102,8 +110,6 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -114,6 +120,8 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     ${CMAKE_C_FLAGS_FLASH_RELEASE} \
@@ -129,8 +137,6 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -141,6 +147,8 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
@@ -154,8 +162,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -167,6 +173,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
@@ -179,8 +187,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -192,6 +198,8 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
@@ -205,8 +213,6 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -218,6 +224,8 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
@@ -230,8 +238,6 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
     -mthumb \
     -MMD \
     -MP \
@@ -243,16 +249,14 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -g \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -271,16 +275,14 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -299,6 +301,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
@@ -306,10 +310,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -g \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -328,16 +328,14 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
     -mcpu=cortex-m33 \
     -Wall \
-    -mfloat-abi=hard \
-    -mfpu=fpv5-sp-d16 \
-    --specs=nano.specs \
-    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -356,5 +354,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    ${FPU} \
+    ${SPECS} \
     -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld -static \
 ")

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['flexcomm_5fperiph_5ft',['FLEXCOMM_PERIPH_T',['../a00217.html#ga41eebbb4c49103c4d42f91c8f542c2c7',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fperiph_5ft',['FLEXCOMM_PERIPH_T',['../a00216.html#ga41eebbb4c49103c4d42f91c8f542c2c7',1,'fsl_flexcomm.h']]],
   ['flexspi_5fahb_5ferror_5fcode_5ft',['flexspi_ahb_error_code_t',['../a00021.html#gac8c57dd8e797af1040fd9fcc21b10917',1,'fsl_flexspi.h']]],
   ['flexspi_5fahb_5fwrite_5fwait_5funit_5ft',['flexspi_ahb_write_wait_unit_t',['../a00021.html#ga3c773143ad080de42e5e18928fb26f71',1,'fsl_flexspi.h']]],
   ['flexspi_5farb_5fcommand_5fsource_5ft',['flexspi_arb_command_source_t',['../a00021.html#ga884bdaa9f8e8c1f5bd80b483c5097489',1,'fsl_flexspi.h']]],

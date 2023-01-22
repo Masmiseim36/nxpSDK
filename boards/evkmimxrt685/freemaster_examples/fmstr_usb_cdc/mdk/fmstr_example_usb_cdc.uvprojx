@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT685SFVKB=1, USB_STACK_BM=1, USB_STACK_USE_DEDICATED_RAM=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -759,6 +759,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1114,11 +1124,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1132,16 +1137,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1533,7 +1528,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT685SFVKB=1, USB_STACK_BM=1, USB_STACK_USE_DEDICATED_RAM=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1958,6 +1953,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2313,11 +2318,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2331,16 +2331,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2732,7 +2722,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT685SFVKB=1, USB_STACK_BM=1, USB_STACK_USE_DEDICATED_RAM=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3157,6 +3147,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3512,11 +3512,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3530,16 +3525,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3931,7 +3916,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, CPU_MIMXRT685SFVKB=1, USB_STACK_BM=1, USB_STACK_USE_DEDICATED_RAM=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4356,6 +4341,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -4711,11 +4706,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4729,16 +4719,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

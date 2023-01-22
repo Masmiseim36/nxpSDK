@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
 #include "fsl_memory.h"
 #endif
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 #include "xa_error_standards.h"
 #include "audio/xa-capturer-api.h"
 #include "audio/xa-pcm-gain-api.h"
@@ -31,9 +31,6 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (32 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (101 * 1024)
-
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
 
 #define CAPTURER_FRAME_SIZE (192)
 #define PCM_GAIN_FRAME_SIZE (192)

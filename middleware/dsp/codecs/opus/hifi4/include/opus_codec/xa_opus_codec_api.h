@@ -1,20 +1,30 @@
 /*
- * Copyright (c) 2014-2019 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
- * These coded instructions, statements, and computer programs are the
- * copyrighted works and confidential proprietary information of
- * Cadence Design Systems Inc.  They may be adapted and modified by bona fide
- * purchasers for internal use, but neither the original nor any adapted
- * or modified version may be disclosed or distributed to third parties
- * in any manner, medium, or form, in whole or in part, without the prior
- * written consent of Cadence Design Systems Inc.  This software and its
- * derivatives are to be executed solely on products incorporating a Cadence
- * Design Systems processor.
+ * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
 
-#ifndef __XA_SILK_CODEC_API_H__
-#define __XA_SILK_CODEC_API_H__
+#ifndef __XA_OPUS_CODEC_API_H__
+#define __XA_OPUS_CODEC_API_H__
 
 #include "xa_type_def.h"
 #include "xa_error_standards.h"
@@ -295,7 +305,7 @@ XA_ERRORCODE xa_opus_enc
     xa_codec_handle_t       handle,                     /* I/O: State handle                            */
     pWORD16                 inp_speech,                 /* I:   Input speech samples                    */
     pUWORD8                 enc_speech,                 /* O:   Encoded output speech bytes             */
-    WORD16                  inp_samples,                /* I:   Number of input bytes                   */
+    WORD16                  inp_samples,                /* I:   Number of input samples                   */
     xa_opus_enc_control_t  *enc_control,                /* I/O: Control Structure                       */
     WORD16                 *out_bytes,                  /* I/O: Number of samples (vector/decoded)      */
     pVOID                   scratch                     /* I/O: Scratch memory                          */
@@ -339,4 +349,4 @@ const char * xa_opus_get_lib_api_version_string();
 }
 #endif    /* __cplusplus */
 
-#endif /* __XA_SILK_CODEC_API_H__ */
+#endif /* __XA_OPUS_CODEC_API_H__ */

@@ -1,6 +1,6 @@
 var a00045 =
 [
-    [ "rtc_datetime_t", "a00045.html#a00352", [
+    [ "rtc_datetime_t", "a00045.html#a00353", [
       [ "year", "a00045.html#a9d9b3f17954a41223c07440f08edaf74", null ],
       [ "month", "a00045.html#a1621f010a30ff4e06636f08cdcb9a0b0", null ],
       [ "day", "a00045.html#a6be9f8cd55c5ccc80f6bb3a0fa1a9d0f", null ],

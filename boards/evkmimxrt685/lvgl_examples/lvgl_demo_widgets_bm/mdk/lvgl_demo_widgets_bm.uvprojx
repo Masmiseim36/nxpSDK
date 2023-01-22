@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -437,6 +437,16 @@
               <FileName>lv_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lv_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../lvgl_demo_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../lvgl_demo_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -724,6 +734,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -939,6 +959,26 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
+              <FileName>lv_draw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.c</FilePath>
@@ -1046,6 +1086,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/arm2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_arm2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/arm2d/lv_gpu_arm2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/swm341_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_swm341_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/swm341_dma2d/lv_gpu_swm341_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
           <Files>
             <File>
@@ -1117,6 +1177,16 @@
               <FileName>lv_draw_vglite_rect.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_gpu_nxp_vglite.c</FileName>
@@ -1337,6 +1407,16 @@
               <FileName>lv_draw_sw_rect.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_layer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2129,14 +2209,14 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
             </File>
             <File>
-              <FileName>qrcodegen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
-            </File>
-            <File>
               <FileName>qrcodegen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2267,6 +2347,66 @@
               <FileName>lv_monkey.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/fragment</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fragment.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fragment.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/ime</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ime_pinyin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ime_pinyin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/imgfont</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_imgfont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_imgfont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/msg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2704,11 +2844,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2722,16 +2857,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3108,7 +3233,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3211,6 +3336,16 @@
               <FileName>lv_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lv_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../lvgl_demo_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../lvgl_demo_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3498,6 +3633,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3713,6 +3858,26 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
+              <FileName>lv_draw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.c</FilePath>
@@ -3820,6 +3985,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/arm2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_arm2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/arm2d/lv_gpu_arm2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/swm341_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_swm341_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/swm341_dma2d/lv_gpu_swm341_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
           <Files>
             <File>
@@ -3891,6 +4076,16 @@
               <FileName>lv_draw_vglite_rect.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_gpu_nxp_vglite.c</FileName>
@@ -4111,6 +4306,16 @@
               <FileName>lv_draw_sw_rect.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_layer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4903,14 +5108,14 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
             </File>
             <File>
-              <FileName>qrcodegen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
-            </File>
-            <File>
               <FileName>qrcodegen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5041,6 +5246,66 @@
               <FileName>lv_monkey.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/fragment</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fragment.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fragment.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/ime</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ime_pinyin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ime_pinyin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/imgfont</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_imgfont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_imgfont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/msg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5478,11 +5743,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -5496,16 +5756,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -5882,7 +6132,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5985,6 +6235,16 @@
               <FileName>lv_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lv_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../lvgl_demo_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../lvgl_demo_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6272,6 +6532,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -6487,6 +6757,26 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
+              <FileName>lv_draw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.c</FilePath>
@@ -6594,6 +6884,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/arm2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_arm2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/arm2d/lv_gpu_arm2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/swm341_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_swm341_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/swm341_dma2d/lv_gpu_swm341_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
           <Files>
             <File>
@@ -6665,6 +6975,16 @@
               <FileName>lv_draw_vglite_rect.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_gpu_nxp_vglite.c</FileName>
@@ -6885,6 +7205,16 @@
               <FileName>lv_draw_sw_rect.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_layer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7677,14 +8007,14 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
             </File>
             <File>
-              <FileName>qrcodegen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
-            </File>
-            <File>
               <FileName>qrcodegen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7815,6 +8145,66 @@
               <FileName>lv_monkey.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/fragment</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fragment.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fragment.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/ime</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ime_pinyin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ime_pinyin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/imgfont</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_imgfont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_imgfont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/msg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8252,11 +8642,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -8270,16 +8655,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -8656,7 +9031,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8759,6 +9134,16 @@
               <FileName>lv_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lv_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../lvgl_demo_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lvgl_demo_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../lvgl_demo_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9046,6 +9431,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -9261,6 +9656,26 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
+              <FileName>lv_draw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_layer.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_transform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_transform.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.c</FilePath>
@@ -9368,6 +9783,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/arm2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_arm2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/arm2d/lv_gpu_arm2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/swm341_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_swm341_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/swm341_dma2d/lv_gpu_swm341_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
           <Files>
             <File>
@@ -9439,6 +9874,16 @@
               <FileName>lv_draw_vglite_rect.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_line.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_gpu_nxp_vglite.c</FileName>
@@ -9659,6 +10104,16 @@
               <FileName>lv_draw_sw_rect.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_transform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_layer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10451,14 +10906,14 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
             </File>
             <File>
-              <FileName>qrcodegen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
-            </File>
-            <File>
               <FileName>qrcodegen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10589,6 +11044,66 @@
               <FileName>lv_monkey.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/fragment</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fragment.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fragment.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/ime</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ime_pinyin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ime_pinyin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/imgfont</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_imgfont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_imgfont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/msg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11026,11 +11541,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -11044,16 +11554,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

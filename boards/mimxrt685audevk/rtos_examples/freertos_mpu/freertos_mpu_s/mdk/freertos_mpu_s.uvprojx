@@ -335,7 +335,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=786432, DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -572,47 +572,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33/secure</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33/secure</GroupName>
           <Files>
             <File>
               <FileName>secure_context.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
             </File>
             <File>
               <FileName>secure_context.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
             </File>
             <File>
               <FileName>secure_context_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
             </File>
             <File>
               <FileName>secure_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
             </File>
             <File>
               <FileName>secure_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
             </File>
             <File>
               <FileName>secure_port_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -775,11 +775,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -793,16 +788,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1160,7 +1145,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=135266304, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1397,47 +1382,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33/secure</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33/secure</GroupName>
           <Files>
             <File>
               <FileName>secure_context.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
             </File>
             <File>
               <FileName>secure_context.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
             </File>
             <File>
               <FileName>secure_context_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
             </File>
             <File>
               <FileName>secure_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
             </File>
             <File>
               <FileName>secure_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
             </File>
             <File>
               <FileName>secure_port_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1600,11 +1585,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1618,16 +1598,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1985,7 +1955,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=786432, NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2222,47 +2192,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33/secure</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33/secure</GroupName>
           <Files>
             <File>
               <FileName>secure_context.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
             </File>
             <File>
               <FileName>secure_context.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
             </File>
             <File>
               <FileName>secure_context_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
             </File>
             <File>
               <FileName>secure_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
             </File>
             <File>
               <FileName>secure_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
             </File>
             <File>
               <FileName>secure_port_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2425,11 +2395,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2443,16 +2408,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2810,7 +2765,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=135266304, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3047,47 +3002,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33/secure</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33/secure</GroupName>
           <Files>
             <File>
               <FileName>secure_context.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.c</FilePath>
             </File>
             <File>
               <FileName>secure_context.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context.h</FilePath>
             </File>
             <File>
               <FileName>secure_context_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.c</FilePath>
             </File>
             <File>
               <FileName>secure_heap.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_heap.h</FilePath>
             </File>
             <File>
               <FileName>secure_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.c</FilePath>
             </File>
             <File>
               <FileName>secure_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_init.h</FilePath>
             </File>
             <File>
               <FileName>secure_port_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3250,11 +3205,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3268,16 +3218,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

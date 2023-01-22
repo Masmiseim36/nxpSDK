@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Cadence Design Systems, Inc.
+ * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -53,8 +53,10 @@
 #endif
 
 #include "opus_header.h"
-#include <string.h>
+#if defined(ENABLE_ASSERTIONS) || defined(ENABLE_HARDENING)
 #include <stdio.h>
+#endif
+#include <string.h>
 
 /* Header contents:
   - "OpusHead" (64 bits)

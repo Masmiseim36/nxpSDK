@@ -1,12 +1,12 @@
 var a00056 =
 [
-    [ "spi_delay_config_t", "a00056.html#a00379", [
+    [ "spi_delay_config_t", "a00056.html#a00380", [
       [ "preDelay", "a00056.html#a24a2584817f03d1ace0a6cecc718bc09", null ],
       [ "postDelay", "a00056.html#a960b87887e431dabbb5641109cb56d90", null ],
       [ "frameDelay", "a00056.html#a9609e5c510bf5d0c120a403ed40aed42", null ],
       [ "transferDelay", "a00056.html#a7ea0733fc746e2bafe1c0999db7d4804", null ]
     ] ],
-    [ "spi_master_config_t", "a00056.html#a00381", [
+    [ "spi_master_config_t", "a00056.html#a00382", [
       [ "enableLoopback", "a00056.html#a384bc00ef4cd5b4e9cb6a4d48ec336bd", null ],
       [ "enableMaster", "a00056.html#aa033bd20cfbb1a14f0fd43f4b31bb27e", null ],
       [ "polarity", "a00056.html#ac8d9a8c7a526b96cbe3105d6e06b1cce", null ],
@@ -20,7 +20,7 @@ var a00056 =
       [ "rxWatermark", "a00056.html#a8089a2a9d16d41ed4502e251ff4cffec", null ],
       [ "delayConfig", "a00056.html#a787477e7b0ae7833dcbdb1c85fef361c", null ]
     ] ],
-    [ "spi_slave_config_t", "a00056.html#a00383", [
+    [ "spi_slave_config_t", "a00056.html#a00384", [
       [ "enableSlave", "a00056.html#a9fcd3fae6d886c7dfd0c3fd4cd51e6fe", null ],
       [ "polarity", "a00056.html#a32c240620581fcb133877d4fbda21226", null ],
       [ "phase", "a00056.html#ac6d76d6b354491d5b43756fdf8ef07d6", null ],
@@ -30,13 +30,13 @@ var a00056 =
       [ "txWatermark", "a00056.html#ac1dedde5a4b05f4e56192aadc03813c7", null ],
       [ "rxWatermark", "a00056.html#a4b2df05f775a1481b39f95a23a43ad4b", null ]
     ] ],
-    [ "spi_transfer_t", "a00056.html#a00384", [
+    [ "spi_transfer_t", "a00056.html#a00385", [
       [ "txData", "a00056.html#addc4f20760a1a62c4d20cdf9443f3af3", null ],
       [ "rxData", "a00056.html#a28b878b99d5ec790b5c8f3bafe140da0", null ],
       [ "configFlags", "a00056.html#a582eea734badd0049c98ea3cf89b3e4b", null ],
       [ "dataSize", "a00056.html#ae003337c9398e5f5e3189f5b2ba6335b", null ]
     ] ],
-    [ "spi_half_duplex_transfer_t", "a00056.html#a00380", [
+    [ "spi_half_duplex_transfer_t", "a00056.html#a00381", [
       [ "txData", "a00056.html#a720d55f285c43087c893c2f48018e0da", null ],
       [ "rxData", "a00056.html#a93f6fd7e0e297152075af5a3a2c6929c", null ],
       [ "txDataSize", "a00056.html#a3b296a6f72288eb7fa86067e51dc231d", null ],
@@ -45,7 +45,7 @@ var a00056 =
       [ "isPcsAssertInTransfer", "a00056.html#a23f645fd24ca70055b770082586b1a59", null ],
       [ "isTransmitFirst", "a00056.html#a1cd036b1eb498f75d8988916dbea3345", null ]
     ] ],
-    [ "spi_config_t", "a00056.html#a00378", null ],
+    [ "spi_config_t", "a00056.html#a00379", null ],
     [ "spi_master_handle_t", "a00056.html#a00272", [
       [ "txData", "a00056.html#a6cb4626f6b63c70fa21fe2e3338dc915", null ],
       [ "rxData", "a00056.html#a69f260bde2e1728233f835a148b2f51b", null ],

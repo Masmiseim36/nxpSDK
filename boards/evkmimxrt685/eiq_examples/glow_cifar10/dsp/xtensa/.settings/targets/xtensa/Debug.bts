@@ -13,10 +13,11 @@
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/inc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
@@ -31,6 +32,8 @@
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="DEBUG" value=""/>
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
+              <ListEntry key="XF_CORE_ID" value="0"/>
+              <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
               <ListEntry key="NN_ENABLE_xa_nn_inference" value="1"/>
               <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
@@ -80,24 +83,6 @@
       </CompilerOptions>
       <AssemblerOptions/>
       <LinkerOptions>
-        <StringListMapOptions>
-          <StringListMapEntry>
-            <key>LinkerAdditionalOptions</key>
-            <value inheritance="append">
-              <ListEntry>${xt_project_loc}/../glow_bundle/model.o&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a&#13;
--g&#13;
-</ListEntry>
-            </value>
-          </StringListMapEntry>
-          <StringListMapEntry>
-            <key>Libraries</key>
-            <value inheritance="prepend" flag="-l">
-              <ListEntry>xos</ListEntry>
-              <ListEntry>xtutil</ListEntry>
-            </value>
-          </StringListMapEntry>
-        </StringListMapOptions>
         <BooleanMapOptions>
           <BooleanMapEntry>
             <key>CreateMinsize</key>
@@ -109,6 +94,26 @@ ${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnli
           </BooleanMapEntry>
         </BooleanMapOptions>
         <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT685S/xtensa/gdbio"/>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Libraries</key>
+            <value inheritance="prepend" flag="-l">
+              <ListEntry>xos</ListEntry>
+              <ListEntry>xtutil</ListEntry>
+            </value>
+          </StringListMapEntry>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-g&#13;
+-Wl,--start-group&#13;
+${xt_project_loc}/../glow_bundle/model.o&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a&#13;
+-Wl,--end-group&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
       </LinkerOptions>
     </BaseSettings>
     <OverriddenSettings/>

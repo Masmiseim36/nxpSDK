@@ -52,7 +52,7 @@
 //!
 //! Static API functions (no dynamic allocation) enabled/disabled.
 //! The default value is 0 (static API disabled).
-#define RL_USE_STATIC_API (1)
+#define RL_USE_STATIC_API (0)
 
 //! @def RL_CLEAR_USED_BUFFERS
 //!

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2020 Cadence Design Systems, Inc.
+# Copyright (c) 2006-2022 Cadence Design Systems, Inc.
 # 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -37,7 +37,7 @@ AR = ar $(XTCORE)
 RM_R = rm -rf
 MKPATH = mkdir -p
 else
-CC = xt-xcc $(XTCORE)
+CC = xt-clang $(XTCORE)
 ISS = xt-run $(XTCORE)
 CONFIGDIR := $(shell $(ISS) $(XTCORE) --show-config=config)
 include $(CONFIGDIR)/misc/hostenv.mk
@@ -46,7 +46,7 @@ endif
 ifeq ($(DEBUG), 1)
 OPT = -O0 -g
 else
-OPT = -O2
+OPT = -Os
 endif
 
 ifeq "$(CPU)" "gcc"
@@ -123,9 +123,6 @@ endif
 	aacplus_v2_dec \
 	aacmch_dec \
 	aacmchplus_dec 
-
-$(OBJS_OBJS): .FORCE
-.FORCE:
 
 all:
 	@echo "Please specify target:"

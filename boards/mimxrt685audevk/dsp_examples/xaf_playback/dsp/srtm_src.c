@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,7 +12,7 @@
 
 #include <xtensa/xos.h>
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 
 #include "xa_error_standards.h"
 #include "xa_src_pp_api.h"
@@ -27,9 +27,6 @@
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
 #define MAX_SRC_FRAME_ADJUST 2
 #define MAX_INPUT_CHUNK_LEN  512
-
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
 
 static int src_setup(
     void *p_comp, int channels, int in_sample_rate, int out_sample_rate, int in_frame_size, int pcm_width_bytes)
@@ -84,7 +81,7 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
     int read_length;
     int i;
     xaf_format_t src_format;
-    xf_id_t comp_id   = "audio-fx/src-pp";
+    xf_id_t comp_id   = "post-proc/src-pp";
     int in_frame_size = 0;
     uint32_t *input_size, *output_size;
     XAF_ERR_CODE ret;

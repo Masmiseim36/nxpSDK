@@ -9,9 +9,22 @@
 
 /****************************************************************************************/
 /*                                                                                      */
+/*  Includes                                                                            */
+/*                                                                                      */
+/****************************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+/****************************************************************************************/
+/*                                                                                      */
 /*  User Selections : to be adapted per platform integration                            */
 /*                                                                                      */
 /****************************************************************************************/
+
+/*    VIT Configuration      */
 
 // Select core targeted
 //#define PLATFORM_RT600
@@ -21,14 +34,14 @@
 //#define PLATFORM_RT1170
 //#define PLATFORM_WINDOWS
 
-
 // Way to reserve memory, if defined then Malloc() allocation else pre-reserved buffer (static allocation) 
 #define MEMORY_MALLOC
 
 
 // PCM input file
 // The data format should be aligned with VIT interface (16kHz, 16-bit, number of channel) 
-#define INPUT_FILE                   "../../../../_INPUT/HEYNXP_WW_CMD.pcm"
+#define INPUT_FILE                   "../../../../_INPUT/HEYNXP_WW_CMD.pcm" 
+
 
 #ifndef MEMORY_MALLOC
 // STATIC ALLOCATION 
@@ -46,84 +59,75 @@
 
 
 // Configurations below are provided as examples of possible VIT configurations
-// Configuration should be adapted to number of MICs supported and VIT features targeted.
-// If AFE is enable  : only 2 or 3 channels input is supported
-// If AFE is disable : only 1 channel input is supported
-// see VIT.h for further information on VIT configurations : section "Valid VIT Configurations"
+// see VIT.h for further information on VIT configurations
 #ifdef PLATFORM_RT1040
     #include "PL_platformTypes_CortexM.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_ROM
     #define DEVICE_ID                   VIT_IMXRT1040
-    // Configuration : VIT lib not integrating AFE - only 1Mic supported
-    #define VIT_OPERATING_MODE          VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
-    #define NUMBER_OF_CHANNELS          _1CHAN
-    #define VIT_MIC1_MIC2_DISTANCE      0 
-    #define VIT_MIC1_MIC3_DISTANCE      0
+    #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif PLATFORM_RT1060
     #include "PL_platformTypes_CortexM.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_ROM
     #define DEVICE_ID                   VIT_IMXRT1060
-    // Configuration : VIT lib integrating AFE - AFE selected - 2 Mics enabled
-    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
-    #define NUMBER_OF_CHANNELS          _2CHAN
-    #define VIT_MIC1_MIC2_DISTANCE      63                       // Distance between MIC2 and the reference MIC in mm
-    #define VIT_MIC1_MIC3_DISTANCE      0                        // Distance between MIC3 and the reference MIC in mm
+    #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined PLATFORM_RT1170
     #include "PL_platformTypes_CortexM.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_ROM
     #define DEVICE_ID                   VIT_IMXRT1170
-    // Configuration : VIT lib integrating AFE - AFE selected  - 3Mics enabled
-    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
-    #define NUMBER_OF_CHANNELS          _3CHAN
-    #define VIT_MIC1_MIC2_DISTANCE      63                       // Distance between MIC2 and the reference MIC in mm
-    #define VIT_MIC1_MIC3_DISTANCE      63                       // Distance between MIC3 and the reference MIC in mm
+    #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined  PLATFORM_RT600
     #include "PL_platformTypes_HIFI4_FUSIONF1.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_RAM
     #define DEVICE_ID                   VIT_IMXRT600
-    // Configuration : VIT lib integrating AFE - AFE selected - 2 enabled
-    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
-    #define NUMBER_OF_CHANNELS          _2CHAN
-    #define VIT_MIC1_MIC2_DISTANCE      95                       // Distance between MIC2 and the reference MIC in mm
-    #define VIT_MIC1_MIC3_DISTANCE      0                        // Distance between MIC3 and the reference MIC in mm
+    #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined  PLATFORM_RT500
     #include "PL_platformTypes_HIFI4_FUSIONF1.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_RAM
     #define DEVICE_ID                   VIT_IMXRT500
-    // Configuration : VIT lib not integrating AFE - only 1Mic supported
-    #define VIT_OPERATING_MODE          VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
-    #define NUMBER_OF_CHANNELS          _1CHAN
-    #define VIT_MIC1_MIC2_DISTANCE      0 
-    #define VIT_MIC1_MIC3_DISTANCE      0
+    #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined  PLATFORM_WINDOWS
-#include "PL_platformTypes_windows.h"
+    #include "PL_platformTypes_windows.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_ROM
     #define DEVICE_ID                   VIT_IMXRT500   //Dummy
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
-    #define NUMBER_OF_CHANNELS          _1CHAN
-    #define VIT_MIC1_MIC2_DISTANCE      0
-    #define VIT_MIC1_MIC3_DISTANCE      0
-
+#elif defined  PLATFORM_LINUX
+    #include "PL_platformTypes_linux.h"
+    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define DEVICE_ID                   VIT_IMXRT500   //Dummy
+    #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #else
     #error "No platform selected"
 #endif
 
 // Configure the detection period in second for each command
 // VIT will return UNKNOWN if no command is recognized during this time span.
-#define VIT_COMMAND_TIME_SPAN 3.0 // in second
+#define VIT_COMMAND_TIME_SPAN           3.0 // in second
 
-/****************************************************************************************/
-/*                                                                                      */
-/*  Includes                                                                            */
-/*                                                                                      */
-/****************************************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+// Configure number of samples per frame read from the serial interface (MIC, File,...)
+// This will correspond to the number of samples at VoiceSeeker Output and VIT Input
+#define SAMPLES_PER_FRAME               VIT_SAMPLES_PER_30MS_FRAME
+
+
 
 #include "VIT.h"
 #include "VIT_Model_en.h"
 
+
+
+/*    VoiceSeeker Configuration      */
+
+// Enable or not VoiceSeeker Processing
+
+#define AFE_VOICESEEKER
+
+#ifdef AFE_VOICESEEKER
+#include "AFE_VoiceSeeker.h"
+#define VOICESEEKER_ENABLE          1
+#define NUMBER_OF_CHANNELS          _3CHAN
+#else
+#define NUMBER_OF_CHANNELS          _1CHAN
+#endif
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -144,8 +148,8 @@
 /****************************************************************************************/
 
 // To manage the input data from the file
-PL_UINT16  InputRawData[VIT_SAMPLES_PER_FRAME*NUMBER_OF_CHANNELS];           // data from file
-PL_INT16   DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME*NUMBER_OF_CHANNELS];    // data from file de-Interleaved
+PL_INT16  InputRawData[SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS];            // data from file
+PL_INT32  TempData[SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS];                // data in Float32 or int32_t
 
 
 // VIT Buffers declaration in case of static allocation
@@ -186,7 +190,6 @@ PL_INT32 main(void)
     VIT_VoiceCommand_st       VoiceCommand;                             // Voice Command info
     VIT_WakeWord_st           WakeWord;                                 // Wakeword info
     VIT_DetectionStatus_en    VIT_DetectionResults = VIT_NO_DETECTION;  // VIT detection result
-    VIT_DataIn_st             VIT_InputBuffers     = { PL_NULL, PL_NULL, PL_NULL };  // Resetting Input Buffer addresses provided to VIT_process() API
     PL_INT16                  *VIT_InputData;    
 
     // General
@@ -213,7 +216,7 @@ PL_INT32 main(void)
     if (INFILE == NULL)
     {
         printf("Can't open Input file : %s\n", INPUT_FILE);
-        scanf("%d", &Status);
+        scanf("%d", (int *)&Status);
         exit(-1);
     }
     else 
@@ -230,7 +233,7 @@ PL_INT32 main(void)
     if (Status != VIT_SUCCESS)
     {
         printf("VIT_SetModel error : %d\n", Status);
-        scanf("%d", &Status);
+        scanf("%d", (int *)&Status);
         exit(-1);                                        // We can exit from here since memory is not allocated yet
     }
 
@@ -248,7 +251,7 @@ PL_INT32 main(void)
     if (Status != VIT_SUCCESS)
     {
         printf("VIT_GetModelInfo error : %d\n", Status);
-        scanf("%d", &Status);
+        scanf("%d", (int *)&Status);
         exit(-1);                                        // We can exit from here since memory is not allocated yet
     }
 
@@ -272,7 +275,7 @@ PL_INT32 main(void)
 
         printf("  VIT_Model integrating WakeWord and Voice Commands strings : YES\n");
         printf("  WakeWords supported : \n");
-        ptr = Model_Info.pWakeWord;
+        ptr = Model_Info.pWakeWord_List;
         if (ptr != PL_NULL)
         {
             for (PL_UINT16 i = 0; i < Model_Info.NbOfWakeWords; i++)
@@ -302,39 +305,23 @@ PL_INT32 main(void)
     if (Status != VIT_SUCCESS)
     {
         printf("VIT_GetLibInfo error : %d\n", Status);
-        scanf("%d", &Status);
+        scanf("%d", (int *)&Status);
         exit(-1);                                        // We can exit from here since memory is not allocated yet
     }
     printf("\nVIT Lib Info\n");
     printf(" VIT LIB Release   = 0x%04x\n", Lib_Info.VIT_LIB_Release);
     printf(" VIT Features supported by the lib       = 0x%04x\n", Lib_Info.VIT_Features_Supported);
     printf(" Number of channels supported by VIT lib = %d\n", Lib_Info.NumberOfChannels_Supported);
-    if (Lib_Info.WakeWord_In_Text2Model)
-    {
-        printf(" VIT WakeWord in Text2Model\n\n ");
-    }
-    else
-    {
-        printf(" VIT WakeWord in Audio2Model\n\n ");
-    }
 
 
     /*
      *   Configure VIT Instance Parameters
      */
-    // Check that NUMBER_OF_CHANNELS is supported by VIT
-    // Retrieve from VIT_GetLibInfo API the number of channel supported by the VIT lib
-    PL_UINT16 max_nb_of_Channels = Lib_Info.NumberOfChannels_Supported ;
-    if (NUMBER_OF_CHANNELS > max_nb_of_Channels)
-    {
-        printf("VIT lib is supporting only : %d channels\n", max_nb_of_Channels);
-        scanf("%d", &Status);
-        exit(-1);                                        // We can exit from here since memory is not allocated yet
-    }
     VITInstParams.SampleRate_Hz            = VIT_SAMPLE_RATE;
-    VITInstParams.SamplesPerFrame          = VIT_SAMPLES_PER_FRAME;
-    VITInstParams.NumberOfChannel          = NUMBER_OF_CHANNELS;
+    VITInstParams.SamplesPerFrame          = SAMPLES_PER_FRAME;
+    VITInstParams.NumberOfChannel          = _1CHAN;
     VITInstParams.DeviceId                 = DEVICE_ID;
+    VITInstParams.APIVersion               = VIT_API_VERSION;
 
 
     /* 
@@ -346,7 +333,7 @@ PL_INT32 main(void)
     if (Status != VIT_SUCCESS)
     {
         printf("VIT_GetMemoryTable error : %d\n", Status);
-        scanf("%d", &Status);
+        scanf("%d", (int *)&Status);
         exit(-1);                                        // We can exit from here since memory is not allocated yet
     }
 
@@ -452,8 +439,7 @@ PL_INT32 main(void)
     *   Set and Apply VIT control parameters
     */
     VITControlParams.OperatingMode      = VIT_OPERATING_MODE;
-    VITControlParams.MIC1_MIC2_Distance = VIT_MIC1_MIC2_DISTANCE;
-    VITControlParams.MIC1_MIC3_Distance = VIT_MIC1_MIC3_DISTANCE;
+    VITControlParams.Feature_LowRes     = PL_FALSE;
     VITControlParams.Command_Time_Span  = VIT_COMMAND_TIME_SPAN;
 
 
@@ -464,7 +450,6 @@ PL_INT32 main(void)
         if (Status != VIT_SUCCESS)
         {
             InitPhase_Error = PL_TRUE;
-            printf("VIT_SetControlParameters error : %d\n", Status);
         }
     }
 
@@ -479,17 +464,19 @@ PL_INT32 main(void)
             printf(" VIT Features supported by the lib = 0x%04x\n", pVIT_StatusParam_Buffer->VIT_Features_Supported);
             printf(" VIT Features Selected             = 0x%04x\n", pVIT_StatusParam_Buffer->VIT_Features_Selected);
             printf(" Number of channels supported by VIT lib = %d\n", pVIT_StatusParam_Buffer->NumberOfChannels_Supported);
-            printf(" Number of channels selected             = %d\n", pVIT_StatusParam_Buffer->NumberOfChannels_Selected);
             printf(" Device Selected : device id = %d\n", pVIT_StatusParam_Buffer->Device_Selected);
-            if (pVIT_StatusParam_Buffer->WakeWord_In_Text2Model)
-            {
-                printf(" VIT WakeWord in Text2Model\n ");
-            }
-            else
-            {
-                printf(" VIT WakeWord in Audio2Model\n ");
-            }
         }
+
+#ifdef AFE_VOICESEEKER
+    AFE_VoiceSeeker_st AFE_VoiceSeekerConfig;
+
+    if (AFE_VoiceSeeker_Init(&AFE_VoiceSeekerConfig, SAMPLES_PER_FRAME,
+                             NUMBER_OF_CHANNELS, VOICESEEKER_ENABLE) != AFE_VOICESEEKER_SUCCESS)
+    {
+        (void)scanf("%d", (int *)&Status);
+        exit(-1);
+    }
+#endif
 
 
     /*
@@ -505,12 +492,11 @@ PL_INT32 main(void)
     {
         printf("\r%d", frameCnt);     // Animation during processing
         
-        FrameSize = VIT_SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS;
+        FrameSize = SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS;
         InputRawData_Read_Number = (short) fread(   &InputRawData,              // read data 1 full frame
                                                     sizeof(short),
                                                     (size_t)FrameSize,
                                                     INFILE);
-
         if (InputRawData_Read_Number < FrameSize)                               // if frame is shorter than the frame size
         {
             for (i = InputRawData_Read_Number; i<FrameSize; i++)                // set missing samples to 0
@@ -522,56 +508,77 @@ PL_INT32 main(void)
 
 
         /*
-        *   VIT Process
+        *   AFE VoiceSeeker Process
         */
-        // Current VIT library is supporting from 1 to 3 channels
-        // VIT_InputBuffers.pBuffer_Chan1/2/3 should be set to the input buffer addresses
-        // VIT_InputBuffers.pBuffer_Chan1/2/3 setting can be done out of the while loop
+
         // Application should take care of the ping pong buffers (when present) handling - no pingpong buffer in this example app.   
 
         // Convert from float interleaved to float non-interleaved (Multichannel case)
-        if (VITInstParams.NumberOfChannel > _1CHAN)
+        if (NUMBER_OF_CHANNELS > _1CHAN)
         {
-            // De-Interleaved input streams to VIT_LargeInputBuffer
+
+#ifdef AFE_VOICESEEKER
+            // De-Interleaved input streams to TempData
             // In place processing not supported 
-            DeInterleave(InputRawData, DeInterleavedBuffer, VITInstParams.SamplesPerFrame, VITInstParams.NumberOfChannel);
-            VIT_InputData = DeInterleavedBuffer;      //Configure address of VIT_InputBuffer
+            DeInterleave(InputRawData, (PL_INT16*)TempData, SAMPLES_PER_FRAME, NUMBER_OF_CHANNELS);
+
+            PL_FLOAT *InputTempDataFloat = (float*)TempData;
+            PL_INT16 *InputTempDataINT16 = (PL_INT16*)TempData;
+
+            // Convert  INT16 Q15 data to Float data
+            #define INV_32768   3.0517578125e-05f
+            for (PL_UINT16 i = FrameSize; i > 0; i--)
+            {
+                InputTempDataFloat[i-1] = ((float)InputTempDataINT16[i-1]) * INV_32768;
+            }
+
+
+            // AFE VoiceSeeker Processing : in place processing
+            PL_INT16 VoiceSeekerStatus = 0;
+            VoiceSeekerStatus = AFE_VoiceSeeker_Process(&AFE_VoiceSeekerConfig, (float*)TempData,
+                                                        sizeof(PL_FLOAT)* SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS);
+
+
+            if (VoiceSeekerStatus == AFE_VOICESEEKER_ERROR)
+            {
+                printf("VoiceSeeker Error\n");
+                break;
+            }
+            else
+            {
+                // Convert VoiceSeeker output from Float data to INT16 Q15 data
+                VIT_InputData = (PL_INT16*)TempData;
+                for (PL_UINT16 i = 0; i < SAMPLES_PER_FRAME; i++)
+                {
+                    VIT_InputData[i] = (PL_INT16)((float)InputTempDataFloat[i] * 32768);
+                }
+            }
+
+#else
+            printf("wrong AFE VoiceSeeker configuration\n");
+            break;
+#endif
+
         }
-        else {
+        else 
+        {
             VIT_InputData = InputRawData;             //Configure address of VIT_InputBuffer
         }
 
-
-        switch (VITInstParams.NumberOfChannel)
-        {
-        case _1CHAN:
-                VIT_InputBuffers.pBuffer_Chan1 = &VIT_InputData[0];
-                VIT_InputBuffers.pBuffer_Chan2 = PL_NULL;
-                VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
-                break;
-
-        case _2CHAN:
-                VIT_InputBuffers.pBuffer_Chan1 = &VIT_InputData[0];
-                VIT_InputBuffers.pBuffer_Chan2 = &VIT_InputData[VIT_SAMPLES_PER_FRAME];
-                VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
-                break;
-
-        case _3CHAN:
-                VIT_InputBuffers.pBuffer_Chan1 = &VIT_InputData[0];
-                VIT_InputBuffers.pBuffer_Chan2 = &VIT_InputData[VIT_SAMPLES_PER_FRAME];
-                VIT_InputBuffers.pBuffer_Chan3 = &VIT_InputData[VIT_SAMPLES_PER_FRAME*2];
-        }
-        
+      
+        /*
+        *   VIT Process
+        */
 
         Status = VIT_Process ( VITHandle,
-                               &VIT_InputBuffers,                               // temporal audio input data
+                               (void*)VIT_InputData,                               // temporal audio input data
                                &VIT_DetectionResults
                               );
 
         if (Status != VIT_SUCCESS)
         {
             printf("VIT_Process error : %d\n", Status);
-            MainLoop_Flag = 0;                                                  // will stop processing VIT and go directly to MEM free
+            break;                                                                 // will stop processing VIT and go directly to MEM free
         }
 
 
@@ -585,18 +592,22 @@ PL_INT32 main(void)
             if (Status != VIT_SUCCESS)
             {
                 printf("VIT_GetWakeWordFound error : %d\n", Status);
-                MainLoop_Flag = 0;                                              // will stop processing VIT and go directly to MEM free
+                break;                                                             // will stop processing VIT and go directly to MEM free
             }
             else
             {
-                printf(" - WakeWord detected %d", WakeWord.WW_Id);
+                printf(" - WakeWord detected %d", WakeWord.Id);
 
                 // Retrieve WakeWord Name : OPTIONAL
                 // Check first if WakeWord string is present
-                if (WakeWord.pWW_Name != PL_NULL)
+                if (WakeWord.pName != PL_NULL)
                 {
-                    printf(" %s\n", WakeWord.pWW_Name);
+                    printf(" %s\n", WakeWord.pName);
                 }
+
+#ifdef AFE_VOICESEEKER
+                AFE_VoiceSeeker_TriggerFound(&AFE_VoiceSeekerConfig, WakeWord.StartOffset);
+#endif
             }
         }
         else if (VIT_DetectionResults == VIT_VC_DETECTED)
@@ -609,17 +620,17 @@ PL_INT32 main(void)
             if (Status != VIT_SUCCESS)
             {
                 printf("VIT_GetVoiceCommandFound error : %d\n", Status);
-                MainLoop_Flag = 0;                                              // will stop processing VIT and go directly to MEM free
+                break;                                                               // will stop processing VIT and go directly to MEM free
             }
             else
             {
-                printf(" - Voice Command detected %d", VoiceCommand.Cmd_Id);
+                printf(" - Voice Command detected %d", VoiceCommand.Id);
 
                 // Retrieve CMD Name : OPTIONAL
                 // Check first if CMD string is present
-                if (VoiceCommand.pCmd_Name != PL_NULL)
+                if (VoiceCommand.pName != PL_NULL)
                 {
-                    printf(" %s\n", VoiceCommand.pCmd_Name);
+                    printf(" %s\n", VoiceCommand.pName);
                 }
             }
         }
@@ -627,7 +638,7 @@ PL_INT32 main(void)
         frameCnt++;
     } // end while MainLoop_Flag == 1
 
-    printf(" frames processesd \n"); // Animation during processing end
+    printf(" frames processed \n"); // Animation during processing end
 
 
     /*  
@@ -648,7 +659,7 @@ PL_INT32 main(void)
     if (Status != VIT_SUCCESS)
     {
         printf("VIT_GetMemoryTable error : %d\n", Status);
-        scanf("%d", &Status);
+        scanf("%d", (int *)&Status);
         exit(-1);
     }
 
@@ -662,9 +673,14 @@ PL_INT32 main(void)
     }
 #endif
     
+
+#ifdef AFE_VOICESEEKER
+    AFE_VoiceSeeker_Delete(&AFE_VoiceSeekerConfig);
+#endif
+
     /* end */
     printf("Press a key + ENTER to close: \n\n");
-    scanf("%d", &Status);
+    scanf("%d", (int *)&Status);
 
     return 1;
 }

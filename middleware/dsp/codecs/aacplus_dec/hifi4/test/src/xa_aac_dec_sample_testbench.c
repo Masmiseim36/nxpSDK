@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2020 Cadence Design Systems, Inc.
+ * Copyright (c) 2006-2022 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -52,12 +52,13 @@ int varChunkSize = CHUNK_SIZE;
 
 #if !defined(PROFILE)
 #define PROFILE 1
-//#define GMON_PROFILE
+#define GMON_PROFILE
 #endif /* PROFILE */
 
 
 #if PROFILE
 #include <sys/times.h>
+#include <xtensa/sim.h>
 #if defined(GMON_PROFILE)^M
 #define GMON_FRMSTRT 0
 #define GMON_FRMSTP 10000
@@ -312,9 +313,9 @@ void showusage()
             "\n"
             "        OPTIONS:\n"
 #ifdef DAB_PLUS
-            "         -b<bsfomat> Input file format (dabplus, rawdabplus)\n"
+            "         -b<bsformat> Input file format (dabplus, rawdabplus)\n"
 #else
-            "         -b<bsfomat> Input file format (none - raw / adts(default) / adif / loas / latm)\n"
+            "         -b<bsformat> Input file format (none - raw / adts(default) / adif / loas / latm)\n"
             "                     Note libraries for supporting loas formats need to be built with appropriate makefile options\n"
 #endif
             "         -d<bdownsample> Downsampled SBR mode (0 - off by default, 1 - on)\n"
@@ -360,6 +361,14 @@ void showusage()
             "         -cfi<int>    Concealment fade-in slope in frames/AUs. Valid values: 2 to 7. Default: 5\n"
 #endif
             "         -a<int>     MPEG4 Amendment4 (0 - disable, 1 - enable by default)\n"
+            "         -rst<int>   Reset internal decoder states in case of sync loss error(0 - disable, 1 - enable by default)\n"
+            " \n "
+#ifndef DAB_PLUS
+            "NOTE: The above parameters are generic. "
+            "AAC-LC does not support SBR. "
+            "SBR is only supported by AAC plus & AAC plus v2 "
+            "\n Please refer PG for more details "
+#endif
             );
 }
 
@@ -503,6 +512,12 @@ int parse_cmdline(void *p_hdl, char *argv[], int argc)
                     break;
 
             case 'r':
+                if(!strncmp(argval, "st", 2)) {
+                    char *pb_arg_val = argval + 2;
+                    ui_value = atoi(pb_arg_val);
+                    SET_CONFIG( XA_AACDEC_CONFIG_PARAM_RESET_STATE_ON_SYNC_LOSS_ERROR, (void *)&ui_value, "Reset States on Sync Loss Error");
+                }
+                else
                 {
                     /* Channel BitRate required as input for DAB_Parser */
                     int externalbitrate = atol(argval);
@@ -1106,7 +1121,8 @@ int xa_aac_dec_main_process(int argc, char *argv[])
 
     /* Display the Tensilica identification message */
     fprintf(stderr, "\n%s version %s\n", pb_process_name, pb_lib_version);
-    fprintf(stderr, "Tensilica, Inc. http://www.tensilica.com\n\n");
+    //fprintf(stderr, "Tensilica, Inc. http://www.tensilica.com\n\n");
+    fprintf(stderr, "Cadence Design Systems, Inc. https://ip.cadence.com/\n\n");
 #endif
 
     /* ******************************************************************/

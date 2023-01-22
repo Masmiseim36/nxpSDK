@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(glow_cifar10_cm33)
 
+set(MCUX_BUILD_TYPES flash_debug flash_release)
+
 set(MCUX_SDK_PROJECT_NAME glow_cifar10_cm33.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -32,8 +38,8 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../main_cm33.c"
-"${ProjDirPath}/../../test/input.bin"
-"${ProjDirPath}/../../test/output.bin"
+"${SdkRootDirPath}/boards/evkmimxrt685/eiq_examples/glow_cifar10/test/input.bin"
+"${SdkRootDirPath}/boards/evkmimxrt685/eiq_examples/glow_cifar10/test/output.bin"
 "${ProjDirPath}/../counter.c"
 "${ProjDirPath}/../counter.h"
 "${ProjDirPath}/../dsp_config.h"
@@ -54,8 +60,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dsp_nn.c"
 "${ProjDirPath}/../dsp_nn.h"
 "${ProjDirPath}/../config_nn.h"
-"${ProjDirPath}/../../../../../../middleware/eiq/glow/bundle_utils/glow_bundle_utils.h"
-"${ProjDirPath}/../../../../../../middleware/eiq/glow/bundle_utils/glow_bundle_utils.c"
+"${SdkRootDirPath}/middleware/eiq/glow/bundle_utils/glow_bundle_utils.h"
+"${SdkRootDirPath}/middleware/eiq/glow/bundle_utils/glow_bundle_utils.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
@@ -66,31 +72,31 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../dsp/binary/dsp_text_release.bin"
-"${ProjDirPath}/../../dsp/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt685/eiq_examples/glow_cifar10/dsp/binary/dsp_text_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt685/eiq_examples/glow_cifar10/dsp/binary/dsp_data_release.bin"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../test
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    ${SdkRootDirPath}/boards/evkmimxrt685/eiq_examples/glow_cifar10/test
     ${ProjDirPath}/..
     ${ProjDirPath}/../glow_bundle
-    ${ProjDirPath}/../../dsp/binary
-    ${ProjDirPath}/../../../../dsp_examples/nn_demo/cm33
-    ${ProjDirPath}/../../../../../../middleware/eiq/glow/bundle_utils
+    ${SdkRootDirPath}/boards/evkmimxrt685/eiq_examples/glow_cifar10/dsp/binary
+    ${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/nn_demo/cm33
+    ${SdkRootDirPath}/middleware/eiq/glow/bundle_utils
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../middleware/multicore
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../components/pca9420
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
+    ${SdkRootDirPath}/middleware/multicore
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/components/pca9420
+    ${SdkRootDirPath}/devices/MIMXRT685S
+    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/boards/evkmimxrt685/flash_config
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -167,15 +173,13 @@ include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

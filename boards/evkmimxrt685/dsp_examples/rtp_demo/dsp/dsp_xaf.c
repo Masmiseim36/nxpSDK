@@ -18,7 +18,7 @@
 #include "rpmsg_lite.h"
 #include "rtp.h"
 
-#include "xaf-api.h"
+#include "xaf-utils-test.h"
 #include "xa-audio-decoder-api.h"
 #include "xa-mixer-api.h"
 #include "xa-renderer-api.h"
@@ -38,9 +38,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* Stack size for DSP data processing thread. */
-#define STACK_SIZE (4 * 1024)
 
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
@@ -457,7 +454,7 @@ static void dsp_xaf_process_creating(dsp_handle_t *dsp)
     /* Sample rate converter component */
     xaf_comp_config_default_init(&comp_config);
 
-    comp_config.comp_id            = "audio-fx/src-pp";
+    comp_config.comp_id            = "post-proc/src-pp";
     comp_config.num_input_buffers  = 0;
     comp_config.num_output_buffers = 0;
     comp_config.pp_inbuf           = NULL;

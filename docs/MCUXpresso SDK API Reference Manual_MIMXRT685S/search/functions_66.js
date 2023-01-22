@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['flexcomm_5fgetinstance',['FLEXCOMM_GetInstance',['../a00217.html#ga59338c42d2715c76e95c4dc2c1190f08',1,'fsl_flexcomm.h']]],
-  ['flexcomm_5finit',['FLEXCOMM_Init',['../a00217.html#gaff39b352ed7517521dfcece68ba34327',1,'fsl_flexcomm.h']]],
-  ['flexcomm_5fsetirqhandler',['FLEXCOMM_SetIRQHandler',['../a00217.html#gaedf64691b871a2b0ea6a68fab284376a',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fgetinstance',['FLEXCOMM_GetInstance',['../a00216.html#ga59338c42d2715c76e95c4dc2c1190f08',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5finit',['FLEXCOMM_Init',['../a00216.html#gaff39b352ed7517521dfcece68ba34327',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fsetirqhandler',['FLEXCOMM_SetIRQHandler',['../a00216.html#gaedf64691b871a2b0ea6a68fab284376a',1,'fsl_flexcomm.h']]],
   ['flexspi_5fcheckandclearerror',['FLEXSPI_CheckAndClearError',['../a00021.html#ga32000baf3445d1b43444fd0dc0dbb643',1,'fsl_flexspi.h']]],
   ['flexspi_5fclearinterruptstatusflags',['FLEXSPI_ClearInterruptStatusFlags',['../a00021.html#ga3a374e8190cb2a45fa1eea1ffa31b912',1,'fsl_flexspi.h']]],
   ['flexspi_5fdeinit',['FLEXSPI_Deinit',['../a00021.html#gaad2d8ae42188749382c0d1dd0f6572d0',1,'fsl_flexspi.h']]],
@@ -25,7 +25,7 @@ var searchData=
   ['flexspi_5fgetrxfifoaddress',['FLEXSPI_GetRxFifoAddress',['../a00021.html#ga34c014e6d3d86f854f2ff767f0891dbe',1,'fsl_flexspi.h']]],
   ['flexspi_5fgettxfifoaddress',['FLEXSPI_GetTxFifoAddress',['../a00021.html#gab0476f9699fc375fee33a5afc7ec5ee8',1,'fsl_flexspi.h']]],
   ['flexspi_5finit',['FLEXSPI_Init',['../a00021.html#ga8f12065e78d8a8c6527b0a937f06316d',1,'fsl_flexspi.h']]],
-  ['flexspi_5freadblocking',['FLEXSPI_ReadBlocking',['../a00021.html#ga3c4c3127c9420d3a97755dec9931a306',1,'fsl_flexspi.h']]],
+  ['flexspi_5freadblocking',['FLEXSPI_ReadBlocking',['../a00021.html#ga60aa4f8455c65b2c90ff4e42fc425c82',1,'fsl_flexspi.h']]],
   ['flexspi_5freaddata',['FLEXSPI_ReadData',['../a00021.html#ga05c507ce3babcb459cda71a4ab347eae',1,'fsl_flexspi.h']]],
   ['flexspi_5fresetfifos',['FLEXSPI_ResetFifos',['../a00021.html#gadd183feac77a644fe03802bd2989d1f7',1,'fsl_flexspi.h']]],
   ['flexspi_5fsetflashconfig',['FLEXSPI_SetFlashConfig',['../a00021.html#ga43bbcb0a954c93243a0dc472e07db7d3',1,'fsl_flexspi.h']]],
@@ -44,9 +44,9 @@ var searchData=
   ['flexspi_5fupdatedllvalue',['FLEXSPI_UpdateDllValue',['../a00021.html#ga03e96ef7a2fbf0c6a931b4d6701bb573',1,'fsl_flexspi.h']]],
   ['flexspi_5fupdatelut',['FLEXSPI_UpdateLUT',['../a00021.html#ga160f066685276e79b0f79968e3087489',1,'fsl_flexspi.h']]],
   ['flexspi_5fupdaterxsampleclock',['FLEXSPI_UpdateRxSampleClock',['../a00021.html#ga482b015aec3e0491c9359e698ca638a1',1,'fsl_flexspi.h']]],
-  ['flexspi_5fwriteblocking',['FLEXSPI_WriteBlocking',['../a00021.html#ga280f49b55e211c416f38085dd67c0559',1,'fsl_flexspi.h']]],
+  ['flexspi_5fwriteblocking',['FLEXSPI_WriteBlocking',['../a00021.html#ga9707db6bb7aaac807060bf4036554787',1,'fsl_flexspi.h']]],
   ['flexspi_5fwritedata',['FLEXSPI_WriteData',['../a00021.html#ga054519fc1555d02f1c3e6652631e50ae',1,'fsl_flexspi.h']]],
-  ['fmeas_5fgetfrequency',['FMEAS_GetFrequency',['../a00226.html#gac6ee7be474a37d4c17120b54fc8b856a',1,'fsl_fmeas.h']]],
-  ['fmeas_5fismeasurecomplete',['FMEAS_IsMeasureComplete',['../a00226.html#ga39ff45995edf620470c1397b1edd83b5',1,'fsl_fmeas.h']]],
-  ['fmeas_5fstartmeasure',['FMEAS_StartMeasure',['../a00226.html#gaf1392245996cea51e17175085a0c3cef',1,'fsl_fmeas.h']]]
+  ['fmeas_5fgetfrequency',['FMEAS_GetFrequency',['../a00225.html#gac6ee7be474a37d4c17120b54fc8b856a',1,'fsl_fmeas.h']]],
+  ['fmeas_5fismeasurecomplete',['FMEAS_IsMeasureComplete',['../a00225.html#ga39ff45995edf620470c1397b1edd83b5',1,'fsl_fmeas.h']]],
+  ['fmeas_5fstartmeasure',['FMEAS_StartMeasure',['../a00225.html#gaf1392245996cea51e17175085a0c3cef',1,'fsl_fmeas.h']]]
 ];

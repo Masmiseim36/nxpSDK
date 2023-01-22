@@ -1,6 +1,6 @@
 var a00036 =
 [
-    [ "iap_boot_option_t", "a00036.html#a00331", [
+    [ "iap_boot_option_t", "a00036.html#a00332", [
       [ "bootImageIndex", "a00036.html#a3dcf012c6f93189ce0e413e4e2ef701c", null ],
       [ "instance", "a00036.html#a9bce3df9087fe4fa05f640382da9b4b9", null ],
       [ "bootInterface", "a00036.html#a259cfbea5148ebdf1b934a9b09f4bf78", null ],

@@ -2,7 +2,6 @@ include_guard()
 message("middleware_tfm_ns_test component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/app/tfm_integ_test.c
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/non_secure_suites.c
     ${CMAKE_CURRENT_LIST_DIR}/test/framework/test_framework.c
     ${CMAKE_CURRENT_LIST_DIR}/test/framework/test_framework_integ_test_helper.c
@@ -10,7 +9,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/test/framework
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/core/non_secure
     ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/ipc/non_secure
@@ -23,6 +22,4 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/.
 )
 
-
-include(middleware_tfm_memory_utils_MIMXRT685S_cm33)
 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('a00030.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">I2S Driver<div class="ingroups"><a class="el" href="a00221.html">I2S: I2S Driver</a></div></div>  </div>
+<div class="title">I2S Driver<div class="ingroups"><a class="el" href="a00220.html">I2S: I2S Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -135,7 +135,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gaf04bcafbb89c4d0a47ac0acfcc958faf"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gaf04bcafbb89c4d0a47ac0acfcc958faf">i2s_transfer_callback_t</a> )(I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
+<tr class="memitem:gaf04bcafbb89c4d0a47ac0acfcc958faf"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gaf04bcafbb89c4d0a47ac0acfcc958faf">i2s_transfer_callback_t</a> )(I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
 <tr class="memdesc:gaf04bcafbb89c4d0a47ac0acfcc958faf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function invoked from transactional API on completion of a single buffer transfer.  <a href="#gaf04bcafbb89c4d0a47ac0acfcc958faf">More...</a><br/></td></tr>
 <tr class="separator:gaf04bcafbb89c4d0a47ac0acfcc958faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -200,8 +200,8 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaf19f85eb3c13d6b8b839a62c30009710"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gaf19f85eb3c13d6b8b839a62c30009710">FSL_I2S_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
-<tr class="memdesc:gaf19f85eb3c13d6b8b839a62c30009710"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2S driver version 2.3.1.  <a href="#gaf19f85eb3c13d6b8b839a62c30009710">More...</a><br/></td></tr>
+<tr class="memitem:gaf19f85eb3c13d6b8b839a62c30009710"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gaf19f85eb3c13d6b8b839a62c30009710">FSL_I2S_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
+<tr class="memdesc:gaf19f85eb3c13d6b8b839a62c30009710"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2S driver version 2.3.2.  <a href="#gaf19f85eb3c13d6b8b839a62c30009710">More...</a><br/></td></tr>
 <tr class="separator:gaf19f85eb3c13d6b8b839a62c30009710"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -230,7 +230,7 @@ Non-blocking API</h2></td></tr>
 <tr class="memitem:ga0e630bdd0adb5a39b52e374ede7bc07f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga0e630bdd0adb5a39b52e374ede7bc07f">I2S_TxTransferCreateHandle</a> (I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00030.html#gaf04bcafbb89c4d0a47ac0acfcc958faf">i2s_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga0e630bdd0adb5a39b52e374ede7bc07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes handle for transfer of audio data.  <a href="#ga0e630bdd0adb5a39b52e374ede7bc07f">More...</a><br/></td></tr>
 <tr class="separator:ga0e630bdd0adb5a39b52e374ede7bc07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e341c9ce48e5be03e120ea332758048"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga8e341c9ce48e5be03e120ea332758048">I2S_TxTransferNonBlocking</a> (I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
+<tr class="memitem:ga8e341c9ce48e5be03e120ea332758048"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga8e341c9ce48e5be03e120ea332758048">I2S_TxTransferNonBlocking</a> (I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
 <tr class="memdesc:ga8e341c9ce48e5be03e120ea332758048"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins or queue sending of the given data.  <a href="#ga8e341c9ce48e5be03e120ea332758048">More...</a><br/></td></tr>
 <tr class="separator:ga8e341c9ce48e5be03e120ea332758048"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga25659519f70757bf2db3831f7e807bd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga25659519f70757bf2db3831f7e807bd8">I2S_TxTransferAbort</a> (I2S_Type *base, i2s_handle_t *handle)</td></tr>
@@ -239,16 +239,16 @@ Non-blocking API</h2></td></tr>
 <tr class="memitem:gabd8c54c9689fd89024c83bb883693c16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gabd8c54c9689fd89024c83bb883693c16">I2S_RxTransferCreateHandle</a> (I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00030.html#gaf04bcafbb89c4d0a47ac0acfcc958faf">i2s_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gabd8c54c9689fd89024c83bb883693c16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes handle for reception of audio data.  <a href="#gabd8c54c9689fd89024c83bb883693c16">More...</a><br/></td></tr>
 <tr class="separator:gabd8c54c9689fd89024c83bb883693c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga454cba72bec3ebeecf865570ce6ed900"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga454cba72bec3ebeecf865570ce6ed900">I2S_RxTransferNonBlocking</a> (I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
+<tr class="memitem:ga454cba72bec3ebeecf865570ce6ed900"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga454cba72bec3ebeecf865570ce6ed900">I2S_RxTransferNonBlocking</a> (I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00030.html#a00322">i2s_transfer_t</a> transfer)</td></tr>
 <tr class="memdesc:ga454cba72bec3ebeecf865570ce6ed900"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins or queue reception of data into given buffer.  <a href="#ga454cba72bec3ebeecf865570ce6ed900">More...</a><br/></td></tr>
 <tr class="separator:ga454cba72bec3ebeecf865570ce6ed900"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32eb018b43745a695ef26cec1ff73a73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga32eb018b43745a695ef26cec1ff73a73">I2S_RxTransferAbort</a> (I2S_Type *base, i2s_handle_t *handle)</td></tr>
 <tr class="memdesc:ga32eb018b43745a695ef26cec1ff73a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts receiving of data.  <a href="#ga32eb018b43745a695ef26cec1ff73a73">More...</a><br/></td></tr>
 <tr class="separator:ga32eb018b43745a695ef26cec1ff73a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14ef749f4300fe7b1fd38277f0ef167f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga14ef749f4300fe7b1fd38277f0ef167f">I2S_TransferGetCount</a> (I2S_Type *base, i2s_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga14ef749f4300fe7b1fd38277f0ef167f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga14ef749f4300fe7b1fd38277f0ef167f">I2S_TransferGetCount</a> (I2S_Type *base, i2s_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga14ef749f4300fe7b1fd38277f0ef167f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of bytes transferred so far.  <a href="#ga14ef749f4300fe7b1fd38277f0ef167f">More...</a><br/></td></tr>
 <tr class="separator:ga14ef749f4300fe7b1fd38277f0ef167f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3d210a830859e93103931b4baf83586"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gae3d210a830859e93103931b4baf83586">I2S_TransferGetErrorCount</a> (I2S_Type *base, i2s_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gae3d210a830859e93103931b4baf83586"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gae3d210a830859e93103931b4baf83586">I2S_TransferGetErrorCount</a> (I2S_Type *base, i2s_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:gae3d210a830859e93103931b4baf83586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of buffer underruns or overruns.  <a href="#gae3d210a830859e93103931b4baf83586">More...</a><br/></td></tr>
 <tr class="separator:gae3d210a830859e93103931b4baf83586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -278,7 +278,7 @@ Interrupts</h2></td></tr>
 <tr class="memitem:ga2d96a8f63e454de7225a98541b6461b9"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga2d96a8f63e454de7225a98541b6461b9">I2S_GetEnabledInterrupts</a> (I2S_Type *base)</td></tr>
 <tr class="memdesc:ga2d96a8f63e454de7225a98541b6461b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the set of currently enabled I2S FIFO interrupts.  <a href="#ga2d96a8f63e454de7225a98541b6461b9">More...</a><br/></td></tr>
 <tr class="separator:ga2d96a8f63e454de7225a98541b6461b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8d8c443026cca28ef0c8f9890a894829"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga8d8c443026cca28ef0c8f9890a894829">I2S_EmptyTxFifo</a> (I2S_Type *base)</td></tr>
+<tr class="memitem:ga8d8c443026cca28ef0c8f9890a894829"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga8d8c443026cca28ef0c8f9890a894829">I2S_EmptyTxFifo</a> (I2S_Type *base)</td></tr>
 <tr class="memdesc:ga8d8c443026cca28ef0c8f9890a894829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush the valid data in TX fifo.  <a href="#ga8d8c443026cca28ef0c8f9890a894829">More...</a><br/></td></tr>
 <tr class="separator:ga8d8c443026cca28ef0c8f9890a894829"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2423f95dc2c00bce6a9de6d868d1fde2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga2423f95dc2c00bce6a9de6d868d1fde2">I2S_TxHandleIRQ</a> (I2S_Type *base, i2s_handle_t *handle)</td></tr>
@@ -484,7 +484,7 @@ volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_I2S_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
+          <td class="memname">#define FSL_I2S_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -509,7 +509,7 @@ volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* i2s_transfer_callback_t)(I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td>
+          <td class="memname">typedef void(* i2s_transfer_callback_t)(I2S_Type *base, i2s_handle_t *handle, <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -935,7 +935,7 @@ volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TxTransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TxTransferNonBlocking </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1062,7 +1062,7 @@ volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_RxTransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_RxTransferNonBlocking </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1142,7 +1142,7 @@ volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferGetCount </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferGetCount </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1189,7 +1189,7 @@ volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferGetErrorCount </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_TransferGetErrorCount </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1497,7 +1497,7 @@ volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_EmptyTxFifo </td>
+          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2S_EmptyTxFifo </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>

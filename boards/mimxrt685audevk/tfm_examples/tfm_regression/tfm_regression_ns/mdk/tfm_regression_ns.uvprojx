@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_ALG_GCM, TFM_CRYPTO_TEST_HKDF, TEST_FRAMEWORK_NS, TEST_FRAMEWORK_S, TEST_NS_ITS, TEST_NS_PS, TEST_NS_PLATFORM, T_COSE_USE_PSA_CRYPTO, TEST_NS_CRYPTO, TEST_NS_QCBOR, TFM_PARTITION_IPC_TEST, TEST_NS_IPC, TFM_PSA_API, TEST_NS_CORE, TFM_ENABLE_PERIPH_ACCESS_TEST, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, TEST_NS_ATTESTATION, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_HKDF, TEST_FRAMEWORK_NS, TEST_FRAMEWORK_S, TEST_NS_ITS, TEST_NS_PS, TEST_NS_PLATFORM, T_COSE_USE_PSA_CRYPTO, TEST_NS_CRYPTO, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TEST_NS_QCBOR, TFM_PARTITION_IPC_TEST, TEST_NS_IPC, TFM_PSA_API, TEST_NS_CORE, TFM_ENABLE_PERIPH_ACCESS_TEST, TEST_NS_SLIH_IRQ, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, TEST_NS_ATTESTATION, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/audit/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/t_cose/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/multi_core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/test;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/audit/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/t_cose/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/multi_core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/test;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -369,7 +369,7 @@
             <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../tfm_regression_s/mdk/debug/tfm_regression_s_CMSE_Lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../tfm_regression_s/mdk/debug/tfm_regression_s_CMSE_lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -628,51 +628,6 @@
               <FileName>flash_layout.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition/flash_layout.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m-tests/app</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_integ_test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_integ_test.c</FilePath>
-            </File>
-            <File>
-              <FileName>os_wrapper_cmsis_rtos_v2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/os_wrapper_cmsis_rtos_v2.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_integ_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_integ_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>main_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/main_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_api_test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_api_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ns_interface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_ns_interface.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -942,6 +897,76 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/interface/include</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_attest_iat_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_iat_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_attest_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_veneers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_crypto_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_crypto_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_its_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_its_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ps_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ps_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_psa_call_pack.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_client_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_platform_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/platform/ext/common/template</GroupName>
           <Files>
             <File>
@@ -969,40 +994,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_key.h</FilePath>
             </File>
-            <File>
-              <FileName>attest_eat_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_eat_defines.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <GroupName>tf-m/secure_fw/spm/include/boot</GroupName>
           <Files>
             <File>
               <FileName>tfm_boot_status.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_boot_status.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch_v8m.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_memory_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_memory_utils.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot/tfm_boot_status.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1219,6 +1219,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/crypto_tests_common.h</FilePath>
             </File>
+            <File>
+              <FileName>crypto_tests_check_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/crypto_tests_check_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1244,6 +1249,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service/client_api_test_defs.h</FilePath>
             </File>
+            <File>
+              <FileName>client_api_test_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service/client_api_test_defs.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1259,70 +1269,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/client_api_tests.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include</GroupName>
-          <Files>
             <File>
-              <FileName>tfm_attest_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_defs.h</FilePath>
+              <FileName>irq_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/irq_test.c</FilePath>
             </File>
             <File>
-              <FileName>config_impl.h</FileName>
+              <FileName>irq_test.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_veneers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_crypto_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_crypto_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_its_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_its_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ps_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ps_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ns_interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_psa_call_pack.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ns_client_ext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_platform_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/irq_test.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1378,6 +1333,31 @@
               <FileName>core_test_defs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test/core_test_defs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/test/secure_fw/suites/spm/common</GroupName>
+          <Files>
+            <File>
+              <FileName>spm_test_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/spm_test_defs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/test/secure_fw/suites/spm/irq</GroupName>
+          <Files>
+            <File>
+              <FileName>irq_testsuite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/irq_testsuite.c</FilePath>
+            </File>
+            <File>
+              <FileName>irq_testsuite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/irq_testsuite.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1495,11 +1475,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1513,16 +1488,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1667,6 +1632,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_builtin_key_ids.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/interface/include/psa</GroupName>
           <Files>
             <File>
@@ -1753,6 +1728,61 @@
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_compat.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_arch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch_v8m.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/app</GroupName>
+          <Files>
+            <File>
+              <FileName>os_wrapper_cmsis_rtos_v2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/os_wrapper_cmsis_rtos_v2.c</FilePath>
+            </File>
+            <File>
+              <FileName>main_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/main_ns.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_ns_interface.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1934,16 +1964,6 @@
         <Group>
           <GroupName>tf-m-tests/test/secure_fw/suites/attestation</GroupName>
           <Files>
-            <File>
-              <FileName>attest_public_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_public_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>attest_public_key.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_public_key.h</FilePath>
-            </File>
             <File>
               <FileName>attest_token_decode_asymmetric.c</FileName>
               <FileType>1</FileType>
@@ -2323,9 +2343,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_ALG_GCM, TFM_CRYPTO_TEST_HKDF, TEST_FRAMEWORK_NS, TEST_FRAMEWORK_S, TEST_NS_ITS, TEST_NS_PS, TEST_NS_PLATFORM, T_COSE_USE_PSA_CRYPTO, TEST_NS_CRYPTO, TEST_NS_QCBOR, TFM_PARTITION_IPC_TEST, TEST_NS_IPC, TFM_PSA_API, TEST_NS_CORE, TFM_ENABLE_PERIPH_ACCESS_TEST, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, TEST_NS_ATTESTATION, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_HKDF, TEST_FRAMEWORK_NS, TEST_FRAMEWORK_S, TEST_NS_ITS, TEST_NS_PS, TEST_NS_PLATFORM, T_COSE_USE_PSA_CRYPTO, TEST_NS_CRYPTO, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TEST_NS_QCBOR, TFM_PARTITION_IPC_TEST, TEST_NS_IPC, TFM_PSA_API, TEST_NS_CORE, TFM_ENABLE_PERIPH_ACCESS_TEST, TEST_NS_SLIH_IRQ, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, TEST_NS_ATTESTATION, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/audit/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/t_cose/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/multi_core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/test;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/audit/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/t_cose/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/multi_core/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/test;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2359,7 +2379,7 @@
             <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../tfm_regression_s/mdk/release/tfm_regression_s_CMSE_Lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../tfm_regression_s/mdk/release/tfm_regression_s_CMSE_lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2618,51 +2638,6 @@
               <FileName>flash_layout.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition/flash_layout.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m-tests/app</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_integ_test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_integ_test.c</FilePath>
-            </File>
-            <File>
-              <FileName>os_wrapper_cmsis_rtos_v2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/os_wrapper_cmsis_rtos_v2.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_integ_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_integ_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>main_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/main_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_api_test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_api_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/psa_api_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ns_interface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_ns_interface.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2932,6 +2907,76 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/interface/include</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_attest_iat_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_iat_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_attest_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_veneers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_crypto_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_crypto_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_its_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_its_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ps_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ps_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_psa_call_pack.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_client_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_platform_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/platform/ext/common/template</GroupName>
           <Files>
             <File>
@@ -2959,40 +3004,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_key.h</FilePath>
             </File>
-            <File>
-              <FileName>attest_eat_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_eat_defines.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <GroupName>tf-m/secure_fw/spm/include/boot</GroupName>
           <Files>
             <File>
               <FileName>tfm_boot_status.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_boot_status.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch_v8m.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_memory_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_memory_utils.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot/tfm_boot_status.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3209,6 +3229,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/crypto_tests_common.h</FilePath>
             </File>
+            <File>
+              <FileName>crypto_tests_check_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/crypto_tests_check_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3234,6 +3259,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service/client_api_test_defs.h</FilePath>
             </File>
+            <File>
+              <FileName>client_api_test_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service/client_api_test_defs.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3249,70 +3279,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/client_api_tests.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include</GroupName>
-          <Files>
             <File>
-              <FileName>tfm_attest_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_defs.h</FilePath>
+              <FileName>irq_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/irq_test.c</FilePath>
             </File>
             <File>
-              <FileName>config_impl.h</FileName>
+              <FileName>irq_test.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_veneers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_crypto_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_crypto_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_its_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_its_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ps_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ps_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ns_interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_psa_call_pack.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_ns_client_ext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_platform_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/irq_test.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3368,6 +3343,31 @@
               <FileName>core_test_defs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test/core_test_defs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/test/secure_fw/suites/spm/common</GroupName>
+          <Files>
+            <File>
+              <FileName>spm_test_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/spm_test_defs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/test/secure_fw/suites/spm/irq</GroupName>
+          <Files>
+            <File>
+              <FileName>irq_testsuite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/irq_testsuite.c</FilePath>
+            </File>
+            <File>
+              <FileName>irq_testsuite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/irq_testsuite.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3485,11 +3485,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3503,16 +3498,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3657,6 +3642,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_builtin_key_ids.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/interface/include/psa</GroupName>
           <Files>
             <File>
@@ -3743,6 +3738,61 @@
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_compat.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_arch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch_v8m.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/app</GroupName>
+          <Files>
+            <File>
+              <FileName>os_wrapper_cmsis_rtos_v2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/os_wrapper_cmsis_rtos_v2.c</FilePath>
+            </File>
+            <File>
+              <FileName>main_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/main_ns.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/test_app.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_ns_interface.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3924,16 +3974,6 @@
         <Group>
           <GroupName>tf-m-tests/test/secure_fw/suites/attestation</GroupName>
           <Files>
-            <File>
-              <FileName>attest_public_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_public_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>attest_public_key.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_public_key.h</FilePath>
-            </File>
             <File>
               <FileName>attest_token_decode_asymmetric.c</FileName>
               <FileType>1</FileType>

@@ -43,6 +43,7 @@ var searchData=
   ['dma_5fsetchannelconfig',['DMA_SetChannelConfig',['../a00016.html#gafc795a7c0b3e5f4bbf32c1eed3a9ea47',1,'fsl_dma.h']]],
   ['dma_5fsetchannelconfigvalid',['DMA_SetChannelConfigValid',['../a00016.html#gaa200c0bd1a2d714f6cd002919ed8a213',1,'fsl_dma.h']]],
   ['dma_5fsetchannelpriority',['DMA_SetChannelPriority',['../a00016.html#gad8ae76fc5d858b97de3362100af86df6',1,'fsl_dma.h']]],
+  ['dma_5fsetchannelxferconfig',['DMA_SetChannelXferConfig',['../a00016.html#gaed498d0e17c40aa2899869626c238507',1,'fsl_dma.h']]],
   ['dma_5fsetupchanneldescriptor',['DMA_SetupChannelDescriptor',['../a00016.html#ga6c69a736b8e5719fe01bb7d3b76f9088',1,'fsl_dma.h']]],
   ['dma_5fsetupdescriptor',['DMA_SetupDescriptor',['../a00016.html#gabbdbf43b54f0a0029cd27c09c094de36',1,'fsl_dma.h']]],
   ['dma_5fstarttransfer',['DMA_StartTransfer',['../a00016.html#gac6fb3f30e13c937cc00fe11218e6ec76',1,'fsl_dma.h']]],

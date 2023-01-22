@@ -1,6 +1,6 @@
 var a00062 =
 [
-    [ "usart_config_t", "a00062.html#a00390", [
+    [ "usart_config_t", "a00062.html#a00391", [
       [ "baudRate_Bps", "a00062.html#a5d2631bc772901b4114b01770f9bb337", null ],
       [ "parityMode", "a00062.html#aff1d7e368b35ae89db8aa393207e7ccc", null ],
       [ "stopBitCount", "a00062.html#aeb0b8a38f5d7e0def2aa1b079643682f", null ],
@@ -16,7 +16,7 @@ var a00062 =
       [ "syncMode", "a00062.html#ad5debb2aa90fc8fa732edd1ab4bdbbea", null ],
       [ "clockPolarity", "a00062.html#ac808e4908f1d6f9ca78fec3d0b8f118a", null ]
     ] ],
-    [ "usart_transfer_t", "a00062.html#a00392", [
+    [ "usart_transfer_t", "a00062.html#a00393", [
       [ "data", "a00062.html#acad21ced979ce0c2af98f0b1837863c9", null ],
       [ "rxData", "a00062.html#a44bd38d7d89b7e185ac9bb49bd7214ea", null ],
       [ "txData", "a00062.html#ad081b93c86f16dedd57dfc105a71e7fa", null ],

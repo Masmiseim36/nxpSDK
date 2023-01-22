@@ -20,9 +20,11 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/interface/include
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/initial_attestation
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/spm/include
+    ${CMAKE_CURRENT_LIST_DIR}/secure_fw/spm/include/boot
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/inc
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/src
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/test

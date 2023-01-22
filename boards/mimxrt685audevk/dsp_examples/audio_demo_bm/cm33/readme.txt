@@ -7,10 +7,10 @@ buffer and output to the CODEC, where the audio data will be heard from lineout.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================
@@ -22,10 +22,8 @@ Hardware requirements
 
 Board settings
 ==============
-
-To enable the example audio using WM8904 codec, connect jumpers as follows:
-  JP7-1        <-->        JP7-2
-  JP8-1        <-->        JP8-2
+1. Set the hardware jumpers (Tower system/base module) to default settings.
+2. Set the hardware jumpers JP2 2-3, JP44 1-2 and JP45 1-2.
 
 Prepare the Demo
 ================

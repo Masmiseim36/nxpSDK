@@ -334,7 +334,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../../middleware/wifi_nxp/port/lwip;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../../middleware/wifi_nxp/port/lwip;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/wifi_nxp;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -893,27 +893,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
             </File>
             <File>
               <FileName>portasm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
               <FileName>portasm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacrocommon.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacrocommon.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2411,16 +2416,6 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
             </File>
             <File>
-              <FileName>mlan_ioctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
-            </File>
-            <File>
               <FileName>type_decls.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
@@ -2434,6 +2429,16 @@
               <FileName>mlan_sdio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ioctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2643,172 +2648,172 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2844,51 +2849,6 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
-          <Files>
-            <File>
-              <FileName>wifi-decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_events.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3131,11 +3091,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3149,16 +3104,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3189,6 +3134,11 @@
               <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW_rw610.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3273,6 +3223,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>wifi/incl/wifidriver</GroupName>
+          <Files>
+            <File>
+              <FileName>mlan_sdio_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_events.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/osa</GroupName>
           <Files>
             <File>
@@ -3309,6 +3284,26 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_os.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>os.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3645,7 +3640,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../../middleware/wifi_nxp/port/lwip;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../../middleware/wifi_nxp/port/lwip;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/wifi_nxp;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4204,27 +4199,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
             </File>
             <File>
               <FileName>portasm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
               <FileName>portasm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacrocommon.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacrocommon.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5722,16 +5722,6 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
             </File>
             <File>
-              <FileName>mlan_ioctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
-            </File>
-            <File>
               <FileName>type_decls.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
@@ -5745,6 +5735,16 @@
               <FileName>mlan_sdio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ioctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5954,172 +5954,172 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -6155,51 +6155,6 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
-          <Files>
-            <File>
-              <FileName>wifi-decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_events.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6442,11 +6397,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -6460,16 +6410,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -6500,6 +6440,11 @@
               <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW_rw610.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6584,6 +6529,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>wifi/incl/wifidriver</GroupName>
+          <Files>
+            <File>
+              <FileName>mlan_sdio_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_events.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/osa</GroupName>
           <Files>
             <File>
@@ -6620,6 +6590,26 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_os.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>os.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
             </File>
           </Files>
         </Group>

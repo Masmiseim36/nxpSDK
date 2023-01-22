@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -146,9 +146,9 @@ Files</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00344"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00344">mrt_config_t</a></td></tr>
-<tr class="memdesc:a00344"><td class="mdescLeft">&#160;</td><td class="mdescRight">MRT configuration structure.  <a href="a00041.html#a00344">More...</a><br/></td></tr>
-<tr class="separator:a00344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00345"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00345">mrt_config_t</a></td></tr>
+<tr class="memdesc:a00345"><td class="mdescLeft">&#160;</td><td class="mdescRight">MRT configuration structure.  <a href="a00041.html#a00345">More...</a><br/></td></tr>
+<tr class="separator:a00345"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -190,19 +190,19 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gae39f6122bd73a5156d40291962f7507f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae39f6122bd73a5156d40291962f7507f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gae39f6122bd73a5156d40291962f7507f">FSL_MRT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gae39f6122bd73a5156d40291962f7507f">FSL_MRT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
 <tr class="memdesc:gae39f6122bd73a5156d40291962f7507f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.3. <br/></td></tr>
 <tr class="separator:gae39f6122bd73a5156d40291962f7507f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga44091408531a61dfac7c4ee4982be317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga44091408531a61dfac7c4ee4982be317">MRT_Init</a> (MRT_Type *base, const <a class="el" href="a00041.html#a00344">mrt_config_t</a> *config)</td></tr>
+<tr class="memitem:ga44091408531a61dfac7c4ee4982be317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga44091408531a61dfac7c4ee4982be317">MRT_Init</a> (MRT_Type *base, const <a class="el" href="a00041.html#a00345">mrt_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga44091408531a61dfac7c4ee4982be317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the MRT clock and configures the peripheral for basic operation.  <a href="#ga44091408531a61dfac7c4ee4982be317">More...</a><br/></td></tr>
 <tr class="separator:ga44091408531a61dfac7c4ee4982be317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga5d988ee09b604ab28f1b37320ee8d2d9">MRT_Deinit</a> (MRT_Type *base)</td></tr>
 <tr class="memdesc:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gate the MRT clock.  <a href="#ga5d988ee09b604ab28f1b37320ee8d2d9">More...</a><br/></td></tr>
 <tr class="separator:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad30aa85105a47b708fd5880a929e5e84"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gad30aa85105a47b708fd5880a929e5e84">MRT_GetDefaultConfig</a> (<a class="el" href="a00041.html#a00344">mrt_config_t</a> *config)</td></tr>
+<tr class="memitem:gad30aa85105a47b708fd5880a929e5e84"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gad30aa85105a47b708fd5880a929e5e84">MRT_GetDefaultConfig</a> (<a class="el" href="a00041.html#a00345">mrt_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad30aa85105a47b708fd5880a929e5e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill in the MRT config struct with the default settings.  <a href="#gad30aa85105a47b708fd5880a929e5e84">More...</a><br/></td></tr>
 <tr class="separator:gad30aa85105a47b708fd5880a929e5e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f4d38afa34e99ba521d9ca08be06355"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga8f4d38afa34e99ba521d9ca08be06355">MRT_SetupChannelMode</a> (MRT_Type *base, <a class="el" href="a00041.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel, const <a class="el" href="a00041.html#gad481f648f1c89a1eab327530d6fef1d0">mrt_timer_mode_t</a> mode)</td></tr>
@@ -258,7 +258,7 @@ Get &amp; release channel</h2></td></tr>
 <tr class="separator:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00344" id="a00344"></a>
+<a name="a00345" id="a00345"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -380,7 +380,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00041.html#a00344">mrt_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00041.html#a00345">mrt_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -433,7 +433,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">static void MRT_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00041.html#a00344">mrt_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#a00345">mrt_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>

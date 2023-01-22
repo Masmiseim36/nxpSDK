@@ -1049,10 +1049,10 @@ canopen                    Name: EmSA CANopen (FD) Libraries
                            Location: middleware/canopen                      
                            Origin: EmSA                                      
 
-VIT                        Name: VIT_v5.6.0                                  
-                           Version: 5.6.0                                    
+VIT                        Name: VIT_v4.7.5                                  
+                           Version: 4.7.5                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: Precompiled libraries, header files,      
@@ -1666,9 +1666,9 @@ VoiceSpot                  Name: VoiceSpot_v0.23.2
                            are/voicespot-wake-word-engine:VOICESPOT          
 
 dsp_audio_codec_aac_dec_hifName: dsp_audio_codec_aac_dec_hifi4               
-i4                         Version: 3.8                                      
+i4                         Version: 3.11                                     
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1680,7 +1680,7 @@ i4                         Version: 3.8
 dsp_audio_codec_g711_hifi4 Name: dsp_audio_codec_g711_hifi4                  
                            Version: 1.3p1                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1689,9 +1689,9 @@ dsp_audio_codec_g711_hifi4 Name: dsp_audio_codec_g711_hifi4
                            Origin: Cadence Design Systems                    
 
 dsp_audio_codec_mp3_dec_hifName: dsp_audio_codec_mp3_dec_hifi4               
-i4                         Version: 3.19                                     
+i4                         Version: 3.26                                     
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1702,7 +1702,7 @@ i4                         Version: 3.19
 dsp_audio_codec_asrc_src_ppName: dsp_audio_codec_asrc_src_pp_hifi4           
 _hifi4                     Version: 1.1                                      
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1712,9 +1712,9 @@ _hifi4                     Version: 1.1
                            Origin: Cadence Design Systems                    
 
 dsp_audio_codec_vorbis_dec_Name: dsp_audio_codec_vorbis_dec_hifi4            
-hifi4                      Version: 1.12                                     
+hifi4                      Version: 1.14                                     
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1724,9 +1724,9 @@ hifi4                      Version: 1.12
                            Origin: Cadence Design Systems                    
 
 dsp_audio_codec_opus_hifi4 Name: dsp_audio_codec_opus_hifi4                  
-                           Version: 1.9                                      
+                           Version: 1.19                                     
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1735,9 +1735,9 @@ dsp_audio_codec_opus_hifi4 Name: dsp_audio_codec_opus_hifi4
                            Origin: Cadence Design Systems                    
 
 dsp_audio_codec_sbc_dec_hifName: dsp_audio_codec_sbc_dec_hifi4               
-i4                         Version: 1.4                                      
+i4                         Version: 1.6                                      
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1746,9 +1746,9 @@ i4                         Version: 1.4
                            Origin: Cadence Design Systems                    
 
 dsp_audio_codec_sbc_enc_hifName: dsp_audio_codec_sbc_enc_hifi4               
-i4                         Version: 1.5                                      
+i4                         Version: 1.7                                      
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
+                           v39 August 2022 - Additional distribution license 
                            granted - License in Section 2.3 applies          
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: binary                                    
@@ -1759,8 +1759,8 @@ i4                         Version: 1.5
 naturedsp_hifi4            Name: naturedsp                                   
                            Version: 4.1.0                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - No distribution permitted, license 
-                           in Section 2.2 applies.                           
+                           v39 August 2022 - No distribution permitted,      
+                           license in Section 2.2 applies.                   
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: source code                               
                            Description: Digital Signal Processing for Xtensa 

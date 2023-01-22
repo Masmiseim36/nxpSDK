@@ -1,15 +1,16 @@
 Overview
 ========
 The OSTIMER project is a simple demonstration program of the SDK OSTIMER driver. It sets the OSTIMER as
-the wakeup source from deep-sleep mode. After wakeup from deep-sleep mode, OS timer will set match value 
+the wakeup source from deep-sleep mode. Board will enter power deep sleep mode, and then wakeup by OS timer after about 5 seconds.
+After wakeup from deep-sleep mode, OS timer will set match value 
 to trigger the interrupt while the timer count tick reach the match value about every 2 seconds.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================

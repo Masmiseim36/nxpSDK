@@ -15,7 +15,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/TargetSpecific/evkmimxrt1040
     ${CMAKE_CURRENT_LIST_DIR}/PlatformPackage/evkmimxrt1040/RGB565
     ${CMAKE_CURRENT_LIST_DIR}/PlatformPackage/evkmimxrt1040/RTE

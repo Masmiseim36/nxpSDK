@@ -10,7 +10,7 @@ var searchData=
   ['ocotp_5freadfuseshadowregister',['OCOTP_ReadFuseShadowRegister',['../a00047.html#gaecc991ccf4be0c49286fb13cba97e389',1,'fsl_ocotp.h']]],
   ['ocotp_5freadfuseshadowregisterext',['OCOTP_ReadFuseShadowRegisterExt',['../a00047.html#gaa1b0f813fa5ca43225d71d9218c48a28',1,'fsl_ocotp.h']]],
   ['ocotp_5freloadshadowregister',['OCOTP_ReloadShadowRegister',['../a00047.html#ga7a7b1cd03383fafde15157a06fdda557',1,'fsl_ocotp.h']]],
-  ['ocotp_5ftiming_5ft',['ocotp_timing_t',['../a00047.html#a00356',1,'']]],
+  ['ocotp_5ftiming_5ft',['ocotp_timing_t',['../a00047.html#a00355',1,'']]],
   ['ocotp_5fwritefuseshadowregister',['OCOTP_WriteFuseShadowRegister',['../a00047.html#ga43636ab96125958c9a14fe82c176e33e',1,'fsl_ocotp.h']]],
   ['ocotp_5fwritefuseshadowregisterwithlock',['OCOTP_WriteFuseShadowRegisterWithLock',['../a00047.html#ga4f837c7b4a66ffe3153f2975fd5c6388',1,'fsl_ocotp.h']]],
   ['ocram_5fexsc_5fclocks',['OCRAM_EXSC_CLOCKS',['../a00011.html#gaae92c633a9798e714c4a291b3fa78a3d',1,'fsl_clock.h']]],

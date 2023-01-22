@@ -1,6 +1,6 @@
 var a00012 =
 [
-    [ "cmp_config_t", "a00012.html#a00326", [
+    [ "cmp_config_t", "a00012.html#a00325", [
       [ "enableCmp", "a00012.html#a87248f8e354fbe0310fa9968d2437db3", null ],
       [ "hysteresisMode", "a00012.html#aa4e3d61d0cbbf97ef31d633ea731eb58", null ],
       [ "enableHighSpeed", "a00012.html#a0449a799c02a2b534609c576509af9ee", null ],
@@ -8,12 +8,12 @@ var a00012 =
       [ "useUnfilteredOutput", "a00012.html#afe5cb349fa86a64a7fa195655d8be65b", null ],
       [ "enablePinOut", "a00012.html#a2dee30cf50e5df9902360f800d0bbe69", null ]
     ] ],
-    [ "cmp_filter_config_t", "a00012.html#a00328", [
+    [ "cmp_filter_config_t", "a00012.html#a00327", [
       [ "enableSample", "a00012.html#ad84aa6fee10de5e95b8c933296923df9", null ],
       [ "filterCount", "a00012.html#a1ee3e17eae70b6efa023d51367c9d798", null ],
       [ "filterPeriod", "a00012.html#ac56e3c13889d8eee7c595a58718c8964", null ]
     ] ],
-    [ "cmp_dac_config_t", "a00012.html#a00327", [
+    [ "cmp_dac_config_t", "a00012.html#a00326", [
       [ "referenceVoltageSource", "a00012.html#a01753d40f590d16345dd45abefb8bbe6", null ],
       [ "DACValue", "a00012.html#aa44061486be24d6276a2aae0283c8153", null ]
     ] ],

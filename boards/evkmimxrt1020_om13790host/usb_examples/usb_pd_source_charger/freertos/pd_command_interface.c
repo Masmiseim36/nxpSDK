@@ -17,7 +17,6 @@
 #include "pd_app.h"
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "fsl_gpio.h"
 #include "pd_power_interface.h"
 #include "pd_command_interface.h"
 #include "board.h"

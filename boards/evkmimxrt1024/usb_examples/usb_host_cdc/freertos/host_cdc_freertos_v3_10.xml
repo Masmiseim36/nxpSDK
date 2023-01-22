@@ -134,10 +134,6 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
       <files mask="build_release.bat"/>
       <files mask="build_release.sh"/>
       <files mask="build_sdram_release.bat"/>

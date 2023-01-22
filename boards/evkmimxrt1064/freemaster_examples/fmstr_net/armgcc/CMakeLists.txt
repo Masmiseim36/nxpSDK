@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(fmstr_example_net)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME fmstr_example_net.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -37,51 +43,51 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../freemaster_cfg.h"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/freemaster_example.c"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/freemaster_example.h"
 "${ProjDirPath}/../network.c"
 "${ProjDirPath}/../network.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../network_enet.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
-"${ProjDirPath}/../../common/fmstr_example/example_data.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/data_example_pmp.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/data_img_logo.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/data_img_file.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/data_img_fmstrlogo.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/data_html_index.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example/example_data.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common/fmstr_example
+    ${SdkRootDirPath}/boards/evkmimxrt1064/freemaster_examples/common/fmstr_example
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/phy/mdio/enet
-    ${ProjDirPath}/../../../../../components/phy/device/phyksz8081
-    ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../components/phy
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/drivers
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../middleware/freemaster
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/components/phy/device/phyksz8081
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/components/phy
+    ${SdkRootDirPath}/devices/MIMXRT1064/drivers
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/components/silicon_id
+    ${SdkRootDirPath}/components/silicon_id/socs/rt10xx
+    ${SdkRootDirPath}/middleware/freemaster
+    ${SdkRootDirPath}/devices/MIMXRT1064/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1064
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1064/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1064/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
-include(driver_mdio-enet_MIMXRT1064)
-
 include(driver_phy-device-ksz8081_MIMXRT1064)
 
 include(middleware_lwip_enet_ethernetif_MIMXRT1064)
@@ -96,13 +102,17 @@ include(middleware_freertos-kernel_heap_3_MIMXRT1064)
 
 include(driver_cache_armv7_m7_MIMXRT1064)
 
+include(component_silicon_id_MIMXRT1064)
+
+include(driver_common_MIMXRT1064)
+
+include(component_silicon_id_rt10xx_MIMXRT1064)
+
 include(middleware_fmstr_MIMXRT1064)
 
 include(utility_assert_MIMXRT1064)
 
 include(driver_clock_MIMXRT1064)
-
-include(driver_common_MIMXRT1064)
 
 include(device_MIMXRT1064_CMSIS_MIMXRT1064)
 
@@ -128,8 +138,6 @@ include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
 include(middleware_fmstr_platform_gen32le_MIMXRT1064)
 
-include(driver_mdio-common_MIMXRT1064)
-
 include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(middleware_freertos-kernel_MIMXRT1064)
@@ -143,15 +151,13 @@ include(utilities_misc_utilities_MIMXRT1064)
 include(device_MIMXRT1064_system_MIMXRT1064)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

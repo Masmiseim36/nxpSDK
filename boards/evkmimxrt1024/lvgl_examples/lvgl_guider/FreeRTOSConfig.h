@@ -108,12 +108,20 @@
 #define INCLUDE_xTaskGetSchedulerState          1
 #define INCLUDE_xTaskGetCurrentTaskHandle       1
 #define INCLUDE_uxTaskGetStackHighWaterMark     0
-#define INCLUDE_xTaskGetIdleTaskHandle          0
+#define INCLUDE_xTaskGetIdleTaskHandle          1
 #define INCLUDE_eTaskGetState                   0
 #define INCLUDE_xTimerPendFunctionCall          1
 #define INCLUDE_xTaskAbortDelay                 0
 #define INCLUDE_xTaskGetHandle                  0
 #define INCLUDE_xTaskResumeFromISR              1
+
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+extern void traceTaskSwitchedOut(void);
+extern void traceTaskSwitchedIn(void);
+#endif
+
+#define traceTASK_SWITCHED_IN()  traceTaskSwitchedIn()
+#define traceTASK_SWITCHED_OUT() traceTaskSwitchedOut()
 
 
 

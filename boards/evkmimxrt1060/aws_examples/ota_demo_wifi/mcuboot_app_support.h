@@ -84,10 +84,11 @@ typedef struct
     uint32_t size;
 } partition_t;
 
-extern int32_t bl_verify_image(const uint8_t *data, uint32_t size);
+extern int32_t bl_verify_image(uint32_t addrphy, uint32_t size);
 
-extern status_t bl_get_update_partition_info(partition_t *partition);
-extern status_t bl_update_image_state(uint32_t state);
-extern status_t bl_get_image_state(uint32_t *state);
+extern status_t bl_get_update_partition_info(uint32_t image, partition_t *ptn);
+extern status_t bl_update_image_state(uint32_t image, uint32_t state);
+extern status_t bl_get_image_state(uint32_t image, uint32_t *state);
+const char *bl_imgstate_to_str(uint32_t state);
 
 #endif

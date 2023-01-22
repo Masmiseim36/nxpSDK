@@ -10,7 +10,11 @@
 /*---------------------------------------------------------------------------/
 / MSDK adaptation configuration
 /---------------------------------------------------------------------------*/
+#ifdef SD_ENABLED
 #define SD_DISK_ENABLE
+#else
+#define RAM_DISK_ENABLE
+#endif
 
 /*---------------------------------------------------------------------------/
 / Function Configurations
@@ -120,8 +124,9 @@
 /     0 - Include all code pages above and configured by f_setcp()
 */
 
-
+#ifndef FF_USE_LFN
 #define FF_USE_LFN        3
+#endif
 #define FF_MAX_LFN        255
 /* The FF_USE_LFN switches the support for LFN (long file name).
 /

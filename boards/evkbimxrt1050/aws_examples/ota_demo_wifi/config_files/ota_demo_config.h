@@ -34,7 +34,7 @@
  * typically one of the certificates in iot_default_root_certificates.h
  * Refer to https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs
  */
-#define democonfigROOT_CA_PEM tlsCombi_ROOT_CERTIFICATE_PEM
+#define democonfigROOT_CA_PEM tlsATS1_ROOT_CERTIFICATE_PEM
 
 /**
  * @brief Certificate used for validating code signing signatures in the OTA PAL.

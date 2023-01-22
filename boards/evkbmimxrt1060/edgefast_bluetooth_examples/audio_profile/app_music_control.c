@@ -48,7 +48,7 @@ static QueueHandle_t app_music_control_queue = NULL;
 extern void streamer_pcm_test_init(void);
 extern void streamer_pcm_test_send_data(uint8_t *buffer, uint32_t length);
 
-extern void app_music_shadow_update(uint8_t playIndexSet, uint8_t playStateSet, uint8_t playerReadySet);
+extern void app_music_shadow_update(void);
 
 static void app_music_list_reset(void)
 {
@@ -220,12 +220,13 @@ void app_music_play_control_task(void *pvParameters)
                     if (app_playing_state == APP_STREAMER_PLAYING)
                     {
                         app_music_pause_internal();
+                        app_music_stop_internal();
                     }
 
                     if (app_a2dp_speaker_state == A2DP_SPEAKER_PLAYING)
                     {
                         app_a2dp_speaker_state = A2DP_SPEAKER_READY;
-                        app_edgefast_a2dp_suspend();
+                        /* app_edgefast_a2dp_suspend(); */
                     }
                     break;
                 case MUSIC_CONTROL_NEXT:
@@ -317,7 +318,7 @@ void app_music_play_control_task(void *pvParameters)
 
             if (MUSIC_CONTROL_AWS_READY != music_control)
             {
-                app_music_shadow_update(app_playing_index, ((app_playing_state == APP_STREAMER_PLAYING) ? 1 : 0) , ((app_a2dp_speaker_state > A2DP_SPEAKER_NOT_PRESENCE) ? 1 : 0));
+                app_music_shadow_update();
             }
         }
     }

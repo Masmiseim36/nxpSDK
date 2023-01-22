@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(wifi_webconfig)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME wifi_webconfig.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -33,7 +39,6 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
-"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../webconfig.c"
@@ -48,6 +53,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
+"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -57,33 +63,32 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common
-    ${ProjDirPath}/../../..
+    ${SdkRootDirPath}/boards/evkbmimxrt1060/wifi_examples/common
+    ${SdkRootDirPath}/boards/evkbmimxrt1060
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/flash/mflash
-    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../middleware/wifi_nxp
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../components/gpio
-    ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../components/wifi_bt_module
-    ${ProjDirPath}/../../../../../middleware/edgefast_wifi
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/osa
+    ${SdkRootDirPath}/components/flash/mflash
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt1062
+    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
+    ${SdkRootDirPath}/middleware/wifi_nxp
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/middleware/sdmmc
+    ${SdkRootDirPath}/components/gpio
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/middleware/edgefast_wifi
+    ${SdkRootDirPath}/devices/MIMXRT1062
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1062/xip
+    ${SdkRootDirPath}/boards/evkbmimxrt1060/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/components/wifi_bt_module
 )
 
 # include modules
@@ -125,10 +130,6 @@ include(middleware_lwip_MIMXRT1062)
 
 include(middleware_wifi_MIMXRT1062)
 
-include(driver_usdhc_MIMXRT1062)
-
-include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1062)
-
 include(middleware_edgefast_wifi_nxp_MIMXRT1062)
 
 include(driver_common_MIMXRT1062)
@@ -157,8 +158,6 @@ include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
 
-include(component_silicon_id_MIMXRT1062)
-
 include(component_mflash_common_MIMXRT1062)
 
 include(CMSIS_Include_core_cm_MIMXRT1062)
@@ -171,6 +170,12 @@ include(middleware_sdmmc_osa_freertos_MIMXRT1062)
 
 include(component_osa_free_rtos_MIMXRT1062)
 
+include(driver_usdhc_MIMXRT1062)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1062)
+
+include(middleware_wifi_common_files_MIMXRT1062)
+
 include(middleware_edgefast_wifi_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
@@ -178,15 +183,13 @@ include(utilities_misc_utilities_MIMXRT1062)
 include(device_MIMXRT1062_system_MIMXRT1062)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

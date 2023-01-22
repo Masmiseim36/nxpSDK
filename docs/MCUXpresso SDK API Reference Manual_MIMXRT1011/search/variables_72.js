@@ -52,7 +52,7 @@ var searchData=
   ['rxidleconfig',['rxIdleConfig',['../a00041.html#a00e18786e55ac3057c2bc32b8bc0e361',1,'lpuart_config_t']]],
   ['rxidletype',['rxIdleType',['../a00041.html#accbd00b653a769831310e62f8a9045eb',1,'lpuart_config_t']]],
   ['rxinprogress',['rxInProgress',['../a00029.html#aa8bfa7c132f8415458603e2f55525597',1,'_flexio_spi_master_edma_handle']]],
-  ['rxpinindex',['RxPinIndex',['../a00030.html#a21879d73921f1cd42601b0a80d029a6a',1,'FLEXIO_UART_Type::RxPinIndex()'],['../a00024.html#adbb4dced07edd10ea2a343e8309c93a7',1,'FLEXIO_I2S_Type::rxPinIndex()']]],
+  ['rxpinindex',['rxPinIndex',['../a00024.html#adbb4dced07edd10ea2a343e8309c93a7',1,'FLEXIO_I2S_Type::rxPinIndex()'],['../a00030.html#a21879d73921f1cd42601b0a80d029a6a',1,'FLEXIO_UART_Type::RxPinIndex()']]],
   ['rxpinpolarity',['rxPinPolarity',['../a00024.html#a30aa98ab4ffdcf552b772745c1e209f1',1,'flexio_i2s_config_t']]],
   ['rxremainingbytecount',['rxRemainingByteCount',['../a00039.html#a61a204896d0204b4438fc50f54d182ac',1,'_lpspi_master_handle::rxRemainingByteCount()'],['../a00039.html#afcdbb7552d9e668ff7bcc6f49e1c46bf',1,'_lpspi_slave_handle::rxRemainingByteCount()'],['../a00040.html#a40f69c223ec3606147163a841ee0cb69',1,'_lpspi_master_edma_handle::rxRemainingByteCount()'],['../a00040.html#a541744df6a1f4544ad0357b31a6bf409',1,'_lpspi_slave_edma_handle::rxRemainingByteCount()']]],
   ['rxremainingbytes',['rxRemainingBytes',['../a00028.html#aee7be6e3dd2109f9d5374a1b2fb45ade',1,'_flexio_spi_master_handle']]],

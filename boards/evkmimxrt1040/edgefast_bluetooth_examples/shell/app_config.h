@@ -35,10 +35,10 @@
 #define CONFIG_BT_L2CAP_IFRAME_SUPPORT 1
 
 #define CONFIG_BT_RFCOMM                    1
-#define CONFIG_BT_HFP_HF                    1
-#define CONFIG_BT_A2DP                      1
-#define CONFIG_BT_A2DP_SOURCE               1
-#define CONFIG_BT_A2DP_SINK                 1
+#define CONFIG_BT_HFP_HF                    0
+#define CONFIG_BT_A2DP                      0
+#define CONFIG_BT_A2DP_SOURCE               0
+#define CONFIG_BT_A2DP_SINK                 0
 #define CONFIG_BT_A2DP_CP_SERVICE           1
 #define CONFIG_BT_A2DP_RECOVERY_SERVICE     1
 #define CONFIG_BT_A2DP_REPORTING_SERVICE    1

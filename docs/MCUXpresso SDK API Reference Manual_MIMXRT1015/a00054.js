@@ -2,15 +2,15 @@ var a00054 =
 [
     [ "Serial Port SWO", "a00055.html", "a00055" ],
     [ "Serial Port USB", "a00056.html", "a00056" ],
-    [ "Serial Port Uart", "a00246.html", "a00246" ],
-    [ "serial_manager_config_t", "a00054.html#a00376", [
+    [ "Serial Port Uart", "a00245.html", "a00245" ],
+    [ "serial_manager_config_t", "a00054.html#a00375", [
       [ "ringBuffer", "a00054.html#a73403169ff2d3c8d8897059435fe7e01", null ],
       [ "ringBufferSize", "a00054.html#a3cdd8d8501bb64e720345207310de89b", null ],
       [ "type", "a00054.html#a19422220843683406b8487dd40fc2cee", null ],
       [ "blockType", "a00054.html#ae1f413cf0928c0efdf89ce584adf8007", null ],
       [ "portConfig", "a00054.html#ac91431f403f82ce50784274deab7e640", null ]
     ] ],
-    [ "serial_manager_callback_message_t", "a00054.html#a00375", [
+    [ "serial_manager_callback_message_t", "a00054.html#a00374", [
       [ "buffer", "a00054.html#a80694c056b447b821f7e146122040e0f", null ],
       [ "length", "a00054.html#a5eb02d4cb2745ea57f5f78e764f80893", null ]
     ] ],

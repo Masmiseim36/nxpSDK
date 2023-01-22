@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(host_cdc_bm)
 
+set(MCUX_BUILD_TYPES release flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME host_cdc_bm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -44,23 +50,23 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers
-    ${ProjDirPath}/../../../../../../middleware
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1015
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1015/utilities
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1015/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/devices/MIMXRT1015/drivers
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/devices/MIMXRT1015
+    ${SdkRootDirPath}/devices/MIMXRT1015/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1015/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1015/xip
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -119,15 +125,13 @@ include(utilities_misc_utilities_MIMXRT1015)
 include(device_MIMXRT1015_system_MIMXRT1015)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -234,7 +234,7 @@ smStatus_t Se05x_API_WriteECKey(pSe05xSession_t session_ctx,
     const SE05x_KeyPart_t key_part)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_WRITE | ins_type, kSE05x_P1_EC | key_part, kSE05x_P2_DEFAULT}};
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_WRITE | ins_type, (uint8_t)kSE05x_P1_EC | key_part, kSE05x_P2_DEFAULT}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
@@ -303,7 +303,7 @@ smStatus_t Se05x_API_WriteRSAKey(pSe05xSession_t session_ctx,
     const SE05x_RSAKeyFormat_t rsa_format)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_WRITE | ins_type, kSE05x_P1_RSA | key_part, rsa_format}};
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_WRITE | ins_type, (uint8_t)kSE05x_P1_RSA | key_part, rsa_format}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
@@ -479,7 +479,7 @@ smStatus_t Se05x_API_WriteUserID(pSe05xSession_t session_ctx,
     if (Se05x_IsInValidRangeOfUID(objectID)) {
         return SM_NOT_OK;
     }
-    tlvHeader_t hdr = {{kSE05x_CLA, kSE05x_INS_WRITE | attestation_type, kSE05x_P1_UserID, kSE05x_P2_DEFAULT}};
+    tlvHeader_t hdr = {{kSE05x_CLA, (uint8_t)kSE05x_INS_WRITE | attestation_type, kSE05x_P1_UserID, kSE05x_P2_DEFAULT}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
@@ -1338,7 +1338,7 @@ smStatus_t Se05x_API_ReadType(pSe05xSession_t session_ctx,
     const SE05x_AttestationType_t attestation_type)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_READ | attestation_type, kSE05x_P1_DEFAULT, kSE05x_P2_TYPE}};
+    tlvHeader_t hdr      = {{kSE05x_CLA, (uint8_t)kSE05x_INS_READ | attestation_type, kSE05x_P1_DEFAULT, kSE05x_P2_TYPE}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen                       = 0;
     uint8_t *pCmdbuf                       = &cmdbuf[0];

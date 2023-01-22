@@ -13,7 +13,7 @@
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
 #include "main.h"
-#include "logging.h"
+#include "maestro_logging.h"
 
 #ifdef EAP_PROC
 #include "eap_proc.h"
@@ -219,7 +219,7 @@ status_t STREAMER_file_Create(char *filename, int volume)
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
     params.stack_size = STREAMER_TASK_STACK_SIZE;
 #ifdef EAP_PROC
-    params.pipeline_type = STREAM_PIPELINE_EAP;
+    params.pipeline_type = STREAM_PIPELINE_AUDIO_PROC;
 #else
     params.pipeline_type = STREAM_PIPELINE_FILESYSTEM;
 #endif

@@ -1,6 +1,6 @@
 var a00073 =
 [
-    [ "snvs_hp_rtc_datetime_t", "a00073.html#a00515", [
+    [ "snvs_hp_rtc_datetime_t", "a00073.html#a00514", [
       [ "year", "a00073.html#ad208ce2822d4237a24aa334378163d8e", null ],
       [ "month", "a00073.html#aeae304d30957ee76f2ae1549118ea383", null ],
       [ "day", "a00073.html#a01d05e21af560f5185d63247d88b4c07", null ],
@@ -8,7 +8,7 @@ var a00073 =
       [ "minute", "a00073.html#a94effdb46795404af3432392f35e2353", null ],
       [ "second", "a00073.html#acbb250fa88138295346c157310a47db8", null ]
     ] ],
-    [ "snvs_hp_rtc_config_t", "a00073.html#a00514", [
+    [ "snvs_hp_rtc_config_t", "a00073.html#a00513", [
       [ "rtcCalEnable", "a00073.html#aadf858054f534311eca1fe14c2d3e11a", null ],
       [ "rtcCalValue", "a00073.html#ac916583f19d243eb891aa156b6ccd56a", null ],
       [ "periodicInterruptFreq", "a00073.html#a7ffad480a30cb609a32c67cdd4f9e34c", null ]

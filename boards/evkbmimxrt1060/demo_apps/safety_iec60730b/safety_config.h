@@ -11,6 +11,7 @@
 #include "MIMXRT1062.h" 
 #include "iec60730b.h" 
 #include "iec60730b_core.h"
+#include "safety_test_items.h"
 #include "project_setup_evkbmimxrt1060.h"
 #include "safety_cm7_imxrt.h"
 
@@ -19,6 +20,14 @@
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 
+#ifndef NULL
+#ifdef __cplusplus
+#define NULL (0)
+#else
+#define NULL ((void *)0)
+#endif
+#endif
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -26,7 +35,7 @@
 #define SAFETY_ERROR_ACTION 1
    
 /* TEST SWITCHES - for debugging it is better to turn the flash test and watchdog OFF */
-#define ADC_TEST_ENABLED   0
+#define ADC_TEST_ENABLED   1
 #define CLOCK_TEST_ENABLED 1
 #define DIO_TEST_ENABLED   1
 #define FLASH_TEST_ENABLED 1
@@ -146,31 +155,13 @@
 /********* ADC *********/
 #define TESTED_ADC ADC1 /* which ADC is use for AIO test */
 #define ADC_RESOLUTION  12
-#define ADC_MAX  ((1<<(ADC_RESOLUTION))-1)
 #define ADC_REFERENCE  3.3
 #define ADC_BANDGAP_LEVEL  1.6   /* depends on power supply configuration */
-#define ADC_BANDGAP_LEVEL_RAW  (((ADC_BANDGAP_LEVEL)*(ADC_MAX))/(ADC_REFERENCE))
 #define ADC_DEVIATION_PERCENT 25
-#define ADC_MIN_LIMIT(val)  (uint16_t)(((val) * (100 - ADC_DEVIATION_PERCENT)) / 100)
-#define ADC_MAX_LIMIT(val)  (uint16_t)(((val) * (100 + ADC_DEVIATION_PERCENT)) / 100)
-#define FS_CFG_AIO_CHANNELS_CNT    3
-#define FS_CFG_AIO_CHANNELS_LIMITS_INIT \
-{\
-  {(uint32_t)ADC_MIN_LIMIT(0), (uint32_t)ADC_MAX_LIMIT(60)}, \
-  {(uint32_t)ADC_MIN_LIMIT(ADC_MAX), (uint32_t)ADC_MAX_LIMIT(ADC_MAX)},\
-  {(uint32_t)ADC_MIN_LIMIT(ADC_BANDGAP_LEVEL_RAW), (uint32_t)ADC_MAX_LIMIT(ADC_BANDGAP_LEVEL_RAW)}\
-}
 
-
-#define FS_CFG_AIO_CHANNELS_INIT {0xFU, 0x19U, 0}  /* ADC Channels for V_refl, V_refh, bandgap */
 /********* ADC END *********/
 
 /* Define i.MX device (to differentiate from other devices in the vector table etc.) */
 #define _IMX_ 1U
-
-/* NULL definition */
-#ifndef NULL
-    #define NULL 0
-#endif
 
 #endif /* _SAFETY_CONFIG_H_ */

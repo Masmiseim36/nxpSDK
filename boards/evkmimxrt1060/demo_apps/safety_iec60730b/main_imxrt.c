@@ -6,8 +6,11 @@
  */
 
 #include "safety_config.h"
+#if FMSTR_SERIAL_ENABLE
 #include "freemaster.h"
-#include "safety_test_items.h"
+#endif
+#include "board.h"
+
 
 /*******************************************************************************
  * Prototypes
@@ -19,8 +22,8 @@ void safety_dio_runtime(void);
  * Variables
  ******************************************************************************/
 /* Start and end addresses for March test applied to Stack area */
-extern const uint32_t c_stackTestFirstAddress;  /* Defined in safety_cm7_imxrt.c */
-extern const uint32_t c_stackTestSecondAddress; /* Defined in safety_cm7_imxrt.c */
+extern const uint32_t c_stackTestFirstAddress;  /* defined in safety_*.c */
+extern const uint32_t c_stackTestSecondAddress; /* defined in safety_*.c */
 
 /* Test variable */
 volatile uint32_t counter = 0;
@@ -110,14 +113,20 @@ volatile uint32_t counter = 0;
  * Code
  ******************************************************************************/
 /*!
- * @brief Main function
+ * @brief main function
+ *
+ * @param void
+ *
+ * @return None
  */
 int32_t main(void)
 {
+#if WATCHDOG_ENABLED
+    Watchdog_refresh; /* refreshing the watchdog */
+#endif  
     __asm("CPSID i"); /* Disable interrupts */
 
-    g_sSafetyCommon.safetyErrors        = 0; /* Clear the variable that records safety error codes */
-    g_sSafetyCommon.fastIsrSafetySwitch = 0;
+
 #if defined(DCP_BASE)
     g_flashTestTTF = 0;
 #endif
@@ -157,7 +166,7 @@ int32_t main(void)
     MPUSetup();
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
     /* Clock initialization */
@@ -170,64 +179,48 @@ int32_t main(void)
     SafetyWatchdogTest(&g_sSafetyCommon, &g_sSafetyWdTest);
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
-#if DIO_TEST_ENABLED
-    /* Digital I/O test */
-    for (uint16_t i = 0; dio_safety_test_items[i] != 0; i++)
-    {
-        SafetyDigitalOutputTest(&g_sSafetyCommon, dio_safety_test_items[i]);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[i], DIO_SHORT_TO_GND_TEST);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[i], DIO_SHORT_TO_VDD_TEST);
-    }
 
-    SafetyDigitalInputOutput_ShortAdjTest(&g_sSafetyCommon, dio_safety_test_items[0], dio_safety_test_items[1],
-                                          LOGICAL_ONE);
-    SafetyDigitalInputOutput_ShortAdjTest(&g_sSafetyCommon, dio_safety_test_items[0], dio_safety_test_items[1],
-                                          LOGICAL_ZERO);
-#endif /* DIO_TEST_ENABLED */
-
+   
+    g_sSafetyCommon.safetyErrors        = 0; /* Clear the variable that records safety error codes */
+    g_sSafetyCommon.fastIsrSafetySwitch = 0;
+    
+    
 #if FMSTR_SERIAL_ENABLE
     SerialInit();
 
-    /* FreeMaster init */
-    FMSTR_Init();
-#endif
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
-
-    /* CPU test after */
-    SafetyCpuAfterResetTest(&g_sSafetyCommon);
+    FMSTR_Init(); /* initialize freemaster */
+#endif /* FMSTR_SERIAL_ENABLE */
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
-#if PC_TEST_ENABLED
-    /* Program Counter test */
-    SafetyPcTest(&g_sSafetyCommon, PC_TEST_PATTERN);
-#endif
+
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
-#if FLASH_TEST_ENABLED
+
 #if defined(DCP_BASE)
-    /* Flash test initialization */
+    /* Flash test init */
     DCPInit(g_contextSwitchingBuffer);
     SafetyFlashTestInit(&g_sFlashCrc, &g_sFlashConfig, &g_sFlashDCPState);
 #else
-    /* Flash test initialization */
+    /* Flash test init */
     SafetyFlashTestInit(&g_sFlashCrc, &g_sFlashConfig, NULL);
 #endif
-#endif
+
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
 #if FLASH_TEST_ENABLED
@@ -240,33 +233,50 @@ int32_t main(void)
 #endif
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 #endif /* FLASH_TEST_ENABLED */
 
     /* Ram test init for Safety related RAM space */
     SafetyRamTestInit(&g_sSafetyRamTest, safetyRamStart, safetyRamEnd);
 
-    /* Ram after-reset test for safety related memory */
-    SafetyRamAfterResetTest(&g_sSafetyCommon, &g_sSafetyRamTest);
-
     /* Ram test init for Stack memory */
     SafetyRamTestInit(&g_sSafetyRamStackTest, (uint32_t *)c_stackTestFirstAddress,
                       (uint32_t *)c_stackTestSecondAddress);
+
+    /* Ram after-reset test for safety related memory*/
+    SafetyRamAfterResetTest(&g_sSafetyCommon, &g_sSafetyRamTest);
+
 #if defined(DCP_BASE)
     /* Ram test init for DCP-related memory */
     SafetyRamTestInit(&g_sSafetyRamCRCTest, safetyRamCRCStart, safetyRamCRCEnd);
 #endif
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
     /* Ram after-reset test for Stack area */
     SafetyRamAfterResetTest(&g_sSafetyCommon, &g_sSafetyRamStackTest);
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
+#endif
+
+#if PC_TEST_ENABLED
+    /* Program Counter test */
+    SafetyPcTest(&g_sSafetyCommon, PC_TEST_PATTERN);
+#endif
+
+#if WATCHDOG_ENABLED
+    Watchdog_refresh; /* refreshing the watchdog */
+#endif 
+
+    /* CPU test after */
+    SafetyCpuAfterResetTest(&g_sSafetyCommon);
+
+#if WATCHDOG_ENABLED
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
     /* initialize Stack test */
@@ -275,6 +285,10 @@ int32_t main(void)
     /* Stack overflow and underflow test */
     SafetyStackTest(&g_sSafetyCommon);
 
+#if WATCHDOG_ENABLED
+    Watchdog_refresh; /* refreshing the watchdog */
+#endif
+
 #if ADC_TEST_ENABLED
     AdcInit();
 
@@ -282,11 +296,8 @@ int32_t main(void)
     Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
-    /* initialize Analog test */
-    SafetyAnalogTestInitialization();
-
     /* After-reset ADC test */
-    for (uint8_t i = 0; i < 4; i++) /* first iteration is init phase */
+    for (uint8_t i = 0; i < 6; i++) /* each odd iteration is init phase */
     {
         for (uint8_t y = 0; y < 100; y++)
             __asm("nop"); /* delay because of conversion time */
@@ -299,24 +310,44 @@ int32_t main(void)
 #endif /* ADC_TEST_ENABLED */
 
 #if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
+    Watchdog_refresh; /* refreshing the watchdog */
+#endif
+#if DIO_TEST_ENABLED
+    /* Digital I/O test */
+
+    for (uint16_t i = 0; g_dio_safety_test_items[i] != 0; i++)
+    {
+        SafetyDigitalOutputTest(&g_sSafetyCommon, g_dio_safety_test_items[i]);
+        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, g_dio_safety_test_items[i], DIO_SHORT_TO_GND_TEST);
+        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, g_dio_safety_test_items[i], DIO_SHORT_TO_VDD_TEST);
+
+         #if WATCHDOG_ENABLED
+        Watchdog_refresh; /* refreshing the watchdog */
+        #endif
+    }
+
+    SafetyDigitalInputOutput_ShortAdjTest(&g_sSafetyCommon, g_dio_safety_test_items[0], g_dio_safety_test_items[1],
+                                          LOGICAL_ONE);
+    SafetyDigitalInputOutput_ShortAdjTest(&g_sSafetyCommon, g_dio_safety_test_items[0], g_dio_safety_test_items[1],
+                                          LOGICAL_ZERO);
+#endif /* DIO_TEST_ENABLED */
+
+#if WATCHDOG_ENABLED
+    Watchdog_refresh; /* refreshing the watchdog */
 #endif
 
 #if CLOCK_TEST_ENABLED
-    /* Clock test initialization */
+    /* Initialize Clock test */
     SafetyClockTestInit(&g_sSafetyCommon, &g_sSafetyClockTest);
 #endif
 
-    /* SysTick initialization */
-    SystickInitialisation(SYSTICK_RELOAD_VALUE);
+    /* Initialize SysTick */
+    SystickInit(SYSTICK_RELOAD_VALUE);
 
-#if WATCHDOG_ENABLED
-    Watchdog_refresh; /********************************************************/
-#endif
+   /* Enable interrupts */
+    __asm("CPSIE i"); 
 
-    __asm("CPSIE i"); /* Enable interrupts */
-
-    while (1)
+    while (TRUE)
     {
         /* Interruptable CPU registers test */
         SafetyCpuBackgroundTest(&g_sSafetyCommon);
@@ -344,6 +375,15 @@ int32_t main(void)
         FS_CM4_CM7_CPU_SPprocess();
         __asm("CPSIE i");
 
+#if FLASH_TEST_ENABLED
+        /* Runtime Flash test */
+#if defined(DCP_BASE)
+        SafetyFlashRuntimeTest_DCP(&g_sSafetyCommon, &g_sFlashCrc, &g_sFlashConfig, &g_sFlashDCPState);
+#else
+        SafetyFlashRuntimeTest(&g_sSafetyCommon, &g_sFlashCrc, &g_sFlashConfig);
+#endif
+#endif
+
 #if CLOCK_TEST_ENABLED
         /* Runtime Clock test */
         SafetyClockTestCheck(&g_sSafetyCommon, &g_sSafetyClockTest);
@@ -357,48 +397,35 @@ int32_t main(void)
         SafetyAnalogTest(&g_sSafetyCommon);
 #endif
 
-#if FLASH_TEST_ENABLED
-        /* Runtime Flash test */
-#if defined(DCP_BASE)
-        SafetyFlashRuntimeTest_DCP(&g_sSafetyCommon, &g_sFlashCrc, &g_sFlashConfig, &g_sFlashDCPState);
-#else
-        SafetyFlashRuntimeTest(&g_sSafetyCommon, &g_sFlashCrc, &g_sFlashConfig);
-#endif
-#endif
 
 #if DIO_TEST_ENABLED
+
         /* Digital I/O test */
         safety_dio_runtime();
-#endif
+#endif /* DIO_TEST_ENABLED */
 
 #if FMSTR_SERIAL_ENABLE
 
         FMSTR_Poll(); /* Freemaster cummunication */
-#endif
-
+#endif /* FMSTR_SERIAL_ENABLE */
         development_test_terminate(); /* For example validation during development */
     }
 }
 
-/*!
- * @brief Runtime Digital I/O tests
- *
- * @param None
- *
- * @return None
- */
 void safety_dio_runtime(void)
 {
-    static uint8_t dio_cnt_number = 0; /*Static variable for indexin in items array*/
+    /* Static variable for indexing in items array */
+    static uint8_t dio_cnt_number = 0;
 
-    if (dio_safety_test_items[dio_cnt_number] != NULL)
+    if (g_dio_safety_test_items[dio_cnt_number] != NULL)
     {
-        SafetyDigitalOutputTest(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number]);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number],
+        SafetyDigitalOutputTest(&g_sSafetyCommon, g_dio_safety_test_items[dio_cnt_number]);
+        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, g_dio_safety_test_items[dio_cnt_number],
                                                  DIO_SHORT_TO_GND_TEST);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number],
+        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, g_dio_safety_test_items[dio_cnt_number],
                                                  DIO_SHORT_TO_VDD_TEST);
 
+        /* In next call, test next DIO channel */
         dio_cnt_number++;
     }
     else
@@ -408,7 +435,7 @@ void safety_dio_runtime(void)
 }
 
 /*!
- * @brief Systick interrupt service routine
+ * @brief Systick interrupt function
  *
  * @param void
  *
@@ -443,7 +470,7 @@ void SYSTICK_Isr(void)
 #endif
 
 #if CLOCK_TEST_ENABLED
-    /* Clock test */
+    /* Clock test function */
     SafetyClockTestIsr(&g_sSafetyClockTest);
 #endif
 

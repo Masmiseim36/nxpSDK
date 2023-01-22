@@ -1422,6 +1422,17 @@ wifi_tx_pwr_limits         Name: Wi-Fi module Tx power limits
                            Origin: Murata Manufacturing Co., Ltd.            
                            (BSD-3-Clause)                                    
 
+segger_rtt                 Name: SEGGER Real Timer Transfer                  
+                           Version: 7.22                                     
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           v39 August 2022 - Additional distribution license 
+                           granted - License in Section 2.3 applies          
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: source code                               
+                           Description: SEGGER Real Timer Transfer           
+                           Location: components/rtt                          
+                           Origin: SEGGER Microcontroller (proprietary)      
+
 nghttp2                    Name: nghttp2                                     
                            Version: 1.32.90                                  
                            Outgoing License: The MIT License                 

@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2022 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -42,7 +42,7 @@
 #define SSS_HAVE_APPLET_SE05X_B 0
 
 /** SE050 (Super set of A + B) */
-#define SSS_HAVE_APPLET_SE05X_C 1
+#define SSS_HAVE_APPLET_SE05X_C 0
 
 /** SE050 (Similar to A71CL) */
 #define SSS_HAVE_APPLET_SE05X_L 0
@@ -50,8 +50,14 @@
 /** SE051UWB (Similar to SE05x) */
 #define SSS_HAVE_APPLET_SE051_UWB 0
 
+/** SE051 with SPAKE Support */
+#define SSS_HAVE_APPLET_SE051_H 0
+
 /** AUTH */
 #define SSS_HAVE_APPLET_AUTH 0
+
+/** SE050E */
+#define SSS_HAVE_APPLET_SE050_E 1
 
 /** NXP Internal testing Applet */
 #define SSS_HAVE_APPLET_LOOPBACK 0
@@ -66,7 +72,9 @@
     + SSS_HAVE_APPLET_SE05X_C        \
     + SSS_HAVE_APPLET_SE05X_L        \
     + SSS_HAVE_APPLET_SE051_UWB      \
+    + SSS_HAVE_APPLET_SE051_H        \
     + SSS_HAVE_APPLET_AUTH           \
+    + SSS_HAVE_APPLET_SE050_E        \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) > 1)
 #        error "Enable only one of 'PTMW_Applet'"
@@ -83,7 +91,9 @@
     + SSS_HAVE_APPLET_SE05X_C        \
     + SSS_HAVE_APPLET_SE05X_L        \
     + SSS_HAVE_APPLET_SE051_UWB      \
+    + SSS_HAVE_APPLET_SE051_H        \
     + SSS_HAVE_APPLET_AUTH           \
+    + SSS_HAVE_APPLET_SE050_E        \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) == 0)
 #        error "Enable at-least one of 'PTMW_Applet'"
@@ -99,13 +109,13 @@
  */
 
 /** SE050 */
-#define SSS_HAVE_SE05X_VER_03_XX 1
+#define SSS_HAVE_SE05X_VER_03_XX 0
 
 /** SE051 */
 #define SSS_HAVE_SE05X_VER_06_00 0
 
 /** SE051 */
-#define SSS_HAVE_SE05X_VER_07_02 0
+#define SSS_HAVE_SE05X_VER_07_02 1
 
 #if (( 0                             \
     + SSS_HAVE_SE05X_VER_03_XX       \
@@ -135,10 +145,6 @@
 /** Use mbedTLS as host crypto */
 #define SSS_HAVE_HOSTCRYPTO_MBEDTLS 1
 
-/** Use mbed-crypto as host crypto
- * Required for ARM-PSA / TF-M */
-#define SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO 0
-
 /** Use OpenSSL as host crypto */
 #define SSS_HAVE_HOSTCRYPTO_OPENSSL 0
 
@@ -159,7 +165,6 @@
 
 #if (( 0                             \
     + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
-    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
     + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
     + SSS_HAVE_HOSTCRYPTO_USER       \
     + SSS_HAVE_HOSTCRYPTO_NONE       \
@@ -170,7 +175,6 @@
 
 #if (( 0                             \
     + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
-    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
     + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
     + SSS_HAVE_HOSTCRYPTO_USER       \
     + SSS_HAVE_HOSTCRYPTO_NONE       \
@@ -192,6 +196,9 @@
 /** Legacy implementation */
 #define SSS_HAVE_MBEDTLS_ALT_A71CH 0
 
+/** Enable TF-M based on PSA as ALT */
+#define SSS_HAVE_MBEDTLS_ALT_PSA 0
+
 /** Not using any mbedTLS_ALT
  *
  * When this is selected, cloud demos can not work with mbedTLS */
@@ -200,6 +207,7 @@
 #if (( 0                             \
     + SSS_HAVE_MBEDTLS_ALT_SSS       \
     + SSS_HAVE_MBEDTLS_ALT_A71CH     \
+    + SSS_HAVE_MBEDTLS_ALT_PSA       \
     + SSS_HAVE_MBEDTLS_ALT_NONE      \
     ) > 1)
 #        error "Enable only one of 'PTMW_mbedTLS_ALT'"
@@ -209,6 +217,7 @@
 #if (( 0                             \
     + SSS_HAVE_MBEDTLS_ALT_SSS       \
     + SSS_HAVE_MBEDTLS_ALT_A71CH     \
+    + SSS_HAVE_MBEDTLS_ALT_PSA       \
     + SSS_HAVE_MBEDTLS_ALT_NONE      \
     ) == 0)
 #        error "Enable at-least one of 'PTMW_mbedTLS_ALT'"
@@ -410,6 +419,35 @@
 #endif
 
 
+
+/** PTMW_OpenSSL : For PC, which OpenSSL to pick up
+ *
+ * On Linux based builds, this option has no impact, because the build system
+ * picks up the default available/installed OpenSSL from the system directly.
+ */
+
+/** Use 1.1.1 version (Only applicable on PC) */
+#define SSS_HAVE_OPENSSL_1_1_1 1
+
+/** Use 3.0 version (Only applicable on PC) */
+#define SSS_HAVE_OPENSSL_3_0 0
+
+#if (( 0                             \
+    + SSS_HAVE_OPENSSL_1_1_1         \
+    + SSS_HAVE_OPENSSL_3_0           \
+    ) > 1)
+#        error "Enable only one of 'PTMW_OpenSSL'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_OPENSSL_1_1_1         \
+    + SSS_HAVE_OPENSSL_3_0           \
+    ) == 0)
+#        error "Enable at-least one of 'PTMW_OpenSSL'"
+#endif
+
+
 /* ====================================================================== *
  * == Feature selection/values ========================================== *
  * ====================================================================== */
@@ -494,16 +532,16 @@
 
 
 #define SSS_HAVE_APPLET \
- (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CL | SSS_HAVE_APPLET_A71CH_SIM | SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE05X_L | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH | SSS_HAVE_APPLET_LOOPBACK)
+ (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CL | SSS_HAVE_APPLET_A71CH_SIM | SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE05X_L | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_SE051_H | SSS_HAVE_APPLET_AUTH | SSS_HAVE_APPLET_SE050_E | SSS_HAVE_APPLET_LOOPBACK)
 
 #define SSS_HAVE_APPLET_SE05X_IOT \
- (SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH)
+ (SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_SE051_H | SSS_HAVE_APPLET_AUTH | SSS_HAVE_APPLET_SE050_E)
 
 #define SSS_HAVE_MBEDTLS_ALT \
- (SSS_HAVE_MBEDTLS_ALT_SSS | SSS_HAVE_MBEDTLS_ALT_A71CH)
+ (SSS_HAVE_MBEDTLS_ALT_SSS | SSS_HAVE_MBEDTLS_ALT_A71CH | SSS_HAVE_MBEDTLS_ALT_PSA)
 
 #define SSS_HAVE_HOSTCRYPTO_ANY \
- (SSS_HAVE_HOSTCRYPTO_MBEDTLS | SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO | SSS_HAVE_HOSTCRYPTO_OPENSSL | SSS_HAVE_HOSTCRYPTO_USER)
+ (SSS_HAVE_HOSTCRYPTO_MBEDTLS | SSS_HAVE_HOSTCRYPTO_OPENSSL | SSS_HAVE_HOSTCRYPTO_USER)
 
 #define SSS_HAVE_FIPS \
  (SSS_HAVE_FIPS_SE050 | SSS_HAVE_FIPS_140_2 | SSS_HAVE_FIPS_140_3)
@@ -542,7 +580,7 @@
 #define SSS_HAVE_ECC 1
 
 /* RSA is available */
-#define SSS_HAVE_RSA 1
+#define SSS_HAVE_RSA 0
 
 /* TPM BARRETO_NAEHRIG Curve is enabled */
 #define SSS_HAVE_TPM_BN 1
@@ -578,6 +616,27 @@
 
 /* ========= Miscellaneous values : END ===================== */
 
+/* Enable one of these
+ * If none is selected, default config would be used
+ */
+#define SSS_PFSCP_ENABLE_SE050A1 0
+#define SSS_PFSCP_ENABLE_SE050A2 0
+#define SSS_PFSCP_ENABLE_SE050B1 0
+#define SSS_PFSCP_ENABLE_SE050B2 0
+#define SSS_PFSCP_ENABLE_SE050C1 0
+#define SSS_PFSCP_ENABLE_SE050C2 0
+#define SSS_PFSCP_ENABLE_SE050_DEVKIT 0
+#define SSS_PFSCP_ENABLE_SE051A2 0
+#define SSS_PFSCP_ENABLE_SE051C2 0
+#define SSS_PFSCP_ENABLE_SE050F2 0
+#define SSS_PFSCP_ENABLE_SE051C_0005A8FA 0
+#define SSS_PFSCP_ENABLE_SE051A_0001A920 0
+#define SSS_PFSCP_ENABLE_SE050E_0001A921 0
+#define SSS_PFSCP_ENABLE_SE051W_0005A739 0
+#define SSS_PFSCP_ENABLE_A5000_0004A736 0
+#define SSS_PFSCP_ENABLE_SE050F2_0001A92A 0
+#define SSS_PFSCP_ENABLE_OTHER 0
+
 /* ========= Calculated values : START ====================== */
 
 /* Should we expose, SSS APIs */
@@ -585,16 +644,9 @@
     + SSS_HAVE_SSCP                  \
     + SSS_HAVE_APPLET_SE05X_IOT      \
     + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
-    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
     + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
     + SSS_HAVE_HOSTCRYPTO_USER       \
     )
-
-/* MBEDCRYPTO is superset of MBEDTLS and exposing that way */
-#if SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO
-#   undef  SSS_HAVE_HOSTCRYPTO_MBEDTLS
-#   define SSS_HAVE_HOSTCRYPTO_MBEDTLS 1
-#endif // SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO
 
 #if SSS_HAVE_HOSTCRYPTO_NONE
 #   undef  SSSFTR_SE05X_AuthSession
@@ -619,6 +671,7 @@
 #       define SSS_HAVE_RSA_4K 1
 #    endif // SSS_HAVE_APPLET_SE051_UWB
 #endif // SSS_HAVE_RSA
+
 
 #if SSS_HAVE_ECC
 #   define SSS_HAVE_EC_NIST_192 1
@@ -664,7 +717,22 @@
 #       define SSS_HAVE_HASH_224 1
 #       define SSS_HAVE_HASH_512 1
 #    endif // SSS_HAVE_APPLET_AUTH
+#    if SSS_HAVE_APPLET_SE050_E
+#       undef SSS_HAVE_RSA
+#       define SSS_HAVE_RSA 0
+#    endif //SSS_HAVE_APPLET_SE050_E
+#    if SSS_HAVE_RSA
+#        if SSS_HAVE_APPLET_SE051_H
+#           undef SSS_HAVE_RSA_4K
+#           define SSS_HAVE_RSA_4K 0
+#           define SSS_HAVE_RSA_3K 0
+#        else
+#        define SSS_HAVE_RSA_3K 1
+#        endif //SSS_HAVE_APPLET_SE051_H
+#    endif //SSS_HAVE_RSA
 #endif
+
+
 
 /* ========= Calculated values : END ======================== */
 

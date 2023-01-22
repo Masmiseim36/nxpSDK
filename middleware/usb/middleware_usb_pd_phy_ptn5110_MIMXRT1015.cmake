@@ -11,7 +11,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/pd/ptn5110
     ${CMAKE_CURRENT_LIST_DIR}/pd
     ${CMAKE_CURRENT_LIST_DIR}/pd/phy_interface
@@ -24,5 +24,5 @@ include(component_lpi2c_adapter_MIMXRT1015)
 
 include(component_osa_MIMXRT1015)
 
-include(middleware_usb_common_header_MIMXRT1015)
+include(middleware_usb_pd_common_header_MIMXRT1015)
 

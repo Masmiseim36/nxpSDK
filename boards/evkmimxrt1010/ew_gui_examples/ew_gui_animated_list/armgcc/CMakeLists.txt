@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(ew_gui_animated_list)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME ew_gui_animated_list.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -114,26 +120,26 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
     ${ProjDirPath}/../GeneratedCode
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/ili9341
-    ${ProjDirPath}/../../../../../components/ft6x06
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/cmsis_drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../middleware/EmbeddedWizard
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../CMSIS/Driver/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/utilities
+    ${SdkRootDirPath}/components/ili9341
+    ${SdkRootDirPath}/components/ft6x06
+    ${SdkRootDirPath}/devices/MIMXRT1011/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1011/cmsis_drivers
+    ${SdkRootDirPath}/devices/MIMXRT1011/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1011/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware/EmbeddedWizard
+    ${SdkRootDirPath}/devices/MIMXRT1011
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1011/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1010/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/CMSIS/Driver/Include
 )
 
 # include modules
@@ -204,15 +210,13 @@ include(utilities_misc_utilities_MIMXRT1011)
 include(device_MIMXRT1011_system_MIMXRT1011)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)

@@ -1,6 +1,6 @@
 var a00053 =
 [
-    [ "pit_config_t", "a00053.html#a00429", [
+    [ "pit_config_t", "a00053.html#a00428", [
       [ "enableRunInDebug", "a00053.html#ade3a74504e1c6ecf10eb1f30fe5c0921", null ]
     ] ],
     [ "FSL_PIT_DRIVER_VERSION", "a00053.html#ga55a6c6a9b7ee34302c636f9496d0ea2f", null ],

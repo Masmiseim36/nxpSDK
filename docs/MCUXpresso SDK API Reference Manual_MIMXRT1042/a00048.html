@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.2</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,64 +103,64 @@ $(document).ready(function(){initNavTree('a00048.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LPSPI eDMA Driver<div class="ingroups"><a class="el" href="a00277.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
+<div class="title">LPSPI eDMA Driver<div class="ingroups"><a class="el" href="a00276.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00323"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00323">lpspi_master_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00323"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master eDMA transfer handle structure used for transactional API.  <a href="a00048.html#a00323">More...</a><br/></td></tr>
-<tr class="separator:a00323"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00325"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00325">lpspi_slave_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00325"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave eDMA transfer handle structure used for transactional API.  <a href="a00048.html#a00325">More...</a><br/></td></tr>
-<tr class="separator:a00325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00322"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00322">lpspi_master_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00322"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master eDMA transfer handle structure used for transactional API.  <a href="a00048.html#a00322">More...</a><br/></td></tr>
+<tr class="separator:a00322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00324"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00324">lpspi_slave_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00324"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave eDMA transfer handle structure used for transactional API.  <a href="a00048.html#a00324">More...</a><br/></td></tr>
+<tr class="separator:a00324"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gac7830d169e650c0f0239bfe22fe044f0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> )(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gac7830d169e650c0f0239bfe22fe044f0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> )(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gac7830d169e650c0f0239bfe22fe044f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback function pointer type.  <a href="#gac7830d169e650c0f0239bfe22fe044f0">More...</a><br/></td></tr>
 <tr class="separator:gac7830d169e650c0f0239bfe22fe044f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> )(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> )(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback function pointer type.  <a href="#gafab27c360b0c9a27c0c3f2327cdf8fd8">More...</a><br/></td></tr>
 <tr class="separator:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga0e311cb35cbf6f7d4c8027773214c75e">LPSPI_MasterTransferCreateHandleEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00048.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
+<tr class="memitem:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga0e311cb35cbf6f7d4c8027773214c75e">LPSPI_MasterTransferCreateHandleEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00048.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00370">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00021.html#a00370">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
 <tr class="memdesc:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPSPI master eDMA handle.  <a href="#ga0e311cb35cbf6f7d4c8027773214c75e">More...</a><br/></td></tr>
 <tr class="separator:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gabcd43b45998e6fe655192d9b7f0d641c">LPSPI_MasterTransferEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00047.html#a00437">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memitem:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gabcd43b45998e6fe655192d9b7f0d641c">LPSPI_MasterTransferEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00047.html#a00436">lpspi_transfer_t</a> *transfer)</td></tr>
 <tr class="memdesc:gabcd43b45998e6fe655192d9b7f0d641c"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master transfer data using eDMA.  <a href="#gabcd43b45998e6fe655192d9b7f0d641c">More...</a><br/></td></tr>
 <tr class="separator:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gabe586c4f55bdf08b9e2e1f9c708f7cfc">LPSPI_MasterTransferAbortEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle)</td></tr>
 <tr class="memdesc:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master aborts a transfer which is using eDMA.  <a href="#gabe586c4f55bdf08b9e2e1f9c708f7cfc">More...</a><br/></td></tr>
 <tr class="separator:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga002238d5b9e570fb8a0afb6fcbc04be6">LPSPI_MasterTransferGetCountEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga002238d5b9e570fb8a0afb6fcbc04be6">LPSPI_MasterTransferGetCountEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master eDMA transfer remaining bytes.  <a href="#ga002238d5b9e570fb8a0afb6fcbc04be6">More...</a><br/></td></tr>
 <tr class="separator:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac41d24f3bffe0f4fb09f59fa632c793f">LPSPI_SlaveTransferCreateHandleEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00048.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
+<tr class="memitem:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac41d24f3bffe0f4fb09f59fa632c793f">LPSPI_SlaveTransferCreateHandleEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00048.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00370">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00021.html#a00370">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
 <tr class="memdesc:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPSPI slave eDMA handle.  <a href="#gac41d24f3bffe0f4fb09f59fa632c793f">More...</a><br/></td></tr>
 <tr class="separator:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac4b006dcf6f81a13249bd18a991e5c9d">LPSPI_SlaveTransferEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00047.html#a00437">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memitem:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac4b006dcf6f81a13249bd18a991e5c9d">LPSPI_SlaveTransferEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00047.html#a00436">lpspi_transfer_t</a> *transfer)</td></tr>
 <tr class="memdesc:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave transfers data using eDMA.  <a href="#gac4b006dcf6f81a13249bd18a991e5c9d">More...</a><br/></td></tr>
 <tr class="separator:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga56077376e3e8eae57c110ecde471d6f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga56077376e3e8eae57c110ecde471d6f0">LPSPI_SlaveTransferAbortEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle)</td></tr>
 <tr class="memdesc:ga56077376e3e8eae57c110ecde471d6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave aborts a transfer which is using eDMA.  <a href="#ga56077376e3e8eae57c110ecde471d6f0">More...</a><br/></td></tr>
 <tr class="separator:ga56077376e3e8eae57c110ecde471d6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd05a23bb61b471d2e1c289ce076148e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gacd05a23bb61b471d2e1c289ce076148e">LPSPI_SlaveTransferGetCountEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gacd05a23bb61b471d2e1c289ce076148e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gacd05a23bb61b471d2e1c289ce076148e">LPSPI_SlaveTransferGetCountEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:gacd05a23bb61b471d2e1c289ce076148e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave eDMA transfer remaining bytes.  <a href="#gacd05a23bb61b471d2e1c289ce076148e">More...</a><br/></td></tr>
 <tr class="separator:gacd05a23bb61b471d2e1c289ce076148e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaa083089fda62238f6cdcd9b6289913c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaa083089fda62238f6cdcd9b6289913c7">FSL_LPSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00265.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
+<tr class="memitem:gaa083089fda62238f6cdcd9b6289913c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaa083089fda62238f6cdcd9b6289913c7">FSL_LPSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
 <tr class="memdesc:gaa083089fda62238f6cdcd9b6289913c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI EDMA driver version.  <a href="#gaa083089fda62238f6cdcd9b6289913c7">More...</a><br/></td></tr>
 <tr class="separator:gaa083089fda62238f6cdcd9b6289913c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00323" id="a00323"></a>
+<a name="a00322" id="a00322"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -169,7 +169,7 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Forward declaration of the <a class="el" href="a00048.html#a00323" title="LPSPI master eDMA transfer handle structure used for transactional API. ">_lpspi_master_edma_handle</a> typedefs.</p>
+<div class="textblock"><p>Forward declaration of the <a class="el" href="a00048.html#a00322" title="LPSPI master eDMA transfer handle structure used for transactional API. ">_lpspi_master_edma_handle</a> typedefs.</p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:a46fe35e5026b495d125d0adbb3f7800c"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a46fe35e5026b495d125d0adbb3f7800c">isPcsContinuous</a></td></tr>
@@ -240,15 +240,15 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memdesc:a314643d8584c345051a7e389ad68cd32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#a314643d8584c345051a7e389ad68cd32">More...</a><br/></td></tr>
 <tr class="separator:a314643d8584c345051a7e389ad68cd32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02594ec906631b7188c0b56888c5239a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02594ec906631b7188c0b56888c5239a"></a>
-<a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a02594ec906631b7188c0b56888c5239a">edmaRxRegToRxDataHandle</a></td></tr>
-<tr class="memdesc:a02594ec906631b7188c0b56888c5239a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for RxReg to RxData buff <br/></td></tr>
+<a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a02594ec906631b7188c0b56888c5239a">edmaRxRegToRxDataHandle</a></td></tr>
+<tr class="memdesc:a02594ec906631b7188c0b56888c5239a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for RxReg to RxData buff <br/></td></tr>
 <tr class="separator:a02594ec906631b7188c0b56888c5239a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7040efe4741c60f8924c0988178af2f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7040efe4741c60f8924c0988178af2f5"></a>
-<a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a7040efe4741c60f8924c0988178af2f5">edmaTxDataToTxRegHandle</a></td></tr>
-<tr class="memdesc:a7040efe4741c60f8924c0988178af2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for TxData to TxReg buff <br/></td></tr>
+<a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a7040efe4741c60f8924c0988178af2f5">edmaTxDataToTxRegHandle</a></td></tr>
+<tr class="memdesc:a7040efe4741c60f8924c0988178af2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for TxData to TxReg buff <br/></td></tr>
 <tr class="separator:a7040efe4741c60f8924c0988178af2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1610cd02da7febac3e0cb624bd5f54af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1610cd02da7febac3e0cb624bd5f54af"></a>
-<a class="el" href="a00021.html#a00373">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1610cd02da7febac3e0cb624bd5f54af">lpspiSoftwareTCD</a> [3]</td></tr>
+<a class="el" href="a00021.html#a00372">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1610cd02da7febac3e0cb624bd5f54af">lpspiSoftwareTCD</a> [3]</td></tr>
 <tr class="memdesc:a1610cd02da7febac3e0cb624bd5f54af"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
 <tr class="separator:a1610cd02da7febac3e0cb624bd5f54af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -508,7 +508,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00325" id="a00325"></a>
+<a name="a00324" id="a00324"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -517,7 +517,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Forward declaration of the <a class="el" href="a00048.html#a00325" title="LPSPI slave eDMA transfer handle structure used for transactional API. ">_lpspi_slave_edma_handle</a> typedefs.</p>
+<div class="textblock"><p>Forward declaration of the <a class="el" href="a00048.html#a00324" title="LPSPI slave eDMA transfer handle structure used for transactional API. ">_lpspi_slave_edma_handle</a> typedefs.</p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:adde5846fcb7d9b727fa48199e097ebe0"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#adde5846fcb7d9b727fa48199e097ebe0">isByteSwap</a></td></tr>
@@ -585,15 +585,15 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memdesc:ae4827ac81285a661d014146716aa3889"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#ae4827ac81285a661d014146716aa3889">More...</a><br/></td></tr>
 <tr class="separator:ae4827ac81285a661d014146716aa3889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c648d914e0a3cac170577ddd5d2f4a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c648d914e0a3cac170577ddd5d2f4a4"></a>
-<a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a0c648d914e0a3cac170577ddd5d2f4a4">edmaRxRegToRxDataHandle</a></td></tr>
-<tr class="memdesc:a0c648d914e0a3cac170577ddd5d2f4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for RxReg to RxData buff <br/></td></tr>
+<a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a0c648d914e0a3cac170577ddd5d2f4a4">edmaRxRegToRxDataHandle</a></td></tr>
+<tr class="memdesc:a0c648d914e0a3cac170577ddd5d2f4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for RxReg to RxData buff <br/></td></tr>
 <tr class="separator:a0c648d914e0a3cac170577ddd5d2f4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf7f0d220ddc8aaeaff77b316c32210e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf7f0d220ddc8aaeaff77b316c32210e"></a>
-<a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#abf7f0d220ddc8aaeaff77b316c32210e">edmaTxDataToTxRegHandle</a></td></tr>
-<tr class="memdesc:abf7f0d220ddc8aaeaff77b316c32210e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for TxData to TxReg <br/></td></tr>
+<a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#abf7f0d220ddc8aaeaff77b316c32210e">edmaTxDataToTxRegHandle</a></td></tr>
+<tr class="memdesc:abf7f0d220ddc8aaeaff77b316c32210e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for TxData to TxReg <br/></td></tr>
 <tr class="separator:abf7f0d220ddc8aaeaff77b316c32210e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1aa47d8c4f4d937202d9e5407500d918"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1aa47d8c4f4d937202d9e5407500d918"></a>
-<a class="el" href="a00021.html#a00373">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1aa47d8c4f4d937202d9e5407500d918">lpspiSoftwareTCD</a> [2]</td></tr>
+<a class="el" href="a00021.html#a00372">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1aa47d8c4f4d937202d9e5407500d918">lpspiSoftwareTCD</a> [2]</td></tr>
 <tr class="memdesc:a1aa47d8c4f4d937202d9e5407500d918"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
 <tr class="separator:a1aa47d8c4f4d937202d9e5407500d918"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -847,7 +847,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00265.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
+          <td class="memname">#define FSL_LPSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -860,7 +860,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpspi_master_edma_transfer_callback_t)(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* lpspi_master_edma_transfer_callback_t)(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -881,7 +881,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpspi_slave_edma_transfer_callback_t)(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* lpspi_slave_edma_transfer_callback_t)(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -929,13 +929,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaRxRegToRxDataHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaTxDataToTxRegHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -953,8 +953,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
     <tr><td class="paramname">handle</td><td>LPSPI handle pointer to lpspi_master_edma_handle_t. </td></tr>
     <tr><td class="paramname">callback</td><td>LPSPI callback. </td></tr>
     <tr><td class="paramname">userData</td><td>callback function parameter. </td></tr>
-    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to <a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
-    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to <a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
+    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to <a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
+    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to <a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -966,7 +966,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMA </td>
+          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -980,7 +980,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00047.html#a00437">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00047.html#a00436">lpspi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>transfer</em>&#160;</td>
         </tr>
         <tr>
@@ -996,7 +996,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <table class="params">
     <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">transfer</td><td>pointer to <a class="el" href="a00047.html#a00437" title="LPSPI master/slave transfer structure. ">lpspi_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to <a class="el" href="a00047.html#a00436" title="LPSPI master/slave transfer structure. ">lpspi_transfer_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1043,7 +1043,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferGetCountEDMA </td>
+          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferGetCountEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1111,13 +1111,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaRxRegToRxDataHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00371">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaTxDataToTxRegHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -1136,8 +1136,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
     <tr><td class="paramname">handle</td><td>LPSPI handle pointer to lpspi_slave_edma_handle_t. </td></tr>
     <tr><td class="paramname">callback</td><td>LPSPI callback. </td></tr>
     <tr><td class="paramname">userData</td><td>callback function parameter. </td></tr>
-    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to <a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
-    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to <a class="el" href="a00021.html#a00371" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
+    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to <a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
+    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to <a class="el" href="a00021.html#a00370" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1149,7 +1149,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferEDMA </td>
+          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1163,7 +1163,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00047.html#a00437">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00047.html#a00436">lpspi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>transfer</em>&#160;</td>
         </tr>
         <tr>
@@ -1179,7 +1179,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <table class="params">
     <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>pointer to lpspi_slave_edma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">transfer</td><td>pointer to <a class="el" href="a00047.html#a00437" title="LPSPI master/slave transfer structure. ">lpspi_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to <a class="el" href="a00047.html#a00436" title="LPSPI master/slave transfer structure. ">lpspi_transfer_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1226,7 +1226,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferGetCountEDMA </td>
+          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferGetCountEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

@@ -2,4 +2,3 @@
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_MIMXRT1021 true)
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_polling_MIMXRT1021 true)
 set(CONFIG_USE_driver_lpuart_MIMXRT1021 true)
-set(CONFIG_USE_driver_common_MIMXRT1021 true)

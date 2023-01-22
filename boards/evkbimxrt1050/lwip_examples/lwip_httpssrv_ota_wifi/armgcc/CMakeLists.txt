@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lwip_httpssrv_ota_wifi)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME lwip_httpssrv_ota_wifi.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -32,6 +38,8 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../lwip_httpssrv_ota.c"
+"${ProjDirPath}/../httpsrv_multipart.c"
+"${ProjDirPath}/../httpsrv_multipart.h"
 "${ProjDirPath}/../network_cfg.h"
 "${ProjDirPath}/../init_wifi.c"
 "${ProjDirPath}/../wpl.h"
@@ -45,7 +53,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../mcuboot_app_support.c"
 "${ProjDirPath}/../mcuboot_app_support.h"
-"${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.c"
+"${ProjDirPath}/../bootutil_port/board_specific/sblconfig.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_config.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
+"${ProjDirPath}/../bootutil_port/flash_map.h"
+"${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
+"${ProjDirPath}/../bootutil_port/sbldef.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
@@ -59,9 +74,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../..
+    ${ProjDirPath}/../bootutil_port
+    ${ProjDirPath}/../bootutil_port/mcuboot_config
+    ${ProjDirPath}/../bootutil_port/sysflash
+    ${ProjDirPath}/../bootutil_port/board_specific
+    ${SdkRootDirPath}/boards/evkbimxrt1050
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -73,24 +92,23 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
-    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1052
-    ${ProjDirPath}/../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../middleware/wifi_nxp
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
-    ${ProjDirPath}/../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../components/gpio
-    ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/flash/mflash
-    ${ProjDirPath}/../../../../../components/osa
-    ${ProjDirPath}/../../../../../components/wifi_bt_module
+    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt1052
+    ${SdkRootDirPath}/middleware/mbedtls
+    ${SdkRootDirPath}/middleware/wifi_nxp
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
+    ${SdkRootDirPath}/middleware/sdmmc
+    ${SdkRootDirPath}/components/gpio
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/devices/MIMXRT1052
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/flash/mflash
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/components/wifi_bt_module
 )
 
 # include modules
@@ -158,8 +176,6 @@ include(utility_assert_MIMXRT1052)
 
 include(driver_igpio_MIMXRT1052)
 
-include(component_silicon_id_MIMXRT1052)
-
 include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(component_mflash_common_MIMXRT1052)
@@ -180,6 +196,8 @@ include(driver_usdhc_MIMXRT1052)
 
 include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1052)
 
+include(middleware_wifi_common_files_MIMXRT1052)
+
 include(middleware_lwip_apps_httpsrv_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
@@ -187,15 +205,13 @@ include(utilities_misc_utilities_MIMXRT1052)
 include(device_MIMXRT1052_system_MIMXRT1052)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

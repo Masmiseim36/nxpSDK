@@ -11,10 +11,10 @@ screen tearing.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================
@@ -44,8 +44,9 @@ Prepare the Demo
 5.  Launch the debugger in your IDE to begin running the demo.
 
 Note: If OV7725 is used, change the macro APP_CAMERA_TYPE to APP_CAMERA_OV7725 in
-csi_rgb565.c.
+csi_fragment_gray.c.
 
 Running the demo
 ================
+Input anykey from the terminal to trigger image capture.
 When the demo runs successfully, the camera received pictures are shown in the LCD.

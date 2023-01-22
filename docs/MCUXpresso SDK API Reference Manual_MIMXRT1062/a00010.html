@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -146,9 +146,9 @@ BEE example</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00339"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00339">bee_region_config_t</a></td></tr>
-<tr class="memdesc:a00339"><td class="mdescLeft">&#160;</td><td class="mdescRight">BEE region configuration structure.  <a href="a00010.html#a00339">More...</a><br/></td></tr>
-<tr class="separator:a00339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00338"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00338">bee_region_config_t</a></td></tr>
+<tr class="memdesc:a00338"><td class="mdescLeft">&#160;</td><td class="mdescRight">BEE region configuration structure.  <a href="a00010.html#a00338">More...</a><br/></td></tr>
+<tr class="separator:a00338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -229,16 +229,16 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6283ed8e0a7504b9bccfc79e204522e7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga6283ed8e0a7504b9bccfc79e204522e7">BEE_Disable</a> (BEE_Type *base)</td></tr>
 <tr class="memdesc:ga6283ed8e0a7504b9bccfc79e204522e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables BEE decryption.  <a href="#ga6283ed8e0a7504b9bccfc79e204522e7">More...</a><br/></td></tr>
 <tr class="separator:ga6283ed8e0a7504b9bccfc79e204522e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeca7aeaa01f87978efc7c216cd7bb5e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaeca7aeaa01f87978efc7c216cd7bb5e5">BEE_GetDefaultConfig</a> (<a class="el" href="a00010.html#a00339">bee_region_config_t</a> *config)</td></tr>
+<tr class="memitem:gaeca7aeaa01f87978efc7c216cd7bb5e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaeca7aeaa01f87978efc7c216cd7bb5e5">BEE_GetDefaultConfig</a> (<a class="el" href="a00010.html#a00338">bee_region_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaeca7aeaa01f87978efc7c216cd7bb5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads default values to the BEE region configuration structure.  <a href="#gaeca7aeaa01f87978efc7c216cd7bb5e5">More...</a><br/></td></tr>
 <tr class="separator:gaeca7aeaa01f87978efc7c216cd7bb5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9744f40ce0f27c8b6dcabce8fda252b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga9744f40ce0f27c8b6dcabce8fda252b5">BEE_SetConfig</a> (BEE_Type *base, const <a class="el" href="a00010.html#a00339">bee_region_config_t</a> *config)</td></tr>
+<tr class="memitem:ga9744f40ce0f27c8b6dcabce8fda252b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga9744f40ce0f27c8b6dcabce8fda252b5">BEE_SetConfig</a> (BEE_Type *base, const <a class="el" href="a00010.html#a00338">bee_region_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga9744f40ce0f27c8b6dcabce8fda252b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets BEE configuration.  <a href="#ga9744f40ce0f27c8b6dcabce8fda252b5">More...</a><br/></td></tr>
 <tr class="separator:ga9744f40ce0f27c8b6dcabce8fda252b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab46f30a09b9b92665ff197ab7cdb78cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gab46f30a09b9b92665ff197ab7cdb78cd">BEE_SetRegionKey</a> (BEE_Type *base, <a class="el" href="a00010.html#ga63e3de927c1695c23c7f488343af3068">bee_region_t</a> region, const uint8_t *key, size_t keySize)</td></tr>
+<tr class="memitem:gab46f30a09b9b92665ff197ab7cdb78cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gab46f30a09b9b92665ff197ab7cdb78cd">BEE_SetRegionKey</a> (BEE_Type *base, <a class="el" href="a00010.html#ga63e3de927c1695c23c7f488343af3068">bee_region_t</a> region, const uint8_t *key, size_t keySize)</td></tr>
 <tr class="memdesc:gab46f30a09b9b92665ff197ab7cdb78cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the AES key for selected region into BEE key registers.  <a href="#gab46f30a09b9b92665ff197ab7cdb78cd">More...</a><br/></td></tr>
 <tr class="separator:gab46f30a09b9b92665ff197ab7cdb78cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa638564cda2e20d4891534c9542eaa39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaa638564cda2e20d4891534c9542eaa39">BEE_SetRegionNonce</a> (BEE_Type *base, <a class="el" href="a00010.html#ga63e3de927c1695c23c7f488343af3068">bee_region_t</a> region, const uint8_t *nonce, size_t nonceSize)</td></tr>
+<tr class="memitem:gaa638564cda2e20d4891534c9542eaa39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaa638564cda2e20d4891534c9542eaa39">BEE_SetRegionNonce</a> (BEE_Type *base, <a class="el" href="a00010.html#ga63e3de927c1695c23c7f488343af3068">bee_region_t</a> region, const uint8_t *nonce, size_t nonceSize)</td></tr>
 <tr class="memdesc:gaa638564cda2e20d4891534c9542eaa39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the nonce for selected region into BEE nonce registers.  <a href="#gaa638564cda2e20d4891534c9542eaa39">More...</a><br/></td></tr>
 <tr class="separator:gaa638564cda2e20d4891534c9542eaa39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68a9f0f1fd8f8db579c283db82e6c5f8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga68a9f0f1fd8f8db579c283db82e6c5f8">BEE_GetStatusFlags</a> (BEE_Type *base)</td></tr>
@@ -250,12 +250,12 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga2e7cd17d2050f7390d7a48066ad2634e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga2e7cd17d2050f7390d7a48066ad2634e">FSL_BEE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td></tr>
+<tr class="memitem:ga2e7cd17d2050f7390d7a48066ad2634e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga2e7cd17d2050f7390d7a48066ad2634e">FSL_BEE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00265.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td></tr>
 <tr class="memdesc:ga2e7cd17d2050f7390d7a48066ad2634e"><td class="mdescLeft">&#160;</td><td class="mdescRight">BEE driver version.  <a href="#ga2e7cd17d2050f7390d7a48066ad2634e">More...</a><br/></td></tr>
 <tr class="separator:ga2e7cd17d2050f7390d7a48066ad2634e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00339" id="a00339"></a>
+<a name="a00338" id="a00338"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -316,7 +316,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_BEE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td>
+          <td class="memname">#define FSL_BEE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00265.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -617,7 +617,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void BEE_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00010.html#a00339">bee_region_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00010.html#a00338">bee_region_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -657,7 +657,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00010.html#a00339">bee_region_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00010.html#a00338">bee_region_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -683,7 +683,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> BEE_SetRegionKey </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> BEE_SetRegionKey </td>
           <td>(</td>
           <td class="paramtype">BEE_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -732,7 +732,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> BEE_SetRegionNonce </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> BEE_SetRegionNonce </td>
           <td>(</td>
           <td class="paramtype">BEE_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

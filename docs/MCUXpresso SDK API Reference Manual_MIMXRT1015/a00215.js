@@ -1,15 +1,20 @@
 var a00215 =
 [
-    [ "FSL_AIPSTZ_DRIVER_VERSION", "a00215.html#ga63da39530bbcd0dc57e95ea907626d30", null ],
-    [ "aipstz_master_privilege_level_t", "a00215.html#ga50d1d18a2f10ab6d0978dc59ac7062e0", [
-      [ "kAIPSTZ_MasterBufferedWriteEnable", "a00215.html#gga50d1d18a2f10ab6d0978dc59ac7062e0a0b72fa18391c6c78eb6a099d20294269", null ],
-      [ "kAIPSTZ_MasterTrustedForReadEnable", "a00215.html#gga50d1d18a2f10ab6d0978dc59ac7062e0a9519e4b78bb722c6e0cc66f2f5ddeeee", null ],
-      [ "kAIPSTZ_MasterTrustedForWriteEnable", "a00215.html#gga50d1d18a2f10ab6d0978dc59ac7062e0ac266137d6fc99b702e03eacd79ff5280", null ],
-      [ "kAIPSTZ_MasterForceUserModeEnable", "a00215.html#gga50d1d18a2f10ab6d0978dc59ac7062e0ac588fb9df7c0231b66a302077e08a5de", null ]
-    ] ],
-    [ "aipstz_master_t", "a00215.html#ga1b7e45a44dadf636d9941f600e5f8cf4", null ],
-    [ "aipstz_peripheral_access_control_t", "a00215.html#ga85073f011425a31234f80e72f0574701", null ],
-    [ "aipstz_peripheral_t", "a00215.html#ga8c8376b4734c8b7d16219d52e375d1c8", null ],
-    [ "AIPSTZ_SetMasterPriviledgeLevel", "a00215.html#gaa0b2d889df182cd605ae955fc65e333a", null ],
-    [ "AIPSTZ_SetPeripheralAccessControl", "a00215.html#ga6dd3e90419600f38e9d4b970f723e918", null ]
+    [ "FSL_CACHE_DRIVER_VERSION", "a00215.html#gac954b8be2bb59a983a9594c59e4b4fa5", null ],
+    [ "L1CACHE_EnableICache", "a00215.html#gaea07bb3879fa96b03f1ecaa6bf821c74", null ],
+    [ "L1CACHE_DisableICache", "a00215.html#gafa6d1a14a0499342890eee0e104c8d96", null ],
+    [ "L1CACHE_InvalidateICache", "a00215.html#gabce0ccbe1684fef7eff231f3704025b6", null ],
+    [ "L1CACHE_InvalidateICacheByRange", "a00215.html#gaf66ed6d9a7b881ef98707861484d7530", null ],
+    [ "L1CACHE_EnableDCache", "a00215.html#ga52d071c691c4ce9ead828e086f07f457", null ],
+    [ "L1CACHE_DisableDCache", "a00215.html#gae6eb154e5afc3a877aad4155cb90bca9", null ],
+    [ "L1CACHE_InvalidateDCache", "a00215.html#gad6bb45d3f9feb8ed2a63b174d204f277", null ],
+    [ "L1CACHE_CleanDCache", "a00215.html#gab1dcfc930ee90724a807f69428a1f269", null ],
+    [ "L1CACHE_CleanInvalidateDCache", "a00215.html#ga49c6ba08328943022264442f6ce2c090", null ],
+    [ "L1CACHE_InvalidateDCacheByRange", "a00215.html#ga9baff800f4d60a09efc4e4ce309dd583", null ],
+    [ "L1CACHE_CleanDCacheByRange", "a00215.html#gad120776b1a7f2f3f21b2bf017dbab095", null ],
+    [ "L1CACHE_CleanInvalidateDCacheByRange", "a00215.html#ga4837708efaec2927416b268d75412361", null ],
+    [ "ICACHE_InvalidateByRange", "a00215.html#ga00cdccb5c53201a747f2a3e2009f43cc", null ],
+    [ "DCACHE_InvalidateByRange", "a00215.html#gab5c47d7193562d7a763b1bc1bd91b28c", null ],
+    [ "DCACHE_CleanByRange", "a00215.html#ga893959336987f85910fe98ab9f7f8648", null ],
+    [ "DCACHE_CleanInvalidateByRange", "a00215.html#gac20095b525889cf55c105658877c2c84", null ]
 ];

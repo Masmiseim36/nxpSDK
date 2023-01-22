@@ -43966,8 +43966,8 @@ typedef struct {
 #define USBHS_EPCR_TXE(x)                        USB_ENDPTCTRL_TXE(x)
 #define USBHS_EPCR_COUNT                         USB_ENDPTCTRL_COUNT
 #define USBHS_Type                               USB_Type
-#define USBHS_BASE_ADDRS                         { USB_BASE }
-#define USBHS_IRQS                               { USB_OTG_IRQn }
+#define USBHS_BASE_ADDRS                         USB_BASE_ADDRS
+#define USBHS_IRQS                               USB_IRQS
 #define USBHS_IRQHandler                         USB_OTG_IRQHandler
 
 
@@ -45518,11 +45518,11 @@ typedef struct {
 /** Peripheral USBPHY base pointer */
 #define USBPHY                                   ((USBPHY_Type *)USBPHY_BASE)
 /** Array initializer of USBPHY peripheral base addresses */
-#define USBPHY_BASE_ADDRS                        { 0u, USBPHY_BASE }
+#define USBPHY_BASE_ADDRS                        { USBPHY_BASE }
 /** Array initializer of USBPHY peripheral base pointers */
-#define USBPHY_BASE_PTRS                         { (USBPHY_Type *)0u, USBPHY }
+#define USBPHY_BASE_PTRS                         { USBPHY }
 /** Interrupt vectors for the USBPHY peripheral type */
-#define USBPHY_IRQS                              { NotAvail_IRQn, USB_PHY_IRQn }
+#define USBPHY_IRQS                              { USB_PHY_IRQn }
 /* Backward compatibility */
 #define USBPHY_CTRL_ENDEVPLUGINDET_MASK     USBPHY_CTRL_ENDEVPLUGINDETECT_MASK
 #define USBPHY_CTRL_ENDEVPLUGINDET_SHIFT    USBPHY_CTRL_ENDEVPLUGINDETECT_SHIFT

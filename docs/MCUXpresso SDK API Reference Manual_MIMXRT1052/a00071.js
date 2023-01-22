@@ -1,6 +1,6 @@
 var a00071 =
 [
-    [ "shell_command_t", "a00071.html#a00511", [
+    [ "shell_command_t", "a00071.html#a00510", [
       [ "pcCommand", "a00071.html#a9bcf2ff85f63adcaa4c03f4ef85e8df9", null ],
       [ "pcHelpString", "a00071.html#af6bfe76160c7aeeb3c32cc2fe117541b", null ],
       [ "pFuncCallBack", "a00071.html#aa5d55bf1f33b397949eb926c9ee48e6d", null ],
@@ -26,7 +26,8 @@ var a00071 =
       [ "kStatus_SHELL_Success", "a00071.html#gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e", null ],
       [ "kStatus_SHELL_Error", "a00071.html#gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9", null ],
       [ "kStatus_SHELL_OpenWriteHandleFailed", "a00071.html#gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b", null ],
-      [ "kStatus_SHELL_OpenReadHandleFailed", "a00071.html#gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8", null ]
+      [ "kStatus_SHELL_OpenReadHandleFailed", "a00071.html#gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8", null ],
+      [ "kStatus_SHELL_RetUsage", "a00071.html#gga16424f17c6492c580e65adf9a4e1ac61ad139f389943f49d948bbff024d6c5a26", null ]
     ] ],
     [ "SHELL_Init", "a00071.html#ga7961e946400cd244c315cfbbd36ae5d1", null ],
     [ "SHELL_RegisterCommand", "a00071.html#gab5f85f3ba2cc7dd58bc85076c19c5177", null ],

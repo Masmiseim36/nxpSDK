@@ -164,7 +164,7 @@ static sss_status_t sems_lite_session_open(void *conn_ctx)
     ret     = smCom_TransceiveRaw(conn_ctx, (uint8_t *)selectCmd, selectCmdLen, resp, &respLen);
     ENSURE_OR_GO_EXIT(ret == SM_OK);
 
-    retStatus = (resp[respLen - 2] << 8) | (resp[respLen - 1]);
+    retStatus = (smStatus_t)((resp[respLen - 2] << 8) | (resp[respLen - 1]));
     if (retStatus != SM_OK) {
         goto exit;
     }
@@ -187,9 +187,10 @@ static sss_status_t sems_lite_verify_GetDataResponse(uint8_t tag_P2, uint8_t *pR
     sss_status_t sss_stat = kStatus_SSS_Fail;
     size_t getDataRspLen  = 0;
     smStatus_t retStatus  = SM_NOT_OK;
-    if (*pRspBufLen > 2) {
+    if (*pRspBufLen >= 4) { // Response should include Tag + Len + Data + SW1 + SW2.
         getDataRspLen = *pRspBufLen;
-        retStatus     = (smStatus_t)((pRspBuf[getDataRspLen - 2] << 8) | (pRspBuf[getDataRspLen - 1]));
+
+        retStatus = (smStatus_t)((pRspBuf[getDataRspLen - 2] << 8) | (pRspBuf[getDataRspLen - 1]));
         if (retStatus == SM_OK) {
             if (pRspBuf[0] == tag_P2) {
                 // pRspBuf[1] is data length. It should be less than response buffer - tag - lenght - SW1SW2 field.
@@ -212,8 +213,8 @@ static sss_status_t SemsLite_Applet_Identify(void *conn_ctx)
 {
     sss_status_t status = kStatus_SSS_Fail;
     U32 ret             = 0;
-    uint8_t uid[64];
-    U32 uidLen = sizeof(uid);
+    uint8_t uid[64]     = {0};
+    U32 uidLen          = sizeof(uid);
 
     uint8_t tag_P1 = 0x00;
     uint8_t tag_P2 = SEMS_LITE_GETDATA_UUID_TAG;
@@ -294,7 +295,7 @@ static sss_status_t Iot_Applet_Identify(sss_se05x_session_t *pSession, int getUi
             unsigned char appletName[] = APPLET_NAME;
             U8 selectResponseData[32]  = {0};
             U16 selectResponseDataLen  = sizeof(selectResponseData);
-            sw_status                  = GP_Select(pSession->s_ctx.conn_ctx,
+            sw_status                  = (smStatus_t)GP_Select(pSession->s_ctx.conn_ctx,
                 (U8 *)&appletName,
                 APPLET_NAME_LEN,
                 selectResponseData,
@@ -304,6 +305,9 @@ static sss_status_t Iot_Applet_Identify(sss_se05x_session_t *pSession, int getUi
                 goto cleanup;
             }
             if (selectResponseDataLen != applet_versionLen) {
+                goto cleanup;
+            }
+            if (selectResponseDataLen > sizeof(applet_version)) {
                 goto cleanup;
             }
             memcpy(applet_version, selectResponseData, selectResponseDataLen);
@@ -316,7 +320,6 @@ static sss_status_t Iot_Applet_Identify(sss_se05x_session_t *pSession, int getUi
     LOG_I("AppletConfig = %02X%02X", applet_version[3], applet_version[4]);
     {
         U16 AppletConfig = applet_version[3] << 8 | applet_version[4];
-        CHECK_FEATURE_PRESENT(AppletConfig, ECDAA);
         CHECK_FEATURE_PRESENT(AppletConfig, ECDSA_ECDH_ECDHE);
         CHECK_FEATURE_PRESENT(AppletConfig, EDDSA);
         CHECK_FEATURE_PRESENT(AppletConfig, DH_MONT);
@@ -413,13 +416,15 @@ static sss_status_t JCOP4_GetDataIdentify(void *conn_ctx)
     U16 dummyResponse16 = sizeof(identifyRsp_t);
     /* Select card manager / ISD
     * (ReUsing same dummy buffers) */
-    rxStatus = GP_Select(conn_ctx, (uint8_t *)&identifyRsp /* dummy */, 0, (uint8_t *)&identifyRsp, &dummyResponse16);
+    rxStatus = (smStatus_t)GP_Select(
+        conn_ctx, (uint8_t *)&identifyRsp /* dummy */, 0, (uint8_t *)&identifyRsp, &dummyResponse16);
     if (rxStatus != SM_OK) {
         LOG_E("Could not select ISD.");
         goto cleanup;
     }
 
-    rxStatus = smCom_TransceiveRaw(conn_ctx, (uint8_t *)cmd, sizeof(cmd), (uint8_t *)&identifyRsp, &prspLen);
+    rxStatus =
+        (smStatus_t)smCom_TransceiveRaw(conn_ctx, (uint8_t *)cmd, sizeof(cmd), (uint8_t *)&identifyRsp, &prspLen);
     if (rxStatus == SM_OK && prspLen == sizeof(identifyRsp)) {
         LOG_W("#####################################################");
         LOG_I("%s = 0x%02X", "Tag value - proprietary data 0xFE", identifyRsp.vTag_value_proprietary_data);
@@ -529,7 +534,8 @@ static sss_status_t JCOP4_GetCPLCData(void *conn_ctx)
 
     SSS_ASSERT(sizeof(cplcRsp_t) == 47);
 
-    rxStatus = smCom_TransceiveRaw(conn_ctx, (uint8_t *)cmd, sizeof(cmd), (uint8_t *)&cplc_data, &cplc_data_len);
+    rxStatus =
+        (smStatus_t)smCom_TransceiveRaw(conn_ctx, (uint8_t *)cmd, sizeof(cmd), (uint8_t *)&cplc_data, &cplc_data_len);
     if (rxStatus == SM_OK && cplc_data_len == sizeof(cplc_data)) {
         LOG_W("#####################################################");
         LOG_AU8_I(cplc_data.IC_fabricator, sizeof(cplc_data.IC_fabricator));

@@ -110,6 +110,16 @@ static void BOARD_LCD_InterfaceInit(void)
     /* Init data/command GPIO output . */
     GPIO_PinInit(BOARD_LCD_DC_GPIO, BOARD_LCD_DC_GPIO_PIN, &dc_config);
 
+/* DMA Mux init and EDMA init */
+#ifdef BOARD_LCD_LPSPI_DMA_BASEADDR
+    edma_config_t edmaConfig = {0};
+    EDMA_GetDefaultConfig(&edmaConfig);
+    EDMA_Init(BOARD_LCD_LPSPI_DMA_BASEADDR, &edmaConfig);
+#endif
+#ifdef BOARD_LCD_LPSPI_DMA_MUX_BASEADDR
+    DMAMUX_Init(BOARD_LCD_LPSPI_DMA_MUX_BASEADDR);
+#endif
+
     /* SPI master init */
     BOARD_LCD_SPI.Initialize(SPI_MasterSignalEvent);
     BOARD_LCD_SPI.PowerControl(ARM_POWER_FULL);

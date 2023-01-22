@@ -1,7 +1,7 @@
 var a00219 =
 [
-    [ "LPSPI CMSIS Driver", "a00221.html", null ],
-    [ "LPSPI FreeRTOS Driver", "a00220.html", "a00220" ],
-    [ "LPSPI Peripheral driver", "a00039.html", "a00039" ],
-    [ "LPSPI eDMA Driver", "a00040.html", "a00040" ]
+    [ "FSL_LPSPI_FREERTOS_DRIVER_VERSION", "a00219.html#gaf5602bf29f89af865ebea200ff535f98", null ],
+    [ "LPSPI_RTOS_Init", "a00219.html#ga17e5f827d714b4bba86af6ce5b9e8119", null ],
+    [ "LPSPI_RTOS_Deinit", "a00219.html#gadac220234f10116e78dd6ce341c4377c", null ],
+    [ "LPSPI_RTOS_Transfer", "a00219.html#gad1bc18b3a105852cfcea1f5fc97ef0d8", null ]
 ];

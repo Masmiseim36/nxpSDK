@@ -238,8 +238,8 @@
           <state>SD_ENABLED</state>
           <state>DISABLEFLOAT16</state>
           <state>SAI_XFER_QUEUE_SIZE=2</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>HAVE_CONFIG_H</state>
+          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>CASCFG_PLATFORM_FREERTOS</state>
@@ -386,9 +386,6 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/PrivateInclude</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/config</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/celt</state>
@@ -396,6 +393,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/silk</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/silk/fixed</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/config</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/inc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
@@ -404,12 +404,11 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
@@ -881,6 +880,7 @@
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libflac.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1384,8 +1384,8 @@
           <state>SD_ENABLED</state>
           <state>DISABLEFLOAT16</state>
           <state>SAI_XFER_QUEUE_SIZE=2</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>HAVE_CONFIG_H</state>
+          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>CASCFG_PLATFORM_FREERTOS</state>
@@ -1532,9 +1532,6 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/PrivateInclude</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/config</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/celt</state>
@@ -1542,6 +1539,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/silk</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/silk/fixed</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/config</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/inc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
@@ -1550,12 +1550,11 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
@@ -2027,6 +2026,7 @@
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libflac.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2542,15 +2542,6 @@
       </file>
     </group>
     <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
-    <group>
       <name>osa</name>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
@@ -2914,19 +2905,7 @@
       </group>
     </group>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
@@ -2945,163 +2924,40 @@
     </file>
   </group>
   <group>
-    <name>freertos</name>
+    <name>fatfs</name>
     <group>
-      <name>freertos_kernel</name>
-      <group>
-        <name>portable</name>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-        </group>
-        <group>
-          <name>IAR</name>
-          <group>
-            <name>ARM_CM4F</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
-            </file>
-          </group>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
-        </file>
-      </group>
+      <name>source</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffsystem.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
       <group>
-        <name>include</name>
+        <name>fsl_sd_disk</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/timers.c</name>
-      </file>
     </group>
   </group>
   <group>
     <name>maestro</name>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/error.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/file_utils.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/general_utils.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/logging.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/ringbuffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_api.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_element_properties.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_message.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_pcm.h</name>
-      </file>
-    </group>
-    <group>
-      <name>config</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/config/audio_cfg.h</name>
-      </file>
-    </group>
     <group>
       <name>opus</name>
       <group>
@@ -3700,6 +3556,42 @@
       </group>
     </group>
     <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/error.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/file_utils.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/general_utils.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/maestro_logging.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/ringbuffer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_api.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_element_properties.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_message.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_pcm.h</name>
+      </file>
+    </group>
+    <group>
+      <name>config</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/config/audio_cfg.h</name>
+      </file>
+    </group>
+    <group>
       <name>streamer</name>
       <group>
         <name>cci</name>
@@ -3748,11 +3640,35 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/adpcm/adpcm_extractmetadata.c</name>
               </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/adpcm/wav_common.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/adpcm/wav_metadata.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/adpcm/wavedata.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/adpcm/wavedefs.h</name>
+              </file>
             </group>
             <group>
               <name>opus</name>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/opus/opus_extractmetadata.c</name>
+              </file>
+            </group>
+            <group>
+              <name>aac</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/aac/aac_extractmetadata.c</name>
+              </file>
+            </group>
+            <group>
+              <name>flac</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/flac/flac_extractmetadata.c</name>
               </file>
             </group>
           </group>
@@ -3815,9 +3731,6 @@
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/audio_src_pcmrtos.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/freertos_pcm.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/audio_sink_pcmrtos.c</name>
         </file>
         <file>
@@ -3826,6 +3739,9 @@
       </group>
       <group>
         <name>elements</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_proc.h</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_sink.h</name>
         </file>
@@ -3837,9 +3753,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/decoder_pads.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/eap.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/encoder.h</name>
@@ -3863,6 +3776,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/vit_sink.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_proc.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_sink.c</name>
         </file>
         <file>
@@ -3873,9 +3789,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/decoder_pads.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/eap.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/file_sink.c</name>
@@ -3914,7 +3827,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_eap_speaker.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.h</name>
@@ -3935,7 +3848,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_eap_speaker.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.c</name>
@@ -3986,12 +3899,132 @@
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/general_utils.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/logging.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/maestro_logging.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/ringbuffer.c</name>
         </file>
       </group>
+    </group>
+  </group>
+  <group>
+    <name>freertos</name>
+    <group>
+      <name>freertos-kernel</name>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM4F</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+            </file>
+          </group>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
+      </file>
     </group>
   </group>
   <group>
@@ -4020,39 +4053,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
     </file>
-  </group>
-  <group>
-    <name>fatfs</name>
-    <group>
-      <name>source</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffsystem.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffunicode.c</name>
-      </file>
-      <group>
-        <name>fsl_sd_disk</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
-        </file>
-      </group>
-    </group>
   </group>
   <group>
     <name>device</name>

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -49,7 +49,7 @@
 
 #ifdef IPERF3_ENET
 
-#include "enet_ethernetif.h"
+#include "ethernetif.h"
 #include "lwip/netifapi.h"
 #include "board.h"
 #include "lwip/tcpip.h"
@@ -139,8 +139,7 @@ static char *json_req[] = {
 
 #ifdef IPERF3_ENET
 
-static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
-static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+static phy_handle_t phyHandle;
 
 #endif /* IPERF3_ENET */
 
@@ -868,11 +867,13 @@ void enet_init(void)
     struct dhcp *pdhcp = NULL;
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
-        .phyHandle  = &phyHandle,
-        .macAddress = configMAC_ADDR,
+        .phyHandle   = &phyHandle,
+        .phyAddr     = EXAMPLE_PHY_ADDRESS,
+        .phyOps      = EXAMPLE_PHY_OPS,
+        .phyResource = EXAMPLE_PHY_RESOURCE,
+        .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+        .macAddress  = configMAC_ADDR,
     };
-
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     tcpip_init(NULL, NULL);
 

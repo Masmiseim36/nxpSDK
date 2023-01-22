@@ -16,7 +16,6 @@
 #include "board.h"
 
 #include "boot.h"
-#include "flash_info.h"
 
 /* MCUboot */
 #include "bootutil/bootutil_log.h"
@@ -47,10 +46,6 @@ extern void SBL_DisablePeripherals(void);
  ******************************************************************************/
 #if (defined(COMPONENT_KBOOT))
 extern int isp_kboot_main(bool isInfiniteIsp);
-#endif
-
-#ifdef SOC_REMAP_ENABLE
-int boot_remap_go(struct boot_rsp *rsp);
 #endif
 
 #ifdef CONFIG_BOOT_SIGNATURE
@@ -268,11 +263,7 @@ int sbl_boot_main(void)
 #ifdef SINGLE_IMAGE
     rc = boot_single_go(&rsp);
 #else
-#ifdef SOC_REMAP_ENABLE
-    rc = boot_remap_go(&rsp);
-#else
     rc = boot_go(&rsp);
-#endif
 #endif /* SINGLE_IMAGE*/
     if (rc != 0)
     {
@@ -300,3 +291,11 @@ void cleanup(void)
 #endif
     SBL_DisablePeripherals();
 }
+
+#if !defined(MCUBOOT_DIRECT_XIP) && !defined(MCUBOOT_SWAP_USING_MOVE) && !defined(MCUBOOT_OVERWRITE_ONLY)
+#warning "Make sure scratch area is defined in 'boot_flash_map' array if required by defined swap mechanism"
+#endif
+
+#if defined(MCUBOOT_DIRECT_XIP) && CONFIG_UPDATEABLE_IMAGE_NUMBER > 1
+#error "DIRECT_XIP (using remapping) and multiple images is not currently supported"
+#endif

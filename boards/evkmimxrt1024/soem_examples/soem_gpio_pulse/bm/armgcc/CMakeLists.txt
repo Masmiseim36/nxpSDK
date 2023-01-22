@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(soem_gpio_pulse_bm)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME soem_gpio_pulse_bm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -42,31 +48,29 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../../middleware/soem/osal/baremetal
+    ${SdkRootDirPath}/middleware/soem/osal/baremetal
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../components/phy/mdio/enet
-    ${ProjDirPath}/../../../../../../components/phy/device/phyksz8081
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1024/drivers
-    ${ProjDirPath}/../../../../../../middleware/soem
-    ${ProjDirPath}/../../../../../../middleware
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1024
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1024/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1024/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../components/phy
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT1024/drivers
+    ${SdkRootDirPath}/components/phy/device/phyksz8081
+    ${SdkRootDirPath}/middleware/soem
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/devices/MIMXRT1024
+    ${SdkRootDirPath}/devices/MIMXRT1024/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1024/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1024/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/phy
 )
 
 # include modules
-include(driver_mdio-enet_MIMXRT1024)
+include(driver_enet_MIMXRT1024)
 
 include(driver_phy-device-ksz8081_MIMXRT1024)
 
@@ -106,13 +110,7 @@ include(driver_xip_device_MIMXRT1024)
 
 include(driver_xip_board_evkmimxrt1024_MIMXRT1024)
 
-include(component_silicon_id_MIMXRT1024)
-
-include(driver_mdio-common_MIMXRT1024)
-
 include(CMSIS_Include_core_cm_MIMXRT1024)
-
-include(driver_enet_MIMXRT1024)
 
 include(driver_phy-common_MIMXRT1024)
 
@@ -121,15 +119,13 @@ include(utilities_misc_utilities_MIMXRT1024)
 include(device_MIMXRT1024_system_MIMXRT1024)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

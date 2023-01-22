@@ -1,0 +1,22 @@
+
+prod_name = "SSS_APIs"
+
+prod_desc = "SSS APIs"
+
+lang_c_prefix = prod_name.upper()
+
+lang_namespace = ""
+
+v_major  = "04"
+
+v_minor  = "02"
+
+v_dev    = "00"
+
+v_meta   = ""
+
+maturity = "B"
+
+#
+# 03.00.00 : Changed Enums
+#

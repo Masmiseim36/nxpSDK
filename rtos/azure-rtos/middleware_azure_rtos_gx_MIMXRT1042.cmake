@@ -2,7 +2,7 @@ include_guard()
 message("middleware_azure_rtos_gx component is included.")
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/guix/common/inc
     ${CMAKE_CURRENT_LIST_DIR}/guix/ports/cortex_m7/gnu/inc
 )

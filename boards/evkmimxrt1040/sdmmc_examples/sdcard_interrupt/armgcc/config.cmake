@@ -2,4 +2,3 @@
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_MIMXRT1042 true)
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_interrupt_MIMXRT1042 true)
 set(CONFIG_USE_driver_lpuart_MIMXRT1042 true)
-set(CONFIG_USE_driver_common_MIMXRT1042 true)

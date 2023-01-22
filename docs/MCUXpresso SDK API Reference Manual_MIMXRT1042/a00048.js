@@ -1,6 +1,6 @@
 var a00048 =
 [
-    [ "lpspi_master_edma_handle_t", "a00048.html#a00323", [
+    [ "lpspi_master_edma_handle_t", "a00048.html#a00322", [
       [ "isPcsContinuous", "a00048.html#a46fe35e5026b495d125d0adbb3f7800c", null ],
       [ "isByteSwap", "a00048.html#ad0fb215abc5c73d7571757cacddd25e3", null ],
       [ "fifoSize", "a00048.html#ab73f9ad736231a96b1d1fe9b36d0f4d9", null ],
@@ -27,7 +27,7 @@ var a00048 =
       [ "edmaTxDataToTxRegHandle", "a00048.html#a7040efe4741c60f8924c0988178af2f5", null ],
       [ "lpspiSoftwareTCD", "a00048.html#a1610cd02da7febac3e0cb624bd5f54af", null ]
     ] ],
-    [ "lpspi_slave_edma_handle_t", "a00048.html#a00325", [
+    [ "lpspi_slave_edma_handle_t", "a00048.html#a00324", [
       [ "isByteSwap", "a00048.html#adde5846fcb7d9b727fa48199e097ebe0", null ],
       [ "fifoSize", "a00048.html#a32ff741b430eafb22d754ac1c915c0d2", null ],
       [ "rxWatermark", "a00048.html#ae71513d9bb2d3555688dc788f59e95e3", null ],

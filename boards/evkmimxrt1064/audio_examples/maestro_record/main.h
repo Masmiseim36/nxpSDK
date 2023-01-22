@@ -12,7 +12,9 @@
 #include "task.h"
 #include "semphr.h"
 
+#ifdef SD_ENABLED
 #include "ff.h"
+#endif
 
 #include <stdbool.h>
 
@@ -24,14 +26,18 @@ typedef struct _app_handle
 {
     TaskHandle_t shell_task_handle;
 
+#ifdef SD_ENABLED
     /* SD card management */
     SemaphoreHandle_t sdcardSem;
     volatile bool sdcardInserted;
     volatile bool sdcardInsertedPrev;
     FATFS fileSystem;
     FIL fileObject;
+#endif
 } app_handle_t;
 
+#ifdef SD_ENABLED
 bool SDCARD_inserted(void);
+#endif
 
 #endif /* __MAIN_H__ */

@@ -354,6 +354,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
@@ -1446,6 +1447,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
@@ -2537,6 +2539,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
@@ -3628,6 +3631,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
@@ -4720,6 +4724,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
@@ -5811,6 +5816,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
@@ -6810,6 +6816,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6930,19 +6942,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

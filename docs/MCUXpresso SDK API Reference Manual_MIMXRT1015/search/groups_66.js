@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['flexio_3a_20flexio_20driver',['FlexIO: FlexIO Driver',['../a00221.html',1,'']]],
+  ['flexio_3a_20flexio_20driver',['FlexIO: FlexIO Driver',['../a00220.html',1,'']]],
   ['flexio_20camera_20driver',['FlexIO Camera Driver',['../a00022.html',1,'']]],
   ['flexio_20driver',['FlexIO Driver',['../a00024.html',1,'']]],
   ['flexio_20edma_20camera_20driver',['FlexIO eDMA Camera Driver',['../a00023.html',1,'']]],
@@ -13,6 +13,6 @@ var searchData=
   ['flexio_20mcu_20interface_20lcd_20driver',['FlexIO MCU Interface LCD Driver',['../a00028.html',1,'']]],
   ['flexio_20spi_20driver',['FlexIO SPI Driver',['../a00030.html',1,'']]],
   ['flexio_20uart_20driver',['FlexIO UART Driver',['../a00032.html',1,'']]],
-  ['flexram_3a_20on_2dchip_20ram_20manager',['FLEXRAM: on-chip RAM manager',['../a00222.html',1,'']]],
+  ['flexram_3a_20on_2dchip_20ram_20manager',['FLEXRAM: on-chip RAM manager',['../a00221.html',1,'']]],
   ['flexspi_3a_20flexible_20serial_20peripheral_20interface_20driver',['FLEXSPI: Flexible Serial Peripheral Interface Driver',['../a00034.html',1,'']]]
 ];

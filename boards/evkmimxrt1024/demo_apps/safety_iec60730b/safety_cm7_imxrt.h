@@ -11,29 +11,29 @@
 #include "safety_config.h"
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
-#define CPU_TEST_ERROR                     0x1  /* CPU test fault flag */
-#define FLASH_TEST_ERROR                   0x2  /* Flash test fault flag */
-#define RAM_TEST_ERROR                     0x4  /* RAM test fault flag */
-#define STACK_TEST_ERROR                   0x8  /* Stack test fault flag */
-#define CLOCK_TEST_ERROR                  0x10  /* Clock test fault flag */
-#define PC_TEST_ERROR                     0x20  /* Program counter test fault flag */
-#define CPU_PRIMASK_ERROR                 0x40  /* PRIMASK test fault flag */
-#define CPU_REGISTERS_ERROR               0x80  /* CPU registers test fault flag */
-#define CPU_NONSTACKED_ERROR             0x100  /* non-stacked CPU test fault flag */
-#define CPU_FLOAT_1_ERROR                0x200  /* floating point registers test fault flag */
-#define CPU_FLOAT_2_ERROR                0x400  /* floating point registers test fault flag */
-#define CPU_CONTROL_ERROR                0x800  /* CONTROL register test fault flag */
-#define CPU_SPECIAL_ERROR               0x1000  /* special CPU registers test fault flag */
-#define DIO_TEST_ERROR                  0x2000  /* DIO test fault flag */
-#define AIO_TEST_ERROR                  0x4000  /* AIO test fault flag */
-#define WDOG_TEST_ERROR                 0x8000  /* WDOG test fault flag */
-#define FLASH_TEST_RAM_CRC_ERROR       0x10000  /* DCP-related part of RAM wasn't tested in time limit fault flag */
+ * Definitions
+ ******************************************************************************/
+#define CPU_TEST_ERROR           0x1     /* CPU test fault flag */
+#define FLASH_TEST_ERROR         0x2     /* Flash test fault flag */
+#define RAM_TEST_ERROR           0x4     /* RAM test fault flag */
+#define STACK_TEST_ERROR         0x8     /* Stack test fault flag */
+#define CLOCK_TEST_ERROR         0x10    /* Clock test fault flag */
+#define PC_TEST_ERROR            0x20    /* Program counter test fault flag */
+#define CPU_PRIMASK_ERROR        0x40    /* PRIMASK test fault flag */
+#define CPU_REGISTERS_ERROR      0x80    /* CPU registers test fault flag */
+#define CPU_NONSTACKED_ERROR     0x100   /* non-stacked CPU test fault flag */
+#define CPU_FLOAT_1_ERROR        0x200   /* floating point registers test fault flag */
+#define CPU_FLOAT_2_ERROR        0x400   /* floating point registers test fault flag */
+#define CPU_CONTROL_ERROR        0x800   /* CONTROL register test fault flag */
+#define CPU_SPECIAL_ERROR        0x1000  /* special CPU registers test fault flag */
+#define DIO_TEST_ERROR           0x2000  /* DIO test fault flag */
+#define AIO_TEST_ERROR           0x4000  /* AIO test fault flag */
+#define WDOG_TEST_ERROR          0x8000  /* WDOG test fault flag */
+#define FLASH_TEST_RAM_CRC_ERROR 0x10000 /* DCP-related part of RAM wasn't tested in time limit fault flag */
 
-#define FS_FLASH_PASS         0x0        /* Flash test pass return */
-#define FS_FLASH_FAIL         0x00000301 /* Flash test fail return */
-#define FS_FLASH_PROGRESS     0x00000302 /* Flash test inprogress  */
+#define FS_FLASH_PASS     0x0        /* Flash test pass return */
+#define FS_FLASH_FAIL     0x00000301 /* Flash test fail return */
+#define FS_FLASH_PROGRESS 0x00000302 /* Flash test inprogress  */
 
 /*! @brief Safety tests */
 typedef struct _safety_common
@@ -100,9 +100,9 @@ typedef struct _ram_test
 /*! @brief Safety Flash test runtime */
 typedef struct _flash_runtime_test_parameters
 {
-    uint32_t blockSize;         /* size of tested block */
-    uint32_t actualAddress;     /* actual start address for crc module */
-    uint32_t partCrc;           /* seed in begin, particular crc result in process, crc result in final*/
+    uint32_t blockSize;     /* size of tested block */
+    uint32_t actualAddress; /* actual start address for crc module */
+    uint32_t partCrc;       /* seed in begin, particular crc result in process, crc result in final*/
 } flash_runtime_test_parameters_t;
 
 /*! @brief Safety Flash test parameters */
@@ -121,9 +121,9 @@ typedef struct _fs_crc
 {
     uint16_t ui16Start;
     uint32_t ui32FlashStart __attribute__((packed));
-    uint32_t ui32FlashEnd   __attribute__((packed));
-    uint32_t ui32CRC        __attribute__((packed));
-    uint16_t ui16End        __attribute__((packed));
+    uint32_t ui32FlashEnd __attribute__((packed));
+    uint32_t ui32CRC __attribute__((packed));
+    uint16_t ui16End __attribute__((packed));
 } fs_crc_t;
 
 #ifdef __cplusplus
@@ -131,25 +131,35 @@ extern "C" {
 #endif
 
 /*!
-* @name Safety Class B tests handling functions
-* @{
-*/
+ * @name Safety Class B tests handling functions
+ * @{
+ */
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTest);
 void SafetyWatchdogRuntimeRefresh(wd_test_t *psSafetyWdTest);
 void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest);
 void SafetyClockTestIsr(clock_test_t *psSafetyClockTest);
 void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest);
-void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState);
+void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc,
+                         flash_configuration_parameters_t *psFlashConfig,
+                         fs_flash_dcp_state_t *psFlashDCPState);
 void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig);
-void SafetyFlashAfterResetTest_DCP(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState);
-void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig);
-void SafetyFlashRuntimeTest_DCP(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState);
+void SafetyFlashAfterResetTest_DCP(safety_common_t *psSafetyCommon,
+                                   flash_configuration_parameters_t *psFlashConfig,
+                                   fs_flash_dcp_state_t *psFlashDCPState);
+void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon,
+                            flash_runtime_test_parameters_t *psFlashCrc,
+                            flash_configuration_parameters_t *psFlashConfig);
+void SafetyFlashRuntimeTest_DCP(safety_common_t *psSafetyCommon,
+                                flash_runtime_test_parameters_t *psFlashCrc,
+                                flash_configuration_parameters_t *psFlashConfig,
+                                fs_flash_dcp_state_t *psFlashDCPState);
 
-uint32_t SafetyFlashTestHandling( flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig);
+uint32_t SafetyFlashTestHandling(flash_runtime_test_parameters_t *psFlashCrc,
+                                 flash_configuration_parameters_t *psFlashConfig);
 void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pui32SafetyRamStart, uint32_t *pui32SafetyRamEnd);
 void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest);
 void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest);
@@ -161,10 +171,14 @@ void SafetyStackTestInit(void);
 void SafetyStackTest(safety_common_t *psSafetyCommon);
 
 void SafetyDigitalOutputTest(safety_common_t *psSafetyCommon, fs_dio_test_imx_t *pTestedPin);
-void SafetyDigitalInputOutput_ShortSupplyTest(safety_common_t *psSafetyCommon, fs_dio_test_imx_t *pTestedPin, uint8_t polarity);
-void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon, fs_dio_test_imx_t *pTestedPin, fs_dio_test_imx_t *pAdjPin, uint32_t PinValue);
+void SafetyDigitalInputOutput_ShortSupplyTest(safety_common_t *psSafetyCommon,
+                                              fs_dio_test_imx_t *pTestedPin,
+                                              uint8_t polarity);
+void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon,
+                                           fs_dio_test_imx_t *pTestedPin,
+                                           fs_dio_test_imx_t *pAdjPin,
+                                           uint32_t PinValue);
 
-void SafetyAnalogTestInitialization(void);
 void SafetyAnalogTest(safety_common_t *psSafetyCommon);
 
 void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest, ram_test_t *psSafetyRamStackTest);

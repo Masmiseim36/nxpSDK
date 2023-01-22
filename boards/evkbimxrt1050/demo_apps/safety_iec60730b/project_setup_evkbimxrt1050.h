@@ -28,12 +28,12 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-void WatchdogEnable(void);
+void WatchdogEnable(uint32_t wd_setup_value);
 void WatchdogDisable(void);
-void GPT1_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler);
+void ReferenceTimerInit(uint32_t clkSource, uint32_t compare, uint32_t prescaler);
 void GPT2_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler);
 void QTMR1_Init(uint32_t compare);
-void SystickInitialisation(uint32_t compare);
+void SystickInit(uint32_t compare);
 void SerialInit(void);
 void ClockInit(void);
 void PortSetup(uint32_t gpio, uint8_t pinNum, uint8_t pinDir);
@@ -45,4 +45,4 @@ void DCPInit(uint32_t *buffer);
 }
 #endif
 
-#endif /* _PROJECT_SETUP_IMXRT_H_ */ 
+#endif /* _PROJECT_SETUP_IMXRT_H_ */

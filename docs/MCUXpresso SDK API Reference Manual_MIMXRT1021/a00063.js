@@ -1,6 +1,6 @@
 var a00063 =
 [
-    [ "semc_sdram_config_t", "a00063.html#a00473", [
+    [ "semc_sdram_config_t", "a00063.html#a00472", [
       [ "csxPinMux", "a00063.html#a2d5aca72eb96b8cc24ae1e311a3b8b04", null ],
       [ "address", "a00063.html#a5ec8500c84d6ce9d42155f6c53241109", null ],
       [ "memsize_kbytes", "a00063.html#a04d6a6238baf0812a60f87a7223ac033", null ],
@@ -23,7 +23,7 @@ var a00063 =
       [ "refreshUrgThreshold", "a00063.html#ad2620016a22a74f7a078c99a4ac87206", null ],
       [ "refreshBurstLen", "a00063.html#aadd156b3af85bb6af2adae0576953f03", null ]
     ] ],
-    [ "semc_nand_timing_config_t", "a00063.html#a00467", [
+    [ "semc_nand_timing_config_t", "a00063.html#a00466", [
       [ "tCeSetup_Ns", "a00063.html#a43488e8f58378eb3df070f959f99e6f9", null ],
       [ "tCeHold_Ns", "a00063.html#aff124680a66815c3a7cf1f23c4ad895c", null ],
       [ "tCeInterval_Ns", "a00063.html#aeb9f6319e3c3c836b2aa0f39ffe0b199", null ],
@@ -38,7 +38,7 @@ var a00063 =
       [ "tReady2Relow_Ns", "a00063.html#a7154c9f3d193f4738e96ffe54ec2083b", null ],
       [ "tWehigh2Busy_Ns", "a00063.html#a35931851a747c8a1caf05cd434ea3e1c", null ]
     ] ],
-    [ "semc_nand_config_t", "a00063.html#a00466", [
+    [ "semc_nand_config_t", "a00063.html#a00465", [
       [ "cePinMux", "a00063.html#a64d1eda3de7bd7ed57ebd7efb7d20648", null ],
       [ "axiAddress", "a00063.html#a7021d8697aaffcf93a31ffc779128f42", null ],
       [ "axiMemsize_kbytes", "a00063.html#a948ff588277af99bf4ec894c6e616443", null ],
@@ -52,7 +52,7 @@ var a00063 =
       [ "portSize", "a00063.html#a591507bf3b418686e99df4bf6cbb8ea8", null ],
       [ "timingConfig", "a00063.html#ad4af2b5540ff0e7f3da18597132d513c", null ]
     ] ],
-    [ "semc_nor_config_t", "a00063.html#a00468", [
+    [ "semc_nor_config_t", "a00063.html#a00467", [
       [ "cePinMux", "a00063.html#a804d354d6b5c9b0b54e1bf64eeeb94e0", null ],
       [ "addr27", "a00063.html#a4e19090680d163d7c08b7d78c347d4cd", null ],
       [ "address", "a00063.html#a998a6d27682aab407a76746374e5921a", null ],
@@ -76,7 +76,7 @@ var a00063 =
       [ "tTurnAround_Ns", "a00063.html#a923d26cf4e292324a94c8640664e4173", null ],
       [ "tAddr2WriteHold_Ns", "a00063.html#a4fd35fa1499bd844b29e7012617f75ec", null ]
     ] ],
-    [ "semc_sram_config_t", "a00063.html#a00474", [
+    [ "semc_sram_config_t", "a00063.html#a00473", [
       [ "cePinMux", "a00063.html#a3239ed4c24d1f82e878754474c8df4cb", null ],
       [ "addr27", "a00063.html#ae316e6e66331292ef317f0fb5ba43253", null ],
       [ "address", "a00063.html#afdd65f6869375842dc0e7f11b0110026", null ],
@@ -98,7 +98,7 @@ var a00063 =
       [ "tTurnAround_Ns", "a00063.html#ace861035ad7a5cc23ffddf869055f189", null ],
       [ "tAddr2WriteHold_Ns", "a00063.html#a28c41fca4d12a1a056100668f4deff0a", null ]
     ] ],
-    [ "semc_dbi_config_t", "a00063.html#a00465", [
+    [ "semc_dbi_config_t", "a00063.html#a00464", [
       [ "csxPinMux", "a00063.html#a97eeb06a428f77cc89496e4bdfc92579", null ],
       [ "address", "a00063.html#a619160a685ef70dc9e2baf5afe3175dc", null ],
       [ "memsize_kbytes", "a00063.html#aca16a35e3a81d7c99c589aaa7a8136df", null ],
@@ -113,34 +113,34 @@ var a00063 =
       [ "tRdxHigh_Ns", "a00063.html#a4074c6ab10f1acd901ef30975ea0d78e", null ],
       [ "tCsxInterval_Ns", "a00063.html#aeda30a1c3fd5fb6b1e52df023bd098a7", null ]
     ] ],
-    [ "semc_queuea_weight_struct_t", "a00063.html#a00469", [
+    [ "semc_queuea_weight_struct_t", "a00063.html#a00468", [
       [ "qos", "a00063.html#afab9f70a86a33b9c8da1ef36f2f1d02e", null ],
       [ "aging", "a00063.html#a6e55fb61226793aa0acbe0f58355898b", null ],
       [ "slaveHitSwith", "a00063.html#ace09bab95f07944ff34cf6319b6024cd", null ],
       [ "slaveHitNoswitch", "a00063.html#ad9bd44c36bc646f495f98af2066300c0", null ]
     ] ],
-    [ "semc_queuea_weight_t", "a00063.html#a00470", [
+    [ "semc_queuea_weight_t", "a00063.html#a00469", [
       [ "queueaConfig", "a00063.html#aefaa2eabd4ac4ea524b7d0126a02b20c", null ],
       [ "queueaValue", "a00063.html#ab509ce2fb0182fb358984b9301f4cdfd", null ]
     ] ],
-    [ "semc_queueb_weight_struct_t", "a00063.html#a00471", [
+    [ "semc_queueb_weight_struct_t", "a00063.html#a00470", [
       [ "qos", "a00063.html#a3186aa8a6b5d6697e416d5fbc57da495", null ],
       [ "aging", "a00063.html#a12e5e110c5ec9dd743ecdbf3ba7fa763", null ],
       [ "slaveHitSwith", "a00063.html#a834c4706478a75f2314684b65385e12e", null ],
       [ "weightPagehit", "a00063.html#a39bb3d43377f36d0a42e299043cd5396", null ],
       [ "bankRotation", "a00063.html#ac5871fe54766b23536af91dc8bd67381", null ]
     ] ],
-    [ "semc_queueb_weight_t", "a00063.html#a00472", [
+    [ "semc_queueb_weight_t", "a00063.html#a00471", [
       [ "queuebConfig", "a00063.html#a970901c06ba269d5629155625c3bffb0", null ],
       [ "queuebValue", "a00063.html#af6b7c849489b32c6cdec7d2abaf86691", null ]
     ] ],
-    [ "semc_axi_queueweight_t", "a00063.html#a00463", [
+    [ "semc_axi_queueweight_t", "a00063.html#a00462", [
       [ "queueaEnable", "a00063.html#a9a37ee71421c8fd72e449125a3f75cf1", null ],
       [ "queueaWeight", "a00063.html#abf61231ae8b60ac7986225f004c76e3b", null ],
       [ "queuebEnable", "a00063.html#abe1dd146b7b4e5a58d039c092012d54a", null ],
       [ "queuebWeight", "a00063.html#a093aa4c6138b637c68cf68003e208dca", null ]
     ] ],
-    [ "semc_config_t", "a00063.html#a00464", [
+    [ "semc_config_t", "a00063.html#a00463", [
       [ "dqsMode", "a00063.html#a944d6bcd47438973e8b39e30d21f156e", null ],
       [ "cmdTimeoutCycles", "a00063.html#a9411ce8d6b6935552dae7c1b5776c1e5", null ],
       [ "busTimeoutCycles", "a00063.html#aa461ba9894391d92617b62431c6b58e7", null ],

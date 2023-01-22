@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -106,13 +106,35 @@ void BOARD_EnableSaiMclkOutput(bool enable)
     }
 }
 
+#if DEMO_CODEC_CS42448
+/*!
+ * @brief Function for changing codec settings according to selected parameters.
+ *
+ * @param[in] nchannel Number of chnnels.
+ */
+int BOARD_CodecChangeSettings(uint8_t nchannel)
+{
+    cs42448_handle_t *devHandle = (cs42448_handle_t *)((uint32_t)(((codec_handle_t *)&codecHandle)->codecDevHandle));
+
+    /* set protocol */
+    switch (nchannel)
+    {
+        case 2:
+            return CS42448_SetProtocol(devHandle, kCS42448_BusI2S, 16U);
+        case 8:
+            /* Intentional fall */
+        default:
+            return CS42448_SetProtocol(devHandle, kCS42448_BusTDM, 24U);
+    }
+}
+
+#endif
+
 int BOARD_CODEC_Init(void)
 {
     CODEC_Init(&codecHandle, &boardCodecConfig);
-
     /* Initial volume kept low for hearing safety. */
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 80);
-
+    CODEC_SetVolume(&codecHandle, ~0U, DEMO_VOLUME);
     return 0;
 }
 
@@ -196,6 +218,15 @@ status_t list_files(bool autoInput)
             if (
 #if (OGG_OPUS_DEC == 1)
                 (dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
+#endif
+#if (AAC_DEC == 1)
+                (dot && strncmp(dot + 1, "aac", 3) == 0) ||
+#endif
+#if (WAV_DEC == 1)
+                (dot && strncmp(dot + 1, "wav", 3) == 0) ||
+#endif
+#if (FLAC_DEC == 1)
+                (dot && strncmp(dot + 1, "flac", 3) == 0) ||
 #endif
                 (dot && strncmp(dot + 1, "mp3", 3) == 0))
             {
@@ -351,7 +382,7 @@ int main(void)
     GPIO_PinWrite(DEMO_CODEC_POWER_GPIO, DEMO_CODEC_POWER_GPIO_PIN, 1U);
 #endif
 
-    /* Initialize OSA*/
+    /* Initialize OSA */
     OSA_Init();
 
     PRINTF("\r\n");

@@ -1,13 +1,14 @@
 var a00057 =
 [
-    [ "pwm_signal_param_t", "a00057.html#a00456", [
+    [ "pwm_signal_param_t", "a00057.html#a00455", [
       [ "pwmChannel", "a00057.html#afe284fd225ea192d3456b41dd2703365", null ],
       [ "dutyCyclePercent", "a00057.html#acf5a17cbd7dafb2cca8afee404f12b17", null ],
       [ "level", "a00057.html#a1cc3927fcf1fd1adaeac49139919ed4f", null ],
       [ "deadtimeValue", "a00057.html#aad95dc08519edfd81485bad0640512f2", null ],
-      [ "faultState", "a00057.html#ad4d7b748ab3d9f789983a299d799ef50", null ]
+      [ "faultState", "a00057.html#ad4d7b748ab3d9f789983a299d799ef50", null ],
+      [ "pwmchannelenable", "a00057.html#ad1495db96381190a421cc78fb450d37a", null ]
     ] ],
-    [ "pwm_config_t", "a00057.html#a00452", [
+    [ "pwm_config_t", "a00057.html#a00451", [
       [ "enableDebugMode", "a00057.html#a6269c0b9d8089986d5ca6be2d59e0728", null ],
       [ "enableWait", "a00057.html#a8606dc1ca1a8645f9f45b7ed55694ed6", null ],
       [ "initializationControl", "a00057.html#a063619b08565ed073b4aa22065b6514b", null ],
@@ -19,18 +20,18 @@ var a00057 =
       [ "reloadFrequency", "a00057.html#a576607f47ae97b0c3eb47f9cfbab66d7", null ],
       [ "forceTrigger", "a00057.html#a878aeddf9a10f2cb7ae5917cfe2c9c84", null ]
     ] ],
-    [ "pwm_fault_input_filter_param_t", "a00057.html#a00453", [
+    [ "pwm_fault_input_filter_param_t", "a00057.html#a00452", [
       [ "faultFilterCount", "a00057.html#a8dd64dbdb5cfddbc73aa831f6523cd06", null ],
       [ "faultFilterPeriod", "a00057.html#a121148e856d8304cad33418c14cbcb49", null ],
       [ "faultGlitchStretch", "a00057.html#adc4619cc4945da5964d4a90e7a6943ff", null ]
     ] ],
-    [ "pwm_fault_param_t", "a00057.html#a00454", [
+    [ "pwm_fault_param_t", "a00057.html#a00453", [
       [ "faultClearingMode", "a00057.html#abd6959c9123d004bd98d1f000404eb7e", null ],
       [ "faultLevel", "a00057.html#a623c03ffe07a6bb87f5f678cf965fc61", null ],
       [ "enableCombinationalPath", "a00057.html#aadb707d1b75ac87f0cf1fab143a8b51d", null ],
       [ "recoverMode", "a00057.html#ac771868777f59c5876e89d69c7a6552f", null ]
     ] ],
-    [ "pwm_input_capture_param_t", "a00057.html#a00455", [
+    [ "pwm_input_capture_param_t", "a00057.html#a00454", [
       [ "captureInputSel", "a00057.html#a010807beeb7b92f66bae9eb2c0107a70", null ],
       [ "edgeCompareValue", "a00057.html#ab7f5713d68bcce0b9e12db75630dc73c", null ],
       [ "edge0", "a00057.html#aa4255f37fdebd83a57003336d1118a2f", null ],
@@ -40,6 +41,7 @@ var a00057 =
     ] ],
     [ "FSL_PWM_DRIVER_VERSION", "a00057.html#ga8bda5d1da1f6b7150e002c109a62d083", null ],
     [ "PWM_SUBMODULE_SWCONTROL_WIDTH", "a00057.html#ga6e56de2326b1f4bf708bd7991010e63f", null ],
+    [ "PWM_SUBMODULE_CHANNEL", "a00057.html#ga7b52c5fec031c9b8be85697d36ae3959", null ],
     [ "pwm_submodule_t", "a00057.html#ga467e18574027c8e3bde8f61a3fe61010", [
       [ "kPWM_Module_0", "a00057.html#gga467e18574027c8e3bde8f61a3fe61010add38c1b5a7f784f71f3cebf9a1bf3ff6", null ],
       [ "kPWM_Module_1", "a00057.html#gga467e18574027c8e3bde8f61a3fe61010a47a6ce50cc1613c9988bf21d9bb44c4c", null ],
@@ -87,6 +89,13 @@ var a00057 =
       [ "kPWM_Force_MasterSync", "a00057.html#gga199c9464fb869977d72535e508628966afea13339a2eeb6a11e8700cfd90dc8c3", null ],
       [ "kPWM_Force_External", "a00057.html#gga199c9464fb869977d72535e508628966a764ad229154a4eaeee4ae8c407d060f2", null ],
       [ "kPWM_Force_ExternalSync", "a00057.html#gga199c9464fb869977d72535e508628966a941c421adc51446d05dd65a257e081b9", null ]
+    ] ],
+    [ "pwm_output_state_t", "a00057.html#ga3af3bf8876cf936bf0c145708a78fa7a", [
+      [ "kPWM_HighState", "a00057.html#gga3af3bf8876cf936bf0c145708a78fa7aa40e8775968875f204e05ea1d8bb8df91", null ],
+      [ "kPWM_LowState", "a00057.html#gga3af3bf8876cf936bf0c145708a78fa7aaff20501cdadbeb76c35acbf2dcbfdeda", null ],
+      [ "kPWM_NormalState", "a00057.html#gga3af3bf8876cf936bf0c145708a78fa7aa21eacc26123c1c12be908b4aa5f2e11e", null ],
+      [ "kPWM_InvertState", "a00057.html#gga3af3bf8876cf936bf0c145708a78fa7aa6bfff92a047c3309594e642f4e2198c4", null ],
+      [ "kPWM_MaskState", "a00057.html#gga3af3bf8876cf936bf0c145708a78fa7aa549e6d9331bfe063b10af324f9645e1d", null ]
     ] ],
     [ "pwm_init_source_t", "a00057.html#ga56a54ba9383680868db1e1292aceedd1", [
       [ "kPWM_Initialize_LocalSync", "a00057.html#gga56a54ba9383680868db1e1292aceedd1abc2411b795be6f4f26efdc1d7abeadfa", null ],
@@ -248,6 +257,7 @@ var a00057 =
     [ "PWM_Deinit", "a00057.html#ga23a26fead175fa19dfe4617dde090bb5", null ],
     [ "PWM_GetDefaultConfig", "a00057.html#gaead09677ab28bfd57dce26c6c161b18d", null ],
     [ "PWM_SetupPwm", "a00057.html#ga50ecefa180c7ab83cb25c8ed58505b43", null ],
+    [ "PWM_SetupPwmPhaseShift", "a00057.html#gab73176c5684ced442299cc8c338ec555", null ],
     [ "PWM_UpdatePwmDutycycle", "a00057.html#ga8324acc824d28acc111006c67746d6ae", null ],
     [ "PWM_UpdatePwmDutycycleHighAccuracy", "a00057.html#ga46eebd874652ec8e9c9b128bbd6057df", null ],
     [ "PWM_SetupInputCapture", "a00057.html#ga714adfb30a4bac917530e4f7ac9f8497", null ],
@@ -266,11 +276,20 @@ var a00057 =
     [ "PWM_ClearStatusFlags", "a00057.html#ga66f5e7f2d2f671b35031e17f17ae5b0d", null ],
     [ "PWM_StartTimer", "a00057.html#ga7da5f4910ad7945fee50bd642f871fcc", null ],
     [ "PWM_StopTimer", "a00057.html#ga542db369e1459b8b7847d005937a5be9", null ],
+    [ "PWM_SetVALxValue", "a00057.html#gac610c4250011fd66c9197c49c207901f", null ],
+    [ "PWM_GetVALxValue", "a00057.html#ga46727b84b25524b019fbb0eb96a69861", null ],
     [ "PWM_OutputTriggerEnable", "a00057.html#ga40256df62c18de1ab8fef8609d6b4060", null ],
     [ "PWM_ActivateOutputTrigger", "a00057.html#ga88cdc0804a1619da24c387a38d3f6741", null ],
     [ "PWM_DeactivateOutputTrigger", "a00057.html#gaf64233d8510927731ae458d31fa5512e", null ],
     [ "PWM_SetupSwCtrlOut", "a00057.html#ga8236aa4d0e9beba91cdaabdadc841b32", null ],
     [ "PWM_SetPwmLdok", "a00057.html#ga7ff017951793deb3e01659ab0f440133", null ],
     [ "PWM_SetPwmFaultState", "a00057.html#gaf7a606468a735625a9f7f1409b1686ab", null ],
-    [ "PWM_SetupFaultDisableMap", "a00057.html#ga5c4a97812d828bc76cd1873abf1710f7", null ]
+    [ "PWM_SetupFaultDisableMap", "a00057.html#ga5c4a97812d828bc76cd1873abf1710f7", null ],
+    [ "PWM_OutputEnable", "a00057.html#ga646c67ec4031138ff5826f1b0fb649e8", null ],
+    [ "PWM_OutputDisable", "a00057.html#ga7f98c7daa79cf94c51685ee8586554ef", null ],
+    [ "PWM_GetPwmChannelState", "a00057.html#gaf5508876799328a445ca15ed60c4eba6", null ],
+    [ "PWM_SetOutputToIdle", "a00057.html#gac629bc123a2ce96ffccfba611a2d2e3b", null ],
+    [ "PWM_SetClockMode", "a00057.html#gae3c90bc3ec4b98b6e53f4e4b2e0f65b7", null ],
+    [ "PWM_SetPwmForceOutputToZero", "a00057.html#ga496cefe0b41a844b2f7f967bf681e9ff", null ],
+    [ "PWM_SetChannelOutput", "a00057.html#ga6ef08d759de5b19cf7423f5fc0024611", null ]
 ];

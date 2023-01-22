@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: AIPSTZ: AHB to IP Bridge</title>
+<title>MCUXpresso SDK API Reference Manual: CACHE: ARMV7-M7 CACHE Memory Controller</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.2</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,142 +98,125 @@ $(document).ready(function(){initNavTree('a00263.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">AIPSTZ: AHB to IP Bridge</div>  </div>
+<div class="title">CACHE: ARMV7-M7 CACHE Memory Controller</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the AHB-to-IP Bridge (AIPSTZ) of MCUXpresso SDK devices. </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the CACHE Controller of MCUXpresso SDK devices.</p>
+<p>The CACHE driver is created to help the user more easily operate the cache memory. The APIs for basic operations are including the following three levels:</p>
+<p>1L. The L1 cache driver API. This level provides the level 1 caches controller drivers. The L1 caches are mainly integrated in the Core memory system, Cortex-M7 L1 caches, etc. For our Cortex-M4 series platforms, the L1 cache is the local memory controller (LMEM) which is not integrated in the Cortex-M4 processer memory system.</p>
+<p>2L. The L2 cache driver API. This level provides the level 2 cache controller drivers. The L2 cache could be integrated in the CORE memory system or an external L2 cache memory, PL310, etc.</p>
+<p>3L. The combined cache driver API. This level provides many APIs for combined L1 and L2 cache maintain operations. This is provided for MCUXpresso SDK drivers (DMA, ENET, USDHC, etc) which should do the cache maintenance in their transactional APIs.</p>
+<h1><a class="anchor" id="CACHEFuncGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="L1CACHEMaintainOperation"></a>
+L1 CACHE Operation</h2>
+<p>The L1 CACHE has both code cache and data cache. This function group provides independent two groups API for both code cache and data cache. There are Enable/Disable APIs for code cache and data cache control and cache maintenance operations as Invalidate/Clean/CleanInvalidate by all and by address range.</p>
+<h2><a class="anchor" id="L2CACHEMaintainOperation"></a>
+L2 CACHE Operation</h2>
+<p>The L2 CACHE does not divide the cache to data and code. Instead, this function group provides one group cache maintenance operations as Enable/Disable/Invalidate/Clean/CleanInvalidate by all and by address range. Except the maintenance operation APIs, the L2 CACHE has it's initialization/configure API. The user can use the default configure parameter by calling L2CACHE_GetDefaultConfig() or changing the parameters as they wish. Then, call L2CACHE_Init to do the L2 CACHE initialization. After initialization, the L2 cache can then be enabled.</p>
+<p>Note: For the core external l2 Cache, the SoC usually has the control bit to select the SRAM to use as L2 Cache or normal SRAM. Make sure this selection is right when you use the L2 CACHE feature. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga50d1d18a2f10ab6d0978dc59ac7062e0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga50d1d18a2f10ab6d0978dc59ac7062e0">aipstz_master_privilege_level_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga50d1d18a2f10ab6d0978dc59ac7062e0a0b72fa18391c6c78eb6a099d20294269">kAIPSTZ_MasterBufferedWriteEnable</a> = (1U &lt;&lt; 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#gga50d1d18a2f10ab6d0978dc59ac7062e0a9519e4b78bb722c6e0cc66f2f5ddeeee">kAIPSTZ_MasterTrustedForReadEnable</a> = (1U &lt;&lt; 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#gga50d1d18a2f10ab6d0978dc59ac7062e0ac266137d6fc99b702e03eacd79ff5280">kAIPSTZ_MasterTrustedForWriteEnable</a> = (1U &lt;&lt; 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#gga50d1d18a2f10ab6d0978dc59ac7062e0ac588fb9df7c0231b66a302077e08a5de">kAIPSTZ_MasterForceUserModeEnable</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga50d1d18a2f10ab6d0978dc59ac7062e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ privilege configuration.  <a href="a00263.html#ga50d1d18a2f10ab6d0978dc59ac7062e0">More...</a><br/></td></tr>
-<tr class="separator:ga50d1d18a2f10ab6d0978dc59ac7062e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b7e45a44dadf636d9941f600e5f8cf4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga1b7e45a44dadf636d9941f600e5f8cf4">aipstz_master_t</a> </td></tr>
-<tr class="memdesc:ga1b7e45a44dadf636d9941f600e5f8cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ masters.  <a href="a00263.html#ga1b7e45a44dadf636d9941f600e5f8cf4">More...</a><br/></td></tr>
-<tr class="separator:ga1b7e45a44dadf636d9941f600e5f8cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85073f011425a31234f80e72f0574701"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga85073f011425a31234f80e72f0574701">aipstz_peripheral_access_control_t</a> </td></tr>
-<tr class="memdesc:ga85073f011425a31234f80e72f0574701"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ peripheral access control configuration.  <a href="a00263.html#ga85073f011425a31234f80e72f0574701">More...</a><br/></td></tr>
-<tr class="separator:ga85073f011425a31234f80e72f0574701"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c8376b4734c8b7d16219d52e375d1c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga8c8376b4734c8b7d16219d52e375d1c8">aipstz_peripheral_t</a> </td></tr>
-<tr class="memdesc:ga8c8376b4734c8b7d16219d52e375d1c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ peripherals.  <a href="a00263.html#ga8c8376b4734c8b7d16219d52e375d1c8">More...</a><br/></td></tr>
-<tr class="separator:ga8c8376b4734c8b7d16219d52e375d1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga63da39530bbcd0dc57e95ea907626d30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga63da39530bbcd0dc57e95ea907626d30"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga63da39530bbcd0dc57e95ea907626d30">FSL_AIPSTZ_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00265.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
-<tr class="memdesc:ga63da39530bbcd0dc57e95ea907626d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.1. <br/></td></tr>
-<tr class="separator:ga63da39530bbcd0dc57e95ea907626d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gac954b8be2bb59a983a9594c59e4b4fa5">FSL_CACHE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="memdesc:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">cache driver version 2.0.4.  <a href="#gac954b8be2bb59a983a9594c59e4b4fa5">More...</a><br/></td></tr>
+<tr class="separator:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gaa0b2d889df182cd605ae955fc65e333a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaa0b2d889df182cd605ae955fc65e333a">AIPSTZ_SetMasterPriviledgeLevel</a> (AIPSTZ_Type *base, <a class="el" href="a00263.html#ga1b7e45a44dadf636d9941f600e5f8cf4">aipstz_master_t</a> master, uint32_t privilegeConfig)</td></tr>
-<tr class="memdesc:gaa0b2d889df182cd605ae955fc65e333a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the privilege level for master.  <a href="#gaa0b2d889df182cd605ae955fc65e333a">More...</a><br/></td></tr>
-<tr class="separator:gaa0b2d889df182cd605ae955fc65e333a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6dd3e90419600f38e9d4b970f723e918"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga6dd3e90419600f38e9d4b970f723e918">AIPSTZ_SetPeripheralAccessControl</a> (AIPSTZ_Type *base, <a class="el" href="a00263.html#ga8c8376b4734c8b7d16219d52e375d1c8">aipstz_peripheral_t</a> peripheral, uint32_t accessControl)</td></tr>
-<tr class="memdesc:ga6dd3e90419600f38e9d4b970f723e918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the access for peripheral.  <a href="#ga6dd3e90419600f38e9d4b970f723e918">More...</a><br/></td></tr>
-<tr class="separator:ga6dd3e90419600f38e9d4b970f723e918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Control for cortex-m7 L1 cache</h2></td></tr>
+<tr class="memitem:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaea07bb3879fa96b03f1ecaa6bf821c74"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaea07bb3879fa96b03f1ecaa6bf821c74">L1CACHE_EnableICache</a> (void)</td></tr>
+<tr class="memdesc:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa6d1a14a0499342890eee0e104c8d96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafa6d1a14a0499342890eee0e104c8d96"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gafa6d1a14a0499342890eee0e104c8d96">L1CACHE_DisableICache</a> (void)</td></tr>
+<tr class="memdesc:gafa6d1a14a0499342890eee0e104c8d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gafa6d1a14a0499342890eee0e104c8d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabce0ccbe1684fef7eff231f3704025b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabce0ccbe1684fef7eff231f3704025b6"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gabce0ccbe1684fef7eff231f3704025b6">L1CACHE_InvalidateICache</a> (void)</td></tr>
+<tr class="memdesc:gabce0ccbe1684fef7eff231f3704025b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gabce0ccbe1684fef7eff231f3704025b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf66ed6d9a7b881ef98707861484d7530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaf66ed6d9a7b881ef98707861484d7530">L1CACHE_InvalidateICacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gaf66ed6d9a7b881ef98707861484d7530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate cortex-m7 L1 instruction cache by range.  <a href="#gaf66ed6d9a7b881ef98707861484d7530">More...</a><br/></td></tr>
+<tr class="separator:gaf66ed6d9a7b881ef98707861484d7530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52d071c691c4ce9ead828e086f07f457"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga52d071c691c4ce9ead828e086f07f457"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga52d071c691c4ce9ead828e086f07f457">L1CACHE_EnableDCache</a> (void)</td></tr>
+<tr class="memdesc:ga52d071c691c4ce9ead828e086f07f457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:ga52d071c691c4ce9ead828e086f07f457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6eb154e5afc3a877aad4155cb90bca9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae6eb154e5afc3a877aad4155cb90bca9"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gae6eb154e5afc3a877aad4155cb90bca9">L1CACHE_DisableDCache</a> (void)</td></tr>
+<tr class="memdesc:gae6eb154e5afc3a877aad4155cb90bca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gae6eb154e5afc3a877aad4155cb90bca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad6bb45d3f9feb8ed2a63b174d204f277"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gad6bb45d3f9feb8ed2a63b174d204f277">L1CACHE_InvalidateDCache</a> (void)</td></tr>
+<tr class="memdesc:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1dcfc930ee90724a807f69428a1f269"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1dcfc930ee90724a807f69428a1f269"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gab1dcfc930ee90724a807f69428a1f269">L1CACHE_CleanDCache</a> (void)</td></tr>
+<tr class="memdesc:gab1dcfc930ee90724a807f69428a1f269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gab1dcfc930ee90724a807f69428a1f269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49c6ba08328943022264442f6ce2c090"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga49c6ba08328943022264442f6ce2c090"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga49c6ba08328943022264442f6ce2c090">L1CACHE_CleanInvalidateDCache</a> (void)</td></tr>
+<tr class="memdesc:ga49c6ba08328943022264442f6ce2c090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:ga49c6ba08328943022264442f6ce2c090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9baff800f4d60a09efc4e4ce309dd583"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga9baff800f4d60a09efc4e4ce309dd583">L1CACHE_InvalidateDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga9baff800f4d60a09efc4e4ce309dd583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates cortex-m7 L1 data cache by range.  <a href="#ga9baff800f4d60a09efc4e4ce309dd583">More...</a><br/></td></tr>
+<tr class="separator:ga9baff800f4d60a09efc4e4ce309dd583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad120776b1a7f2f3f21b2bf017dbab095"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gad120776b1a7f2f3f21b2bf017dbab095">L1CACHE_CleanDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gad120776b1a7f2f3f21b2bf017dbab095"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans cortex-m7 L1 data cache by range.  <a href="#gad120776b1a7f2f3f21b2bf017dbab095">More...</a><br/></td></tr>
+<tr class="separator:gad120776b1a7f2f3f21b2bf017dbab095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4837708efaec2927416b268d75412361"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga4837708efaec2927416b268d75412361">L1CACHE_CleanInvalidateDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga4837708efaec2927416b268d75412361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates cortex-m7 L1 data cache by range.  <a href="#ga4837708efaec2927416b268d75412361">More...</a><br/></td></tr>
+<tr class="separator:ga4837708efaec2927416b268d75412361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Unified Cache Control for all caches (cortex-m7 L1 cache + l2 pl310)</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp15e7a9b463a20c013988f37a2d8c9ee1"></a>Mainly used for many drivers for easy cache operation. </p>
+</td></tr>
+<tr class="memitem:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga00cdccb5c53201a747f2a3e2009f43cc">ICACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates all instruction caches by range.  <a href="#ga00cdccb5c53201a747f2a3e2009f43cc">More...</a><br/></td></tr>
+<tr class="separator:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gab5c47d7193562d7a763b1bc1bd91b28c">DCACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates all data caches by range.  <a href="#gab5c47d7193562d7a763b1bc1bd91b28c">More...</a><br/></td></tr>
+<tr class="separator:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga893959336987f85910fe98ab9f7f8648"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga893959336987f85910fe98ab9f7f8648">DCACHE_CleanByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga893959336987f85910fe98ab9f7f8648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans all data caches by range.  <a href="#ga893959336987f85910fe98ab9f7f8648">More...</a><br/></td></tr>
+<tr class="separator:ga893959336987f85910fe98ab9f7f8648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac20095b525889cf55c105658877c2c84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gac20095b525889cf55c105658877c2c84">DCACHE_CleanInvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gac20095b525889cf55c105658877c2c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates all data caches by range.  <a href="#gac20095b525889cf55c105658877c2c84">More...</a><br/></td></tr>
+<tr class="separator:gac20095b525889cf55c105658877c2c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga50d1d18a2f10ab6d0978dc59ac7062e0"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gac954b8be2bb59a983a9594c59e4b4fa5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga50d1d18a2f10ab6d0978dc59ac7062e0">aipstz_master_privilege_level_t</a></td>
+          <td class="memname">#define FSL_CACHE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga50d1d18a2f10ab6d0978dc59ac7062e0a0b72fa18391c6c78eb6a099d20294269"></a>kAIPSTZ_MasterBufferedWriteEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Write accesses from this master are allowed to be buffered. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga50d1d18a2f10ab6d0978dc59ac7062e0a9519e4b78bb722c6e0cc66f2f5ddeeee"></a>kAIPSTZ_MasterTrustedForReadEnable</em>&nbsp;</td><td class="fielddoc">
-<p>This master is trusted for read accesses. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga50d1d18a2f10ab6d0978dc59ac7062e0ac266137d6fc99b702e03eacd79ff5280"></a>kAIPSTZ_MasterTrustedForWriteEnable</em>&nbsp;</td><td class="fielddoc">
-<p>This master is trusted for write accesses. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga50d1d18a2f10ab6d0978dc59ac7062e0ac588fb9df7c0231b66a302077e08a5de"></a>kAIPSTZ_MasterForceUserModeEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Accesses from this master are forced to user-mode. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga1b7e45a44dadf636d9941f600e5f8cf4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga1b7e45a44dadf636d9941f600e5f8cf4">aipstz_master_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Organized by width for the 8-15 bits and shift for lower 8 bits. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga85073f011425a31234f80e72f0574701"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga85073f011425a31234f80e72f0574701">aipstz_peripheral_access_control_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga8c8376b4734c8b7d16219d52e375d1c8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga8c8376b4734c8b7d16219d52e375d1c8">aipstz_peripheral_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Organized by register offset for higher 32 bits, width for the 8-15 bits and shift for lower 8 bits. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa0b2d889df182cd605ae955fc65e333a"></a>
+<a class="anchor" id="gaf66ed6d9a7b881ef98707861484d7530"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void AIPSTZ_SetMasterPriviledgeLevel </td>
+          <td class="memname">void L1CACHE_InvalidateICacheByRange </td>
           <td>(</td>
-          <td class="paramtype">AIPSTZ_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga1b7e45a44dadf636d9941f600e5f8cf4">aipstz_master_t</a>&#160;</td>
-          <td class="paramname"><em>master</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>privilegeConfig</em>&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -244,36 +227,156 @@ Initialization and deinitialization</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>AIPSTZ peripheral base pointer </td></tr>
-    <tr><td class="paramname">master</td><td>Masters for AIPSTZ. </td></tr>
-    <tr><td class="paramname">privilegeConfig</td><td>Configuration is ORed from <a class="el" href="a00263.html#ga50d1d18a2f10ab6d0978dc59ac7062e0">aipstz_master_privilege_level_t</a>. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 I-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6dd3e90419600f38e9d4b970f723e918"></a>
+<a class="anchor" id="ga9baff800f4d60a09efc4e4ce309dd583"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void AIPSTZ_SetPeripheralAccessControl </td>
+          <td class="memname">static void L1CACHE_InvalidateDCacheByRange </td>
           <td>(</td>
-          <td class="paramtype">AIPSTZ_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga8c8376b4734c8b7d16219d52e375d1c8">aipstz_peripheral_t</a>&#160;</td>
-          <td class="paramname"><em>peripheral</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>accessControl</em>&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The start address of the memory to be invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad120776b1a7f2f3f21b2bf017dbab095"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void L1CACHE_CleanDCacheByRange </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The start address of the memory to be cleaned. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4837708efaec2927416b268d75412361"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void L1CACHE_CleanInvalidateDCacheByRange </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The start address of the memory to be clean and invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga00cdccb5c53201a747f2a3e2009f43cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ICACHE_InvalidateByRange </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -282,14 +385,120 @@ Initialization and deinitialization</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>AIPSTZ peripheral base pointer </td></tr>
-    <tr><td class="paramname">peripheral</td><td>Peripheral for AIPSTZ. </td></tr>
-    <tr><td class="paramname">accessControl</td><td>Configuration is ORed from <a class="el" href="a00263.html#ga85073f011425a31234f80e72f0574701">aipstz_peripheral_access_control_t</a>. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab5c47d7193562d7a763b1bc1bd91b28c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DCACHE_InvalidateByRange </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga893959336987f85910fe98ab9f7f8648"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DCACHE_CleanByRange </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac20095b525889cf55c105658877c2c84"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DCACHE_CleanInvalidateByRange </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned and invalidated. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>

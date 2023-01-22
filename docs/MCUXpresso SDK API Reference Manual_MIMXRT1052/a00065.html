@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('a00065.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">USDHC HOST adapter Driver<div class="ingroups"><a class="el" href="a00290.html">SDMMC HOST Driver</a></div></div>  </div>
+<div class="title">USDHC HOST adapter Driver<div class="ingroups"><a class="el" href="a00289.html">SDMMC HOST Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -116,13 +116,13 @@ $(document).ready(function(){initNavTree('a00065.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00491"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00491">sdmmchost_t</a></td></tr>
-<tr class="memdesc:a00491"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host handler  <a href="a00065.html#a00491">More...</a><br/></td></tr>
-<tr class="separator:a00491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00490"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00490">sdmmchost_t</a></td></tr>
+<tr class="memdesc:a00490"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host handler  <a href="a00065.html#a00490">More...</a><br/></td></tr>
+<tr class="separator:a00490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gab7f416230cd008bf4453aca9e4ae6623"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gab7f416230cd008bf4453aca9e4ae6623">FSL_SDMMC_HOST_ADAPTER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 6U, 2U)) /*2.6.2*/</td></tr>
+<tr class="memitem:gab7f416230cd008bf4453aca9e4ae6623"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gab7f416230cd008bf4453aca9e4ae6623">FSL_SDMMC_HOST_ADAPTER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 6U, 3U)) /*2.6.3*/</td></tr>
 <tr class="memdesc:gab7f416230cd008bf4453aca9e4ae6623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware adapter version.  <a href="#gab7f416230cd008bf4453aca9e4ae6623">More...</a><br/></td></tr>
 <tr class="separator:gab7f416230cd008bf4453aca9e4ae6623"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga51ef85092e4c145fd0c3a422df20aa93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga51ef85092e4c145fd0c3a422df20aa93"></a>
@@ -168,7 +168,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga4cb15dfa790e535a38ec0b3ed86ff7b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4cb15dfa790e535a38ec0b3ed86ff7b8"></a>
-typedef <a class="el" href="a00079.html#a00536">usdhc_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga4cb15dfa790e535a38ec0b3ed86ff7b8">sdmmchost_transfer_t</a></td></tr>
+typedef <a class="el" href="a00079.html#a00535">usdhc_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga4cb15dfa790e535a38ec0b3ed86ff7b8">sdmmchost_transfer_t</a></td></tr>
 <tr class="memdesc:ga4cb15dfa790e535a38ec0b3ed86ff7b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host transfer function <br/></td></tr>
 <tr class="separator:ga4cb15dfa790e535a38ec0b3ed86ff7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -239,84 +239,84 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 USDHC host controller function</h2></td></tr>
-<tr class="memitem:ga6a2f4160b4f2bf3a24c0a9e85f652cac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga6a2f4160b4f2bf3a24c0a9e85f652cac">SDMMCHOST_SetCardBusWidth</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, uint32_t dataBusWidth)</td></tr>
+<tr class="memitem:ga6a2f4160b4f2bf3a24c0a9e85f652cac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga6a2f4160b4f2bf3a24c0a9e85f652cac">SDMMCHOST_SetCardBusWidth</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, uint32_t dataBusWidth)</td></tr>
 <tr class="memdesc:ga6a2f4160b4f2bf3a24c0a9e85f652cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">set data bus width.  <a href="#ga6a2f4160b4f2bf3a24c0a9e85f652cac">More...</a><br/></td></tr>
 <tr class="separator:ga6a2f4160b4f2bf3a24c0a9e85f652cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3167687798418ad802388c549a4dc79e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga3167687798418ad802388c549a4dc79e">SDMMCHOST_SendCardActive</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host)</td></tr>
+<tr class="memitem:ga3167687798418ad802388c549a4dc79e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga3167687798418ad802388c549a4dc79e">SDMMCHOST_SendCardActive</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host)</td></tr>
 <tr class="memdesc:ga3167687798418ad802388c549a4dc79e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send initilization active 80 clocks to card.  <a href="#ga3167687798418ad802388c549a4dc79e">More...</a><br/></td></tr>
 <tr class="separator:ga3167687798418ad802388c549a4dc79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed911872439a396900e606d88ec2f639"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaed911872439a396900e606d88ec2f639">SDMMCHOST_SetCardClock</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, uint32_t targetClock)</td></tr>
+<tr class="memitem:gaed911872439a396900e606d88ec2f639"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaed911872439a396900e606d88ec2f639">SDMMCHOST_SetCardClock</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, uint32_t targetClock)</td></tr>
 <tr class="memdesc:gaed911872439a396900e606d88ec2f639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set card bus clock.  <a href="#gaed911872439a396900e606d88ec2f639">More...</a><br/></td></tr>
 <tr class="separator:gaed911872439a396900e606d88ec2f639"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3ab76c607654db1629f1bbaf773c2c3"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gab3ab76c607654db1629f1bbaf773c2c3">SDMMCHOST_IsCardBusy</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host)</td></tr>
+<tr class="memitem:gab3ab76c607654db1629f1bbaf773c2c3"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gab3ab76c607654db1629f1bbaf773c2c3">SDMMCHOST_IsCardBusy</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host)</td></tr>
 <tr class="memdesc:gab3ab76c607654db1629f1bbaf773c2c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">check card status by DATA0.  <a href="#gab3ab76c607654db1629f1bbaf773c2c3">More...</a><br/></td></tr>
 <tr class="separator:gab3ab76c607654db1629f1bbaf773c2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bd5a5d59633b4628f28c3599f3b897f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga6bd5a5d59633b4628f28c3599f3b897f">SDMMCHOST_GetSignalLineStatus</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, uint32_t signalLine)</td></tr>
+<tr class="memitem:ga6bd5a5d59633b4628f28c3599f3b897f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga6bd5a5d59633b4628f28c3599f3b897f">SDMMCHOST_GetSignalLineStatus</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, uint32_t signalLine)</td></tr>
 <tr class="memdesc:ga6bd5a5d59633b4628f28c3599f3b897f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get signal line status.  <a href="#ga6bd5a5d59633b4628f28c3599f3b897f">More...</a><br/></td></tr>
 <tr class="separator:ga6bd5a5d59633b4628f28c3599f3b897f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02e31cfbe66648fc70cb5ad1ad8d4e81"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga02e31cfbe66648fc70cb5ad1ad8d4e81">SDMMCHOST_EnableCardInt</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memitem:ga02e31cfbe66648fc70cb5ad1ad8d4e81"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga02e31cfbe66648fc70cb5ad1ad8d4e81">SDMMCHOST_EnableCardInt</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, bool enable)</td></tr>
 <tr class="memdesc:ga02e31cfbe66648fc70cb5ad1ad8d4e81"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable card interrupt.  <a href="#ga02e31cfbe66648fc70cb5ad1ad8d4e81">More...</a><br/></td></tr>
 <tr class="separator:ga02e31cfbe66648fc70cb5ad1ad8d4e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga325ef14ece0196e72dbb9f23fb3a6c05"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga325ef14ece0196e72dbb9f23fb3a6c05">SDMMCHOST_EnableDDRMode</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, bool enable, uint32_t nibblePos)</td></tr>
+<tr class="memitem:ga325ef14ece0196e72dbb9f23fb3a6c05"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga325ef14ece0196e72dbb9f23fb3a6c05">SDMMCHOST_EnableDDRMode</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, bool enable, uint32_t nibblePos)</td></tr>
 <tr class="memdesc:ga325ef14ece0196e72dbb9f23fb3a6c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable DDR mode.  <a href="#ga325ef14ece0196e72dbb9f23fb3a6c05">More...</a><br/></td></tr>
 <tr class="separator:ga325ef14ece0196e72dbb9f23fb3a6c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1cb3b2a1fc0014931ec3557d7a2539b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaa1cb3b2a1fc0014931ec3557d7a2539b">SDMMCHOST_EnableHS400Mode</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memitem:gaa1cb3b2a1fc0014931ec3557d7a2539b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaa1cb3b2a1fc0014931ec3557d7a2539b">SDMMCHOST_EnableHS400Mode</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, bool enable)</td></tr>
 <tr class="memdesc:gaa1cb3b2a1fc0014931ec3557d7a2539b"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable HS400 mode.  <a href="#gaa1cb3b2a1fc0014931ec3557d7a2539b">More...</a><br/></td></tr>
 <tr class="separator:gaa1cb3b2a1fc0014931ec3557d7a2539b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga08cbe1e8c2a7f37be10f901761ff2870"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga08cbe1e8c2a7f37be10f901761ff2870">SDMMCHOST_EnableStrobeDll</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memitem:ga08cbe1e8c2a7f37be10f901761ff2870"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga08cbe1e8c2a7f37be10f901761ff2870">SDMMCHOST_EnableStrobeDll</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, bool enable)</td></tr>
 <tr class="memdesc:ga08cbe1e8c2a7f37be10f901761ff2870"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable STROBE DLL.  <a href="#ga08cbe1e8c2a7f37be10f901761ff2870">More...</a><br/></td></tr>
 <tr class="separator:ga08cbe1e8c2a7f37be10f901761ff2870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b1a9d28ed22d8b7496372b0d1b2d068"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga1b1a9d28ed22d8b7496372b0d1b2d068">SDMMCHOST_StartBoot</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, <a class="el" href="a00079.html#a00526">sdmmchost_boot_config_t</a> *hostConfig, <a class="el" href="a00079.html#a00528">sdmmchost_cmd_t</a> *cmd, uint8_t *buffer)</td></tr>
+<tr class="memitem:ga1b1a9d28ed22d8b7496372b0d1b2d068"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga1b1a9d28ed22d8b7496372b0d1b2d068">SDMMCHOST_StartBoot</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, <a class="el" href="a00079.html#a00525">sdmmchost_boot_config_t</a> *hostConfig, <a class="el" href="a00079.html#a00527">sdmmchost_cmd_t</a> *cmd, uint8_t *buffer)</td></tr>
 <tr class="memdesc:ga1b1a9d28ed22d8b7496372b0d1b2d068"><td class="mdescLeft">&#160;</td><td class="mdescRight">start read boot data.  <a href="#ga1b1a9d28ed22d8b7496372b0d1b2d068">More...</a><br/></td></tr>
 <tr class="separator:ga1b1a9d28ed22d8b7496372b0d1b2d068"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga67013c224293f28edf35bbd645f56171"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga67013c224293f28edf35bbd645f56171">SDMMCHOST_ReadBootData</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, <a class="el" href="a00079.html#a00526">sdmmchost_boot_config_t</a> *hostConfig, uint8_t *buffer)</td></tr>
+<tr class="memitem:ga67013c224293f28edf35bbd645f56171"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga67013c224293f28edf35bbd645f56171">SDMMCHOST_ReadBootData</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, <a class="el" href="a00079.html#a00525">sdmmchost_boot_config_t</a> *hostConfig, uint8_t *buffer)</td></tr>
 <tr class="memdesc:ga67013c224293f28edf35bbd645f56171"><td class="mdescLeft">&#160;</td><td class="mdescRight">read boot data.  <a href="#ga67013c224293f28edf35bbd645f56171">More...</a><br/></td></tr>
 <tr class="separator:ga67013c224293f28edf35bbd645f56171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95c2985329c39dd313a8ae3330dafbcf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga95c2985329c39dd313a8ae3330dafbcf">SDMMCHOST_EnableBoot</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memitem:ga95c2985329c39dd313a8ae3330dafbcf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga95c2985329c39dd313a8ae3330dafbcf">SDMMCHOST_EnableBoot</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, bool enable)</td></tr>
 <tr class="memdesc:ga95c2985329c39dd313a8ae3330dafbcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable boot mode.  <a href="#ga95c2985329c39dd313a8ae3330dafbcf">More...</a><br/></td></tr>
 <tr class="separator:ga95c2985329c39dd313a8ae3330dafbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96724bd653d1ca166314f52bd8eaf9ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga96724bd653d1ca166314f52bd8eaf9ab">SDMMCHOST_CardIntInit</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, void *sdioInt)</td></tr>
+<tr class="memitem:ga96724bd653d1ca166314f52bd8eaf9ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga96724bd653d1ca166314f52bd8eaf9ab">SDMMCHOST_CardIntInit</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, void *sdioInt)</td></tr>
 <tr class="memdesc:ga96724bd653d1ca166314f52bd8eaf9ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">card interrupt function.  <a href="#ga96724bd653d1ca166314f52bd8eaf9ab">More...</a><br/></td></tr>
 <tr class="separator:ga96724bd653d1ca166314f52bd8eaf9ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5375f1305a451912d3ad33d85d45ce4e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga5375f1305a451912d3ad33d85d45ce4e">SDMMCHOST_ForceClockOn</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memitem:ga5375f1305a451912d3ad33d85d45ce4e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga5375f1305a451912d3ad33d85d45ce4e">SDMMCHOST_ForceClockOn</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, bool enable)</td></tr>
 <tr class="memdesc:ga5375f1305a451912d3ad33d85d45ce4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">force card clock on.  <a href="#ga5375f1305a451912d3ad33d85d45ce4e">More...</a><br/></td></tr>
 <tr class="separator:ga5375f1305a451912d3ad33d85d45ce4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96d258a5a09f079bfe135fe545c5778c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga96d258a5a09f079bfe135fe545c5778c">SDMMCHOST_SwitchToVoltage</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, uint32_t voltage)</td></tr>
+<tr class="memitem:ga96d258a5a09f079bfe135fe545c5778c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga96d258a5a09f079bfe135fe545c5778c">SDMMCHOST_SwitchToVoltage</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, uint32_t voltage)</td></tr>
 <tr class="memdesc:ga96d258a5a09f079bfe135fe545c5778c"><td class="mdescLeft">&#160;</td><td class="mdescRight">switch to voltage.  <a href="#ga96d258a5a09f079bfe135fe545c5778c">More...</a><br/></td></tr>
 <tr class="separator:ga96d258a5a09f079bfe135fe545c5778c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae33c669f37f6354c1618e4354e7a2d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaae33c669f37f6354c1618e4354e7a2d8">SDMMCHOST_CardDetectInit</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, void *cd)</td></tr>
+<tr class="memitem:gaae33c669f37f6354c1618e4354e7a2d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaae33c669f37f6354c1618e4354e7a2d8">SDMMCHOST_CardDetectInit</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, void *cd)</td></tr>
 <tr class="memdesc:gaae33c669f37f6354c1618e4354e7a2d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">card detect init function.  <a href="#gaae33c669f37f6354c1618e4354e7a2d8">More...</a><br/></td></tr>
 <tr class="separator:gaae33c669f37f6354c1618e4354e7a2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga846a7644c956ee5533e913327cb85c3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga846a7644c956ee5533e913327cb85c3c">SDMMCHOST_PollingCardDetectStatus</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, uint32_t waitCardStatus, uint32_t timeout)</td></tr>
+<tr class="memitem:ga846a7644c956ee5533e913327cb85c3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga846a7644c956ee5533e913327cb85c3c">SDMMCHOST_PollingCardDetectStatus</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, uint32_t waitCardStatus, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga846a7644c956ee5533e913327cb85c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect card insert, only need for SD cases.  <a href="#ga846a7644c956ee5533e913327cb85c3c">More...</a><br/></td></tr>
 <tr class="separator:ga846a7644c956ee5533e913327cb85c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae0989b876590f6ae75709a06de205ae7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gae0989b876590f6ae75709a06de205ae7">SDMMCHOST_CardDetectStatus</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host)</td></tr>
+<tr class="memitem:gae0989b876590f6ae75709a06de205ae7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gae0989b876590f6ae75709a06de205ae7">SDMMCHOST_CardDetectStatus</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host)</td></tr>
 <tr class="memdesc:gae0989b876590f6ae75709a06de205ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">card detect status.  <a href="#gae0989b876590f6ae75709a06de205ae7">More...</a><br/></td></tr>
 <tr class="separator:gae0989b876590f6ae75709a06de205ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f316244d63b01d005de110482ca125f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga8f316244d63b01d005de110482ca125f">SDMMCHOST_Init</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host)</td></tr>
+<tr class="memitem:ga8f316244d63b01d005de110482ca125f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga8f316244d63b01d005de110482ca125f">SDMMCHOST_Init</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host)</td></tr>
 <tr class="memdesc:ga8f316244d63b01d005de110482ca125f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Init host controller.  <a href="#ga8f316244d63b01d005de110482ca125f">More...</a><br/></td></tr>
 <tr class="separator:ga8f316244d63b01d005de110482ca125f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8070be281bdd447d149114b4445bcdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gad8070be281bdd447d149114b4445bcdc">SDMMCHOST_Deinit</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host)</td></tr>
+<tr class="memitem:gad8070be281bdd447d149114b4445bcdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gad8070be281bdd447d149114b4445bcdc">SDMMCHOST_Deinit</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host)</td></tr>
 <tr class="memdesc:gad8070be281bdd447d149114b4445bcdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit host controller.  <a href="#gad8070be281bdd447d149114b4445bcdc">More...</a><br/></td></tr>
 <tr class="separator:gad8070be281bdd447d149114b4445bcdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga587da6c26c9e6401e77d083011b8e474"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga587da6c26c9e6401e77d083011b8e474">SDMMCHOST_SetCardPower</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memitem:ga587da6c26c9e6401e77d083011b8e474"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga587da6c26c9e6401e77d083011b8e474">SDMMCHOST_SetCardPower</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, bool enable)</td></tr>
 <tr class="memdesc:ga587da6c26c9e6401e77d083011b8e474"><td class="mdescLeft">&#160;</td><td class="mdescRight">host power off card function.  <a href="#ga587da6c26c9e6401e77d083011b8e474">More...</a><br/></td></tr>
 <tr class="separator:ga587da6c26c9e6401e77d083011b8e474"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62429a2a668ae8bef49352256bbc6a48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga62429a2a668ae8bef49352256bbc6a48">SDMMCHOST_TransferFunction</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, <a class="el" href="a00065.html#ga4cb15dfa790e535a38ec0b3ed86ff7b8">sdmmchost_transfer_t</a> *content)</td></tr>
+<tr class="memitem:ga62429a2a668ae8bef49352256bbc6a48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga62429a2a668ae8bef49352256bbc6a48">SDMMCHOST_TransferFunction</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, <a class="el" href="a00065.html#ga4cb15dfa790e535a38ec0b3ed86ff7b8">sdmmchost_transfer_t</a> *content)</td></tr>
 <tr class="memdesc:ga62429a2a668ae8bef49352256bbc6a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">host transfer function.  <a href="#ga62429a2a668ae8bef49352256bbc6a48">More...</a><br/></td></tr>
 <tr class="separator:ga62429a2a668ae8bef49352256bbc6a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb989c127eb1ca6bc4a831220be0f384"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaeb989c127eb1ca6bc4a831220be0f384">SDMMCHOST_ExecuteTuning</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)</td></tr>
+<tr class="memitem:gaeb989c127eb1ca6bc4a831220be0f384"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaeb989c127eb1ca6bc4a831220be0f384">SDMMCHOST_ExecuteTuning</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)</td></tr>
 <tr class="memdesc:gaeb989c127eb1ca6bc4a831220be0f384"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host excute tuning.  <a href="#gaeb989c127eb1ca6bc4a831220be0f384">More...</a><br/></td></tr>
 <tr class="separator:gaeb989c127eb1ca6bc4a831220be0f384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4d25fd8cb129e822223b868bdfa6c10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gac4d25fd8cb129e822223b868bdfa6c10">SDMMCHOST_Reset</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host)</td></tr>
+<tr class="memitem:gac4d25fd8cb129e822223b868bdfa6c10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gac4d25fd8cb129e822223b868bdfa6c10">SDMMCHOST_Reset</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host)</td></tr>
 <tr class="memdesc:gac4d25fd8cb129e822223b868bdfa6c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">host reset function.  <a href="#gac4d25fd8cb129e822223b868bdfa6c10">More...</a><br/></td></tr>
 <tr class="separator:gac4d25fd8cb129e822223b868bdfa6c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8d6ed81a627153dfdfc9527193026490"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga8d6ed81a627153dfdfc9527193026490">SDMMCHOST_ConvertDataToLittleEndian</a> (<a class="el" href="a00065.html#a00491">sdmmchost_t</a> *host, uint32_t *data, uint32_t wordSize, uint32_t format)</td></tr>
+<tr class="memitem:ga8d6ed81a627153dfdfc9527193026490"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga8d6ed81a627153dfdfc9527193026490">SDMMCHOST_ConvertDataToLittleEndian</a> (<a class="el" href="a00065.html#a00490">sdmmchost_t</a> *host, uint32_t *data, uint32_t wordSize, uint32_t format)</td></tr>
 <tr class="memdesc:ga8d6ed81a627153dfdfc9527193026490"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host convert data sequence to little endian sequence  <a href="#ga8d6ed81a627153dfdfc9527193026490">More...</a><br/></td></tr>
 <tr class="separator:ga8d6ed81a627153dfdfc9527193026490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00491" id="a00491"></a>
+<a name="a00490" id="a00490"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -328,7 +328,7 @@ USDHC host controller function</h2></td></tr>
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:a71c2bc521cd1b46bb9702a438694fd0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71c2bc521cd1b46bb9702a438694fd0f"></a>
-<a class="el" href="a00079.html#a00531">usdhc_host_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a71c2bc521cd1b46bb9702a438694fd0f">hostController</a></td></tr>
+<a class="el" href="a00079.html#a00530">usdhc_host_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a71c2bc521cd1b46bb9702a438694fd0f">hostController</a></td></tr>
 <tr class="memdesc:a71c2bc521cd1b46bb9702a438694fd0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">host configuration <br/></td></tr>
 <tr class="separator:a71c2bc521cd1b46bb9702a438694fd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdbf757e35a244a36abd144ef6a221c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdbf757e35a244a36abd144ef6a221c7"></a>
@@ -360,7 +360,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <tr class="memdesc:a511523e7f57def013239ab926f4c16f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">host tuning type <br/></td></tr>
 <tr class="separator:a511523e7f57def013239ab926f4c16f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11341f23f4880014e3434831ecfcbfc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11341f23f4880014e3434831ecfcbfc5"></a>
-<a class="el" href="a00064.html#a00489">sdmmc_osa_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a11341f23f4880014e3434831ecfcbfc5">hostEvent</a></td></tr>
+<a class="el" href="a00064.html#a00488">sdmmc_osa_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a11341f23f4880014e3434831ecfcbfc5">hostEvent</a></td></tr>
 <tr class="memdesc:a11341f23f4880014e3434831ecfcbfc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">host event handler <br/></td></tr>
 <tr class="separator:a11341f23f4880014e3434831ecfcbfc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5eac770d59a0ce28e585fe187de8a584"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5eac770d59a0ce28e585fe187de8a584"></a>
@@ -372,7 +372,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memdesc:ac13e3f3fbadf990f727778cd1e79ed3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">call back function for card interrupt <br/></td></tr>
 <tr class="separator:ac13e3f3fbadf990f727778cd1e79ed3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a831fa5dcf47b5c89cd18fbf75057b32f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a831fa5dcf47b5c89cd18fbf75057b32f"></a>
-<a class="el" href="a00064.html#a00490">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a831fa5dcf47b5c89cd18fbf75057b32f">lock</a></td></tr>
+<a class="el" href="a00064.html#a00489">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a831fa5dcf47b5c89cd18fbf75057b32f">lock</a></td></tr>
 <tr class="memdesc:a831fa5dcf47b5c89cd18fbf75057b32f"><td class="mdescLeft">&#160;</td><td class="mdescRight">host access lock <br/></td></tr>
 <tr class="separator:a831fa5dcf47b5c89cd18fbf75057b32f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -385,7 +385,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SDMMC_HOST_ADAPTER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 6U, 2U)) /*2.6.2*/</td>
+          <td class="memname">#define FSL_SDMMC_HOST_ADAPTER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 6U, 3U)) /*2.6.3*/</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -542,7 +542,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void SDMMCHOST_SetCardBusWidth </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -578,7 +578,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void SDMMCHOST_SendCardActive </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
@@ -608,7 +608,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static uint32_t SDMMCHOST_SetCardClock </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -655,7 +655,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static bool SDMMCHOST_IsCardBusy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
@@ -691,7 +691,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static uint32_t SDMMCHOST_GetSignalLineStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -732,7 +732,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void SDMMCHOST_EnableCardInt </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -773,7 +773,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void SDMMCHOST_EnableDDRMode </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -821,7 +821,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void SDMMCHOST_EnableHS400Mode </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -862,7 +862,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void SDMMCHOST_EnableStrobeDll </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -898,21 +898,21 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_StartBoot </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_StartBoot </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00526">sdmmchost_boot_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00079.html#a00525">sdmmchost_boot_config_t</a> *&#160;</td>
           <td class="paramname"><em>hostConfig</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00528">sdmmchost_cmd_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00079.html#a00527">sdmmchost_cmd_t</a> *&#160;</td>
           <td class="paramname"><em>cmd</em>, </td>
         </tr>
         <tr>
@@ -945,15 +945,15 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_ReadBootData </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_ReadBootData </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00526">sdmmchost_boot_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00079.html#a00525">sdmmchost_boot_config_t</a> *&#160;</td>
           <td class="paramname"><em>hostConfig</em>, </td>
         </tr>
         <tr>
@@ -990,7 +990,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void SDMMCHOST_EnableBoot </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1026,9 +1026,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_CardIntInit </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_CardIntInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1064,7 +1064,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void SDMMCHOST_ForceClockOn </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1102,7 +1102,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void SDMMCHOST_SwitchToVoltage </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1133,9 +1133,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_CardDetectInit </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_CardDetectInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1166,9 +1166,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_PollingCardDetectStatus </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_PollingCardDetectStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1215,7 +1215,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">uint32_t SDMMCHOST_CardDetectStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1241,9 +1241,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_Init </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1276,7 +1276,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void SDMMCHOST_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1299,7 +1299,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void SDMMCHOST_SetCardPower </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1330,9 +1330,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_TransferFunction </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_TransferFunction </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1369,9 +1369,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_ExecuteTuning </td>
+          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_ExecuteTuning </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
@@ -1418,7 +1418,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void SDMMCHOST_Reset </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1440,7 +1440,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void SDMMCHOST_ConvertDataToLittleEndian </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00491">sdmmchost_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00490">sdmmchost_t</a> *&#160;</td>
           <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>

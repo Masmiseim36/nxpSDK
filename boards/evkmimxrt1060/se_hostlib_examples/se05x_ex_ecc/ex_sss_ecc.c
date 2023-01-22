@@ -94,8 +94,8 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
     size_t digestLen;
     uint8_t signature[256] = {0};
     size_t signatureLen;
-    sss_object_t keyPair = {0};
-    sss_object_t key_pub = {0};
+    sss_object_t keyPair        = {0};
+    sss_object_t key_pub        = {0};
     sss_asymmetric_t ctx_asymm  = {0};
     sss_asymmetric_t ctx_verify = {0};
 

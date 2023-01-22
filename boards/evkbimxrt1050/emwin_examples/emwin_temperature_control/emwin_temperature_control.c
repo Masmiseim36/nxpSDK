@@ -27,10 +27,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP                PXP
-#define EXAMPLE_GPT            GPT2
-#define EXAMPLE_GPT_TICK_TO_MS 25
-
 
 #ifndef APPWIZARD
 //

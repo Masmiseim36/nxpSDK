@@ -1,6 +1,6 @@
 var a00021 =
 [
-    [ "ewm_config_t", "a00021.html#a00313", [
+    [ "ewm_config_t", "a00021.html#a00312", [
       [ "enableEwm", "a00021.html#a9fc625647ba94efff761a19ea25dedae", null ],
       [ "enableEwmInput", "a00021.html#a48b7c11c26b8b3a1843bd78e9bd3124c", null ],
       [ "setInputAssertLogic", "a00021.html#a824557f8134c17a6cfea99f510704127", null ],

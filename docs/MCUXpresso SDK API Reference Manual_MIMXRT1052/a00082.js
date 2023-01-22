@@ -1,15 +1,15 @@
 var a00082 =
 [
-    [ "wm8960_audio_format_t", "a00082.html#a00543", [
+    [ "wm8960_audio_format_t", "a00082.html#a00542", [
       [ "mclk_HZ", "a00082.html#afb1efbb406e368e6fd5393da2543bb8a", null ],
       [ "sampleRate", "a00082.html#ae96a0158b6a005c24d4713578b9f493a", null ],
       [ "bitWidth", "a00082.html#abd1d53b78beb2d929a1d1200c2a18227", null ]
     ] ],
-    [ "wm8960_master_sysclk_config_t", "a00082.html#a00546", [
+    [ "wm8960_master_sysclk_config_t", "a00082.html#a00545", [
       [ "sysclkSource", "a00082.html#a9d65bbccb784d7bd1850e0c4bd505469", null ],
       [ "sysclkFreq", "a00082.html#a351c89e7074a75ea90e4a69b70721a7a", null ]
     ] ],
-    [ "wm8960_config_t", "a00082.html#a00544", [
+    [ "wm8960_config_t", "a00082.html#a00543", [
       [ "route", "a00082.html#aecb1d7a00e01dca75ed9008045fea7c9", null ],
       [ "bus", "a00082.html#a2aa9a1534286c670f9cccc121dfc2427", null ],
       [ "format", "a00082.html#a1f604d76836bba22c48628d1790abbf1", null ],
@@ -22,7 +22,7 @@ var a00082 =
       [ "slaveAddress", "a00082.html#a3789a7dad901df8d576de42d76b47b41", null ],
       [ "i2cConfig", "a00082.html#a223e757e0c4efc169f0b45385d99dbd5", null ]
     ] ],
-    [ "wm8960_handle_t", "a00082.html#a00545", [
+    [ "wm8960_handle_t", "a00082.html#a00544", [
       [ "config", "a00082.html#a1445b9b877b692662e5fb0f8ce3224c9", null ],
       [ "i2cHandle", "a00082.html#ae6d5faabcff6b852ebb460da190c9811", null ]
     ] ],

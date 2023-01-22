@@ -1,11 +1,11 @@
 var a00072 =
 [
-    [ "spdif_edma_transfer_t", "a00072.html#a00487", [
+    [ "spdif_edma_transfer_t", "a00072.html#a00486", [
       [ "leftData", "a00072.html#aa90fd5f547b7e42f7b978e33b4f45fe4", null ],
       [ "rightData", "a00072.html#ae12876ab6641bb3dacad39a873b0c9b7", null ],
       [ "dataSize", "a00072.html#acdffc956f6414bb01b68cd78c660c2fd", null ]
     ] ],
-    [ "spdif_edma_handle_t", "a00072.html#a00314", [
+    [ "spdif_edma_handle_t", "a00072.html#a00313", [
       [ "dmaLeftHandle", "a00072.html#abaebb5b00fd7e2733feb64e2ff36e2c2", null ],
       [ "dmaRightHandle", "a00072.html#a7df62c301a4541752492b4dd164647e5", null ],
       [ "nbytes", "a00072.html#a64d0df1456c3e227075740856ef9792f", null ],

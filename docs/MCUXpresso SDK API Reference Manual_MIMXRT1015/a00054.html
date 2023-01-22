@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -119,17 +119,17 @@ Modules</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00056"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html">Serial Port USB</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00246"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00246.html">Serial Port Uart</a></td></tr>
+<tr class="memitem:a00245"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00245.html">Serial Port Uart</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00376"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a00376">serial_manager_config_t</a></td></tr>
-<tr class="memdesc:a00376"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager config structure  <a href="a00054.html#a00376">More...</a><br/></td></tr>
-<tr class="separator:a00376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00375"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a00375">serial_manager_callback_message_t</a></td></tr>
-<tr class="memdesc:a00375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback message structure.  <a href="a00054.html#a00375">More...</a><br/></td></tr>
+<tr class="memitem:a00375"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a00375">serial_manager_config_t</a></td></tr>
+<tr class="memdesc:a00375"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager config structure  <a href="a00054.html#a00375">More...</a><br/></td></tr>
 <tr class="separator:a00375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00374"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a00374">serial_manager_callback_message_t</a></td></tr>
+<tr class="memdesc:a00374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback message structure.  <a href="a00054.html#a00374">More...</a><br/></td></tr>
+<tr class="separator:a00374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -228,7 +228,7 @@ typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The read handle of the serial manager module. <br/></td></tr>
 <tr class="separator:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe6a6263bb1570ea715938b2420af773"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabe6a6263bb1570ea715938b2420af773"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> )(void *callbackParam, <a class="el" href="a00054.html#a00375">serial_manager_callback_message_t</a> *message, <a class="el" href="a00054.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> status)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> )(void *callbackParam, <a class="el" href="a00054.html#a00374">serial_manager_callback_message_t</a> *message, <a class="el" href="a00054.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> status)</td></tr>
 <tr class="memdesc:gabe6a6263bb1570ea715938b2420af773"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager callback function <br/></td></tr>
 <tr class="separator:gabe6a6263bb1570ea715938b2420af773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga856d80a20772bd9d9ad950b8ec852635"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga856d80a20772bd9d9ad950b8ec852635"></a>
@@ -291,7 +291,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gac9ad820108a6713516ff44ef109fadf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00054.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a> (<a class="el" href="a00054.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, const <a class="el" href="a00054.html#a00376">serial_manager_config_t</a> *config)</td></tr>
+<tr class="memitem:gac9ad820108a6713516ff44ef109fadf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00054.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a> (<a class="el" href="a00054.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, const <a class="el" href="a00054.html#a00375">serial_manager_config_t</a> *config)</td></tr>
 <tr class="memdesc:gac9ad820108a6713516ff44ef109fadf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a serial manager module with the serial manager handle and the user configuration structure.  <a href="#gac9ad820108a6713516ff44ef109fadf4">More...</a><br/></td></tr>
 <tr class="separator:gac9ad820108a6713516ff44ef109fadf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga467c8a817003eacd48f86aaef1ce8306"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00054.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga467c8a817003eacd48f86aaef1ce8306">SerialManager_Deinit</a> (<a class="el" href="a00054.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
@@ -326,7 +326,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00376" id="a00376"></a>
+<a name="a00375" id="a00375"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -374,7 +374,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00375" id="a00375"></a>
+<a name="a00374" id="a00374"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -666,7 +666,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00054.html#a00376">serial_manager_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00054.html#a00375">serial_manager_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -676,13 +676,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function configures the Serial Manager module with user-defined settings. The user can configure the configuration structure. The parameter serialHandle is a pointer to point to a memory space of size <a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The Serial Manager module supports three types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc), USB CDC and swo. Please refer to <a class="el" href="a00054.html#ga103db7d7f3fc8234978efadef0fdaf80" title="serial port type ">serial_port_type_t</a> for serial port setting. These three types can be set by using <a class="el" href="a00054.html#a00376" title="serial manager config structure ">serial_manager_config_t</a>.</p>
+<p>This function configures the Serial Manager module with user-defined settings. The user can configure the configuration structure. The parameter serialHandle is a pointer to point to a memory space of size <a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The Serial Manager module supports three types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc), USB CDC and swo. Please refer to <a class="el" href="a00054.html#ga103db7d7f3fc8234978efadef0fdaf80" title="serial port type ">serial_port_type_t</a> for serial port setting. These three types can be set by using <a class="el" href="a00054.html#a00375" title="serial manager config structure ">serial_manager_config_t</a>.</p>
 <p>Example below shows how to use this API to configure the Serial Manager. For UART, </p>
 <div class="fragment"><div class="line">*   #define SERIAL_MANAGER_RING_BUFFER_SIZE (256U)</div>
 <div class="line">*   <span class="keyword">static</span> <a class="code" href="a00054.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(s_serialHandle);</div>
 <div class="line">*   <span class="keyword">static</span> uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];</div>
 <div class="line">*</div>
-<div class="line">*   <a class="code" href="a00054.html#a00376">serial_manager_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00054.html#a00375">serial_manager_config_t</a> config;</div>
 <div class="line">*   serial_port_uart_config_t uartConfig;</div>
 <div class="line">*   config.<a class="code" href="a00054.html#a19422220843683406b8487dd40fc2cee">type</a> = <a class="code" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a>;</div>
 <div class="line">*   config.<a class="code" href="a00054.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
@@ -690,8 +690,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="line">*   uartConfig.instance = 0;</div>
 <div class="line">*   uartConfig.clockRate = 24000000;</div>
 <div class="line">*   uartConfig.baudRate = 115200;</div>
-<div class="line">*   uartConfig.parityMode = <a class="code" href="a00246.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a>;</div>
-<div class="line">*   uartConfig.stopBitCount = <a class="code" href="a00246.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a>;</div>
+<div class="line">*   uartConfig.parityMode = <a class="code" href="a00245.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a>;</div>
+<div class="line">*   uartConfig.stopBitCount = <a class="code" href="a00245.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a>;</div>
 <div class="line">*   uartConfig.enableRx = 1;</div>
 <div class="line">*   uartConfig.enableTx = 1;</div>
 <div class="line">*   uartConfig.enableRxRTS = 0;</div>
@@ -704,8 +704,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="line">*   <span class="keyword">static</span> <a class="code" href="a00054.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(s_serialHandle);</div>
 <div class="line">*   <span class="keyword">static</span> uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];</div>
 <div class="line">*</div>
-<div class="line">*   <a class="code" href="a00054.html#a00376">serial_manager_config_t</a> config;</div>
-<div class="line">*   <a class="code" href="a00056.html#a00378">serial_port_usb_cdc_config_t</a> usbCdcConfig;</div>
+<div class="line">*   <a class="code" href="a00054.html#a00375">serial_manager_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00056.html#a00377">serial_port_usb_cdc_config_t</a> usbCdcConfig;</div>
 <div class="line">*   config.<a class="code" href="a00054.html#a19422220843683406b8487dd40fc2cee">type</a> = <a class="code" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>;</div>
 <div class="line">*   config.<a class="code" href="a00054.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
 <div class="line">*   config.<a class="code" href="a00054.html#a3cdd8d8501bb64e720345207310de89b">ringBufferSize</a> = SERIAL_MANAGER_RING_BUFFER_SIZE;</div>

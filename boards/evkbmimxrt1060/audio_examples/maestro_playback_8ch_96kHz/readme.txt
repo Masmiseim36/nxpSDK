@@ -28,9 +28,9 @@ Type "help" to see the command list. Similar description will be displayed on se
         stop              Stops actual playback.
         pause             Pause actual track or resume if already paused.
         update=<preset>   Apply current EAP parameters without attribute value
-                          or switch to preset 1-"TO_STR(EAP_MAX_PRESET)"
+                          or switch to preset 1-10
         set=<preset>      Apply current EAP parameters without attribute value
-                          or switch to preset 1-"TO_STR(EAP_MAX_PRESET)"
+                          or switch to preset 1-10
         get               Sync actual EAP parameters from library to ATT config structures.
         track=<filename>[num_channels]   Select audio track to play. Select 2 or 8 channels.
                                          - If channel number not specified, default 8 is used.
@@ -45,9 +45,9 @@ Type "help" to see the command list. Similar description will be displayed on se
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================
@@ -56,12 +56,13 @@ Hardware requirements
 - MIMXRT1060-EVKB board
 - Personal Computer
 - Headphones with 3.5 mm stereo jack / multi channel speakers
+- Audio expansion board AUD-EXP-42448 (REV B)
 
 Board settings
 ==============
 Make sure resistors R368/R347/R349/R365/R363 are removed to be able to use SD-Card.
 
-Insert AUDIO board into J23 to be able to use the CS42448 codec for multichannel output.
+Insert AUDIO expansion board into J23 to be able to use the CS42448 codec for multichannel output.
 
 Prepare the Demo
 ================

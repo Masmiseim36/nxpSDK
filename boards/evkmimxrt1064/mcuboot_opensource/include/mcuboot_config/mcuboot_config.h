@@ -7,7 +7,8 @@
 #ifndef __MCUBOOT_CONFIG_H__
 #define __MCUBOOT_CONFIG_H__
 
-#include <sbl.h>
+#include <sblconfig.h>
+#include <sbldef.h>
 /*
  * Template configuration file for MCUboot.
  *
@@ -67,6 +68,9 @@
  * The default is to support A/B image swapping with rollback.  A
  * simpler code path, which only supports overwriting the
  * existing image with the update image, is also available.
+ *
+ * In case of supported flash remap funcionality in the used processor the
+ * direct-xip mode is configured with user support for downgrade.
  */
 
 /* Uncomment to enable the overwrite-only code path. */
@@ -74,10 +78,25 @@
 
 #ifndef MCUBOOT_OVERWRITE_ONLY
 
+#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
+
+#define MCUBOOT_DIRECT_XIP
+#define MCUBOOT_DIRECT_XIP_REVERT
+
+#ifdef CONFIG_MCUBOOT_FLASH_REMAP_DOWNGRADE_SUPPORT
+/* Enable hook funcionality to support downgrade functionality in direct-xip
+ * mode, see hooks implementation in bootutil_hooks.c */
+#define MCUBOOT_IMAGE_ACCESS_HOOKS
+#endif /* CONFIG_MCUBOOT_FLASH_REMAP_DOWNGRADE_SUPPORT */
+
+#else
+
 #define CONFIG_BOOT_SWAP_USING_MOVE
 #define MCUBOOT_SWAP_USING_MOVE 1
 
-#endif
+#endif /* CONFIG_MCUBOOT_FLASH_REMAP_ENABLE */
+
+#endif /* MCUBOOT_OVERWRITE_ONLY */
 
 #ifdef MCUBOOT_OVERWRITE_ONLY
 /* Uncomment to only erase and overwrite those primary slot sectors needed
@@ -158,7 +177,9 @@
  *
  *    MCUBOOT_LOG_ERR > MCUBOOT_LOG_WRN > MCUBOOT_LOG_INF > MCUBOOT_LOG_DBG
  */
+#ifndef CONFIG_MCUBOOT_DISABLE_LOGGING
 #define MCUBOOT_HAVE_LOGGING
+#endif
 
 /*
  * Assertions

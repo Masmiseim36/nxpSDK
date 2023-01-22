@@ -352,14 +352,15 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
@@ -368,10 +369,9 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1453,14 +1453,15 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
@@ -1469,10 +1470,9 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2555,14 +2555,15 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
@@ -2571,10 +2572,9 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3654,14 +3654,15 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
@@ -3670,10 +3671,9 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4755,14 +4755,15 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
@@ -4771,10 +4772,9 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5857,14 +5857,15 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
@@ -5873,10 +5874,9 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6616,6 +6616,12 @@
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../mqtt_freertos.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mqtt_freertos.h</name>
+    </file>
   </group>
   <group>
     <name>board</name>
@@ -6651,28 +6657,70 @@
     </file>
   </group>
   <group>
-    <name>mdio</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/fsl_mdio.h</name>
-    </file>
-  </group>
-  <group>
-    <name>phy</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/phy/fsl_phy.h</name>
-    </file>
+    <name>component</name>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/fsl_phy.h</name>
+      </file>
+    </group>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>drivers</name>
@@ -6681,18 +6729,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_common.h</name>
@@ -6705,6 +6741,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/drivers/fsl_lpuart.h</name>
@@ -6725,32 +6773,239 @@
   <group>
     <name>lwip</name>
     <group>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/ethernetif.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/ethernetif.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/ethernetif_mmac.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/ethernetif_mmac.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/ethernetif_priv.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_sanitychecks.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch.c</name>
+      </file>
+      <group>
+        <name>arch</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/cc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/perf.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/sys_arch.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
       <name>src</name>
       <group>
-        <name>apps</name>
+        <name>api</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/sockets.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netifapi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netdb.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/tcpip.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/api_msg.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/err.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/if_api.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/api_lib.c</name>
+        </file>
+      </group>
+      <group>
+        <name>core</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/def.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ip.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp.c</name>
+        </file>
         <group>
-          <name>mqtt</name>
+          <name>ipv6</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/apps/mqtt/mqtt.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ethip6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/mld6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/icmp6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/inet6.c</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp_tcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/init.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/inet_chksum.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
+        </file>
+        <group>
+          <name>ipv4</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/autoip.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/icmp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/acd.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/etharp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/igmp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_frag.c</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/dns.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp_alloc.c</name>
+        </file>
       </group>
       <group>
         <name>include</name>
         <group>
-          <name>lwip</name>
+          <name>compat</name>
           <group>
-            <name>apps</name>
+            <name>stdc</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps/mqtt.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps/mqtt_opts.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps/mqtt_priv.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h</name>
             </file>
           </group>
+          <group>
+            <name>posix</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
+            </file>
+            <group>
+              <name>sys</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h</name>
+              </file>
+            </group>
+            <group>
+              <name>net</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
+              </file>
+            </group>
+            <group>
+              <name>arpa</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>lwip</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/acd.h</name>
           </file>
@@ -7003,38 +7258,17 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/etharp.h</name>
             </file>
           </group>
-        </group>
-        <group>
-          <name>compat</name>
           <group>
-            <name>stdc</name>
+            <name>apps</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps/mqtt.h</name>
             </file>
-          </group>
-          <group>
-            <name>posix</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps/mqtt_opts.h</name>
             </file>
-            <group>
-              <name>sys</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h</name>
-              </file>
-            </group>
-            <group>
-              <name>net</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
-              </file>
-            </group>
-            <group>
-              <name>arpa</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</name>
-              </file>
-            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/apps/mqtt_priv.h</name>
+            </file>
           </group>
         </group>
         <group>
@@ -7168,159 +7402,6 @@
         </group>
       </group>
       <group>
-        <name>api</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/sockets.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netifapi.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netdb.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netbuf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/tcpip.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/api_msg.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/err.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/if_api.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/api_lib.c</name>
-        </file>
-      </group>
-      <group>
-        <name>core</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/def.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ip.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp.c</name>
-        </file>
-        <group>
-          <name>ipv6</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ethip6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/mld6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/icmp6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/inet6.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp_tcp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/init.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/inet_chksum.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
-        </file>
-        <group>
-          <name>ipv4</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/autoip.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/icmp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/acd.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/etharp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/igmp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_frag.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/dns.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp_alloc.c</name>
-        </file>
-      </group>
-      <group>
         <name>netif</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/bridgeif.c</name>
@@ -7425,51 +7506,30 @@
           </file>
         </group>
       </group>
-    </group>
-    <group>
-      <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch.c</name>
-      </file>
       <group>
-        <name>arch</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/cc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/perf.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/sys_arch.h</name>
-        </file>
+        <name>apps</name>
+        <group>
+          <name>mqtt</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/apps/mqtt/mqtt.c</name>
+          </file>
+        </group>
       </group>
     </group>
   </group>
   <group>
     <name>freertos</name>
     <group>
-      <name>freertos_kernel</name>
+      <name>freertos-kernel</name>
       <group>
         <name>portable</name>
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
           </file>
         </group>
         <group>
@@ -7477,103 +7537,103 @@
           <group>
             <name>ARM_CM4F</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
             </file>
           </group>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -7617,54 +7677,6 @@
     </file>
   </group>
   <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/iar/startup_MIMXRT1042.s</name>
@@ -7688,19 +7700,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

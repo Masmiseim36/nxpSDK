@@ -518,16 +518,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_edma.h</FilePath>
@@ -546,6 +536,16 @@
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -713,11 +713,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -731,16 +726,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1281,16 +1266,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_edma.h</FilePath>
@@ -1309,6 +1284,16 @@
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1476,11 +1461,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1494,16 +1474,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2044,16 +2014,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_edma.h</FilePath>
@@ -2072,6 +2032,16 @@
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2239,11 +2209,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2257,16 +2222,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2807,16 +2762,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_edma.h</FilePath>
@@ -2835,6 +2780,16 @@
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1011/drivers/fsl_flexspi.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3002,11 +2957,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3020,16 +2970,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

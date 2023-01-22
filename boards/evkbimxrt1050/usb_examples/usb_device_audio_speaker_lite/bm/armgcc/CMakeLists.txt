@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(dev_audio_speaker_lite_bm)
 
+set(MCUX_BUILD_TYPES debug release sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME dev_audio_speaker_lite_bm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -51,28 +57,29 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers
-    ${ProjDirPath}/../../../../../../components/codec/wm8960
-    ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/i2c
-    ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../components/audio
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../middleware
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1052
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1052/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
+    ${SdkRootDirPath}/components/codec/wm8960
+    ${SdkRootDirPath}/components/codec
+    ${SdkRootDirPath}/components/codec/
+    ${SdkRootDirPath}/components/codec/i2c
+    ${SdkRootDirPath}/components/i2c
+    ${SdkRootDirPath}/components/audio
+    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1052/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/devices/MIMXRT1052
+    ${SdkRootDirPath}/devices/MIMXRT1052/xip
+    ${SdkRootDirPath}/boards/evkbimxrt1050/xip
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -147,15 +154,13 @@ include(utilities_misc_utilities_MIMXRT1052)
 include(device_MIMXRT1052_system_MIMXRT1052)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

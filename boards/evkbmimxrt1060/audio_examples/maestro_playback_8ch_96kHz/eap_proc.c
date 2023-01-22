@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,6 +10,7 @@
 
 #include "streamer_api.h"
 #include "streamer_element_properties.h"
+#include "streamer.h"
 
 #include "app_streamer.h"
 #include "eap_proc.h"
@@ -48,63 +49,63 @@ typedef struct _eap_preset_t
     LVM_HeadroomParams_t *headroomParams;
 } eap_preset_t;
 
-eap_preset_t eap_presets[EAP_MAX_PRESET] = {{.name           = "AllEffectOff",
-                                             .controlParams  = &ControlParamSet_allEffectOff,
-                                             .instParams     = &InstParams_allEffectOff,
-                                             .headroomParams = &HeadroomParams_allEffectOff},
-                                            {.name = "VoiceEnhancer",
+eap_preset_t eap_presets[] = {{.name           = "AllEffectOff",
+                               .controlParams  = &ControlParamSet_allEffectOff,
+                               .instParams     = &InstParams_allEffectOff,
+                               .headroomParams = &HeadroomParams_allEffectOff},
+                              {.name = "VoiceEnhancer",
 #ifdef CPU_LPC55S69JBD100_cm33_core0
-                                             .controlParams  = &ControlParamSet_voiceEnhancer_lowMIPS,
-                                             .instParams     = &InstParams_voiceEnhancer_lowMIPS,
-                                             .headroomParams = &HeadroomParams_voiceEnhancer_lowMIPS},
+                               .controlParams  = &ControlParamSet_voiceEnhancer_lowMIPS,
+                               .instParams     = &InstParams_voiceEnhancer_lowMIPS,
+                               .headroomParams = &HeadroomParams_voiceEnhancer_lowMIPS},
 #else
                                .controlParams  = &ControlParamSet_voiceEnhancer,
                                .instParams     = &InstParams_voiceEnhancer,
                                .headroomParams = &HeadroomParams_voiceEnhancer},
 #endif
-                                            {.name = "MusicEnhancer",
+                              {.name = "MusicEnhancer",
 #ifdef CPU_LPC55S69JBD100_cm33_core0
-                                             .controlParams  = &ControlParamSet_musicEnhancerRmsLimiter_lowMIPS,
-                                             .instParams     = &InstParams_musicEnhancerRmsLimiter_lowMIPS,
-                                             .headroomParams = &HeadroomParams_musicEnhancerRmsLimiter_lowMIPS},
+                               .controlParams  = &ControlParamSet_musicEnhancerRmsLimiter_lowMIPS,
+                               .instParams     = &InstParams_musicEnhancerRmsLimiter_lowMIPS,
+                               .headroomParams = &HeadroomParams_musicEnhancerRmsLimiter_lowMIPS},
 #else
                                .controlParams  = &ControlParamSet_musicEnhancerRmsLimiter,
                                .instParams     = &InstParams_musicEnhancerRmsLimiter,
                                .headroomParams = &HeadroomParams_musicEnhancerRmsLimiter},
 #endif
-                                            {.name           = "AutoVolumeLeveler",
-                                             .controlParams  = &ControlParamSet_autoVolumeLeveler,
-                                             .instParams     = &InstParams_autoVolumeLeveler,
-                                             .headroomParams = &HeadroomParams_autoVolumeLeveler},
-                                            {.name           = "LoudnessMaximiser",
-                                             .controlParams  = &ControlParamSet_loudnessMaximiser,
-                                             .instParams     = &InstParams_loudnessMaximiser,
-                                             .headroomParams = &HeadroomParams_loudnessMaximiser},
+                              {.name           = "AutoVolumeLeveler",
+                               .controlParams  = &ControlParamSet_autoVolumeLeveler,
+                               .instParams     = &InstParams_autoVolumeLeveler,
+                               .headroomParams = &HeadroomParams_autoVolumeLeveler},
+                              {.name           = "LoudnessMaximiser",
+                               .controlParams  = &ControlParamSet_loudnessMaximiser,
+                               .instParams     = &InstParams_loudnessMaximiser,
+                               .headroomParams = &HeadroomParams_loudnessMaximiser},
 #if (ALGORITHM_CS == 1)
-                                            {.name           = "ConcertSound",
-                                             .controlParams  = &ControlParamSet_concertSound,
-                                             .instParams     = &InstParams_concertSound,
-                                             .headroomParams = &HeadroomParams_concertSound},
+                              {.name           = "ConcertSound",
+                               .controlParams  = &ControlParamSet_concertSound,
+                               .instParams     = &InstParams_concertSound,
+                               .headroomParams = &HeadroomParams_concertSound},
 #endif
 #ifndef CPU_LPC55S69JBD100_cm33_core0
-                                            {.name           = "Custom",
-                                             .controlParams  = &ControlParamSet_custom,
-                                             .instParams     = &InstParams_custom,
-                                             .headroomParams = &HeadroomParams_custom},
+                              {.name           = "Custom",
+                               .controlParams  = &ControlParamSet_custom,
+                               .instParams     = &InstParams_custom,
+                               .headroomParams = &HeadroomParams_custom},
 #endif
-                                            {.name           = "ToneGenerator",
-                                             .controlParams  = &ControlParamSet_toneGenerator,
-                                             .instParams     = &InstParams_toneGenerator,
-                                             .headroomParams = &HeadroomParams_toneGenerator},
+                              {.name           = "ToneGenerator",
+                               .controlParams  = &ControlParamSet_toneGenerator,
+                               .instParams     = &InstParams_toneGenerator,
+                               .headroomParams = &HeadroomParams_toneGenerator},
 #if (ALGORITHM_XO == 1)
-                                            {.name           = "Crossover2WaySpeakers",
-                                             .controlParams  = &ControlParamSet_Crossover2WaySpeaker,
-                                             .instParams     = &InstParams_Crossover2WaySpeaker,
-                                             .headroomParams = &HeadroomParams_Crossover2WaySpeaker},
-                                            {.name           = "CrossoverForSubwoofer",
-                                             .controlParams  = &ControlParamSet_CrossoverForSubwoofer,
-                                             .instParams     = &InstParams_CrossoverForSubwoofer,
-                                             .headroomParams = &HeadroomParams_CrossoverForSubwoofer}
+                              {.name           = "Crossover2WaySpeakers",
+                               .controlParams  = &ControlParamSet_Crossover2WaySpeaker,
+                               .instParams     = &InstParams_Crossover2WaySpeaker,
+                               .headroomParams = &HeadroomParams_Crossover2WaySpeaker},
+                              {.name           = "CrossoverForSubwoofer",
+                               .controlParams  = &ControlParamSet_CrossoverForSubwoofer,
+                               .instParams     = &InstParams_CrossoverForSubwoofer,
+                               .headroomParams = &HeadroomParams_CrossoverForSubwoofer}
 #endif
 };
 
@@ -114,8 +115,11 @@ static bool first_exec;
 static LVM_MemTab_t EAP_MemTab;            /* Memory allocation table */
 static LVM_VersionInfo_st EAP_VersionInfo; /* Version info structure */
 #if (ALGORITHM_XO == 1)
-static LVM_INT32 *eap_xo_out_buffer[2];
+static uint16_t eap_xo_out_buf_size = 0U; /* Chunk size for which the xo out buffers are allocated */
+static int8_t *eap_xo_out_buffer    = NULL;
 #endif
+int32_t *unaligned_buff[LVM_NR_MEMORY_REGIONS];
+
 #ifdef ALGORITHM_AVL
 static LVM_INT32 avlGain;
 #endif
@@ -140,9 +144,21 @@ static LVM_INT16 MallocAlign = 4; /* 4 byte Malloc alignment */
 int EAP_Init(void *arg)
 {
     LVM_ReturnStatus_en LVM_Status; /* Function call status */
-    LVM_UINT16 i;                   /* loop index */
+    LVM_UINT16 i, minIdx;           /* loop index */
     LVM_INT32 temp32;               /* temporary address */
+    LVM_INT16 j;
+    LVM_UINT16 order[LVM_NR_MEMORY_REGIONS];
 
+#if (ALGORITHM_XO == 1)
+    /* Init variables */
+    eap_xo_out_buf_size = 0U;
+    eap_xo_out_buffer   = NULL;
+#endif
+
+    for (i = 0; i < LVM_NR_MEMORY_REGIONS; i++)
+    {
+        unaligned_buff[i] = NULL;
+    }
     /******************************************************************************
     GET VERSION INFORMATION
     *******************************************************************************/
@@ -222,17 +238,39 @@ int EAP_Init(void *arg)
         return LVM_Status;
     }
 
+    /* Initialize order variable */
     for (i = 0; i < LVM_NR_MEMORY_REGIONS; i++)
     {
+        order[i] = i;
+    }
+
+    /* Sort region indexes by region size */
+    for (i = 0; i < (LVM_NR_MEMORY_REGIONS - 1); i++)
+    {
+        minIdx = i;
+        for (j = i + 1; j < LVM_NR_MEMORY_REGIONS; j++)
+            if (EAP_MemTab.Region[order[j]].Size < EAP_MemTab.Region[order[minIdx]].Size)
+                minIdx = j;
+
+        /* Swap indexes */
+        temp32        = order[minIdx];
+        order[minIdx] = order[i];
+        order[i]      = temp32;
+    }
+
+    /* Allocate regions in order from largest to smallest */
+    for (j = (LVM_NR_MEMORY_REGIONS - 1); j >= 0; j--)
+    {
         /* Log the memory size */
-        if (EAP_MemTab.Region[i].Size != 0)
+        if (EAP_MemTab.Region[order[j]].Size != 0)
         {
-            temp32 = (LVM_INT32)OSA_MemoryAllocate(EAP_MemTab.Region[i].Size + (LVM_UINT32)MallocAlign);
-            if (!temp32)
+            unaligned_buff[j] =
+                (int32_t *)OSA_MemoryAllocate(EAP_MemTab.Region[order[j]].Size + (LVM_UINT32)MallocAlign);
+            if (unaligned_buff[j] == NULL)
             {
                 return LVM_NULLADDRESS;
             }
-            EAP_MemTab.Region[i].pBaseAddress = (LVM_INT8 *)(temp32 + MallocAlign);
+            EAP_MemTab.Region[order[j]].pBaseAddress = (void *)MEM_ALIGN(unaligned_buff[j], MallocAlign);
         }
     }
 
@@ -286,72 +324,143 @@ int EAP_Init(void *arg)
 
 int EAP_Execute(void *arg, void *inputBuffer, int size)
 {
-    /* Function call status */
-    LVM_ReturnStatus_en LVM_Status;
-    LVM_INT32 *outBuffer[2] = {(LVM_INT32 *)inputBuffer, NULL};
+    StreamBuffer *buf                 = (StreamBuffer *)inputBuffer;
+    int8_t *pkt_hdr_size              = arg;
+    AudioPacketHeader *data_packet    = NULL;
+    int8_t *data_ptr                  = NULL;
+    int8_t num_channel                = 0;
+    int8_t byte_width                 = 0;
+    int8_t *outBuffer[NUM_OUT_BUFFES] = {NULL, NULL};
+    LVM_ReturnStatus_en LVM_Status    = LVM_SUCCESS;
 
-    eap_att_control_t *control = get_eap_att_control();
-    int num_channel            = *(int *)arg;
+    if ((buf == NULL) || (pkt_hdr_size == NULL))
+    {
+        return LVM_NULLADDRESS;
+    }
+
+    if (*pkt_hdr_size != sizeof(AudioPacketHeader))
+    {
+        /* Others headers are not allowed in the EAP */
+        return LVM_OUTOFRANGE_GENERAL_PARAMS;
+    }
+
+    /* Initialization of the variables */
+    data_packet  = (AudioPacketHeader *)buf->buffer;
+    data_ptr     = buf->buffer + *pkt_hdr_size;
+    outBuffer[0] = (int8_t *)data_ptr;
+    num_channel  = data_packet->num_channels;
+    byte_width   = data_packet->bits_per_sample >> 3;
+
     if (num_channel < 1)
     {
         return LVM_OUTOFRANGE;
     }
+
 #if (ALGORITHM_XO == 1)
-    app_data_t *app_data = get_app_data();
+    eap_att_control_t *control = get_eap_att_control();
+    app_data_t *app_data       = get_app_data();
+    if (size > (int)eap_xo_out_buf_size)
+    {
+        first_exec = true;
+    }
+
     if (first_exec)
     {
         first_exec                    = false;
         app_data->eap_args.xo_enabled = false;
 
-        if ((control->controlParam->XO_OperatingMode == LVM_MODE_ON))
+        if (control->controlParam->XO_OperatingMode == LVM_MODE_ON)
         {
             // indicate that xo is enabled to enable proper chunks delivery for MONO source format by maestro
             // streamer
             app_data->eap_args.xo_enabled = true;
 
-            for (int i = 0; i < 2; i++)
+            if (eap_xo_out_buffer != NULL)
             {
-                eap_xo_out_buffer[i] = OSA_MemoryAllocate(size * num_channel);
-                if (eap_xo_out_buffer[i] != NULL)
-                {
-                    outBuffer[i] = eap_xo_out_buffer[i];
-                }
-                else
-                {
-                    return LVM_NULLADDRESS;
-                }
+                OSA_MemoryFree(eap_xo_out_buffer);
+                eap_xo_out_buffer = NULL;
+            }
+
+            eap_xo_out_buf_size = (uint16_t)size;
+            eap_xo_out_buffer   = (int8_t *)OSA_MemoryAllocate(size * NUM_OUT_BUFFES + *pkt_hdr_size);
+            if (eap_xo_out_buffer == NULL)
+            {
+                return LVM_NULLADDRESS;
             }
         }
     }
-    if (app_data->lastXOOperatingMode == LVM_MODE_ON)
+    if (control->controlParam->XO_OperatingMode == LVM_MODE_ON)
     {
-        outBuffer[0] = eap_xo_out_buffer[0];
-        outBuffer[1] = eap_xo_out_buffer[1];
+        outBuffer[1] = (eap_xo_out_buffer + *pkt_hdr_size) + size;
     }
 #endif
-    /* size of each sample is 4 bytes */
-    size = size >> 2;
+    size /= byte_width;
 
     EAP_AudioTime += LVM_FRAME_SIZE_MS;
 
-    LVM_Status = LVM_Process(EAP_hInstance,            /* Instance handle */
-                             (LVM_INT32 *)inputBuffer, /* Input buffer */
-                             outBuffer,                /* Output buffer */
-                             size / num_channel,       /* Number of samples to process */
-                             EAP_AudioTime);           /* Audio Time*/
+    LVM_Status = LVM_Process(EAP_hInstance,           /* Instance handle */
+                             (LVM_INT32 *)data_ptr,   /* Input buffer */
+                             (LVM_INT32 **)outBuffer, /* Output buffer */
+                             size / num_channel,      /* Number of samples to process */
+                             EAP_AudioTime);          /* Audio Time*/
 
 #if (ALGORITHM_XO == 1)
-    if (app_data->lastXOOperatingMode)
+
+    if (control->controlParam->XO_OperatingMode == LVM_MODE_ON)
     {
-        /* Interleave data - mix low and high band output of crossover (in case of stereo input take just right
-         * channel)*/
-        for (int i = 0; i < size / num_channel; i++)
+        int8_t *data_out = eap_xo_out_buffer + *pkt_hdr_size;
+        int8_t num_bytes = num_channel * byte_width;
+
+#ifdef XO_USE_FULL_STEREO
+        /* rearrangement of output values */
+        for (int i = 0; i < size / num_channel; i++, outBuffer[0] += num_bytes, outBuffer[1] += num_bytes)
         {
-            *((LVM_INT32 *)inputBuffer + 2 * i)     = *(outBuffer[0] + num_channel * i);
-            *((LVM_INT32 *)inputBuffer + 2 * i + 1) = *(outBuffer[1] + num_channel * i);
+            memcpy(data_out + num_bytes * 2 * i, outBuffer[0], num_bytes);
+            memcpy(data_out + num_bytes * 2 * i + num_bytes, outBuffer[1], num_bytes);
         }
+
+        /* Set the current valid values */
+        data_packet->num_channels = 2 * num_channel;
+        data_packet->chunk_size   = 2 * size * byte_width;
+        memcpy(eap_xo_out_buffer, data_packet, *pkt_hdr_size);
+
+        buf->buffer = eap_xo_out_buffer;
+        buf->size   = data_packet->chunk_size + *pkt_hdr_size;
+#else
+        if (num_channel == 1)
+        {
+            /* rearrangement of output values */
+            for (int i = 0; i < size / num_channel; i++, outBuffer[0] += num_bytes, outBuffer[1] += num_bytes)
+            {
+                memcpy(data_out + num_bytes * 2 * i, outBuffer[0], num_bytes);
+                memcpy(data_out + num_bytes * 2 * i + num_bytes, outBuffer[1], num_bytes);
+            }
+
+            /* Set the current valid values */
+            data_packet->num_channels = 2 * num_channel;
+            data_packet->chunk_size   = 2 * size * byte_width;
+            memcpy(eap_xo_out_buffer, data_packet, *pkt_hdr_size);
+
+            buf->buffer = eap_xo_out_buffer;
+            buf->size   = data_packet->chunk_size + *pkt_hdr_size;
+        }
+        else
+        {
+            /* Interleave data - mix low and high band output of crossover (in case of stereo input take just left
+             * channel)*/
+            for (int i = 0; i < size / num_channel; i++, outBuffer[0] += num_bytes, outBuffer[1] += num_bytes)
+            {
+                memcpy(data_out + byte_width * 2 * i, outBuffer[0], byte_width);
+                memcpy(data_out + byte_width * 2 * i + byte_width, outBuffer[1], byte_width);
+            }
+
+            memcpy(eap_xo_out_buffer, data_packet, *pkt_hdr_size);
+            buf->buffer = eap_xo_out_buffer;
+        }
+#endif
     }
 #endif
+
 #ifdef ALGORITHM_AVL
     LVM_GetAVLGain(EAP_hInstance, &avlGain);
 #endif
@@ -441,32 +550,30 @@ int EAP_Deinit(void)
 {
     LVM_ReturnStatus_en LVM_Status; /* Function call status */
     LVM_UINT16 i;                   /* loop index */
-    LVM_INT32 temp32;               /* temporary address */
 
     /*
      * Free memory
      */
+
     LVM_Status = LVM_GetMemoryTable(EAP_hInstance, &EAP_MemTab, LVM_NULL);
     if (LVM_Status != LVM_SUCCESS)
     {
-        return LVM_Status;
+        PRINTF("EAP GetMemoryTable error: %d\r\n", LVM_Status);
     }
-
     for (i = 0; i < LVM_NR_MEMORY_REGIONS; i++)
     {
-        if (EAP_MemTab.Region[i].Size != 0)
+        if (unaligned_buff[i] != NULL)
         {
-            temp32 = (LVM_INT32)EAP_MemTab.Region[i].pBaseAddress - MallocAlign;
-            OSA_MemoryFree((LVM_INT8 *)temp32);
+            OSA_MemoryFree(unaligned_buff[i]);
+            unaligned_buff[i] = NULL;
         }
     }
 #if (ALGORITHM_XO == 1)
-    if (get_app_data()->lastXOOperatingMode)
+    if (eap_xo_out_buffer != NULL)
     {
-        for (int i = 0; i < 2; i++)
-        {
-            OSA_MemoryFree(eap_xo_out_buffer[i]);
-        }
+        OSA_MemoryFree(eap_xo_out_buffer);
+        eap_xo_out_buffer   = NULL;
+        eap_xo_out_buf_size = 0U;
     }
 #endif
 
@@ -483,7 +590,7 @@ eap_att_code_t register_post_process(void *streamer)
 
     EXT_PROCESS_DESC_T eap_proc = {EAP_Init, EAP_Execute, EAP_Deinit, &get_app_data()->eap_args};
 
-    prop.prop = PROP_EAP_FPOINT;
+    prop.prop = PROP_AUDIO_PROC_FUNCPTR;
     prop.val  = (uintptr_t)&eap_proc;
 
     if (streamer_set_property(streamer, prop, true) == 0)

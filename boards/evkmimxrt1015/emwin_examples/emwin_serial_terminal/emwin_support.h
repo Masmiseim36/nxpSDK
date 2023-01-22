@@ -11,6 +11,9 @@
 #define BOARD_LCD_SPI          Driver_SPI1
 #define BOARD_LCD_SPI_BAUDRATE 8000000U /*! Transfer baudrate */
 
+#define BOARD_LCD_LPSPI_DMA_MUX_BASEADDR DMAMUX
+#define BOARD_LCD_LPSPI_DMA_BASEADDR     DMA0
+
 #define BOARD_LCD_DC_GPIO     GPIO2 /*! LCD data/command port */
 #define BOARD_LCD_DC_GPIO_PIN 22U   /*! LCD data/command pin */
 

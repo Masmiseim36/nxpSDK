@@ -1,6 +1,6 @@
 var a00068 =
 [
-    [ "xbara_control_config_t", "a00068.html#a00404", [
+    [ "xbara_control_config_t", "a00068.html#a00403", [
       [ "activeEdge", "a00068.html#a115969c58f3d6d8642a1095a7c685167", null ],
       [ "requestType", "a00068.html#ae5ec7c11cc4f3164a562917fbc8f9183", null ]
     ] ],

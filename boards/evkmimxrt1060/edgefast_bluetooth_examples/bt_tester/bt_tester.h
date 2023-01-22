@@ -15,6 +15,7 @@
 
 #include <bluetooth/uuid.h>
 #include <bluetooth/gatt.h>
+#include <bluetooth/addr.h>
 
 #include "board.h"
 
@@ -306,6 +307,12 @@ typedef __packed struct gap_oob_sc_set_remote_data_cmd {
 typedef __packed struct gap_set_mitm {
   uint8_t mitm;
 } gap_set_mitm_t;
+
+#define GAP_SET_FILTER_LIST 0x1c
+typedef __packed struct gap_set_filter_list {
+    uint8_t cnt;
+    bt_addr_le_t addr[0];
+} gap_set_filter_list_t;
 
 /* events */
 #define GAP_EV_NEW_SETTINGS   0x80
@@ -874,7 +881,22 @@ typedef __packed struct gatt_change_db_cmd {
     uint8_t visibility;
 } gatt_change_db_cmd_t;
 
+#define GATT_EATT_CONNECT		0x1f
+struct gatt_eatt_connect_cmd {
+	uint8_t address_type;
+	uint8_t address[6];
+	uint8_t num_channels;
+} __packed;
+
 #define GATT_READ_MULTIPLE_VAR      0x20
+
+#define GATT_NOTIFY_MULTIPLE        0x21
+typedef __packed struct gatt_cfg_notify_mult_cmd {
+    uint8_t address_type;
+    uint8_t address[6];
+    uint16_t cnt;
+    uint16_t attr_id[];
+} gatt_cfg_notify_mult_cmd_t;
 
 /* GATT events */
 #define GATT_EV_NOTIFICATION        0x80

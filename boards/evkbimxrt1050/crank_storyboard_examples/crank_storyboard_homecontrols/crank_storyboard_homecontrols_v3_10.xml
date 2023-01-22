@@ -27,7 +27,6 @@
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052"/>
-    <definition extID="component.silicon_id.MIMXRT1052"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
@@ -40,7 +39,7 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_crank_storyboard_homecontrols" name="crank_storyboard_homecontrols" dependency="platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.elcdif.MIMXRT1052 platform.drivers.pxp.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 driver.ft5406_rt.MIMXRT1052 driver.gt911.MIMXRT1052 driver.video-common.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_3.MIMXRT1052 middleware.crank.evkbimxrt1050.MIMXRT1052 middleware.crank.freetype.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 component.silicon_id.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="crank_storyboard_examples">
+  <example id="evkbimxrt1050_crank_storyboard_homecontrols" name="crank_storyboard_homecontrols" dependency="platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.elcdif.MIMXRT1052 platform.drivers.pxp.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 driver.ft5406_rt.MIMXRT1052 driver.gt911.MIMXRT1052 driver.video-common.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_3.MIMXRT1052 middleware.crank.evkbimxrt1050.MIMXRT1052 middleware.crank.freetype.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="crank_storyboard_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(flashloader)
 
+set(MCUX_BUILD_TYPES release)
+
 set(MCUX_SDK_PROJECT_NAME flashloader.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -41,20 +47,19 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usb_device_class.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../middleware/mcu-boot
-    ${ProjDirPath}/../../../../..
-    ${ProjDirPath}/../../../../../middleware
-    ${ProjDirPath}/../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../components/osa
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011
-    ${ProjDirPath}/../../../../../components/lists
+    ${SdkRootDirPath}/middleware/mcu-boot
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT1011/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1011
+    ${SdkRootDirPath}/components/lists
 )
 
 # include modules
@@ -101,15 +106,13 @@ include(middleware_usb_common_header_MIMXRT1011)
 include(middleware_usb_device_common_header_MIMXRT1011)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

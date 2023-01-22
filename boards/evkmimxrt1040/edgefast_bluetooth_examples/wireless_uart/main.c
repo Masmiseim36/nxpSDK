@@ -16,7 +16,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_adapter_uart.h"
-#include "controller.h"
+#include "controller_hci_uart.h"
 #include "usb_host_config.h"
 #include "usb_phy.h"
 #include "usb_host.h"
@@ -175,10 +175,10 @@ int main(void)
     CLOCK_SetMux(kCLOCK_PerclkMux, 1U);
     /* Set PERCLK_CLK divider to 1 */
     CLOCK_SetDiv(kCLOCK_PerclkDiv, 0U);
-    timerConfig.instance       = 0;
-    timerConfig.srcClock_Hz    = CLOCK_GetFreq(kCLOCK_OscClk);
-    timerConfig.clockSrcSelect = 0;
-    status                     = (osa_status_t)TM_Init(&timerConfig);
+    (void)memset(&timerConfig, 0, sizeof(timer_config_t));
+    timerConfig.instance    = 0;
+    timerConfig.srcClock_Hz = CLOCK_GetFreq(kCLOCK_OscClk);
+    status                  = (osa_status_t)TM_Init(&timerConfig);
     assert(status == (osa_status_t)kStatus_TimerSuccess);
     (void)status;
 
@@ -192,17 +192,4 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
-}
-
-void *pvPortCalloc(size_t xNum, size_t xSize)
-{
-    void *pvReturn;
-
-    pvReturn = pvPortMalloc(xNum * xSize);
-    if (pvReturn != NULL)
-    {
-        memset(pvReturn, 0x00, xNum * xSize);
-    }
-
-    return pvReturn;
 }

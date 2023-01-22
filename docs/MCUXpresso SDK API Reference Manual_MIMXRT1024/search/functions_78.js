@@ -6,7 +6,7 @@ var searchData=
   ['xbara_5finit',['XBARA_Init',['../a00079.html#ga5c026c940af4df8e13962eb78d4e0f13',1,'fsl_xbara.h']]],
   ['xbara_5fsetoutputsignalconfig',['XBARA_SetOutputSignalConfig',['../a00079.html#gaa010e6aecc627b857b04d9c2e8f5178b',1,'fsl_xbara.h']]],
   ['xbara_5fsetsignalsconnection',['XBARA_SetSignalsConnection',['../a00079.html#gac03e8f73ad95b6df165650308b809cad',1,'fsl_xbara.h']]],
-  ['xbarb_5fdeinit',['XBARB_Deinit',['../a00271.html#gad5775a6073d472b2749cc202116d1809',1,'fsl_xbarb.h']]],
-  ['xbarb_5finit',['XBARB_Init',['../a00271.html#gaef36940e839f28936f9415c3cb6d703f',1,'fsl_xbarb.h']]],
-  ['xbarb_5fsetsignalsconnection',['XBARB_SetSignalsConnection',['../a00271.html#ga64a72733261fc11d061c0d7f0abe0771',1,'fsl_xbarb.h']]]
+  ['xbarb_5fdeinit',['XBARB_Deinit',['../a00270.html#gad5775a6073d472b2749cc202116d1809',1,'fsl_xbarb.h']]],
+  ['xbarb_5finit',['XBARB_Init',['../a00270.html#gaef36940e839f28936f9415c3cb6d703f',1,'fsl_xbarb.h']]],
+  ['xbarb_5fsetsignalsconnection',['XBARB_SetSignalsConnection',['../a00270.html#ga64a72733261fc11d061c0d7f0abe0771',1,'fsl_xbarb.h']]]
 ];

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -16,13 +16,15 @@
 #include "lwip/opt.h"
 #include "lwip/netifapi.h"
 #include "netif/ethernet.h"
-#include "enet_ethernetif.h"
-#include "fsl_enet_mdio.h"
-#include "fsl_phyksz8081.h"
+#include "ethernetif.h"
 #include "fsl_phy.h"
 
 #include "freemaster.h"
 #include "network.h"
+
+#ifndef EXAMPLE_MAC_ADDR
+    #include "fsl_silicon_id.h"
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -32,28 +34,27 @@
 #define EXAMPLE_USE_DHCP 1
 
 #if EXAMPLE_USE_DHCP
-/* IP address configuration. */
-#define FMSTR_IP_ADDR 0U
-/* Netmask configuration. */
-#define FMSTR_NET_MASK 0U
-/* Gateway address configuration. */
-#define FMSTR_GW_ADDR 0U
+#define EXAMPLE_IP_ADDR  0U
+#define EXAMPLE_NET_MASK 0U
+#define EXAMPLE_GW_ADDR  0U
 #else
-/* IP address configuration. */
-#define FMSTR_IP_ADDR  LWIP_MAKEU32(192, 168, 1, 20)
-/* Netmask configuration. */
-#define FMSTR_NET_MASK LWIP_MAKEU32(255, 255, 255, 0)
-/* Gateway address configuration. */
-#define FMSTR_GW_ADDR  LWIP_MAKEU32(192, 168, 1, 1)
-#endif /* EXAMPLE_USE_DHCP */
+#define EXAMPLE_IP_ADDR  LWIP_MAKEU32(192, 168, 1, 20)    /* IP address configuration. */
+#define EXAMPLE_NET_MASK LWIP_MAKEU32(255, 255, 255, 0)   /* Netmask configuration. */
+#define EXAMPLE_GW_ADDR  LWIP_MAKEU32(192, 168, 1, 1)     /* Gateway address configuration. */
+#endif
 
+////////////////////////////////////////////////////////////////////////////////
+// Variables
+////////////////////////////////////////////////////////////////////////////////
 static struct netif netif;
-static mdio_handle_t mdioHandle = {.ops = &enet_ops};
-static phy_handle_t phyHandle = {.phyAddr = BOARD_ENET0_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &phyksz8081_ops};
 
 #if EXAMPLE_USE_DHCP
 static dhcp_state_enum_t dhcp_last_state = DHCP_STATE_OFF;
 #endif
+
+////////////////////////////////////////////////////////////////////////////////
+// Code
+////////////////////////////////////////////////////////////////////////////////
 
 static void print_ipaddr(struct netif *itf, unsigned short port)
 {
@@ -102,25 +103,43 @@ static void print_dhcp_state(void)
 
 void Network_Init(uint32_t csrClock_Hz)
 {
-    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    static EXAMPLE_PHY_RES phyResource;
+
+    static phy_handle_t phyHandle;
+    static phy_operations_t phy_ops;
+    ip4_addr_t ipaddr, netmask, gw;
     err_t err;
 
     ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
-        .macAddress = {0x02, 0x12, 0x13, 0x10, 0x15, 0x11},
+        .phyHandle   = &phyHandle,
+        .phyResource = &phyResource,
+        .phyAddr     = EXAMPLE_PHY_ADDRESS,
+        .phyOps      = &phy_ops,
+        .srcClockHz  = csrClock_Hz,
+         /* Set defined MAC address. */
+#ifdef EXAMPLE_MAC_ADDR
+        .macAddress  = EXAMPLE_MAC_ADDR,
+#endif
     };
 
-    mdioHandle.resource.csrClock_Hz = csrClock_Hz;
+     /* Generate and set MAC address. */
+#ifndef EXAMPLE_MAC_ADDR
+    SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
 
     /* Prepare static IP address */
-    netif_ipaddr.addr  = (u32_t)PP_HTONL(FMSTR_IP_ADDR);
-    netif_netmask.addr = (u32_t)PP_HTONL(FMSTR_NET_MASK);
-    netif_gw.addr      = (u32_t)PP_HTONL(FMSTR_GW_ADDR);
+    ipaddr.addr  = (u32_t)PP_HTONL(EXAMPLE_IP_ADDR);
+    netmask.addr = (u32_t)PP_HTONL(EXAMPLE_NET_MASK);
+    gw.addr      = (u32_t)PP_HTONL(EXAMPLE_GW_ADDR);
 
+    /* Initialize PHY */
+    Network_PhyInit(&phyResource, &phy_ops, csrClock_Hz);
+
+    /* Initialize LWIP stack */
     tcpip_init(NULL, NULL);
 
-    err = netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, ethernetif0_init,
-                             tcpip_input);
+    /* Register ETH as network interface */
+    err = netifapi_netif_add(&netif, &ipaddr, &netmask, &gw, &enet_config, EXAMPLE_ETHIF_INIT, tcpip_input);
 
     if (err == ERR_OK)
     {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -160,6 +160,15 @@ status_t list_files(bool autoInput)
 #if (OGG_OPUS_DEC == 1)
                 (dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
 #endif
+#if (AAC_DEC == 1)
+                (dot && strncmp(dot + 1, "aac", 3) == 0) ||
+#endif
+#if (WAV_DEC == 1)
+                (dot && strncmp(dot + 1, "wav", 3) == 0) ||
+#endif
+#if (FLAC_DEC == 1)
+                (dot && strncmp(dot + 1, "flac", 3) == 0) ||
+#endif
                 (dot && strncmp(dot + 1, "mp3", 3) == 0))
             {
                 if (count < MAX_FILES_LIST)
@@ -305,7 +314,7 @@ int main(void)
     DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
     DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_CHANNEL);
 
-    /* Initialize OSA*/
+    /* Initialize OSA */
     OSA_Init();
 
     PRINTF("\r\n");

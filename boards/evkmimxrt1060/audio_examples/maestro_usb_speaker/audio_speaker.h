@@ -37,9 +37,6 @@
 #endif
 #endif
 
-/* the threshold transfer count that can tolerance by frame */
-#define USB_AUDIO_PLAY_BUFFER_TOLERANCE_THRESHOLD (4U)
-
 #define AUDIO_SAMPLING_RATE_KHZ                      (48)
 #define AUDIO_SAMPLING_RATE                          (AUDIO_SAMPLING_RATE_KHZ * 1000)
 #define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT_NORMAL (16 * 2)

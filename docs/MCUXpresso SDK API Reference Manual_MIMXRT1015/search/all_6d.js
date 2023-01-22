@@ -1,8 +1,8 @@
 var searchData=
 [
   ['majorloopcounts',['majorLoopCounts',['../a00019.html#accd14b645237edae7fa51c5db6aa6998',1,'edma_transfer_config_t']]],
-  ['make_5fstatus',['MAKE_STATUS',['../a00217.html#gad76dfbb0423d0cd3a7b77cbcd9043146',1,'fsl_common.h']]],
-  ['make_5fversion',['MAKE_VERSION',['../a00217.html#ga812138aa3315b0c6953c1a26130bcc37',1,'fsl_common.h']]],
+  ['make_5fstatus',['MAKE_STATUS',['../a00216.html#gad76dfbb0423d0cd3a7b77cbcd9043146',1,'fsl_common.h']]],
+  ['make_5fversion',['MAKE_VERSION',['../a00216.html#ga812138aa3315b0c6953c1a26130bcc37',1,'fsl_common.h']]],
   ['master',['master',['../a00014.html#a95951482c89e8729513dc7521ae44ba0',1,'cs42888_config_t::master()'],['../a00066.html#a1aabe6eeed1fdd3e9f52237c546c84b0',1,'wm8904_config_t::master()']]],
   ['master_5fslave',['master_slave',['../a00057.html#a4daf6a63ca5b405aac9332ca477c3501',1,'sgtl_config_t::master_slave()'],['../a00067.html#a2628e48b064d8d943c0f247da6404342',1,'wm8960_config_t::master_slave()']]],
   ['masterclock',['masterClock',['../a00067.html#a8641bb5e2d06983e204a10b798d2d230',1,'wm8960_config_t']]],

@@ -74,8 +74,6 @@ typedef struct
     uint8_t Reserved[253];
 } image_info_t;
 
-void set_image_addr(uint32_t start_addr, uint32_t end_addr);
-void change_image_offset(uint32_t offset_size);
 void do_boot(struct boot_rsp *rsp);
 
 #endif

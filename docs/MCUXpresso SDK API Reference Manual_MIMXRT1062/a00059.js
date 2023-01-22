@@ -1,6 +1,6 @@
 var a00059 =
 [
-    [ "qtmr_config_t", "a00059.html#a00468", [
+    [ "qtmr_config_t", "a00059.html#a00467", [
       [ "primarySource", "a00059.html#a91dd226537330d518dd5ea567dbf84eb", null ],
       [ "secondarySource", "a00059.html#a2fa6d82bc64478134af68365767a04c3", null ],
       [ "enableMasterMode", "a00059.html#aee6ee95482b24267445974cd191870ce", null ],
@@ -43,6 +43,10 @@ var a00059 =
       [ "kQTMR_PriSrcRiseEdgeSecDir", "a00059.html#gga397995409e23551319239ec333f00981aa514bc2e0906a7cbab11373f3dea5e82", null ],
       [ "kQTMR_SecSrcTrigPriCnt", "a00059.html#gga397995409e23551319239ec333f00981abaec5373ab714b0b58ce2e56f79bbf8a", null ],
       [ "kQTMR_CascadeCount", "a00059.html#gga397995409e23551319239ec333f00981aac99a0f3873161f9cf61f724f2a8570b", null ]
+    ] ],
+    [ "qtmr_pwm_out_state_t", "a00059.html#gab7a02ea380b8c2058829accfa51822e9", [
+      [ "kQTMR_PwmLow", "a00059.html#ggab7a02ea380b8c2058829accfa51822e9ac1f1720b29f57f6bdf0364709f96a6c2", null ],
+      [ "kQTMR_PwmHigh", "a00059.html#ggab7a02ea380b8c2058829accfa51822e9a74ea9af3309cfad4a8dc7bb86d334677", null ]
     ] ],
     [ "qtmr_output_mode_t", "a00059.html#gaf79e17f54c3cf8ed96bb9e7845ca5bc3", [
       [ "kQTMR_AssertWhenCountActive", "a00059.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a3a0003a83a00acc39a519d540c562472", null ],
@@ -113,5 +117,9 @@ var a00059 =
     [ "QTMR_StartTimer", "a00059.html#ga14d9ab0215127155e559a9f98f4fc7f4", null ],
     [ "QTMR_StopTimer", "a00059.html#gad1a85cff4fe7e16d497b59d9fea2ad58", null ],
     [ "QTMR_EnableDma", "a00059.html#ga73b23acbae47d427ea8513cfb239e32d", null ],
-    [ "QTMR_DisableDma", "a00059.html#ga0645602d837cd4e7ad7e8d80dbf3ffae", null ]
+    [ "QTMR_DisableDma", "a00059.html#ga0645602d837cd4e7ad7e8d80dbf3ffae", null ],
+    [ "QTMR_SetPwmOutputToIdle", "a00059.html#ga6829a4d084cf7275d610c31928443867", null ],
+    [ "QTMR_GetPwmOutputStatus", "a00059.html#ga30e6d57c776b790a42dffc32f1807344", null ],
+    [ "QTMR_GetPwmChannelStatus", "a00059.html#gafa79fe21d65270ec7bae480289e9f0d3", null ],
+    [ "QTMR_SetPwmClockMode", "a00059.html#ga2e6a1a6d8fd0593fae5eb49e79b6b038", null ]
 ];

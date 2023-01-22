@@ -2336,6 +2336,9 @@
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</name>
           </file>
           <file>
@@ -2560,6 +2563,12 @@
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio10.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio20.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_dcd_sim_slave.h</name>
             </file>
             <file>
@@ -2605,6 +2614,9 @@
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_ccid.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</name>
             </file>
             <file>
@@ -2627,6 +2639,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_storage.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_video.h</name>
             </file>
           </group>
           <file>

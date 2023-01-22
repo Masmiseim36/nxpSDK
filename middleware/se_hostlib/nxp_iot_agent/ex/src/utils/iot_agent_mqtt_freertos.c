@@ -11,11 +11,8 @@
 // #include "aws_bufferpool.h"
 #include "core_mqtt_serializer.h"
 #include "core_mqtt.h"
-#include "transport_secure_sockets.h"
 
-#include "iot_secure_sockets.h"
-#include "iot_default_root_certificates.h"
-#include "iot_init.h"
+#include "using_mbedtls.h"
 
 #include "jsmn.h"
 
@@ -71,13 +68,8 @@ extern ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx;
 #define MILLISECONDS_PER_TICK                      	(MILLISECONDS_PER_SECOND / configTICK_RATE_HZ)
 #define AGENT_NETWORK_BUFFER_SIZE 					1024U
 
-struct NetworkContext
-{
-    SecureSocketsTransportParams_t * pParams;
-};
-
-
-static SecureSocketsTransportParams_t secureSocketsTransportParams;
+#define AWS_IOT_MQTT_ALPN "\x0ex-amzn-mqtt-ca"
+#define AWS_IOT_CUSTOM_AUTH_ALPN "\x04mqtt"
 
 typedef struct MqttAgent_Context {
 	MQTTContext_t* pMqttContext;
@@ -97,6 +89,11 @@ typedef struct MqttAgent_Context {
 	bool tlsConnected;
 	bool mqttConnected;
 }MqttAgent_Context_t;
+
+uint32_t key_id = 0U;
+uint32_t cert_id = 0U;
+
+static void iot_agent_convert_id_to_label(char* label, size_t label_size, uint32_t id);
 
 // doc: trigger MQTT connection freertos - start
 iot_agent_status_t iot_agent_verify_mqtt_connection_for_service(iot_agent_context_t* iot_agent_context,
@@ -155,27 +152,9 @@ iot_agent_status_t pubSubCosOverRtp(iot_agent_context_t* iot_agent_context,
         const nxp_iot_ServiceDescriptor* service_descriptor)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	iot_agent_keystore_t* keystore = NULL;
-    sss_object_t service_private_key = {0};
 
-	uint32_t key_id = (uint32_t) (service_descriptor->client_key_sss_ref.object_id);
-	uint32_t cert_id = (uint32_t) (service_descriptor->client_certificate_sss_ref.object_id);
-
-	uint32_t keystore_id = service_descriptor->client_key_sss_ref.endpoint_id;
-	agent_status = iot_agent_get_keystore_by_id(iot_agent_context, keystore_id, &keystore);
-	AGENT_SUCCESS_OR_EXIT();
-
-    mbedtls_pk_context pk;
-	mbedtls_pk_init(&pk);
-
-	agent_status = associateKeyPair(&pk, &service_private_key, keystore, key_id);
-	AGENT_SUCCESS_OR_EXIT();
-
-	pex_sss_demo_tls_ctx->client_cert_index = cert_id;
-
-    BaseType_t sdk_result;
-    sdk_result = IotSdk_Init();
-	ASSERT_OR_EXIT_MSG(sdk_result == pdPASS, "\nFailure at IotSdk_Init\n");
+	key_id = (uint32_t) (service_descriptor->client_key_sss_ref.object_id);
+	cert_id = (uint32_t) (service_descriptor->client_certificate_sss_ref.object_id);
 
     if(service_descriptor->service_type == nxp_iot_ServiceType_AWSSERVICE)
 	{
@@ -194,8 +173,6 @@ iot_agent_status_t pubSubCosOverRtp(iot_agent_context_t* iot_agent_context,
     }
 
 exit:
-	IotSdk_Cleanup();
-	mbedtls_pk_free(&pk);
 	return agent_status;
 }
 
@@ -207,27 +184,16 @@ iot_agent_status_t pubSub(iot_agent_context_t* iot_agent_context,
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	iot_agent_keystore_t* keystore = NULL;
-    sss_object_t service_private_key = {0};
 
-	uint32_t key_id = (uint32_t) (service_descriptor->identifier | 0x80000000);
-	uint32_t cert_id = (uint32_t) (service_descriptor->identifier | 0x40000000);
+	key_id = (uint32_t) (service_descriptor->identifier | 0x80000000);
+	cert_id = (uint32_t) (service_descriptor->identifier | 0x40000000);
 
 	uint32_t keystore_id = service_descriptor->client_key_sss_ref.endpoint_id;
 	agent_status = iot_agent_get_keystore_by_id(iot_agent_context, keystore_id, &keystore);
 	AGENT_SUCCESS_OR_EXIT();
 
-    mbedtls_pk_context pk;
-	mbedtls_pk_init(&pk);
-
-	agent_status = associateKeyPair(&pk, &service_private_key, keystore, key_id);
-	AGENT_SUCCESS_OR_EXIT();
-
 	agent_status = write_cert_to_keystore(keystore, service_descriptor, cert_id);
 	AGENT_SUCCESS_OR_EXIT();
-
-    BaseType_t sdk_result;
-    sdk_result = IotSdk_Init();
-	ASSERT_OR_EXIT_MSG(sdk_result == pdPASS, "\nFailure at IotSdk_Init\n");
 
     if(service_descriptor->service_type == nxp_iot_ServiceType_AWSSERVICE)
 	{
@@ -246,8 +212,6 @@ iot_agent_status_t pubSub(iot_agent_context_t* iot_agent_context,
     }
 
 exit:
-	IotSdk_Cleanup();
-	mbedtls_pk_free(&pk);
 	return agent_status;
 }
 
@@ -353,7 +317,6 @@ iot_agent_status_t iot_agent_demo_mqtt_disconnect(MqttAgent_Context_t* pMqttAgen
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
     MQTTStatus_t mqttStatus = MQTTSuccess;
-    TransportSocketStatus_t networkStatus = TRANSPORT_SOCKET_STATUS_SUCCESS;
 
     ASSERT_OR_EXIT_MSG(pMqttAgentContext != NULL, "MQTT context pointer is null");
     ASSERT_OR_EXIT_MSG(pMqttAgentContext->pMqttContext != NULL, "Error in the MQTT Context parameters");
@@ -371,13 +334,7 @@ iot_agent_status_t iot_agent_demo_mqtt_disconnect(MqttAgent_Context_t* pMqttAgen
 
 	if(pMqttAgentContext->tlsConnected == true )
 	{
-		networkStatus = SecureSocketsTransport_Disconnect(pMqttAgentContext->pNetworkContext);
-
-		if(networkStatus != TRANSPORT_SOCKET_STATUS_SUCCESS )
-		{
-			IOT_AGENT_ERROR("Secure Socket Disconnect failed");
-			agent_status = IOT_AGENT_FAILURE;
-		}
+    	TLS_FreeRTOS_Disconnect(pMqttAgentContext->pNetworkContext);
 	}
 exit:
 	return agent_status;
@@ -387,12 +344,14 @@ iot_agent_status_t iot_agent_demo_mqtt_connect(MqttAgent_Context_t* pMqttAgentCo
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
     MQTTStatus_t mqttStatus = MQTTSuccess;
-    TransportSocketStatus_t networkStatus = TRANSPORT_SOCKET_STATUS_SUCCESS;
-    ServerInfo_t serverInfo = { 0 };
-    SocketsConfig_t socketConfig = { 0 };
+	
+    TlsTransportStatus_t xNetworkStatus = TLS_TRANSPORT_CONNECT_FAILURE;
+    NetworkCredentials_t xNetworkCredentials = { 0 };
     MQTTConnectInfo_t connectInfo = { 0 };
     bool previousSession = false;
-    BaseType_t mqtt_result = pdPASS;
+    const char * pcAlpnProtocols[] = { NULL, NULL };	
+    char certLabel[20];
+    char keyLabel[20];
 
     ASSERT_OR_EXIT_MSG(pMqttAgentContext != NULL, "MQTT context pointer is null");
     ASSERT_OR_EXIT_MSG(pMqttAgentContext->pMqttContext != NULL, "Error in the MQTT Context parameters");
@@ -403,33 +362,25 @@ iot_agent_status_t iot_agent_demo_mqtt_connect(MqttAgent_Context_t* pMqttAgentCo
     ASSERT_OR_EXIT_MSG(pMqttAgentContext->pRootCa != NULL, "Error in the MQTT Context parameters");
     ASSERT_OR_EXIT_MSG(pMqttAgentContext->pClientId != NULL, "Error in the MQTT Context parameters");
 
-    mqtt_result = SOCKETS_Init();
-    ASSERT_OR_EXIT_MSG(pdPASS == mqtt_result, "SOCKETS_Init failed with 0x%08lx.", mqtt_result);
+   	pcAlpnProtocols[ 0 ] = AWS_IOT_MQTT_ALPN;
+    xNetworkCredentials.pAlpnProtos = pcAlpnProtocols;
+	iot_agent_convert_id_to_label(certLabel, sizeof(certLabel), cert_id);
+	iot_agent_convert_id_to_label(keyLabel, sizeof(keyLabel), key_id);
 
-    pMqttAgentContext->pNetworkContext->pParams = &secureSocketsTransportParams;
-    serverInfo.pHostName = pMqttAgentContext->pHostName;
-    serverInfo.hostNameLength = strlen(pMqttAgentContext->pHostName);
-    serverInfo.port = pMqttAgentContext->port;
+    /* Set the credentials for establishing a TLS connection. */
+    xNetworkCredentials.pRootCa = ( unsigned char * )pMqttAgentContext->pRootCa;
+    xNetworkCredentials.rootCaSize = pMqttAgentContext->rootCaSize;
+	xNetworkCredentials.pClientCertLabel = certLabel;
+	xNetworkCredentials.pPrivateKeyLabel = keyLabel;
+	xNetworkCredentials.disableSni = pdFALSE;
+    xNetworkStatus = TLS_FreeRTOS_Connect( pMqttAgentContext->pNetworkContext,
+                                           pMqttAgentContext->pHostName,
+                                           pMqttAgentContext->port,
+                                           &xNetworkCredentials,
+                                           mqttexampleTRANSPORT_SEND_RECV_TIMEOUT_MS,
+                                           mqttexampleTRANSPORT_SEND_RECV_TIMEOUT_MS );
+	pMqttAgentContext->tlsConnected = (xNetworkStatus == TLS_TRANSPORT_SUCCESS);
 
-    socketConfig.enableTls = true;
-
-    if(serverInfo.port == 443)
-    {
-        socketConfig.pAlpnProtos = socketsAWS_IOT_ALPN_MQTT;
-    }
-
-    socketConfig.maxFragmentLength = 0;
-    socketConfig.disableSni = false;
-    socketConfig.sendTimeoutMs = mqttexampleTRANSPORT_SEND_RECV_TIMEOUT_MS;
-    socketConfig.recvTimeoutMs = mqttexampleTRANSPORT_SEND_RECV_TIMEOUT_MS;
-    socketConfig.pRootCa = pMqttAgentContext->pRootCa;
-    socketConfig.rootCaSize = pMqttAgentContext->rootCaSize;
-
-	networkStatus = SecureSocketsTransport_Connect(pMqttAgentContext->pNetworkContext,
-												   &serverInfo,
-												   &socketConfig );
-
-	pMqttAgentContext->tlsConnected = (networkStatus == TRANSPORT_SOCKET_STATUS_SUCCESS);
 	ASSERT_OR_EXIT_MSG(pMqttAgentContext->tlsConnected, "Secure Socket Connect failed: Exiting");
 
     mqttStatus = MQTT_Init(pMqttAgentContext->pMqttContext,
@@ -505,7 +456,7 @@ iot_agent_status_t iot_agent_demo_mqtt_wait_packet(MqttAgent_Context_t* pMqttAge
     ASSERT_OR_EXIT_MSG(pMqttAgentContext != NULL, "MQTT context pointer is null");
     ASSERT_OR_EXIT_MSG(pMqttAgentContext->pMqttContext != NULL, "Error in the MQTT Context parameters");
 
-    mqttStatus = MQTT_ProcessLoop(pMqttAgentContext->pMqttContext, 0U);
+    mqttStatus = MQTT_ProcessLoop(pMqttAgentContext->pMqttContext);
 	ASSERT_OR_EXIT_MSG(MQTTSuccess == mqttStatus, "MQTT_ProcessLoop failed with status=%s.", MQTT_Status_strerror(mqttStatus));
 exit:
 	return agent_status;
@@ -537,6 +488,29 @@ exit:
     return agent_status;
 }
 
+static const char tlsATS1_ROOT_CERTIFICATE_PEM[] =
+    "-----BEGIN CERTIFICATE-----\n"
+    "MIIDQTCCAimgAwIBAgITBmyfz5m/jAo54vB4ikPmljZbyjANBgkqhkiG9w0BAQsF\n"
+    "ADA5MQswCQYDVQQGEwJVUzEPMA0GA1UEChMGQW1hem9uMRkwFwYDVQQDExBBbWF6\n"
+    "b24gUm9vdCBDQSAxMB4XDTE1MDUyNjAwMDAwMFoXDTM4MDExNzAwMDAwMFowOTEL\n"
+    "MAkGA1UEBhMCVVMxDzANBgNVBAoTBkFtYXpvbjEZMBcGA1UEAxMQQW1hem9uIFJv\n"
+    "b3QgQ0EgMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALJ4gHHKeNXj\n"
+    "ca9HgFB0fW7Y14h29Jlo91ghYPl0hAEvrAIthtOgQ3pOsqTQNroBvo3bSMgHFzZM\n"
+    "9O6II8c+6zf1tRn4SWiw3te5djgdYZ6k/oI2peVKVuRF4fn9tBb6dNqcmzU5L/qw\n"
+    "IFAGbHrQgLKm+a/sRxmPUDgH3KKHOVj4utWp+UhnMJbulHheb4mjUcAwhmahRWa6\n"
+    "VOujw5H5SNz/0egwLX0tdHA114gk957EWW67c4cX8jJGKLhD+rcdqsq08p8kDi1L\n"
+    "93FcXmn/6pUCyziKrlA4b9v7LWIbxcceVOF34GfID5yHI9Y/QCB/IIDEgEw+OyQm\n"
+    "jgSubJrIqg0CAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMC\n"
+    "AYYwHQYDVR0OBBYEFIQYzIU07LwMlJQuCFmcx7IQTgoIMA0GCSqGSIb3DQEBCwUA\n"
+    "A4IBAQCY8jdaQZChGsV2USggNiMOruYou6r4lK5IpDB/G/wkjUu0yKGX9rbxenDI\n"
+    "U5PMCCjjmCXPI6T53iHTfIUJrU6adTrCC2qJeHZERxhlbI1Bjjt/msv0tadQ1wUs\n"
+    "N+gDS63pYaACbvXy8MWy7Vu33PqUXHeeE6V/Uq2V8viTO96LXFvKWlJbYK8U90vv\n"
+    "o/ufQJVtMVT8QtPHRh8jrdkPSHCa2XV4cdFyQzR1bldZwgJcJmApzyMZFo6IQ6XU\n"
+    "5MsI+yMRQ+hDKXJioaldXgjUkK642M4UwtBV8ob2xJNDd2ZhwLnoQdeXeGADbkpy\n"
+    "rqXRfboQnoZsG4q5WTP468SQvvG5\n"
+    "-----END CERTIFICATE-----\n";
+static const uint32_t tlsATS1_ROOT_CERTIFICATE_LENGTH = sizeof( tlsATS1_ROOT_CERTIFICATE_PEM );
+
 iot_agent_status_t awsPubMqttMessage(const nxp_iot_ServiceDescriptor* service_descriptor)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
@@ -556,11 +530,9 @@ iot_agent_status_t awsPubMqttMessage(const nxp_iot_ServiceDescriptor* service_de
 	agent_status = iot_agent_demo_mqtt_init(&mqttAgentContext);
     AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT Agent Context initialization");
 
-    networkContext.pParams = &secureSocketsTransportParams;
     transportInterface.pNetworkContext = &networkContext;
-    transportInterface.send = SecureSocketsTransport_Send;
-    transportInterface.recv = SecureSocketsTransport_Recv;
-
+    transportInterface.send = TLS_FreeRTOS_Send;
+    transportInterface.recv = TLS_FreeRTOS_Recv;
 
     mqttAgentContext.pMqttContext = &mqttContext;
     mqttAgentContext.pNetworkContext = &networkContext;
@@ -668,11 +640,9 @@ iot_agent_status_t customPubMqttMessage(const nxp_iot_ServiceDescriptor* service
 	agent_status = iot_agent_demo_mqtt_init(&mqttAgentContext);
     AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT Agent Context initialization");
 
-    networkContext.pParams = &secureSocketsTransportParams;
     transportInterface.pNetworkContext = &networkContext;
-    transportInterface.send = SecureSocketsTransport_Send;
-    transportInterface.recv = SecureSocketsTransport_Recv;
-
+    transportInterface.send = TLS_FreeRTOS_Send;
+    transportInterface.recv = TLS_FreeRTOS_Recv;
 
     mqttAgentContext.pMqttContext = &mqttContext;
     mqttAgentContext.pNetworkContext = &networkContext;
@@ -935,10 +905,9 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
     agent_status = iot_agent_demo_mqtt_init(&mqttAgentContext);
     AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT Agent Context initialization");
 
-    networkContext.pParams = &secureSocketsTransportParams;
     transportInterface.pNetworkContext = &networkContext;
-    transportInterface.send = SecureSocketsTransport_Send;
-    transportInterface.recv = SecureSocketsTransport_Recv;
+    transportInterface.send = TLS_FreeRTOS_Send;
+    transportInterface.recv = TLS_FreeRTOS_Recv;
 
     mqttAgentContext.pMqttContext = &mqttContext;
     mqttAgentContext.pNetworkContext = &networkContext;
@@ -953,7 +922,7 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
     mqttAgentContext.pUserName = reg_info->username;
 
 	while (retryCount < 5) {
-		IOT_AGENT_INFO("\nMQTT attempting to register Azure Service '%s'...", service_descriptor->azure_registration_id);
+		IOT_AGENT_INFO("\nMQTT attempting to register Azure Service '%s' (the operation migth take around 1 minute)...", service_descriptor->azure_registration_id);
 		agent_status = iot_agent_demo_mqtt_connect(&mqttAgentContext);
 		if (agent_status == IOT_AGENT_SUCCESS) {
 			break;
@@ -1039,11 +1008,9 @@ static iot_agent_status_t azurePubSub(const nxp_iot_ServiceDescriptor* service_d
     agent_status = iot_agent_demo_mqtt_init(&mqttAgentContext);
     AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT Agent Context initialization");
 
-    networkContext.pParams = &secureSocketsTransportParams;
     transportInterface.pNetworkContext = &networkContext;
-    transportInterface.send = SecureSocketsTransport_Send;
-    transportInterface.recv = SecureSocketsTransport_Recv;
-
+    transportInterface.send = TLS_FreeRTOS_Send;
+    transportInterface.recv = TLS_FreeRTOS_Recv;
 
     mqttAgentContext.pMqttContext = &mqttContext;
     mqttAgentContext.pNetworkContext = &networkContext;
@@ -1117,3 +1084,11 @@ iot_agent_status_t azurePubMqttMessage(const nxp_iot_ServiceDescriptor* service_
 }
 
 
+static void iot_agent_convert_id_to_label(char* label, size_t label_size, uint32_t id) {
+    memset(label, 0, label_size);
+    uint32_t sss_keyId = (uint32_t)((((id >> (8 * 0)) & 0x000000FF) << (8 * 3)) |
+                            (((id >> (8 * 1)) & 0x000000FF) << (8 * 2)) |
+                            (((id >> (8 * 2)) & 0x000000FF) << (8 * 1)) |
+                            (((id >> (8 * 3)) & 0x000000FF) << (8 * 0)));
+    snprintf(label, label_size, "sss:%08lx", sss_keyId);
+}

@@ -3,6 +3,8 @@ message("middleware_lwip_enet_ethernetif component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/port/enet_ethernetif.c
+    ${CMAKE_CURRENT_LIST_DIR}/port/ethernetif.c
+    ${CMAKE_CURRENT_LIST_DIR}/port/ethernetif_mmac.c
 )
 
 if(CONFIG_USE_driver_enet_MIMXRT1042)
@@ -14,7 +16,7 @@ else()
 endif()
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/port
 )
 

@@ -1,16 +1,16 @@
 var a00017 =
 [
-    [ "DCP AES blocking driver", "a00218.html", "a00218" ],
-    [ "DCP AES non-blocking driver", "a00219.html", "a00219" ],
+    [ "DCP AES blocking driver", "a00217.html", "a00217" ],
+    [ "DCP AES non-blocking driver", "a00218.html", "a00218" ],
     [ "DCP HASH driver", "a00018.html", "a00018" ],
-    [ "dcp_work_packet_t", "a00017.html#a00304", null ],
-    [ "dcp_handle_t", "a00017.html#a00302", [
+    [ "dcp_work_packet_t", "a00017.html#a00303", null ],
+    [ "dcp_handle_t", "a00017.html#a00301", [
       [ "channel", "a00017.html#a39ed7dd6a2962d2828d9493fd92280c0", null ],
       [ "keySlot", "a00017.html#a71cde84117fa8d1c3e2d31463fe0ca9a", null ],
       [ "swapConfig", "a00017.html#a2d15c1d34f59af1fbc90c82662f1b2c5", null ]
     ] ],
-    [ "dcp_context_t", "a00017.html#a00301", null ],
-    [ "dcp_config_t", "a00017.html#a00300", [
+    [ "dcp_context_t", "a00017.html#a00300", null ],
+    [ "dcp_config_t", "a00017.html#a00299", [
       [ "gatherResidualWrites", "a00017.html#a9bf6c28d293292f7ab36414ac55d8e6b", null ],
       [ "enableContextCaching", "a00017.html#ac5894cd7e28f23913baadfd40f77bc02", null ],
       [ "enableContextSwitching", "a00017.html#a78b6fbfe15a7691babe04e1e8c2ff59a", null ],

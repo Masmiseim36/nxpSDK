@@ -1,11 +1,11 @@
 var a00015 =
 [
-    [ "cs42888_audio_format_t", "a00015.html#a00332", [
+    [ "cs42888_audio_format_t", "a00015.html#a00331", [
       [ "mclk_HZ", "a00015.html#a5fd01de40f2d61eaded45b58910eb9e6", null ],
       [ "sampleRate", "a00015.html#a606f22140a1a18f014cfd854233716fc", null ],
       [ "bitWidth", "a00015.html#a5a375f48e508232d89ae87f4af47e166", null ]
     ] ],
-    [ "cs42888_config_t", "a00015.html#a00333", [
+    [ "cs42888_config_t", "a00015.html#a00332", [
       [ "bus", "a00015.html#abe4fb7d060b3749d089f212afee66edd", null ],
       [ "format", "a00015.html#a390b84d16170a8a88a1630f4a4f0de19", null ],
       [ "ADCMode", "a00015.html#a3b112c12d31e8259d8d4a36846071cde", null ],
@@ -15,7 +15,7 @@ var a00015 =
       [ "slaveAddress", "a00015.html#abdef2c13001f11f5d4148af1b0196567", null ],
       [ "reset", "a00015.html#a9c476b216744897cc8a3fc401e0e6dca", null ]
     ] ],
-    [ "cs42888_handle_t", "a00015.html#a00334", [
+    [ "cs42888_handle_t", "a00015.html#a00333", [
       [ "config", "a00015.html#ae6a321c3fa8d47e83f09996125b06794", null ],
       [ "i2cHandle", "a00015.html#a561ab054fec522adeab35c07bb6cab34", null ]
     ] ],

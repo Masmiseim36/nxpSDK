@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,11 +11,15 @@
 #include "EAP32.h" // EAP library
 #include "eap_att.h"
 
-#define LVM_FRAME_SIZE_MS 10
+#define LVM_FRAME_SIZE_MS (10)
 
 #ifndef MAX_SAMPLE_SIZE
-#define MAX_SAMPLE_SIZE 1024
+#define MAX_SAMPLE_SIZE (1024)
 #endif
+
+#define NUM_OUT_BUFFES (2)
+// #define XO_USE_FULL_STEREO /* Define for the full output range of the EAP crossover options when applied to a stereo
+// audio input file */
 
 int EAP_Init(void *arg);
 int EAP_Execute(void *arg, void *inputBuffer, int size);

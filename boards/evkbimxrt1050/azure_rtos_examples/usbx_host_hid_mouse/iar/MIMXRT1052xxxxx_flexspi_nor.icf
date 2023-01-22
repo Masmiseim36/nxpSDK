@@ -81,7 +81,17 @@ define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 
-initialize by copy { readwrite, section .textrw };
+initialize by copy {
+  readwrite,
+
+  /* Explicitly place flash operation functions in RAM. */
+  object mflash_drv.o,
+  object fsl_flexspi.o,
+  object fsl_cache.o,
+
+  section .textrw
+};
+
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };

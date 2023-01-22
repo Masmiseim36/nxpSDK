@@ -1,7 +1,7 @@
 var a00070 =
 [
-    [ "snvs_lp_passive_tamper_t", "a00070.html#a00485", null ],
-    [ "snvs_lp_srtc_datetime_t", "a00070.html#a00487", [
+    [ "snvs_lp_passive_tamper_t", "a00070.html#a00484", null ],
+    [ "snvs_lp_srtc_datetime_t", "a00070.html#a00486", [
       [ "year", "a00070.html#a03a4361ff2481ab7ed890c60f3ac68b7", null ],
       [ "month", "a00070.html#afeeab32d19b15b5dd7ebbcd3c1322e28", null ],
       [ "day", "a00070.html#a8325ab17dc714294c88414f24d03320d", null ],
@@ -9,7 +9,7 @@ var a00070 =
       [ "minute", "a00070.html#a266253051fa3ee775a27bffb92d9be5b", null ],
       [ "second", "a00070.html#a24f3ad7303d4b70ca927c385490a3448", null ]
     ] ],
-    [ "snvs_lp_srtc_config_t", "a00070.html#a00486", [
+    [ "snvs_lp_srtc_config_t", "a00070.html#a00485", [
       [ "srtcCalEnable", "a00070.html#a876e4c24fd02f7b939354f625e81b0a3", null ],
       [ "srtcCalValue", "a00070.html#a86c9d09f47c6c6fa4dd60c24088f2d4f", null ]
     ] ],

@@ -104,7 +104,7 @@ BOARD_InitPinsM2:
   - {pin_num: J1, peripheral: USDHC1, signal: 'usdhc_data, 3', pin_signal: GPIO_SD_B0_05}
   - {pin_num: E13, peripheral: USDHC1, signal: usdhc_vselect, pin_signal: GPIO_B1_14}
   - {pin_num: K11, peripheral: GPIO1, signal: 'gpio_io, 18', pin_signal: GPIO_AD_B1_02, direction: OUTPUT}
-  - {pin_num: N2, peripheral: GPIO3, signal: 'gpio_io, 04', pin_signal: GPIO_SD_B1_04, direction: OUTPUT}
+  - {pin_num: N2, peripheral: GPIO3, signal: 'gpio_io, 04', pin_signal: GPIO_SD_B1_04, identifier: SDIO_RST, direction: OUTPUT}
   - {pin_num: K5, peripheral: GPIO3, signal: 'gpio_io, 02', pin_signal: GPIO_SD_B1_02, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

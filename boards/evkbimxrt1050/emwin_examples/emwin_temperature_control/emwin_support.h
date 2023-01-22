@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -61,10 +60,22 @@
 #define LCD_BYTES_PER_PIXEL (LCD_BITS_PER_PIXEL / 8)
 
 /* Color depth dependent definitions */
+#if LCD_BITS_PER_PIXEL == 8
+#define DISPLAY_DRIVER      GUIDRV_LIN_8
+#define COLOR_CONVERSION    GUICC_0
+#define ELCDIF_PIXEL_FORMAT kELCDIF_PixelFormatRAW8
+#define APP_LCDIF_DATA_BUS  kELCDIF_DataBus8Bit
+#elif LCD_BITS_PER_PIXEL == 16
+#define DISPLAY_DRIVER      GUIDRV_LIN_16
+#define COLOR_CONVERSION    GUICC_M565
+#define ELCDIF_PIXEL_FORMAT kELCDIF_PixelFormatRGB565
+#define APP_LCDIF_DATA_BUS  kELCDIF_DataBus16Bit
+#else
 #define DISPLAY_DRIVER      GUIDRV_LIN_32
 #define COLOR_CONVERSION    GUICC_M8888I
 #define ELCDIF_PIXEL_FORMAT kELCDIF_PixelFormatXRGB8888
 #define APP_LCDIF_DATA_BUS  kELCDIF_DataBus16Bit
+#endif
 
 /* Define scale factors */
 #define GUI_SCALE_FACTOR   0.8

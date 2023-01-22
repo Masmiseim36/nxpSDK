@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,10 +22,10 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v8.0
+product: Clocks v10.0
 processor: MIMXRT1041xxxxB
 mcu_data: ksdk2_0
-processor_version: 0.11.0
+processor_version: 0.12.12
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 #include "clock_config.h"
@@ -38,8 +38,6 @@ processor_version: 0.11.0
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/* System clock frequency. */
-extern uint32_t SystemCoreClock;
 
 /*******************************************************************************
  ************************ BOARD_InitBootClocks function ************************
@@ -62,6 +60,7 @@ outputs:
 - {id: CLK_1M.outFreq, value: 1 MHz}
 - {id: CLK_24M.outFreq, value: 24 MHz}
 - {id: ENET_125M_CLK.outFreq, value: 2.4 MHz}
+- {id: ENET_25M_REF_CLK.outFreq, value: 1.2 MHz}
 - {id: FLEXIO1_CLK_ROOT.outFreq, value: 1.5 MHz}
 - {id: FLEXIO2_CLK_ROOT.outFreq, value: 1.5 MHz}
 - {id: FLEXSPI2_CLK_ROOT.outFreq, value: 12 MHz}
@@ -110,6 +109,7 @@ const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN =
 const clock_enet_pll_config_t enetPllConfig_BOARD_BootClockRUN =
     {
         .enableClkOutput = true,                  /* Enable the PLL providing the ENET 125MHz reference clock */
+        .enableClkOutput25M = true,               /* Enable the PLL providing the ENET 25MHz reference clock */
         .loopDivider = 1,                         /* Set frequency of ethernet reference clock to 2.4 MHz */
         .src = 0,                                 /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
     };

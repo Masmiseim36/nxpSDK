@@ -174,10 +174,6 @@
     <source path="." project_relative_path="board" type="c_include">
       <files mask="pin_mux.h"/>
     </source>
-    <source path="iar" project_relative_path="MIMXRT1015/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1015xxxxx_ram.icf"/>
-      <files mask="MIMXRT1015xxxxx_flexspi_nor_ocram.icf"/>
-    </source>
     <source path="mdk" project_relative_path="MIMXRT1015/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1015xxxxx_ram.scf"/>
       <files mask="MIMXRT1015xxxxx_flexspi_nor_ocram.scf"/>
@@ -185,6 +181,9 @@
     <source path="armgcc" project_relative_path="MIMXRT1015/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1015xxxxx_ram.ld"/>
       <files mask="MIMXRT1015xxxxx_flexspi_nor_ocram.ld"/>
+    </source>
+    <source path="iar" project_relative_path="MIMXRT1015/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1015xxxxx_flexspi_nor_ocram.icf"/>
     </source>
     <source path="mdk" project_relative_path="evkmimxrt1015" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1015_ram.ini"/>

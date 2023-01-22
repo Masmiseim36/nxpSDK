@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['usb_20device_20configuration',['USB Device Configuration',['../a00247.html',1,'']]]
+  ['usb_20device_20configuration',['USB Device Configuration',['../a00246.html',1,'']]]
 ];

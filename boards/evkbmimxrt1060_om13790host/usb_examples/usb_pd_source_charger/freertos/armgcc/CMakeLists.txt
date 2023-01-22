@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(usb_pd_source_charger_freertos)
 
+set(MCUX_BUILD_TYPES sdram_release flexspi_nor_release debug release sdram_debug flexspi_nor_debug)
+
 set(MCUX_SDK_PROJECT_NAME usb_pd_source_charger_freertos.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -55,27 +61,27 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../evkbmimxrt1060
+    ${SdkRootDirPath}/boards/evkbmimxrt1060
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1062
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip
-    ${ProjDirPath}/../../../../../evkbmimxrt1060/xip
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/gpio
-    ${ProjDirPath}/../../../../../../components/timer
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
+    ${SdkRootDirPath}/components/i2c
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/devices/MIMXRT1062
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1062/xip
+    ${SdkRootDirPath}/boards/evkbmimxrt1060/xip
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/gpio
+    ${SdkRootDirPath}/components/timer
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -137,7 +143,7 @@ include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(component_osa_MIMXRT1062)
 
-include(middleware_usb_common_header_MIMXRT1062)
+include(middleware_usb_pd_common_header_MIMXRT1062)
 
 include(middleware_freertos-kernel_MIMXRT1062)
 
@@ -148,15 +154,13 @@ include(utilities_misc_utilities_MIMXRT1062)
 include(device_MIMXRT1062_system_MIMXRT1062)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -306,14 +306,7 @@ void eap_att_process(void)
             break;
         }
         case kAttCmdSeek:
-            if (att_control.status != kAttPaused)
-            {
-                att_control.logme("[EAP_ATT] First pause the track\r\n");
-            }
-            else
-            {
-                att_control.lastError = seek_wrapper(att_control.seek_time);
-            }
+            att_control.lastError = seek_wrapper(att_control.seek_time);
             break;
 #if (defined EAP_PROC || defined EAP32_PROC)
         case kAttCmdSetConfig:

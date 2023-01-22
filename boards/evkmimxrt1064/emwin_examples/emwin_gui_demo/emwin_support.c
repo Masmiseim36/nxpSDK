@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -60,15 +60,17 @@ static const LCD_COLOR _aColors_256[] = {
     0xff66ffff, 0xff99ffff, 0xffccffff, 0xffffffff};
 static const LCD_PHYSPALETTE _aPalette_256 = {ARRAY_SIZE(_aColors_256), _aColors_256};
 #endif
-
-/* Internal emWin memory buffer */
-SDK_ALIGN(uint8_t s_gui_memory[GUI_NUMBYTES], FRAME_BUFFER_ALIGN);
-/* Frame buffers */
-SDK_ALIGN(uint8_t s_vram_buffer[VRAM_SIZE * GUI_BUFFERS], FRAME_BUFFER_ALIGN);
+#if LCD_BITS_PER_PIXEL < 32 /* Buffer definitions for emwin and LCD framebuffer */
+AT_NONCACHEABLE_SECTION_ALIGN(uint8_t s_gui_memory[GUI_NUMBYTES * LCD_BYTES_PER_PIXEL], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(uint8_t s_vram_buffer[VRAM_SIZE * GUI_BUFFERS * LCD_BYTES_PER_PIXEL], FRAME_BUFFER_ALIGN);
+#else
+uint32_t s_gui_memory[(GUI_NUMBYTES)];
+uint32_t s_vram_buffer[VRAM_SIZE * GUI_BUFFERS];
+#endif
 
 /* Memory address definitions */
 #define GUI_MEMORY_ADDR ((uint32_t)s_gui_memory)
-#define VRAM_ADDR       ((uint32_t)s_vram_buffer)
+#define VRAM_ADDR       (SDK_SIZEALIGN(s_vram_buffer, FRAME_BUFFER_ALIGN))
 
 static volatile int32_t s_LCDpendingBuffer = -1;
 
@@ -276,11 +278,10 @@ int BOARD_Touch_Poll(void)
  *
  *       _ClearCache
  */
-static void _ClearCache(U32 layerMask)
+static void _ClearCache(U32 v)
 {
-    /* We use only one layer, therefore we can omit this parameter */
-    GUI_USE_PARA(layerMask);
-    SCB_CleanDCache_by_Addr((uint32_t *)&s_vram_buffer, LCD_WIDTH * LCD_HEIGHT * GUI_BUFFERS * sizeof(U32));
+    GUI_USE_PARA(v);
+    SCB_CleanInvalidateDCache();
 }
 
 /*******************************************************************************
@@ -410,7 +411,6 @@ void GUI_X_Delay(int Period)
     volatile uint32_t tNow = GPT_GetCurrentTimerCount(EXAMPLE_GPT);
     while ((GPT_GetCurrentTimerCount(EXAMPLE_GPT) - tNow) < Period * EXAMPLE_GPT_TICK_TO_MS)
         ;
-    BOARD_Touch_Poll();
 }
 
 void *emWin_memcpy(void *pDst, const void *pSrc, long size)

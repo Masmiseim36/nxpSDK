@@ -348,10 +348,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../common</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
@@ -1434,10 +1436,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../common</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
@@ -2326,6 +2330,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2682,6 +2692,12 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SCROLLBAR_Private.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SCROLLER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SCROLLER_Private.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SEGGER.h</name>
       </file>
       <file>
@@ -2719,6 +2735,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/TREEVIEW_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WHEEL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WHEEL_Private.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WIDGET.h</name>
@@ -2809,19 +2831,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

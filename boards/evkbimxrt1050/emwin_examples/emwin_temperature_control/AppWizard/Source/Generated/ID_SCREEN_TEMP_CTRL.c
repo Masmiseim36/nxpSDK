@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -37,6 +37,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_IMAGE_Create,
     ID_IMAGE_BG, ID_SCREEN_TEMP_CTRL,
@@ -47,6 +48,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       480, 272, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_CTRL, ID_SCREEN_TEMP_CTRL,
@@ -57,6 +59,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       171, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_FAN, ID_SCREEN_TEMP_CTRL,
@@ -67,6 +70,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       31, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP, ID_SCREEN_TEMP_CTRL,
@@ -77,6 +81,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       107, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_ROOM, ID_SCREEN_TEMP_CTRL,
@@ -87,6 +92,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       64, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_FAN_STATE, ID_SCREEN_TEMP_CTRL,
@@ -97,6 +103,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       64, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP1, ID_SCREEN_TEMP_CTRL,
@@ -107,6 +114,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       64, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BOX_Create,
     ID_BOX_BR_BUTTON_HL, ID_SCREEN_TEMP_CTRL,
@@ -117,6 +125,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BOX_Create,
     ID_BOX_LR_BUTTON_HL, ID_SCREEN_TEMP_CTRL,
@@ -127,6 +136,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BOX_Create,
     ID_BOX_KT_BUTTON_HL, ID_SCREEN_TEMP_CTRL,
@@ -137,6 +147,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BOX_Create,
     ID_BOX_FR_BUTTON_HL, ID_SCREEN_TEMP_CTRL,
@@ -147,6 +158,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BOX_Create,
     ID_BOX_DR_BUTTON_HL, ID_SCREEN_TEMP_CTRL,
@@ -157,6 +169,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DEGR_C, ID_SCREEN_TEMP_CTRL,
@@ -167,6 +180,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       20, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_WINDOW_Create,
     ID_WINDOW_BR_CTRLS, ID_SCREEN_TEMP_CTRL,
@@ -177,6 +191,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       165, 198, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_WINDOW_Create,
     ID_WINDOW_LR_CTRLS, ID_SCREEN_TEMP_CTRL,
@@ -187,6 +202,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_ROTARY_Create,
     ID_ROTARY_BR, ID_WINDOW_BR_CTRLS,
@@ -197,6 +213,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       105, 105, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_WINDOW_Create,
     ID_WINDOW_KT_CTRLS, ID_SCREEN_TEMP_CTRL,
@@ -207,6 +224,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_WINDOW_Create,
     ID_WINDOW_FR_CTRLS, ID_SCREEN_TEMP_CTRL,
@@ -217,6 +235,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_WINDOW_Create,
     ID_WINDOW_DR_CTRLS, ID_SCREEN_TEMP_CTRL,
@@ -227,6 +246,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       0, 0, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DEGR_C_BR_B, ID_SCREEN_TEMP_CTRL,
@@ -237,6 +257,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       20, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DEGR_C_LR_B, ID_SCREEN_TEMP_CTRL,
@@ -247,6 +268,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       20, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DEGR_C_KT_B, ID_SCREEN_TEMP_CTRL,
@@ -257,6 +279,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       20, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_BR, ID_WINDOW_BR_CTRLS,
@@ -267,6 +290,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       33, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DEGR_C_FR_B, ID_SCREEN_TEMP_CTRL,
@@ -277,6 +301,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       20, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DEGR_C_DR_B, ID_SCREEN_TEMP_CTRL,
@@ -287,6 +312,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       20, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_BR, ID_SCREEN_TEMP_CTRL,
@@ -297,6 +323,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       81, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_LR, ID_SCREEN_TEMP_CTRL,
@@ -307,6 +334,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       110, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_KT, ID_SCREEN_TEMP_CTRL,
@@ -317,6 +345,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       110, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_FR, ID_SCREEN_TEMP_CTRL,
@@ -327,6 +356,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       110, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DR, ID_SCREEN_TEMP_CTRL,
@@ -337,6 +367,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       110, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_BR_FAN, ID_SCREEN_TEMP_CTRL,
@@ -347,6 +378,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       49, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_LR_FAN, ID_SCREEN_TEMP_CTRL,
@@ -357,6 +389,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       48, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_KT_FAN, ID_SCREEN_TEMP_CTRL,
@@ -367,6 +400,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       48, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_DR_FAN, ID_SCREEN_TEMP_CTRL,
@@ -377,6 +411,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       48, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_FR_FAN, ID_SCREEN_TEMP_CTRL,
@@ -387,6 +422,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       48, 24, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_BR_B, ID_SCREEN_TEMP_CTRL,
@@ -397,6 +433,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       41, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_LR_B, ID_SCREEN_TEMP_CTRL,
@@ -407,6 +444,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       40, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_KT_B, ID_SCREEN_TEMP_CTRL,
@@ -417,6 +455,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       40, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_FR_B, ID_SCREEN_TEMP_CTRL,
@@ -427,6 +466,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       40, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_DR_B, ID_SCREEN_TEMP_CTRL,
@@ -437,6 +477,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       40, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_BR, ID_SCREEN_TEMP_CTRL,
@@ -447,6 +488,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       239, 40, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_LR, ID_SCREEN_TEMP_CTRL,
@@ -457,6 +499,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       240, 39, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_ROTARY_Create,
     ID_ROTARY_LR, ID_WINDOW_LR_CTRLS,
@@ -467,6 +510,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       105, 105, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_LR, ID_WINDOW_LR_CTRLS,
@@ -477,6 +521,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       33, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_BR_FAN_ON, ID_WINDOW_BR_CTRLS,
@@ -487,6 +532,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_BR_FAN_OFF, ID_WINDOW_BR_CTRLS,
@@ -497,6 +543,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_BR_FAN_AUTO, ID_WINDOW_BR_CTRLS,
@@ -507,6 +554,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_LR_FAN_ON, ID_WINDOW_LR_CTRLS,
@@ -517,6 +565,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_LR_FAN_OFF, ID_WINDOW_LR_CTRLS,
@@ -527,6 +576,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_LR_FAN_AUTO, ID_WINDOW_LR_CTRLS,
@@ -537,6 +587,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_ROTARY_Create,
     ID_ROTARY_KT, ID_WINDOW_KT_CTRLS,
@@ -547,6 +598,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       105, 105, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_KT, ID_WINDOW_KT_CTRLS,
@@ -557,6 +609,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       33, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_FR, ID_SCREEN_TEMP_CTRL,
@@ -567,6 +620,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       240, 39, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_KT, ID_SCREEN_TEMP_CTRL,
@@ -577,6 +631,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       240, 39, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_KT_FAN_ON, ID_WINDOW_KT_CTRLS,
@@ -587,6 +642,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_KT_FAN_OFF, ID_WINDOW_KT_CTRLS,
@@ -597,6 +653,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_KT_FAN_AUTO, ID_WINDOW_KT_CTRLS,
@@ -607,6 +664,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_ROTARY_Create,
     ID_ROTARY_FR, ID_WINDOW_FR_CTRLS,
@@ -617,6 +675,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       105, 105, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_DR, ID_SCREEN_TEMP_CTRL,
@@ -627,6 +686,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       240, 39, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_FR, ID_WINDOW_FR_CTRLS,
@@ -637,6 +697,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       33, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_FR_FAN_ON, ID_WINDOW_FR_CTRLS,
@@ -647,6 +708,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_FR_FAN_OFF, ID_WINDOW_FR_CTRLS,
@@ -657,6 +719,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_FR_FAN_AUTO, ID_WINDOW_FR_CTRLS,
@@ -667,6 +730,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_IMAGE_Create,
     ID_IMAGE_SEGGER, ID_SCREEN_TEMP_CTRL,
@@ -677,6 +741,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       80, 40, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_ROTARY_Create,
     ID_ROTARY_DR, ID_WINDOW_DR_CTRLS,
@@ -687,6 +752,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       105, 105, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_TEXT_Create,
     ID_TEXT_TEMP_DR, ID_WINDOW_DR_CTRLS,
@@ -697,6 +763,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       33, 32, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_DR_FAN_ON, ID_WINDOW_DR_CTRLS,
@@ -707,6 +774,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_DR_FAN_OFF, ID_WINDOW_DR_CTRLS,
@@ -717,6 +785,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_DR_FAN_AUTO, ID_WINDOW_DR_CTRLS,
@@ -727,6 +796,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
       },
       50, 26, 0, 0, 0, 0
     },
+    { 0, 0 }
   },
 };
 
@@ -734,7 +804,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
 *
 *       _aSetup
 */
-static const APPW_SETUP_ITEM _aSetup[] = {
+static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_IMAGE_BG,           APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acTemperatureControl_3_480x272),
                                                          ARG_V(391734), } },
   { ID_TEXT_TEMP_CTRL,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
@@ -787,8 +857,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_BR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_BR,       APPW_SET_PROP_RANGE,        { ARG_V(0),
-                                                         ARG_V(0) } },
+  { ID_TEXT_TEMP_BR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_BR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
   { ID_TEXT_TEMP_BR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
@@ -838,6 +908,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_BR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
+  { ID_TEXT_TEMP_BR_B,     APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_LR_B,     APPW_SET_PROP_DECMODE,      { ARG_V(0),
                                                          ARG_V(0),
                                                          ARG_V(0),
@@ -847,6 +919,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_LR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
+  { ID_TEXT_TEMP_LR_B,     APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_KT_B,     APPW_SET_PROP_DECMODE,      { ARG_V(0),
                                                          ARG_V(0),
                                                          ARG_V(0),
@@ -856,6 +930,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_KT_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
+  { ID_TEXT_TEMP_KT_B,     APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_FR_B,     APPW_SET_PROP_DECMODE,      { ARG_V(0),
                                                          ARG_V(0),
                                                          ARG_V(0),
@@ -865,6 +941,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_FR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
+  { ID_TEXT_TEMP_FR_B,     APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_DECMODE,      { ARG_V(0),
                                                          ARG_V(0),
                                                          ARG_V(0),
@@ -874,6 +952,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
+  { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_ROTARY_LR,          APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acKNOB_106x106),
                                                          ARG_VP(0, acGreenGlowMarker_16x9), } },
   { ID_ROTARY_LR,          APPW_SET_PROP_POS,          { ARG_V(42) } },
@@ -889,8 +969,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_LR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_LR,       APPW_SET_PROP_RANGE,        { ARG_V(0),
-                                                         ARG_V(0) } },
+  { ID_TEXT_TEMP_LR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_LR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
   { ID_TEXT_TEMP_LR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
@@ -988,8 +1068,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_KT,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_KT,       APPW_SET_PROP_RANGE,        { ARG_V(0),
-                                                         ARG_V(0) } },
+  { ID_TEXT_TEMP_KT,       APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_KT,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
   { ID_TEXT_TEMP_KT,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
@@ -1048,8 +1128,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_FR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_FR,       APPW_SET_PROP_RANGE,        { ARG_V(0),
-                                                         ARG_V(0) } },
+  { ID_TEXT_TEMP_FR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_FR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
   { ID_TEXT_TEMP_FR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
@@ -1110,8 +1190,8 @@ static const APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_DR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_DR,       APPW_SET_PROP_RANGE,        { ARG_V(0),
-                                                         ARG_V(0) } },
+  { ID_TEXT_TEMP_DR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
+                                                         ARG_V(30) } },
   { ID_TEXT_TEMP_DR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
   { ID_TEXT_TEMP_DR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),

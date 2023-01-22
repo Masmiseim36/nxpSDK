@@ -687,12 +687,12 @@ void spi_pcs_pin_control(uint32_t instance, uint8_t pcsx, bool isSelected)
             pcsPinNumber = LPSPI3_PCS_GPIO_NUM;
             gpio = LPSPI3_PCS_GPIO;
             break;
-#if (FSL_FEATURE_SOC_LPSPI_COUNT >= 4)            
+#if (FSL_FEATURE_SOC_LPSPI_COUNT >= 4)
         case 4:
             pcsPinNumber = LPSPI4_PCS_GPIO_NUM;
             gpio = LPSPI4_PCS_GPIO;
             break;
-#endif //             
+#endif //
         default:
             return;
     }
@@ -825,7 +825,7 @@ void spi_iomux_config(spi_nor_eeprom_peripheral_config_t *config)
             LPSPI3_PCS_GPIO->DR |= (1u << LPSPI3_PCS_GPIO_NUM);
 
             break;
-#if (FSL_FEATURE_SOC_LPSPI_COUNT >= 4) 
+#if (FSL_FEATURE_SOC_LPSPI_COUNT >= 4)
         case 4:
             /* LPSPI4_SCK*/
             IOMUXC->SW_MUX_CTL_PAD[SW_MUX_CTL_PAD_LPSPI4_SCK_IDX] = LPSPI4_MUX_VAL;
@@ -853,7 +853,7 @@ void spi_iomux_config(spi_nor_eeprom_peripheral_config_t *config)
             LPSPI4_PCS_GPIO->DR |= (1u << LPSPI4_PCS_GPIO_NUM);
 
             break;
-#endif            
+#endif
         default:
             break;
     }
@@ -942,10 +942,10 @@ uint32_t get_primary_boot_device(void)
             }
             break;
         case 1:
-            flash_device = kBootDevice_MMC_SD; // SD
+            flash_device = kBootDevice_SD; // SD
             break;
         case 2:
-            flash_device = kBootDevice_MMC_SD; // MMC/eMMC
+            flash_device = kBootDevice_MMC; // MMC/eMMC
             break;
         case 3:
             flash_device = kBootDevice_FlexSpiNAND; // FlexSPI NAND
@@ -1133,7 +1133,7 @@ void normal_mem_init(void)
         { 448, 0, 64 },    { 0, 128, 384 },  { 32, 32, 448 },   { 0, 256, 256 },  { 0, 0, 512 },
     };
 
-    uint32_t fixedOcramSize = 512u * 1024ul;
+    uint32_t fixedOcramSize = 0u;
 
     uint32_t ramCfgIndex = ROM_OCOTP_FLEXRAM_CFG_VALUE();
 

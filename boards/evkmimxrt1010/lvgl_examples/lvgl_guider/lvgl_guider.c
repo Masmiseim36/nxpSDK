@@ -109,6 +109,8 @@ int main(void)
  */
 void vApplicationMallocFailedHook(void)
 {
+    PRINTF("Malloc failed. Increase the heap size.");
+
     for (;;)
         ;
 }

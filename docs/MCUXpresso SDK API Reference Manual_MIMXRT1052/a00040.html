@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -115,9 +115,9 @@ Input Operation</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00425"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a00425">gpio_pin_config_t</a></td></tr>
-<tr class="memdesc:a00425"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Init structure definition.  <a href="a00040.html#a00425">More...</a><br/></td></tr>
-<tr class="separator:a00425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00424"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a00424">gpio_pin_config_t</a></td></tr>
+<tr class="memdesc:a00424"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Init structure definition.  <a href="a00040.html#a00424">More...</a><br/></td></tr>
+<tr class="separator:a00424"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -148,13 +148,13 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga5aa5229cbd041b11bcf8417ba12896b2">FSL_GPIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
+<tr class="memitem:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga5aa5229cbd041b11bcf8417ba12896b2">FSL_GPIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
 <tr class="memdesc:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO driver version.  <a href="#ga5aa5229cbd041b11bcf8417ba12896b2">More...</a><br/></td></tr>
 <tr class="separator:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 GPIO Initialization and Configuration functions</h2></td></tr>
-<tr class="memitem:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga8d3aa26ad7e88ef1427e51242a70c259">GPIO_PinInit</a> (GPIO_Type *base, uint32_t pin, const <a class="el" href="a00040.html#a00425">gpio_pin_config_t</a> *Config)</td></tr>
+<tr class="memitem:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga8d3aa26ad7e88ef1427e51242a70c259">GPIO_PinInit</a> (GPIO_Type *base, uint32_t pin, const <a class="el" href="a00040.html#a00424">gpio_pin_config_t</a> *Config)</td></tr>
 <tr class="memdesc:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the GPIO peripheral according to the specified parameters in the initConfig.  <a href="#ga8d3aa26ad7e88ef1427e51242a70c259">More...</a><br/></td></tr>
 <tr class="separator:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -231,7 +231,7 @@ Interrupts and flags management functions</h2></td></tr>
 <tr class="separator:ga0b1ad50f4212dfb839fd059503f03bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00425" id="a00425"></a>
+<a name="a00424" id="a00424"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -287,7 +287,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_GPIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td>
+          <td class="memname">#define FSL_GPIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -367,7 +367,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00040.html#a00425">gpio_pin_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00040.html#a00424">gpio_pin_config_t</a> *&#160;</td>
           <td class="paramname"><em>Config</em>&#160;</td>
         </tr>
         <tr>
@@ -381,7 +381,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
     <tr><td class="paramname">pin</td><td>Specifies the pin number </td></tr>
-    <tr><td class="paramname">Config</td><td>pointer to a <a class="el" href="a00040.html#a00425">gpio_pin_config_t</a> structure that contains the configuration information. </td></tr>
+    <tr><td class="paramname">Config</td><td>pointer to a <a class="el" href="a00040.html#a00424">gpio_pin_config_t</a> structure that contains the configuration information. </td></tr>
   </table>
   </dd>
 </dl>
@@ -469,7 +469,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00300.html#_deprecated000008">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#ga41c1b70e3ee7825359e0891812c88e85">GPIO_PinWrite</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000008">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#ga41c1b70e3ee7825359e0891812c88e85">GPIO_PinWrite</a>. </dd></dl>
 
 </div>
 </div>
@@ -545,7 +545,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00300.html#_deprecated000009">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#ga2de9f41517bfde0920a5dea5db6e56d6">GPIO_PortSet</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000009">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#ga2de9f41517bfde0920a5dea5db6e56d6">GPIO_PortSet</a>. </dd></dl>
 
 </div>
 </div>
@@ -621,7 +621,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00300.html#_deprecated000010">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gaff8a89d83ce5fdaea9db88317eece33c">GPIO_PortClear</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000010">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gaff8a89d83ce5fdaea9db88317eece33c">GPIO_PortClear</a>. </dd></dl>
 
 </div>
 </div>
@@ -744,7 +744,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00300.html#_deprecated000011">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gac999c0dd229595fe2b651e796da560be">GPIO_PinRead</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000011">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gac999c0dd229595fe2b651e796da560be">GPIO_PinRead</a>. </dd></dl>
 
 </div>
 </div>
@@ -826,7 +826,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00300.html#_deprecated000012">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa">GPIO_PinReadPadStatus</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000012">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa">GPIO_PinReadPadStatus</a>. </dd></dl>
 
 </div>
 </div>
@@ -907,7 +907,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00300.html#_deprecated000013">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000013">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a>. </dd></dl>
 
 </div>
 </div>
@@ -1065,7 +1065,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00300.html#_deprecated000014">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gaf9613d5714d047051b09f86592d9cdc4">GPIO_PortDisableInterrupts</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000014">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00040.html#gaf9613d5714d047051b09f86592d9cdc4">GPIO_PortDisableInterrupts</a>. </dd></dl>
 
 </div>
 </div>

@@ -48,10 +48,10 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
     }
     LOG_U16_I(mem);
 
-    if(mem >= 0x7FFF) {
+    if (mem >= 0x7FFF) {
         LOG_W("If 32768 bytes or more bytes are available, 32767 bytes free is reported.");
     }
-    
+
     if (kStatus_SSS_Success == status) {
         LOG_I("se05x_Minimal Example Success !!!...");
     }

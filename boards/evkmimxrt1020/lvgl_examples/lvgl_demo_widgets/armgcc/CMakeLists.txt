@@ -24,60 +24,69 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lvgl_demo_widgets)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME lvgl_demo_widgets.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../RTE_Device.h"
+"${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples/RTE_Device.h"
 "${ProjDirPath}/../lvgl_demo_widgets.c"
 "${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/lv_demos.h"
+"${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples/lvgl_freertos.h"
+"${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples/lvgl_freertos.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../lvgl_support.h"
-"${ProjDirPath}/../../lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples/lvgl_support.h"
+"${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples/lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples/lvgl_demo_utils.h"
+"${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples/lvgl_demo_utils.c"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../..
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos
+    ${SdkRootDirPath}/boards/evkmimxrt1020/lvgl_examples
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/ili9341
-    ${ProjDirPath}/../../../../../components/ft6x06
-    ${ProjDirPath}/../../../../../devices/MIMXRT1021/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1021/cmsis_drivers
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../middleware/lvgl
-    ${ProjDirPath}/../../../../../devices/MIMXRT1021
-    ${ProjDirPath}/../../../../../devices/MIMXRT1021/utilities
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1021/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../CMSIS/Driver/Include
+    ${SdkRootDirPath}/components/ili9341
+    ${SdkRootDirPath}/components/ft6x06
+    ${SdkRootDirPath}/devices/MIMXRT1021/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1021/cmsis_drivers
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/middleware/lvgl
+    ${SdkRootDirPath}/devices/MIMXRT1021
+    ${SdkRootDirPath}/devices/MIMXRT1021/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1021/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1020/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/CMSIS/Driver/Include
 )
 
 # include modules
@@ -135,8 +144,6 @@ include(driver_xip_device_MIMXRT1021)
 
 include(driver_xip_board_evkmimxrt1020_MIMXRT1021)
 
-include(component_silicon_id_MIMXRT1021)
-
 include(CMSIS_Include_core_cm_MIMXRT1021)
 
 include(CMSIS_Driver_Include_I2C_MIMXRT1021)
@@ -156,15 +163,13 @@ include(utilities_misc_utilities_MIMXRT1021)
 include(device_MIMXRT1021_system_MIMXRT1021)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

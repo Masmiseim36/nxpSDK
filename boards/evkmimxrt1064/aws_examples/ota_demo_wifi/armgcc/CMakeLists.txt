@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(ota_demo_wifi)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME ota_demo_wifi.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -54,7 +60,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../config_files/ota_demo_config.h"
 "${ProjDirPath}/../mcuboot_app_support.c"
 "${ProjDirPath}/../mcuboot_app_support.h"
-"${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.c"
+"${ProjDirPath}/../bootutil_port/board_specific/sblconfig.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_config.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
+"${ProjDirPath}/../bootutil_port/flash_map.h"
+"${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
+"${ProjDirPath}/../bootutil_port/sbldef.h"
 "${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
@@ -65,11 +78,15 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../config_files
-    ${ProjDirPath}/../../..
+    ${SdkRootDirPath}/boards/evkmimxrt1064
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common
+    ${SdkRootDirPath}/boards/evkmimxrt1064/aws_examples/common
+    ${ProjDirPath}/../bootutil_port
+    ${ProjDirPath}/../bootutil_port/mcuboot_config
+    ${ProjDirPath}/../bootutil_port/sysflash
+    ${ProjDirPath}/../bootutil_port/board_specific
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -81,27 +98,34 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/drivers
-    ${ProjDirPath}/../../../../../components/flash/mflash
-    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1064
-    ${ProjDirPath}/../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../middleware/wifi_nxp
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
-    ${ProjDirPath}/../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../components/gpio
-    ${ProjDirPath}/../../../../../rtos/freertos
-    ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../components/wifi_bt_module
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/osa
+    ${SdkRootDirPath}/devices/MIMXRT1064/drivers
+    ${SdkRootDirPath}/components/flash/mflash
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt1064
+    ${SdkRootDirPath}/middleware/mbedtls
+    ${SdkRootDirPath}/middleware/wifi_nxp
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1064/utilities
+    ${SdkRootDirPath}/middleware/sdmmc
+    ${SdkRootDirPath}/components/gpio
+    ${SdkRootDirPath}/middleware/aws_iot/amazon-freertos
+    ${SdkRootDirPath}/middleware/aws_iot/ota
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/rtos/freertos/coremqtt
+    ${SdkRootDirPath}/components/wifi_bt_module
+    ${SdkRootDirPath}/middleware/pkcs11
+    ${SdkRootDirPath}/rtos/freertos/corepkcs11
+    ${SdkRootDirPath}/devices/MIMXRT1064
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1064/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1064/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/rtos/freertos/corejson
+    ${SdkRootDirPath}/middleware/tinycbor
+    ${SdkRootDirPath}/rtos/freertos/backoffalgorithm
+    ${SdkRootDirPath}/rtos/freertos/coremqtt-agent
 )
 
 # include modules
@@ -143,43 +167,41 @@ include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1064)
 
 include(component_igpio_adapter_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_demos_MIMXRT1064)
+include(middleware_amazon-freertos_demos_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT1064)
+include(middleware_amazon-freertos_demos_dev_mode_key_provisioning_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_demos_ota_mqtt_MIMXRT1064)
+include(middleware_amazon-freertos_demos_ota_mqtt_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_ota_for_aws_MIMXRT1064)
+include(middleware_aws_iot_ota_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT1064)
+include(middleware_amazon-freertos_vendor_nxp_secure_sockets_lwip_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_vendor_nxp_wifi_MIMXRT1064)
+include(middleware_amazon-freertos_vendor_nxp_wifi_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_vendor_nxp_ota_pal_MIMXRT1064)
+include(middleware_amazon-freertos_vendor_nxp_ota_pal_MIMXRT1064)
 
 include(middleware_lwip_MIMXRT1064)
 
 include(middleware_wifi_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_abstractions_transport_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_abstractions_secure_sockets_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_logging_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1064)
+include(middleware_freertos_coremqtt_MIMXRT1064)
 
 include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1064)
+include(middleware_pkcs11_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1064)
+include(middleware_freertos_corepkcs11_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT1064)
+include(middleware_freertos_corepkcs11_mbedtls_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT1064)
-
-include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1064)
+include(middleware_amazon-freertos_vendor_nxp_pkcs11_MIMXRT1064)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1064)
 
@@ -211,8 +233,6 @@ include(driver_xip_device_MIMXRT1064)
 
 include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
-include(component_silicon_id_MIMXRT1064)
-
 include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(component_mflash_common_MIMXRT1064)
@@ -227,52 +247,56 @@ include(component_osa_free_rtos_MIMXRT1064)
 
 include(driver_usdhc_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1064)
+include(middleware_wifi_common_files_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_abstractions_platform_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_network_manager_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_c_sdk_standard_common_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_demos_ota_demo_helpers_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_c_sdk_standard_common_include_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT1064)
+include(middleware_amazon-freertos_network_manager_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_tinycbor_MIMXRT1064)
+include(middleware_amazon-freertos_demos_ota_demo_helpers_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT1064)
+include(middleware_freertos_corejson_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_mqtt_agent_MIMXRT1064)
+include(middleware_tinycbor_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_coremqtt-agent_MIMXRT1064)
+include(middleware_freertos_backoffalgorithm_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_abstractions_mqtt_agent_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_demos_common_mqtt_subscription_manager_MIMXRT1064)
+include(middleware_freertos_coremqtt-agent_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT1064)
+include(middleware_aws_iot_ota_freertos_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1064)
+include(middleware_amazon-freertos_pkcs11_helpers_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMXRT1064)
+include(middleware_amazon-freertos_demos_common_mqtt_subscription_manager_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_freertos_plus_standard_tls_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1064)
+include(middleware_amazon-freertos_libraries_3rdparty_mbedtls_utils_MIMXRT1064)
+
+include(middleware_amazon-freertos_libraries_freertos_plus_standard_crypto_MIMXRT1064)
+
+include(middleware_amazon-freertos_libraries_freertos_plus_standard_utils_MIMXRT1064)
+
+include(middleware_amazon-freertos_libraries_abstractions_wifi_MIMXRT1064)
 
 include(utilities_misc_utilities_MIMXRT1064)
 
 include(device_MIMXRT1064_system_MIMXRT1064)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

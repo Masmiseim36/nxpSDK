@@ -84,6 +84,14 @@
 #define configUSE_TRACE_FACILITY             1
 #define configUSE_STATS_FORMATTING_FUNCTIONS 1
 
+/*
+ *Disable default, enable when you want to get cpu task info by adding marco CONFIG_CPU_TASK_STATUS
+ *
+ *#define configGENERATE_RUN_TIME_STATS        1
+ *#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()
+ *#define portGET_RUN_TIME_COUNTER_VALUE()  xTaskGetTickCount()
+*/
+
 /* Co-routine related definitions. */
 #define configUSE_CO_ROUTINES           0
 #define configMAX_CO_ROUTINE_PRIORITIES 2

@@ -1,6 +1,6 @@
 var a00044 =
 [
-    [ "lpuart_edma_handle_t", "a00044.html#a00271", [
+    [ "lpuart_edma_handle_t", "a00044.html#a00270", [
       [ "callback", "a00044.html#a90af06bca6fa1c835176bb2f7baae37c", null ],
       [ "userData", "a00044.html#ac699f5a5123647eefb2aebb1b1a35c4a", null ],
       [ "rxDataSizeAll", "a00044.html#a6cbb7a1abb602e48f3dcf355ad94ff14", null ],

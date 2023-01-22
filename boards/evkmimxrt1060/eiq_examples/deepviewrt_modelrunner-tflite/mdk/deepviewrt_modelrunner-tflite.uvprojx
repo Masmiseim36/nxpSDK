@@ -332,7 +332,7 @@
               <MiscControls>-fno-exceptions  -Wno-c++17-extensions  -ffp-mode=full  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1062DVL6A, FSL_RTOS_FREE_RTOS, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_RTOS_BM, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SDK_OS_BAREMETAL, USE_RTOS=1, SDK_OS_FREE_RTOS, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CMSIS_NN, SERIAL_PORT_TYPE_UART=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/silicon_id;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -657,14 +657,34 @@
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
@@ -1814,192 +1834,192 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
             <File>
               <FileName>heap_3.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phy.h</FileName>
@@ -2109,22 +2129,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_mdio.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_mdio.h</FilePath>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2342,6 +2367,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.cpp</FilePath>
             </File>
             <File>
+              <FileName>ethosu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.cpp</FilePath>
+            </File>
+            <File>
               <FileName>floor.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor.cpp</FilePath>
@@ -2357,14 +2387,49 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp</FilePath>
             </File>
             <File>
+              <FileName>lstm_eval.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pad.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pad.cpp</FilePath>
+            </File>
+            <File>
               <FileName>quantize.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.cpp</FilePath>
             </File>
             <File>
+              <FileName>reduce.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>reshape.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>strided_slice.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/strided_slice.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>sub.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.cpp</FilePath>
+            </File>
+            <File>
               <FileName>transpose_conv.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>unidirectional_sequence_lstm.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unidirectional_sequence_lstm.cpp</FilePath>
             </File>
             <File>
               <FileName>activation_utils.h</FileName>
@@ -2442,9 +2507,24 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.h</FilePath>
             </File>
             <File>
+              <FileName>lstm_eval.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval.h</FilePath>
+            </File>
+            <File>
+              <FileName>lstm_shared.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_shared.h</FilePath>
+            </File>
+            <File>
               <FileName>micro_ops.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</FilePath>
+            </File>
+            <File>
+              <FileName>micro_tensor_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_tensor_utils.h</FilePath>
             </File>
             <File>
               <FileName>micro_utils.h</FileName>
@@ -2470,6 +2550,11 @@
               <FileName>quantize.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</FilePath>
+            </File>
+            <File>
+              <FileName>reduce.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.h</FilePath>
             </File>
             <File>
               <FileName>softmax.h</FileName>
@@ -2515,6 +2600,16 @@
               <FileName>batch_to_space_nd.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>broadcast_args.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/broadcast_args.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>broadcast_to.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/broadcast_to.cpp</FilePath>
             </File>
             <File>
               <FileName>call_once.cpp</FileName>
@@ -2587,6 +2682,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/detection_postprocess.cpp</FilePath>
             </File>
             <File>
+              <FileName>div.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/div.cpp</FilePath>
+            </File>
+            <File>
               <FileName>elementwise.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elementwise.cpp</FilePath>
@@ -2595,11 +2695,6 @@
               <FileName>elu.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elu.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ethosu.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.cpp</FilePath>
             </File>
             <File>
               <FileName>exp.cpp</FileName>
@@ -2702,6 +2797,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.cpp</FilePath>
             </File>
             <File>
+              <FileName>micro_tensor_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_tensor_utils.cpp</FilePath>
+            </File>
+            <File>
               <FileName>mirror_pad.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mirror_pad.cpp</FilePath>
@@ -2720,11 +2820,6 @@
               <FileName>pack.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pack.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>pad.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pad.cpp</FilePath>
             </File>
             <File>
               <FileName>pooling_common.cpp</FileName>
@@ -2752,14 +2847,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/read_variable.cpp</FilePath>
             </File>
             <File>
-              <FileName>reduce.cpp</FileName>
+              <FileName>reduce_common.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>reshape.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce_common.cpp</FilePath>
             </File>
             <File>
               <FileName>resize_bilinear.cpp</FileName>
@@ -2775,6 +2865,11 @@
               <FileName>round.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/round.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>select.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/select.cpp</FilePath>
             </File>
             <File>
               <FileName>shape.cpp</FileName>
@@ -2812,19 +2907,14 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/split_v.cpp</FilePath>
             </File>
             <File>
+              <FileName>squared_difference.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/squared_difference.cpp</FilePath>
+            </File>
+            <File>
               <FileName>squeeze.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/squeeze.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>strided_slice.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/strided_slice.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>sub.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.cpp</FilePath>
             </File>
             <File>
               <FileName>sub_common.cpp</FileName>
@@ -2857,24 +2947,14 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/var_handle.cpp</FilePath>
             </File>
             <File>
+              <FileName>while.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/while.cpp</FilePath>
+            </File>
+            <File>
               <FileName>zeros_like.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/zeros_like.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3102,11 +3182,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3120,16 +3195,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3187,6 +3252,11 @@
           <GroupName>eiq/tensorflow-lite/tensorflow/lite</GroupName>
           <Files>
             <File>
+              <FileName>context_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h</FilePath>
+            </File>
+            <File>
               <FileName>portable_type_to_tflitetype.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</FilePath>
@@ -3202,9 +3272,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</FilePath>
             </File>
             <File>
-              <FileName>common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.c</FilePath>
+              <FileName>common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.cpp</FilePath>
             </File>
             <File>
               <FileName>builtin_op_data.h</FileName>
@@ -3397,6 +3467,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/binary_function.h</FilePath>
             </File>
             <File>
+              <FileName>broadcast_args.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/broadcast_args.h</FilePath>
+            </File>
+            <File>
+              <FileName>broadcast_to.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/broadcast_to.h</FilePath>
+            </File>
+            <File>
               <FileName>ceil.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/ceil.h</FilePath>
@@ -3440,6 +3520,11 @@
               <FileName>dequantize.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/dequantize.h</FilePath>
+            </File>
+            <File>
+              <FileName>div.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/div.h</FilePath>
             </File>
             <File>
               <FileName>elu.h</FileName>
@@ -3570,6 +3655,11 @@
               <FileName>round.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/round.h</FilePath>
+            </File>
+            <File>
+              <FileName>select.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/select.h</FilePath>
             </File>
             <File>
               <FileName>slice.h</FileName>
@@ -3742,6 +3832,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.h</FilePath>
             </File>
             <File>
+              <FileName>micro_allocation_info.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocation_info.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>micro_allocation_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocation_info.h</FilePath>
+            </File>
+            <File>
               <FileName>micro_allocator.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.cpp</FilePath>
@@ -3795,6 +3895,16 @@
               <FileName>micro_interpreter.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.h</FilePath>
+            </File>
+            <File>
+              <FileName>micro_log.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_log.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>micro_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_log.h</FilePath>
             </File>
             <File>
               <FileName>micro_mutable_op_resolver.h</FileName>
@@ -3866,25 +3976,55 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</GroupName>
+          <Files>
             <File>
-              <FileName>recording_simple_memory_allocator.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>recording_simple_memory_allocator.h</FileName>
+              <FileName>ibuffer_allocator.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</FilePath>
             </File>
             <File>
-              <FileName>simple_memory_allocator.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>simple_memory_allocator.h</FileName>
+              <FileName>non_persistent_arena_buffer_allocator.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>persistent_arena_buffer_allocator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>recording_single_arena_buffer_allocator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>single_arena_buffer_allocator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>non_persistent_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>persistent_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>recording_single_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>single_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -4232,6 +4372,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>core_cm85.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm85.h</FilePath>
+            </File>
+            <File>
               <FileName>core_sc000.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_sc000.h</FilePath>
@@ -4247,6 +4392,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_star.h</FilePath>
             </File>
             <File>
+              <FileName>core_starmc1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_starmc1.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv7.h</FilePath>
@@ -4255,6 +4405,11 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>pac_armv81.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/pac_armv81.h</FilePath>
             </File>
             <File>
               <FileName>pmu_armv8.h</FileName>
@@ -4572,9 +4727,19 @@
           <GroupName>eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_elementwise_add_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_elementwise_add_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s8.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_elementwise_mul_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s16.c</FilePath>
             </File>
             <File>
               <FileName>arm_elementwise_mul_s8.c</FileName>
@@ -4697,6 +4862,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_3x3_s8.c</FilePath>
             </File>
             <File>
+              <FileName>arm_depthwise_conv_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_depthwise_conv_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c</FilePath>
@@ -4745,11 +4915,6 @@
               <FileName>arm_nn_mat_mult_kernel_s8_s16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_s8_s16_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16_reordered.c</FilePath>
             </File>
             <File>
               <FileName>arm_nn_mat_mult_s8.c</FileName>
@@ -4902,9 +5067,19 @@
           <GroupName>eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_avgpool_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_avgpool_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s8.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_max_pool_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s16.c</FilePath>
             </File>
             <File>
               <FileName>arm_max_pool_s8.c</FileName>
@@ -4936,11 +5111,21 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SVDFunctions/arm_svdf_s8.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_svdf_state_s16_s8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SVDFunctions/arm_svdf_state_s16_s8.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_nn_softmax_common_s8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_nn_softmax_common_s8.c</FilePath>
+            </File>
             <File>
               <FileName>arm_softmax_q15.c</FileName>
               <FileType>1</FileType>
@@ -4952,9 +5137,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c</FilePath>
             </File>
             <File>
+              <FileName>arm_softmax_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_softmax_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_s8_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8_s16.c</FilePath>
             </File>
             <File>
               <FileName>arm_softmax_u8.c</FileName>
@@ -5314,7 +5509,7 @@
               <MiscControls>-Os  -fno-exceptions  -Wno-c++17-extensions  -ffp-mode=full  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1062DVL6A, FSL_RTOS_FREE_RTOS, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_RTOS_BM, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SDK_OS_BAREMETAL, USE_RTOS=1, SDK_OS_FREE_RTOS, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CMSIS_NN, SERIAL_PORT_TYPE_UART=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/silicon_id;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5639,14 +5834,34 @@
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
@@ -6796,192 +7011,192 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
             <File>
               <FileName>heap_3.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phy.h</FileName>
@@ -7091,22 +7306,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_mdio.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_mdio.h</FilePath>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7324,6 +7544,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.cpp</FilePath>
             </File>
             <File>
+              <FileName>ethosu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.cpp</FilePath>
+            </File>
+            <File>
               <FileName>floor.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor.cpp</FilePath>
@@ -7339,14 +7564,49 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp</FilePath>
             </File>
             <File>
+              <FileName>lstm_eval.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pad.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pad.cpp</FilePath>
+            </File>
+            <File>
               <FileName>quantize.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.cpp</FilePath>
             </File>
             <File>
+              <FileName>reduce.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>reshape.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>strided_slice.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/strided_slice.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>sub.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.cpp</FilePath>
+            </File>
+            <File>
               <FileName>transpose_conv.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>unidirectional_sequence_lstm.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unidirectional_sequence_lstm.cpp</FilePath>
             </File>
             <File>
               <FileName>activation_utils.h</FileName>
@@ -7424,9 +7684,24 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.h</FilePath>
             </File>
             <File>
+              <FileName>lstm_eval.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval.h</FilePath>
+            </File>
+            <File>
+              <FileName>lstm_shared.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_shared.h</FilePath>
+            </File>
+            <File>
               <FileName>micro_ops.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</FilePath>
+            </File>
+            <File>
+              <FileName>micro_tensor_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_tensor_utils.h</FilePath>
             </File>
             <File>
               <FileName>micro_utils.h</FileName>
@@ -7452,6 +7727,11 @@
               <FileName>quantize.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</FilePath>
+            </File>
+            <File>
+              <FileName>reduce.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.h</FilePath>
             </File>
             <File>
               <FileName>softmax.h</FileName>
@@ -7497,6 +7777,16 @@
               <FileName>batch_to_space_nd.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>broadcast_args.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/broadcast_args.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>broadcast_to.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/broadcast_to.cpp</FilePath>
             </File>
             <File>
               <FileName>call_once.cpp</FileName>
@@ -7569,6 +7859,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/detection_postprocess.cpp</FilePath>
             </File>
             <File>
+              <FileName>div.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/div.cpp</FilePath>
+            </File>
+            <File>
               <FileName>elementwise.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elementwise.cpp</FilePath>
@@ -7577,11 +7872,6 @@
               <FileName>elu.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elu.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ethosu.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.cpp</FilePath>
             </File>
             <File>
               <FileName>exp.cpp</FileName>
@@ -7684,6 +7974,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.cpp</FilePath>
             </File>
             <File>
+              <FileName>micro_tensor_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_tensor_utils.cpp</FilePath>
+            </File>
+            <File>
               <FileName>mirror_pad.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mirror_pad.cpp</FilePath>
@@ -7702,11 +7997,6 @@
               <FileName>pack.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pack.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>pad.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pad.cpp</FilePath>
             </File>
             <File>
               <FileName>pooling_common.cpp</FileName>
@@ -7734,14 +8024,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/read_variable.cpp</FilePath>
             </File>
             <File>
-              <FileName>reduce.cpp</FileName>
+              <FileName>reduce_common.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>reshape.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce_common.cpp</FilePath>
             </File>
             <File>
               <FileName>resize_bilinear.cpp</FileName>
@@ -7757,6 +8042,11 @@
               <FileName>round.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/round.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>select.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/select.cpp</FilePath>
             </File>
             <File>
               <FileName>shape.cpp</FileName>
@@ -7794,19 +8084,14 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/split_v.cpp</FilePath>
             </File>
             <File>
+              <FileName>squared_difference.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/squared_difference.cpp</FilePath>
+            </File>
+            <File>
               <FileName>squeeze.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/squeeze.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>strided_slice.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/strided_slice.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>sub.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.cpp</FilePath>
             </File>
             <File>
               <FileName>sub_common.cpp</FileName>
@@ -7839,24 +8124,14 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/var_handle.cpp</FilePath>
             </File>
             <File>
+              <FileName>while.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/while.cpp</FilePath>
+            </File>
+            <File>
               <FileName>zeros_like.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/zeros_like.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8084,11 +8359,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -8102,16 +8372,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -8169,6 +8429,11 @@
           <GroupName>eiq/tensorflow-lite/tensorflow/lite</GroupName>
           <Files>
             <File>
+              <FileName>context_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h</FilePath>
+            </File>
+            <File>
               <FileName>portable_type_to_tflitetype.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</FilePath>
@@ -8184,9 +8449,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</FilePath>
             </File>
             <File>
-              <FileName>common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.c</FilePath>
+              <FileName>common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.cpp</FilePath>
             </File>
             <File>
               <FileName>builtin_op_data.h</FileName>
@@ -8379,6 +8644,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/binary_function.h</FilePath>
             </File>
             <File>
+              <FileName>broadcast_args.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/broadcast_args.h</FilePath>
+            </File>
+            <File>
+              <FileName>broadcast_to.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/broadcast_to.h</FilePath>
+            </File>
+            <File>
               <FileName>ceil.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/ceil.h</FilePath>
@@ -8422,6 +8697,11 @@
               <FileName>dequantize.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/dequantize.h</FilePath>
+            </File>
+            <File>
+              <FileName>div.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/div.h</FilePath>
             </File>
             <File>
               <FileName>elu.h</FileName>
@@ -8552,6 +8832,11 @@
               <FileName>round.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/round.h</FilePath>
+            </File>
+            <File>
+              <FileName>select.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/select.h</FilePath>
             </File>
             <File>
               <FileName>slice.h</FileName>
@@ -8724,6 +9009,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.h</FilePath>
             </File>
             <File>
+              <FileName>micro_allocation_info.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocation_info.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>micro_allocation_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocation_info.h</FilePath>
+            </File>
+            <File>
               <FileName>micro_allocator.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.cpp</FilePath>
@@ -8777,6 +9072,16 @@
               <FileName>micro_interpreter.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.h</FilePath>
+            </File>
+            <File>
+              <FileName>micro_log.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_log.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>micro_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_log.h</FilePath>
             </File>
             <File>
               <FileName>micro_mutable_op_resolver.h</FileName>
@@ -8848,25 +9153,55 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</GroupName>
+          <Files>
             <File>
-              <FileName>recording_simple_memory_allocator.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>recording_simple_memory_allocator.h</FileName>
+              <FileName>ibuffer_allocator.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</FilePath>
             </File>
             <File>
-              <FileName>simple_memory_allocator.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>simple_memory_allocator.h</FileName>
+              <FileName>non_persistent_arena_buffer_allocator.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>persistent_arena_buffer_allocator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>recording_single_arena_buffer_allocator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>single_arena_buffer_allocator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</FilePath>
+            </File>
+            <File>
+              <FileName>non_persistent_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>persistent_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>recording_single_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>single_arena_buffer_allocator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -9214,6 +9549,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>core_cm85.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm85.h</FilePath>
+            </File>
+            <File>
               <FileName>core_sc000.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_sc000.h</FilePath>
@@ -9229,6 +9569,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_star.h</FilePath>
             </File>
             <File>
+              <FileName>core_starmc1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_starmc1.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv7.h</FilePath>
@@ -9237,6 +9582,11 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>pac_armv81.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/pac_armv81.h</FilePath>
             </File>
             <File>
               <FileName>pmu_armv8.h</FileName>
@@ -9554,9 +9904,19 @@
           <GroupName>eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_elementwise_add_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_elementwise_add_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s8.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_elementwise_mul_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s16.c</FilePath>
             </File>
             <File>
               <FileName>arm_elementwise_mul_s8.c</FileName>
@@ -9679,6 +10039,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_3x3_s8.c</FilePath>
             </File>
             <File>
+              <FileName>arm_depthwise_conv_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_depthwise_conv_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c</FilePath>
@@ -9727,11 +10092,6 @@
               <FileName>arm_nn_mat_mult_kernel_s8_s16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_s8_s16_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16_reordered.c</FilePath>
             </File>
             <File>
               <FileName>arm_nn_mat_mult_s8.c</FileName>
@@ -9884,9 +10244,19 @@
           <GroupName>eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_avgpool_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_avgpool_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s8.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_max_pool_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s16.c</FilePath>
             </File>
             <File>
               <FileName>arm_max_pool_s8.c</FileName>
@@ -9918,11 +10288,21 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SVDFunctions/arm_svdf_s8.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_svdf_state_s16_s8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SVDFunctions/arm_svdf_state_s16_s8.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_nn_softmax_common_s8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_nn_softmax_common_s8.c</FilePath>
+            </File>
             <File>
               <FileName>arm_softmax_q15.c</FileName>
               <FileType>1</FileType>
@@ -9934,9 +10314,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c</FilePath>
             </File>
             <File>
+              <FileName>arm_softmax_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s16.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_softmax_s8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_s8_s16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8_s16.c</FilePath>
             </File>
             <File>
               <FileName>arm_softmax_u8.c</FileName>

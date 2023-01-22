@@ -348,9 +348,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/common/rtt</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -625,6 +627,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1434,9 +1438,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/common/rtt</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -1711,6 +1717,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2520,9 +2528,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/common/rtt</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -2797,6 +2807,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3604,9 +3616,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/common/rtt</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -3881,6 +3895,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4690,9 +4706,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/common/rtt</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -4967,6 +4985,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5776,9 +5796,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/common/rtt</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -6053,6 +6075,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../components/rtt/RTT</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -6527,24 +6551,9 @@
     <file>
       <name>$PROJ_DIR$/../../common/fmstr_example/freemaster_example.h</name>
     </file>
-    <group>
-      <name>segger_rtt</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_Conf.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_printf.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_ASM_ARMv7M.S</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../SEGGER_RTT_Conf.h</name>
+    </file>
     <group>
       <name>example_data</name>
       <file>
@@ -6759,6 +6768,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6767,6 +6782,30 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
+  </group>
+  <group>
+    <name>rtt</name>
+    <group>
+      <name>RTT</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/rtt/RTT/SEGGER_RTT.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/rtt/RTT/SEGGER_RTT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/rtt/RTT/SEGGER_RTT_ASM_ARMv7M.S</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/rtt/RTT/SEGGER_RTT_printf.c</name>
+      </file>
+    </group>
+    <group>
+      <name>Syscalls</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/rtt/Syscalls/SEGGER_RTT_Syscalls_IAR.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>drivers</name>
@@ -6867,19 +6906,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

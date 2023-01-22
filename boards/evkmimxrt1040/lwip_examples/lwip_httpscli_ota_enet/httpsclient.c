@@ -27,7 +27,6 @@
 #include "network_cfg.h"
 #include "flash_helper.h"
 #include "ota_config.h"
-#include "mcuboot_app_support.h"
 
 /*******************************************************************************
  * Definitions
@@ -86,18 +85,6 @@ static int _iot_tls_verify_cert(void *data, mbedtls_x509_crt *crt, int depth, ui
     mbedtls_x509_crt_info(buf, sizeof(buf) - 1, "", crt);
     PRINTF("%s", buf);
 
-#if 0
-    if ((*flags) == 0)
-    {
-        PRINTF("  This certificate has no flags\n");
-    }
-    else
-    {
-        PRINTF(buf, sizeof(buf), "  ! ", *flags);
-        PRINTF("%s\n", buf);
-    }
-#endif
-
     return 0;
 }
 
@@ -110,7 +97,7 @@ static void my_debug(void *ctx, int level, const char *file, int line, const cha
 }
 #endif
 
-int https_client_tls_init()
+int https_client_tls_init(const char *host, const char *service)
 {
     int ret          = 0;
     const char *pers = "https_ota_demo";
@@ -121,6 +108,11 @@ int https_client_tls_init()
 #ifdef MBEDTLS_DEBUG_C
     unsigned char buf[MBEDTLS_SSL_MAX_CONTENT_LEN + 1];
 #endif
+
+    if (!host || !service)
+    {
+        return NULL_VALUE_ERROR;
+    }
 
     mbedtls_ssl_init(&(tlsDataParams.ssl));
     mbedtls_ssl_config_init(&(tlsDataParams.conf));
@@ -173,7 +165,7 @@ int https_client_tls_init()
         return NETWORK_PK_PRIVATE_KEY_PARSE_ERROR;
     }
 
-    PRINTF("  . Connecting to %s:%s\n", OTA_SERVER_NAME, OTA_SERVER_PORT);
+    PRINTF("  . Connecting to %s:%s\n", host, service);
 
     struct addrinfo hints;
     struct addrinfo *res;
@@ -182,7 +174,7 @@ int https_client_tls_init()
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags    = AI_PASSIVE;
 
-    ret = getaddrinfo(OTA_SERVER_NAME, OTA_SERVER_PORT, &hints, &res);
+    ret = getaddrinfo(host, service, &hints, &res);
     if ((ret != 0) || (res == NULL))
     {
         return NETWORK_ERR_NET_UNKNOWN_HOST;
@@ -213,7 +205,8 @@ int https_client_tls_init()
     }
     PRINTF(" ok\n");
 
-    mbedtls_ssl_conf_verify(&(tlsDataParams.conf), _iot_tls_verify_cert, NULL);
+    /* mbedtls_ssl_conf_verify(&(tlsDataParams.conf), _iot_tls_verify_cert, NULL); */
+
     if (ServerVerificationFlag == true)
     {
         mbedtls_ssl_conf_authmode(&(tlsDataParams.conf), MBEDTLS_SSL_VERIFY_REQUIRED);
@@ -236,7 +229,7 @@ int https_client_tls_init()
         PRINTF(" failed\n  ! mbedtls_ssl_setup returned -0x%x\n\n", -ret);
         return SSL_CONNECTION_ERROR;
     }
-    if ((ret = mbedtls_ssl_set_hostname(&(tlsDataParams.ssl), OTA_SERVER_NAME)) != 0)
+    if ((ret = mbedtls_ssl_set_hostname(&(tlsDataParams.ssl), host)) != 0)
     {
         PRINTF(" failed\n  ! mbedtls_ssl_set_hostname returned %d\n\n", ret);
         return SSL_CONNECTION_ERROR;
@@ -245,7 +238,7 @@ int https_client_tls_init()
     mbedtls_ssl_set_bio(&(tlsDataParams.ssl), &(tlsDataParams.fd), lwipSend, (mbedtls_ssl_recv_t *)lwipRecv, NULL);
 
     PRINTF("  . SSL state connect : %d \n", tlsDataParams.ssl.state);
-    PRINTF("  . Performing the SSL/TLS handshake...");
+    PRINTF("  . Performing the SSL/TLS handshake...\n");
     while ((ret = mbedtls_ssl_handshake(&(tlsDataParams.ssl))) != 0)
     {
         if (ret != MBEDTLS_ERR_SSL_WANT_READ && ret != MBEDTLS_ERR_SSL_WANT_WRITE)
@@ -321,16 +314,20 @@ void https_client_tls_release()
     mbedtls_entropy_free(&(tlsDataParams.entropy));
 }
 
-int https_client_ota_download(const char *fPath)
+/*
+ * host - used in HTTP header in Host field
+ * fPath - path to requested file
+ * dstAddr - flash address where file will be downloaded
+ * dstSize - available size for file download
+ * fSize - actual file size downloaded
+ */
+int https_client_ota_download(const char *host, const char *fPath, uint32_t dstAddrPhy, size_t dstSize, size_t *fSize)
 {
     NetworkContext_t coreHttp_NetCtx = {&tlsDataParams.ssl};
 
     TransportInterface_t ti = {.recv = coreHttp_recv, .send = coreHttp_send, .pNetworkContext = &coreHttp_NetCtx};
 
-    struct OtaHttpConf httpConf = {.ti          = &ti,
-                                   .dataBuf     = https_buf,
-                                   .dataBufSize = sizeof(https_buf),
-                                   .hostName    = OTA_SERVER_NAME ":" OTA_SERVER_PORT};
+    struct OtaHttpConf httpConf = {.ti = &ti, .dataBuf = https_buf, .dataBufSize = sizeof(https_buf), .hostName = host};
 
     int ret;
     unsigned char md_net[16], md_flash[16];
@@ -339,12 +336,10 @@ int https_client_ota_download(const char *fPath)
     mbedtls_md5_init(&md_ctx);
     mbedtls_md5_starts_ret(&md_ctx);
 
-    uint32_t addr_log = OTA_STORAGE_ADDR;
-    uint32_t addr_phy = mflash_drv_log2phys((void *)addr_log, 0);
-
+    uint32_t addr_phy   = dstAddrPhy;
     uint32_t file_size  = 0;
     size_t bytes_recvd  = 0;
-    size_t storage_size = OTA_STORAGE_SIZE;
+    size_t storage_size = dstSize;
 
     /* Determine File Size */
 
@@ -444,10 +439,9 @@ int https_client_ota_download(const char *fPath)
         return EXIT_FAILURE;
     }
 
-    if (bl_verify_image((void *)OTA_STORAGE_ADDR, file_size) <= 0)
+    if (fSize)
     {
-        PRINTF("FAILED to verify downloaded image.\n");
-        return EXIT_FAILURE;
+        *fSize = file_size;
     }
 
     return SUCCESS;

@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS PKCS#11 for A71CH V1.0.0
+ * Amazon FreeRTOS PKCS#11 for NXP Secure element
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright 2018 NXP
  *
@@ -56,7 +56,7 @@ SemaphoreHandle_t xSemaphore;
 
 #if SSS_HAVE_MBEDTLS_ALT
 static mbedtls_ecp_group_id curve_list[16] = {
-    0,
+    MBEDTLS_ECP_DP_NONE,
 };
 #endif // SSS_HAVE_MBEDTLS_ALT
 
@@ -157,7 +157,7 @@ int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
             compareLen = objectIdLen * sizeof(uint32_t);
         }
         if (0 == memcmp(object_identifiers[i].identifier, objectId, compareLen)) {
-            curve_list[0] = object_identifiers[i].groupId;
+            curve_list[0] = (mbedtls_ecp_group_id) object_identifiers[i].groupId;
             curve_list[1] = MBEDTLS_ECP_DP_NONE;
             mbedtls_ssl_conf_curves(conf, curve_list);
             return 0;

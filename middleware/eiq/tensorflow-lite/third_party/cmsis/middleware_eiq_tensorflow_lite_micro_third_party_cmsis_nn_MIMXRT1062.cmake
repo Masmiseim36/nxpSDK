@@ -7,7 +7,9 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ActivationFunctions/arm_relu6_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_w.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_x.c
@@ -30,6 +32,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_3x3_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8_opt.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c
@@ -40,7 +43,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16.c
-    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16_reordered.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c
@@ -68,20 +70,26 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_with_offset.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ReshapeFunctions/arm_reshape_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SVDFunctions/arm_svdf_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SVDFunctions/arm_svdf_state_s16_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_nn_softmax_common_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_u8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_with_batch_q7.c
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/.
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Include
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/Core/Include

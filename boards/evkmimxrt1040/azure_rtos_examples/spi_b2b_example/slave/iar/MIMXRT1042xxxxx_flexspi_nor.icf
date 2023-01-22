@@ -86,7 +86,19 @@ define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block QACCESS_CODE  { section CodeQuickAccess };
 define block QACCESS_DATA  { section DataQuickAccess };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess};
+initialize by copy {
+  readwrite,
+
+  /* Explicitly place flash operation functions in RAM. */
+  object mflash_drv.o,
+  object fsl_flexspi.o,
+  object fsl_cache.o,
+
+  section .textrw,
+  section CodeQuickAccess,
+  section DataQuickAccess
+};
+
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };

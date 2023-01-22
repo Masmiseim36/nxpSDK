@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(emwin_serial_terminal)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME emwin_serial_terminal.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -44,25 +50,25 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
+    ${SdkRootDirPath}/boards/evkbimxrt1050/emwin_examples/common
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
-    ${ProjDirPath}/../../../../../components/ft5406_rt
-    ${ProjDirPath}/../../../../../components/gt911
-    ${ProjDirPath}/../../../../../components/video
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../middleware/emwin
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
+    ${SdkRootDirPath}/components/ft5406_rt
+    ${SdkRootDirPath}/components/gt911
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1052/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware/emwin
+    ${SdkRootDirPath}/devices/MIMXRT1052
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1052/xip
+    ${SdkRootDirPath}/boards/evkbimxrt1050/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -77,6 +83,8 @@ include(driver_ft5406_rt_MIMXRT1052)
 include(driver_gt911_MIMXRT1052)
 
 include(driver_video-common_MIMXRT1052)
+
+include(driver_gpt_MIMXRT1052)
 
 include(utility_debug_console_lite_MIMXRT1052)
 
@@ -106,8 +114,6 @@ include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
-include(component_silicon_id_MIMXRT1052)
-
 include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
@@ -115,15 +121,13 @@ include(utilities_misc_utilities_MIMXRT1052)
 include(device_MIMXRT1052_system_MIMXRT1052)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)

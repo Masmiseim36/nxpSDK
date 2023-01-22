@@ -119,14 +119,15 @@ enum {
 	EDS_SLOT_EID = sys_cpu_to_be16(BIT(3)),
 };
 
-__packed struct eds_capabilities {
+STRUCT_PACKED_PRE
+struct eds_capabilities {
 	uint8_t version;
 	uint8_t slots;
 	uint8_t uids;
 	uint8_t adv_types;
 	uint16_t slot_types;
 	uint8_t tx_power;
-};
+}STRUCT_PACKED_POST;
 
 static struct eds_capabilities eds_caps = {
 	.version = EDS_VERSION,

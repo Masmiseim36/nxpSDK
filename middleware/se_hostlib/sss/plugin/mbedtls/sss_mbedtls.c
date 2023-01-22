@@ -191,7 +191,7 @@ int sss_mbedtls_associate_keypair(mbedtls_pk_context *pkey, sss_object_t *pkeyOb
             return 1;
         }
 
-        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = get_group_id(objectId, objectIdLen);
+        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = (mbedtls_ecp_group_id) get_group_id(objectId, objectIdLen);
         if (((mbedtls_ecp_keypair *)pax_ctx)->grp.id == MBEDTLS_ECP_DP_NONE) {
             LOG_E(" sss_mbedtls_associate_keypair: Group id not found...\n");
             if (pax_ctx != NULL) {
@@ -275,7 +275,7 @@ int sss_mbedtls_associate_pubkey(mbedtls_pk_context *pkey, sss_object_t *pkeyObj
             return 1;
         }
 
-        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = get_group_id(objectId, objectIdLen);
+        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = (mbedtls_ecp_group_id) get_group_id(objectId, objectIdLen);
         if (((mbedtls_ecp_keypair *)pax_ctx)->grp.id == MBEDTLS_ECP_DP_NONE) {
             LOG_E(" sss_mbedtls_associate_pubkey: Group id not found...\n");
             if (pax_ctx != NULL) {
@@ -344,7 +344,7 @@ int sss_mbedtls_associate_ecdhctx(
         return 1;
     }
 
-    handshake->ecdh_ctx.grp.id = get_group_id(objectId, objectIdLen);
+    handshake->ecdh_ctx.grp.id = (mbedtls_ecp_group_id) get_group_id(objectId, objectIdLen);
 
     handshake->ecdh_ctx.grp.pSSSObject = pSSSObject;
     handshake->ecdh_ctx.grp.hostKs     = hostKs;

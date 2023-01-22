@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/segger_rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/boards/common/rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/rtt/RTT;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -348,7 +348,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>..;../../../../../components/rtt/RTT</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -395,6 +395,11 @@
               <FileType>5</FileType>
               <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
+            <File>
+              <FileName>SEGGER_RTT_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -439,36 +444,6 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/segger_rtt</GroupName>
-          <Files>
-            <File>
-              <FileName>SEGGER_RTT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_Conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_Conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -646,6 +621,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -659,6 +644,41 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/RTT</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_printf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/Syscalls</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT_Syscalls_KEIL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/Syscalls/SEGGER_RTT_Syscalls_KEIL.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -956,11 +976,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -974,16 +989,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1336,7 +1341,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/segger_rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/boards/common/rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/rtt/RTT;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1354,7 +1359,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>..;../../../../../components/rtt/RTT</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1401,6 +1406,11 @@
               <FileType>5</FileType>
               <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
+            <File>
+              <FileName>SEGGER_RTT_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1445,36 +1455,6 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/segger_rtt</GroupName>
-          <Files>
-            <File>
-              <FileName>SEGGER_RTT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_Conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_Conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1652,6 +1632,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1665,6 +1655,41 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/RTT</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_printf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/Syscalls</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT_Syscalls_KEIL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/Syscalls/SEGGER_RTT_Syscalls_KEIL.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1962,11 +1987,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1980,16 +2000,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2342,7 +2352,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/segger_rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/boards/common/rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/rtt/RTT;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2360,7 +2370,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>..;../../../../../components/rtt/RTT</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2407,6 +2417,11 @@
               <FileType>5</FileType>
               <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
+            <File>
+              <FileName>SEGGER_RTT_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2451,36 +2466,6 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/segger_rtt</GroupName>
-          <Files>
-            <File>
-              <FileName>SEGGER_RTT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_Conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_Conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2658,6 +2643,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2671,6 +2666,41 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/RTT</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_printf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/Syscalls</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT_Syscalls_KEIL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/Syscalls/SEGGER_RTT_Syscalls_KEIL.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2968,11 +2998,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2986,16 +3011,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3348,7 +3363,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/segger_rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/boards/common/rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/rtt/RTT;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3366,7 +3381,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>..;../../../../../components/rtt/RTT</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3413,6 +3428,11 @@
               <FileType>5</FileType>
               <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
+            <File>
+              <FileName>SEGGER_RTT_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3457,36 +3477,6 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/segger_rtt</GroupName>
-          <Files>
-            <File>
-              <FileName>SEGGER_RTT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_Conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_Conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3664,6 +3654,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3677,6 +3677,41 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/RTT</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_printf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/Syscalls</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT_Syscalls_KEIL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/Syscalls/SEGGER_RTT_Syscalls_KEIL.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3974,11 +4009,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3992,16 +4022,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4354,7 +4374,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/segger_rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/boards/common/rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/rtt/RTT;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4372,7 +4392,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>..;../../../../../components/rtt/RTT</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4419,6 +4439,11 @@
               <FileType>5</FileType>
               <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
+            <File>
+              <FileName>SEGGER_RTT_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4463,36 +4488,6 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/segger_rtt</GroupName>
-          <Files>
-            <File>
-              <FileName>SEGGER_RTT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_Conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_Conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -4670,6 +4665,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -4683,6 +4688,41 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/RTT</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_printf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/Syscalls</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT_Syscalls_KEIL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/Syscalls/SEGGER_RTT_Syscalls_KEIL.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4980,11 +5020,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4998,16 +5033,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -5360,7 +5385,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/src/support/segger_rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../middleware/freemaster/boards/common/rtt;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/rtt/RTT;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5378,7 +5403,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>..;../../../../../components/rtt/RTT</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5425,6 +5450,11 @@
               <FileType>5</FileType>
               <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
+            <File>
+              <FileName>SEGGER_RTT_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5469,36 +5499,6 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/segger_rtt</GroupName>
-          <Files>
-            <File>
-              <FileName>SEGGER_RTT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_Conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_Conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/segger_rtt/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -5676,6 +5676,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -5689,6 +5699,41 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/RTT</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_ASM_ARMv7M.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_ASM_ARMv7M.S</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/RTT/SEGGER_RTT_printf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rtt/Syscalls</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_RTT_Syscalls_KEIL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/rtt/Syscalls/SEGGER_RTT_Syscalls_KEIL.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5986,11 +6031,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -6004,16 +6044,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

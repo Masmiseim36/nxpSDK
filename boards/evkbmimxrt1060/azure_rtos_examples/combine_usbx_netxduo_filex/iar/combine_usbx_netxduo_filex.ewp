@@ -363,13 +363,12 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -406,6 +405,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -415,8 +415,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1509,13 +1509,12 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -1552,6 +1551,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -1561,8 +1561,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2654,13 +2654,12 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -2697,6 +2696,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -2706,8 +2706,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3800,13 +3800,12 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -3843,6 +3842,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -3852,8 +3852,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4651,6 +4651,12 @@
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio10.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_class_audio20.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_dcd_sim_slave.h</name>
             </file>
             <file>
@@ -4693,6 +4699,9 @@
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_ccid.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</name>
             </file>
             <file>
@@ -4715,6 +4724,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_storage.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_video.h</name>
             </file>
           </group>
         </group>
@@ -5121,6 +5133,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_http_proxy_client.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</name>
@@ -5544,31 +5559,61 @@
     </file>
   </group>
   <group>
-    <name>mdio</name>
+    <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_enet.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/phy/fsl_mdio.h</name>
-    </file>
-  </group>
-  <group>
-    <name>phy</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/phy/fsl_phy.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
     </file>
   </group>
   <group>
     <name>component</name>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/phy/fsl_phy.h</name>
+      </file>
+    </group>
     <group>
       <name>osa</name>
       <file>
@@ -5685,48 +5730,6 @@
     </group>
   </group>
   <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_enet.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</name>
-    </file>
-  </group>
-  <group>
     <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
@@ -5789,19 +5792,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

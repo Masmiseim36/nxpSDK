@@ -1,6 +1,6 @@
 var a00025 =
 [
-    [ "flexio_i2s_edma_handle_t", "a00025.html#a00245", [
+    [ "flexio_i2s_edma_handle_t", "a00025.html#a00244", [
       [ "dmaHandle", "a00025.html#a12a2f2c760cbe15e7fb1f0951a0c7d9b", null ],
       [ "bytesPerFrame", "a00025.html#abd5c06ded3088c6359591a31379ad075", null ],
       [ "nbytes", "a00025.html#a0c4f3ae0b658cf448c53bb0c85859989", null ],

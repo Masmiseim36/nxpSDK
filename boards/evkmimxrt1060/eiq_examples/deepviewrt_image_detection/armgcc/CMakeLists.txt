@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(deepviewrt_image_detection)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME deepviewrt_image_detection.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -49,23 +55,23 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.c"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../source
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../components/ft5406_rt
-    ${ProjDirPath}/../../../../../middleware/eiq
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities/debug_console_lite
+    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
+    ${SdkRootDirPath}/components/ft5406_rt
+    ${SdkRootDirPath}/middleware/eiq
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/devices/MIMXRT1062
+    ${SdkRootDirPath}/devices/MIMXRT1062/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1060/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -120,15 +126,13 @@ include(utilities_misc_utilities_MIMXRT1062)
 include(device_MIMXRT1062_system_MIMXRT1062)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepview-rt-cortex-m7f.a)

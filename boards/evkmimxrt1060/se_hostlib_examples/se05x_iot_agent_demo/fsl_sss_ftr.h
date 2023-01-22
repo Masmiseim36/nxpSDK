@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2022 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -53,6 +53,9 @@
 /** AUTH */
 #define SSS_HAVE_APPLET_AUTH 0
 
+/** SE050E */
+#define SSS_HAVE_APPLET_SE050_E 0
+
 /** NXP Internal testing Applet */
 #define SSS_HAVE_APPLET_LOOPBACK 0
 
@@ -67,6 +70,7 @@
     + SSS_HAVE_APPLET_SE05X_L        \
     + SSS_HAVE_APPLET_SE051_UWB      \
     + SSS_HAVE_APPLET_AUTH           \
+    + SSS_HAVE_APPLET_SE050_E        \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) > 1)
 #        error "Enable only one of 'PTMW_Applet'"
@@ -84,6 +88,7 @@
     + SSS_HAVE_APPLET_SE05X_L        \
     + SSS_HAVE_APPLET_SE051_UWB      \
     + SSS_HAVE_APPLET_AUTH           \
+    + SSS_HAVE_APPLET_SE050_E        \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) == 0)
 #        error "Enable at-least one of 'PTMW_Applet'"
@@ -91,7 +96,7 @@
 
 
 
-/** SE05X_Ver : SE05X Applet version.
+/** PTMW_SE05X_Ver : SE05X Applet version.
  *
  * Selection of Applet version 03_XX enables SE050 features.
  * Selection of Applet version 06_00 enables SE051 features.
@@ -135,10 +140,6 @@
 /** Use mbedTLS as host crypto */
 #define SSS_HAVE_HOSTCRYPTO_MBEDTLS 1
 
-/** Use mbed-crypto as host crypto
- * Required for ARM-PSA / TF-M */
-#define SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO 0
-
 /** Use OpenSSL as host crypto */
 #define SSS_HAVE_HOSTCRYPTO_OPENSSL 0
 
@@ -159,7 +160,6 @@
 
 #if (( 0                             \
     + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
-    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
     + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
     + SSS_HAVE_HOSTCRYPTO_USER       \
     + SSS_HAVE_HOSTCRYPTO_NONE       \
@@ -170,7 +170,6 @@
 
 #if (( 0                             \
     + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
-    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
     + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
     + SSS_HAVE_HOSTCRYPTO_USER       \
     + SSS_HAVE_HOSTCRYPTO_NONE       \
@@ -192,6 +191,9 @@
 /** Legacy implementation */
 #define SSS_HAVE_MBEDTLS_ALT_A71CH 0
 
+/** Enable TF-M based on PSA as ALT */
+#define SSS_HAVE_MBEDTLS_ALT_PSA 0
+
 /** Not using any mbedTLS_ALT
  *
  * When this is selected, cloud demos can not work with mbedTLS */
@@ -200,6 +202,7 @@
 #if (( 0                             \
     + SSS_HAVE_MBEDTLS_ALT_SSS       \
     + SSS_HAVE_MBEDTLS_ALT_A71CH     \
+    + SSS_HAVE_MBEDTLS_ALT_PSA       \
     + SSS_HAVE_MBEDTLS_ALT_NONE      \
     ) > 1)
 #        error "Enable only one of 'PTMW_mbedTLS_ALT'"
@@ -209,6 +212,7 @@
 #if (( 0                             \
     + SSS_HAVE_MBEDTLS_ALT_SSS       \
     + SSS_HAVE_MBEDTLS_ALT_A71CH     \
+    + SSS_HAVE_MBEDTLS_ALT_PSA       \
     + SSS_HAVE_MBEDTLS_ALT_NONE      \
     ) == 0)
 #        error "Enable at-least one of 'PTMW_mbedTLS_ALT'"
@@ -494,16 +498,16 @@
 
 
 #define SSS_HAVE_APPLET \
- (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CL | SSS_HAVE_APPLET_A71CH_SIM | SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE05X_L | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH | SSS_HAVE_APPLET_LOOPBACK)
+ (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CL | SSS_HAVE_APPLET_A71CH_SIM | SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE05X_L | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH | SSS_HAVE_APPLET_SE050_E | SSS_HAVE_APPLET_LOOPBACK)
 
 #define SSS_HAVE_APPLET_SE05X_IOT \
- (SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH)
+ (SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH | SSS_HAVE_APPLET_SE050_E)
 
 #define SSS_HAVE_MBEDTLS_ALT \
- (SSS_HAVE_MBEDTLS_ALT_SSS | SSS_HAVE_MBEDTLS_ALT_A71CH)
+ (SSS_HAVE_MBEDTLS_ALT_SSS | SSS_HAVE_MBEDTLS_ALT_A71CH | SSS_HAVE_MBEDTLS_ALT_PSA)
 
 #define SSS_HAVE_HOSTCRYPTO_ANY \
- (SSS_HAVE_HOSTCRYPTO_MBEDTLS | SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO | SSS_HAVE_HOSTCRYPTO_OPENSSL | SSS_HAVE_HOSTCRYPTO_USER)
+ (SSS_HAVE_HOSTCRYPTO_MBEDTLS | SSS_HAVE_HOSTCRYPTO_OPENSSL | SSS_HAVE_HOSTCRYPTO_USER)
 
 #define SSS_HAVE_FIPS \
  (SSS_HAVE_FIPS_SE050 | SSS_HAVE_FIPS_140_2 | SSS_HAVE_FIPS_140_3)
@@ -579,7 +583,6 @@
 /* ========= Miscellaneous values : END ===================== */
 
 /* ========= Calculated values : START ====================== */
-
 
 /* Should we expose, SSS APIs */
 #define SSS_HAVE_SSS ( 0             \
@@ -669,6 +672,12 @@
 #       define SSS_HAVE_HASH_1 0
 #       define SSS_HAVE_HASH_224 0
 #       define SSS_HAVE_HASH_512 0
+#    if SSS_HAVE_APPLET_SE050_E
+#       undef SSS_HAVE_RSA
+#       define SSS_HAVE_RSA 0
+#    else
+#       define SSS_HAVE_RSA 1
+#    endif //SSS_HAVE_APPLET_SE050_E
 #    endif
 #endif
 

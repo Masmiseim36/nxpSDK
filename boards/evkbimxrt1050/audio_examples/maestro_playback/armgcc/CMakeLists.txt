@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(maestro_playback)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME maestro_playback.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -47,8 +53,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../ffconf.h"
-"${ProjDirPath}/../../common/att/eap_att.c"
-"${ProjDirPath}/../../common/att/eap_att.h"
+"${SdkRootDirPath}/boards/evkbimxrt1050/audio_examples/common/att/eap_att.c"
+"${SdkRootDirPath}/boards/evkbimxrt1050/audio_examples/common/att/eap_att.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../app_definitions.h"
@@ -60,38 +66,38 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common/att
-    ${ProjDirPath}/../../..
+    ${SdkRootDirPath}/boards/evkbimxrt1050/audio_examples/common/att
+    ${SdkRootDirPath}/boards/evkbimxrt1050
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
-    ${ProjDirPath}/../../../../../components/codec/wm8960
-    ${ProjDirPath}/../../../../../components/codec
-    ${ProjDirPath}/../../../../../components/codec/i2c
-    ${ProjDirPath}/../../../../../components/i2c
-    ${ProjDirPath}/../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../components/gpio
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../middleware/maestro
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
-    ${ProjDirPath}/../../../../../middleware/fatfs
-    ${ProjDirPath}/../../../../../middleware/EAP
-    ${ProjDirPath}/../../../../../middleware/maestro/mcu-audio/opus
-    ${ProjDirPath}/../../../../../middleware/maestro/mcu-audio/opusfile
-    ${ProjDirPath}/../../../../../middleware/maestro/mcu-audio/ogg
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/osa
-    ${ProjDirPath}/../../../../../middleware/maestro/streamer
+    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
+    ${SdkRootDirPath}/components/codec/wm8960
+    ${SdkRootDirPath}/components/codec
+    ${SdkRootDirPath}/components/codec/
+    ${SdkRootDirPath}/components/codec/i2c
+    ${SdkRootDirPath}/components/i2c
+    ${SdkRootDirPath}/middleware/sdmmc
+    ${SdkRootDirPath}/components/gpio
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/middleware/maestro
+    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
+    ${SdkRootDirPath}/middleware/fatfs
+    ${SdkRootDirPath}/middleware/EAP
+    ${SdkRootDirPath}/middleware/maestro/mcu-audio/opus
+    ${SdkRootDirPath}/middleware/maestro/mcu-audio/opusfile
+    ${SdkRootDirPath}/middleware/maestro/mcu-audio/ogg
+    ${SdkRootDirPath}/devices/MIMXRT1052
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1052/xip
+    ${SdkRootDirPath}/boards/evkbimxrt1050/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/middleware/maestro/streamer
 )
 
 # include modules
@@ -177,8 +183,6 @@ include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
-include(component_silicon_id_MIMXRT1052)
-
 include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1052)
@@ -195,6 +199,8 @@ include(middleware_maestro_framework_doc_MIMXRT1052)
 
 include(middleware_maestro_framework_streamer_MIMXRT1052)
 
+include(middleware_eap_exapp_MIMXRT1052)
+
 include(middleware_eap16_header_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
@@ -202,15 +208,13 @@ include(utilities_misc_utilities_MIMXRT1052)
 include(device_MIMXRT1052_system_MIMXRT1052)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
@@ -218,6 +222,14 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libwav.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libaac.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libflac.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -230,6 +242,14 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libwav.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libaac.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libflac.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)

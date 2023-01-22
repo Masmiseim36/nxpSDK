@@ -1,22 +1,22 @@
 var a00012 =
 [
-    [ "CODEC Adapter", "a00248.html", null ],
-    [ "CS42888 Adapter", "a00241.html", "a00241" ],
-    [ "DA7212 Adapter", "a00242.html", "a00242" ],
-    [ "SGTL5000 Adapter", "a00243.html", "a00243" ],
-    [ "WM8904 Adapter", "a00245.html", "a00245" ],
-    [ "WM8960 Adapter", "a00244.html", "a00244" ],
-    [ "codec_config_t", "a00012.html#a00286", [
+    [ "CODEC Adapter", "a00247.html", null ],
+    [ "CS42888 Adapter", "a00240.html", "a00240" ],
+    [ "DA7212 Adapter", "a00241.html", "a00241" ],
+    [ "SGTL5000 Adapter", "a00242.html", "a00242" ],
+    [ "WM8904 Adapter", "a00244.html", "a00244" ],
+    [ "WM8960 Adapter", "a00243.html", "a00243" ],
+    [ "codec_config_t", "a00012.html#a00285", [
       [ "codecDevType", "a00012.html#a0f68e054507c31a257a298cc9839729e", null ],
       [ "codecDevConfig", "a00012.html#a6b9cc87b16b5275a006f34477a04f96e", null ]
     ] ],
-    [ "codec_capability_t", "a00012.html#a00285", [
+    [ "codec_capability_t", "a00012.html#a00284", [
       [ "codecModuleCapability", "a00012.html#a3309e0df5a46d24b5bf533f792276169", null ],
       [ "codecPlayCapability", "a00012.html#acda24c6b9b8efe9624996cee729ccecb", null ],
       [ "codecRecordCapability", "a00012.html#a5df326e2f2b2e3c02e74f4ca53302176", null ],
       [ "codecVolumeCapability", "a00012.html#a4d0d68ff05679d9b0b0f24f600faa093", null ]
     ] ],
-    [ "codec_handle_t", "a00012.html#a00251", [
+    [ "codec_handle_t", "a00012.html#a00250", [
       [ "codecConfig", "a00012.html#a5329fc06c178bf451e290727c6b65af0", null ],
       [ "codecCapability", "a00012.html#a615896799601a79f4b41448ef3eac6a6", null ],
       [ "codecDevHandle", "a00012.html#ad1119b5bf61bcd4fef27470977a4bf82", null ]

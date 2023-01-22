@@ -116,7 +116,10 @@ void bt_tester_task(void *argument)
     status = SerialManager_OpenReadHandle(g_serialHandle, bt_tester_info.serialReadHandle);
     assert(kStatus_SerialManager_Success == status);
     (void)status;
-    SerialManager_InstallRxCallback(bt_tester_info.serialReadHandle, bt_tester_rx_callback, &bt_tester_info);
+
+    status = SerialManager_InstallRxCallback(bt_tester_info.serialReadHandle, bt_tester_rx_callback, &bt_tester_info);
+    assert(kStatus_SerialManager_Success == status);
+    (void)status;
 
     signal_packet_received = xSemaphoreCreateCounting(0xFFu, 0u);
     if (NULL == signal_packet_received)
@@ -134,7 +137,10 @@ void bt_tester_task(void *argument)
 
     for (int i = 0; i < CMD_QUEUED; i++) {
         buf = net_buf_alloc(&buf_pool, osaWaitForever_c);
-        net_buf_put(cmds_queue, buf);
+        if (buf != NULL)
+        {
+            net_buf_put(cmds_queue, buf);
+        }
 	}
 
     uint16_t packetLength = 0;
@@ -143,8 +149,11 @@ void bt_tester_task(void *argument)
                                            ((serial_write_handle_t)&bt_tester_info.serialWriteHandleBuffer[0]));
     assert(kStatus_SerialManager_Success == status);
     (void)status;
-    SerialManager_InstallTxCallback(((serial_write_handle_t)&bt_tester_info.serialWriteHandleBuffer[0]),
+
+    status = SerialManager_InstallTxCallback(((serial_write_handle_t)&bt_tester_info.serialWriteHandleBuffer[0]),
                                     bt_tester_tx_callback, &bt_tester_info);
+    assert(kStatus_SerialManager_Success == status);
+    (void)status;
 
     /* Crete data cleanup timer */
     if (data_cleanup_timer == NULL)
@@ -190,7 +199,6 @@ void bt_tester_task(void *argument)
                     net_buf_reset(buf);
                     net_buf_put(cmds_queue, buf);
                 }
-
             }
         }
     }
@@ -237,6 +245,7 @@ static void bt_tester_rx_callback
         }
         OSA_EXIT_CRITICAL();
     } while (going);
+
     /* Verify if a packet is in process */
     if(bt_tester_info.flagPachetReceived == 0x0)
     {
@@ -260,7 +269,7 @@ static void bt_tester_rx_callback
                 /* Packet contains header and data. Start data cleanup timer in case of errors */
                 if (timerStarted == false)
                 {
-                    xTimerStartFromISR(data_cleanup_timer, &xHigherPriorityTaskWoken);
+                    (void)xTimerStartFromISR(data_cleanup_timer, &xHigherPriorityTaskWoken);
                     timerStarted = true;
                 }
 
@@ -269,7 +278,7 @@ static void bt_tester_rx_callback
                 {
                     bt_tester_info.flagPachetReceived = 1;
                     timerStarted = false;
-                    xTimerStopFromISR(data_cleanup_timer, &xHigherPriorityTaskWoken);
+                    (void)xTimerStopFromISR(data_cleanup_timer, &xHigherPriorityTaskWoken);
                 }
             }
             else
@@ -283,7 +292,7 @@ static void bt_tester_rx_callback
         {
             if (NULL != signal_packet_received)
             {
-                xSemaphoreGiveFromISR(signal_packet_received, &xReturn);
+                (void)xSemaphoreGiveFromISR(signal_packet_received, &xReturn);
             }
         }
     }

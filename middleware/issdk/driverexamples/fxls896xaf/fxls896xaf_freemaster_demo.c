@@ -19,7 +19,11 @@
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "math.h"
+#ifndef CPU_LPC55S16JBD100
 #include "fsl_uart.h"
+#else
+#include "fsl_usart.h"
+#endif
 #include "fsl_common.h"
 #include "freemaster.h"
 #include "freemaster_serial_uart.h"

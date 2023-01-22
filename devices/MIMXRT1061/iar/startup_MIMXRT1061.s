@@ -4,7 +4,7 @@
 ;            MIMXRT1061
 ;  @version: 1.4
 ;  @date:    2022-3-25
-;  @build:   b220425
+;  @build:   b221009
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
@@ -185,8 +185,8 @@ __vector_table_0x1c
         DCD     USB_OTG1_IRQHandler                           ;USBO2 USB OTG1
         DCD     ENET_IRQHandler                               ;ENET interrupt
         DCD     ENET_1588_Timer_IRQHandler                    ;ENET_1588_Timer interrupt
-        DCD     XBAR1_IRQ_0_1_IRQHandler                      ;XBAR1 interrupt
-        DCD     XBAR1_IRQ_2_3_IRQHandler                      ;XBAR1 interrupt
+        DCD     XBAR1_IRQ_0_1_IRQHandler                      ;XBARA1 output signal 0, 1 interrupt
+        DCD     XBAR1_IRQ_2_3_IRQHandler                      ;XBARA1 output signal 2, 3 interrupt
         DCD     ADC_ETC_IRQ0_IRQHandler                       ;ADCETC IRQ0 interrupt
         DCD     ADC_ETC_IRQ1_IRQHandler                       ;ADCETC IRQ1 interrupt
         DCD     ADC_ETC_IRQ2_IRQHandler                       ;ADCETC IRQ2 interrupt

@@ -4,6 +4,8 @@
 * SPDX-License-Identifier: Apache-2.0
 */
 
+#if !defined(USE_THREADX_RTOS)
+
 #if defined(SSS_USE_FTR_FILE)
 #include "fsl_sss_ftr.h"
 #else
@@ -443,3 +445,5 @@ static void nxSCP03_PadCommandAPDU(uint8_t *cmdBuf, size_t *pCmdBufLen)
 exit:
     return;
 }
+
+#endif /* USE_THREADX_RTOS */

@@ -14,7 +14,9 @@
 #include "fsl_shell.h"
 
 #include "app_streamer.h"
+#ifdef SD_ENABLED
 #include "fsl_sd_disk.h"
+#endif
 #include "portable.h"
 
 #ifdef VIT_PROC
@@ -51,16 +53,23 @@ SHELL_COMMAND_DEFINE(version, "\r\n\"version\": Display component versions\r\n",
 
 SHELL_COMMAND_DEFINE(record_mic,
                      "\r\n\"record_mic\": Record MIC audio and either:\r\n"
+#ifdef VOICE_SEEKER_PROC
+                     " - perform VoiceSeeker processing\r\n"
+#endif
 #ifdef VIT_PROC
                      " - perform voice recognition (VIT)\r\n"
 #endif
-                     " - playback on WM8904 codec\r\n"
+                     " - playback on codec\r\n"
+#ifdef SD_ENABLED
                      " - store samples to file.\r\n"
+#endif
                      "\r\n"
-#ifdef VIT_PROC
+#if (defined(VIT_PROC) && defined(SD_ENABLED))
                      " USAGE: record_mic [audio|file|<file_name>|vit] 20 [en|cn]\r\n"
-#else
+#elif (defined(SD_ENABLED))
                      " USAGE: record_mic [audio|file|<file_name>] 20\r\n"
+#else
+                     " USAGE: record_mic [audio] 20\r\n"
 #endif
                      " The number defines length of recording in seconds.\r\n"
 #ifdef VIT_PROC
@@ -68,9 +77,12 @@ SHELL_COMMAND_DEFINE(record_mic,
                      " Please note that this VIT demo is near-field and uses 1 on-board microphone.\r\n"
 #endif
                      " NOTES: This command returns to shell after record finished.\r\n"
+#ifdef SD_ENABLED
                      "        To store samples to a file, the \"file\" option can be used to create a file\r\n"
                      "        with a predefined name, or any file name (without whitespaces) can be specified\r\n"
-                     "        instead of the \"file\" option.\r\n",
+                     "        instead of the \"file\" option.\r\n"
+#endif
+                     ,
                      shellRecMIC,
                      SHELL_IGNORE_PARAMETER_COUNT);
 
@@ -118,14 +130,16 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
     Vit_Language = EN;
 #endif
 
-    if ((argc > 1) && (strcmp(argv[1], "file") == 0))
-    {
-        out_sink = FILE_SINK;
-    }
-    else if ((argc > 1) && (strcmp(argv[1], "audio") == 0))
+    if ((argc > 1) && (strcmp(argv[1], "audio") == 0))
     {
         out_sink = AUDIO_SINK;
     }
+#ifdef SD_ENABLED
+    else if ((argc > 1) && (strcmp(argv[1], "file") == 0))
+    {
+        out_sink = FILE_SINK;
+    }
+#endif
 #ifdef VIT_PROC
     else if ((argc > 1) && (strcmp(argv[1], "vit") == 0))
     {
@@ -134,9 +148,15 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
 #endif
     else
     {
+#ifdef SD_ENABLED
         /* Save the samples to the file with the defined name */
         out_sink  = FILE_SINK;
         file_name = argv[1];
+#else
+        PRINTF("Sink parameter not specified!\r\n");
+        PRINTF("Default audio sink will be used.\r\n");
+        out_sink = AUDIO_SINK;
+#endif
     }
 
     if ((argc > 2))
@@ -162,6 +182,7 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
         return kStatus_SHELL_Success;
     }
 
+#ifdef SD_ENABLED
     if (out_sink == FILE_SINK)
     {
         if (!SDCARD_inserted())
@@ -172,6 +193,7 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
         else
             PRINTF("Recording to a file on sd-card\r\n");
     }
+#endif
 
     PRINTF("\r\nStarting streamer demo application for %d sec\r\n", duration);
 

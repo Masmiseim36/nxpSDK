@@ -68,15 +68,6 @@ ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx = &gex_sss_demo_tls_ctx;
 #define EX_SSS_BOOT_RTOS_STACK_SIZE (1024*8)
 #define MAX_UID_DECIMAL_STRING_SIZE 44U
 
-#if USE_RTOS
-#if !SSS_HAVE_APPLET_SE051_UWB
-#include "iot_logging_task.h"
-#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
-#define LOGGING_TASK_STACK_SIZE (300)
-#define LOGGING_QUEUE_LENGTH    (16)
-#endif // SSS_HAVE_APPLET_SE051_UWB
-#endif // USE_RTOS
-
 static ex_sss_boot_ctx_t gex_sss_demo_boot_ctx;
 ex_sss_boot_ctx_t *pex_sss_demo_boot_ctx = &gex_sss_demo_boot_ctx;
 
@@ -85,6 +76,14 @@ const char * gszDatastoreFilename = "datastore.bin";
 const uint32_t gKeystoreId = 0x0000BEEFU;
 
 const char * gszKeystoreFilename = "keystore.bin";
+
+const char* update_status_report_description(nxp_iot_UpdateStatusReport_UpdateStatus status);
+const char* claim_status_description(nxp_iot_AgentClaimStatus_ClaimStatus status);
+const char* rtp_status_description(nxp_iot_AgentRtpStatus_RtpStatus status);
+const char* csp_status_description(nxp_iot_AgentCspStatus_CspStatus status);
+void print_status_report(const nxp_iot_UpdateStatusReport* status_report);
+void iot_agent_print_uid_integer(char* hexString, size_t len);
+iot_agent_status_t iot_agent_print_uid (sss_se05x_session_t* pSession);
 
 #if	((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (SSS_HAVE_HOSTCRYPTO_OPENSSL)) && (IOT_AGENT_COS_OVER_RTP_ENABLE == 1)
 
@@ -159,10 +158,6 @@ int main(int argc, const char *argv[])
 	cli_arguments_t args;
     args.c = argc;
     args.v = argv;
-
-#if !SSS_HAVE_APPLET_SE051_UWB
-    xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
-#endif
 
     if (xTaskCreate(&agent_start_task,
         "agent_start_session_task",

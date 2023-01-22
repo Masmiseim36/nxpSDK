@@ -371,6 +371,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -378,7 +379,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -398,7 +398,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -407,7 +407,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1479,6 +1479,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -1486,7 +1487,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -2588,6 +2588,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -2595,7 +2596,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -3694,6 +3694,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -3701,7 +3702,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -4802,6 +4802,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -4809,7 +4810,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -5911,6 +5911,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -5918,7 +5919,6 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -7133,19 +7133,7 @@
       </group>
     </group>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
@@ -7235,15 +7223,6 @@
       </file>
     </group>
     <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
-    <group>
       <name>osa</name>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
@@ -7318,6 +7297,12 @@
   </group>
   <group>
     <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>

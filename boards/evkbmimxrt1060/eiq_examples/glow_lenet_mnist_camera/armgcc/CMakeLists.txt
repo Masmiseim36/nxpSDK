@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(glow_lenet_mnist_camera)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_release flexspi_nor_sdram_debug)
+
 set(MCUX_SDK_PROJECT_NAME glow_lenet_mnist_camera.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -63,37 +69,37 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../gui_print
     ${ProjDirPath}/../source
     ${ProjDirPath}/../board
-    ${ProjDirPath}/../../../../../middleware/eiq/glow/examples/lenet_mnist_camera/evkbmimxrt1060
+    ${SdkRootDirPath}/middleware/eiq/glow/examples/lenet_mnist_camera/evkbmimxrt1060
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062
-    ${ProjDirPath}/../../../../../components/video/camera/device
-    ${ProjDirPath}/../../../../../components/video/camera
-    ${ProjDirPath}/../../../../../components/video
-    ${ProjDirPath}/../../../../../components/video/camera/receiver
-    ${ProjDirPath}/../../../../../components/video/camera/device/sccb
-    ${ProjDirPath}/../../../../../components/video/camera/device/ov7725
-    ${ProjDirPath}/../../../../../components/video/camera/device/mt9m114
-    ${ProjDirPath}/../../../../../components/video/i2c
-    ${ProjDirPath}/../../../../../components/video/camera/receiver/csi
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../components/video/display/dc
-    ${ProjDirPath}/../../../../../components/video/display/dc/elcdif
-    ${ProjDirPath}/../../../../../middleware/eiq
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/DSP
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1062
+    ${SdkRootDirPath}/components/video/camera/device
+    ${SdkRootDirPath}/components/video/camera
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/components/video/camera/receiver
+    ${SdkRootDirPath}/components/video/camera/device/sccb
+    ${SdkRootDirPath}/components/video/camera/device/ov7725
+    ${SdkRootDirPath}/components/video/camera/device/mt9m114
+    ${SdkRootDirPath}/components/video/i2c
+    ${SdkRootDirPath}/components/video/camera/receiver/csi
+    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
+    ${SdkRootDirPath}/components/video/display/dc
+    ${SdkRootDirPath}/components/video/display/dc/elcdif
+    ${SdkRootDirPath}/middleware/eiq
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/devices/MIMXRT1062/xip
+    ${SdkRootDirPath}/boards/evkbmimxrt1060/xip
+    ${SdkRootDirPath}/CMSIS/DSP
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -168,15 +174,13 @@ include(CMSIS_DSP_Source_MIMXRT1062)
 include(CMSIS_Include_core_cm_MIMXRT1062)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -12,6 +12,7 @@
 #include "ble_utils.h"
 #include <sys/atomic.h>
 
+#include <bluetooth/att.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/gatt.h>
@@ -156,6 +157,11 @@ static void config_subscription(uint8_t *data, uint16_t len, uint16_t op);
 static void get_attrs(uint8_t *data, uint16_t len);
 static void get_attr_val(uint8_t *data, uint16_t len);
 
+#if (defined(CONFIG_BT_GATT_NOTIFY_MULTIPLE) && (CONFIG_BT_GATT_NOTIFY_MULTIPLE > 0))
+static void notify_cb(struct bt_conn *conn, void *user_data);
+static void notify_mult(uint8_t *data, uint16_t len, uint16_t op);
+#endif /* CONFIG_BT_GATT_NOTIFY_MULTIPLE */
+
 /* Events */
 static void attr_value_changed_ev(uint16_t handle, const uint8_t *value, const uint16_t len);
 static uint8_t notify_func(struct bt_conn *conn,
@@ -276,6 +282,31 @@ static struct bt_gatt_read_params read_long_params;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+static void eatt_connect(uint8_t *data, uint16_t len)
+{
+	const struct gatt_eatt_connect_cmd *cmd = (void *)data;
+	struct bt_conn *conn;
+	uint8_t status = BTP_STATUS_SUCCESS;
+	int err;
+
+	conn = bt_conn_lookup_addr_le(BT_ID_DEFAULT, (bt_addr_le_t *)cmd);
+	if (!conn) {
+		status = BTP_STATUS_FAILED;
+		goto response;
+	}
+
+	err = bt_eatt_connect(conn, cmd->num_channels);
+	if (err) {
+		status = BTP_STATUS_FAILED;
+	}
+
+	bt_conn_unref(conn);
+
+response:
+	tester_rsp(BTP_SERVICE_ID_GATT, GATT_EATT_CONNECT, CONTROLLER_INDEX, status);
+}
+
 /*
  * @brief   Tester App functionality
  */
@@ -394,6 +425,12 @@ void tester_handle_gatt
         case GATT_GET_ATTRIBUTE_VALUE:
             get_attr_val(data, len);
         break;
+	    case GATT_EATT_CONNECT:
+		    eatt_connect(data, len);
+		return;
+        case GATT_NOTIFY_MULTIPLE:
+            notify_mult(data, len, opcode);
+        break;
 
         default:
             tester_rsp(BTP_SERVICE_ID_GATT, opcode, index,
@@ -463,6 +500,8 @@ static void supported_commands(uint8_t *data, uint16_t len)
     tester_set_bit(cmds, GATT_GET_ATTRIBUTE_VALUE);
     tester_set_bit(cmds, GATT_DISC_ALL_PRIM);
     tester_set_bit(cmds, GATT_READ_MULTIPLE_VAR);
+    tester_set_bit(cmds, GATT_NOTIFY_MULTIPLE);
+    tester_set_bit(cmds, GATT_EATT_CONNECT);
 
     tester_send(BTP_SERVICE_ID_GATT, GATT_READ_SUPPORTED_COMMANDS,
                 CONTROLLER_INDEX, (uint8_t *) rp, sizeof(cmds));
@@ -1026,6 +1065,7 @@ static void read_data(uint8_t *data, uint16_t len)
     const gatt_read_cmd_t *cmd = (void *) data;
     struct bt_conn *conn;
     uint16_t offset = gatt_buf.len;
+    int res;
 
     conn = bt_conn_lookup_addr_le(BT_ID_DEFAULT, (bt_addr_le_t *)data);
 
@@ -1045,8 +1085,9 @@ static void read_data(uint8_t *data, uint16_t len)
     read_params.func = read_cb;
 
     btp_opcode = GATT_READ;
+    res = bt_gatt_read(conn, &read_params);
 
-    if (bt_gatt_read(conn, &read_params) < 0)
+    if (res < 0)
     {
         (void)memset(&read_params, 0, sizeof(read_params));
         gatt_buf_clear_offset(offset);
@@ -1070,6 +1111,7 @@ static void read_uuid(uint8_t *data, uint16_t len)
     const struct gatt_read_uuid_cmd *cmd = (void *) data;
     struct bt_conn *conn;
     uint16_t offset = gatt_buf.len;
+    int res;
 
     conn = bt_conn_lookup_addr_le(BT_ID_DEFAULT, (bt_addr_le_t *)data);
     if (!conn) {
@@ -1087,8 +1129,9 @@ static void read_uuid(uint8_t *data, uint16_t len)
     read_uuid_params.func = read_uuid_cb;
 
     btp_opcode = GATT_READ_UUID;
+    res = bt_gatt_read(conn, &read_uuid_params);
 
-    if (bt_gatt_read(conn, &read_uuid_params) < 0)
+    if (res < 0)
     {
         (void)memset(&read_uuid_params, 0, sizeof(read_uuid_params));
         gatt_buf_clear_offset(offset);
@@ -1112,6 +1155,7 @@ static void read_long(uint8_t *data, uint16_t len)
     const gatt_read_long_cmd_t *cmd = (void *) data;
     struct bt_conn *conn;
     uint16_t offset = gatt_buf.len;
+    int res;
 
     conn = bt_conn_lookup_addr_le(BT_ID_DEFAULT, (bt_addr_le_t *)data);
 
@@ -1131,8 +1175,9 @@ static void read_long(uint8_t *data, uint16_t len)
     read_long_params.func = read_cb;
 
     btp_opcode = GATT_READ_LONG;
+    res = bt_gatt_read(conn, &read_long_params);
 
-    if (bt_gatt_read(conn, &read_long_params) < 0)
+    if (res < 0)
     {
         (void)memset(&read_long_params, 0, sizeof(read_long_params));
         gatt_buf_clear_offset(offset);
@@ -1158,6 +1203,7 @@ static void read_multiple(uint8_t *data, uint16_t len, uint8_t opcode)
     uint16_t handles[255];
     struct bt_conn *conn;
     int i;
+    int res;
     struct bt_gatt_read_params read_params;
 
     for (i = 0; i < cmd->handles_count; i++)
@@ -1180,11 +1226,12 @@ static void read_multiple(uint8_t *data, uint16_t len, uint8_t opcode)
     read_params.func = read_cb;
     read_params.handle_count = i;
     read_params.multiple.handles = handles; /* not used in read func */
-    read_params.multiple.variable = false;
+    read_params.multiple.variable = (opcode == GATT_READ_MULTIPLE_VAR);
 
     btp_opcode = opcode;
+    res = bt_gatt_read(conn, &read_params);
 
-    if (bt_gatt_read(conn, &read_params) < 0)
+    if (res < 0)
     {
         gatt_buf_clear();
         goto fail;
@@ -1376,7 +1423,7 @@ static void get_attrs(uint8_t *data, uint16_t len)
 
         bt_uuid_to_str(&uuid.uuid, uuid_str, sizeof(uuid_str));
         LOG_DBG("start 0x%04x end 0x%04x, uuid %s", start_handle,
-                end_handle, log_strdup(uuid_str));
+                end_handle, uuid_str);
 
         foreach.uuid = &uuid.uuid;
     }
@@ -1886,7 +1933,7 @@ static uint8_t alloc_value(struct bt_gatt_attr *attr, struct set_value *data)
             indicate_params.func = indicate_cb;
             indicate_params.destroy = NULL;
 
-            bt_gatt_indicate(NULL, &indicate_params);
+            (void)bt_gatt_indicate(NULL, &indicate_params);
         }
     }
 
@@ -2014,11 +2061,14 @@ static uint8_t disc_prim_cb(struct bt_conn *conn,
         /* copy data for the response from the gatt buffer */
         uint8_t data_len = gatt_buf.len;
         struct gatt_disc_prim_rp *rp = gatt_buf_reserve(1 + data_len);
-        rp->services_count = services_count;
-        memcpy(rp->services, gatt_buf.buf, data_len);
+        if (rp != NULL)
+        {
+            rp->services_count = services_count;
+            memcpy(rp->services, gatt_buf.buf, data_len);
 
-        tester_send(BTP_SERVICE_ID_GATT, btp_opcode,
-                CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+            tester_send(BTP_SERVICE_ID_GATT, btp_opcode,
+                    CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+        }
         discover_destroy(params);
         services_count = 0;
         return BT_GATT_ITER_STOP;
@@ -2076,17 +2126,20 @@ static uint8_t find_included_cb(struct bt_conn *conn,
     gatt_included_t *included;
     uint8_t uuid_length;
     static uint8_t services_count = 0;
-    
+
     if (!attr)
     {
         /* copy data for the response from the gatt buffer */
         uint8_t data_len = gatt_buf.len;
         gatt_find_included_rp_t *rp = gatt_buf_reserve(1 + data_len);
-        rp->services_count = services_count;
-        memcpy(rp->included, gatt_buf.buf, data_len);
-        
-        tester_send(BTP_SERVICE_ID_GATT, GATT_FIND_INCLUDED,
-                    CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+        if (rp != NULL)
+        {
+            rp->services_count = services_count;
+            memcpy(rp->included, gatt_buf.buf, data_len);
+
+            tester_send(BTP_SERVICE_ID_GATT, GATT_FIND_INCLUDED,
+                        CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+        }
         discover_destroy(params);
         services_count = 0;
         return BT_GATT_ITER_STOP;
@@ -2143,11 +2196,14 @@ static uint8_t disc_chrc_cb(struct bt_conn *conn,
         /* copy data for the response from the gatt buffer */
         uint16_t data_len = gatt_buf.len;
         gatt_disc_chrc_rp_t *rp = gatt_buf_reserve(1 + data_len);
-        rp->characteristics_count = characteristics_count;
-        memcpy(rp->characteristics, gatt_buf.buf, data_len);
-      
-        tester_send(BTP_SERVICE_ID_GATT, btp_opcode,
-                    CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+        if (rp != NULL)
+        {
+            rp->characteristics_count = characteristics_count;
+            memcpy(rp->characteristics, gatt_buf.buf, data_len);
+
+            tester_send(BTP_SERVICE_ID_GATT, btp_opcode,
+                        CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+        }
         discover_destroy(params);
         characteristics_count = 0;
         return BT_GATT_ITER_STOP;
@@ -2156,7 +2212,7 @@ static uint8_t disc_chrc_cb(struct bt_conn *conn,
     data = attr->user_data;
 
     uuid_length = data->uuid->type == BT_UUID_TYPE_16 ? 2 : 16;
-    
+
     /* save characteristic information for building the response */
     chrc = gatt_buf_reserve(sizeof(*chrc) - SERVER_MAX_UUID_LEN + uuid_length);
 
@@ -2203,11 +2259,14 @@ static uint8_t disc_all_desc_cb(struct bt_conn *conn,
         /* copy data for the response from the gatt buffer */
         uint16_t data_len = gatt_buf.len;
         gatt_disc_all_desc_rp_t *rp = gatt_buf_reserve(1 + data_len);
-        rp->descriptors_count = descriptors_count;
-        memcpy(rp->descriptors, gatt_buf.buf, data_len);
-      
-        tester_send(BTP_SERVICE_ID_GATT, GATT_DISC_ALL_DESC,
-                    CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+        if (rp != NULL)
+        {
+            rp->descriptors_count = descriptors_count;
+            memcpy(rp->descriptors, gatt_buf.buf, data_len);
+
+            tester_send(BTP_SERVICE_ID_GATT, GATT_DISC_ALL_DESC,
+                        CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
+        }
         discover_destroy(params);
         descriptors_count = 0;
         return BT_GATT_ITER_STOP;
@@ -2291,7 +2350,7 @@ static uint8_t read_uuid_cb(struct bt_conn *conn, uint8_t err,
 		       struct bt_gatt_read_params *params, const void *data,
 		       uint16_t length)
 {
-	
+
 	gatt_char_value_t *value;
     static uint8_t values_count = 0;
     static uint8_t att_response = BT_ATT_ERR_SUCCESS;
@@ -2307,17 +2366,20 @@ static uint8_t read_uuid_cb(struct bt_conn *conn, uint8_t err,
         /* copy data for the response from the gatt buffer */
         uint8_t data_len = gatt_buf.len;
         struct gatt_read_uuid_rp *rp = gatt_buf_reserve(2 + data_len);
-        rp->values_count = values_count;
-        rp->att_response = att_response;
-        memcpy(rp->values, gatt_buf.buf, data_len);
-      
-        tester_send(BTP_SERVICE_ID_GATT, btp_opcode, CONTROLLER_INDEX,
-                    (uint8_t*)rp, data_len + 2);
+        if (rp != NULL)
+        {
+            rp->values_count = values_count;
+            rp->att_response = att_response;
+            memcpy(rp->values, gatt_buf.buf, data_len);
+
+            tester_send(BTP_SERVICE_ID_GATT, btp_opcode, CONTROLLER_INDEX,
+                        (uint8_t*)rp, data_len + 2);
+        }
         read_destroy(params);
         values_count = 0;
         return BT_GATT_ITER_STOP;
 	}
-        
+
         /* save value information for building the response */
         value = gatt_buf_reserve(sizeof(*value) - SERVER_MAX_UUID_LEN + length);
         if (!value) {
@@ -2326,12 +2388,12 @@ static uint8_t read_uuid_cb(struct bt_conn *conn, uint8_t err,
             read_destroy(params);
             return BT_GATT_ITER_STOP;
 	}
-        
+
 	value->handle = params->by_uuid.start_handle;
 	value->data_len = length;
 
 	memcpy(value->data, data, length);
-        
+
         /* update values count */
 	values_count++;
 
@@ -2383,7 +2445,14 @@ static int enable_subscription(struct bt_conn *conn, uint16_t ccc_handle,
 
 #if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0))
     /* require security level from time of subscription */
-    subscription->min_security = bt_conn_get_security(conn);
+#if (defined(CONFIG_BT_SMP_SC_ONLY) && (CONFIG_BT_SMP_SC_ONLY == 1)) || \
+    (defined(CONFIG_BT_SMP_SC_PAIR_ONLY) && (CONFIG_BT_SMP_SC_PAIR_ONLY == 1))
+    subscription->min_security = BT_SECURITY_L4;
+#elif (defined(CONFIG_BT_SMP_ENFORCE_MITM) && (CONFIG_BT_SMP_ENFORCE_MITM == 1))
+    subscription->min_security = BT_SECURITY_L3;
+#elif (defined(CONFIG_BT_SMP_ENFORCE_MITM) && (CONFIG_BT_SMP_ENFORCE_MITM == 0))
+    subscription->min_security = BT_SECURITY_L2;
+#endif
 #endif /* CONFIG_BT_SMP > 0 */
 
     return bt_gatt_discover(conn, &discover_params);
@@ -2434,8 +2503,11 @@ static uint8_t notify_func(struct bt_conn *conn,
 
     ev->data_length = sys_cpu_to_le16(length);
     memcpy(ev->data, data, length);
-    memcpy(ev->address, addr->a.val, sizeof(ev->address));
-    ev->address_type = addr->type;
+    if (addr != NULL)
+    {
+        memcpy(ev->address, addr->a.val, sizeof(ev->address));
+        ev->address_type = addr->type;
+    }
 
     tester_send(BTP_SERVICE_ID_GATT, GATT_EV_NOTIFICATION,
                 CONTROLLER_INDEX, ev_buf, sizeof(*ev) + length);
@@ -2602,3 +2674,62 @@ static uint8_t get_attr_val_rp(const struct bt_gatt_attr *attr, uint16_t handle,
 
     return BT_GATT_ITER_STOP;
 }
+
+#if (defined(CONFIG_BT_GATT_NOTIFY_MULTIPLE) && (CONFIG_BT_GATT_NOTIFY_MULTIPLE > 0))
+static void notify_cb(struct bt_conn *conn, void *user_data)
+{
+    LOG_DBG("Nofication sent");
+}
+
+static void notify_mult(uint8_t *data, uint16_t len, uint16_t op)
+{
+    const struct gatt_cfg_notify_mult_cmd *cmd = (void *) data;
+    struct bt_gatt_notify_params params[CONFIG_BT_L2CAP_TX_BUF_COUNT];
+    struct bt_conn *conn;
+    const size_t min_cnt = 1U;
+    int err = 0;
+    uint8_t status = BTP_STATUS_SUCCESS;
+    uint16_t attr_data_len = 0;
+
+    conn = bt_conn_lookup_addr_le(BT_ID_DEFAULT, (bt_addr_le_t *)data);
+    if (!conn) {
+        status = BTP_STATUS_FAILED;
+    }
+    else
+    {
+        if (cmd->cnt < min_cnt || cmd->cnt > CONFIG_BT_L2CAP_TX_BUF_COUNT) {
+            LOG_ERR("Invalid count value %d (range %zu to %zu)",
+                    cmd->cnt, min_cnt, CONFIG_BT_L2CAP_TX_BUF_COUNT);
+
+            status = BTP_STATUS_FAILED;
+        }
+        else
+        {
+            (void)memset(params, 0, sizeof(params));
+
+            for (uint16_t i = 0U; i < cmd->cnt; i++) {
+                struct bt_gatt_attr attr = server_db[cmd->attr_id[i] -
+                    server_db[0].handle];
+
+                attr_data_len = strtoul(attr.user_data, NULL, 16);
+                params[i].uuid = 0;
+                params[i].attr = &attr;
+                params[i].data = &attr.user_data;
+                params[i].len = attr_data_len;
+                params[i].func = notify_cb;
+                params[i].user_data = NULL;
+            }
+
+            err = bt_gatt_notify_multiple(conn, cmd->cnt, params);
+            if (err != 0) {
+                LOG_ERR("bt_gatt_notify_multiple failed: %d", err);
+                status = BTP_STATUS_FAILED;
+            } else {
+                LOG_DBG("Send %u notifications", cmd->cnt);
+            }
+        }
+    }
+
+    tester_rsp(BTP_SERVICE_ID_GATT, op, CONTROLLER_INDEX, status);
+}
+#endif /* CONFIG_BT_GATT_NOTIFY_MULTIPLE */

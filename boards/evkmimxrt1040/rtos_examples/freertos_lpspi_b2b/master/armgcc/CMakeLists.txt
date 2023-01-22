@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(freertos_lpspi_b2b_master)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release debug release sdram_debug sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME freertos_lpspi_b2b_master.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -43,22 +49,21 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042/drivers
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT1042/drivers
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1042
+    ${SdkRootDirPath}/devices/MIMXRT1042/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1042/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1040/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -98,8 +103,6 @@ include(driver_xip_device_MIMXRT1042)
 
 include(driver_xip_board_evkmimxrt1040_MIMXRT1042)
 
-include(component_silicon_id_MIMXRT1042)
-
 include(CMSIS_Include_core_cm_MIMXRT1042)
 
 include(middleware_freertos-kernel_MIMXRT1042)
@@ -111,15 +114,13 @@ include(utilities_misc_utilities_MIMXRT1042)
 include(device_MIMXRT1042_system_MIMXRT1042)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

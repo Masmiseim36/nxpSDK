@@ -15,25 +15,18 @@
  * OTA server DNS name or IP string.
  */
 
-#define OTA_SERVER_NAME "192.168.0.116"
+#define OTA_SERVER_NAME_DEFAULT "192.168.0.10"
 
 /*
  * OTA server service name or port number string.
  */
 
-#define OTA_SERVER_PORT "4433"
+#define OTA_SERVER_PORT_DEFAULT "4433"
 
 /*
  * OTA image path on the server
  */
 
-#define OTA_IMAGE_PATH "/ota.bin"
-
-/*
- * Defines size and address of internal flash area dedicated for storing downloaded image update
- */
-
-#define OTA_STORAGE_SIZE (BOOT_FLASH_CAND_APP - BOOT_FLASH_ACT_APP)
-#define OTA_STORAGE_ADDR BOOT_FLASH_CAND_APP
+#define OTA_IMAGE_PATH_DEFAULT "/ota.bin"
 
 #endif /* __OTA_CONFIG_H__ */

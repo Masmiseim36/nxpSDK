@@ -229,15 +229,18 @@
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>MCUBOOT_APPLICATION=1</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=0</state>
           <state>HTTPSRV_CFG_MBEDTLS_ENABLE=1</state>
           <state>HTTPSRV_CFG_DEFAULT_SES_CNT=8</state>
           <state>MBEDTLS_CONFIG_FILE="mbedtls_config.h"</state>
-          <state>MFLASH_FILE_BASEADDR=1572864</state>
+          <state>MFLASH_FILE_BASEADDR=3670016</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SDIO_ENABLED</state>
+          <state>MBEDTLS_THREADING_C</state>
+          <state>MBEDTLS_THREADING_ALT</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -361,6 +364,10 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../bootutil_port</state>
+          <state>$PROJ_DIR$/../bootutil_port/mcuboot_config</state>
+          <state>$PROJ_DIR$/../bootutil_port/sysflash</state>
+          <state>$PROJ_DIR$/../bootutil_port/board_specific</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1064</state>
@@ -374,10 +381,11 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
@@ -393,7 +401,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -1355,15 +1362,18 @@
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>MCUBOOT_APPLICATION=1</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=0</state>
           <state>HTTPSRV_CFG_MBEDTLS_ENABLE=1</state>
           <state>HTTPSRV_CFG_DEFAULT_SES_CNT=8</state>
           <state>MBEDTLS_CONFIG_FILE="mbedtls_config.h"</state>
-          <state>MFLASH_FILE_BASEADDR=1572864</state>
+          <state>MFLASH_FILE_BASEADDR=3670016</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SDIO_ENABLED</state>
+          <state>MBEDTLS_THREADING_C</state>
+          <state>MBEDTLS_THREADING_ALT</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -1487,6 +1497,10 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../bootutil_port</state>
+          <state>$PROJ_DIR$/../bootutil_port/mcuboot_config</state>
+          <state>$PROJ_DIR$/../bootutil_port/sysflash</state>
+          <state>$PROJ_DIR$/../bootutil_port/board_specific</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1064</state>
@@ -1500,10 +1514,11 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
@@ -1519,7 +1534,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -2259,6 +2273,12 @@
       <name>$PROJ_DIR$/../lwip_httpssrv_ota.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../httpsrv_multipart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../httpsrv_multipart.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../network_cfg.h</name>
     </file>
     <file>
@@ -2304,9 +2324,6 @@
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../flash_partitioning.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../sdmmc_config.c</name>
     </file>
     <file>
@@ -2335,6 +2352,42 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>bootutil_port</name>
+    <group>
+      <name>board_specific</name>
+      <file>
+        <name>$PROJ_DIR$/../bootutil_port/board_specific/flash_partitioning.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../bootutil_port/board_specific/flash_partitioning.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../bootutil_port/board_specific/sblconfig.h</name>
+      </file>
+    </group>
+    <group>
+      <name>mcuboot_config</name>
+      <file>
+        <name>$PROJ_DIR$/../bootutil_port/mcuboot_config/mcuboot_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../bootutil_port/mcuboot_config/mcuboot_logging.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../bootutil_port/flash_map.h</name>
+    </file>
+    <group>
+      <name>sysflash</name>
+      <file>
+        <name>$PROJ_DIR$/../bootutil_port/sysflash/sysflash.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../bootutil_port/sbldef.h</name>
     </file>
   </group>
   <group>
@@ -3157,26 +3210,32 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan_11d.h</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
+      </file>
       <group>
         <name>port</name>
-        <group>
-          <name>os</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</name>
-          </file>
-        </group>
         <group>
           <name>lwip</name>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/lwip/wm_net.h</name>
           </file>
         </group>
+        <group>
+          <name>os</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</name>
+          </file>
+        </group>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wmstats.h</name>
       </file>
       <group>
         <name>wifidriver</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</name>
         </file>
@@ -3185,9 +3244,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</name>
         </file>
       </group>
       <file>
@@ -3201,9 +3257,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wmtypes.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wmstats.h</name>
       </file>
     </group>
     <group>
@@ -3268,12 +3321,6 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</name>
         </file>
         <file>
@@ -3281,6 +3328,12 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</name>
         </file>
       </group>
       <file>
@@ -3405,27 +3458,6 @@
       </file>
     </group>
     <group>
-      <name>port</name>
-      <group>
-        <name>os</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/os/os.c</name>
-        </file>
-      </group>
-      <group>
-        <name>lwip</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/lwip/net.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/lwip/netif_decl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/lwip/wifi_netif.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
       <name>wifi_bt_firmware</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
@@ -3462,6 +3494,27 @@
       </file>
     </group>
     <group>
+      <name>port</name>
+      <group>
+        <name>lwip</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/lwip/net.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/lwip/netif_decl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/lwip/wifi_netif.c</name>
+        </file>
+      </group>
+      <group>
+        <name>os</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/port/os/os.c</name>
+        </file>
+      </group>
+    </group>
+    <group>
       <name>wlcmgr</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wlcmgr/wlan.c</name>
@@ -3474,78 +3527,78 @@
   <group>
     <name>freertos</name>
     <group>
-      <name>freertos_kernel</name>
+      <name>freertos-kernel</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
       </file>
       <group>
         <name>portable</name>
@@ -3554,40 +3607,40 @@
           <group>
             <name>ARM_CM4F</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
             </file>
           </group>
         </group>
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</name>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -3717,15 +3770,6 @@
       </file>
     </group>
     <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
-    <group>
       <name>osa</name>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
@@ -3748,6 +3792,9 @@
           <name>tx_pwr_limits</name>
           <file>
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</name>
           </file>
         </group>
       </group>
@@ -4611,19 +4658,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

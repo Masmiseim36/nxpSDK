@@ -1,9 +1,9 @@
 
 Toolchain supported
 ===================
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 - Keil MDK  5.37
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -15,7 +15,9 @@ Hardware requirements
 
 Board settings
 ==============
-- for OM- SE050ARD & OM- SE051ARD use default jumper settings
+Jumper settings for OM- SE050ARD & OM- SE051ARD:
+    -J15 3-4 (Default): I2C target SDA connection
+    -J17 3-4 (Default): I2C target SCL connection
 
 
 For SE050

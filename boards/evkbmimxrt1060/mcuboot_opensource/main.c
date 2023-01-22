@@ -13,6 +13,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "boot.h"
 
 #if defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0)
 #include "fsl_dcp.h"
@@ -24,11 +25,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifdef SOC_REMAP_ENABLE
-#define REMAPADDRSTART  0x400AC078
-#define REMAPADDREND    0x400AC07C
-#define REMAPADDROFFSET 0x400AC080
-#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -39,6 +36,36 @@ extern int isp_kboot_main(bool isInfiniteIsp);
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
+
+#define IOMUXC_GPR_GPR30_REG 0x400AC078 /* Flash remapping start address  */
+#define IOMUXC_GPR_GPR31_REG 0x400AC07C /* Flash remapping end address    */
+#define IOMUXC_GPR_GPR32_REG 0x400AC080 /* Flash remapping offset address */
+
+void SBL_EnableRemap(uint32_t start_addr, uint32_t end_addr, uint32_t off)
+{
+    uint32_t *remap_start  = (uint32_t *)IOMUXC_GPR_GPR30_REG;
+    uint32_t *remap_end    = (uint32_t *)IOMUXC_GPR_GPR31_REG;
+    uint32_t *remap_offset = (uint32_t *)IOMUXC_GPR_GPR32_REG;
+
+    *remap_start  = start_addr;
+    *remap_end    = end_addr;
+    *remap_offset = off;
+}
+
+void SBL_DisableRemap(void)
+{
+    uint32_t *remap_start  = (uint32_t *)IOMUXC_GPR_GPR30_REG;
+    uint32_t *remap_end    = (uint32_t *)IOMUXC_GPR_GPR31_REG;
+    uint32_t *remap_offset = (uint32_t *)IOMUXC_GPR_GPR32_REG;
+
+    /* Disable offset first! */
+    *remap_offset = 0;
+    *remap_start  = 0;
+    *remap_end    = 0;
+}
+#endif /* CONFIG_MCUBOOT_FLASH_REMAP_ENABLE */
+
 /*!
  * @brief Main function
  */
@@ -59,6 +86,14 @@ int main(void)
 
     PRINTF("hello sbl.\r\n");
 
+#if defined(MCUBOOT_DIRECT_XIP) && defined(CONFIG_MCUBOOT_FLASH_REMAP_ENABLE)
+    /* Make sure flash remapping function is disabled before running the
+     * bootloader application .
+     */
+    PRINTF("Disabling flash remapping function\n");
+    SBL_DisableRemap();
+#endif
+
     (void)sbl_boot_main();
 
     return 0;
@@ -76,27 +111,3 @@ void SBL_DisablePeripherals(void)
 #endif
 #endif
 }
-
-#ifdef SOC_REMAP_ENABLE
-void SBL_EnableRemap(uint32_t start_addr, uint32_t end_addr, uint32_t off)
-{
-    uint32_t *remap_start  = (uint32_t *)REMAPADDRSTART;
-    uint32_t *remap_end    = (uint32_t *)REMAPADDREND;
-    uint32_t *remap_offset = (uint32_t *)REMAPADDROFFSET;
-
-    *remap_start  = start_addr;
-    *remap_end    = end_addr;
-    *remap_offset = off;
-}
-
-void SBL_DisableRemap(void)
-{
-    uint32_t *remap_start  = (uint32_t *)REMAPADDRSTART;
-    uint32_t *remap_end    = (uint32_t *)REMAPADDREND;
-    uint32_t *remap_offset = (uint32_t *)REMAPADDROFFSET;
-
-    *remap_start  = 0;
-    *remap_end    = 0;
-    *remap_offset = 0;
-}
-#endif

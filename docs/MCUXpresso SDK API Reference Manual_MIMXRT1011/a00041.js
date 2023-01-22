@@ -1,6 +1,6 @@
 var a00041 =
 [
-    [ "lpuart_config_t", "a00041.html#a00338", [
+    [ "lpuart_config_t", "a00041.html#a00337", [
       [ "baudRate_Bps", "a00041.html#a09d359de28dc114424b2d702df014d1c", null ],
       [ "parityMode", "a00041.html#ae7ce86796f025a059c973c540d5a94ad", null ],
       [ "dataBitsCount", "a00041.html#a58ce25b71bde98b9c09875481637d120", null ],
@@ -17,13 +17,13 @@ var a00041 =
       [ "enableTx", "a00041.html#a0d677467cd14ee90f544d688f3dc9b9a", null ],
       [ "enableRx", "a00041.html#a48d3f37a9364c0093083ef843d5d062e", null ]
     ] ],
-    [ "lpuart_transfer_t", "a00041.html#a00340", [
+    [ "lpuart_transfer_t", "a00041.html#a00339", [
       [ "data", "a00041.html#a7c49cf389dea8ad6f674bff6cedd8e37", null ],
       [ "rxData", "a00041.html#a5c7fe6c7d0575874728260e0ee2439df", null ],
       [ "txData", "a00041.html#a6403edb37a03ed860ac5c2cda4d314be", null ],
       [ "dataSize", "a00041.html#ad269a833a8e8e4cdbc0d485d59e256d8", null ]
     ] ],
-    [ "lpuart_handle_t", "a00041.html#a00263", [
+    [ "lpuart_handle_t", "a00041.html#a00262", [
       [ "txData", "a00041.html#a9d7a97a2805da5949867d433660a09a7", null ],
       [ "txDataSize", "a00041.html#a2114edec74578fe798a62cf852ab0194", null ],
       [ "txDataSizeAll", "a00041.html#a84153c9f581e7201d5c2a20423a321da", null ],

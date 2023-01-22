@@ -7,10 +7,10 @@ FreeRTOS. The user uses an Internet browser to upload new version of firmware an
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================
@@ -74,7 +74,7 @@ The latter method is described step by step below:
    as browsers generally tend to use non-secure connection to port 80 by default.
 6. Go to OTA page, select file with udpated firmware (signed image) and upload it.
 7. After the file is uploaded, click "Reboot" button to start newly uploaded firmware in test mode.
-8. Once the updated firmware executes, the "Accept update" button becomes active. Click it to make the update permanent.
+8. Once the updated firmware executes, the "accept" button becomes active. Click it to make the update permanent.
 
 Known issue:
 Browser may not display progress of the upload. This is an issue of the browser rather than OTA demo.

@@ -6,8 +6,8 @@ The HFP Ag can connected a HFP HF device like headphone or device running HFP HF
 
 Toolchain supported
 ===================
-- MCUXpresso  11.6.0
-- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
 
@@ -60,6 +60,16 @@ BT_UART_RTS_HOST |  J8(pin 3)  	   |   J23(pin 3)   |    LPUART3_CTS     | GPIO_
 BT_UART_CTS_HOST |  J8(pin 4)  	   |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
 ----------------------------------------------------------------------------------------------
 
+The pin connect for PCM interface as the following table,
+------------------------------------------------------------------------------------
+PIN NAME | uSD-M.2 Adapter |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+------------------------------------------------------------------------------------
+PCM_IN   |  J5(pin 1)      |   J22(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
+PCM_OUT  |  J5(pin 3)      |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
+PCM_SYNC |  J5(pin 5)      |   J21(pin 9)   |    SAI2_RX_SYNC    | GPIO_AD_B0_07
+PCM_CLK  |  J5(pin 7)      |   J21(pin 7)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
+GND      |  J5(pin 15)     |   J21(pin 20)  |    GND             | GND
+------------------------------------------------------------------------------------
 
 AzureWave Solution Board settings
 Jumper settings for AzureWave AW-AM457-uSD Module:

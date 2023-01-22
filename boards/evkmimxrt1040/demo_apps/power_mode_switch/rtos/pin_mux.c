@@ -49,9 +49,7 @@ BOARD_InitPins:
   - {pin_num: J12, peripheral: LPUART1, signal: TX, pin_signal: GPIO_AD_B0_12, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: G10, peripheral: ARM, signal: arm_trace_swo, pin_signal: GPIO_AD_B0_10, slew_rate: Fast}
-  - {pin_num: J9, peripheral: GPIO5, signal: 'gpio_io, 00', pin_signal: WAKEUP, direction: INPUT, gpio_interrupt: kGPIO_IntRisingEdge, software_input_on: Disable,
-    hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm, pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100,
-    drive_strength: R0_6, slew_rate: Slow}
+  - {pin_num: J9, peripheral: GPIO5, signal: 'gpio_io, 00', pin_signal: WAKEUP, direction: INPUT, gpio_interrupt: kGPIO_IntRisingEdge, software_input_on: Disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -83,7 +81,6 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_10_ARM_TRACE_SWO, 0x90B1U); 
   IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_12_LPUART1_TX, 0x10B0U); 
   IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_13_LPUART1_RX, 0x10B0U); 
-  IOMUXC_SetPinConfig(IOMUXC_SNVS_WAKEUP_GPIO5_IO00, 0x10B0U); 
 }
 
 /***********************************************************************************************************************

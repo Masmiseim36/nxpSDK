@@ -1,17 +1,17 @@
 var a00080 =
 [
-    [ "usdhc_adma2_descriptor_t", "a00080.html#a00527", [
+    [ "usdhc_adma2_descriptor_t", "a00080.html#a00526", [
       [ "attribute", "a00080.html#a3c14a6798aa0951a5fd9d20799b97710", null ],
       [ "address", "a00080.html#a67e47312b77e17d14af7020546d5e7fe", null ]
     ] ],
-    [ "usdhc_capability_t", "a00080.html#a00530", [
+    [ "usdhc_capability_t", "a00080.html#a00529", [
       [ "sdVersion", "a00080.html#a59d9dc7b7e718afe5483858ce7223a60", null ],
       [ "mmcVersion", "a00080.html#a16eb57f98ef71d02a355996d83dc2f42", null ],
       [ "maxBlockLength", "a00080.html#aadc0a197cc72a6e8c128562cf3a38c83", null ],
       [ "maxBlockCount", "a00080.html#a26b8e1098cd43ce51e0679af3b9f135f", null ],
       [ "flags", "a00080.html#ac91446f846420c73846d4f45a0b848c2", null ]
     ] ],
-    [ "usdhc_boot_config_t", "a00080.html#a00529", [
+    [ "usdhc_boot_config_t", "a00080.html#a00528", [
       [ "ackTimeoutCount", "a00080.html#adf9eeaba4b051d1223c46f93f8f18e96", null ],
       [ "bootMode", "a00080.html#a50b1b5c218a7c616deeb45ca5bbe1cfc", null ],
       [ "blockCount", "a00080.html#adc0abf994260a86a70f0d0b8d6f59879", null ],
@@ -19,7 +19,7 @@ var a00080 =
       [ "enableBootAck", "a00080.html#a1e037ed69b459760bd8d5759b29ec9a1", null ],
       [ "enableAutoStopAtBlockGap", "a00080.html#a3274c01f43dab0ac60d9242fd0db1fe2", null ]
     ] ],
-    [ "usdhc_config_t", "a00080.html#a00532", [
+    [ "usdhc_config_t", "a00080.html#a00531", [
       [ "dataTimeout", "a00080.html#ace34d5f555e421402c6ee83c5d0948ee", null ],
       [ "endianMode", "a00080.html#ab7957be109e6e0caf0d30625b7242f99", null ],
       [ "readWatermarkLevel", "a00080.html#a3686b109101d95cb08d26b71eb4fa13d", null ],
@@ -27,7 +27,7 @@ var a00080 =
       [ "readBurstLen", "a00080.html#ace767db0bcc5a27216bca7d5e269aae6", null ],
       [ "writeBurstLen", "a00080.html#a31b413461fc916297277672f4407a931", null ]
     ] ],
-    [ "usdhc_command_t", "a00080.html#a00531", [
+    [ "usdhc_command_t", "a00080.html#a00530", [
       [ "index", "a00080.html#a9b3f2ad2e7fbcb302d67944a5325a3f1", null ],
       [ "argument", "a00080.html#a1565644f8ea71272a2c40e76a71a29ff", null ],
       [ "type", "a00080.html#a85dc70afc4ad886c87a2cc5533c29010", null ],
@@ -36,14 +36,14 @@ var a00080 =
       [ "responseErrorFlags", "a00080.html#afe3122f0c11538ad6cce2f32c908faa1", null ],
       [ "flags", "a00080.html#ae7c8445329649435af51f83c9de8da01", null ]
     ] ],
-    [ "usdhc_adma_config_t", "a00080.html#a00528", [
+    [ "usdhc_adma_config_t", "a00080.html#a00527", [
       [ "dmaMode", "a00080.html#a1346aa3fd0093530b201c56d2337b5df", null ],
       [ "burstLen", "a00080.html#a47ab3bfe3a559f6f6d25745189b49d03", null ],
       [ "admaTable", "a00080.html#a63f3879873a7a6265ac416a605848274", null ],
       [ "admaTableWords", "a00080.html#a4c0297334fde7de8c664b35ed352f7e4", null ]
     ] ],
-    [ "usdhc_scatter_gather_data_list_t", "a00080.html#a00535", null ],
-    [ "usdhc_scatter_gather_data_t", "a00080.html#a00536", [
+    [ "usdhc_scatter_gather_data_list_t", "a00080.html#a00534", null ],
+    [ "usdhc_scatter_gather_data_t", "a00080.html#a00535", [
       [ "enableAutoCommand12", "a00080.html#a20c1ebd1c85baa7129176840f2bf1fc9", null ],
       [ "enableAutoCommand23", "a00080.html#ad6e3d64e6c3380b86742e565a718c9da", null ],
       [ "enableIgnoreError", "a00080.html#a58dba1c12c5575c3c4e4185e205de68b", null ],
@@ -52,11 +52,11 @@ var a00080 =
       [ "blockSize", "a00080.html#af1d7646d3bf2ac550a81537a37f1add0", null ],
       [ "sgData", "a00080.html#a5230497d132ea46a2342862f26a5cc22", null ]
     ] ],
-    [ "usdhc_scatter_gather_transfer_t", "a00080.html#a00537", [
+    [ "usdhc_scatter_gather_transfer_t", "a00080.html#a00536", [
       [ "data", "a00080.html#af53f5cb59cbf53b7d68d058537922c84", null ],
       [ "command", "a00080.html#a3d03108960d44f57db7103c35bd5b1df", null ]
     ] ],
-    [ "usdhc_data_t", "a00080.html#a00533", [
+    [ "usdhc_data_t", "a00080.html#a00532", [
       [ "enableAutoCommand12", "a00080.html#a1fd43ec0d07238455d1fe9c49e73b44f", null ],
       [ "enableAutoCommand23", "a00080.html#acdbb2d8cbbda290c9ab211c58ec396dc", null ],
       [ "enableIgnoreError", "a00080.html#a06d9bde53b59991116731dd68c62560b", null ],
@@ -66,11 +66,11 @@ var a00080 =
       [ "rxData", "a00080.html#ad0a4dacf75dabc71b4fde45ed63695fb", null ],
       [ "txData", "a00080.html#a8c38d38dcd33249fc8322aea44aaa36b", null ]
     ] ],
-    [ "usdhc_transfer_t", "a00080.html#a00539", [
+    [ "usdhc_transfer_t", "a00080.html#a00538", [
       [ "data", "a00080.html#af5a228d071aeee597eddac24d8054918", null ],
       [ "command", "a00080.html#aff86d4696f5a240cdf22299287f8df84", null ]
     ] ],
-    [ "usdhc_transfer_callback_t", "a00080.html#a00538", [
+    [ "usdhc_transfer_callback_t", "a00080.html#a00537", [
       [ "CardInserted", "a00080.html#a81250c3d428ec2bb1343fc1d3077b215", null ],
       [ "CardRemoved", "a00080.html#a0c93d7232ea193f443c06412927f946a", null ],
       [ "SdioInterrupt", "a00080.html#a3a0f799d9f6acf6549a42d4c7b505789", null ],
@@ -78,14 +78,14 @@ var a00080 =
       [ "TransferComplete", "a00080.html#ac4ec65cb0c5d255eced167ac9d8ddd02", null ],
       [ "ReTuning", "a00080.html#afbf2feb6cd56da33c47722d54dcc2c88", null ]
     ] ],
-    [ "usdhc_handle_t", "a00080.html#a00333", [
+    [ "usdhc_handle_t", "a00080.html#a00332", [
       [ "data", "a00080.html#a1339a99e40fabfd34f47e82f27cb2d09", null ],
       [ "command", "a00080.html#a170ac6f4eea7a78bc44a96245c175913", null ],
       [ "transferredWords", "a00080.html#ad6ebee53893ba048bd077c58b583643c", null ],
       [ "callback", "a00080.html#acbb85944773d6b2f65a1e82b06d72f12", null ],
       [ "userData", "a00080.html#af19daa704f2c6081584f03dba7d8d7ef", null ]
     ] ],
-    [ "usdhc_host_t", "a00080.html#a00534", [
+    [ "usdhc_host_t", "a00080.html#a00533", [
       [ "base", "a00080.html#af4b9afbd2f344d962cad34b3c5e53dca", null ],
       [ "sourceClock_Hz", "a00080.html#a09d0d482636c704b9e9f77dbde06822c", null ],
       [ "config", "a00080.html#a18dd05c8b4bdfbddab5eeb43c8092c82", null ],

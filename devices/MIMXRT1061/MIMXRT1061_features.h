@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 2.0, 2022-03-25
-**     Build:               b220426
+**     Build:               b220718
 **
 **     Abstract:
 **         Chip specific module features.
@@ -566,8 +566,10 @@
 
 /* SAI module features */
 
+/* @brief SAI has FIFO in this soc (register bit fields TCR1[TFW]. */
+#define FSL_FEATURE_SAI_HAS_FIFO (1)
 /* @brief Receive/transmit FIFO size in item count (register bit fields TCSR[FRDE], TCSR[FRIE], TCSR[FRF], TCR1[TFW], RCSR[FRDE], RCSR[FRIE], RCSR[FRF], RCR1[RFW], registers TFRn, RFRn). */
-#define FSL_FEATURE_SAI_FIFO_COUNT (32)
+#define FSL_FEATURE_SAI_FIFO_COUNTn(x) (32)
 /* @brief Receive/transmit channel number (register bit fields TCR3[TCE], RCR3[RCE], registers TDRn and RDRn). */
 #define FSL_FEATURE_SAI_CHANNEL_COUNTn(x) \
     (((x) == SAI1) ? (4) : \

@@ -10,7 +10,6 @@
 #include "usb_pd.h"
 #include "usb_pd_i2c.h"
 #include "pd_app.h"
-#include "fsl_gpio.h"
 #include "pd_power_interface.h"
 #include "pd_board_config.h"
 #include "pd_power_nx20p3483.h"

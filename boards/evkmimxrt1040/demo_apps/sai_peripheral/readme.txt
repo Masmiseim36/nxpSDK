@@ -9,8 +9,8 @@ Toolchain supported
 ===================
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
-- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.32.1
 
 Hardware requirements
 =====================
@@ -52,7 +52,7 @@ This following section shows how to run the demo:
 Please note that the log print out may be different according to the different card,
 If the card doesn't been formatted ,the case will making new file system and below log will be printed,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-SAI Peripheral Demo started!
+SAI Demo started!
 Please insert a card into board.
 
 Card inserted.

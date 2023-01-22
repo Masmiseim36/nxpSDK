@@ -2,4 +2,3 @@
 set(CONFIG_USE_middleware_mbedtls_rt_MIMXRT1024 true)
 set(CONFIG_USE_component_serial_manager_uart_MIMXRT1024 true)
 set(CONFIG_USE_driver_lpuart_MIMXRT1024 true)
-set(CONFIG_USE_driver_common_MIMXRT1024 true)

@@ -57,7 +57,7 @@ SHELL_COMMAND_DEFINE(
     "    start             Play default (first found) or specified audio track file.\r\n"
     "    stop              Stops actual playback.\r\n"
     "    pause             Pause actual track or resume if already paused.\r\n"
-	"    seek=<seek_time>  Seek currently paused track. Seek time is in milliseconds.\r\n"
+	"    seek=<seek_time>  Seek currently paused track. Seek time is absolute time in milliseconds.\r\n"
 	"    volume=<volume>   Set volume. The volume can be set from 0 to 100.\r\n"
 
 #ifdef EAP_PROC
@@ -99,14 +99,14 @@ static uint32_t isFileOnSDcard(char *filename)
 
     if (!app.sdcardInserted)
     {
-        PRINTF("Please insert an SD card with audio files and retry this command\r\n");
+        PRINTF("[CMD] Please insert an SD card with audio files and retry this command\r\n");
         return 0;
     }
 
     error = f_opendir(&directory, "/");
     if (error)
     {
-        PRINTF("Failed to open root directory of SD card\r\n");
+        PRINTF("[CMD] Failed to open root directory of SD card\r\n");
         return 0;
     }
 
@@ -160,7 +160,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
 
     if (!app.sdcardInserted)
     {
-        PRINTF("Please insert an SD card with audio files and retry this command\r\n");
+        PRINTF("[CMD] Please insert an SD card with audio files and retry this command\r\n");
         return kStatus_SHELL_Error;
     }
 
@@ -182,15 +182,45 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
         }
         else if (strcmp(argv[1], "seek") == 0)
         {
-            if (argc >= 3)
+            if ((get_eap_att_control()->status != kAttPaused) && (get_eap_att_control()->status != kAttRunning))
             {
-                get_eap_att_control()->seek_time = abs(atoi((argv[2])));
-                get_eap_att_control()->command   = kAttCmdSeek;
+                PRINTF("[CMD] First select an audio track to play.\r\n");
+                retVal = kStatus_SHELL_Error;
+            }
+            else if (get_eap_att_control()->status != kAttPaused)
+            {
+                PRINTF("[CMD] First pause the track.\r\n");
+                retVal = kStatus_SHELL_Error;
             }
             else
             {
-                PRINTF("[CMD] Enter seek time value.\r\n");
-                retVal = kStatus_SHELL_Error;
+                if (argc >= 3)
+                {
+                    dot = strrchr(get_eap_att_control()->input, '.');
+                    if ((dot && strncmp(dot + 1, "aac", 3) == 0) && (get_eap_att_control()->status == kAttPaused))
+                    {
+                        PRINTF("[CMD] The AAC decoder does not support the seek command.\r\n");
+                        retVal = kStatus_SHELL_Error;
+                    }
+                    else
+                    {
+                        if (atoi(argv[2]) < 0)
+                        {
+                            PRINTF("[CMD] The seek time must be a positive value.\r\n");
+                            retVal = kStatus_SHELL_Error;
+                        }
+                        else
+                        {
+                            get_eap_att_control()->seek_time = atoi(argv[2]);
+                            get_eap_att_control()->command   = kAttCmdSeek;
+                        }
+                    }
+                }
+                else
+                {
+                    PRINTF("[CMD] Enter a seek time value.\r\n");
+                    retVal = kStatus_SHELL_Error;
+                }
             }
         }
 #if defined(EAP_PROC) && (ALGORITHM_XO == 1)
@@ -262,7 +292,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
                 int preset = abs(atoi((argv[2])));
                 if (preset < 0 || preset > EAP_MAX_PRESET)
                 {
-                    PRINTF("EAP preset number out of range, setting EAP all effects OFF.\r\n");
+                    PRINTF("[CMD] EAP preset number out of range, setting EAP all effects OFF.\r\n");
                     preset = 0;
                 }
                 get_eap_att_control()->eapPreset = preset;
@@ -287,6 +317,15 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
 #if (OGG_OPUS_DEC == 1)
                             (dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
 #endif
+#if (AAC_DEC == 1)
+                            (dot && strncmp(dot + 1, "aac", 3) == 0) ||
+#endif
+#if (WAV_DEC == 1)
+                            (dot && strncmp(dot + 1, "wav", 3) == 0) ||
+#endif
+#if (FLAC_DEC == 1)
+                            (dot && strncmp(dot + 1, "flac", 3) == 0) ||
+#endif
                             (dot && strncmp(dot + 1, "mp3", 3) == 0))
                         {
                             strcpy(get_eap_att_control()->input, argv[2]);
@@ -294,29 +333,39 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
                         }
                         else
                         {
+                            PRINTF(
+                                "[CMD] Input audio file name has to match one of the .mp3"
 #if (OGG_OPUS_DEC == 1)
-                            PRINTF("Input audio file name has to match one of the .opus|.ogg|.mp3 formats.\r\n");
-#else
-                            PRINTF("Input audio file name has to match the .mp3 format.\r\n");
+                                "|.opus|.ogg"
 #endif
+#if (AAC_DEC == 1)
+                                "|.aac"
+#endif
+#if (WAV_DEC == 1)
+                                "|.wav"
+#endif
+#if (FLAC_DEC == 1)
+                                "|.flac"
+#endif
+                                " formats.\r\n");
                             retVal = kStatus_SHELL_Error;
                         }
                     }
                     else
                     {
-                        PRINTF("File is not on the SD card, please enter valid filename.\r\n");
+                        PRINTF("[CMD] File is not on the SD card, please enter valid filename.\r\n");
                         retVal = kStatus_SHELL_Error;
                     }
                 }
                 else
                 {
-                    PRINTF("Enter name of audio file.\r\n");
+                    PRINTF("[CMD] Enter name of audio file.\r\n");
                     retVal = kStatus_SHELL_Error;
                 }
             }
             else
             {
-                PRINTF("Use the stop command first.\r\n");
+                PRINTF("[CMD] Use the stop command first.\r\n");
                 retVal = kStatus_SHELL_Error;
             }
         }
@@ -329,19 +378,19 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
         }
         else if (strcmp(argv[1], "info") == 0)
         {
-            PRINTF("status: %d (last error: %d), (%d/%d)[%s]\r\n", get_eap_att_control()->status,
+            PRINTF("[CMD] status: %d (last error: %d), (%d/%d)[%s]\r\n", get_eap_att_control()->status,
                    get_eap_att_control()->lastError, get_eap_att_control()->trackCurrent,
                    get_eap_att_control()->trackTotal, get_eap_att_control()->input);
         }
         else
         {
-            PRINTF("Undefined att command option. \r\n");
+            PRINTF("[CMD] Undefined att command option. \r\n");
             retVal = kStatus_SHELL_Error;
         }
     }
     else
     {
-        PRINTF("Enter correct command option. \r\n");
+        PRINTF("[CMD] Enter correct command option. \r\n");
         retVal = kStatus_SHELL_Error;
     }
     // unlock APP mutex

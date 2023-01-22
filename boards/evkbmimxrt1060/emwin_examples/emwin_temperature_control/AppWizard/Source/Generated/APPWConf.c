@@ -29,6 +29,10 @@ Purpose     : Generated file do NOT edit!
 #define DISPLAY_DRIVER GUIDRV_WIN32
 #define NUM_BUFFERS   2
 #define _aVarList NULL
+#define _appDrawing      NULL
+#define _NumDrawings     0
+#define _aScrollerList   NULL
+#define _NumScrollers    0
 
 /*********************************************************************
 *
@@ -64,23 +68,26 @@ static U8 _MultibufEnable = 1;
 
 /*********************************************************************
 *
+*       _ShowMissingCharacters
+*/
+static U8 _ShowMissingCharacters = 1;
+
+/*********************************************************************
+*
 *       _apLang
 */
-static const char * _apLang[] = {
-  (const char *)acAPPW_Language_0,
+static GUI_CONST_STORAGE char * _apLang[] = {
+  (GUI_CONST_STORAGE char *)acAPPW_Language_0,
 };
 
 /*********************************************************************
 *
 *       _TextInit
 */
-static const APPW_TEXT_INIT _TextInit = {
+static GUI_CONST_STORAGE APPW_TEXT_INIT _TextInit = {
   _apLang,
   GUI_COUNTOF(_apLang),
 };
-
-static APPW_DRAWING_ITEM ** ppDrawingList;
-static int NumDrawings;
 
 /*********************************************************************
 *
@@ -110,7 +117,9 @@ void APPW_X_Setup(void) {
   APPW_SetpfInitText(_InitText);
   APPW_X_FS_Init();
   APPW_MULTIBUF_Enable(_MultibufEnable);
-  APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars, ppDrawingList, NumDrawings);
+  APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars, _aScrollerList, _NumScrollers, (APPW_DRAWING_ITEM **)_appDrawing, _NumDrawings);
+  APPW_SetSupportScroller(0);
+  GUI_ShowMissingCharacters(_ShowMissingCharacters);
 }
 
 /*********************************************************************

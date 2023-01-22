@@ -1,6 +1,6 @@
 var a00040 =
 [
-    [ "kpp_config_t", "a00040.html#a00407", [
+    [ "kpp_config_t", "a00040.html#a00406", [
       [ "activeRow", "a00040.html#affe1c0fe7c98a7bbd90e5da557a77029", null ],
       [ "activeColumn", "a00040.html#a17262e678dbf479fc6fea48e685e94be", null ],
       [ "interrupt", "a00040.html#a3f6f88fe9bcaf13690da0506e52f8bd9", null ]

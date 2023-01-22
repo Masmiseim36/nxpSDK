@@ -5,15 +5,15 @@ This demo demonstrates the follow function:
 2. With an app running on the smart phone (Android phone), the end users could connect to AWS cloud and control the audio demo running on the target board EVK board through AWS cloud. Some operations like play, play next, pause, etc., could be used to control the media play functionalities. 
 3. Audio demo running on the target board EVK board connects to the AWS through Wifi, also a connection could be established between the target board EVK board and a Bluetooth headset. To get the media resource (mp3 files) from the U-disk, a HS USB host is enabled, and a U-disk with mp3 files should be connected to target board EVK board via the USB port. After that, the audio demo will search the root directory of U-disk for the music files (now only mp3 files are supported), and upload the song file list to AWS, then the song list would be shown in the app running on the smart phone. Finally, the music could be played out via the Bluetooth headset once end user controls the app to play the mp3 file.
 Note:
-1. This demo could NOT function with the default setting provided in SDK package because a AWS account is mandatory to run to the demo, the end users must create their owner AWS account and configure the IoT Thing before the functionality of the demo could be used. Also some information specified by the end customers, like Thing name, Wifi SSID Wifi password, etc., must be updated accordingly before the demo would work. Check (Prepare the Demo) to get the detailed guidance of the configuration steps.
+1. This demo could NOT function with the default setting provided in SDK package because a AWS account is mandatory to run to the demo, the end users must create their own AWS account and configure the IoT Thing before the functionality of the demo could be used. Also some information specified by the end customers, like Thing name, Wifi SSID Wifi password, etc., must be updated accordingly before the demo would work. Check (Prepare the Demo) to get the detailed guidance of the configuration steps.
 2. The music files names in U-disk need be english.
 3. The volume of audio adjustment is not supported.
 
 
 Toolchain supported
 ===================
-- MCUXpresso  11.6.0
-- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.32.1
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -145,8 +145,8 @@ You need to update FreeRTOS with your AWS IoT endpoint so the application runnin
 a. Browse to the AWS IoT console(https://console.aws.amazon.com/iotv2/).
 b. In the navigation pane, choose "Settings".
    Your AWS IoT endpoint is displayed in "Endpoint". It should look like 1234567890123-ats.iot.us-west-2.amazonaws.com. Make a note of this endpoint.
-c. In the navigation pane, choose "Manage", and then choose "Things". Your device should have an AWS IoT thing name. Make a note of this name. Such as, the thing name "MusicPlayer" created in  step 3.c.
-d. Open <MCUXpresso SDK>/rtos/freertos/demos/include/aws_clientcredential.h.
+c. In the navigation pane, choose "Manage", and then choose "Things". Your device should have an AWS IoT thing name. Make a note of this name. Such as, the thing name "MusicPlayer" created in step 3.c.
+d. Open <MCUXpresso SDK>/boards/<board>/edgefast_bluetooth_examples/audio_profile/aws_clientcredential.h.
 e. Specify values for the following constants:
    o #define clientcredentialMQTT_BROKER_ENDPOINT "Your AWS IoT endpoint"
    o #define clientcredentialIOT_THING_NAME "The AWS IoT thing name of your board"
@@ -157,10 +157,8 @@ e. Specify values for the following constants:
 5. To format your AWS IoT credentials based on the guide: https://docs.aws.amazon.com/freertos/latest/userguide/freertos-prereqs.html
 FreeRTOS needs the AWS IoT certificate and private keys associated with your registered thing and its permissions policies to successfully communicate with AWS IoT on behalf of your device.
 FreeRTOS is a C language project, and the certificate and private key must be specially formatted to be added to the project.
-a. In a browser window, open <MCUXpresso SDK>/rtos/freertos/tools/certificate_configuration/CertificateConfigurator.html.
-b. Under "Certificate PEM file", choose the ID-certificate.pem.crt that you downloaded from the AWS IoT console.
-c. Under "Private Key PEM file", choose the ID-private.pem.key that you downloaded from the AWS IoT console.
-d. Choose "Generate and save aws_clientcredential_keys.h", and then save the file in <MCUXpresso SDK>/rtos/freertos/demos/include. This overwrites the existing file in the directory.
+a. Use the PEM-to-C-string.py (<MCUXpresso SDK>\middleware\aws_iot\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+d. Copy the file to <MCUXpresso SDK>/boards/<board>/edgefast_bluetooth_examples/audio_profile. This overwrites the existing file in the directory.
 Note, The certificate and private key are hard-coded for demonstration purposes only. Production-level applications should store these files in a secure location.
 
 6. Open example's project and build it.
@@ -255,11 +253,11 @@ Running the demo
 ================
 1. The log below shows the output of the demo in the terminal window. The log can be different based on your WiFi network configuration and based on the actions, which you have done in the Android application.
 
-2. After the log "Use mobile application to control the remote device.", the shell command can be used to connect to BT headset.
+2. After the log "Bluetooth initialized", the shell command can be used to connect to BT headset.
 
 a. The commands are as follow:
     "bt": BT related function
-      USAGE: bt [connect |finddevice|connectdevice]
+      USAGE: bt [connectaddress|finddevice|connectdevice|disconnect|deletedevice]
         connectaddress connect to the device of the address parameter,for example: bt connectaddress xx:xx:xx:xx:xx:xx. Address format(LSB-MSB): xx:xx:xx:xx:xx:xx
         finddevice     start to find BT devices
         connectdevice  connect to the device that is found, for example: bt connectdevice n (from 1)
@@ -296,159 +294,60 @@ e. Use "deletedevice"
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 usb host init done
-0 154 [main_task] Write certificate...
-
- 
-
-1 221 [iot_thread] [INFO ][DEMO][539114128] ---------STARTING DEMO---------
-
- 
-
-
-2 222 [iot_thread] [INFO ][INIT][539114128] SDK successfully initialized.
-
- 
-
-MAC Address: 80:D2:1D:E8:2F:67 
-[net] Initialized TCP/IP networking stack
-3 3571 [iot_thread] Connecting to nxp .....
-
- 
-
-4 15602 [wlcmgr] Connected to with IP = [192.168.199.68]
-
- 
-
-5 15622 [iot_thread] [INFO ][DEMO][0] Successfully initialized the demo. Network type for the demo: 1
-
- 
-
-6 15622 [iot_thread] [INFO] Create a TCP connection to a2nxzv2h17k05v.ats.iot.cn-north-1.amazonaws.com.cn:8883.
-7 22785 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
-8 22785 [iot_thread] [INFO] CONNACK session present bit not set.
-9 22785 [iot_thread] [INFO] Connection accepted.
-10 22785 [iot_thread] [INFO] Received MQTT CONNACK successfully from broker.
-11 22785 [iot_thread] [INFO] MQTT connection established with the broker.
-12 22785 [iot_thread] [INFO] MQTT connection successfully established with broker.
-
- 
-
-
-13 22785 [iot_thread] [INFO] A clean MQTT connection is established. Cleaning up all the stored outgoing publishes.
-
- 
-
-
-14 22786 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_wifi_provisioning/shadow/delete/accepted to broker.
-
- 
-
-
-15 22938 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
-16 22938 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
-
- 
-
-
-17 23341 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_wifi_provisioning/shadow/delete/rejected to broker.
-
- 
-
-
-18 23501 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
-19 23502 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
-
- 
-
-
-20 23904 [iot_thread] [INFO] the published payload: 
- 
-21 23905 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_wifi_provisioning/shadow/delete to broker with packet ID 3.
-
- 
-
-
-22 24027 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
-23 24027 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
-24 24027 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
-25 24028 [iot_thread] [INFO] PUBACK received for packet id 3.
-
- 
-
-
-26 24028 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 3.
-
- 
-
-
-27 24095 [iot_thread] [INFO] Packet received. ReceivedBytes=99.
-28 24095 [iot_thread] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
-29 24095 [iot_thread] [INFO] State record updated. New state=MQTTPubAckSend.
-30 24095 [iot_thread] [INFO] pPublishInfo->pTopicName:$aws/things/aws_wifi_provisioning/shadow/delete/accepted.
-31 24095 [iot_thread] [INFO] Received an MQTT incoming publish on /delete/accepted topic.
-32 24499 [iot_thread] [INFO] UNSUBSCRIBE sent topic $aws/things/aws_wifi_provisioning/shadow/delete/accepted to broker.
-
- 
-
-
-33 24671 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
-34 24671 [iot_thread] [INFO] MQTT_PACKET_TYPE_UNSUBACK.
-
- 
-
-
-35 25075 [iot_thread] [INFO] UNSUBSCRIBE sent topic $aws/things/aws_wifi_provisioning/shadow/delete/rejected to broker.
-
- 
-
-
-36 25243 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
-37 25243 [iot_thread] [INFO] MQTT_PACKET_TYPE_UNSUBACK.
-
- 
-
-
-38 25646 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_wifi_provisioning/shadow/update/delta to broker.
-
- 
-
-
-39 25780 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
-40 25780 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
-
- 
-
-
-41 26182 [iot_thread] [INFO] the published payload:{"state":{"desired":{"playState":false,"playIndex":0},"reported":{"playState":false,"playIndex":0,"playerReady":false,"musicList":[]}},"clientToken": "token-26182"} 
- 
-42 26184 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_wifi_provisioning/shadow/update to broker with packet ID 7.
-
- 
-
-
-43 26445 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
-44 26445 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
-45 26445 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
-46 26445 [iot_thread] [INFO] PUBACK received for packet id 7.
-
- 
-
-
-47 26445 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 7.
-
- 
-
-
-48 26848 [iot_thread] [INFO] AWS Remote Control Demo initialized.
-49 26848 [iot_thread] [INFO] Use mobile application to control the remote device.
+0 21 [main_task] Warning: could not clean-up old crypto objects. 6 
+
+1 21 [main_task] Initializing Wi-Fi...
+
+MAC Address: 9C:50:D1:44:F5:7F 
+2 3166 [main_task] Wi-Fi initialized successfully.
+
+3 3168 [main_task] Connecting to: Cher's iPhone
+
+4 12932 [main_task] Wi-Fi connected
+
+5 12933 [main_task] IP Address acquired: 172.20.10.3
+
+6 12934 [MQTT] [INFO] Creating a TLS connection to a2nxzv2h17k05v.ats.iot.cn-north-1.amazonaws.com.cn:8883.
+7 15775 [MQTT] [INFO] (Network connection 202539dc) TLS handshake successful.
+8 15775 [MQTT] [INFO] (Network connection 202539dc) Connection to a2nxzv2h17k05v.ats.iot.cn-north-1.amazonaws.com.cn established.
+9 15775 [MQTT] [INFO] Creating an MQTT connection to the broker.
+10 16048 [MQTT] [INFO] MQTT connection established with the broker.
+11 16048 [MQTT] [INFO] Successfully connected to MQTT broker.
+12 16049 [SHADOW_DEV] [INFO] MQTT Agent is connected. Initializing shadow device task.
+13 16049 [SHADOW_DEV] [INFO] Sending subscribe request to agent for shadow topics.
+14 16056 [SHADOW_APP] [INFO] MQTT Agent is connected. Initializing shadow update task.
+15 16057 [SHADOW_APP] [INFO] Sending subscribe request to agent for shadow topics.
+16 16310 [SHADOW_APP] [INFO] Received subscribe ack for shadow update topics.
+17 16311 [SHADOW_DEV] [INFO] Successfully subscribed to shadow update topics.
+18 16311 [SHADOW_DEV] [INFO] Publishing to /get message using client token 16311.
+19 16311 [MQTT] [INFO] Publishing message to $aws/things/aws_audio_profile/shadow/get.
+
+20 16314 [SHADOW_APP] [INFO] Publishing to /update with following client token 16314.
+21 16314 [MQTT] [INFO] Publishing message to $aws/things/aws_audio_profile/shadow/update.
+
+22 16317 [SHADOW_DEV] [INFO] Successfully sent a publish message to /get topic.
+23 16467 [MQTT] [INFO] Ack packet deserialized with result: MQTTSuccess.
+24 16468 [MQTT] [INFO] State record updated. New state=MQTTPublishDone.
+25 16468 [MQTT] [INFO] Ack packet deserialized with result: MQTTSuccess.
+26 16469 [MQTT] [INFO] State record updated. New state=MQTTPublishDone.
+27 16520 [MQTT] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+28 16520 [MQTT] [INFO] State record updated. New state=MQTTPubAckSend.
+29 16520 [MQTT] [WARN] Received rejected response for get with error code 404.
+30 16522 [SHADOW_DEV] [WARN] Cannot find a shadow document in cloud.
+31 16574 [MQTT] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+32 16574 [MQTT] [INFO] State record updated. New state=MQTTPubAckSend.
+33 16575 [MQTT] [INFO] Received accepted response for update with token 16314. 
 Bluetooth initialized
 
- 
+Copyright  2022  NXP
 
-Copyright  2020  NXP
+>> 34 17522 [SHADOW_DEV] [INFO] Publishing to /get message using client token 17522.
+35 17522 [MQTT] [INFO] Publishing message to $aws/things/aws_audio_profile/shadow/get.
 
- 
-
->> 
-
+36 17524 [SHADOW_DEV] [INFO] Successfully sent a publish message to /get topic.
+37 17724 [MQTT] [INFO] Ack packet deserialized with result: MQTTSuccess.
+38 17724 [MQTT] [INFO] State record updated. New state=MQTTPublishDone.
+39 17777 [MQTT] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+40 17777 [MQTT] [INFO] State record updated. New state=MQTTPubAckSend.
+41 17779 [SHADOW_DEV] [INFO] Received an accepted response for shadow GET request.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

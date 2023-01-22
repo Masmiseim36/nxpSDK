@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1024DAG5A, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, DEBUG_CONSOLE_ASSERT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -766,6 +766,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -956,11 +966,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -974,16 +979,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1356,7 +1351,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, DEBUG_CONSOLE_ASSERT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1792,6 +1787,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1982,11 +1987,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2000,16 +2000,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2382,7 +2372,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, DEBUG_CONSOLE_ASSERT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2818,6 +2808,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3008,11 +3008,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3026,16 +3021,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3408,7 +3393,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1024DAG5A, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, DEBUG_CONSOLE_ASSERT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3844,6 +3829,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -4034,11 +4029,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4052,16 +4042,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4434,7 +4414,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=0, NDEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CPU_MIMXRT1024DAG5A, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, DEBUG_CONSOLE_ASSERT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4870,6 +4850,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -5060,11 +5050,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -5078,16 +5063,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -5460,7 +5435,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=0, NDEBUG, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, CPU_MIMXRT1024DAG5A, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, DEBUG_CONSOLE_ASSERT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/i2c;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/osa;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../../evkmimxrt1024/xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5896,6 +5871,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -6086,11 +6071,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -6104,16 +6084,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

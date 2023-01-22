@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-typedef-redefinition  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, IMX_RT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', mqttconfigENABLE_METRICS=0, SDK_DEBUGCONSOLE_UART, FREEDOM, LPC_ENET, EXAMPLE_USE_100M_ENET_PORT, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, PB_FIELD_32BIT, EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MBEDTLS, USE_RTOS, mqttconfigENABLE_METRICS=0, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, IMX_RT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', mqttconfigENABLE_METRICS=0, SDK_DEBUGCONSOLE_UART, FREEDOM, LPC_ENET, EXAMPLE_USE_100M_ENET_PORT, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, PB_FIELD_32BIT, EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MBEDTLS, USE_RTOS, mqttconfigENABLE_METRICS=0, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../..;..;../../../../../middleware/se_hostlib/demos/ksdk/se05x/iot_agent;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo;../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/platform;../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls;../../../../../middleware/se_hostlib/semslite/lib/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf;../../../../../middleware/se_hostlib/nxp_iot_agent/inc;../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../rtos/freertos/libraries/logging/include;../../../../../rtos/freertos/libraries/coreMQTT/source/include;../../../../../rtos/freertos/libraries/coreMQTT/source/interface;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types;../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform;../../../../../rtos/freertos/libraries/abstractions/platform/include/platform;../../../../../rtos/freertos/libraries/abstractions/platform/include/types;../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils;../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config;../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include;../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11;../../../../../rtos/freertos/libraries/3rdparty/jsmn;../../../../../rtos/freertos/demos/common/pkcs11_helpers;../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include</IncludePath>
+              <IncludePath>../../..;..;../../../../../middleware/se_hostlib/demos/ksdk/se05x/iot_agent;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/platform;../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls;../../../../../middleware/se_hostlib/semslite/lib/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf;../../../../../middleware/se_hostlib/nxp_iot_agent/inc;../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../middleware/pkcs11;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corepkcs11/source/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -349,7 +349,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..</IncludePath>
+              <IncludePath>..;../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -390,26 +390,71 @@
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
             <File>
-              <FileName>readme.rst</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.rst</FilePath>
-            </File>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FileName>FreeRTOSConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../FreeRTOSConfig.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_secure_sockets_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_bufferpool_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_bufferpool_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_mqtt_agent_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../iot_mqtt_agent_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSIPConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../se05x_cloud_gcp/FreeRTOSIPConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../core_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../core_pkcs11_config.h</FilePath>
+            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -439,6 +484,21 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.rst</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.rst</FilePath>
+            </File>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -588,7 +648,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phy.h</FileName>
@@ -608,66 +668,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060</GroupName>
-          <Files>
-            <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/lwipopts.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSIPConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/FreeRTOSIPConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/aws_secure_sockets_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/aws_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/aws_bufferpool_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_mqtt_agent_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/iot_mqtt_agent_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>app.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/app.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
@@ -676,14 +676,34 @@
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
@@ -3428,317 +3448,57 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/transport/secure_sockets</GroupName>
+          <GroupName>aws_iot/amazon-freertos/libraries/3rdparty/jsmn</GroupName>
           <Files>
             <File>
-              <FileName>transport_secure_sockets.c</FileName>
+              <FileName>jsmn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
             </File>
             <File>
-              <FileName>transport_secure_sockets.h</FileName>
+              <FileName>jsmn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>aws_iot/iot-reference/FreeRTOS/transport_mbedtls</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
+              <FileName>using_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls/using_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FileName>using_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls/using_mbedtls.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>aws_iot/iot-reference/examples/common/logging</GroupName>
           <Files>
             <File>
-              <FileName>atomic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
-            </File>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_prototypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
+              <FileName>logging.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/examples/common/logging/logging.c</FilePath>
             </File>
             <File>
-              <FileName>portmacro.h</FileName>
+              <FileName>logging.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/secure_sockets/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_secure_sockets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_secure_sockets_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_secure_sockets_wrapper_metrics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/logging/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_logging_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/include/iot_logging_task.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/examples/common/logging/logging.h</FilePath>
             </File>
             <File>
               <FileName>logging_levels.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/include/logging_levels.h</FilePath>
-            </File>
-            <File>
-              <FileName>logging_stack.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/include/logging_stack.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/logging</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_logging.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/iot_logging.c</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging_task_dynamic_buffers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/iot_logging_task_dynamic_buffers.c</FilePath>
-            </File>
-            <File>
-              <FileName>README.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/README.md</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/coreMQTT/source</GroupName>
-          <Files>
-            <File>
-              <FileName>core_mqtt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/core_mqtt.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_serializer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/core_mqtt_serializer.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_state.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/core_mqtt_state.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/coreMQTT/source/include</GroupName>
-          <Files>
-            <File>
-              <FileName>core_mqtt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_serializer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt_serializer.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_state.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt_state.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/coreMQTT/source/interface</GroupName>
-          <Files>
-            <File>
-              <FileName>transport_interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/interface/transport_interface.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/examples/common/logging/logging_levels.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3903,28 +3663,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -3939,16 +3679,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3973,377 +3703,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/vendors/nxp/secure_sockets/lwip</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
-              <FileName>iot_secure_sockets.c</FileName>
+              <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_atomic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
-              <FileName>iot_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_linear_containers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging_setup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_taskpool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/include/private</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_default_root_certificates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_doubly_linked_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_error.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_lib_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_static_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_taskpool_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/include/types</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_taskpool_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_device_metrics.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_device_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
-              <FileName>iot_init.c</FileName>
+              <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
-              <FileName>iot_static_memory_common.c</FileName>
+              <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/taskpool</GroupName>
-          <Files>
             <File>
-              <FileName>iot_taskpool.c</FileName>
+              <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
-              <FileName>iot_taskpool_static_memory.c</FileName>
+              <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/platform/freertos/include/platform</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_network_freertos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
-              <FileName>iot_platform_types_freertos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/platform/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_clock_freertos.c</FileName>
+              <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <Files>
+            <File>
+              <FileName>atomic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
-              <FileName>iot_metrics.c</FileName>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
-              <FileName>iot_network_freertos.c</FileName>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+            <File>
+              <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c</FilePath>
-            </File>
-            <File>
-              <FileName>iot_threads_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/platform/include/platform</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
-              <FileName>iot_clock.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_metrics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_metrics.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_network.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_network.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_threads.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_threads.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/platform/include/types</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_network_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_network_types.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_platform_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_platform_types.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/tls/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/tls/src</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_tls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/mbedtls_utils</GroupName>
-          <Files>
-            <File>
-              <FileName>LICENSE-2.0.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/LICENSE-2.0.txt</FilePath>
-            </File>
-            <File>
-              <FileName>mbedtls_error.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/mbedtls_error.c</FilePath>
-            </File>
-            <File>
-              <FileName>mbedtls_error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/mbedtls_error.h</FilePath>
-            </File>
-            <File>
-              <FileName>mbedtls_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/mbedtls_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>README.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/README.md</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/crypto/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/crypto/src</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/mbedtls_config</GroupName>
-          <Files>
-            <File>
-              <FileName>threading_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config/threading_alt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/pkcs11/corePKCS11/source</GroupName>
-          <Files>
-            <File>
-              <FileName>core_pkcs11.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/core_pkcs11.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_pki_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/core_pki_utils.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/pkcs11/corePKCS11/source/include</GroupName>
-          <Files>
-            <File>
-              <FileName>core_pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include/core_pkcs11.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_pal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include/core_pkcs11_pal.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pki_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include/core_pki_utils.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/pkcs11</GroupName>
-          <Files>
-            <File>
-              <FileName>CONTRIBUTING.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/CONTRIBUTING.md</FilePath>
-            </File>
-            <File>
-              <FileName>LICENSE.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/LICENSE.md</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs11f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11f.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs11t.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11t.h</FilePath>
-            </File>
-            <File>
-              <FileName>README.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/README.md</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/utils/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_system_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/utils/src</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_system_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4494,6 +4034,11 @@
               <FileName>ledHandler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>modules.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/inc/modules.h</FilePath>
             </File>
             <File>
               <FileName>nxEnsure.h</FileName>
@@ -4865,6 +4410,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_freertos.c</FilePath>
             </File>
+            <File>
+              <FileName>timer_kinetis_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_threadx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5111,6 +4661,11 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_lpcxpresso55s.h</FilePath>
             </File>
             <File>
+              <FileName>ex_sss_main_inc_nrf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_nrf.h</FilePath>
+            </File>
+            <File>
               <FileName>ex_sss_main_inc_qn9090.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_qn9090.h</FilePath>
@@ -5288,91 +4843,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib/demos/ksdk/common</GroupName>
-          <Files>
-            <File>
-              <FileName>ledHandler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/ledHandler.c</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_logging_task.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_config_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential_keys.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/core_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_secure_sockets_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_secure_sockets_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo/pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo/pin_mux.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>FreeRTOSConfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/FreeRTOSConfig.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>se_hostlib/sss/plugin/pkcs11</GroupName>
           <Files>
             <File>
@@ -5423,67 +4893,117 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/https_client</GroupName>
+          <GroupName>freertos/coremqtt/source</GroupName>
           <Files>
             <File>
-              <FileName>httpsclient.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/https_client/httpsclient.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/jsmn</GroupName>
-          <Files>
-            <File>
-              <FileName>jsmn.c</FileName>
+              <FileName>core_mqtt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/core_mqtt.c</FilePath>
             </File>
             <File>
-              <FileName>jsmn.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
+              <FileName>core_mqtt_serializer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/core_mqtt_serializer.c</FilePath>
             </File>
             <File>
-              <FileName>LICENSE</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/LICENSE</FilePath>
+              <FileName>core_mqtt_state.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/core_mqtt_state.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/demos/common/pkcs11_helpers</GroupName>
+          <GroupName>freertos/coremqtt/source/include</GroupName>
           <Files>
             <File>
-              <FileName>pkcs11_helpers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/demos/common/pkcs11_helpers/pkcs11_helpers.c</FilePath>
+              <FileName>core_mqtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt.h</FilePath>
             </File>
             <File>
-              <FileName>pkcs11_helpers.h</FileName>
+              <FileName>core_mqtt_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/demos/common/pkcs11_helpers/pkcs11_helpers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_default_logging.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_default_logging.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_serializer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_serializer.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_state.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_state.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/backoff_algorithm/source</GroupName>
+          <GroupName>freertos/coremqtt/source/interface</GroupName>
+          <Files>
+            <File>
+              <FileName>transport_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/interface/transport_interface.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pkcs11</GroupName>
+          <Files>
+            <File>
+              <FileName>README.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/README.md</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11t.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/pkcs11t.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11f.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/pkcs11f.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/LICENSE.md</FilePath>
+            </File>
+            <File>
+              <FileName>CONTRIBUTING.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/CONTRIBUTING.md</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/backoffalgorithm/source</GroupName>
           <Files>
             <File>
               <FileName>backoff_algorithm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/backoff_algorithm.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/backoff_algorithm/source/include</GroupName>
+          <GroupName>freertos/backoffalgorithm/source/include</GroupName>
           <Files>
             <File>
               <FileName>backoff_algorithm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include/backoff_algorithm.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5569,6 +5089,46 @@
               <FileName>fsl_sss_mbedtls_apis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/src/mbedtls/fsl_sss_mbedtls_apis.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/corepkcs11/source</GroupName>
+          <Files>
+            <File>
+              <FileName>core_pkcs11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/core_pkcs11.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_pki_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/core_pki_utils.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/corepkcs11/source/include</GroupName>
+          <Files>
+            <File>
+              <FileName>core_pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pkcs11_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_pal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pkcs11_pal.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pki_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pki_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5900,9 +5460,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-typedef-redefinition  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, IMX_RT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', mqttconfigENABLE_METRICS=0, SDK_DEBUGCONSOLE_UART, FREEDOM, LPC_ENET, EXAMPLE_USE_100M_ENET_PORT, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, PB_FIELD_32BIT, EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MBEDTLS, USE_RTOS, mqttconfigENABLE_METRICS=0, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, IMX_RT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', mqttconfigENABLE_METRICS=0, SDK_DEBUGCONSOLE_UART, FREEDOM, LPC_ENET, EXAMPLE_USE_100M_ENET_PORT, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, PB_FIELD_32BIT, EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MBEDTLS, USE_RTOS, mqttconfigENABLE_METRICS=0, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../..;..;../../../../../middleware/se_hostlib/demos/ksdk/se05x/iot_agent;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo;../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/platform;../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls;../../../../../middleware/se_hostlib/semslite/lib/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf;../../../../../middleware/se_hostlib/nxp_iot_agent/inc;../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../rtos/freertos/libraries/logging/include;../../../../../rtos/freertos/libraries/coreMQTT/source/include;../../../../../rtos/freertos/libraries/coreMQTT/source/interface;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types;../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform;../../../../../rtos/freertos/libraries/abstractions/platform/include/platform;../../../../../rtos/freertos/libraries/abstractions/platform/include/types;../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils;../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config;../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include;../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11;../../../../../rtos/freertos/libraries/3rdparty/jsmn;../../../../../rtos/freertos/demos/common/pkcs11_helpers;../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include</IncludePath>
+              <IncludePath>../../..;..;../../../../../middleware/se_hostlib/demos/ksdk/se05x/iot_agent;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/platform;../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls;../../../../../middleware/se_hostlib/semslite/lib/inc;../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf;../../../../../middleware/se_hostlib/nxp_iot_agent/inc;../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../middleware/pkcs11;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corepkcs11/source/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5920,7 +5480,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..</IncludePath>
+              <IncludePath>..;../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5961,26 +5521,71 @@
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
             <File>
-              <FileName>readme.rst</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.rst</FilePath>
-            </File>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FileName>FreeRTOSConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../FreeRTOSConfig.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_secure_sockets_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_bufferpool_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_bufferpool_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_mqtt_agent_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../iot_mqtt_agent_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSIPConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../se05x_cloud_gcp/FreeRTOSIPConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../core_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../core_pkcs11_config.h</FilePath>
+            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -6010,6 +5615,21 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.rst</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.rst</FilePath>
+            </File>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -6159,7 +5779,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phy.h</FileName>
@@ -6179,66 +5799,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060</GroupName>
-          <Files>
-            <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/lwipopts.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSIPConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/FreeRTOSIPConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/aws_secure_sockets_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/aws_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/aws_bufferpool_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_mqtt_agent_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/iot_mqtt_agent_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>app.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkmimxrt1060/app.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
@@ -6247,14 +5807,34 @@
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
@@ -8999,317 +8579,57 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/transport/secure_sockets</GroupName>
+          <GroupName>aws_iot/amazon-freertos/libraries/3rdparty/jsmn</GroupName>
           <Files>
             <File>
-              <FileName>transport_secure_sockets.c</FileName>
+              <FileName>jsmn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
             </File>
             <File>
-              <FileName>transport_secure_sockets.h</FileName>
+              <FileName>jsmn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>aws_iot/iot-reference/FreeRTOS/transport_mbedtls</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
+              <FileName>using_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls/using_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FileName>using_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls/using_mbedtls.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>aws_iot/iot-reference/examples/common/logging</GroupName>
           <Files>
             <File>
-              <FileName>atomic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
-            </File>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_prototypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
+              <FileName>logging.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/examples/common/logging/logging.c</FilePath>
             </File>
             <File>
-              <FileName>portmacro.h</FileName>
+              <FileName>logging.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/secure_sockets/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_secure_sockets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_secure_sockets_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_secure_sockets_wrapper_metrics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/logging/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_logging_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/include/iot_logging_task.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/examples/common/logging/logging.h</FilePath>
             </File>
             <File>
               <FileName>logging_levels.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/include/logging_levels.h</FilePath>
-            </File>
-            <File>
-              <FileName>logging_stack.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/include/logging_stack.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/logging</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_logging.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/iot_logging.c</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging_task_dynamic_buffers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/iot_logging_task_dynamic_buffers.c</FilePath>
-            </File>
-            <File>
-              <FileName>README.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/logging/README.md</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/coreMQTT/source</GroupName>
-          <Files>
-            <File>
-              <FileName>core_mqtt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/core_mqtt.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_serializer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/core_mqtt_serializer.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_state.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/core_mqtt_state.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/coreMQTT/source/include</GroupName>
-          <Files>
-            <File>
-              <FileName>core_mqtt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_serializer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt_serializer.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_state.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/include/core_mqtt_state.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/coreMQTT/source/interface</GroupName>
-          <Files>
-            <File>
-              <FileName>transport_interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/coreMQTT/source/interface/transport_interface.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/examples/common/logging/logging_levels.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9474,28 +8794,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -9510,16 +8810,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -9544,377 +8834,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/vendors/nxp/secure_sockets/lwip</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
-              <FileName>iot_secure_sockets.c</FileName>
+              <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_atomic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
-              <FileName>iot_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_linear_containers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging_setup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_taskpool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/include/private</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_default_root_certificates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_doubly_linked_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_error.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_lib_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_static_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_taskpool_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/include/types</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_taskpool_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_device_metrics.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_device_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
-              <FileName>iot_init.c</FileName>
+              <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
-              <FileName>iot_static_memory_common.c</FileName>
+              <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/c_sdk/standard/common/taskpool</GroupName>
-          <Files>
             <File>
-              <FileName>iot_taskpool.c</FileName>
+              <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
-              <FileName>iot_taskpool_static_memory.c</FileName>
+              <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/platform/freertos/include/platform</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_network_freertos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
-              <FileName>iot_platform_types_freertos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/platform/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_clock_freertos.c</FileName>
+              <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <Files>
+            <File>
+              <FileName>atomic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
-              <FileName>iot_metrics.c</FileName>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
-              <FileName>iot_network_freertos.c</FileName>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+            <File>
+              <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c</FilePath>
-            </File>
-            <File>
-              <FileName>iot_threads_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/platform/include/platform</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
-              <FileName>iot_clock.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_metrics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_metrics.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_network.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_network.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_threads.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_threads.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/platform/include/types</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_network_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_network_types.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_platform_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_platform_types.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/tls/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/tls/src</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_tls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/mbedtls_utils</GroupName>
-          <Files>
-            <File>
-              <FileName>LICENSE-2.0.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/LICENSE-2.0.txt</FilePath>
-            </File>
-            <File>
-              <FileName>mbedtls_error.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/mbedtls_error.c</FilePath>
-            </File>
-            <File>
-              <FileName>mbedtls_error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/mbedtls_error.h</FilePath>
-            </File>
-            <File>
-              <FileName>mbedtls_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/mbedtls_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>README.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/README.md</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/crypto/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/crypto/src</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/mbedtls_config</GroupName>
-          <Files>
-            <File>
-              <FileName>threading_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config/threading_alt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/pkcs11/corePKCS11/source</GroupName>
-          <Files>
-            <File>
-              <FileName>core_pkcs11.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/core_pkcs11.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_pki_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/core_pki_utils.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/abstractions/pkcs11/corePKCS11/source/include</GroupName>
-          <Files>
-            <File>
-              <FileName>core_pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include/core_pkcs11.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_pal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include/core_pkcs11_pal.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pki_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include/core_pki_utils.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/pkcs11</GroupName>
-          <Files>
-            <File>
-              <FileName>CONTRIBUTING.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/CONTRIBUTING.md</FilePath>
-            </File>
-            <File>
-              <FileName>LICENSE.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/LICENSE.md</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs11f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11f.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs11t.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11t.h</FilePath>
-            </File>
-            <File>
-              <FileName>README.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/README.md</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/utils/include</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_system_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/freertos_plus/standard/utils/src</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_system_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -10065,6 +9165,11 @@
               <FileName>ledHandler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>modules.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/inc/modules.h</FilePath>
             </File>
             <File>
               <FileName>nxEnsure.h</FileName>
@@ -10436,6 +9541,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_freertos.c</FilePath>
             </File>
+            <File>
+              <FileName>timer_kinetis_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_threadx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10682,6 +9792,11 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_lpcxpresso55s.h</FilePath>
             </File>
             <File>
+              <FileName>ex_sss_main_inc_nrf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_nrf.h</FilePath>
+            </File>
+            <File>
               <FileName>ex_sss_main_inc_qn9090.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_qn9090.h</FilePath>
@@ -10859,91 +9974,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib/demos/ksdk/common</GroupName>
-          <Files>
-            <File>
-              <FileName>ledHandler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/ledHandler.c</FilePath>
-            </File>
-            <File>
-              <FileName>iot_logging_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_logging_task.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_config_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential_keys.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/core_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/aws_demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_secure_sockets_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/iot_secure_sockets_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo/pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkmimxrt1060/se_hostlib_examples/cloud_demo/pin_mux.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>FreeRTOSConfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/FreeRTOSConfig.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>se_hostlib/sss/plugin/pkcs11</GroupName>
           <Files>
             <File>
@@ -10994,67 +10024,117 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib/demos/ksdk/common/https_client</GroupName>
+          <GroupName>freertos/coremqtt/source</GroupName>
           <Files>
             <File>
-              <FileName>httpsclient.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/demos/ksdk/common/https_client/httpsclient.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/libraries/3rdparty/jsmn</GroupName>
-          <Files>
-            <File>
-              <FileName>jsmn.c</FileName>
+              <FileName>core_mqtt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/core_mqtt.c</FilePath>
             </File>
             <File>
-              <FileName>jsmn.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
+              <FileName>core_mqtt_serializer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/core_mqtt_serializer.c</FilePath>
             </File>
             <File>
-              <FileName>LICENSE</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/LICENSE</FilePath>
+              <FileName>core_mqtt_state.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/core_mqtt_state.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/demos/common/pkcs11_helpers</GroupName>
+          <GroupName>freertos/coremqtt/source/include</GroupName>
           <Files>
             <File>
-              <FileName>pkcs11_helpers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/demos/common/pkcs11_helpers/pkcs11_helpers.c</FilePath>
+              <FileName>core_mqtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt.h</FilePath>
             </File>
             <File>
-              <FileName>pkcs11_helpers.h</FileName>
+              <FileName>core_mqtt_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/demos/common/pkcs11_helpers/pkcs11_helpers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_default_logging.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_default_logging.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_serializer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_serializer.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_state.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/include/core_mqtt_state.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/backoff_algorithm/source</GroupName>
+          <GroupName>freertos/coremqtt/source/interface</GroupName>
+          <Files>
+            <File>
+              <FileName>transport_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/coremqtt/source/interface/transport_interface.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pkcs11</GroupName>
+          <Files>
+            <File>
+              <FileName>README.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/README.md</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11t.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/pkcs11t.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11f.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/pkcs11f.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/LICENSE.md</FilePath>
+            </File>
+            <File>
+              <FileName>CONTRIBUTING.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/pkcs11/CONTRIBUTING.md</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/backoffalgorithm/source</GroupName>
           <Files>
             <File>
               <FileName>backoff_algorithm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/backoff_algorithm.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/libraries/abstractions/backoff_algorithm/source/include</GroupName>
+          <GroupName>freertos/backoffalgorithm/source/include</GroupName>
           <Files>
             <File>
               <FileName>backoff_algorithm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include/backoff_algorithm.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -11140,6 +10220,46 @@
               <FileName>fsl_sss_mbedtls_apis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/src/mbedtls/fsl_sss_mbedtls_apis.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/corepkcs11/source</GroupName>
+          <Files>
+            <File>
+              <FileName>core_pkcs11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/core_pkcs11.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_pki_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/core_pki_utils.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/corepkcs11/source/include</GroupName>
+          <Files>
+            <File>
+              <FileName>core_pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pkcs11_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_pal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pkcs11_pal.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pki_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/corepkcs11/source/include/core_pki_utils.h</FilePath>
             </File>
           </Files>
         </Group>

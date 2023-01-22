@@ -35,7 +35,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/incl
     ${CMAKE_CURRENT_LIST_DIR}/incl/port/os
     ${CMAKE_CURRENT_LIST_DIR}/incl/wifidriver
@@ -56,8 +56,11 @@ endif()
 if(CONFIG_USE_middleware_wifi_imu_MIMXRT1021)
      include(middleware_wifi_imu_MIMXRT1021)
 endif()
-if(NOT (CONFIG_USE_middleware_wifi_sdio_MIMXRT1021 OR CONFIG_USE_middleware_wifi_fwdnld_MIMXRT1021 OR CONFIG_USE_middleware_wifi_imu_MIMXRT1021))
-    message(WARNING "Since middleware_wifi_sdio_MIMXRT1021/middleware_wifi_fwdnld_MIMXRT1021/middleware_wifi_imu_MIMXRT1021 is not included at first or config in config.cmake file, use middleware_wifi_sdio_MIMXRT1021/middleware_wifi_fwdnld_MIMXRT1021 by default.")
+if(CONFIG_USE_middleware_wifi_common_files_MIMXRT1021)
+     include(middleware_wifi_common_files_MIMXRT1021)
+endif()
+if(NOT (CONFIG_USE_middleware_wifi_sdio_MIMXRT1021 OR CONFIG_USE_middleware_wifi_fwdnld_MIMXRT1021 OR CONFIG_USE_middleware_wifi_imu_MIMXRT1021 OR CONFIG_USE_middleware_wifi_common_files_MIMXRT1021))
+    message(WARNING "Since middleware_wifi_sdio_MIMXRT1021/middleware_wifi_fwdnld_MIMXRT1021/middleware_wifi_imu_MIMXRT1021/middleware_wifi_common_files_MIMXRT1021 is not included at first or config in config.cmake file, use middleware_wifi_sdio_MIMXRT1021/middleware_wifi_fwdnld_MIMXRT1021 by default.")
     include(middleware_wifi_sdio_MIMXRT1021)
     include(middleware_wifi_fwdnld_MIMXRT1021)
 endif()

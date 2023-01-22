@@ -1,6 +1,6 @@
 var a00017 =
 [
-    [ "dcdc_detection_config_t", "a00017.html#a00339", [
+    [ "dcdc_detection_config_t", "a00017.html#a00338", [
       [ "enableXtalokDetection", "a00017.html#a26388a555904c467f343d5cee515f268", null ],
       [ "powerDownOverVoltageDetection", "a00017.html#ade909492fceb456669197dc2375b66e0", null ],
       [ "powerDownLowVlotageDetection", "a00017.html#a66c8245327afcaeaea7658dc07cd72f0", null ],
@@ -10,7 +10,7 @@ var a00017 =
       [ "OverCurrentThreshold", "a00017.html#a2cbfaed67e0e2e90e77fce311a24e8c4", null ],
       [ "PeakCurrentThreshold", "a00017.html#a918a386c698955495c5ae942f8c9d728", null ]
     ] ],
-    [ "dcdc_loop_control_config_t", "a00017.html#a00341", [
+    [ "dcdc_loop_control_config_t", "a00017.html#a00340", [
       [ "enableCommonHysteresis", "a00017.html#aa585f6efdba3cb2bc66b4c658c0b0e80", null ],
       [ "enableCommonThresholdDetection", "a00017.html#ad5a97673aa667b4aeb7549173d4e8516", null ],
       [ "enableInvertHysteresisSign", "a00017.html#afc343fa7b91648dd8823d261c9cf4ab7", null ],
@@ -18,17 +18,17 @@ var a00017 =
       [ "enableRCScaleCircuit", "a00017.html#a858dc72ad7c5c7d9222a88e38000aeaf", null ],
       [ "complementFeedForwardStep", "a00017.html#a82a1dd02ed11c6788782084e2645a388", null ]
     ] ],
-    [ "dcdc_low_power_config_t", "a00017.html#a00342", [
+    [ "dcdc_low_power_config_t", "a00017.html#a00341", [
       [ "enableOverloadDetection", "a00017.html#a0b5eac5db5131a800abf4d9094239a12", null ],
       [ "enableAdjustHystereticValue", "a00017.html#a5ba90c8ec3b353714b1db3e3951b5013", null ],
       [ "countChargingTimePeriod", "a00017.html#ae490cc4c07715bb317d3d67d964a3372", null ],
       [ "countChargingTimeThreshold", "a00017.html#a201277744bf77d5a14a0ed9ecbe3ff54", null ]
     ] ],
-    [ "dcdc_internal_regulator_config_t", "a00017.html#a00340", [
+    [ "dcdc_internal_regulator_config_t", "a00017.html#a00339", [
       [ "enableLoadResistor", "a00017.html#ac44462711fb30cd01799e287a3a4791e", null ],
       [ "feedbackPoint", "a00017.html#a7494dc737ae93a739c944037610372b2", null ]
     ] ],
-    [ "dcdc_min_power_config_t", "a00017.html#a00343", [
+    [ "dcdc_min_power_config_t", "a00017.html#a00342", [
       [ "enableUseHalfFreqForContinuous", "a00017.html#adbe01c99b380a3d872f7fd6f787ab7cc", null ]
     ] ],
     [ "FSL_DCDC_DRIVER_VERSION", "a00017.html#gaead28d0a1704d502fa7e4d83448530d9", null ],

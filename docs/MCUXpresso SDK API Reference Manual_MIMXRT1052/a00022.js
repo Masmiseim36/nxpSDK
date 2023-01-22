@@ -1,10 +1,10 @@
 var a00022 =
 [
-    [ "elcdif_pixel_format_reg_t", "a00022.html#a00375", [
+    [ "elcdif_pixel_format_reg_t", "a00022.html#a00374", [
       [ "regCtrl", "a00022.html#a243f7bcead2cd9765740179f868418a9", null ],
       [ "regCtrl1", "a00022.html#ad31198998ee25bf96a29ba270ba0841d", null ]
     ] ],
-    [ "elcdif_rgb_mode_config_t", "a00022.html#a00376", [
+    [ "elcdif_rgb_mode_config_t", "a00022.html#a00375", [
       [ "panelWidth", "a00022.html#a6019faab572a2ca590379f05c6e46c51", null ],
       [ "panelHeight", "a00022.html#a1a4d5e151baba11eb7ce004ae1348b7b", null ],
       [ "hsw", "a00022.html#ac780ae2b80426ec933a490f824b08b5b", null ],
@@ -18,11 +18,11 @@ var a00022 =
       [ "pixelFormat", "a00022.html#ae3a7b3acf215c33febaf5c52cec9ea2c", null ],
       [ "dataBus", "a00022.html#a7a9bf62b63fba18f0cb9f4fb390b8217", null ]
     ] ],
-    [ "elcdif_as_buffer_config_t", "a00022.html#a00374", [
+    [ "elcdif_as_buffer_config_t", "a00022.html#a00373", [
       [ "bufferAddr", "a00022.html#af166d7fd726cc4bc90abf3fa5140c15d", null ],
       [ "pixelFormat", "a00022.html#a03873f7e13d6a3a2a549ba2a337bce8a", null ]
     ] ],
-    [ "elcdif_as_blend_config_t", "a00022.html#a00373", [
+    [ "elcdif_as_blend_config_t", "a00022.html#a00372", [
       [ "alpha", "a00022.html#a7259ea82353b9bdf03fd1a6fbbcde0be", null ],
       [ "invertAlpha", "a00022.html#a5be27ea072fae0fc346b4a26f89c1431", null ],
       [ "alphaMode", "a00022.html#a84b9c9865f5f08218e977b3102a47cbf", null ],
@@ -31,12 +31,12 @@ var a00022 =
     [ "FSL_ELCDIF_DRIVER_VERSION", "a00022.html#gab67777152094679eac0c4e5a4d2cb57f", null ],
     [ "_elcdif_polarity_flags", "a00022.html#ga42e171b7dacb57b185d679c529b80130", [
       [ "kELCDIF_VsyncActiveLow", "a00022.html#gga42e171b7dacb57b185d679c529b80130abdcb3ed32cdc7590ab0f98a74fa604d4", null ],
-      [ "kELCDIF_VsyncActiveHigh", "a00022.html#gga42e171b7dacb57b185d679c529b80130a144b1218e371764b13c3e06151816f2a", null ],
       [ "kELCDIF_HsyncActiveLow", "a00022.html#gga42e171b7dacb57b185d679c529b80130a1d37748f64c08bc48ad103e8985b6e6f", null ],
-      [ "kELCDIF_HsyncActiveHigh", "a00022.html#gga42e171b7dacb57b185d679c529b80130a920c6053e8890a2851d99779d9918e0d", null ],
       [ "kELCDIF_DataEnableActiveLow", "a00022.html#gga42e171b7dacb57b185d679c529b80130ada2445528ea3b8b0372d8767c2863fb8", null ],
-      [ "kELCDIF_DataEnableActiveHigh", "a00022.html#gga42e171b7dacb57b185d679c529b80130a683fdd2e81303eb2b7bfb9e8c75586de", null ],
       [ "kELCDIF_DriveDataOnFallingClkEdge", "a00022.html#gga42e171b7dacb57b185d679c529b80130aab3c59520f94a08681050ea4da760347", null ],
+      [ "kELCDIF_VsyncActiveHigh", "a00022.html#gga42e171b7dacb57b185d679c529b80130a144b1218e371764b13c3e06151816f2a", null ],
+      [ "kELCDIF_HsyncActiveHigh", "a00022.html#gga42e171b7dacb57b185d679c529b80130a920c6053e8890a2851d99779d9918e0d", null ],
+      [ "kELCDIF_DataEnableActiveHigh", "a00022.html#gga42e171b7dacb57b185d679c529b80130a683fdd2e81303eb2b7bfb9e8c75586de", null ],
       [ "kELCDIF_DriveDataOnRisingClkEdge", "a00022.html#gga42e171b7dacb57b185d679c529b80130a523b66197f5a8081ab67961ee40ea1b4", null ]
     ] ],
     [ "_elcdif_interrupt_enable", "a00022.html#ga85f043049c76b307a85a1e6a332d3976", [
@@ -113,13 +113,13 @@ var a00022 =
     [ "ELCDIF_RgbModeStop", "a00022.html#ga4355b92ba05040a3ae13f64c754f887e", null ],
     [ "ELCDIF_SetNextBufferAddr", "a00022.html#ga2c1bfce1634eefed0d6273f912a13aed", null ],
     [ "ELCDIF_Reset", "a00022.html#gafab5b66f91b28d6ed9ec105bbd3dcc02", null ],
-    [ "ELCDIF_GetCrcValue", "a00022.html#ga5ce33a57d96d2f8ac1dcd4436314fc69", null ],
-    [ "ELCDIF_GetBusMasterErrorAddr", "a00022.html#ga98998d47bd4862c06a4440be1193cd54", null ],
-    [ "ELCDIF_GetStatus", "a00022.html#gaef5d09b85acb59ef808c911307df4175", null ],
-    [ "ELCDIF_GetLFifoCount", "a00022.html#gae118322248c1969833d9e5ee02e6859c", null ],
+    [ "ELCDIF_GetCrcValue", "a00022.html#ga69e40acb7efed878dd12d94864824e85", null ],
+    [ "ELCDIF_GetBusMasterErrorAddr", "a00022.html#ga20f19cbba38e3e5aa9dc42290964fd1a", null ],
+    [ "ELCDIF_GetStatus", "a00022.html#ga4d3d365b858d7cd0f0bde11771b87e56", null ],
+    [ "ELCDIF_GetLFifoCount", "a00022.html#ga35e371ab47709921a7b518dc3d287b8e", null ],
     [ "ELCDIF_EnableInterrupts", "a00022.html#gab5bf32b9595a5c59279383c5863574cd", null ],
     [ "ELCDIF_DisableInterrupts", "a00022.html#ga9f94b5554a448d894f154ca3500a7f6d", null ],
-    [ "ELCDIF_GetInterruptStatus", "a00022.html#gae44664428afea9e9cc486f2a406a456f", null ],
+    [ "ELCDIF_GetInterruptStatus", "a00022.html#gadbe604a8461fce683e757068b35adac0", null ],
     [ "ELCDIF_ClearInterruptStatus", "a00022.html#ga0cd233c0aaa9dfd2155096c1a24393ed", null ],
     [ "ELCDIF_EnableLut", "a00022.html#gaa0d05f9dd30f7e1428c7280bc9e08943", null ],
     [ "ELCDIF_UpdateLut", "a00022.html#ga5149785af8e02f82283f585f0818167e", null ]

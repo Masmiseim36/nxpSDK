@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('a00031.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexIO I2C Master Driver<div class="ingroups"><a class="el" href="a00272.html">FlexIO: FlexIO Driver</a></div></div>  </div>
+<div class="title">FlexIO I2C Master Driver<div class="ingroups"><a class="el" href="a00271.html">FlexIO: FlexIO Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -118,17 +118,17 @@ Typical use case</h1>
 <h2><a class="anchor" id="FlexIO_I2CMasterCaseInterrupt"></a>
 FlexIO I2C master transfer using an interrupt method</h2>
 <div class="fragment"><div class="line">flexio_i2c_master_handle_t g_m_handle;</div>
-<div class="line"><a class="code" href="a00031.html#a00407">flexio_i2c_master_config_t</a> masterConfig;</div>
-<div class="line"><a class="code" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a> masterXfer;</div>
+<div class="line"><a class="code" href="a00031.html#a00406">flexio_i2c_master_config_t</a> masterConfig;</div>
+<div class="line"><a class="code" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a> masterXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> completionFlag = <span class="keyword">false</span>;</div>
 <div class="line"><span class="keyword">const</span> uint8_t sendData[] = [......];</div>
-<div class="line"><a class="code" href="a00031.html#a00409">FLEXIO_I2C_Type</a> i2cDev;</div>
+<div class="line"><a class="code" href="a00031.html#a00408">FLEXIO_I2C_Type</a> i2cDev;</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> FLEXIO_I2C_MasterCallback(<a class="code" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, <a class="code" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordtype">void</span> FLEXIO_I2C_MasterCallback(<a class="code" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, <a class="code" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00266.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> == status)</div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00265.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> == status)</div>
 <div class="line">    {</div>
 <div class="line">        completionFlag = <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
@@ -165,18 +165,18 @@ FlexIO I2C master transfer using an interrupt method</h2>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00409"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a></td></tr>
-<tr class="memdesc:a00409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master access structure typedef.  <a href="a00031.html#a00409">More...</a><br/></td></tr>
-<tr class="separator:a00409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00407"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00407">flexio_i2c_master_config_t</a></td></tr>
-<tr class="memdesc:a00407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master user configuration structure.  <a href="a00031.html#a00407">More...</a><br/></td></tr>
-<tr class="separator:a00407"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00408"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a></td></tr>
-<tr class="memdesc:a00408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master transfer structure.  <a href="a00031.html#a00408">More...</a><br/></td></tr>
+<tr class="memitem:a00408"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a></td></tr>
+<tr class="memdesc:a00408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master access structure typedef.  <a href="a00031.html#a00408">More...</a><br/></td></tr>
 <tr class="separator:a00408"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00310"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00310">flexio_i2c_master_handle_t</a></td></tr>
-<tr class="memdesc:a00310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master handle structure.  <a href="a00031.html#a00310">More...</a><br/></td></tr>
-<tr class="separator:a00310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00406"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00406">flexio_i2c_master_config_t</a></td></tr>
+<tr class="memdesc:a00406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master user configuration structure.  <a href="a00031.html#a00406">More...</a><br/></td></tr>
+<tr class="separator:a00406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00407"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a></td></tr>
+<tr class="memdesc:a00407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master transfer structure.  <a href="a00031.html#a00407">More...</a><br/></td></tr>
+<tr class="separator:a00407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00309"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a00309">flexio_i2c_master_handle_t</a></td></tr>
+<tr class="memdesc:a00309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO I2C master handle structure.  <a href="a00031.html#a00309">More...</a><br/></td></tr>
+<tr class="separator:a00309"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -186,7 +186,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga4a92b2aafd0ea1e7746dc23a7b0f0691"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga4a92b2aafd0ea1e7746dc23a7b0f0691">flexio_i2c_master_transfer_callback_t</a> )(<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:ga4a92b2aafd0ea1e7746dc23a7b0f0691"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga4a92b2aafd0ea1e7746dc23a7b0f0691">flexio_i2c_master_transfer_callback_t</a> )(<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga4a92b2aafd0ea1e7746dc23a7b0f0691"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO I2C master transfer callback typedef.  <a href="#ga4a92b2aafd0ea1e7746dc23a7b0f0691">More...</a><br/></td></tr>
 <tr class="separator:ga4a92b2aafd0ea1e7746dc23a7b0f0691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -234,96 +234,96 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga869dccb29d32c1ccd2057003826d07cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga869dccb29d32c1ccd2057003826d07cc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_FLEXIO_I2C_MASTER_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_FLEXIO_I2C_MASTER_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00265.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
 <tr class="separator:ga869dccb29d32c1ccd2057003826d07cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga2ded19f42c2b7e09764e6e926c501b67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2ded19f42c2b7e09764e6e926c501b67">FLEXIO_I2C_CheckForBusyBus</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base)</td></tr>
+<tr class="memitem:ga2ded19f42c2b7e09764e6e926c501b67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2ded19f42c2b7e09764e6e926c501b67">FLEXIO_I2C_CheckForBusyBus</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base)</td></tr>
 <tr class="memdesc:ga2ded19f42c2b7e09764e6e926c501b67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make sure the bus isn't already pulled down.  <a href="#ga2ded19f42c2b7e09764e6e926c501b67">More...</a><br/></td></tr>
 <tr class="separator:ga2ded19f42c2b7e09764e6e926c501b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaacd8cca7de1ff3a8c33c86d4f7f88fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gaaacd8cca7de1ff3a8c33c86d4f7f88fd">FLEXIO_I2C_MasterInit</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, <a class="el" href="a00031.html#a00407">flexio_i2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:gaaacd8cca7de1ff3a8c33c86d4f7f88fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gaaacd8cca7de1ff3a8c33c86d4f7f88fd">FLEXIO_I2C_MasterInit</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, <a class="el" href="a00031.html#a00406">flexio_i2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:gaaacd8cca7de1ff3a8c33c86d4f7f88fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the FlexIO clock, resets the FlexIO module, and configures the FlexIO I2C hardware configuration.  <a href="#gaaacd8cca7de1ff3a8c33c86d4f7f88fd">More...</a><br/></td></tr>
 <tr class="separator:gaaacd8cca7de1ff3a8c33c86d4f7f88fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2da731bfa4e1e36b5d6d0235898b26dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2da731bfa4e1e36b5d6d0235898b26dd">FLEXIO_I2C_MasterDeinit</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base)</td></tr>
+<tr class="memitem:ga2da731bfa4e1e36b5d6d0235898b26dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2da731bfa4e1e36b5d6d0235898b26dd">FLEXIO_I2C_MasterDeinit</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base)</td></tr>
 <tr class="memdesc:ga2da731bfa4e1e36b5d6d0235898b26dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the FlexIO I2C master peripheral.  <a href="#ga2da731bfa4e1e36b5d6d0235898b26dd">More...</a><br/></td></tr>
 <tr class="separator:ga2da731bfa4e1e36b5d6d0235898b26dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa85599771e53091102f0823217ad0bcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gaa85599771e53091102f0823217ad0bcc">FLEXIO_I2C_MasterGetDefaultConfig</a> (<a class="el" href="a00031.html#a00407">flexio_i2c_master_config_t</a> *masterConfig)</td></tr>
+<tr class="memitem:gaa85599771e53091102f0823217ad0bcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gaa85599771e53091102f0823217ad0bcc">FLEXIO_I2C_MasterGetDefaultConfig</a> (<a class="el" href="a00031.html#a00406">flexio_i2c_master_config_t</a> *masterConfig)</td></tr>
 <tr class="memdesc:gaa85599771e53091102f0823217ad0bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration to configure the FlexIO module.  <a href="#gaa85599771e53091102f0823217ad0bcc">More...</a><br/></td></tr>
 <tr class="separator:gaa85599771e53091102f0823217ad0bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga287dc7896229cd705bb8abbf51ca63a7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga287dc7896229cd705bb8abbf51ca63a7">FLEXIO_I2C_MasterEnable</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, bool enable)</td></tr>
+<tr class="memitem:ga287dc7896229cd705bb8abbf51ca63a7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga287dc7896229cd705bb8abbf51ca63a7">FLEXIO_I2C_MasterEnable</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, bool enable)</td></tr>
 <tr class="memdesc:ga287dc7896229cd705bb8abbf51ca63a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the FlexIO module operation.  <a href="#ga287dc7896229cd705bb8abbf51ca63a7">More...</a><br/></td></tr>
 <tr class="separator:ga287dc7896229cd705bb8abbf51ca63a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Status</h2></td></tr>
-<tr class="memitem:ga5ac748fc7ff593cfa7a9b9a64cd479fa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga5ac748fc7ff593cfa7a9b9a64cd479fa">FLEXIO_I2C_MasterGetStatusFlags</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base)</td></tr>
+<tr class="memitem:ga5ac748fc7ff593cfa7a9b9a64cd479fa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga5ac748fc7ff593cfa7a9b9a64cd479fa">FLEXIO_I2C_MasterGetStatusFlags</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base)</td></tr>
 <tr class="memdesc:ga5ac748fc7ff593cfa7a9b9a64cd479fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the FlexIO I2C master status flags.  <a href="#ga5ac748fc7ff593cfa7a9b9a64cd479fa">More...</a><br/></td></tr>
 <tr class="separator:ga5ac748fc7ff593cfa7a9b9a64cd479fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7509c6f4a8885650c313bb0b56e6bfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gad7509c6f4a8885650c313bb0b56e6bfc">FLEXIO_I2C_MasterClearStatusFlags</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint32_t mask)</td></tr>
+<tr class="memitem:gad7509c6f4a8885650c313bb0b56e6bfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gad7509c6f4a8885650c313bb0b56e6bfc">FLEXIO_I2C_MasterClearStatusFlags</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint32_t mask)</td></tr>
 <tr class="memdesc:gad7509c6f4a8885650c313bb0b56e6bfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the FlexIO I2C master status flags.  <a href="#gad7509c6f4a8885650c313bb0b56e6bfc">More...</a><br/></td></tr>
 <tr class="separator:gad7509c6f4a8885650c313bb0b56e6bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts</h2></td></tr>
-<tr class="memitem:ga07198112aef949ac73874e7d446f7d38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga07198112aef949ac73874e7d446f7d38">FLEXIO_I2C_MasterEnableInterrupts</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint32_t mask)</td></tr>
+<tr class="memitem:ga07198112aef949ac73874e7d446f7d38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga07198112aef949ac73874e7d446f7d38">FLEXIO_I2C_MasterEnableInterrupts</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint32_t mask)</td></tr>
 <tr class="memdesc:ga07198112aef949ac73874e7d446f7d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the FlexIO i2c master interrupt requests.  <a href="#ga07198112aef949ac73874e7d446f7d38">More...</a><br/></td></tr>
 <tr class="separator:ga07198112aef949ac73874e7d446f7d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fcce197e268d6e7310a0087d9288b08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga3fcce197e268d6e7310a0087d9288b08">FLEXIO_I2C_MasterDisableInterrupts</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint32_t mask)</td></tr>
+<tr class="memitem:ga3fcce197e268d6e7310a0087d9288b08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga3fcce197e268d6e7310a0087d9288b08">FLEXIO_I2C_MasterDisableInterrupts</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint32_t mask)</td></tr>
 <tr class="memdesc:ga3fcce197e268d6e7310a0087d9288b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the FlexIO I2C master interrupt requests.  <a href="#ga3fcce197e268d6e7310a0087d9288b08">More...</a><br/></td></tr>
 <tr class="separator:ga3fcce197e268d6e7310a0087d9288b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Bus Operations</h2></td></tr>
-<tr class="memitem:gac1cb6e0f52c2e9e2b4373415dff1f24c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gac1cb6e0f52c2e9e2b4373415dff1f24c">FLEXIO_I2C_MasterSetBaudRate</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint32_t baudRate_Bps, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:gac1cb6e0f52c2e9e2b4373415dff1f24c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gac1cb6e0f52c2e9e2b4373415dff1f24c">FLEXIO_I2C_MasterSetBaudRate</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint32_t baudRate_Bps, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:gac1cb6e0f52c2e9e2b4373415dff1f24c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the FlexIO I2C master transfer baudrate.  <a href="#gac1cb6e0f52c2e9e2b4373415dff1f24c">More...</a><br/></td></tr>
 <tr class="separator:gac1cb6e0f52c2e9e2b4373415dff1f24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f9def4b064e4747675dfc16e9fdde00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6f9def4b064e4747675dfc16e9fdde00">FLEXIO_I2C_MasterStart</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint8_t address, <a class="el" href="a00031.html#gad7cd7cc57788188d0f804b5e3a549303">flexio_i2c_direction_t</a> direction)</td></tr>
+<tr class="memitem:ga6f9def4b064e4747675dfc16e9fdde00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6f9def4b064e4747675dfc16e9fdde00">FLEXIO_I2C_MasterStart</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint8_t address, <a class="el" href="a00031.html#gad7cd7cc57788188d0f804b5e3a549303">flexio_i2c_direction_t</a> direction)</td></tr>
 <tr class="memdesc:ga6f9def4b064e4747675dfc16e9fdde00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends START + 7-bit address to the bus.  <a href="#ga6f9def4b064e4747675dfc16e9fdde00">More...</a><br/></td></tr>
 <tr class="separator:ga6f9def4b064e4747675dfc16e9fdde00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b921453ee8e263f9a2a198b497c88ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6b921453ee8e263f9a2a198b497c88ec">FLEXIO_I2C_MasterStop</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base)</td></tr>
+<tr class="memitem:ga6b921453ee8e263f9a2a198b497c88ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6b921453ee8e263f9a2a198b497c88ec">FLEXIO_I2C_MasterStop</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base)</td></tr>
 <tr class="memdesc:ga6b921453ee8e263f9a2a198b497c88ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the stop signal on the bus.  <a href="#ga6b921453ee8e263f9a2a198b497c88ec">More...</a><br/></td></tr>
 <tr class="separator:ga6b921453ee8e263f9a2a198b497c88ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c2b3776c1630e0bf8e64927a0012b2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga8c2b3776c1630e0bf8e64927a0012b2f">FLEXIO_I2C_MasterRepeatedStart</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base)</td></tr>
+<tr class="memitem:ga8c2b3776c1630e0bf8e64927a0012b2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga8c2b3776c1630e0bf8e64927a0012b2f">FLEXIO_I2C_MasterRepeatedStart</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base)</td></tr>
 <tr class="memdesc:ga8c2b3776c1630e0bf8e64927a0012b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the repeated start signal on the bus.  <a href="#ga8c2b3776c1630e0bf8e64927a0012b2f">More...</a><br/></td></tr>
 <tr class="separator:ga8c2b3776c1630e0bf8e64927a0012b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga20efb0f28522d945694d509b5e4bf52d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga20efb0f28522d945694d509b5e4bf52d">FLEXIO_I2C_MasterAbortStop</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base)</td></tr>
+<tr class="memitem:ga20efb0f28522d945694d509b5e4bf52d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga20efb0f28522d945694d509b5e4bf52d">FLEXIO_I2C_MasterAbortStop</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base)</td></tr>
 <tr class="memdesc:ga20efb0f28522d945694d509b5e4bf52d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the stop signal when transfer is still on-going.  <a href="#ga20efb0f28522d945694d509b5e4bf52d">More...</a><br/></td></tr>
 <tr class="separator:ga20efb0f28522d945694d509b5e4bf52d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca2e797a84bc5b68a75ba10cf2750fc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gaca2e797a84bc5b68a75ba10cf2750fc0">FLEXIO_I2C_MasterEnableAck</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, bool enable)</td></tr>
+<tr class="memitem:gaca2e797a84bc5b68a75ba10cf2750fc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#gaca2e797a84bc5b68a75ba10cf2750fc0">FLEXIO_I2C_MasterEnableAck</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, bool enable)</td></tr>
 <tr class="memdesc:gaca2e797a84bc5b68a75ba10cf2750fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the sent ACK/NAK for the following byte.  <a href="#gaca2e797a84bc5b68a75ba10cf2750fc0">More...</a><br/></td></tr>
 <tr class="separator:gaca2e797a84bc5b68a75ba10cf2750fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6239ded74ab146f5f04c6355edf6e64a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6239ded74ab146f5f04c6355edf6e64a">FLEXIO_I2C_MasterSetTransferCount</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint16_t count)</td></tr>
+<tr class="memitem:ga6239ded74ab146f5f04c6355edf6e64a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga6239ded74ab146f5f04c6355edf6e64a">FLEXIO_I2C_MasterSetTransferCount</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint16_t count)</td></tr>
 <tr class="memdesc:ga6239ded74ab146f5f04c6355edf6e64a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the number of bytes to be transferred from a start signal to a stop signal.  <a href="#ga6239ded74ab146f5f04c6355edf6e64a">More...</a><br/></td></tr>
 <tr class="separator:ga6239ded74ab146f5f04c6355edf6e64a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e82edf243f26522ea3ecedddb4760ba"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga7e82edf243f26522ea3ecedddb4760ba">FLEXIO_I2C_MasterWriteByte</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint32_t data)</td></tr>
+<tr class="memitem:ga7e82edf243f26522ea3ecedddb4760ba"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga7e82edf243f26522ea3ecedddb4760ba">FLEXIO_I2C_MasterWriteByte</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint32_t data)</td></tr>
 <tr class="memdesc:ga7e82edf243f26522ea3ecedddb4760ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes one byte of data to the I2C bus.  <a href="#ga7e82edf243f26522ea3ecedddb4760ba">More...</a><br/></td></tr>
 <tr class="separator:ga7e82edf243f26522ea3ecedddb4760ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a790d99cbabf8bf7df3216b6da904e5"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2a790d99cbabf8bf7df3216b6da904e5">FLEXIO_I2C_MasterReadByte</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base)</td></tr>
+<tr class="memitem:ga2a790d99cbabf8bf7df3216b6da904e5"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2a790d99cbabf8bf7df3216b6da904e5">FLEXIO_I2C_MasterReadByte</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base)</td></tr>
 <tr class="memdesc:ga2a790d99cbabf8bf7df3216b6da904e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads one byte of data from the I2C bus.  <a href="#ga2a790d99cbabf8bf7df3216b6da904e5">More...</a><br/></td></tr>
 <tr class="separator:ga2a790d99cbabf8bf7df3216b6da904e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13c8be777cb7336878e161ab32fba000"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga13c8be777cb7336878e161ab32fba000">FLEXIO_I2C_MasterWriteBlocking</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, const uint8_t *txBuff, uint8_t txSize)</td></tr>
+<tr class="memitem:ga13c8be777cb7336878e161ab32fba000"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga13c8be777cb7336878e161ab32fba000">FLEXIO_I2C_MasterWriteBlocking</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, const uint8_t *txBuff, uint8_t txSize)</td></tr>
 <tr class="memdesc:ga13c8be777cb7336878e161ab32fba000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a buffer of data in bytes.  <a href="#ga13c8be777cb7336878e161ab32fba000">More...</a><br/></td></tr>
 <tr class="separator:ga13c8be777cb7336878e161ab32fba000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5713e8dca1e7e896c3aed89e8961547a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga5713e8dca1e7e896c3aed89e8961547a">FLEXIO_I2C_MasterReadBlocking</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, uint8_t *rxBuff, uint8_t rxSize)</td></tr>
+<tr class="memitem:ga5713e8dca1e7e896c3aed89e8961547a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga5713e8dca1e7e896c3aed89e8961547a">FLEXIO_I2C_MasterReadBlocking</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, uint8_t *rxBuff, uint8_t rxSize)</td></tr>
 <tr class="memdesc:ga5713e8dca1e7e896c3aed89e8961547a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a buffer of bytes.  <a href="#ga5713e8dca1e7e896c3aed89e8961547a">More...</a><br/></td></tr>
 <tr class="separator:ga5713e8dca1e7e896c3aed89e8961547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b4b3c280a860777e98b5065225a3150"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga7b4b3c280a860777e98b5065225a3150">FLEXIO_I2C_MasterTransferBlocking</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, <a class="el" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga7b4b3c280a860777e98b5065225a3150"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga7b4b3c280a860777e98b5065225a3150">FLEXIO_I2C_MasterTransferBlocking</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, <a class="el" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga7b4b3c280a860777e98b5065225a3150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a master polling transfer on the I2C bus.  <a href="#ga7b4b3c280a860777e98b5065225a3150">More...</a><br/></td></tr>
 <tr class="separator:ga7b4b3c280a860777e98b5065225a3150"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:ga2d26c2cb21b034487ba8b8d4c5da2ef5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2d26c2cb21b034487ba8b8d4c5da2ef5">FLEXIO_I2C_MasterTransferCreateHandle</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00031.html#ga4a92b2aafd0ea1e7746dc23a7b0f0691">flexio_i2c_master_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga2d26c2cb21b034487ba8b8d4c5da2ef5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga2d26c2cb21b034487ba8b8d4c5da2ef5">FLEXIO_I2C_MasterTransferCreateHandle</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00031.html#ga4a92b2aafd0ea1e7746dc23a7b0f0691">flexio_i2c_master_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga2d26c2cb21b034487ba8b8d4c5da2ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I2C handle which is used in transactional functions.  <a href="#ga2d26c2cb21b034487ba8b8d4c5da2ef5">More...</a><br/></td></tr>
 <tr class="separator:ga2d26c2cb21b034487ba8b8d4c5da2ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e21323685831e0ee3f88d50e4c8872c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga4e21323685831e0ee3f88d50e4c8872c">FLEXIO_I2C_MasterTransferNonBlocking</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga4e21323685831e0ee3f88d50e4c8872c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga4e21323685831e0ee3f88d50e4c8872c">FLEXIO_I2C_MasterTransferNonBlocking</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga4e21323685831e0ee3f88d50e4c8872c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a master interrupt non-blocking transfer on the I2C bus.  <a href="#ga4e21323685831e0ee3f88d50e4c8872c">More...</a><br/></td></tr>
 <tr class="separator:ga4e21323685831e0ee3f88d50e4c8872c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79fed99f5f4524619e2c2e28ad037544"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga79fed99f5f4524619e2c2e28ad037544">FLEXIO_I2C_MasterTransferGetCount</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga79fed99f5f4524619e2c2e28ad037544"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga79fed99f5f4524619e2c2e28ad037544">FLEXIO_I2C_MasterTransferGetCount</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga79fed99f5f4524619e2c2e28ad037544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master transfer status during a interrupt non-blocking transfer.  <a href="#ga79fed99f5f4524619e2c2e28ad037544">More...</a><br/></td></tr>
 <tr class="separator:ga79fed99f5f4524619e2c2e28ad037544"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75ecfe909fcd0ae47303eb90af39dea2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga75ecfe909fcd0ae47303eb90af39dea2">FLEXIO_I2C_MasterTransferAbort</a> (<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle)</td></tr>
+<tr class="memitem:ga75ecfe909fcd0ae47303eb90af39dea2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga75ecfe909fcd0ae47303eb90af39dea2">FLEXIO_I2C_MasterTransferAbort</a> (<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle)</td></tr>
 <tr class="memdesc:ga75ecfe909fcd0ae47303eb90af39dea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts an interrupt non-blocking transfer early.  <a href="#ga75ecfe909fcd0ae47303eb90af39dea2">More...</a><br/></td></tr>
 <tr class="separator:ga75ecfe909fcd0ae47303eb90af39dea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga29129d78b9166b7bcb585e336746bec6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#ga29129d78b9166b7bcb585e336746bec6">FLEXIO_I2C_MasterTransferHandleIRQ</a> (void *i2cType, void *i2cHandle)</td></tr>
@@ -331,7 +331,7 @@ Transactional</h2></td></tr>
 <tr class="separator:ga29129d78b9166b7bcb585e336746bec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00409" id="a00409"></a>
+<a name="a00408" id="a00408"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -437,7 +437,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00407" id="a00407"></a>
+<a name="a00406" id="a00406"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -529,7 +529,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00408" id="a00408"></a>
+<a name="a00407" id="a00407"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -651,7 +651,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00310" id="a00310"></a>
+<a name="a00309" id="a00309"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -663,7 +663,7 @@ Transactional</h2></td></tr>
 <div class="textblock"><p>FlexIO I2C master handle typedef.</p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a60bd61f7bad1102b8ae17c147ebe7562"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a60bd61f7bad1102b8ae17c147ebe7562">transfer</a></td></tr>
+<tr class="memitem:a60bd61f7bad1102b8ae17c147ebe7562"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a60bd61f7bad1102b8ae17c147ebe7562">transfer</a></td></tr>
 <tr class="memdesc:a60bd61f7bad1102b8ae17c147ebe7562"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO I2C master transfer copy.  <a href="#a60bd61f7bad1102b8ae17c147ebe7562">More...</a><br/></td></tr>
 <tr class="separator:a60bd61f7bad1102b8ae17c147ebe7562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48d8d3dd2b37359e54ee1ac10d68bfa5"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a48d8d3dd2b37359e54ee1ac10d68bfa5">transferSize</a></td></tr>
@@ -688,7 +688,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a> flexio_i2c_master_handle_t::transfer</td>
+          <td class="memname"><a class="el" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a> flexio_i2c_master_handle_t::transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -778,7 +778,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* flexio_i2c_master_transfer_callback_t)(<a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* flexio_i2c_master_transfer_callback_t)(<a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *base, flexio_i2c_master_handle_t *handle, <a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -881,9 +881,9 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_CheckForBusyBus </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_CheckForBusyBus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -892,7 +892,7 @@ Transactional</h2></td></tr>
 <p>Check the FLEXIO pin status to see whether either of SDA and SCL pin is pulled down.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure.. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure.. </td></tr>
   </table>
   </dd>
 </dl>
@@ -911,15 +911,15 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterInit </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00407">flexio_i2c_master_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00406">flexio_i2c_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em>, </td>
         </tr>
         <tr>
@@ -936,14 +936,14 @@ Transactional</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Example </p>
-<div class="fragment"><div class="line"><a class="code" href="a00031.html#a00409">FLEXIO_I2C_Type</a> base = {</div>
+<div class="fragment"><div class="line"><a class="code" href="a00031.html#a00408">FLEXIO_I2C_Type</a> base = {</div>
 <div class="line">.<a class="code" href="a00031.html#a85065e51da3c0158d4b1d9254d691d26">flexioBase</a> = FLEXIO,</div>
 <div class="line">.SDAPinIndex = 0,</div>
 <div class="line">.SCLPinIndex = 1,</div>
 <div class="line">.shifterIndex = {0,1},</div>
 <div class="line">.timerIndex = {0,1}</div>
 <div class="line">};</div>
-<div class="line"><a class="code" href="a00031.html#a00407">flexio_i2c_master_config_t</a> config = {</div>
+<div class="line"><a class="code" href="a00031.html#a00406">flexio_i2c_master_config_t</a> config = {</div>
 <div class="line">.<a class="code" href="a00028.html#a2fad1c192bdc859ff5b756e15355edb7">enableInDoze</a> = <span class="keyword">false</span>,</div>
 <div class="line">.enableInDebug = <span class="keyword">true</span>,</div>
 <div class="line">.enableFastAccess = <span class="keyword">false</span>,</div>
@@ -952,8 +952,8 @@ Transactional</h2></td></tr>
 <div class="line"><a class="code" href="a00031.html#gaaacd8cca7de1ff3a8c33c86d4f7f88fd">FLEXIO_I2C_MasterInit</a>(base, &amp;config, srcClock_Hz);</div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
-    <tr><td class="paramname">masterConfig</td><td>Pointer to <a class="el" href="a00031.html#a00407" title="Define FlexIO I2C master user configuration structure. ">flexio_i2c_master_config_t</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">masterConfig</td><td>Pointer to <a class="el" href="a00031.html#a00406" title="Define FlexIO I2C master user configuration structure. ">flexio_i2c_master_config_t</a> structure. </td></tr>
     <tr><td class="paramname">srcClock_Hz</td><td>FlexIO source clock in Hz. </td></tr>
   </table>
   </dd>
@@ -975,7 +975,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -984,7 +984,7 @@ Transactional</h2></td></tr>
 <p>Calling this API Resets the FlexIO I2C master shifer and timer config, module can't work unless the FLEXIO_I2C_MasterInit is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -998,7 +998,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00407">flexio_i2c_master_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00406">flexio_i2c_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1006,11 +1006,11 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <p>The configuration can be used directly for calling the <a class="el" href="a00031.html#gaaacd8cca7de1ff3a8c33c86d4f7f88fd" title="Ungates the FlexIO clock, resets the FlexIO module, and configures the FlexIO I2C hardware configurat...">FLEXIO_I2C_MasterInit()</a>.</p>
 <p>Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00031.html#a00407">flexio_i2c_master_config_t</a> config;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00031.html#a00406">flexio_i2c_master_config_t</a> config;</div>
 <div class="line"><a class="code" href="a00031.html#gaa85599771e53091102f0823217ad0bcc">FLEXIO_I2C_MasterGetDefaultConfig</a>(&amp;config);</div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">masterConfig</td><td>Pointer to <a class="el" href="a00031.html#a00407" title="Define FlexIO I2C master user configuration structure. ">flexio_i2c_master_config_t</a> structure. </td></tr>
+    <tr><td class="paramname">masterConfig</td><td>Pointer to <a class="el" href="a00031.html#a00406" title="Define FlexIO I2C master user configuration structure. ">flexio_i2c_master_config_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1027,7 +1027,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">static void FLEXIO_I2C_MasterEnable </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1050,7 +1050,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">enable</td><td>Pass true to enable module, false does not have any effect. </td></tr>
   </table>
   </dd>
@@ -1065,7 +1065,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">uint32_t FLEXIO_I2C_MasterGetStatusFlags </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1073,7 +1073,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -1088,7 +1088,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterClearStatusFlags </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1106,7 +1106,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">mask</td><td>Status flag. The parameter can be any combination of the following values: <ul>
 <li>kFLEXIO_I2C_RxFullFlag </li>
 <li>kFLEXIO_I2C_ReceiveNakFlag </li>
@@ -1125,7 +1125,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterEnableInterrupts </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1143,7 +1143,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">mask</td><td>Interrupt source. Currently only one interrupt request source: <ul>
 <li>kFLEXIO_I2C_TransferCompleteInterruptEnable </li>
 </ul>
@@ -1161,7 +1161,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterDisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1179,7 +1179,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">mask</td><td>Interrupt source. </td></tr>
   </table>
   </dd>
@@ -1194,7 +1194,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterSetBaudRate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1218,7 +1218,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
     <tr><td class="paramname">baudRate_Bps</td><td>the baud rate value in HZ </td></tr>
     <tr><td class="paramname">srcClock_Hz</td><td>source clock in HZ </td></tr>
   </table>
@@ -1234,7 +1234,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterStart </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1259,7 +1259,7 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This API should be called when the transfer configuration is ready to send a START signal and 7-bit address to the bus. This is a non-blocking API, which returns directly after the address is put into the data register but the address transfer is not finished on the bus. Ensure that the kFLEXIO_I2C_RxFullFlag status is asserted before calling this API. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">address</td><td>7-bit address. </td></tr>
     <tr><td class="paramname">direction</td><td>transfer direction. This parameter is one of the values in flexio_i2c_direction_t: <ul>
 <li>kFLEXIO_I2C_Write: Transmit </li>
@@ -1279,7 +1279,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterStop </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1287,7 +1287,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1301,7 +1301,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterRepeatedStart </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1309,7 +1309,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1323,7 +1323,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterAbortStop </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1331,7 +1331,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1345,7 +1345,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterEnableAck </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1363,7 +1363,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">enable</td><td>True to configure send ACK, false configure to send NAK. </td></tr>
   </table>
   </dd>
@@ -1376,9 +1376,9 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterSetTransferCount </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterSetTransferCount </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1397,7 +1397,7 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Call this API before a transfer begins because the timer generates a number of clocks according to the number of bytes that need to be transferred.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">count</td><td>Number of bytes need to be transferred from a start signal to a re-start/stop signal </td></tr>
   </table>
   </dd>
@@ -1422,7 +1422,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">static void FLEXIO_I2C_MasterWriteByte </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1446,7 +1446,7 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This is a non-blocking API, which returns directly after the data is put into the data register but the data transfer is not finished on the bus. Ensure that the TxEmptyFlag is asserted before calling this API.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">data</td><td>a byte of data. </td></tr>
   </table>
   </dd>
@@ -1464,7 +1464,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">static uint8_t FLEXIO_I2C_MasterReadByte </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1478,7 +1478,7 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This is a non-blocking API, which returns directly after the data is read from the data register. Ensure that the data is ready in the register.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1491,9 +1491,9 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterWriteBlocking </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterWriteBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1518,7 +1518,7 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This function blocks via polling until all bytes have been sent.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">txBuff</td><td>The data bytes to send. </td></tr>
     <tr><td class="paramname">txSize</td><td>The number of data bytes to send. </td></tr>
   </table>
@@ -1540,9 +1540,9 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterReadBlocking </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterReadBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1567,7 +1567,7 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This function blocks via polling until all bytes have been received.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">rxBuff</td><td>The buffer to store the received bytes. </td></tr>
     <tr><td class="paramname">rxSize</td><td>The number of data bytes to be received. </td></tr>
   </table>
@@ -1588,15 +1588,15 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferBlocking </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -1609,8 +1609,8 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>The API does not return until the transfer succeeds or fails due to receiving NAK.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
-    <tr><td class="paramname">xfer</td><td>pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master transfer structure. ">flexio_i2c_master_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">xfer</td><td>pointer to <a class="el" href="a00031.html#a00407" title="Define FlexIO I2C master transfer structure. ">flexio_i2c_master_transfer_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1623,9 +1623,9 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferCreateHandle </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferCreateHandle </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1655,7 +1655,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_i2c_master_handle_t structure to store the transfer state. </td></tr>
     <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
     <tr><td class="paramname">userData</td><td>User param passed to the callback function. </td></tr>
@@ -1677,9 +1677,9 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferNonBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1691,7 +1691,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00408">flexio_i2c_master_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00407">flexio_i2c_master_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -1704,9 +1704,9 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>The API returns immediately after the transfer initiates. Call FLEXIO_I2C_MasterTransferGetCount to poll the transfer status to check whether the transfer is finished. If the return status is not kStatus_FLEXIO_I2C_Busy, the transfer is finished.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_i2c_master_handle_t structure which stores the transfer state </td></tr>
-    <tr><td class="paramname">xfer</td><td>pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master transfer structure. ">flexio_i2c_master_transfer_t</a> structure </td></tr>
+    <tr><td class="paramname">xfer</td><td>pointer to <a class="el" href="a00031.html#a00407" title="Define FlexIO I2C master transfer structure. ">flexio_i2c_master_transfer_t</a> structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -1725,9 +1725,9 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferGetCount </td>
+          <td class="memname"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2C_MasterTransferGetCount </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1751,7 +1751,7 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_i2c_master_handle_t structure which stores the transfer state. </td></tr>
     <tr><td class="paramname">count</td><td>Number of bytes transferred so far by the non-blocking transaction. </td></tr>
   </table>
@@ -1775,7 +1775,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXIO_I2C_MasterTransferAbort </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00409">FLEXIO_I2C_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00031.html#a00408">FLEXIO_I2C_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1794,7 +1794,7 @@ Transactional</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This API can be called at any time when an interrupt non-blocking transfer initiates to abort the transfer early.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_i2c_master_handle_t structure which stores the transfer state </td></tr>
   </table>
   </dd>
@@ -1827,8 +1827,8 @@ Transactional</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i2cType</td><td>Pointer to <a class="el" href="a00031.html#a00409" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
-    <tr><td class="paramname">i2cHandle</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master transfer structure. ">flexio_i2c_master_transfer_t</a> structure </td></tr>
+    <tr><td class="paramname">i2cType</td><td>Pointer to <a class="el" href="a00031.html#a00408" title="Define FlexIO I2C master access structure typedef. ">FLEXIO_I2C_Type</a> structure </td></tr>
+    <tr><td class="paramname">i2cHandle</td><td>Pointer to <a class="el" href="a00031.html#a00407" title="Define FlexIO I2C master transfer structure. ">flexio_i2c_master_transfer_t</a> structure </td></tr>
   </table>
   </dd>
 </dl>

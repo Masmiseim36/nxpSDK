@@ -1,7 +1,7 @@
 var a00069 =
 [
-    [ "USB Device Configuration", "a00298.html", null ],
-    [ "serial_port_usb_cdc_config_t", "a00069.html#a00507", [
+    [ "USB Device Configuration", "a00297.html", null ],
+    [ "serial_port_usb_cdc_config_t", "a00069.html#a00506", [
       [ "controllerIndex", "a00069.html#a164ef9f84df063b85674cc8aa6edd872", null ]
     ] ],
     [ "SERIAL_PORT_USB_CDC_HANDLE_SIZE", "a00069.html#ga360a6c81305a4e09848df9aece70ad40", null ],

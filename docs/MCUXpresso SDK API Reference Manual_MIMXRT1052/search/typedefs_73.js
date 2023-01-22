@@ -18,5 +18,5 @@ var searchData=
   ['shell_5fhandle_5ft',['shell_handle_t',['../a00071.html#ga818c3ca274bd83d1dc870a5618eb21f2',1,'fsl_shell.h']]],
   ['spdif_5fedma_5fcallback_5ft',['spdif_edma_callback_t',['../a00075.html#ga301f2d0b9a199636f3c105f26ebe0f57',1,'fsl_spdif_edma.h']]],
   ['spdif_5ftransfer_5fcallback_5ft',['spdif_transfer_callback_t',['../a00074.html#ga8749a36136a9b55600479d61b55596ec',1,'fsl_spdif.h']]],
-  ['status_5ft',['status_t',['../a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092',1,'fsl_common.h']]]
+  ['status_5ft',['status_t',['../a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092',1,'fsl_common.h']]]
 ];

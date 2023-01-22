@@ -24,61 +24,69 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lvgl_demo_benchmark_bm)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME lvgl_demo_benchmark_bm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../RTE_Device.h"
+"${SdkRootDirPath}/boards/evkmimxrt1015/lvgl_examples/RTE_Device.h"
 "${ProjDirPath}/../lvgl_demo_benchmark_bm.c"
 "${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/lv_demos.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../lvgl_support.h"
-"${ProjDirPath}/../../lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1015/lvgl_examples/lvgl_support.h"
+"${SdkRootDirPath}/boards/evkmimxrt1015/lvgl_examples/lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1015/lvgl_examples/lvgl_demo_utils.h"
+"${SdkRootDirPath}/boards/evkmimxrt1015/lvgl_examples/lvgl_demo_utils.c"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../..
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    ${SdkRootDirPath}/boards/evkmimxrt1015/lvgl_examples
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/stress/assets
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/benchmark
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/examples/assets
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/stress/assets
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/ili9341
-    ${ProjDirPath}/../../../../../components/ft6x06
-    ${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1015/cmsis_drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1015/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../middleware/lvgl
-    ${ProjDirPath}/../../../../../devices/MIMXRT1015
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1015/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../CMSIS/Driver/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT1015/utilities
+    ${SdkRootDirPath}/components/ili9341
+    ${SdkRootDirPath}/components/ft6x06
+    ${SdkRootDirPath}/devices/MIMXRT1015/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1015/cmsis_drivers
+    ${SdkRootDirPath}/devices/MIMXRT1015/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1015/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware/lvgl
+    ${SdkRootDirPath}/devices/MIMXRT1015
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1015/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1015/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/CMSIS/Driver/Include
 )
 
 # include modules
@@ -145,15 +153,13 @@ include(utilities_misc_utilities_MIMXRT1015)
 include(device_MIMXRT1015_system_MIMXRT1015)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -537,6 +537,13 @@
 
 #endif //  SSS_HAVE_MBEDTLS_ALT
 
+#if defined(configFRTOS_MEMORY_SCHEME) && (configFRTOS_MEMORY_SCHEME == 4)
+
+#if defined(MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT)
+    #undef MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
+#endif // MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
+#endif //  defined(configFRTOS_MEMORY_SCHEME) && (configFRTOS_MEMORY_SCHEME == 4)
+
 #include <fsl_sss_types.h>
 
 #ifndef MBEDTLS_PLATFORM_MEMORY

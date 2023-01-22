@@ -30,9 +30,9 @@ const flexspi_nor_config_t qspiflash_config = {
             .readSampleClkSrc = kFlexSPIReadSampleClk_LoopbackInternally,
             .csHoldTime       = 3u,
             .csSetupTime      = 3u,
-            .sflashPadType = kSerialFlash_4Pads,
-            .serialClkFreq = kFlexSpiSerialClk_60MHz,
-            .sflashA1Size  = 8u * 1024u * 1024u,
+            .sflashPadType    = kSerialFlash_4Pads,
+            .serialClkFreq    = kFlexSpiSerialClk_60MHz,
+            .sflashA1Size     = 8u * 1024u * 1024u,
             .lookupTable =
                 {
                     // Read LUTs

@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(azure_iot_embedded_sdk_adu)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME azure_iot_embedded_sdk_adu.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 SET(CMAKE_STATIC_LIBRARY_PREFIX "lib")
 
@@ -303,6 +309,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../main.c"
+"${ProjDirPath}/../azure_iot_embedded_sdk_pnp.c"
 "${ProjDirPath}/../azure_iot_embedded_sdk_adu.c"
 "${ProjDirPath}/../sample_azure_iot_embedded_sdk_connect.c"
 "${ProjDirPath}/../secure_storage.c"
@@ -324,18 +331,24 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../create-adu-import-manifest.sh"
-"${ProjDirPath}/../gen_update_files.sh"
+"${ProjDirPath}/../scripts/sign_image.py"
+"${ProjDirPath}/../scripts/gen_manifest.py"
 "${ProjDirPath}/../keys/sign-rsa2048-pub.pem"
 "${ProjDirPath}/../keys/sign-rsa2048-priv.pem"
-"${ProjDirPath}/../mcuboot_app_support.c"
-"${ProjDirPath}/../mcuboot_app_support.h"
-"${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../mcuboot/mcuboot_app_support.c"
+"${ProjDirPath}/../mcuboot/mcuboot_app_support.h"
+"${ProjDirPath}/../mcuboot/flash_map.h"
+"${ProjDirPath}/../mcuboot/sbldef.h"
+"${ProjDirPath}/../mcuboot/sblconfig.h"
+"${ProjDirPath}/../mcuboot/mcuboot_config.h"
+"${ProjDirPath}/../mcuboot/flash_partitioning.c"
+"${ProjDirPath}/../mcuboot/flash_partitioning.h"
+"${ProjDirPath}/../mcuboot/sysflash/sysflash.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../azure_iot/azure-sdk-for-c/sdk/inc
     ${ProjDirPath}/../azure_iot
     ${ProjDirPath}/../azure_iot/azure_iot_security_module
@@ -345,22 +358,22 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime
     ${ProjDirPath}/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include
     ${ProjDirPath}/..
+    ${ProjDirPath}/../mcuboot
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../rtos/azure-rtos
-    ${ProjDirPath}/../../../../../components/phy/mdio/enet
-    ${ProjDirPath}/../../../../../components/phy/device/phyksz8081
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../components/flash/mflash
-    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../components/phy
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/rtos/azure-rtos
+    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
+    ${SdkRootDirPath}/components/phy/device/phyksz8081
+    ${SdkRootDirPath}/components/flash/mflash
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt1062
+    ${SdkRootDirPath}/devices/MIMXRT1062
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/phy
 )
 
 # include modules
@@ -368,7 +381,7 @@ include(middleware_azure_rtos_azure_iot_MIMXRT1062)
 
 include(middleware_azure_rtos_nxd_MIMXRT1062)
 
-include(driver_mdio-enet_MIMXRT1062)
+include(driver_enet_MIMXRT1062)
 
 include(driver_phy-device-ksz8081_MIMXRT1062)
 
@@ -418,11 +431,7 @@ include(middleware_azure_rtos_tx_MIMXRT1062)
 
 include(middleware_azure_rtos_tx_template_MIMXRT1062)
 
-include(driver_mdio-common_MIMXRT1062)
-
 include(CMSIS_Include_core_cm_MIMXRT1062)
-
-include(driver_enet_MIMXRT1062)
 
 include(driver_phy-common_MIMXRT1062)
 
@@ -435,27 +444,23 @@ include(utilities_misc_utilities_MIMXRT1062)
 include(device_MIMXRT1062_system_MIMXRT1062)
 
 
-add_subdirectory(${ProjDirPath}/../../../../../rtos/azure-rtos/netxduo ./CMakeFiles/libnetxduo)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ./CMakeFiles/libnetxduo)
 
-add_subdirectory(${ProjDirPath}/../../../../../rtos/azure-rtos/filex ./CMakeFiles/libfilex)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ./CMakeFiles/libfilex)
 
-add_subdirectory(${ProjDirPath}/../../../../../rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
+
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::netxduo")
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::filex")
-
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE "azrtos::threadx")
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

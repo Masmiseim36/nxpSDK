@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -118,7 +118,7 @@ DCP Driver Initialization and Configuration</h1>
 <p>Initialize DCP after Power On Reset or reset cycle Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dcp</p>
 <p>The DCP Driver is initialized by calling the <a class="el" href="a00017.html#ga933c854a72dc9dc4aa5c419acef247ba" title="Enables clock to and enables DCP. ">DCP_Init()</a> function. It enables the DCP module clock and configures DCP for operation.</p>
 <h1>Key Management</h1>
-<p>The DCP implements four different key storage mechanisms: OTP-key, OTP-Unique key, Payload key, and SRAM-based keys that can be used by the software to securely store keys on a semi-permanent basis (kDCP_KeySlot0 ~ kDCP_KeySlot3). Once the function <a class="el" href="a00218.html#ga15f23983b967199537cda25d70761d82" title="Set AES key to dcp_handle_t struct and optionally to DCP. ">DCP_AES_SetKey()</a> is called, it sets the AES key for encryption/decryption with the <a class="el" href="a00017.html#a00302" title="Specify DCP&#39;s key resource and DCP channel. ">dcp_handle_t</a> structure. In case the SRAM-based key is selected, the function copies and holds the key in memory. In case the OTP key is used, please make sure to set DCP related IOMUXC_GPRs before DCP initialization, since the software reset of DCP must be issued to take these setting in effect. Refer to the DCP_OTPKeySelect() function in BEE driver example.</p>
+<p>The DCP implements four different key storage mechanisms: OTP-key, OTP-Unique key, Payload key, and SRAM-based keys that can be used by the software to securely store keys on a semi-permanent basis (kDCP_KeySlot0 ~ kDCP_KeySlot3). Once the function <a class="el" href="a00217.html#ga15f23983b967199537cda25d70761d82" title="Set AES key to dcp_handle_t struct and optionally to DCP. ">DCP_AES_SetKey()</a> is called, it sets the AES key for encryption/decryption with the <a class="el" href="a00017.html#a00301" title="Specify DCP&#39;s key resource and DCP channel. ">dcp_handle_t</a> structure. In case the SRAM-based key is selected, the function copies and holds the key in memory. In case the OTP key is used, please make sure to set DCP related IOMUXC_GPRs before DCP initialization, since the software reset of DCP must be issued to take these setting in effect. Refer to the DCP_OTPKeySelect() function in BEE driver example.</p>
 <h1><a class="anchor" id="DCPRtos"></a>
 Comments about API usage in RTOS</h1>
 <p>DCP transactional (encryption or hash) APIs can be called from multiple threads.</p>
@@ -138,27 +138,27 @@ Simple examples</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00218"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00218.html">DCP AES blocking driver</a></td></tr>
+<tr class="memitem:a00217"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html">DCP AES blocking driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00219"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00219.html">DCP AES non-blocking driver</a></td></tr>
+<tr class="memitem:a00218"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00218.html">DCP AES non-blocking driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00018"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html">DCP HASH driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00304"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00304">dcp_work_packet_t</a></td></tr>
-<tr class="memdesc:a00304"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCP's work packet.  <a href="a00017.html#a00304">More...</a><br/></td></tr>
-<tr class="separator:a00304"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00302"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00302">dcp_handle_t</a></td></tr>
-<tr class="memdesc:a00302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify DCP's key resource and DCP channel.  <a href="a00017.html#a00302">More...</a><br/></td></tr>
-<tr class="separator:a00302"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00301"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00301">dcp_context_t</a></td></tr>
-<tr class="memdesc:a00301"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCP's context buffer, used by DCP for context switching between channels.  <a href="a00017.html#a00301">More...</a><br/></td></tr>
+<tr class="memitem:a00303"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00303">dcp_work_packet_t</a></td></tr>
+<tr class="memdesc:a00303"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCP's work packet.  <a href="a00017.html#a00303">More...</a><br/></td></tr>
+<tr class="separator:a00303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00301"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00301">dcp_handle_t</a></td></tr>
+<tr class="memdesc:a00301"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify DCP's key resource and DCP channel.  <a href="a00017.html#a00301">More...</a><br/></td></tr>
 <tr class="separator:a00301"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00300"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00300">dcp_config_t</a></td></tr>
-<tr class="memdesc:a00300"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCP's configuration structure.  <a href="a00017.html#a00300">More...</a><br/></td></tr>
+<tr class="memitem:a00300"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00300">dcp_context_t</a></td></tr>
+<tr class="memdesc:a00300"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCP's context buffer, used by DCP for context switching between channels.  <a href="a00017.html#a00300">More...</a><br/></td></tr>
 <tr class="separator:a00300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00299"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00299">dcp_config_t</a></td></tr>
+<tr class="memdesc:a00299"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCP's configuration structure.  <a href="a00017.html#a00299">More...</a><br/></td></tr>
+<tr class="separator:a00299"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -232,27 +232,27 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga933c854a72dc9dc4aa5c419acef247ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga933c854a72dc9dc4aa5c419acef247ba">DCP_Init</a> (DCP_Type *base, const <a class="el" href="a00017.html#a00300">dcp_config_t</a> *config)</td></tr>
+<tr class="memitem:ga933c854a72dc9dc4aa5c419acef247ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga933c854a72dc9dc4aa5c419acef247ba">DCP_Init</a> (DCP_Type *base, const <a class="el" href="a00017.html#a00299">dcp_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga933c854a72dc9dc4aa5c419acef247ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables clock to and enables DCP.  <a href="#ga933c854a72dc9dc4aa5c419acef247ba">More...</a><br/></td></tr>
 <tr class="separator:ga933c854a72dc9dc4aa5c419acef247ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0b9618e77ddda7528fa176a262614b1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga0b9618e77ddda7528fa176a262614b1d">DCP_Deinit</a> (DCP_Type *base)</td></tr>
 <tr class="memdesc:ga0b9618e77ddda7528fa176a262614b1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable DCP clock.  <a href="#ga0b9618e77ddda7528fa176a262614b1d">More...</a><br/></td></tr>
 <tr class="separator:ga0b9618e77ddda7528fa176a262614b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29b04db9db907101539c12a3130525f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga29b04db9db907101539c12a3130525f8">DCP_GetDefaultConfig</a> (<a class="el" href="a00017.html#a00300">dcp_config_t</a> *config)</td></tr>
+<tr class="memitem:ga29b04db9db907101539c12a3130525f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga29b04db9db907101539c12a3130525f8">DCP_GetDefaultConfig</a> (<a class="el" href="a00017.html#a00299">dcp_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga29b04db9db907101539c12a3130525f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration structure.  <a href="#ga29b04db9db907101539c12a3130525f8">More...</a><br/></td></tr>
 <tr class="separator:ga29b04db9db907101539c12a3130525f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga132509d992e50d593f417de365408485"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga132509d992e50d593f417de365408485">DCP_WaitForChannelComplete</a> (DCP_Type *base, <a class="el" href="a00017.html#a00302">dcp_handle_t</a> *handle)</td></tr>
+<tr class="memitem:ga132509d992e50d593f417de365408485"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga132509d992e50d593f417de365408485">DCP_WaitForChannelComplete</a> (DCP_Type *base, <a class="el" href="a00017.html#a00301">dcp_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga132509d992e50d593f417de365408485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll and wait on DCP channel.  <a href="#ga132509d992e50d593f417de365408485">More...</a><br/></td></tr>
 <tr class="separator:ga132509d992e50d593f417de365408485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga5e6e0628adf52111c3174a5f97b4aa99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga5e6e0628adf52111c3174a5f97b4aa99">FSL_DCP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td></tr>
+<tr class="memitem:ga5e6e0628adf52111c3174a5f97b4aa99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga5e6e0628adf52111c3174a5f97b4aa99">FSL_DCP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td></tr>
 <tr class="memdesc:ga5e6e0628adf52111c3174a5f97b4aa99"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCP driver version.  <a href="#ga5e6e0628adf52111c3174a5f97b4aa99">More...</a><br/></td></tr>
 <tr class="separator:ga5e6e0628adf52111c3174a5f97b4aa99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00304" id="a00304"></a>
+<a name="a00303" id="a00303"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -264,7 +264,7 @@ Driver version</h2></td></tr>
 <div class="textblock"></div>
 </div>
 </div>
-<a name="a00302" id="a00302"></a>
+<a name="a00301" id="a00301"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -314,7 +314,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00301" id="a00301"></a>
+<a name="a00300" id="a00300"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -326,7 +326,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="textblock"></div>
 </div>
 </div>
-<a name="a00300" id="a00300"></a>
+<a name="a00299" id="a00299"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -423,7 +423,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_DCP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td>
+          <td class="memname">#define FSL_DCP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -645,7 +645,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00017.html#a00300">dcp_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00017.html#a00299">dcp_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -696,7 +696,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void DCP_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00017.html#a00300">dcp_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00299">dcp_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -717,7 +717,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_WaitForChannelComplete </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_WaitForChannelComplete </td>
           <td>(</td>
           <td class="paramtype">DCP_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -725,7 +725,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00017.html#a00302">dcp_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00301">dcp_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>

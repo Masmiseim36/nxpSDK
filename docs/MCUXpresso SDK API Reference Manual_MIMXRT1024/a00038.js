@@ -1,6 +1,6 @@
 var a00038 =
 [
-    [ "gpio_pin_config_t", "a00038.html#a00403", [
+    [ "gpio_pin_config_t", "a00038.html#a00402", [
       [ "direction", "a00038.html#a5eae83ead0519707b896cfa9082c4e82", null ],
       [ "outputLogic", "a00038.html#a9d37ffd9a2943f10a91095759bd52da5", null ],
       [ "interruptMode", "a00038.html#a2aaf4ec1e85d3fcea653b422c673441e", null ]

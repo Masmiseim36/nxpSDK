@@ -23,7 +23,6 @@
  * http://www.FreeRTOS.org
  */
 
-
 #ifndef FREERTOS_CONFIG_BOARD_H
 #define FREERTOS_CONFIG_BOARD_H
 /*${macro:start}*/

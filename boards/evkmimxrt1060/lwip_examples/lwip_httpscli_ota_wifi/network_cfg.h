@@ -37,15 +37,6 @@
 #define WIFI_AP_CHANNEL 1
 #endif
 
-#ifndef WIFI_AP_IP_ADDR
-#define WIFI_AP_IP_ADDR "192.168.0.1"
-#endif
-
-#ifndef WIFI_AP_NET_MASK
-#define WIFI_AP_NET_MASK "255.255.0.0"
-
-#endif /* USE_DHCP */
-
 /*${macro:end}*/
 
 #endif /* _NETWORK_CFG_H_ */

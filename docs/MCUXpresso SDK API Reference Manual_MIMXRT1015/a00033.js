@@ -1,6 +1,6 @@
 var a00033 =
 [
-    [ "flexio_uart_edma_handle_t", "a00033.html#a00260", [
+    [ "flexio_uart_edma_handle_t", "a00033.html#a00259", [
       [ "callback", "a00033.html#a51c14c68c9c8fe8880ce0266d0fb517f", null ],
       [ "userData", "a00033.html#a776db0493a197eba59938811591e6610", null ],
       [ "txDataSizeAll", "a00033.html#a731d5bd7e8955a5b19fed52a9d8ce0d4", null ],

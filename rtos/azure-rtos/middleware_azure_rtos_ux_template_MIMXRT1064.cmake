@@ -2,7 +2,7 @@ include_guard()
 message("middleware_azure_rtos_ux_template component is included.")
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/usbx/common/core/inc
     ${CMAKE_CURRENT_LIST_DIR}/usbx/common/usbx_device_classes/inc
     ${CMAKE_CURRENT_LIST_DIR}/usbx/common/usbx_host_classes/inc

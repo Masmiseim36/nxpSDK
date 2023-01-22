@@ -16,7 +16,6 @@
 /* FreeRTOS includes. */
 #if defined(USE_RTOS) && USE_RTOS == 1
 #include "FreeRTOS.h"
-#include "FreeRTOSIPConfig.h"
 //#include "iot_crypto.h" /* From older freeRTOS library */
 #include "semphr.h"
 #include "task.h"
@@ -41,9 +40,6 @@
 #include "pkcs11_mbedtls_utils.h"
 #if SSS_HAVE_MBEDTLS_ALT
 #include "mbedtls/ssl.h"
-#endif
-#if defined(USE_RTOS) && USE_RTOS == 1
-#include "aws_clientcredential.h"
 #endif
 
 /*Other includes */

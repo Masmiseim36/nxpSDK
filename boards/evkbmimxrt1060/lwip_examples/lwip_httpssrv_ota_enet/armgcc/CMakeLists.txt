@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lwip_httpssrv_ota_enet)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME lwip_httpssrv_ota_enet.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -35,6 +41,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../network_cfg.h"
 "${ProjDirPath}/../init_enet.c"
 "${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../httpsrv_multipart.c"
+"${ProjDirPath}/../httpsrv_multipart.h"
 "${ProjDirPath}/../httpsrv_fs_data.c"
 "${ProjDirPath}/../mbedtls_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
@@ -42,7 +50,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../mcuboot_app_support.c"
 "${ProjDirPath}/../mcuboot_app_support.h"
-"${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.h"
+"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.c"
+"${ProjDirPath}/../bootutil_port/board_specific/sblconfig.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_config.h"
+"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
+"${ProjDirPath}/../bootutil_port/flash_map.h"
+"${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
+"${ProjDirPath}/../bootutil_port/sbldef.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -51,8 +66,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
+    ${ProjDirPath}/../bootutil_port
+    ${ProjDirPath}/../bootutil_port/mcuboot_config
+    ${ProjDirPath}/../bootutil_port/sysflash
+    ${ProjDirPath}/../bootutil_port/board_specific
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -64,27 +83,25 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/phy/mdio/enet
-    ${ProjDirPath}/../../../../../components/phy/device/phyksz8081
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
-    ${ProjDirPath}/../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../components/phy
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/flash/mflash
+    ${SdkRootDirPath}/components/phy/device/phyksz8081
+    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
+    ${SdkRootDirPath}/components/flash/mflash/mimxrt1062
+    ${SdkRootDirPath}/middleware/mbedtls
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/components/phy
+    ${SdkRootDirPath}/components/silicon_id
+    ${SdkRootDirPath}/components/silicon_id/socs/rt10xx
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/devices/MIMXRT1062
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/components/flash/mflash
 )
 
 # include modules
-include(driver_mdio-enet_MIMXRT1062)
-
 include(driver_phy-device-ksz8081_MIMXRT1062)
 
 include(driver_cache_armv7_m7_MIMXRT1062)
@@ -99,8 +116,6 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1062)
 
 include(middleware_mbedtls_rt_MIMXRT1062)
 
-include(middleware_lwip_apps_httpssrv_MIMXRT1062)
-
 include(middleware_lwip_enet_ethernetif_MIMXRT1062)
 
 include(middleware_lwip_MIMXRT1062)
@@ -109,11 +124,17 @@ include(driver_phy-common_MIMXRT1062)
 
 include(driver_enet_MIMXRT1062)
 
+include(component_silicon_id_MIMXRT1062)
+
+include(driver_common_MIMXRT1062)
+
+include(component_silicon_id_rt10xx_MIMXRT1062)
+
+include(middleware_lwip_apps_httpssrv_MIMXRT1062)
+
 include(driver_clock_MIMXRT1062)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1062)
-
-include(driver_common_MIMXRT1062)
 
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
 
@@ -137,10 +158,6 @@ include(utility_assert_MIMXRT1062)
 
 include(driver_igpio_MIMXRT1062)
 
-include(component_silicon_id_MIMXRT1062)
-
-include(driver_mdio-common_MIMXRT1062)
-
 include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(component_mflash_common_MIMXRT1062)
@@ -160,15 +177,13 @@ include(utilities_misc_utilities_MIMXRT1062)
 include(device_MIMXRT1062_system_MIMXRT1062)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -1,7 +1,7 @@
 var a00031 =
 [
     [ "FlexIO eDMA MCU Interface LCD Driver", "a00032.html", "a00032" ],
-    [ "FLEXIO_MCULCD_Type", "a00031.html#a00392", [
+    [ "FLEXIO_MCULCD_Type", "a00031.html#a00391", [
       [ "flexioBase", "a00031.html#abf2b6adbb0db513d52fcb5f40c02a2b1", null ],
       [ "busType", "a00031.html#a36a8730492f2b1f4e059db4e5419609c", null ],
       [ "dataPinStartIndex", "a00031.html#adb0e01a30225a21919c2889e69283ff6", null ],
@@ -16,20 +16,20 @@ var a00031 =
       [ "setRSPin", "a00031.html#a49c806eebd7c0a7f7bd19050d87f978a", null ],
       [ "setRDWRPin", "a00031.html#a528162f7f3a5eeca0a7533131ffd6792", null ]
     ] ],
-    [ "flexio_mculcd_config_t", "a00031.html#a00390", [
+    [ "flexio_mculcd_config_t", "a00031.html#a00389", [
       [ "enable", "a00031.html#aec7f75c47425865274cb6e3a59e375e5", null ],
       [ "enableInDoze", "a00031.html#a4979ef759a7da0411f944c8341bb5d29", null ],
       [ "enableInDebug", "a00031.html#a06d679c4a415fc922cdcb7d31aa7a227", null ],
       [ "enableFastAccess", "a00031.html#ac485f769dab33c787197bff31507bae7", null ],
       [ "baudRate_Bps", "a00031.html#a3a36a9832963afadadba0d2937d4c879", null ]
     ] ],
-    [ "flexio_mculcd_transfer_t", "a00031.html#a00391", [
+    [ "flexio_mculcd_transfer_t", "a00031.html#a00390", [
       [ "command", "a00031.html#aa447f012ca360d9b06b569879f0342c7", null ],
       [ "mode", "a00031.html#ac69465289fcc81b805c8ee84d4f5f526", null ],
       [ "dataAddrOrSameValue", "a00031.html#a8dc56304688ac3d2ecf1084316e06202", null ],
       [ "dataSize", "a00031.html#ac9fefa4bb4e9dbf94a8769d5dc6369f4", null ]
     ] ],
-    [ "flexio_mculcd_handle_t", "a00031.html#a00298", [
+    [ "flexio_mculcd_handle_t", "a00031.html#a00297", [
       [ "dataAddrOrSameValue", "a00031.html#afd6b5ba7856e4a60b09284d8648927f6", null ],
       [ "dataCount", "a00031.html#a96a7d3183ca79dc52ea96f1cf3cdaee1", null ],
       [ "remainingCount", "a00031.html#a84abb6b0e289e316142b979d5e937b26", null ],

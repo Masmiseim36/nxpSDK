@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,7 +56,7 @@
 
 #define LCD_WIDTH           480
 #define LCD_HEIGHT          272
-#define LCD_BITS_PER_PIXEL  8
+#define LCD_BITS_PER_PIXEL  32
 #define LCD_BYTES_PER_PIXEL (LCD_BITS_PER_PIXEL / 8)
 
 /* Color depth dependent definitions */
@@ -87,11 +87,13 @@
 #define GUI_LARGE_FONT  (&GUI_Font32B_ASCII)
 
 #define GUI_BUFFERS  2
-#define GUI_NUMBYTES 20000U /*! Amount of memory assigned to the emWin library */
+#define GUI_NUMBYTES (0xC0000) /*! Amount of memory assigned to the emWin library */
 
 #define FRAME_BUFFER_ALIGN 64
 
-#define VRAM_SIZE (LCD_HEIGHT * LCD_WIDTH * LCD_BYTES_PER_PIXEL)
+#define VRAM_SIZE              (LCD_HEIGHT * LCD_WIDTH * LCD_BYTES_PER_PIXEL)
+#define EXAMPLE_GPT            GPT2
+#define EXAMPLE_GPT_TICK_TO_MS 25
 
 extern int BOARD_Touch_Poll(void);
 

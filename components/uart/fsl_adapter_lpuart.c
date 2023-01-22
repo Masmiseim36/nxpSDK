@@ -520,7 +520,14 @@ static void HAL_UartInterruptHandle(uint8_t instance)
             count = ((uint8_t)((s_LpuartAdapterBase[instance]->WATER & LPUART_WATER_RXCOUNT_MASK) >>
                                LPUART_WATER_RXCOUNT_SHIFT));
 #else
-            count = 1u;
+            if (0U != (status & (uint32_t)kLPUART_RxDataRegFullInterruptEnable))
+            {
+                count = 1U;
+            }
+            else
+            {
+                count = 0U;
+            }
 #endif
             while (0u != count)
             {

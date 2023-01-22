@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FLEXRAM: on-chip RAM manager</title>
+<title>MCUXpresso SDK API Reference Manual: GPC: General Power Controller Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,315 +99,68 @@ $(document).ready(function(){initNavTree('a00259.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FLEXRAM: on-chip RAM manager</div>  </div>
+<div class="title">GPC: General Power Controller Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the FLEXRAM module of MCUXpresso SDK devices.</p>
-<p>The FLEXRAM module intergrates the ITCM, DTCM, and OCRAM controllers, and supports parameterized RAM array and RAM array portioning.</p>
-<p>This example code shows how to allocate RAM using the FLEXRAM driver.</p>
-<p>Refer to the driver examples codes located at <em>&lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/flexram.</em> </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the General Power Controller (GPC) module of MCUXpresso SDK devices.</p>
+<p>API functions are provided to configure the system about working in dedicated power mode. There are mainly about enabling the power for memory, enabling the wakeup sources for STOP modes, and power up/down operations for various peripherals. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga753afc4abc676bea1fd173785f3e4df1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga753afc4abc676bea1fd173785f3e4df1">FLEXRAM_ECC_ERROR_DETAILED_INFO</a>&#160;&#160;&#160;0U /* Define to zero means get raw ECC error information, which needs parse it by user. */</td></tr>
-<tr class="memdesc:ga753afc4abc676bea1fd173785f3e4df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ECC error detailed information.  <a href="#ga753afc4abc676bea1fd173785f3e4df1">More...</a><br/></td></tr>
-<tr class="separator:ga753afc4abc676bea1fd173785f3e4df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga4caf8d8f829279fba122163d961608a4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00259.html#gga4caf8d8f829279fba122163d961608a4af3fc6642323a8ada0f6777d7f4a6376e">kFLEXRAM_Read</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#gga4caf8d8f829279fba122163d961608a4a385ea6c35cc58d010f554655fd135a2a">kFLEXRAM_Write</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4caf8d8f829279fba122163d961608a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flexram write/read selection.  <a href="a00259.html#ga4caf8d8f829279fba122163d961608a4">More...</a><br/></td></tr>
-<tr class="separator:ga4caf8d8f829279fba122163d961608a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96a58e29e8dbf2b5bdeb775cba46556e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00259.html#gga96a58e29e8dbf2b5bdeb775cba46556eaba5c335068cfa8f481899ecef329e079">kFLEXRAM_OCRAMAccessError</a> = FLEXRAM_INT_STATUS_OCRAM_ERR_STATUS_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#gga96a58e29e8dbf2b5bdeb775cba46556eaf37a97aa3a38990b880d359dae93a8fa">kFLEXRAM_DTCMAccessError</a> = FLEXRAM_INT_STATUS_DTCM_ERR_STATUS_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#gga96a58e29e8dbf2b5bdeb775cba46556ea676a0b6358eb31b6623c4499556af51d">kFLEXRAM_ITCMAccessError</a> = FLEXRAM_INT_STATUS_ITCM_ERR_STATUS_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#gga96a58e29e8dbf2b5bdeb775cba46556eaa952a181d9000982402d3001c9a3814b">kFLEXRAM_InterruptStatusAll</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga96a58e29e8dbf2b5bdeb775cba46556e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt status flag mask.  <a href="a00259.html#ga96a58e29e8dbf2b5bdeb775cba46556e">More...</a><br/></td></tr>
-<tr class="separator:ga96a58e29e8dbf2b5bdeb775cba46556e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa473aadf12ac43c4288d5a8f951721a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00259.html#ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323">kFLEXRAM_TCMAccessFastMode</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011">kFLEXRAM_TCMAccessWaitMode</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa473aadf12ac43c4288d5a8f951721a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM TCM access mode.  <a href="a00259.html#gaa473aadf12ac43c4288d5a8f951721a7">More...</a><br/></td></tr>
-<tr class="separator:gaa473aadf12ac43c4288d5a8f951721a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab48899087cc647f0f791ed0c459adc53"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00259.html#ggab48899087cc647f0f791ed0c459adc53a74b5c142ac9edb5583e8889b9af4a6c0">kFLEXRAM_TCMSize32KB</a> = 32 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#ggab48899087cc647f0f791ed0c459adc53a47c4472f61015f0328f058f0a5202da1">kFLEXRAM_TCMSize64KB</a> = 64 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#ggab48899087cc647f0f791ed0c459adc53ab431382e96926968904f185135c85783">kFLEXRAM_TCMSize128KB</a> = 128 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#ggab48899087cc647f0f791ed0c459adc53a4955cd2b2ae58ff9e1f4035f6fc07912">kFLEXRAM_TCMSize256KB</a> = 256 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00259.html#ggab48899087cc647f0f791ed0c459adc53ac58032229d029c46cc94ac7b4d143c3e">kFLEXRAM_TCMSize512KB</a> = 512 * 1024U
-<br/>
- }</td></tr>
-<tr class="memdesc:gab48899087cc647f0f791ed0c459adc53"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM TCM support size.  <a href="a00259.html#gab48899087cc647f0f791ed0c459adc53">More...</a><br/></td></tr>
-<tr class="separator:gab48899087cc647f0f791ed0c459adc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga955668a7e7f3642c356afec976af4760"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga955668a7e7f3642c356afec976af4760">FLEXRAM_SetTCMReadAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00259.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> mode)</td></tr>
-<tr class="memdesc:ga955668a7e7f3642c356afec976af4760"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module sets TCM read access mode.  <a href="#ga955668a7e7f3642c356afec976af4760">More...</a><br/></td></tr>
-<tr class="separator:ga955668a7e7f3642c356afec976af4760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga315d028e5ef0e55ae3ba711b5d45978d">FLEXRAM_SetTCMWriteAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00259.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> mode)</td></tr>
-<tr class="memdesc:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module set TCM write access mode.  <a href="#ga315d028e5ef0e55ae3ba711b5d45978d">More...</a><br/></td></tr>
-<tr class="separator:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2de915fd7534b8355f320aef9b8571b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gad2de915fd7534b8355f320aef9b8571b">FLEXRAM_EnableForceRamClockOn</a> (FLEXRAM_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gad2de915fd7534b8355f320aef9b8571b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module force ram clock on.  <a href="#gad2de915fd7534b8355f320aef9b8571b">More...</a><br/></td></tr>
-<tr class="separator:gad2de915fd7534b8355f320aef9b8571b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e">GPC_EnableIRQ</a> (GPC_Type *base, uint32_t irqId)</td></tr>
+<tr class="memdesc:ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the IRQ.  <a href="#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e">More...</a><br/></td></tr>
+<tr class="separator:ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfd07601d1a0e90e3b80fffe14830010"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gacfd07601d1a0e90e3b80fffe14830010">GPC_DisableIRQ</a> (GPC_Type *base, uint32_t irqId)</td></tr>
+<tr class="memdesc:gacfd07601d1a0e90e3b80fffe14830010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the IRQ.  <a href="#gacfd07601d1a0e90e3b80fffe14830010">More...</a><br/></td></tr>
+<tr class="separator:gacfd07601d1a0e90e3b80fffe14830010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1118000efd3c822329c63a7155bbe12e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga1118000efd3c822329c63a7155bbe12e">GPC_GetIRQStatusFlag</a> (GPC_Type *base, uint32_t irqId)</td></tr>
+<tr class="memdesc:ga1118000efd3c822329c63a7155bbe12e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the IRQ/Event flag.  <a href="#ga1118000efd3c822329c63a7155bbe12e">More...</a><br/></td></tr>
+<tr class="separator:ga1118000efd3c822329c63a7155bbe12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8270fba73a065a4e14af1bc895e55969"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga8270fba73a065a4e14af1bc895e55969">GPC_RequestPdram0PowerDown</a> (GPC_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga8270fba73a065a4e14af1bc895e55969"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM PDRAM0 Power Gate Enable.  <a href="#ga8270fba73a065a4e14af1bc895e55969">More...</a><br/></td></tr>
+<tr class="separator:ga8270fba73a065a4e14af1bc895e55969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac50bee55eb34b329680e6fd0d2a9582"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gaac50bee55eb34b329680e6fd0d2a9582">GPC_RequestMEGAPowerOn</a> (GPC_Type *base, bool enable)</td></tr>
+<tr class="memdesc:gaac50bee55eb34b329680e6fd0d2a9582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests the MEGA power switch sequence.  <a href="#gaac50bee55eb34b329680e6fd0d2a9582">More...</a><br/></td></tr>
+<tr class="separator:gaac50bee55eb34b329680e6fd0d2a9582"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gae7b4a4bc48727db1cdc7851d2eb33d25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gae7b4a4bc48727db1cdc7851d2eb33d25">FSL_FLEXRAM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00252.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 2U, 0U))</td></tr>
-<tr class="memdesc:gae7b4a4bc48727db1cdc7851d2eb33d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#gae7b4a4bc48727db1cdc7851d2eb33d25">More...</a><br/></td></tr>
-<tr class="separator:gae7b4a4bc48727db1cdc7851d2eb33d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and de-initialization</h2></td></tr>
-<tr class="memitem:gad8bd4333a61ae64e6ad396bf1c4e4f8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gad8bd4333a61ae64e6ad396bf1c4e4f8a">FLEXRAM_Init</a> (FLEXRAM_Type *base)</td></tr>
-<tr class="memdesc:gad8bd4333a61ae64e6ad396bf1c4e4f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module initialization function.  <a href="#gad8bd4333a61ae64e6ad396bf1c4e4f8a">More...</a><br/></td></tr>
-<tr class="separator:gad8bd4333a61ae64e6ad396bf1c4e4f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60031f87389fb038eb0236d06780e328"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga60031f87389fb038eb0236d06780e328"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga60031f87389fb038eb0236d06780e328">FLEXRAM_Deinit</a> (FLEXRAM_Type *base)</td></tr>
-<tr class="memdesc:ga60031f87389fb038eb0236d06780e328"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the FLEXRAM. <br/></td></tr>
-<tr class="separator:ga60031f87389fb038eb0236d06780e328"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:gabafedc98f7b19727c15b519fbb5622cc"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#gabafedc98f7b19727c15b519fbb5622cc">FLEXRAM_GetInterruptStatus</a> (FLEXRAM_Type *base)</td></tr>
-<tr class="memdesc:gabafedc98f7b19727c15b519fbb5622cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module gets interrupt status.  <a href="#gabafedc98f7b19727c15b519fbb5622cc">More...</a><br/></td></tr>
-<tr class="separator:gabafedc98f7b19727c15b519fbb5622cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94fad29c4ce4f80e99127a86b964880a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga94fad29c4ce4f80e99127a86b964880a">FLEXRAM_ClearInterruptStatus</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga94fad29c4ce4f80e99127a86b964880a"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module clears interrupt status.  <a href="#ga94fad29c4ce4f80e99127a86b964880a">More...</a><br/></td></tr>
-<tr class="separator:ga94fad29c4ce4f80e99127a86b964880a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9846b45b429edc61e13d7643040f758c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga9846b45b429edc61e13d7643040f758c">FLEXRAM_EnableInterruptStatus</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga9846b45b429edc61e13d7643040f758c"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module enables interrupt status.  <a href="#ga9846b45b429edc61e13d7643040f758c">More...</a><br/></td></tr>
-<tr class="separator:ga9846b45b429edc61e13d7643040f758c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2af91e45db0c0ed8b36ccc536b75e68d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga2af91e45db0c0ed8b36ccc536b75e68d">FLEXRAM_DisableInterruptStatus</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga2af91e45db0c0ed8b36ccc536b75e68d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module disable interrupt status.  <a href="#ga2af91e45db0c0ed8b36ccc536b75e68d">More...</a><br/></td></tr>
-<tr class="separator:ga2af91e45db0c0ed8b36ccc536b75e68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupts</h2></td></tr>
-<tr class="memitem:ga047368992e49cf1771c6e22a451d681e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga047368992e49cf1771c6e22a451d681e">FLEXRAM_EnableInterruptSignal</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga047368992e49cf1771c6e22a451d681e"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module enables interrupt.  <a href="#ga047368992e49cf1771c6e22a451d681e">More...</a><br/></td></tr>
-<tr class="separator:ga047368992e49cf1771c6e22a451d681e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga557f1b09ff66836a1b884818a5d7ea33"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga557f1b09ff66836a1b884818a5d7ea33">FLEXRAM_DisableInterruptSignal</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga557f1b09ff66836a1b884818a5d7ea33"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module disables interrupt.  <a href="#ga557f1b09ff66836a1b884818a5d7ea33">More...</a><br/></td></tr>
-<tr class="separator:ga557f1b09ff66836a1b884818a5d7ea33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91a1b6b08dc09200c3b0ee314b362b74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00259.html#ga91a1b6b08dc09200c3b0ee314b362b74">FSL_GPC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00251.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
+<tr class="memdesc:ga91a1b6b08dc09200c3b0ee314b362b74"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPC driver version 2.1.1.  <a href="#ga91a1b6b08dc09200c3b0ee314b362b74">More...</a><br/></td></tr>
+<tr class="separator:ga91a1b6b08dc09200c3b0ee314b362b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae7b4a4bc48727db1cdc7851d2eb33d25"></a>
+<a class="anchor" id="ga91a1b6b08dc09200c3b0ee314b362b74"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXRAM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00252.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 2U, 0U))</td>
+          <td class="memname">#define FSL_GPC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00251.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga753afc4abc676bea1fd173785f3e4df1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FLEXRAM_ECC_ERROR_DETAILED_INFO&#160;&#160;&#160;0U /* Define to zero means get raw ECC error information, which needs parse it by user. */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga4caf8d8f829279fba122163d961608a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4caf8d8f829279fba122163d961608a4af3fc6642323a8ada0f6777d7f4a6376e"></a>kFLEXRAM_Read</em>&nbsp;</td><td class="fielddoc">
-<p>read </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4caf8d8f829279fba122163d961608a4a385ea6c35cc58d010f554655fd135a2a"></a>kFLEXRAM_Write</em>&nbsp;</td><td class="fielddoc">
-<p>write </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga96a58e29e8dbf2b5bdeb775cba46556e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556eaba5c335068cfa8f481899ecef329e079"></a>kFLEXRAM_OCRAMAccessError</em>&nbsp;</td><td class="fielddoc">
-<p>OCRAM accesses unallocated address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556eaf37a97aa3a38990b880d359dae93a8fa"></a>kFLEXRAM_DTCMAccessError</em>&nbsp;</td><td class="fielddoc">
-<p>DTCM accesses unallocated address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556ea676a0b6358eb31b6623c4499556af51d"></a>kFLEXRAM_ITCMAccessError</em>&nbsp;</td><td class="fielddoc">
-<p>ITCM accesses unallocated address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556eaa952a181d9000982402d3001c9a3814b"></a>kFLEXRAM_InterruptStatusAll</em>&nbsp;</td><td class="fielddoc">
-<p>all the interrupt status mask </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaa473aadf12ac43c4288d5a8f951721a7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00259.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Fast access mode expected to be finished in 1-cycle; Wait access mode expected to be finished in 2-cycle. Wait access mode is a feature of the flexram and it should be used when the CPU clock is too fast to finish TCM access in 1-cycle. Normally, fast mode is the default mode, the efficiency of the TCM access will better. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323"></a>kFLEXRAM_TCMAccessFastMode</em>&nbsp;</td><td class="fielddoc">
-<p>fast access mode </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011"></a>kFLEXRAM_TCMAccessWaitMode</em>&nbsp;</td><td class="fielddoc">
-<p>wait access mode </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gab48899087cc647f0f791ed0c459adc53"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53a74b5c142ac9edb5583e8889b9af4a6c0"></a>kFLEXRAM_TCMSize32KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 32KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53a47c4472f61015f0328f058f0a5202da1"></a>kFLEXRAM_TCMSize64KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 64KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53ab431382e96926968904f185135c85783"></a>kFLEXRAM_TCMSize128KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 128KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53a4955cd2b2ae58ff9e1f4035f6fc07912"></a>kFLEXRAM_TCMSize256KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 256KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53ac58032229d029c46cc94ac7b4d143c3e"></a>kFLEXRAM_TCMSize512KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 512KB. </p>
-</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad8bd4333a61ae64e6ad396bf1c4e4f8a"></a>
+<a class="anchor" id="ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void FLEXRAM_Init </td>
+          <td class="memname">void GPC_EnableIRQ </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabafedc98f7b19727c15b519fbb5622cc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t FLEXRAM_GetInterruptStatus </td>
-          <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga94fad29c4ce4f80e99127a86b964880a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void FLEXRAM_ClearInterruptStatus </td>
-          <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
+          <td class="paramtype">GPC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>irqId</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -415,40 +168,32 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status to be cleared. </td></tr>
+    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
+    <tr><td class="paramname">irqId</td><td>ID number of IRQ to be enabled, available range is 32-159. 0-31 is available in some platforms. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9846b45b429edc61e13d7643040f758c"></a>
+<a class="anchor" id="gacfd07601d1a0e90e3b80fffe14830010"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_EnableInterruptStatus </td>
+          <td class="memname">void GPC_DisableIRQ </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
+          <td class="paramtype">GPC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>irqId</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -456,40 +201,32 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status to be enabled. </td></tr>
+    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
+    <tr><td class="paramname">irqId</td><td>ID number of IRQ to be disabled, available range is 32-159. 0-31 is available in some platforms. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2af91e45db0c0ed8b36ccc536b75e68d"></a>
+<a class="anchor" id="ga1118000efd3c822329c63a7155bbe12e"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_DisableInterruptStatus </td>
+          <td class="memname">bool GPC_GetIRQStatusFlag </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
+          <td class="paramtype">GPC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>irqId</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -497,23 +234,19 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status to be disabled. </td></tr>
+    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
+    <tr><td class="paramname">irqId</td><td>ID number of IRQ to be enabled, available range is 32-159. 0-31 is available in some platforms. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Indicated IRQ/Event is asserted or not. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga047368992e49cf1771c6e22a451d681e"></a>
+<a class="anchor" id="ga8270fba73a065a4e14af1bc895e55969"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -521,16 +254,16 @@ Interrupts</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_EnableInterruptSignal </td>
+          <td class="memname">static void GPC_RequestPdram0PowerDown </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
+          <td class="paramtype">GPC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -544,17 +277,18 @@ Interrupts</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>This function configures the FLEXRAM PDRAM0 if it will keep power when cpu core is power down. When the PDRAM0 Power is 1, PDRAM0 will be power down once when CPU core is power down. When the PDRAM0 Power is 0, PDRAM0 will keep power on even if CPU core is power down. When CPU core is re-power up, the default setting is 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status interrupt to be enabled. </td></tr>
+    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable the request or not. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga557f1b09ff66836a1b884818a5d7ea33"></a>
+<a class="anchor" id="gaac50bee55eb34b329680e6fd0d2a9582"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -562,132 +296,9 @@ Interrupts</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_DisableInterruptSignal </td>
+          <td class="memname">static void GPC_RequestMEGAPowerOn </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status interrupt to be disabled. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga955668a7e7f3642c356afec976af4760"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void FLEXRAM_SetTCMReadAccessMode </td>
-          <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00259.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Access mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga315d028e5ef0e55ae3ba711b5d45978d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void FLEXRAM_SetTCMWriteAccessMode </td>
-          <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00259.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Access mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad2de915fd7534b8355f320aef9b8571b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void FLEXRAM_EnableForceRamClockOn </td>
-          <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
+          <td class="paramtype">GPC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -710,8 +321,8 @@ Interrupts</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable or disable clock force on. </td></tr>
+    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable the power on sequence, or the power down sequence. </td></tr>
   </table>
   </dd>
 </dl>

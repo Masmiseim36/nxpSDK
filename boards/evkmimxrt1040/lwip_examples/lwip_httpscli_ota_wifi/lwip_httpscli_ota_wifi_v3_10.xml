@@ -20,9 +20,11 @@
     <definition extID="component.igpio_adapter.MIMXRT1042"/>
     <definition extID="middleware.lwip.MIMXRT1042"/>
     <definition extID="middleware.wifi.MIMXRT1042"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.corehttp.MIMXRT1042"/>
+    <definition extID="middleware.freertos.corehttp.MIMXRT1042"/>
+    <definition extID="middleware.edgefast_wifi_nxp.MIMXRT1042"/>
     <definition extID="platform.drivers.clock.MIMXRT1042"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1042"/>
+    <definition extID="utility.shell.MIMXRT1042"/>
     <definition extID="platform.drivers.common.MIMXRT1042"/>
     <definition extID="device.MIMXRT1042_CMSIS.MIMXRT1042"/>
     <definition extID="component.lpuart_adapter.MIMXRT1042"/>
@@ -34,7 +36,6 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1042"/>
     <definition extID="platform.utilities.assert.MIMXRT1042"/>
     <definition extID="platform.drivers.igpio.MIMXRT1042"/>
-    <definition extID="component.silicon_id.MIMXRT1042"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1042"/>
     <definition extID="component.mflash.common.MIMXRT1042"/>
     <definition extID="platform.drivers.flexspi.MIMXRT1042"/>
@@ -44,7 +45,9 @@
     <definition extID="component.osa_free_rtos.MIMXRT1042"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1042"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT1042"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.http_parser.MIMXRT1042"/>
+    <definition extID="middleware.wifi.common_files.MIMXRT1042"/>
+    <definition extID="middleware.llhttp.MIMXRT1042"/>
+    <definition extID="middleware.edgefast_wifi.MIMXRT1042"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1042"/>
     <definition extID="device.MIMXRT1042_system.MIMXRT1042"/>
     <definition extID="iar"/>
@@ -55,7 +58,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1040_lwip_httpscli_ota_wifi" name="lwip_httpscli_ota_wifi" dependency="platform.drivers.trng.MIMXRT1042 platform.drivers.dcp.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 middleware.mbedtls.MIMXRT1042 middleware.mbedtls.port.ksdk.MIMXRT1042 middleware.mbedtls.rt.MIMXRT1042 component.mflash.rt1040.MIMXRT1042 middleware.wifi.wifidriver.MIMXRT1042 middleware.freertos-kernel.MIMXRT1042 utility.debug_console.MIMXRT1042 middleware.wifi.sdio.MIMXRT1042 middleware.wifi.fwdnld.MIMXRT1042 middleware.sdmmc.sdio.MIMXRT1042 middleware.sdmmc.common.MIMXRT1042 middleware.sdmmc.host.usdhc.MIMXRT1042 middleware.sdmmc.host.usdhc.freertos.MIMXRT1042 component.igpio_adapter.MIMXRT1042 middleware.lwip.MIMXRT1042 middleware.wifi.MIMXRT1042 middleware.freertos-aws_iot.libraries.corehttp.MIMXRT1042 platform.drivers.clock.MIMXRT1042 middleware.freertos-kernel.heap_4.MIMXRT1042 platform.drivers.common.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.serial_manager.MIMXRT1042 component.lists.MIMXRT1042 component.serial_manager_uart.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 platform.utilities.assert.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 component.silicon_id.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 component.mflash.common.MIMXRT1042 platform.drivers.flexspi.MIMXRT1042 middleware.freertos-kernel.extension.MIMXRT1042 middleware.wifi.sdio-2.MIMXRT1042 middleware.sdmmc.osa.freertos.MIMXRT1042 component.osa_free_rtos.MIMXRT1042 platform.drivers.usdhc.MIMXRT1042 component.wifi_bt_module.tx_pwr_limits.MIMXRT1042 middleware.freertos-aws_iot.libraries.3rdparty.http_parser.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042" category="lwip_examples">
+  <example id="evkmimxrt1040_lwip_httpscli_ota_wifi" name="lwip_httpscli_ota_wifi" dependency="platform.drivers.trng.MIMXRT1042 platform.drivers.dcp.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 middleware.mbedtls.MIMXRT1042 middleware.mbedtls.port.ksdk.MIMXRT1042 middleware.mbedtls.rt.MIMXRT1042 component.mflash.rt1040.MIMXRT1042 middleware.wifi.wifidriver.MIMXRT1042 middleware.freertos-kernel.MIMXRT1042 utility.debug_console.MIMXRT1042 middleware.wifi.sdio.MIMXRT1042 middleware.wifi.fwdnld.MIMXRT1042 middleware.sdmmc.sdio.MIMXRT1042 middleware.sdmmc.common.MIMXRT1042 middleware.sdmmc.host.usdhc.MIMXRT1042 middleware.sdmmc.host.usdhc.freertos.MIMXRT1042 component.igpio_adapter.MIMXRT1042 middleware.lwip.MIMXRT1042 middleware.wifi.MIMXRT1042 middleware.freertos.corehttp.MIMXRT1042 middleware.edgefast_wifi_nxp.MIMXRT1042 platform.drivers.clock.MIMXRT1042 middleware.freertos-kernel.heap_4.MIMXRT1042 utility.shell.MIMXRT1042 platform.drivers.common.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.serial_manager.MIMXRT1042 component.lists.MIMXRT1042 component.serial_manager_uart.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 platform.utilities.assert.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 component.mflash.common.MIMXRT1042 platform.drivers.flexspi.MIMXRT1042 middleware.freertos-kernel.extension.MIMXRT1042 middleware.wifi.sdio-2.MIMXRT1042 middleware.sdmmc.osa.freertos.MIMXRT1042 component.osa_free_rtos.MIMXRT1042 platform.drivers.usdhc.MIMXRT1042 component.wifi_bt_module.tx_pwr_limits.MIMXRT1042 middleware.wifi.common_files.MIMXRT1042 middleware.llhttp.MIMXRT1042 middleware.edgefast_wifi.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042" category="lwip_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -69,8 +72,8 @@
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.minimal</value>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.general</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
@@ -101,14 +104,17 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>MCUBOOT_APPLICATION=1</value>
           <value>USE_RTOS=1</value>
           <value>LWIP_DNS=1</value>
           <value>LWIP_DHCP=1</value>
           <value>MBEDTLS_CONFIG_FILE='"mbedtls_config_client.h"'</value>
           <value>ENET_RXBUFF_NUM=14</value>
+          <value>SHELL_BUFFER_SIZE=128</value>
           <value>MFLASH_FILE_BASEADDR=7340032</value>
           <value>SDK_OS_FREE_RTOS</value>
           <value>SDIO_ENABLED</value>
+          <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>MCUXPRESSO_SDK</value>
         </option>
@@ -158,6 +164,10 @@
       <include_path path="." project_relative_path="board" type="c_include"/>
       <include_path path="config" project_relative_path="source/config" type="c_include"/>
       <include_path path="../.." project_relative_path="board" type="c_include"/>
+      <include_path path="bootutil_port" project_relative_path="bootutil_port" type="c_include"/>
+      <include_path path="bootutil_port/mcuboot_config" project_relative_path="bootutil_port/mcuboot_config" type="c_include"/>
+      <include_path path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include"/>
+      <include_path path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
       <include_path path="../.." project_relative_path="source" type="asm_include"/>
       <include_path path="../.." project_relative_path="source/config" type="asm_include"/>
@@ -224,7 +234,6 @@
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="init_wifi.c"/>
-      <files mask="wpl_nxp.c"/>
     </source>
     <source path="." project_relative_path="source/config" type="c_include">
       <files mask="lwipopts.h"/>
@@ -238,9 +247,6 @@
     </source>
     <source path="." project_relative_path="board" type="c_include">
       <files mask="pin_mux.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="wpl.h"/>
     </source>
     <source path="." project_relative_path="source/config" type="c_include">
       <files mask="wifi_config.h"/>
@@ -268,8 +274,25 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="mcuboot_app_support.h"/>
     </source>
-    <source path="." project_relative_path="board" type="c_include">
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include">
       <files mask="flash_partitioning.h"/>
+    </source>
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="src">
+      <files mask="flash_partitioning.c"/>
+    </source>
+    <source path="bootutil_port/board_specific" project_relative_path="bootutil_port/board_specific" type="c_include">
+      <files mask="sblconfig.h"/>
+    </source>
+    <source path="bootutil_port/mcuboot_config" project_relative_path="bootutil_port/mcuboot_config" type="c_include">
+      <files mask="mcuboot_config.h"/>
+      <files mask="mcuboot_logging.h"/>
+    </source>
+    <source path="bootutil_port" project_relative_path="bootutil_port" type="c_include">
+      <files mask="flash_map.h"/>
+      <files mask="sbldef.h"/>
+    </source>
+    <source path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include">
+      <files mask="sysflash.h"/>
     </source>
     <source path="https_server" project_relative_path="https_server" type="other" exclude="true">
       <files mask="httpsd_ota.py" hidden="true"/>
@@ -281,6 +304,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="mdk" project_relative_path="evkmimxrt1040" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1040_flexspi_nor.ini"/>
     </source>
   </example>
 </ksdk:examples>

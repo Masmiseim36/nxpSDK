@@ -16,7 +16,7 @@
 #include "streamer_pcm_app.h"
 #include "app_definitions.h"
 #include "main.h"
-#include "logging.h"
+#include "maestro_logging.h"
 
 #ifdef EAP32_PROC
 #include "eap_proc.h"
@@ -203,7 +203,7 @@ status_t STREAMER_PCM_Create(char *filename, int volume)
 #ifdef EAP32_PROC
     if (get_app_data()->num_channels == 2)
     {
-        params.pipeline_type = STREAM_PIPELINE_PCM_EAP_AUDIO;
+        params.pipeline_type = STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO;
     }
     else
     {

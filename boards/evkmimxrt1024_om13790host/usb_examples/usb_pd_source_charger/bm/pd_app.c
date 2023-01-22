@@ -14,7 +14,6 @@
 #include "pd_app.h"
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "fsl_gpio.h"
 #include "pd_power_interface.h"
 #include "pd_board_config.h"
 #include "pd_power_nx20p3483.h"
@@ -22,6 +21,7 @@
 #include "pin_mux.h"
 #include "board.h"
 
+#include "fsl_gpio.h"
 #include "fsl_adapter_gpio.h"
 #include "fsl_iomuxc.h"
 /*******************************************************************************

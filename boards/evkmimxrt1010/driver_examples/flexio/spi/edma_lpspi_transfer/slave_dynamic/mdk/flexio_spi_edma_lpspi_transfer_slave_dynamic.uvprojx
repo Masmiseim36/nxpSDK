@@ -333,7 +333,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1011DAE5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -432,6 +432,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -678,11 +688,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -696,16 +701,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1061,7 +1056,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1160,6 +1155,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1406,11 +1411,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1424,16 +1424,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1789,7 +1779,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1011DAE5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1888,6 +1878,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -2134,11 +2134,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2152,16 +2147,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2517,7 +2502,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../../devices/MIMXRT1011;../../../../../../../../components/uart;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1011/xip;../../../../../../xip;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2616,6 +2601,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -2862,11 +2857,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2880,16 +2870,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

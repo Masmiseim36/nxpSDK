@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -15,6 +15,7 @@ Purpose     : APPWIZARD application entry point
 */
 
 #include "Generated/Resource.h"
+#include "emwin_support.h"
 
 /*********************************************************************
 *
@@ -45,7 +46,8 @@ void MainTask(void) {
       APPW_Exec();
     }
     APPW_Exec();
-    GUI_Delay(5);
+    GUI_X_Delay(5);
+    BOARD_Touch_Poll();
   }
 }
 

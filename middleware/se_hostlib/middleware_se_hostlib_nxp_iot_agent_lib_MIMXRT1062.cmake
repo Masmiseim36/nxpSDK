@@ -37,7 +37,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf
     ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/inc
     ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/platform/mbedtls
@@ -47,5 +47,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(middleware_se_hostlib_commonSe050CloudDemos_evkmimxrt1060_MIMXRT1062)
+include(middleware_se_hostlib_commonSe050CloudDemos_MIMXRT1062)
 

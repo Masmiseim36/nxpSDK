@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=1, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -583,187 +583,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1051,11 +1051,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1069,16 +1064,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1431,7 +1416,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1684,187 +1669,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2152,11 +2137,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2170,16 +2150,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2532,7 +2502,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2785,187 +2755,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -3253,11 +3223,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3271,16 +3236,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3633,7 +3588,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=0, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3886,187 +3841,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4354,11 +4309,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4372,16 +4322,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4734,7 +4674,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4987,187 +4927,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -5455,11 +5395,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -5473,16 +5408,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -5835,7 +5760,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6088,187 +6013,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/include</GroupName>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
           <Files>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stdint.readme</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable</GroupName>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -6556,11 +6481,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -6574,16 +6494,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

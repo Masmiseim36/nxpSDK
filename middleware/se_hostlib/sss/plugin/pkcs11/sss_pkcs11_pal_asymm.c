@@ -869,8 +869,18 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
         goto exit;
     }
 
+    if (index >= sizeof(data)){
+        xResult = CKR_FUNCTION_FAILED;
+        goto exit;
+    }
+
     tag = data[index];
     if (tag != ASN_TAG_OBJ_IDF) {
+        xResult = CKR_FUNCTION_FAILED;
+        goto exit;
+    }
+
+    if (index >= sizeof(data) - 1){
         xResult = CKR_FUNCTION_FAILED;
         goto exit;
     }
@@ -879,10 +889,18 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
 
     if ((len & 0x80) == 0x80) {
         if ((len & 0x7F) == 0x01) {
+            if (index >= sizeof(data) - 2){
+                xResult = CKR_FUNCTION_FAILED;
+                goto exit;
+            }
             len = data[index + 2];
             len++;
         }
         else if ((len & 0x7F) == 0x02) {
+            if (index >= sizeof(data) - 3){
+                xResult = CKR_FUNCTION_FAILED;
+                goto exit;
+            }
             len = (data[index + 2] << 8) | data[index + 3];
             len = len + 2;
         }
@@ -891,6 +909,11 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
     len = len + 2;
 
     if ((index + len) > *inputLen) {
+        xResult = CKR_FUNCTION_FAILED;
+        goto exit;
+    }
+
+    if (index > sizeof(data)){
         xResult = CKR_FUNCTION_FAILED;
         goto exit;
     }

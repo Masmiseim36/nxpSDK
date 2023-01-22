@@ -649,9 +649,7 @@ int main(void)
     while (1)
     {
         /* Poll touch controller for update */
-        if (BOARD_Touch_Poll())
-        {
-            GUI_Delay(25);
-        }
+        BOARD_Touch_Poll();
+        GUI_Delay(25);
     }
 }

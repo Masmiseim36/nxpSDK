@@ -32,7 +32,7 @@ void write_vtor(uint32_t);
 void common_startup(void)
 {
     /* Set the IVT address in SCB */
-    extern uint32_t __VECTOR_TABLE[];
+    extern int32_t __VECTOR_TABLE[];
     write_vtor((uint32_t)__VECTOR_TABLE);
 
 #if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
@@ -100,7 +100,7 @@ void common_startup(void)
     Watchdog_refresh;
 #endif
 
-#if defined(MECC1) || defined(MECC2)
+#if (defined(MECC1) || defined(MECC2)) && !defined(_MIMXRT1189_CM7_H_)
     /* When ECC is enabled, SRC->SRSR need to be cleared since only correct SRSR value can trigger ROM ECC preload
        procedure. Save SRSR to SRC->GPR[10] so that application can still check SRSR value from SRC->GPR[10]. */
     SRC->GPR[10] = SRC->SRSR;
@@ -112,6 +112,20 @@ void common_startup(void)
     __DSB();
     __ISB();
 #endif
+
+#if defined(_MIMXRT1189_CM7_H_)
+    /* When ECC is enabled, SRC->SRSR need to be cleared since only correct SRSR value can trigger ROM ECC preload
+       procedure. Save SRSR to SRC->GPR[10] so that application can still check SRSR value from SRC->GPR[10]. */
+    SRC_GENERAL_REG->GPR[10] = SRC_GENERAL_REG->SRSR;
+    /* clear SRSR */
+    SRC_GENERAL_REG->SRSR = 0xFFFFFFFF;
+
+    /* Enable entry to thread mode when divide by zero */
+    SCB->CCR |= SCB_CCR_DIV_0_TRP_Msk;
+    __DSB();
+    __ISB();
+#endif    
+
 }
 
 /*!
@@ -124,5 +138,5 @@ void common_startup(void)
 void write_vtor(uint32_t vtor)
 {
     uint32_t *pVTOR = (uint32_t *)0xE000ED08;
-    *pVTOR          = vtor;
+    *pVTOR          = 0x30002000;
 }

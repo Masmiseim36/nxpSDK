@@ -12,7 +12,7 @@
 /*${header:start}*/
 #include "board.h"
 
-#include "enet_ethernetif.h"
+#include "ethernetif.h"
 #include "lwip/netifapi.h"
 #include "lwip/prot/dhcp.h"
 
@@ -45,9 +45,7 @@
  * Variables
  ******************************************************************************/
 /*${variable:start}*/
-static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
-static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
-
+static phy_handle_t phyHandle;
 static struct netif netif;
 
 /*${variable:end}*/
@@ -60,13 +58,15 @@ int initNetwork(void)
 {
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle = &phyHandle,
+        .phyHandle   = &phyHandle,
+        .phyAddr     = EXAMPLE_PHY_ADDRESS,
+        .phyOps      = EXAMPLE_PHY_OPS,
+        .phyResource = EXAMPLE_PHY_RESOURCE,
+        .srcClockHz  = EXAMPLE_CLOCK_FREQ,
 #ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
 #endif
     };
-
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
 #ifdef IP_USE_DHCP
 #ifndef configMAC_ADDR

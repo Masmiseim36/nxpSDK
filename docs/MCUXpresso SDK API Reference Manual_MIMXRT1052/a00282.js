@@ -1,5 +1,5 @@
 var a00282 =
 [
-    [ "SAI Driver", "a00060.html", "a00060" ],
-    [ "SAI EDMA Driver", "a00061.html", "a00061" ]
+    [ "Secure Non-Volatile Storage High-Power", "a00072.html", "a00072" ],
+    [ "Secure Non-Volatile Storage Low-Power", "a00073.html", "a00073" ]
 ];

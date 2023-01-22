@@ -9,15 +9,15 @@
       </member>
       <member>
         <project>littlefs_shell</project>
+        <configuration>sdram_release</configuration>
+      </member>
+      <member>
+        <project>littlefs_shell</project>
         <configuration>debug</configuration>
       </member>
       <member>
         <project>littlefs_shell</project>
         <configuration>sdram_debug</configuration>
-      </member>
-      <member>
-        <project>littlefs_shell</project>
-        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -25,6 +25,13 @@
       <member>
         <project>littlefs_shell</project>
         <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_release</name>
+      <member>
+        <project>littlefs_shell</project>
+        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -39,13 +46,6 @@
       <member>
         <project>littlefs_shell</project>
         <configuration>sdram_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
-      <member>
-        <project>littlefs_shell</project>
-        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

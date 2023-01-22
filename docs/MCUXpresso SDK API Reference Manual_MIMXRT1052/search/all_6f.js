@@ -10,7 +10,7 @@ var searchData=
   ['ocotp_5freadfuseshadowregister',['OCOTP_ReadFuseShadowRegister',['../a00054.html#gaecc991ccf4be0c49286fb13cba97e389',1,'fsl_ocotp.h']]],
   ['ocotp_5freadfuseshadowregisterext',['OCOTP_ReadFuseShadowRegisterExt',['../a00054.html#gaa1b0f813fa5ca43225d71d9218c48a28',1,'fsl_ocotp.h']]],
   ['ocotp_5freloadshadowregister',['OCOTP_ReloadShadowRegister',['../a00054.html#ga7a7b1cd03383fafde15157a06fdda557',1,'fsl_ocotp.h']]],
-  ['ocotp_5ftiming_5ft',['ocotp_timing_t',['../a00054.html#a00448',1,'']]],
+  ['ocotp_5ftiming_5ft',['ocotp_timing_t',['../a00054.html#a00447',1,'']]],
   ['ocotp_5fwritefuseshadowregister',['OCOTP_WriteFuseShadowRegister',['../a00054.html#ga43636ab96125958c9a14fe82c176e33e',1,'fsl_ocotp.h']]],
   ['ocotp_5fwritefuseshadowregisterwithlock',['OCOTP_WriteFuseShadowRegisterWithLock',['../a00054.html#ga4f837c7b4a66ffe3153f2975fd5c6388',1,'fsl_ocotp.h']]],
   ['ocr',['ocr',['../a00052.html#a0b3899f0be098f696fd5bc212d4b597e',1,'mmc_card_t::ocr()'],['../a00062.html#a4dfdb06355545a94755d7b7b8b8bb708',1,'sd_card_t::ocr()'],['../a00063.html#a493c409455409991a2af4ae08e31b386',1,'_sdio_card::ocr()']]],

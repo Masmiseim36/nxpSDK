@@ -331,7 +331,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1062DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, CODEC_MULTI_ADAPTERS=1, SD_ENABLED, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1311,6 +1311,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1438,28 +1448,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -1474,16 +1464,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1877,7 +1857,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1062DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, CODEC_MULTI_ADAPTERS=1, SD_ENABLED, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2857,6 +2837,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2984,28 +2974,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -3020,16 +2990,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3423,7 +3383,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1062DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, CODEC_MULTI_ADAPTERS=1, SD_ENABLED, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4403,6 +4363,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -4530,28 +4500,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -4566,16 +4516,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4969,7 +4909,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1062DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, CODEC_MULTI_ADAPTERS=1, SD_ENABLED, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5949,6 +5889,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -6076,28 +6026,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -6112,16 +6042,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -6515,7 +6435,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1062DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, CODEC_MULTI_ADAPTERS=1, SD_ENABLED, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7495,6 +7415,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -7622,28 +7552,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -7658,16 +7568,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -8061,7 +7961,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1062DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, CODEC_MULTI_ADAPTERS=1, SD_ENABLED, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../components/codec;../../../../../components/codec/port;../../../../../components/codec/port/wm8960;../../../../../components/codec/port/cs42448;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../components/codec/cs42448;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9041,6 +8941,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -9168,28 +9078,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -9204,16 +9094,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

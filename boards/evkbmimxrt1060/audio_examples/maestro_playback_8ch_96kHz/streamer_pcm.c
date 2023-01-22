@@ -215,12 +215,17 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
 
     if (pcm->num_channels > 2)
     {
-        SAI_GetTDMConfig(&saiConfig, kSAI_FrameSyncLenOneBitClk, kSAI_WordWidth32bits, DEMO_CHANNEL_NUM,
+        pcm->bit_width    = 32;
+        pcm->num_channels = 8;
+
+        /* Set codec to TDM mode */
+        SAI_GetTDMConfig(&saiConfig, kSAI_FrameSyncLenOneBitClk, _pcm_map_word_width(pcm->bit_width), pcm->num_channels,
                          kSAI_Channel0Mask);
         saiConfig.frameSync.frameSyncEarly = true;
     }
     else
     {
+        /* Set codec to I2S mode */
         SAI_GetClassicI2SConfig(&saiConfig, _pcm_map_word_width(bit_width), format.stereo, 1U << DEMO_SAI_CHANNEL);
         saiConfig.syncMode    = kSAI_ModeAsync;
         saiConfig.masterSlave = kSAI_Master;
@@ -229,13 +234,12 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     SAI_TransferTerminateSendEDMA(DEMO_SAI, &pcm->saiTxHandle);
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &pcmHandle.saiTxHandle, &saiConfig);
     /* set bit clock divider */
-    SAI_TxSetBitClockRate(DEMO_SAI, masterClockHz, _pcm_map_sample_rate(sample_rate), _pcm_map_word_width(bit_width),
-                          pcm->num_channels);
+    SAI_TxSetBitClockRate(DEMO_SAI, masterClockHz, _pcm_map_sample_rate(sample_rate),
+                          _pcm_map_word_width(pcm->bit_width), pcm->num_channels);
     /* Enable SAI transmit and FIFO error interrupts. */
     SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
 
-    CODEC_SetMute(&codecHandle, ~0U, true);
-
+    streamer_pcm_set_volume(pcm, 0);
     BOARD_CodecChangeSettings(pcm->num_channels);
     CODEC_SetFormat(&codecHandle, masterClockHz, format.sampleRate_Hz, format.bitWidth);
 
@@ -260,10 +264,29 @@ int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)
 
 int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume)
 {
+    int channel;
+
+    switch (pcm->num_channels)
+    {
+        case 0:
+            return 0;
+        case 1:
+            channel = kCODEC_PlayChannelHeadphoneLeft;
+            break;
+        case 2:
+            channel = kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight;
+            break;
+        case 8:
+            /* Intentional fall */
+        default:
+            channel = ~0U;
+            break;
+    }
+
     if (volume <= 0)
         CODEC_SetMute(&codecHandle, ~0U, true);
     else
-        CODEC_SetVolume(&codecHandle, ~0U, volume > CODEC_VOLUME_MAX_VALUE ? CODEC_VOLUME_MAX_VALUE : volume);
+        CODEC_SetVolume(&codecHandle, channel, volume > CODEC_VOLUME_MAX_VALUE ? CODEC_VOLUME_MAX_VALUE : volume);
 
     return 0;
 }
@@ -302,33 +325,34 @@ int streamer_set_master_clock(int sample_rate)
         case 12000:
         case 24000:
         {
-            divider = 63;
+            divider = 15;
             break;
         }
         case 8000:
         {
-            predivider = 1;
+            divider = 23;
+            break;
         }
         case 16000:
         {
-            divider = 47;
+            divider = 11;
             break;
         }
         case 32000:
         {
-            divider = 23;
+            divider = 5;
             break;
         }
         case 96000:
         {
-            divider = 15;
+            divider = 3;
             break;
         }
         case 22050:
         case 44100:
         case 48000:
         default:
-            divider = 31;
+            divider = 7;
             break;
     }
 

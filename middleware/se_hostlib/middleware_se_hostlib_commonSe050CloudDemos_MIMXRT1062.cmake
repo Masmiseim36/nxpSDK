@@ -1,8 +1,8 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_se_hostlib_commonSe050CloudDemos component is included.")
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/sss/inc
     ${CMAKE_CURRENT_LIST_DIR}/sss/ex/inc
     ${CMAKE_CURRENT_LIST_DIR}/sss/port/ksdk
@@ -13,7 +13,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/hostlib/hostLib/libCommon/log
     ${CMAKE_CURRENT_LIST_DIR}/hostlib/hostLib/mbedtls/inc
     ${CMAKE_CURRENT_LIST_DIR}/demos/ksdk/common/https_client
-    ${CMAKE_CURRENT_LIST_DIR}/demos/ksdk/common/freertos/boards/evkmimxrt1060
 )
 
 include(middleware_se_hostlib_commonSe050_MIMXRT1062)

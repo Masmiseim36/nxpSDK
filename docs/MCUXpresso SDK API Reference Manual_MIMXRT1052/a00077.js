@@ -1,10 +1,10 @@
 var a00077 =
 [
-    [ "trng_statistical_check_limit_t", "a00077.html#a00522", [
+    [ "trng_statistical_check_limit_t", "a00077.html#a00521", [
       [ "maximum", "a00077.html#a8ab9b19ce415bf6823de58a1bbf6cb66", null ],
       [ "minimum", "a00077.html#aa3400c3e1329406d70f62165f8e4c4f0", null ]
     ] ],
-    [ "trng_config_t", "a00077.html#a00521", [
+    [ "trng_config_t", "a00077.html#a00520", [
       [ "lock", "a00077.html#a5350c101fa633dcebef81476a2ca81b2", null ],
       [ "clockMode", "a00077.html#a2f0603394bb7074023fe0f42b36cd235", null ],
       [ "ringOscDiv", "a00077.html#a14de599122f62cc47ab0beed10940e06", null ],

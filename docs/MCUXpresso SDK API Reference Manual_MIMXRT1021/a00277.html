@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</title>
+<title>MCUXpresso SDK API Reference Manual: SDMMC HOST Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,52 +101,15 @@ $(document).ready(function(){initNavTree('a00277.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</div>  </div>
+<div class="title">SDMMC HOST Driver<div class="ingroups"><a class="el" href="a00276.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides drivers to access the Secure Digital Card(up to v3.0), Embedded MultiMedia Card(up to v5.0) and sdio card(up to v3.0) based on the SDHC/USDHC/SDIF driver. Here is a simple block diagram about the drivers:</p>
-<pre class="fragment">                ---------------------------
-                |       Application       |
-                ---------------------------
-                            |
-                            v
-                ---------------------------
-                |       Card driver       |
-                ---------------------------
-                            |
-                            v
-                ------------- -------------
-                |host driver| |OSA adapter|
-                ------------- -------------
-                            |
-                            v
-                ----------------------------
-                |  host controller driver  |
-                ----------------------------
-                            |
-                            v
-                ----------------------------
-                |host controller peripheral|
-                ----------------------------
-                            |
-                            v
-                ----------------------------
-                |          card            |
-                ----------------------------</pre> <table class="memberdecls">
+<p>The host adapter driver provide adapter for blocking/non_blocking mode. </p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00050"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html">MMC Card Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00059"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html">SD Card Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00060"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html">SDIO Card Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00049"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html">SDMMC Common</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00278"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html">SDMMC HOST Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00061"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html">SDMMC OSA</a></td></tr>
+<tr class="memitem:a00062"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00062.html">USDHC HOST adapter Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

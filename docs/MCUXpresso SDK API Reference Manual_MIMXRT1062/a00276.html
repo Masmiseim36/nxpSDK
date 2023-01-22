@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C FreeRTOS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPI2C CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,151 +99,100 @@ $(document).ready(function(){initNavTree('a00276.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LPI2C FreeRTOS Driver<div class="ingroups"><a class="el" href="a00275.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">LPI2C CMSIS Driver<div class="ingroups"><a class="el" href="a00274.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gabe1b685d26560cdb8a3eccf81d013a3f">FSL_LPI2C_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td></tr>
-<tr class="memdesc:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C FreeRTOS driver version.  <a href="#gabe1b685d26560cdb8a3eccf81d013a3f">More...</a><br/></td></tr>
-<tr class="separator:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-LPI2C RTOS Operation</h2></td></tr>
-<tr class="memitem:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c">LPI2C_RTOS_Init</a> (lpi2c_rtos_handle_t *handle, LPI2C_Type *base, const <a class="el" href="a00044.html#a00433">lpi2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
-<tr class="memdesc:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes LPI2C.  <a href="#ga537a8859c9c83c8a8ccf6e0188cc8b5c">More...</a><br/></td></tr>
-<tr class="separator:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gacacb0612bfdcd7913be1cef8ad19fb9c">LPI2C_RTOS_Deinit</a> (lpi2c_rtos_handle_t *handle)</td></tr>
-<tr class="memdesc:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the LPI2C.  <a href="#gacacb0612bfdcd7913be1cef8ad19fb9c">More...</a><br/></td></tr>
-<tr class="separator:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5359e4f864d7f21eebcab8d3229e963"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gab5359e4f864d7f21eebcab8d3229e963">LPI2C_RTOS_Transfer</a> (lpi2c_rtos_handle_t *handle, lpi2c_master_transfer_t *transfer)</td></tr>
-<tr class="memdesc:gab5359e4f864d7f21eebcab8d3229e963"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs I2C transfer.  <a href="#gab5359e4f864d7f21eebcab8d3229e963">More...</a><br/></td></tr>
-<tr class="separator:gab5359e4f864d7f21eebcab8d3229e963"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gabe1b685d26560cdb8a3eccf81d013a3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_LPI2C_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga537a8859c9c83c8a8ccf6e0188cc8b5c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Init </td>
-          <td>(</td>
-          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00044.html#a00433">lpi2c_master_config_t</a> *&#160;</td>
-          <td class="paramname"><em>masterConfig</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the LPI2C module and related RTOS context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle, the pointer to an allocated space for RTOS context. </td></tr>
-    <tr><td class="paramname">base</td><td>The pointer base address of the LPI2C instance to initialize. </td></tr>
-    <tr><td class="paramname">masterConfig</td><td>Configuration structure to set-up LPI2C in master mode. </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>Frequency of input clock of the LPI2C module. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gacacb0612bfdcd7913be1cef8ad19fb9c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the LPI2C module and related RTOS context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab5359e4f864d7f21eebcab8d3229e963"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Transfer </td>
-          <td>(</td>
-          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lpi2c_master_transfer_t *&#160;</td>
-          <td class="paramname"><em>transfer</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function performs an I2C transfer using LPI2C module according to data given in the transfer structure.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle. </td></tr>
-    <tr><td class="paramname">transfer</td><td>Structure specifying the transfer parameters. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This section describes the programming interface of the LPI2C Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<p>The LPI2C CMSIS driver includes transactional APIs.</p>
+<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
+<h1><a class="anchor" id="LPI2CCMSISDriver"></a>
+LPI2C CMSIS Driver</h1>
+<h2><a class="anchor" id="LPI2CMasterOpsTransIRQ"></a>
+Master Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    {</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"><span class="comment">/*Init I2C0*/</span></div>
+<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
+<div class="line"></div>
+<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*config transmit speed*/</span></div>
+<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*start transmit*/</span></div>
+<div class="line">Driver_I2C0.MasterTransmit(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="LPI2CMasterOpsTransDMA"></a>
+Master Operation in DMA transactional method</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/*  Transfer done */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    {</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* DMAMux init and EDMA init. */</span></div>
+<div class="line"><a class="code" href="a00268.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(EXAMPLE_LPI2C_DMAMUX_BASEADDR);</div>
+<div class="line"><a class="code" href="a00021.html#a00370">edma_config_t</a> edmaConfig;</div>
+<div class="line"><a class="code" href="a00021.html#ga9851dc5addd6a1fc557bfdb625aa5c19">EDMA_GetDefaultConfig</a>(&amp;edmaConfig);</div>
+<div class="line"><a class="code" href="a00021.html#gaf7588eb4b54499f0f55c698bd98bc1bb">EDMA_Init</a>(EXAMPLE_LPI2C_DMA_BASEADDR, &amp;edmaConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*Init I2C0*/</span></div>
+<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
+<div class="line"></div>
+<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*config transmit speed*/</span></div>
+<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*start transfer*/</span></div>
+<div class="line">Driver_I2C0.MasterReceive(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="LPI2CSlaveOpsTransIRQ"></a>
+Slave Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_SlaveSignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/*  Transfer done */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    {</div>
+<div class="line">        g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*Init I2C1*/</span></div>
+<div class="line">Driver_I2C1.Initialize(I2C_SlaveSignalEvent_t);</div>
+<div class="line"></div>
+<div class="line">Driver_I2C1.PowerControl(ARM_POWER_FULL);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*config slave addr*/</span></div>
+<div class="line">Driver_I2C1.Control(ARM_I2C_OWN_ADDRESS, I2C_MASTER_SLAVE_ADDR);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*start transfer*/</span></div>
+<div class="line">Driver_I2C1.SlaveReceive(g_slave_buff, I2C_DATA_LENGTH);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

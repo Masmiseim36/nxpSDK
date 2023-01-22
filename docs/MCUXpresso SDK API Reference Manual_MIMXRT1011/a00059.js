@@ -1,7 +1,7 @@
 var a00059 =
 [
     [ "SPDIF eDMA Driver", "a00060.html", "a00060" ],
-    [ "spdif_config_t", "a00059.html#a00377", [
+    [ "spdif_config_t", "a00059.html#a00376", [
       [ "isTxAutoSync", "a00059.html#aa62aab66a7b03f444074a6abab83294c", null ],
       [ "isRxAutoSync", "a00059.html#a8e7a4d603d3fdbca6d204c21a9729384", null ],
       [ "DPLLClkSource", "a00059.html#a51dfc55f76c63adbb2956c9be1802fab", null ],
@@ -13,13 +13,13 @@ var a00059 =
       [ "validityConfig", "a00059.html#a662ae617d9706faedff59b4e7ebfc563", null ],
       [ "gain", "a00059.html#af2eeb1f3e4a229d81b00a2e293bd5b8f", null ]
     ] ],
-    [ "spdif_transfer_t", "a00059.html#a00379", [
+    [ "spdif_transfer_t", "a00059.html#a00378", [
       [ "data", "a00059.html#aafa6dcdb00a7953d3368916ec776f3f2", null ],
       [ "qdata", "a00059.html#a3f670504281a0bf4ee74d831d965b1c2", null ],
       [ "udata", "a00059.html#a547ec34f70b0c0b803a212301b0e9bbc", null ],
       [ "dataSize", "a00059.html#ae44eb4e4b3141f9478e4b35a9bae8af3", null ]
     ] ],
-    [ "spdif_handle_t", "a00059.html#a00266", [
+    [ "spdif_handle_t", "a00059.html#a00265", [
       [ "state", "a00059.html#a530888b8eb6d5b6383ac803ef5687cac", null ],
       [ "callback", "a00059.html#ae6a348888f71f09a0a2167064b627fef", null ],
       [ "userData", "a00059.html#a453888e826bebbf6d3cefbc1d5c37aa2", null ],

@@ -1,6 +1,6 @@
 var a00054 =
 [
-    [ "ocotp_timing_t", "a00054.html#a00448", [
+    [ "ocotp_timing_t", "a00054.html#a00447", [
       [ "wait", "a00054.html#acd8c4f8763dcb388f62bfa50d6e97a64", null ],
       [ "relax", "a00054.html#a9fea8ef8e47c7341a275e2dae68efa0e", null ],
       [ "strobe_prog", "a00054.html#a8e99b30121ba46182baae7906e68ca21", null ],

@@ -1,16 +1,16 @@
 var a00053 =
 [
-    [ "notifier_notification_block_t", "a00053.html#a00447", [
+    [ "notifier_notification_block_t", "a00053.html#a00446", [
       [ "targetConfig", "a00053.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa", null ],
       [ "policy", "a00053.html#a26aef2519eb2f9990e04f2ce961dfc9b", null ],
       [ "notifyType", "a00053.html#a2ca3b1a52e315e072a8ab48fcc1dd62a", null ]
     ] ],
-    [ "notifier_callback_config_t", "a00053.html#a00445", [
+    [ "notifier_callback_config_t", "a00053.html#a00444", [
       [ "callback", "a00053.html#a116c9dd621ffc21178e769edbd9192e4", null ],
       [ "callbackType", "a00053.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec", null ],
       [ "callbackData", "a00053.html#a4e7db701bbf36647da1e6d0f0efe2ebf", null ]
     ] ],
-    [ "notifier_handle_t", "a00053.html#a00446", [
+    [ "notifier_handle_t", "a00053.html#a00445", [
       [ "configsTable", "a00053.html#a8fd95d668f17b8a7705e2a4ff49f2e16", null ],
       [ "configsNumber", "a00053.html#a59bdd44c33254cfd4626f5906d3c0a7a", null ],
       [ "callbacksTable", "a00053.html#a423480d080ea2580628222dc6c492735", null ],

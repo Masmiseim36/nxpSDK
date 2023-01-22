@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lwip_httpssrv_mbedTLS_bm)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME lwip_httpssrv_mbedTLS_bm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -45,7 +51,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
@@ -58,26 +64,24 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../components/phy/mdio/enet
-    ${ProjDirPath}/../../../../../../components/phy/device/phyksz8081
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042/drivers
-    ${ProjDirPath}/../../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../components/phy
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042/utilities
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1042/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/components/phy/device/phyksz8081
+    ${SdkRootDirPath}/devices/MIMXRT1042/drivers
+    ${SdkRootDirPath}/middleware/mbedtls
+    ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/components/phy
+    ${SdkRootDirPath}/components/silicon_id
+    ${SdkRootDirPath}/components/silicon_id/socs/rt10xx
+    ${SdkRootDirPath}/devices/MIMXRT1042
+    ${SdkRootDirPath}/devices/MIMXRT1042/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1042/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1040/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
-include(driver_mdio-enet_MIMXRT1042)
-
 include(driver_phy-device-ksz8081_MIMXRT1042)
 
 include(driver_trng_MIMXRT1042)
@@ -92,8 +96,6 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1042)
 
 include(middleware_mbedtls_rt_MIMXRT1042)
 
-include(middleware_lwip_apps_httpd_MIMXRT1042)
-
 include(middleware_lwip_enet_ethernetif_MIMXRT1042)
 
 include(middleware_lwip_MIMXRT1042)
@@ -102,9 +104,15 @@ include(driver_phy-common_MIMXRT1042)
 
 include(driver_enet_MIMXRT1042)
 
-include(driver_clock_MIMXRT1042)
+include(component_silicon_id_MIMXRT1042)
 
 include(driver_common_MIMXRT1042)
+
+include(component_silicon_id_rt10xx_MIMXRT1042)
+
+include(middleware_lwip_apps_httpd_MIMXRT1042)
+
+include(driver_clock_MIMXRT1042)
 
 include(device_MIMXRT1042_CMSIS_MIMXRT1042)
 
@@ -132,10 +140,6 @@ include(driver_xip_device_MIMXRT1042)
 
 include(driver_xip_board_evkmimxrt1040_MIMXRT1042)
 
-include(component_silicon_id_MIMXRT1042)
-
-include(driver_mdio-common_MIMXRT1042)
-
 include(CMSIS_Include_core_cm_MIMXRT1042)
 
 include(middleware_lwip_apps_httpd_support_MIMXRT1042)
@@ -145,15 +149,13 @@ include(utilities_misc_utilities_MIMXRT1042)
 include(device_MIMXRT1042_system_MIMXRT1042)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

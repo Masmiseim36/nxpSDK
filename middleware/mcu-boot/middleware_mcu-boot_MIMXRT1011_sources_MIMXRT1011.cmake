@@ -21,7 +21,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1011/src
     ${CMAKE_CURRENT_LIST_DIR}/src/bootloader
     ${CMAKE_CURRENT_LIST_DIR}/src/memory/src

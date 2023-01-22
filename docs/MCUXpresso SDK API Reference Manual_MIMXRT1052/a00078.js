@@ -1,6 +1,6 @@
 var a00078 =
 [
-    [ "tsc_config_t", "a00078.html#a00523", [
+    [ "tsc_config_t", "a00078.html#a00522", [
       [ "enableAutoMeasure", "a00078.html#a7b0a4cf8822101c093825a56db3fd448", null ],
       [ "measureDelayTime", "a00078.html#aec23bf547c79341a69eb78ca2fe19640", null ],
       [ "prechargeTime", "a00078.html#a6e0547b1eb74931522ffe3829462ba03", null ],

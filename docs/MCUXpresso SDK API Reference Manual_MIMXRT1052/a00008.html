@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.13.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -119,19 +119,19 @@ Hardware trigger Configuration</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00332"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00332">adc_etc_config_t</a></td></tr>
-<tr class="memdesc:a00332"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC configuration.  <a href="a00008.html#a00332">More...</a><br/></td></tr>
+<tr class="memitem:a00331"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00331">adc_etc_config_t</a></td></tr>
+<tr class="memdesc:a00331"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC configuration.  <a href="a00008.html#a00331">More...</a><br/></td></tr>
+<tr class="separator:a00331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00332"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00332">adc_etc_trigger_chain_config_t</a></td></tr>
+<tr class="memdesc:a00332"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger chain configuration.  <a href="a00008.html#a00332">More...</a><br/></td></tr>
 <tr class="separator:a00332"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00333"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00333">adc_etc_trigger_chain_config_t</a></td></tr>
-<tr class="memdesc:a00333"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger chain configuration.  <a href="a00008.html#a00333">More...</a><br/></td></tr>
+<tr class="memitem:a00333"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00333">adc_etc_trigger_config_t</a></td></tr>
+<tr class="memdesc:a00333"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger configuration.  <a href="a00008.html#a00333">More...</a><br/></td></tr>
 <tr class="separator:a00333"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00334"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00334">adc_etc_trigger_config_t</a></td></tr>
-<tr class="memdesc:a00334"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger configuration.  <a href="a00008.html#a00334">More...</a><br/></td></tr>
-<tr class="separator:a00334"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gabb13030471759f06c35f462ed2674023"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gabb13030471759f06c35f462ed2674023">FSL_ADC_ETC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
+<tr class="memitem:gabb13030471759f06c35f462ed2674023"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gabb13030471759f06c35f462ed2674023">FSL_ADC_ETC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
 <tr class="memdesc:gabb13030471759f06c35f462ed2674023"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC driver version.  <a href="#gabb13030471759f06c35f462ed2674023">More...</a><br/></td></tr>
 <tr class="separator:gabb13030471759f06c35f462ed2674023"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafcf58ac176e14d5434d45f3999f46a5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gafcf58ac176e14d5434d45f3999f46a5c">ADC_ETC_DMA_CTRL_TRGn_REQ_MASK</a>&#160;&#160;&#160;0xFF0000U</td></tr>
@@ -155,19 +155,19 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization</h2></td></tr>
-<tr class="memitem:gac035c4e4918763d2a3c161bfc967c672"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gac035c4e4918763d2a3c161bfc967c672">ADC_ETC_Init</a> (ADC_ETC_Type *base, const <a class="el" href="a00008.html#a00332">adc_etc_config_t</a> *config)</td></tr>
+<tr class="memitem:gac035c4e4918763d2a3c161bfc967c672"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gac035c4e4918763d2a3c161bfc967c672">ADC_ETC_Init</a> (ADC_ETC_Type *base, const <a class="el" href="a00008.html#a00331">adc_etc_config_t</a> *config)</td></tr>
 <tr class="memdesc:gac035c4e4918763d2a3c161bfc967c672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ADC_ETC module.  <a href="#gac035c4e4918763d2a3c161bfc967c672">More...</a><br/></td></tr>
 <tr class="separator:gac035c4e4918763d2a3c161bfc967c672"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd8e32731410e71c6f25bac9a30bdb73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gafd8e32731410e71c6f25bac9a30bdb73">ADC_ETC_Deinit</a> (ADC_ETC_Type *base)</td></tr>
 <tr class="memdesc:gafd8e32731410e71c6f25bac9a30bdb73"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-Initialize the ADC_ETC module.  <a href="#gafd8e32731410e71c6f25bac9a30bdb73">More...</a><br/></td></tr>
 <tr class="separator:gafd8e32731410e71c6f25bac9a30bdb73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gadbcb45c28030d9a31d33f7686fa36dc5">ADC_ETC_GetDefaultConfig</a> (<a class="el" href="a00008.html#a00332">adc_etc_config_t</a> *config)</td></tr>
+<tr class="memitem:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gadbcb45c28030d9a31d33f7686fa36dc5">ADC_ETC_GetDefaultConfig</a> (<a class="el" href="a00008.html#a00331">adc_etc_config_t</a> *config)</td></tr>
 <tr class="memdesc:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for the ADC_ETC's configuration.  <a href="#gadbcb45c28030d9a31d33f7686fa36dc5">More...</a><br/></td></tr>
 <tr class="separator:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97ee7c65c9e858f6654b54cd76f65652"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga97ee7c65c9e858f6654b54cd76f65652">ADC_ETC_SetTriggerConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, const <a class="el" href="a00008.html#a00334">adc_etc_trigger_config_t</a> *config)</td></tr>
+<tr class="memitem:ga97ee7c65c9e858f6654b54cd76f65652"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga97ee7c65c9e858f6654b54cd76f65652">ADC_ETC_SetTriggerConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, const <a class="el" href="a00008.html#a00333">adc_etc_trigger_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga97ee7c65c9e858f6654b54cd76f65652"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the external XBAR trigger configuration.  <a href="#ga97ee7c65c9e858f6654b54cd76f65652">More...</a><br/></td></tr>
 <tr class="separator:ga97ee7c65c9e858f6654b54cd76f65652"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga3a1d60607b5579c7de1e725ae23d3f4c">ADC_ETC_SetTriggerChainConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, uint32_t chainGroup, const <a class="el" href="a00008.html#a00333">adc_etc_trigger_chain_config_t</a> *config)</td></tr>
+<tr class="memitem:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga3a1d60607b5579c7de1e725ae23d3f4c">ADC_ETC_SetTriggerChainConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, uint32_t chainGroup, const <a class="el" href="a00008.html#a00332">adc_etc_trigger_chain_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the external XBAR trigger chain configuration.  <a href="#ga3a1d60607b5579c7de1e725ae23d3f4c">More...</a><br/></td></tr>
 <tr class="separator:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad5152374108498e580fc013b6179b34b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gad5152374108498e580fc013b6179b34b">ADC_ETC_GetInterruptStatusFlags</a> (ADC_ETC_Type *base, <a class="el" href="a00008.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a> sourceIndex)</td></tr>
@@ -199,7 +199,7 @@ Initialization</h2></td></tr>
 <tr class="separator:ga73f01f54a321d280e18be0fcbf4075a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00332" id="a00332"></a>
+<a name="a00331" id="a00331"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -211,7 +211,7 @@ Initialization</h2></td></tr>
 <div class="textblock"></div>
 </div>
 </div>
-<a name="a00333" id="a00333"></a>
+<a name="a00332" id="a00332"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -223,7 +223,7 @@ Initialization</h2></td></tr>
 <div class="textblock"></div>
 </div>
 </div>
-<a name="a00334" id="a00334"></a>
+<a name="a00333" id="a00333"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -241,7 +241,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_ADC_ETC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td>
+          <td class="memname">#define FSL_ADC_ETC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -275,7 +275,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00332">adc_etc_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#a00331">adc_etc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -324,7 +324,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="memname">void ADC_ETC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00008.html#a00332">adc_etc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00008.html#a00331">adc_etc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -367,7 +367,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00334">adc_etc_trigger_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#a00333">adc_etc_trigger_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -413,7 +413,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00333">adc_etc_trigger_chain_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#a00332">adc_etc_trigger_chain_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>

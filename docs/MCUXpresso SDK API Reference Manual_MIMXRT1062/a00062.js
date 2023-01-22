@@ -1,6 +1,6 @@
 var a00062 =
 [
-    [ "sai_edma_handle_t", "a00062.html#a00473", [
+    [ "sai_edma_handle_t", "a00062.html#a00472", [
       [ "dmaHandle", "a00062.html#ac754f63e6faf24815240a7677eb4a908", null ],
       [ "nbytes", "a00062.html#a061d53e53af802d59eca8bc3171297ce", null ],
       [ "bytesPerFrame", "a00062.html#a999a7493ad74199568fa0ae9a1daba82", null ],

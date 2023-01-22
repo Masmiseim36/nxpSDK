@@ -19,8 +19,8 @@ var searchData=
   ['serial_5fmanager_5ftype_5ft',['serial_manager_type_t',['../a00054.html#ga7799e0e52d9e9fe5bf5198f0a337331d',1,'fsl_component_serial_manager.h']]],
   ['serial_5fport_5fswo_5fprotocol_5ft',['serial_port_swo_protocol_t',['../a00055.html#gab72244db50e88efd6d079d157558932d',1,'fsl_component_serial_port_swo.h']]],
   ['serial_5fport_5ftype_5ft',['serial_port_type_t',['../a00054.html#ga103db7d7f3fc8234978efadef0fdaf80',1,'fsl_component_serial_manager.h']]],
-  ['serial_5fport_5fuart_5fparity_5fmode_5ft',['serial_port_uart_parity_mode_t',['../a00246.html#ga89a4bbed0c24cfe5e085194add680ccc',1,'fsl_component_serial_port_uart.h']]],
-  ['serial_5fport_5fuart_5fstop_5fbit_5fcount_5ft',['serial_port_uart_stop_bit_count_t',['../a00246.html#ga8bdf0213026f54fd54c21971e07f2d56',1,'fsl_component_serial_port_uart.h']]],
+  ['serial_5fport_5fuart_5fparity_5fmode_5ft',['serial_port_uart_parity_mode_t',['../a00245.html#ga89a4bbed0c24cfe5e085194add680ccc',1,'fsl_component_serial_port_uart.h']]],
+  ['serial_5fport_5fuart_5fstop_5fbit_5fcount_5ft',['serial_port_uart_stop_bit_count_t',['../a00245.html#ga8bdf0213026f54fd54c21971e07f2d56',1,'fsl_component_serial_port_uart.h']]],
   ['serial_5fport_5fusb_5fcdc_5fcontroller_5findex_5ft',['serial_port_usb_cdc_controller_index_t',['../a00056.html#ga0d579054cbf9827f77f7018cd6f84c29',1,'fsl_component_serial_port_usb.h']]],
   ['sgtl_5fmodule_5ft',['sgtl_module_t',['../a00057.html#gaf78d5250d200a4cc76a60dcff249a4d3',1,'fsl_sgtl5000.h']]],
   ['sgtl_5fprotocol_5ft',['sgtl_protocol_t',['../a00057.html#ga9bd346f7776a687fe345e336127e5426',1,'fsl_sgtl5000.h']]],
@@ -43,5 +43,5 @@ var searchData=
   ['spdif_5ftxempty_5fselect_5ft',['spdif_txempty_select_t',['../a00061.html#gad58b90afceef70798b8be683f3017c71',1,'fsl_spdif.h']]],
   ['spdif_5fuchannel_5fsource_5ft',['spdif_uchannel_source_t',['../a00061.html#ga01edc35977dbab89a7201285c61c4a3e',1,'fsl_spdif.h']]],
   ['spdif_5fvalidity_5fconfig_5ft',['spdif_validity_config_t',['../a00061.html#gad5615c4913a612ee1dc67e357e905f2c',1,'fsl_spdif.h']]],
-  ['src_5fwarm_5freset_5fbypass_5fcount_5ft',['src_warm_reset_bypass_count_t',['../a00235.html#ga5b40161d6cf7c90a651afd9047b6bedd',1,'fsl_src.h']]]
+  ['src_5fwarm_5freset_5fbypass_5fcount_5ft',['src_warm_reset_bypass_count_t',['../a00234.html#ga5b40161d6cf7c90a651afd9047b6bedd',1,'fsl_src.h']]]
 ];

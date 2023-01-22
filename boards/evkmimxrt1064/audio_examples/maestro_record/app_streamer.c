@@ -10,9 +10,12 @@
 
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
-#include "logging.h"
+#include "maestro_logging.h"
 #ifdef VIT_PROC
 #include "vit_proc.h"
+#endif
+#ifdef VOICE_SEEKER_PROC
+#include "voice_seeker.h"
 #endif
 #include "app_definitions.h"
 
@@ -171,60 +174,6 @@ void STREAMER_Stop(streamer_handle_t *handle)
     }
 }
 
-status_t STREAMER_Create(streamer_handle_t *handle)
-{
-    STREAMER_CREATE_PARAM params;
-    ELEMENT_PROPERTY_T prop;
-    osa_task_def_t thread_attr;
-    int ret;
-
-    OSA_MutexCreate(&audioMutex);
-    audioBuffer = ringbuf_create(AUDIO_BUFFER_SIZE);
-    if (!audioBuffer)
-    {
-        return kStatus_Fail;
-    }
-
-    /* Create message process thread */
-    thread_attr.tpriority = OSA_PRIORITY_NORMAL;
-    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
-    thread_attr.pthread   = &STREAMER_MessageTask;
-    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
-    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)handle);
-    if (KOSA_StatusSuccess != ret)
-    {
-        return kStatus_Fail;
-    }
-
-    /* Create streamer */
-    strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
-    params.stack_size    = STREAMER_TASK_STACK_SIZE;
-    params.pipeline_type = STREAM_PIPELINE_NETBUF;
-    params.task_name     = STREAMER_TASK_NAME;
-    params.in_dev_name   = "";
-    params.out_dev_name  = "";
-
-    handle->streamer = streamer_create(&params);
-    if (!handle->streamer)
-    {
-        return kStatus_Fail;
-    }
-
-    prop.prop = PROP_NETBUFSRC_SET_CALLBACK;
-    prop.val  = (uintptr_t)STREAMER_Read;
-
-    streamer_set_property(handle->streamer, prop, true);
-
-    prop.prop = PROP_DECODER_DECODER_TYPE;
-    prop.val  = DECODER_TYPE_MP3;
-
-    streamer_set_property(handle->streamer, prop, true);
-
-    handle->audioPlaying = false;
-
-    return kStatus_Success;
-}
-
 status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, char *file_name)
 {
     STREAMER_CREATE_PARAM params;
@@ -281,44 +230,59 @@ status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, cha
 #ifdef VIT_PROC
     if (params.pipeline_type == STREAM_PIPELINE_VIT)
     {
+#ifdef VOICE_SEEKER_PROC
+        EXT_PROCESS_DESC_T voice_seeker_proc = {VoiceSeeker_Initialize_func, VoiceSeeker_Execute_func,
+                                                VoiceSeeker_Deinit_func, NULL};
+
+        prop.prop = PROP_AUDIO_PROC_FUNCPTR;
+        prop.val  = (uintptr_t)&voice_seeker_proc;
+        streamer_set_property(handle->streamer, prop, true);
+
+        prop.prop = PROP_AUDIOSRC_SET_FRAME_MS;
+        prop.val  = 30;
+        streamer_set_property(handle->streamer, prop, true);
+
+#endif // VOICE_SEEKER_PROC
         EXT_PROCESS_DESC_T vit_proc = {VIT_Initialize_func, VIT_Execute_func, VIT_Deinit_func, &Vit_Language};
 
         prop.prop = PROP_VITSINK_FPOINT;
         prop.val  = (uintptr_t)&vit_proc;
-
         streamer_set_property(handle->streamer, prop, true);
-    }
+    } // STREAM_PIPELINE_VIT
 #else
     if (params.pipeline_type == STREAM_PIPELINE_VIT)
     {
         PRINTF("[STREAMER] VIT pipeline not available for this config\r\n switching to audio sink");
         params.pipeline_type = STREAM_PIPELINE_PCM;
     }
-#endif
-
-    prop.prop = PROP_AUDIOSRC_SET_SAMPLE_RATE;
-    prop.val  = 16000;
-
-    streamer_set_property(handle->streamer, prop, true);
+#endif // VIT_PROC
 
 #if (defined(PLATFORM_RT1170) || defined(PLATFORM_RT1160))
+    prop.prop = PROP_AUDIOSRC_SET_FRAME_MS;
+    prop.val  = 30;
+    streamer_set_property(handle->streamer, prop, true);
+
+    prop.prop = PROP_AUDIOSRC_SET_NUM_CHANNELS;
+    prop.val  = 2;
+    streamer_set_property(handle->streamer, prop, true);
+
     prop.prop = PROP_AUDIOSRC_SET_BITS_PER_SAMPLE;
     prop.val  = 32;
-
     streamer_set_property(handle->streamer, prop, true);
 #endif
 
 #if DEMO_CODEC_CS42448
     prop.prop = PROP_AUDIOSRC_SET_NUM_CHANNELS;
     prop.val  = 8;
-
     streamer_set_property(handle->streamer, prop, true);
 
     prop.prop = PROP_AUDIOSRC_SET_BITS_PER_SAMPLE;
     prop.val  = 32;
-
     streamer_set_property(handle->streamer, prop, true);
 #endif
+    prop.prop = PROP_AUDIOSRC_SET_SAMPLE_RATE;
+    prop.val  = 16000;
+    streamer_set_property(handle->streamer, prop, true);
 
     if (out_sink == FILE_SINK)
     {
@@ -328,7 +292,6 @@ status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, cha
 
         prop.prop = PROP_FILESINK_LOCATION;
         prop.val  = (uintptr_t)file_name_val;
-
         streamer_set_property(handle->streamer, prop, true);
     }
 

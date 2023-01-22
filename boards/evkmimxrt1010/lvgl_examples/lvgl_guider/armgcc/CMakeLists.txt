@@ -24,14 +24,20 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lvgl_guider)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME lvgl_guider.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../RTE_Device.h"
+"${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples/RTE_Device.h"
 "${ProjDirPath}/../lvgl_guider.c"
 "${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../pin_mux.c"
@@ -45,18 +51,22 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../generated/events_init.h"
 "${ProjDirPath}/../custom/custom.c"
 "${ProjDirPath}/../custom/custom.h"
+"${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples/lvgl_freertos.h"
+"${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples/lvgl_freertos.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../lvgl_support.h"
-"${ProjDirPath}/../../lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples/lvgl_support.h"
+"${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples/lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples/lvgl_demo_utils.h"
+"${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples/lvgl_demo_utils.c"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../..
+    ${SdkRootDirPath}/boards/evkmimxrt1010/lvgl_examples
     ${ProjDirPath}/../generated
     ${ProjDirPath}/../custom
     ${ProjDirPath}/../generated/guider_customer_fonts
@@ -64,21 +74,21 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/ili9341
-    ${ProjDirPath}/../../../../../components/ft6x06
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/cmsis_drivers
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../middleware/lvgl
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/utilities
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1011/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../CMSIS/Driver/Include
+    ${SdkRootDirPath}/components/ili9341
+    ${SdkRootDirPath}/components/ft6x06
+    ${SdkRootDirPath}/devices/MIMXRT1011/drivers
+    ${SdkRootDirPath}/devices/MIMXRT1011/cmsis_drivers
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/middleware/lvgl
+    ${SdkRootDirPath}/devices/MIMXRT1011
+    ${SdkRootDirPath}/devices/MIMXRT1011/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1011/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1010/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
+    ${SdkRootDirPath}/CMSIS/Driver/Include
 )
 
 # include modules
@@ -155,15 +165,13 @@ include(utilities_misc_utilities_MIMXRT1011)
 include(device_MIMXRT1011_system_MIMXRT1011)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

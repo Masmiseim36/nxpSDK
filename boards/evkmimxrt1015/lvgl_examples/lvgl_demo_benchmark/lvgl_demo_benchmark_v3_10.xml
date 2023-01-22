@@ -139,6 +139,7 @@
       <include_path path="../../../../middleware/lvgl/lvgl/examples/assets" project_relative_path="lvgl/lvgl/examples/assets" type="c_include"/>
       <include_path path="../../../../middleware/lvgl/lvgl/demos/stress/assets" project_relative_path="lvgl/lvgl/demos/stress/assets" type="c_include"/>
       <include_path path=".." project_relative_path="evkmimxrt1015/lvgl_examples/lvgl_demo_benchmark" type="c_include"/>
+      <include_path path=".." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -207,6 +208,14 @@
       <files mask="lv_font_bechmark_montserrat_16_compr_az.c.c"/>
       <files mask="lv_font_bechmark_montserrat_12_compr_az.c.c"/>
       <files mask="lv_font_bechmark_montserrat_28_compr_az.c.c"/>
+    </source>
+    <source path=".." project_relative_path="source" type="c_include">
+      <files mask="lvgl_freertos.h"/>
+      <files mask="lvgl_demo_utils.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="src">
+      <files mask="lvgl_freertos.c"/>
+      <files mask="lvgl_demo_utils.c"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>

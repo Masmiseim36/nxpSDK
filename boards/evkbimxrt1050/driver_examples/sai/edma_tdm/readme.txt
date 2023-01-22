@@ -6,10 +6,10 @@ In this example, one sai instance playbacks the audio data stored in the sdcard 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================
@@ -37,6 +37,7 @@ J1-10                     ->          5v
 J1-13                     ->          I2C1_SCL(scl)
 J1-15                     ->          I2C1_SDA(sda)
 J1-1                      ->          SAI1_MCLK(MCLK)
+J1-7                      ->          J22 pin7(codec reset)
 
 Prepare the Demo
 ================

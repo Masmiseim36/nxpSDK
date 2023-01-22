@@ -18,7 +18,6 @@
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_gpt.h"
-#include "fsl_enet_mdio.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_debug_console.h"
 
@@ -33,7 +32,6 @@
 #include "ethercatprint.h"
 #include "enet/soem_enet.h"
 #include "soem_port.h"
-
 
 /*******************************************************************************
  * Definitions
@@ -54,10 +52,10 @@
 #define OSAL_TIMER_CLK_FREQ   CLOCK_GetFreq(kCLOCK_PerClk)
 
 
-#define NUM_1M              (1000000UL)
-#define SOEM_PERIOD         NUM_1M  /* 1 second */
+#define NUM_1M      (1000000UL)
+#define SOEM_PERIOD NUM_1M /* 1 second */
 
-#define OSEM_PORT_NAME      "enet0"
+#define OSEM_PORT_NAME "enet0"
 
 #define ENET_RXBD_NUM (4)
 #define ENET_TXBD_NUM (4)
@@ -71,13 +69,11 @@
 
 static struct enet_if_port if_port;
 
-static uint32_t timer_irq_period = 0;  /* unit: microsecond*/
+static uint32_t timer_irq_period = 0; /* unit: microsecond*/
 
-volatile struct timeval system_time_base =
-    {
-        .tv_sec = 0,
-        .tv_usec = 0
-    };
+volatile struct timeval system_time_base = {.tv_sec = 0, .tv_usec = 0};
+
+phy_ksz8081_resource_t phy_resource;
 
 
 /*! @brief Buffer descriptors should be in non-cacheable region and should be align to "ENET_BUFF_ALIGNMENT". */
@@ -88,10 +84,12 @@ AT_NONCACHEABLE_SECTION_ALIGN(static enet_tx_bd_struct_t g_txBuffDescrip[ENET_TX
  * If use cacheable region, the alignment size should be the maximum size of "CACHE LINE SIZE" and "ENET_BUFF_ALIGNMENT"
  * If use non-cache region, the alignment size is the "ENET_BUFF_ALIGNMENT".
  */
-AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t g_rxDataBuff[ENET_RXBD_NUM][SDK_SIZEALIGN(ENET_RXBUFF_SIZE, ENET_BUFF_ALIGNMENT)],
-          ENET_BUFF_ALIGNMENT);
-AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t g_txDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, ENET_BUFF_ALIGNMENT)],
-          ENET_BUFF_ALIGNMENT);
+AT_NONCACHEABLE_SECTION_ALIGN(
+    static uint8_t g_rxDataBuff[ENET_RXBD_NUM][SDK_SIZEALIGN(ENET_RXBUFF_SIZE, ENET_BUFF_ALIGNMENT)],
+    ENET_BUFF_ALIGNMENT);
+AT_NONCACHEABLE_SECTION_ALIGN(
+    static uint8_t g_txDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, ENET_BUFF_ALIGNMENT)],
+    ENET_BUFF_ALIGNMENT);
 
 static enet_buffer_config_t buffConfig[] = {{
     ENET_RXBD_NUM,
@@ -109,11 +107,9 @@ static enet_buffer_config_t buffConfig[] = {{
 
 static char IOmap[100];
 
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Code
@@ -190,8 +186,8 @@ void osal_gettime(struct timeval *current_time)
 
     if (usec_again != usec_base)
     {
-        usec_base  = system_time_base.tv_usec;
-        cur_usec   = GPT_GetCurrentTimerCount(OSAL_TIMER);
+        usec_base = system_time_base.tv_usec;
+        cur_usec  = GPT_GetCurrentTimerCount(OSAL_TIMER);
     }
 
     current_time->tv_sec  = system_time_base.tv_sec;
@@ -200,18 +196,33 @@ void osal_gettime(struct timeval *current_time)
     return;
 }
 
+static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
+{
+    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
+}
+
+static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
+{
+    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
+}
+
 /* OSHW: register enet port to SOEM stack */
 static int if_port_init(void)
 {
+    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
+    ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
+    phy_resource.read  = MDIO_Read;
+    phy_resource.write = MDIO_Write;
+
     memset(&if_port, 0, sizeof(if_port));
-    if_port.mdioHandle.ops = &enet_ops;
-    if_port.phyHandle.ops  = &phyksz8081_ops;
-    if_port.bufferConfig   = buffConfig;
-    if_port.base           = ENET;
+    if_port.bufferConfig = buffConfig;
+    if_port.base         = ENET;
     /* The miiMode should be set according to the different PHY interfaces. */
-    if_port.mii_mode       = kENET_RmiiMode;
+    if_port.mii_mode                   = kENET_RmiiMode;
     if_port.phy_config.autoNeg         = true;
     if_port.phy_config.phyAddr         = 0x02U;
+    if_port.phy_config.resource        = &phy_resource;
+    if_port.phy_config.ops             = &phyksz8081_ops;
     if_port.srcClock_Hz                = CLOCK_GetFreq(kCLOCK_IpgClk);
     if_port.phy_autonego_timeout_count = PHY_AUTONEGO_TIMEOUT_COUNT;
     if_port.phy_stability_delay_us     = PHY_STABILITY_DELAY_US;
@@ -340,11 +351,7 @@ void control_task(char *ifname)
  */
 int main(void)
 {
-    gpio_pin_config_t gpio_config = {
-        kGPIO_DigitalOutput,
-        0,
-        kGPIO_NoIntmode
-    };
+    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
@@ -354,13 +361,9 @@ int main(void)
 
     IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
 
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    GPIO_PinInit(GPIO1, 10, &gpio_config);
-    /* pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 10, 1);
-    GPIO_WritePinOutput(GPIO1, 9, 0);
+    GPIO_PinInit(GPIO1, 4, &gpio_config);
     SDK_DelayAtLeastUs(NUM_1M, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
+    GPIO_WritePinOutput(GPIO1, 4, 1);
 
     PRINTF("Start the soem_gpio_pulse baremetal example...\r\n");
 

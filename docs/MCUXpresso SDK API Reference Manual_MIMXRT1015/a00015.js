@@ -1,17 +1,17 @@
 var a00015 =
 [
-    [ "da7212_pll_config_t", "a00015.html#a00294", [
+    [ "da7212_pll_config_t", "a00015.html#a00293", [
       [ "source", "a00015.html#a93d832a7b38ce0e5d35cf237ec2e00aa", null ],
       [ "refClock_HZ", "a00015.html#a582daa483484e1b8af88e38a7786a011", null ],
       [ "outputClock_HZ", "a00015.html#aa437baa5261123cd810488ac65e201dd", null ]
     ] ],
-    [ "da7212_audio_format_t", "a00015.html#a00291", [
+    [ "da7212_audio_format_t", "a00015.html#a00290", [
       [ "mclk_HZ", "a00015.html#ae3b11f4616fc011852a6f06e644c00d9", null ],
       [ "sampleRate", "a00015.html#ae6724afaf87a4ae3535217ae5dff41e9", null ],
       [ "bitWidth", "a00015.html#accbab6c50b115c5bf9baec30c8d98b64", null ],
       [ "isBclkInvert", "a00015.html#a19793f6a920f5ff213b39025f80e7a97", null ]
     ] ],
-    [ "da7212_config_t", "a00015.html#a00292", [
+    [ "da7212_config_t", "a00015.html#a00291", [
       [ "isMaster", "a00015.html#a63d48e3ee5e54914cc76eeff817c33b4", null ],
       [ "protocol", "a00015.html#ac0df2c7119a0c2e16db9c3bc18c399df", null ],
       [ "dacSource", "a00015.html#a29cfee6ec8bb4c99b6659686074dcc22", null ],
@@ -21,7 +21,7 @@ var a00015 =
       [ "sysClkSource", "a00015.html#a545d9de5fb4daa0eeea6e23ddab53e00", null ],
       [ "pll", "a00015.html#aece86acd54a2e5dc52e3216ddd7bc262", null ]
     ] ],
-    [ "da7212_handle_t", "a00015.html#a00293", [
+    [ "da7212_handle_t", "a00015.html#a00292", [
       [ "config", "a00015.html#aeb416840b7dddbcd19845c98aa307703", null ],
       [ "i2cHandle", "a00015.html#a7f081eba744a5ca041f6eeb00f3faaf5", null ]
     ] ],

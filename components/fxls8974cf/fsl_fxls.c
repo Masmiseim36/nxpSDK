@@ -115,9 +115,9 @@ status_t FXLS_ReadAccelData(fxls_handle_t *fxls_handle, fxls_accel_data_t *accel
     else
     {
         /* Get the X and Y data from the sensor data structure in 12 bit left format data*/
-        ((int16_t *)(void *)accelData)[0] = (int16_t)((uint16_t)((uint16_t)tmp_buff[1] << 8) | (uint16_t)tmp_buff[0]);
-        ((int16_t *)(void *)accelData)[1] = (int16_t)((uint16_t)((uint16_t)tmp_buff[3] << 8) | (uint16_t)tmp_buff[2]);
-        ((int16_t *)(void *)accelData)[2] = (int16_t)((uint16_t)((uint16_t)tmp_buff[5] << 8) | (uint16_t)tmp_buff[4]);
+        accelData->accelX = (int16_t)(uint16_t)(((uint16_t)tmp_buff[1] << 8) | (uint16_t)tmp_buff[0]);
+        accelData->accelY = (int16_t)(uint16_t)(((uint16_t)tmp_buff[3] << 8) | (uint16_t)tmp_buff[2]);
+        accelData->accelZ = (int16_t)(uint16_t)(((uint16_t)tmp_buff[5] << 8) | (uint16_t)tmp_buff[4]);
     }
 
     return status;

@@ -23,7 +23,7 @@ var searchData=
   ['bee_5fgetdefaultconfig',['BEE_GetDefaultConfig',['../a00010.html#gaeca7aeaa01f87978efc7c216cd7bb5e5',1,'fsl_bee.h']]],
   ['bee_5fgetstatusflags',['BEE_GetStatusFlags',['../a00010.html#ga68a9f0f1fd8f8db579c283db82e6c5f8',1,'fsl_bee.h']]],
   ['bee_5finit',['BEE_Init',['../a00010.html#ga3d52a4156aba0653ab32d8916ced6803',1,'fsl_bee.h']]],
-  ['bee_5fregion_5fconfig_5ft',['bee_region_config_t',['../a00010.html#a00280',1,'']]],
+  ['bee_5fregion_5fconfig_5ft',['bee_region_config_t',['../a00010.html#a00279',1,'']]],
   ['bee_5fregion_5ft',['bee_region_t',['../a00010.html#ga63e3de927c1695c23c7f488343af3068',1,'fsl_bee.h']]],
   ['bee_5fsecurity_5flevel',['bee_security_level',['../a00010.html#ga10a322940c530ebdfcbd3ed4e2dfc30a',1,'fsl_bee.h']]],
   ['bee_5fsetconfig',['BEE_SetConfig',['../a00010.html#ga9744f40ce0f27c8b6dcabce8fda252b5',1,'fsl_bee.h']]],

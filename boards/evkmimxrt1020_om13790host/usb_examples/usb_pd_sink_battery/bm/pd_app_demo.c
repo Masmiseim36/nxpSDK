@@ -11,7 +11,6 @@
 #include "usb_pd_i2c.h"
 #include "pd_app.h"
 #include "fsl_debug_console.h"
-#include "fsl_gpio.h"
 #include "pd_power_interface.h"
 #include "pd_board_config.h"
 #include "board.h"

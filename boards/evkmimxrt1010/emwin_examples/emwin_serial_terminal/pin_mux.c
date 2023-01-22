@@ -96,16 +96,16 @@ void LPSPI1_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_03_LPSPI1_SDI,           /* GPIO_AD_03 is configured as LPSPI1_SDI */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_04_LPSPI1_SDO,           /* GPIO_AD_04 is configured as LPSPI1_SDO */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_05_LPSPI1_PCS0,          /* GPIO_AD_05 is configured as LPSPI1_PCS0 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_06_LPSPI1_SCK,           /* GPIO_AD_06 is configured as LPSPI1_SCK */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_03_LPSPI1_SDI,           /* GPIO_AD_03 PAD functional properties : */
       0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
@@ -171,26 +171,26 @@ void LPI2C1_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 is configured as LPI2C1_SDA */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_02_LPI2C1_SCL,              /* GPIO_02 is configured as LPI2C1_SCL */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 PAD functional properties : */
-      0xD0B0U);                               /* Slew Rate Field: Slow Slew Rate
+      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: fast(150MHz)
-                                                 Open Drain Enable Field: Open Drain Disabled
+                                                 Open Drain Enable Field: Open Drain Enabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 22K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_02_LPI2C1_SCL,              /* GPIO_02 PAD functional properties : */
-      0xD0B0U);                               /* Slew Rate Field: Slow Slew Rate
+      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: fast(150MHz)
-                                                 Open Drain Enable Field: Open Drain Disabled
+                                                 Open Drain Enable Field: Open Drain Enabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 22K Ohm Pull Up

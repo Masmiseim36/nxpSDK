@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -481,6 +481,16 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
@@ -580,6 +590,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1171,6 +1191,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/SCROLLBAR_Private.h</FilePath>
             </File>
             <File>
+              <FileName>SCROLLER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/SCROLLER.h</FilePath>
+            </File>
+            <File>
+              <FileName>SCROLLER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/SCROLLER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>SEGGER.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/SEGGER.h</FilePath>
@@ -1234,6 +1264,16 @@
               <FileName>TREEVIEW_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>WHEEL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WHEEL.h</FilePath>
+            </File>
+            <File>
+              <FileName>WHEEL_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WHEEL_Private.h</FilePath>
             </File>
             <File>
               <FileName>WIDGET.h</FileName>
@@ -1373,28 +1413,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -1409,16 +1429,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1771,7 +1781,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1052;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1922,6 +1932,16 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
@@ -2021,6 +2041,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -2612,6 +2642,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/SCROLLBAR_Private.h</FilePath>
             </File>
             <File>
+              <FileName>SCROLLER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/SCROLLER.h</FilePath>
+            </File>
+            <File>
+              <FileName>SCROLLER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/SCROLLER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>SEGGER.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/SEGGER.h</FilePath>
@@ -2675,6 +2715,16 @@
               <FileName>TREEVIEW_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>WHEEL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WHEEL.h</FilePath>
+            </File>
+            <File>
+              <FileName>WHEEL_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WHEEL_Private.h</FilePath>
             </File>
             <File>
               <FileName>WIDGET.h</FileName>
@@ -2814,28 +2864,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -2850,16 +2880,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

@@ -1,6 +1,6 @@
 var a00061 =
 [
-    [ "tempmon_config_t", "a00061.html#a00380", [
+    [ "tempmon_config_t", "a00061.html#a00379", [
       [ "frequency", "a00061.html#a207108996ebfd8421548f96bd4d3afaf", null ],
       [ "highAlarmTemp", "a00061.html#a7d970f8778383bb43e202e1cb3d45691", null ],
       [ "panicAlarmTemp", "a00061.html#ad5fca8b29572f08204642e2ed8d9dbce", null ],

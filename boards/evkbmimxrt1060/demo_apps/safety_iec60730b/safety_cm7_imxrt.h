@@ -179,7 +179,6 @@ void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon,
                                            fs_dio_test_imx_t *pAdjPin,
                                            uint32_t PinValue);
 
-void SafetyAnalogTestInitialization(void);
 void SafetyAnalogTest(safety_common_t *psSafetyCommon);
 
 void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest, ram_test_t *psSafetyRamStackTest);

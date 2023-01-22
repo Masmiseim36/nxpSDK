@@ -38,6 +38,7 @@
 #define MWM_NETWORK_NOT_FOUND 382
 
 #define MWM_SOCKET_ERROR -700
+#define EAGAIN           11
 
 /* Device Configuration */
 /* Provisioning Configuration */

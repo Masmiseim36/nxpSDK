@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(log_freertos)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME log_freertos.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -41,24 +47,24 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1011/utilities
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../components/panic
-    ${ProjDirPath}/../../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1011/drivers
-    ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../components/log
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1011
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1011/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${SdkRootDirPath}/devices/MIMXRT1011/utilities
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/components/panic
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/devices/MIMXRT1011/drivers
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
+    ${SdkRootDirPath}/components/log
+    ${SdkRootDirPath}/devices/MIMXRT1011
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/devices/MIMXRT1011/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1010/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -117,15 +123,13 @@ include(utilities_misc_utilities_MIMXRT1011)
 include(device_MIMXRT1011_system_MIMXRT1011)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

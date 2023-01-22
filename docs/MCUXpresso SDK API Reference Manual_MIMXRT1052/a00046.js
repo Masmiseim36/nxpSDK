@@ -1,6 +1,6 @@
 var a00046 =
 [
-    [ "lpspi_master_config_t", "a00046.html#a00432", [
+    [ "lpspi_master_config_t", "a00046.html#a00431", [
       [ "baudRate", "a00046.html#a01254e88cf6feef124ab50f204f65c0f", null ],
       [ "bitsPerFrame", "a00046.html#afc83880a5e4d763e80cd757514c96167", null ],
       [ "cpol", "a00046.html#a3c540678d6c2cce2664ba89cc998a1e2", null ],
@@ -12,9 +12,10 @@ var a00046 =
       [ "whichPcs", "a00046.html#ac5514f7f0b043d78c956874d968c95f4", null ],
       [ "pcsActiveHighOrLow", "a00046.html#a7da7b2e2a9a0e959b0f4c5f7b1618c48", null ],
       [ "pinCfg", "a00046.html#a52fed669c402348f070df8322e4bc8b1", null ],
-      [ "dataOutConfig", "a00046.html#acc0422bcb70e685bb66f3a216aa66088", null ]
+      [ "dataOutConfig", "a00046.html#acc0422bcb70e685bb66f3a216aa66088", null ],
+      [ "enableInputDelay", "a00046.html#a1b0faf93c78ceb12d7e12dc036c930c0", null ]
     ] ],
-    [ "lpspi_slave_config_t", "a00046.html#a00433", [
+    [ "lpspi_slave_config_t", "a00046.html#a00432", [
       [ "bitsPerFrame", "a00046.html#a0f74a7ed1b4226f612a3785b07d09c86", null ],
       [ "cpol", "a00046.html#aea9800ee270ac89ec3deb4f2399a92a9", null ],
       [ "cpha", "a00046.html#ac5063bcaacbddbd5753ffe6a2df2a7df", null ],
@@ -24,13 +25,13 @@ var a00046 =
       [ "pinCfg", "a00046.html#ab1b812e03a9b2785efd4e9481c20730c", null ],
       [ "dataOutConfig", "a00046.html#af8879b89ada464a0d8b16c33639e87cf", null ]
     ] ],
-    [ "lpspi_transfer_t", "a00046.html#a00434", [
+    [ "lpspi_transfer_t", "a00046.html#a00433", [
       [ "txData", "a00046.html#ad05c41e2213388411ba65b74b2e296e8", null ],
       [ "rxData", "a00046.html#adcb9063db0070da8c7b2be3aad07a901", null ],
       [ "dataSize", "a00046.html#a00cc53b0e0d0013871c255e17a8fe9b0", null ],
       [ "configFlags", "a00046.html#acea70ac01d69df22aa840e5ed44f9c97", null ]
     ] ],
-    [ "lpspi_master_handle_t", "a00046.html#a00322", [
+    [ "lpspi_master_handle_t", "a00046.html#a00321", [
       [ "isPcsContinuous", "a00046.html#a9615ae8b8bdc4f2bd7d22b3b96d0ced4", null ],
       [ "writeTcrInIsr", "a00046.html#a088fc657556d03d009908496438a1e89", null ],
       [ "isByteSwap", "a00046.html#ae03069cfdcf680ee5fd81e077b81bc18", null ],
@@ -52,7 +53,7 @@ var a00046 =
       [ "callback", "a00046.html#aaa5468f579c64b865d2870a6e28608fb", null ],
       [ "userData", "a00046.html#ad06b10280d203a26ee97ad860360cb3b", null ]
     ] ],
-    [ "lpspi_slave_handle_t", "a00046.html#a00324", [
+    [ "lpspi_slave_handle_t", "a00046.html#a00323", [
       [ "isByteSwap", "a00046.html#aed92e8549294bcdf1ef261ce8f261983", null ],
       [ "fifoSize", "a00046.html#abd595c5df400d5761c3fe88624524bd7", null ],
       [ "rxWatermark", "a00046.html#a0edea4c3bad24d2dc0a0669ca6acc16c", null ],

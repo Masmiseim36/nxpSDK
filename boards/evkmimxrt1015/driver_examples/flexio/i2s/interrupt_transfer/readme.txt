@@ -7,9 +7,9 @@ In this example, flexio acts as I2S module to record data from codec line and pl
 Toolchain supported
 ===================
 - GCC ARM Embedded  10.3.1
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================

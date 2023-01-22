@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=1, DEBUG, CPU_MIMXRT1064DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -618,27 +618,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -660,6 +640,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -856,11 +846,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -874,16 +859,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1236,7 +1211,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1524,27 +1499,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -1566,6 +1521,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1762,11 +1727,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -1780,16 +1740,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2142,7 +2092,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1064DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2430,27 +2380,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -2472,6 +2402,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -2668,11 +2608,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -2686,16 +2621,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3048,7 +2973,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=0, NDEBUG, CPU_MIMXRT1064DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3336,27 +3261,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -3378,6 +3283,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -3574,11 +3489,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -3592,16 +3502,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -3954,7 +3854,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4242,27 +4142,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -4284,6 +4164,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -4480,11 +4370,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -4498,16 +4383,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4860,7 +4735,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1064DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5148,27 +5023,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -5190,6 +5045,16 @@
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -5386,11 +5251,6 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
@@ -5404,16 +5264,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

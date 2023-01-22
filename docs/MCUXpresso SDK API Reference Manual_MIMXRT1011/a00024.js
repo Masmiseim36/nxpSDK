@@ -1,7 +1,7 @@
 var a00024 =
 [
     [ "FlexIO eDMA I2S Driver", "a00025.html", "a00025" ],
-    [ "FLEXIO_I2S_Type", "a00024.html#a00312", [
+    [ "FLEXIO_I2S_Type", "a00024.html#a00311", [
       [ "flexioBase", "a00024.html#a17b7bf09a1a3f54afaf63e0e190927d2", null ],
       [ "txPinIndex", "a00024.html#a84af0363647425d17fffb8d5555fbdd7", null ],
       [ "rxPinIndex", "a00024.html#adbb4dced07edd10ea2a343e8309c93a7", null ],
@@ -12,7 +12,7 @@ var a00024 =
       [ "bclkTimerIndex", "a00024.html#af86182c86d08dea7625f3e2ecdec44c0", null ],
       [ "fsTimerIndex", "a00024.html#af4ceb6fc780a851051a131dfc7174d25", null ]
     ] ],
-    [ "flexio_i2s_config_t", "a00024.html#a00309", [
+    [ "flexio_i2s_config_t", "a00024.html#a00308", [
       [ "enableI2S", "a00024.html#a65f52d2761d26fc3b38ae8dfd2d85f1b", null ],
       [ "masterSlave", "a00024.html#af23ab88febf5c71ed99eebe478152330", null ],
       [ "txPinPolarity", "a00024.html#a7ae45f854ddc7afdd384abba1b7a1055", null ],
@@ -22,15 +22,15 @@ var a00024 =
       [ "txTimerPolarity", "a00024.html#a5846c5f856bba11228e15d322aed6d06", null ],
       [ "rxTimerPolarity", "a00024.html#a7b293f477331ed1edd7129d074a38b18", null ]
     ] ],
-    [ "flexio_i2s_format_t", "a00024.html#a00310", [
+    [ "flexio_i2s_format_t", "a00024.html#a00309", [
       [ "bitWidth", "a00024.html#adb954eb873cf4622252e9c496531b006", null ],
       [ "sampleRate_Hz", "a00024.html#ab8d21f482920d2db31e60ce6073febc7", null ]
     ] ],
-    [ "flexio_i2s_transfer_t", "a00024.html#a00311", [
+    [ "flexio_i2s_transfer_t", "a00024.html#a00310", [
       [ "data", "a00024.html#a3a1bad13211ca0ffe270d1efaebed0ac", null ],
       [ "dataSize", "a00024.html#a02aca7ffe23c696b0d903d43736eea7c", null ]
     ] ],
-    [ "flexio_i2s_handle_t", "a00024.html#a00246", [
+    [ "flexio_i2s_handle_t", "a00024.html#a00245", [
       [ "state", "a00024.html#ae6b4c9950aab2628a2afad4ce1843f53", null ],
       [ "callback", "a00024.html#a8595e0e9871200a31487a7366568cee9", null ],
       [ "userData", "a00024.html#ae1dbe0ea87de3e1008d53ad96f358eff", null ],

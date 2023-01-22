@@ -13,7 +13,7 @@
 **
 **     Reference manual:    IMXRT1020RM Rev.2, 01/2021 | IMXRT102XSRM Rev.0
 **     Version:             rev. 1.2, 2021-08-10
-**     Build:               b220720
+**     Build:               b221010
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for MIMXRT1021
@@ -203,8 +203,8 @@ typedef enum IRQn {
   USB_OTG1_IRQn                = 113,              /**< USBO2 USB OTG1 */
   ENET_IRQn                    = 114,              /**< ENET interrupt */
   ENET_1588_Timer_IRQn         = 115,              /**< ENET_1588_Timer interrupt */
-  XBAR1_IRQ_0_1_IRQn           = 116,              /**< XBAR1 interrupt */
-  XBAR1_IRQ_2_3_IRQn           = 117,              /**< XBAR1 interrupt */
+  XBAR1_IRQ_0_1_IRQn           = 116,              /**< XBARA output signal 0, 1 interrupt */
+  XBAR1_IRQ_2_3_IRQn           = 117,              /**< XBARA output signal 2, 3 interrupt */
   ADC_ETC_IRQ0_IRQn            = 118,              /**< ADCETC IRQ0 interrupt */
   ADC_ETC_IRQ1_IRQn            = 119,              /**< ADCETC IRQ1 interrupt */
   ADC_ETC_IRQ2_IRQn            = 120,              /**< ADCETC IRQ2 interrupt */
@@ -40065,11 +40065,11 @@ typedef struct {
 /** Peripheral USB base pointer */
 #define USB                                      ((USB_Type *)USB_BASE)
 /** Array initializer of USB peripheral base addresses */
-#define USB_BASE_ADDRS                           { 0u, USB_BASE }
+#define USB_BASE_ADDRS                           { USB_BASE }
 /** Array initializer of USB peripheral base pointers */
-#define USB_BASE_PTRS                            { (USB_Type *)0u, USB }
+#define USB_BASE_PTRS                            { USB }
 /** Interrupt vectors for the USB peripheral type */
-#define USB_IRQS                                 { NotAvail_IRQn, USB_OTG1_IRQn }
+#define USB_IRQS                                 { USB_OTG1_IRQn }
 /* Backward compatibility */
 #define GPTIMER0CTL                              GPTIMER0CTRL
 #define GPTIMER1CTL                              GPTIMER1CTRL
@@ -40637,8 +40637,8 @@ typedef struct {
 #define USBHS_EPCR_TXE(x)                        USB_ENDPTCTRL_TXE(x)
 #define USBHS_EPCR_COUNT                         USB_ENDPTCTRL_COUNT
 #define USBHS_Type                               USB_Type
-#define USBHS_BASE_ADDRS                         { USB_BASE }
-#define USBHS_IRQS                               { USB_OTG1_IRQn }
+#define USBHS_BASE_ADDRS                         USB_BASE_ADDRS
+#define USBHS_IRQS                               USB_IRQS
 #define USBHS_IRQHandler                         USB_OTG1_IRQHandler
 
 
@@ -40781,9 +40781,9 @@ typedef struct {
 /** Peripheral USBNC base pointer */
 #define USBNC                                    ((USBNC_Type *)USBNC_BASE)
 /** Array initializer of USBNC peripheral base addresses */
-#define USBNC_BASE_ADDRS                         { 0u, USBNC_BASE }
+#define USBNC_BASE_ADDRS                         { USBNC_BASE }
 /** Array initializer of USBNC peripheral base pointers */
-#define USBNC_BASE_PTRS                          { (USBNC_Type *)0u, USBNC }
+#define USBNC_BASE_PTRS                          { USBNC }
 
 /*!
  * @}
@@ -42189,11 +42189,11 @@ typedef struct {
 /** Peripheral USBPHY base pointer */
 #define USBPHY                                   ((USBPHY_Type *)USBPHY_BASE)
 /** Array initializer of USBPHY peripheral base addresses */
-#define USBPHY_BASE_ADDRS                        { 0u, USBPHY_BASE }
+#define USBPHY_BASE_ADDRS                        { USBPHY_BASE }
 /** Array initializer of USBPHY peripheral base pointers */
-#define USBPHY_BASE_PTRS                         { (USBPHY_Type *)0u, USBPHY }
+#define USBPHY_BASE_PTRS                         { USBPHY }
 /** Interrupt vectors for the USBPHY peripheral type */
-#define USBPHY_IRQS                              { NotAvail_IRQn, USB_PHY_IRQn }
+#define USBPHY_IRQS                              { USB_PHY_IRQn }
 /* Backward compatibility */
 #define USBPHY_CTRL_ENDEVPLUGINDET_MASK     USBPHY_CTRL_ENDEVPLUGINDETECT_MASK
 #define USBPHY_CTRL_ENDEVPLUGINDET_SHIFT    USBPHY_CTRL_ENDEVPLUGINDETECT_SHIFT

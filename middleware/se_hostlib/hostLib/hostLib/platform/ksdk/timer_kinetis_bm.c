@@ -21,7 +21,7 @@
 #endif
 
 
-#if !defined(SDK_OS_FREE_RTOS) && !defined(SDK_OS_FREE_RTOS)
+#if !defined(SDK_OS_FREE_RTOS) && !defined(SDK_OS_FREE_RTOS) && !defined(USE_THREADX_RTOS)
 
 extern volatile uint32_t gtimer_kinetis_msticks; // counter for 1ms SysTicks
 

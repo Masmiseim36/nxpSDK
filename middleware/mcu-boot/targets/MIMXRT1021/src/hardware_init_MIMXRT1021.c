@@ -854,7 +854,7 @@ uint32_t get_primary_boot_device(void)
                     flash_device = kBootDevice_SemcNOR; // SEMC NOR
                     break;
                 default:
-                    flash_device = kBootDevice_MMC_SD; // SD
+                    flash_device = kBootDevice_SD; // SD
                     break;
             }
             break;
@@ -862,7 +862,7 @@ uint32_t get_primary_boot_device(void)
             flash_device = kBootDevice_SemcNAND; // SEMC NAND
             break;
         case 2:
-            flash_device = kBootDevice_MMC_SD; // MMC/eMMC
+            flash_device = kBootDevice_MMC; // MMC/eMMC
             break;
         case 3:
             flash_device = kBootDevice_FlexSpiNAND; // FlexSPI NAND

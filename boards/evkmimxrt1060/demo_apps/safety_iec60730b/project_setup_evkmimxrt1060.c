@@ -18,13 +18,11 @@
  *
  *          Enables the watchdog. Also in Wait and Stop mode. Updates are allowed
  *
- * @param   timeout
- * @param   window
- * @param   prescaler
+ * @param   wd_setup_value      //watchdog setup value for timeout
  *
  * @return  None
  */
-void WatchdogEnable(void)
+void WatchdogEnable(uint32_t wd_setup_value)
 {
     uint32_t prescaler = 0;
     uint16_t window    = 0;
@@ -32,7 +30,7 @@ void WatchdogEnable(void)
     __asm("cpsid i");
 
     USED_WDOG->CNT   = RTWDOG_UPDATE_KEY;                /* Unlock sequence */
-    USED_WDOG->TOVAL = (uint16_t)WATCHDOG_TIMEOUT_VALUE; /* Set timeout */
+    USED_WDOG->TOVAL = (wd_setup_value); /* Set timeout */
 
     /* Enable rtwdog, LPO clock, interrupt disabled, update enabled, 32b refresh, window mode, prescaler 255
      * enabled/disabled */
@@ -78,7 +76,7 @@ void WatchdogDisable(void)
  *
  * @return  None
  */
-void GPT1_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
+void ReferenceTimerInit(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
 {
     /* Gpt serial clock, gpt bus clock enable */
     CCM->CCGR1 |= (CCM_CCGR1_CG10_MASK | CCM_CCGR1_CG11_MASK);
@@ -168,7 +166,7 @@ void GPT2_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
  *
  * @return  None
  */
-void SystickInitialisation(uint32_t compare)
+void SystickInit(uint32_t compare)
 {
     SysTick->VAL  = 0;
     SysTick->LOAD = compare;
@@ -215,7 +213,9 @@ void SerialInit(void)
 
     LPUART_Init(APPLICATION_SERIAL_BASE, &LPUART_1_config, SERIAL_CLOCK);
 
+#if FMSTR_SERIAL_ENABLE
     FMSTR_SerialSetBaseAddress(APPLICATION_SERIAL_BASE);
+#endif //FMSTR_SERIAL_ENABLE
 }
 
 /*!

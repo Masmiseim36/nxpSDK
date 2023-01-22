@@ -226,7 +226,7 @@
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>LFS_NO_INTRINSICS=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>MFLASH_FILE_BASEADDR=1572864</state>
+          <state>MFLASH_FILE_BASEADDR=3670016</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
@@ -361,7 +361,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -1317,7 +1316,7 @@
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>LFS_NO_INTRINSICS=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>MFLASH_FILE_BASEADDR=1572864</state>
+          <state>MFLASH_FILE_BASEADDR=3670016</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
@@ -1452,7 +1451,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -2402,11 +2400,12 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
+          <state>LFS_NO_ASSERT</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>LFS_NO_INTRINSICS=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>MFLASH_FILE_BASEADDR=1572864</state>
+          <state>MFLASH_FILE_BASEADDR=3670016</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
@@ -2541,7 +2540,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -3491,13 +3489,14 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
+          <state>LFS_NO_ASSERT</state>
           <state>NDEBUG</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>LFS_NO_INTRINSICS=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>MFLASH_FILE_BASEADDR=1572864</state>
+          <state>MFLASH_FILE_BASEADDR=3670016</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
@@ -3632,7 +3631,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -4576,15 +4574,6 @@
         <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>startup</name>
@@ -4595,19 +4584,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

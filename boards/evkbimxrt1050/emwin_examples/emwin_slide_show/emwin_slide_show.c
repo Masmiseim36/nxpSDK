@@ -23,10 +23,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP                PXP
-#define EXAMPLE_GPT            GPT2
-#define EXAMPLE_GPT_TICK_TO_MS 25
-
 #define INDICATOR_SIZE_X 60
 #define ALARM_PERIOD     500
 
@@ -653,9 +649,7 @@ int main(void)
     while (1)
     {
         /* Poll touch controller for update */
-        if (BOARD_Touch_Poll())
-        {
-            GUI_Delay(25);
-        }
+        BOARD_Touch_Poll();
+        GUI_Delay(25);
     }
 }

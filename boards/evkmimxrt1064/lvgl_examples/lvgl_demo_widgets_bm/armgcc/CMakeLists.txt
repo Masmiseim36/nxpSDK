@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lvgl_demo_widgets_bm)
 
+set(MCUX_BUILD_TYPES flexspi_nor_sdram_debug flexspi_nor_sdram_release)
+
 set(MCUX_SDK_PROJECT_NAME lvgl_demo_widgets_bm.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -35,45 +41,46 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c"
+"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/lv_demos.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../lvgl_support.h"
-"${ProjDirPath}/../../lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1064/lvgl_examples/lvgl_support.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/lvgl_examples/lvgl_support.c"
+"${SdkRootDirPath}/boards/evkmimxrt1064/lvgl_examples/lvgl_demo_utils.h"
+"${SdkRootDirPath}/boards/evkmimxrt1064/lvgl_examples/lvgl_demo_utils.c"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos
-    ${ProjDirPath}/../..
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets
+    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos
+    ${SdkRootDirPath}/boards/evkmimxrt1064/lvgl_examples
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/drivers
-    ${ProjDirPath}/../../../../../components/ft5406_rt
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../components/gt911
-    ${ProjDirPath}/../../../../../components/video
-    ${ProjDirPath}/../../../../../middleware/lvgl
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1064/drivers
+    ${SdkRootDirPath}/components/ft5406_rt
+    ${SdkRootDirPath}/devices/MIMXRT1064/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1064/utilities/debug_console_lite
+    ${SdkRootDirPath}/components/gt911
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/middleware/lvgl
+    ${SdkRootDirPath}/devices/MIMXRT1064
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1064/xip
+    ${SdkRootDirPath}/boards/evkmimxrt1064/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -119,8 +126,6 @@ include(driver_xip_device_MIMXRT1064)
 
 include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
-include(component_silicon_id_MIMXRT1064)
-
 include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(utilities_misc_utilities_MIMXRT1064)
@@ -128,15 +133,13 @@ include(utilities_misc_utilities_MIMXRT1064)
 include(device_MIMXRT1064_system_MIMXRT1064)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

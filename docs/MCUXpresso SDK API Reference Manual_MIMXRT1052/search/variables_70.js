@@ -91,6 +91,7 @@ var searchData=
   ['pt3cc',['PT3CC',['../a00009.html#abdb9f372b1820f5b09fa5748dd004104',1,'aoi_event_config_t']]],
   ['pt3dc',['PT3DC',['../a00009.html#a00e1069b81be7ee6e9621bf7d4f294ea',1,'aoi_event_config_t']]],
   ['pwmchannel',['pwmChannel',['../a00056.html#afe284fd225ea192d3456b41dd2703365',1,'pwm_signal_param_t']]],
+  ['pwmchannelenable',['pwmchannelenable',['../a00056.html#ad1495db96381190a421cc78fb450d37a',1,'pwm_signal_param_t']]],
   ['pwr',['pwr',['../a00051.html#a13677f2e457d7662cae5189e522afad4',1,'sd_usr_param_t::pwr()'],['../a00051.html#a807cc66ae8fac2047cd6cec5da43b075',1,'sdio_usr_param_t::pwr()']]],
   ['pwrbootconfigprotection',['pwrBootConfigProtection',['../a00051.html#a99452558ac58decc10d2892a94139d76',1,'mmc_boot_config_t']]]
 ];

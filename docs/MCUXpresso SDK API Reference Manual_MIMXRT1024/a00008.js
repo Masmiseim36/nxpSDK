@@ -1,8 +1,8 @@
 var a00008 =
 [
-    [ "adc_etc_config_t", "a00008.html#a00317", null ],
-    [ "adc_etc_trigger_chain_config_t", "a00008.html#a00318", null ],
-    [ "adc_etc_trigger_config_t", "a00008.html#a00319", null ],
+    [ "adc_etc_config_t", "a00008.html#a00316", null ],
+    [ "adc_etc_trigger_chain_config_t", "a00008.html#a00317", null ],
+    [ "adc_etc_trigger_config_t", "a00008.html#a00318", null ],
     [ "FSL_ADC_ETC_DRIVER_VERSION", "a00008.html#gabb13030471759f06c35f462ed2674023", null ],
     [ "ADC_ETC_DMA_CTRL_TRGn_REQ_MASK", "a00008.html#gafcf58ac176e14d5434d45f3999f46a5c", null ],
     [ "_adc_etc_status_flag_mask", "a00008.html#gaecc628cacd5a30243e25b0fd21cddeaa", null ],

@@ -32,7 +32,7 @@
 #include "fsl_codec_common.h"
 #include "fsl_wm8960.h"
 #include "fsl_codec_adapter.h"
-#include "controller.h"
+#include "controller_hci_uart.h"
 #include "usb_host_config.h"
 #include "usb_phy.h"
 #include "usb_host.h"
@@ -61,9 +61,9 @@ extern void BOARD_InitHardware(void);
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
 /* Clock pre divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (1U)
+#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (3U)
 /* Clock divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (63U)
+#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (31U)
 /* Get frequency of sai1 clock */
 #define DEMO_SAI_CLK_FREQ                                                        \
     (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
@@ -78,6 +78,7 @@ extern void BOARD_InitHardware(void);
 /* Get frequency of lpi2c clock */
 #define BOARD_SCO_DEMO_I2C_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
+#define DEMO_SAI                    SAI1
 #define DEMO_CODEC_INSTANCE         (1U)
 #define DEMO_SCO_INSTANCE           (2U)
 #define PCM_MODE_CONFIG_TX_CLK_SYNC (1U)
@@ -163,7 +164,7 @@ hal_audio_config_t txSpeakerConfig = {
     .ipConfig          = (void *)&txSpeakerIpConfig,
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
-    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
     .msaterSlave       = kHAL_AudioMaster,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
@@ -199,7 +200,7 @@ hal_audio_config_t rxMicConfig = {
     .ipConfig          = (void *)&rxMicIpConfig,
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
-    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
     .msaterSlave       = kHAL_AudioMaster,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
@@ -239,7 +240,7 @@ hal_audio_config_t txMicConfig = {
     .ipConfig          = (void *)&txMicIpConfig,
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
-    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
     .msaterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
@@ -279,7 +280,7 @@ hal_audio_config_t rxSpeakerConfig = {
     .ipConfig          = (void *)&rxSpeakerIpConfig,
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
-    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
     .msaterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
@@ -435,17 +436,4 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
-}
-
-void *pvPortCalloc(size_t xNum, size_t xSize)
-{
-    void *pvReturn;
-
-    pvReturn = pvPortMalloc(xNum * xSize);
-    if (pvReturn != NULL)
-    {
-        memset(pvReturn, 0x00, xNum * xSize);
-    }
-
-    return pvReturn;
 }

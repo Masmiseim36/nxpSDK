@@ -357,6 +357,7 @@
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1010</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565</state>
@@ -1451,6 +1452,7 @@
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1010</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565</state>
@@ -2588,6 +2590,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2768,19 +2776,7 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>

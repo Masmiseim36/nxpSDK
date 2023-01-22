@@ -10,6 +10,7 @@
 #include "app_streamer.h"
 #include "streamer_pcm.h"
 #include "app_music_control.h"
+#include "maestro_logging.h"
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"
 #define STREAMER_TASK_NAME         "Streamer"
@@ -167,6 +168,8 @@ status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
     streamer_set_file(handle->streamer, 0, filename, STATE_NULL, true);
 
     handle->audioPlaying = false;
+
+	(void)prop;  /* Unused variable */
 
     return kStatus_Success;
 }

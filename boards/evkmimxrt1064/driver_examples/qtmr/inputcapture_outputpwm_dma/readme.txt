@@ -2,17 +2,17 @@ Overview
 ========
 
 The QTMR project is a demonstration program of the SDK QTMR driver's input capture and output pwm feature by DMA.
-The example sets up a QTMR channel for input capture. Once the input signal is received,
-this example will print the capture value.
-The example also sets up one QTMR channel to output pwm. The user should probe a 50Khz PWM signal output with
-50% dutycycle with a oscilloscope.The user can enter a value to update the Duty cycle.
+The example sets up a QTMR channel for input capture. Once the input signal is received, this example will print the capture value.
+The example also sets up one QTMR channel to output pwm. The example enables DMA and input edge flag setting will trigger DMA read
+request for CAPT register. The user should probe a 50Khz PWM signal output with 50% dutycycle with a oscilloscope.
+The user can enter a value to update the Duty cycle, when 5 is entered, the duty cycle will be set to 50%.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================

@@ -1,12 +1,12 @@
 var a00057 =
 [
-    [ "sgtl_audio_format_t", "a00057.html#a00379", [
+    [ "sgtl_audio_format_t", "a00057.html#a00378", [
       [ "mclk_HZ", "a00057.html#ae0edadf6baf0a743e4765421ad2abc3f", null ],
       [ "sampleRate", "a00057.html#a47b2d7178ab3a15a56b8972b2d2eac29", null ],
       [ "bitWidth", "a00057.html#a78334148115e196b31db9b1a302a4941", null ],
       [ "sclkEdge", "a00057.html#a9cdfd73fb1b74ee97d94e2e183af5a00", null ]
     ] ],
-    [ "sgtl_config_t", "a00057.html#a00380", [
+    [ "sgtl_config_t", "a00057.html#a00379", [
       [ "route", "a00057.html#a8c4ed2bb6162b218a0aa8077d9bab4aa", null ],
       [ "bus", "a00057.html#a1991cd986722d22c8964f08bc9d8c21d", null ],
       [ "master_slave", "a00057.html#a4daf6a63ca5b405aac9332ca477c3501", null ],
@@ -14,7 +14,7 @@ var a00057 =
       [ "slaveAddress", "a00057.html#abdee01c708fa6a6beaf93e371347c590", null ],
       [ "i2cConfig", "a00057.html#a0552d0239f157964cdc500d73350d11d", null ]
     ] ],
-    [ "sgtl_handle_t", "a00057.html#a00381", [
+    [ "sgtl_handle_t", "a00057.html#a00380", [
       [ "config", "a00057.html#a2187719e2579f70c815eff00bd8d7b98", null ],
       [ "i2cHandle", "a00057.html#aee64ef7e3a76d06780a73c63d68d2a98", null ]
     ] ],

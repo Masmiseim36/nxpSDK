@@ -9,10 +9,6 @@
       </member>
       <member>
         <project>sai_interrupt</project>
-        <configuration>sdram_release</configuration>
-      </member>
-      <member>
-        <project>sai_interrupt</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -25,13 +21,6 @@
       <member>
         <project>sai_interrupt</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
-      <member>
-        <project>sai_interrupt</project>
-        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

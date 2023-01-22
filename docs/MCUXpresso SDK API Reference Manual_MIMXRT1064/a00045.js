@@ -1,6 +1,6 @@
 var a00045 =
 [
-    [ "lpi2c_master_edma_handle_t", "a00045.html#a00318", [
+    [ "lpi2c_master_edma_handle_t", "a00045.html#a00317", [
       [ "base", "a00045.html#ac6dd926bb7b4cda0c335aa63af1af25e", null ],
       [ "isBusy", "a00045.html#a22478c736b373611fc17bca3e9d4c434", null ],
       [ "nbytes", "a00045.html#a71e19bdaa2d6ed8e95d4b25497a45149", null ],

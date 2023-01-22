@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,6 +22,7 @@
 #include "fsl_ft5406_rt.h"
 #endif
 #include "fsl_gpt.h"
+
 /*
 **      Define everything necessary for different color depths
 */
@@ -410,7 +411,6 @@ void GUI_X_Delay(int Period)
     volatile uint32_t tNow = GPT_GetCurrentTimerCount(EXAMPLE_GPT);
     while ((GPT_GetCurrentTimerCount(EXAMPLE_GPT) - tNow) < Period * EXAMPLE_GPT_TICK_TO_MS)
         ;
-    BOARD_Touch_Poll();
 }
 
 void *emWin_memcpy(void *pDst, const void *pSrc, long size)

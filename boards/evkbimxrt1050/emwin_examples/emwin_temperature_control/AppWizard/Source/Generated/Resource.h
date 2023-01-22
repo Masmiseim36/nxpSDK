@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -40,26 +40,26 @@ Purpose     : Generated file do NOT edit!
 #define ID_TEXT_11 14
 
 #define APPW_MANAGE_TEXT APPW_MANAGE_TEXT_EXT
-extern const unsigned char acAPPW_Language_0[];
+extern GUI_CONST_STORAGE unsigned char acAPPW_Language_0[];
 
 /*********************************************************************
 *
 *       Fonts
 */
-extern const unsigned char acNettoOT_24_Normal_EXT_AA4[];
-extern const unsigned char acRoboto_24_Normal_EXT_AA4[];
-extern const unsigned char acRoboto_16_Normal_EXT_AA4[];
+extern GUI_CONST_STORAGE unsigned char acNettoOT_24_Normal_EXT_AA4[];
+extern GUI_CONST_STORAGE unsigned char acRoboto_24_Normal_EXT_AA4[];
+extern GUI_CONST_STORAGE unsigned char acRoboto_16_Normal_EXT_AA4[];
 
 /*********************************************************************
 *
 *       Images
 */
-extern const unsigned char acTemperatureControl_3_480x272[];
-extern const unsigned char acKNOB_106x106[];
-extern const unsigned char acGreenGlowMarker_16x9[];
-extern const unsigned char acButtonRound_48x21[];
-extern const unsigned char acButtonRoundPressed_48x21[];
-extern const unsigned char acSeggerLogo_80x40[];
+extern GUI_CONST_STORAGE unsigned char acTemperatureControl_3_480x272[];
+extern GUI_CONST_STORAGE unsigned char acKNOB_106x106[];
+extern GUI_CONST_STORAGE unsigned char acGreenGlowMarker_16x9[];
+extern GUI_CONST_STORAGE unsigned char acButtonRound_48x21[];
+extern GUI_CONST_STORAGE unsigned char acButtonRoundPressed_48x21[];
+extern GUI_CONST_STORAGE unsigned char acSeggerLogo_80x40[];
 
 /*********************************************************************
 *
@@ -75,7 +75,7 @@ extern APPW_ROOT_INFO ID_SCREEN_TEMP_CTRL_RootInfo;
 *
 *       Project path
 */
-#define APPW_PROJECT_PATH "C:/Users/nxf33034/projects/emwin/Temp_ctrl_3"
+#define APPW_PROJECT_PATH ""
 
 #endif  // RESOURCE_H
 

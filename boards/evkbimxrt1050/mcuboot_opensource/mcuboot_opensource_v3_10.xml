@@ -8,7 +8,6 @@
     <definition extID="middleware.mbedtls.MIMXRT1052"/>
     <definition extID="middleware.mbedtls.rt.MIMXRT1052"/>
     <definition extID="component.mflash.rt1050.MIMXRT1052"/>
-    <definition extID="platform.drivers.flexspi.MIMXRT1052"/>
     <definition extID="middleware.mcuboot.bootutil.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
@@ -25,9 +24,9 @@
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052"/>
-    <definition extID="component.silicon_id.MIMXRT1052"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1052"/>
     <definition extID="component.mflash.common.MIMXRT1052"/>
+    <definition extID="platform.drivers.flexspi.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_system.MIMXRT1052"/>
     <definition extID="iar"/>
@@ -38,7 +37,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_mcuboot_opensource" name="mcuboot_opensource" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.rt.MIMXRT1052 component.mflash.rt1050.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.mcuboot.bootutil.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 component.silicon_id.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 component.mflash.common.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="bootloader">
+  <example id="evkbimxrt1050_mcuboot_opensource" name="mcuboot_opensource" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.rt.MIMXRT1052 component.mflash.rt1050.MIMXRT1052 middleware.mcuboot.bootutil.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 component.mflash.common.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="bootloader">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -171,6 +170,7 @@
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="boot.c"/>
+      <files mask="bootutil_hooks.c"/>
       <files mask="keys.c"/>
       <files mask="os.c"/>
       <files mask="sbl_boot.c"/>
@@ -200,9 +200,6 @@
     <source path="flashiap" project_relative_path="flashiap" type="src">
       <files mask="flash_api.c"/>
     </source>
-    <source path="flashiap" project_relative_path="flashiap" type="c_include">
-      <files mask="flash_info.h"/>
-    </source>
     <source path="secure" project_relative_path="secure" type="src" exclude="true">
       <files mask="sign-rsa2048-pub.c"/>
       <files mask="enc-rsa2048-priv.c"/>
@@ -210,17 +207,18 @@
     <source path="." project_relative_path="source" type="src">
       <files mask="main.c"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
+    <source path="." project_relative_path="board" type="c_include">
       <files mask="sblconfig.h"/>
+      <files mask="pin_mux.h"/>
     </source>
     <source path="." project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
-      <files mask="pin_mux.h"/>
-    </source>
-    <source path="." project_relative_path="board" type="c_include">
       <files mask="flash_partitioning.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="flash_partitioning.c"/>
     </source>
     <source path="keys" project_relative_path="keys" type="other" exclude="true">
       <files mask="sign-rsa2048-pub.pem" hidden="true"/>

@@ -22,7 +22,6 @@
     <definition extID="platform.drivers.igpio.MIMXRT1042"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1042"/>
     <definition extID="platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042"/>
-    <definition extID="component.silicon_id.MIMXRT1042"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1042"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1042"/>
     <definition extID="device.MIMXRT1042_system.MIMXRT1042"/>
@@ -34,7 +33,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1040_lvgl_demo_widgets_bm" name="lvgl_demo_widgets_bm" dependency="platform.drivers.elcdif.MIMXRT1042 platform.drivers.lpi2c.MIMXRT1042 driver.ft5406_rt.MIMXRT1042 platform.drivers.pxp.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 utility.debug_console_lite.MIMXRT1042 platform.utilities.assert_lite.MIMXRT1042 driver.gt911.MIMXRT1042 driver.video-common.MIMXRT1042 platform.drivers.common.MIMXRT1042 platform.drivers.clock.MIMXRT1042 middleware.lvgl.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.lists.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 platform.drivers.xip_device.MIMXRT1042 platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042 component.silicon_id.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042" category="lvgl_examples">
+  <example id="evkmimxrt1040_lvgl_demo_widgets_bm" name="lvgl_demo_widgets_bm" dependency="platform.drivers.elcdif.MIMXRT1042 platform.drivers.lpi2c.MIMXRT1042 driver.ft5406_rt.MIMXRT1042 platform.drivers.pxp.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 utility.debug_console_lite.MIMXRT1042 platform.utilities.assert_lite.MIMXRT1042 driver.gt911.MIMXRT1042 driver.video-common.MIMXRT1042 platform.drivers.common.MIMXRT1042 platform.drivers.clock.MIMXRT1042 middleware.lvgl.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.lists.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 platform.drivers.xip_device.MIMXRT1042 platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042" category="lvgl_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -131,6 +130,7 @@
       <include_path path="../../../../middleware/lvgl/lvgl/demos" project_relative_path="lvgl/lvgl/demos" type="c_include"/>
       <include_path path=".." project_relative_path="evkmimxrt1040/lvgl_examples/lvgl_demo_widgets_bm" type="c_include"/>
       <include_path path=".." project_relative_path="board" type="c_include"/>
+      <include_path path=".." project_relative_path="source" type="c_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="lvgl_demo_widgets_bm.ewd"/>
@@ -196,6 +196,12 @@
     </source>
     <source path=".." project_relative_path="board" type="src">
       <files mask="lvgl_support.c"/>
+    </source>
+    <source path=".." project_relative_path="source" type="c_include">
+      <files mask="lvgl_demo_utils.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="src">
+      <files mask="lvgl_demo_utils.c"/>
     </source>
     <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

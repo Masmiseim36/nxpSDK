@@ -12,10 +12,10 @@ For more information about Wi-Fi module connection see:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 
 Hardware requirements
 =====================
@@ -35,8 +35,8 @@ Prepare the Demo
    Please refer to respective readme of the mcuboot_opensource example and follow the steps there before you continue.
 2. Go through setup files in the demo source tree source/config/ota_config.h and source/config/network_cfg.h to check:
     - use of DHCP/static IP
-    - HTTPS server IP and port
-    - OTA image filename as found on the server
+    - Default HTTPS server IP and port
+    - Default OTA image file path on the server
 3. Connect a USB cable between the PC host and the OpenSDA (or USB to Serial) USB port on the target board.
 4. Open a serial terminal on PC for connected board with these settings:
     - 115200 baud rate
@@ -44,7 +44,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-5.  Install WiFi connectivity module into SD or M.2 slot.
+5.  Install WiFi connectivity module into SD or M.2 slot if needed.
 
 
 Running the HTTPS server example
@@ -87,38 +87,53 @@ The latter method is described step by step below:
      
 5.  When the demo runs successfully, the terminal will display message that coresponds with the following:
 
-        Initializing WiFi connection...
-        MAC Address: 48:E7:DA:9A:C7:B1
-        [net] Initialized TCP/IP networking stack
-        WLAN initialized
-        WLAN FW Version: IW416-V0, RF878X, FP91, 16.91.21.p11.3, WPA2_CVE_FIX 1, PVE_FIX 1
-        Successfully initialized WiFi module
-        Joining: nxp-ota
-        Connected to following BSS:SSID = [PlesCorp], IP = [192.168.0.114]
-        Successfully joined: nxp-ota
-        Got IP address 192.168.0.114
-        
-6. It will then try to establish secure connection to the server and starts downloading the OTA image:
+	OTA HTTPS client demo (WiFi)
 
-        Getting size of requested file '/ota.bin'
-        Determined file size is 271358 bytes
-        Starting download of 271358 bytes with block size of 4096 bytes
-        ...................................................................
-        Download loop completed with size 271358, expected 271358
-        
-        MD5 hexdump of downloaded data:
-        00000000  E2 BB 98 EF ED D0 C4 1D EB 70 EE 70 04 C8 68 0D |.........p.p..h.|
-        
-        MD5 hexdump of flashed data:
-        00000000  E2 BB 98 EF ED D0 C4 1D EB 70 EE 70 04 C8 68 0D |.........p.p..h.|
-        
-        write magic number offset = 0x43ff00
-        OTA image was downloaded successfully. Now press the reset button to reboot the board.
+	Initializing WiFi connection...
+	MAC Address: 00:50:43:02:FE:01
+	Successfully initialized WiFi module
 
-7. After image is downloaded successfully the user is prompted to restart the board.
-   The bootloader will then install the new image - it will move it from the secondary partition to the primary one.
+	Copyright  2022  NXP
 
-8. After installation of new image the application detects that it's now in testing phase. In this demo application this is
-   simply done by marking the image as permanent and the user is requested to reboot the board again.
+	$
 
-9. Application now starts and repeats the entire download process again, unless the new version was modified not to do so.
+6. The demo is now waiting for user input. Use 'help' to see all available commands.
+
+7. To connect to WiFi network. First use 'wifi conf' command to setup network name and password.
+   Then 'wifi join' to connect.
+
+8. When connected and with HTTPS server runnning an OTA image is downloaded using 'ota' command:
+
+        $ ota 0 /ota.bin 192.168.1.10 4433
+   
+   This creates a secure connection to specified server 192.168.1.10 using port 4433 and request
+   file stored at path /ota.bin. The downloaded data will be stored into secondary slot for image 0.
+   Note that it depends on the used platform how many images it uses (see 'image info' command for details).
+
+9. After succesfull download of an OTA image, the command 'image info' can be used to inspect the change
+   in the secondary image slot:
+
+	$ image info
+	Image 0; name APP; state none:
+	  Slot 0; slotAddr 8020000; slotSize 655360
+	    <IMAGE APP_PRIMARY: size 373268; version 1.22.0.0>
+	  Slot 1; slotAddr 8210000; slotSize 655360
+	    <IMAGE APP_SECONDARY: size 384238; version 2.20.0.0>
+
+10. Now the downloaded image needs to be set as "ReadyForTest" to inform the bootloader about a new image to be
+    installed and tested upon next reboot:
+
+	$ image test 0
+
+    This change is reflected in the image state parameter set as "ReadyForTest" in the 'image info' command output.
+
+11. To trigger installation of new image either reboot the board manually or use 'reboot' command.
+
+12. After new image is installed and booted, again use the 'image' command to make sure that the image
+    moved from secondary slot into primary slot and image state is now set as "Testing".
+
+13. Since the image now happens to be in the Testing state, it needs to be accepted with 'image accept' command:
+	
+	$ image accept 0
+
+    This makes sure that upon next reboot the image won't be reverted to its previous version.

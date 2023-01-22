@@ -24,7 +24,13 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(ew_gui_smart_thermostat)
 
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
+
 set(MCUX_SDK_PROJECT_NAME ew_gui_smart_thermostat.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -46,146 +52,145 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../DeviceDriver.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Application.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Core.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Effects.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Graphics.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Oximeter.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Resources.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Templates.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Views.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/WidgetSet.c"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Application.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Core.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Effects.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Graphics.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Oximeter.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Resources.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Templates.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/Views.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/WidgetSet.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ApplicationApplication.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorEvent.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorGrabEvent.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorHit.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreDialogContext.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreDragEvent.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreEvent.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreGroup.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreKeyEvent.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreKeyPressHandler.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutContext.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutLineContext.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutQuadContext.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreLineView.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreModalContext.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreOutline.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CorePropertyObserver.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreQuadView.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreRectView.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreResource.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreRoot.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreRotateTouchHandler.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreSimpleTouchHandler.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreSlideTouchHandler.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreTask.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreTaskQueue.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreTimer.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_CoreView.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_EffectsEffect.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_EffectsEffectTimerClass.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_EffectsFloatEffect.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_EffectsInt32Effect.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_EffectsRectEffect.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_EffectsTimingList.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_GraphicsArcPath.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_GraphicsCanvas.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_GraphicsPath.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_GraphicsWarpMatrix.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterAnalogDisplay.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterBackground.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterBattery.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterDataStorage.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterDeviceClass.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterDigitsLarge.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterDigitsSmall.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontCaption.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontL.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontM.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterGlow.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterGraph.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterGraphPanel.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterHeartLarge.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterIconButton.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterLungLarge.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterMainMenu.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterMenuButton.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterMenuIcons.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterNumberDisplay.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterOximeter.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenGradient.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenPanel.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenSettings.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterPlotter.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulseGradient.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulsePanel.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulseSettings.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterPushButton.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackground.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackgroundFlow.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackgroundOxygen.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryThumbMax.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryThumbMin.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterThumb.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterToggleButton.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterTrack.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_OximeterValueDisplay.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ResourcesBitmap.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ResourcesFont.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ResourcesWhiteBitmapStripe.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_TemplatesDeviceClass.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsFillPath.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsFrame.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsImage.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsLine.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsRectangle.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsStrokePath.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsText.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsWallpaper.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsWarpImage.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_ViewsWarpView.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetHorizontalSlider.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetHorizontalSliderConfig.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetPushButton.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetPushButtonConfig.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetRotaryKnob.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetRotaryKnobConfig.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetToggleButton.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetToggleButtonConfig.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetWidgetConfig.h"
-"${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode/ewlocale.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Application.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Core.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Effects.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Graphics.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Oximeter.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Resources.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Templates.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Views.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/WidgetSet.c"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Application.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Core.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Effects.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Graphics.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Oximeter.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Resources.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Templates.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Views.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/WidgetSet.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ApplicationApplication.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorEvent.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorGrabEvent.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorHit.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreDialogContext.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreDragEvent.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreEvent.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreGroup.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreKeyEvent.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreKeyPressHandler.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutContext.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutLineContext.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutQuadContext.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLineView.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreModalContext.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreOutline.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CorePropertyObserver.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreQuadView.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreRectView.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreResource.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreRoot.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreRotateTouchHandler.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreSimpleTouchHandler.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreSlideTouchHandler.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreTask.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreTaskQueue.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreTimer.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreView.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsEffect.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsEffectTimerClass.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsFloatEffect.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsInt32Effect.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsRectEffect.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsTimingList.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsArcPath.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsCanvas.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsPath.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsWarpMatrix.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterAnalogDisplay.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterBackground.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterBattery.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDataStorage.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDeviceClass.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDigitsLarge.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDigitsSmall.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontCaption.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontL.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontM.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterGlow.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterGraph.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterGraphPanel.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterHeartLarge.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterIconButton.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterLungLarge.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterMainMenu.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterMenuButton.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterMenuIcons.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterNumberDisplay.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOximeter.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenGradient.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenPanel.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenSettings.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPlotter.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulseGradient.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulsePanel.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulseSettings.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPushButton.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackground.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackgroundFlow.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackgroundOxygen.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryThumbMax.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryThumbMin.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterThumb.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterToggleButton.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterTrack.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterValueDisplay.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ResourcesBitmap.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ResourcesFont.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ResourcesWhiteBitmapStripe.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_TemplatesDeviceClass.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsFillPath.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsFrame.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsImage.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsLine.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsRectangle.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsStrokePath.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsText.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsWallpaper.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsWarpImage.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsWarpView.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetHorizontalSlider.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetHorizontalSliderConfig.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetPushButton.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetPushButtonConfig.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetRotaryKnob.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetRotaryKnobConfig.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetToggleButton.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetToggleButtonConfig.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetWidgetConfig.h"
+"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/ewlocale.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../ew_gui_pulse_oximeter/GeneratedCode
+    ${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../components/ft5406_rt
-    ${ProjDirPath}/../../../../../components/gt911
-    ${ProjDirPath}/../../../../../components/video
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../middleware/EmbeddedWizard
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062
-    ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
-    ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
+    ${SdkRootDirPath}/components/ft5406_rt
+    ${SdkRootDirPath}/components/gt911
+    ${SdkRootDirPath}/components/video
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
+    ${SdkRootDirPath}/devices/MIMXRT1062/utilities/debug_console_lite
+    ${SdkRootDirPath}/middleware/EmbeddedWizard
+    ${SdkRootDirPath}/devices/MIMXRT1062
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/devices/MIMXRT1062/xip
+    ${SdkRootDirPath}/boards/evkbmimxrt1060/xip
+    ${SdkRootDirPath}/CMSIS/Core/Include
 )
 
 # include modules
@@ -235,8 +240,6 @@ include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
 
-include(component_silicon_id_MIMXRT1062)
-
 include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
@@ -244,15 +247,13 @@ include(utilities_misc_utilities_MIMXRT1062)
 include(device_MIMXRT1062_system_MIMXRT1062)
 
 
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)

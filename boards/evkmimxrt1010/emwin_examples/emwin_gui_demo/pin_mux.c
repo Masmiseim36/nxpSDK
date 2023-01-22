@@ -74,14 +74,14 @@ void BOARD_InitPins(void) {
 LPSPI1_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '55', peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_AD_05, slew_rate: Slow, software_input_on: Enable, drive_strength: R0_6, pull_keeper_select: Keeper,
-    pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm}
-  - {pin_num: '57', peripheral: LPSPI1, signal: SDI, pin_signal: GPIO_AD_03, slew_rate: Slow, software_input_on: Enable, drive_strength: R0_6, pull_keeper_select: Keeper,
-    pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm}
-  - {pin_num: '56', peripheral: LPSPI1, signal: SDO, pin_signal: GPIO_AD_04, slew_rate: Slow, software_input_on: Enable, drive_strength: R0_6, pull_keeper_select: Keeper,
-    pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm}
-  - {pin_num: '52', peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_AD_06, slew_rate: Slow, software_input_on: Enable, drive_strength: R0_6, pull_keeper_select: Keeper,
-    pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm}
+  - {pin_num: '55', peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_AD_05, slew_rate: Slow, drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable,
+    pull_up_down_config: Pull_Down_100K_Ohm}
+  - {pin_num: '57', peripheral: LPSPI1, signal: SDI, pin_signal: GPIO_AD_03, slew_rate: Slow, drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable,
+    pull_up_down_config: Pull_Down_100K_Ohm}
+  - {pin_num: '56', peripheral: LPSPI1, signal: SDO, pin_signal: GPIO_AD_04, slew_rate: Slow, drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable,
+    pull_up_down_config: Pull_Down_100K_Ohm}
+  - {pin_num: '52', peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_AD_06, slew_rate: Slow, drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable,
+    pull_up_down_config: Pull_Down_100K_Ohm}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -96,16 +96,16 @@ void LPSPI1_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_03_LPSPI1_SDI,           /* GPIO_AD_03 is configured as LPSPI1_SDI */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_03 */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_04_LPSPI1_SDO,           /* GPIO_AD_04 is configured as LPSPI1_SDO */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_04 */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_05_LPSPI1_PCS0,          /* GPIO_AD_05 is configured as LPSPI1_PCS0 */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_05 */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_06_LPSPI1_SCK,           /* GPIO_AD_06 is configured as LPSPI1_SCK */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_06 */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_03_LPSPI1_SDI,           /* GPIO_AD_03 PAD functional properties : */
       0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
@@ -153,10 +153,10 @@ void LPSPI1_InitPins(void) {
 LPI2C1_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '11', peripheral: LPI2C1, signal: SCL, pin_signal: GPIO_02, slew_rate: Slow, software_input_on: Enable, open_drain: Enable, drive_strength: R0_6, pull_keeper_select: Keeper,
-    pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_22K_Ohm}
-  - {pin_num: '12', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_01, slew_rate: Slow, software_input_on: Enable, open_drain: Enable, drive_strength: R0_6, pull_keeper_select: Keeper,
-    pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_22K_Ohm}
+  - {pin_num: '11', peripheral: LPI2C1, signal: SCL, pin_signal: GPIO_02, slew_rate: Slow, drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable,
+    pull_up_down_config: Pull_Up_22K_Ohm}
+  - {pin_num: '12', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_01, slew_rate: Slow, drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable,
+    pull_up_down_config: Pull_Up_22K_Ohm}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -171,10 +171,10 @@ void LPI2C1_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 is configured as LPI2C1_SDA */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_01 */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_02_LPI2C1_SCL,              /* GPIO_02 is configured as LPI2C1_SCL */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_02 */
+      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 PAD functional properties : */
       0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,6 +21,8 @@
 #else
 #include "fsl_ft5406_rt.h"
 #endif
+#include "fsl_gpt.h"
+
 /*
 **      Define everything necessary for different color depths
 */
@@ -68,7 +70,7 @@ uint32_t s_vram_buffer[VRAM_SIZE * GUI_BUFFERS];
 
 /* Memory address definitions */
 #define GUI_MEMORY_ADDR ((uint32_t)s_gui_memory)
-#define VRAM_ADDR       ((uint32_t)s_vram_buffer)
+#define VRAM_ADDR       (SDK_SIZEALIGN(s_vram_buffer, FRAME_BUFFER_ALIGN))
 
 static volatile int32_t s_LCDpendingBuffer = -1;
 
@@ -239,38 +241,47 @@ int BOARD_Touch_Poll(void)
 #endif
     int touch_x;
     int touch_y;
-    GUI_PID_STATE pid_state;
+    static GUI_PID_STATE pid_state;
+    pid_state.Layer = 0;
 
 #if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
     status_t st = GT911_GetSingleTouch(&s_touchHandle, &touch_x, &touch_y);
     if ((st == kStatus_Success) || (st == kStatus_TOUCHPANEL_NotTouched))
     {
-        pid_state.x       = touch_x;
-        pid_state.y       = touch_y;
+        if (st == kStatus_Success)
+        {
+            pid_state.x = touch_x;
+            pid_state.y = touch_y;
+        }
         pid_state.Pressed = (st == kStatus_Success);
         GUI_TOUCH_StoreStateEx(&pid_state);
-        return 1;
-    }
-    else
-    {
-        return 0;
     }
 #else
-    if (kStatus_Success != FT5406_RT_GetSingleTouch(&touchHandle, &touch_event, &touch_x, &touch_y))
+    if (kStatus_Success == FT5406_RT_GetSingleTouch(&touchHandle, &touch_event, &touch_x, &touch_y))
     {
-        return 0;
+        if ((touch_event == kTouch_Contact) || (touch_event == kTouch_Up))
+        {
+            if (touch_event == kTouch_Contact)
+            {
+                pid_state.x = touch_y;
+                pid_state.y = touch_x;
+            }
+            pid_state.Pressed = (touch_event == kTouch_Contact);
+            GUI_TOUCH_StoreStateEx(&pid_state);
+        }
     }
-    else if (touch_event != kTouch_Reserved)
-    {
-        pid_state.x       = touch_y;
-        pid_state.y       = touch_x;
-        pid_state.Pressed = ((touch_event == kTouch_Down) || (touch_event == kTouch_Contact));
-        pid_state.Layer   = 0;
-        GUI_TOUCH_StoreStateEx(&pid_state);
-        return 1;
-    }
-    return 0;
 #endif
+    return 1;
+}
+
+/*********************************************************************
+ *
+ *       _ClearCache
+ */
+static void _ClearCache(U32 v)
+{
+    GUI_USE_PARA(v);
+    SCB_CleanInvalidateDCache();
 }
 
 /*******************************************************************************
@@ -287,10 +298,13 @@ void LCD_X_Config(void)
     LCD_SetLUT(&_aPalette_256);
 #endif
     BOARD_Touch_Init();
+    GUI_DCACHE_SetClearCacheHook(_ClearCache);
 }
 
 int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void *p)
 {
+    GUI_USE_PARA(LayerIndex);
+
     uint32_t addr;
 #if (LCD_BITS_PER_PIXEL == 8)
     uint16_t colorR, colorG, colorB;
@@ -384,21 +398,19 @@ U32 GUI_X_GetTaskId(void)
 
 void GUI_X_ExecIdle(void)
 {
+    GUI_X_Delay(1);
 }
 
 GUI_TIMER_TIME GUI_X_GetTime(void)
 {
-    return 0;
+    return GPT_GetCurrentTimerCount(EXAMPLE_GPT) / EXAMPLE_GPT_TICK_TO_MS;
 }
 
 void GUI_X_Delay(int Period)
 {
-    volatile int i;
-    for (; Period > 0; Period--)
-    {
-        for (i = 15000; i > 0; i--)
-            ;
-    }
+    volatile uint32_t tNow = GPT_GetCurrentTimerCount(EXAMPLE_GPT);
+    while ((GPT_GetCurrentTimerCount(EXAMPLE_GPT) - tNow) < Period * EXAMPLE_GPT_TICK_TO_MS)
+        ;
 }
 
 void *emWin_memcpy(void *pDst, const void *pSrc, long size)

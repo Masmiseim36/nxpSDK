@@ -660,13 +660,13 @@ smStatus_t se05x_DeCrypt(
 {
     AX_UNUSED_ARG(cmd_cmacLen);
     AX_UNUSED_ARG(hasle);
-    U16 rv = SM_NOT_OK;
+    smStatus_t rv = SM_NOT_OK;
 
     if (*rspLength >= 2) {
-        rv = rsp[(*rspLength) - 2] << 8 | rsp[(*rspLength) - 1];
+        rv = (smStatus_t) (rsp[(*rspLength) - 2] << 8 | rsp[(*rspLength) - 1]);
         if ((rv == SM_OK) && (pSessionCtx->pdynScp03Ctx != NULL)) {
 #if SSS_HAVE_SCP_SCP03_SSS
-            rv = nxpSCP03_Decrypt_ResponseAPDU(pSessionCtx->pdynScp03Ctx, cmd_cmacLen, rsp, rspLength, hasle);
+            rv = (smStatus_t) nxpSCP03_Decrypt_ResponseAPDU(pSessionCtx->pdynScp03Ctx, cmd_cmacLen, rsp, rspLength, hasle);
 #else
             LOG_W("Decrypting without SSS_HAVE_SCP_SCP03_SSS");
             rv = SM_NOT_OK;

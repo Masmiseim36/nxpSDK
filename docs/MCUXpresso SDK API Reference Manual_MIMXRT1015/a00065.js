@@ -1,11 +1,11 @@
 var a00065 =
 [
-    [ "wdog_work_mode_t", "a00065.html#a00395", [
+    [ "wdog_work_mode_t", "a00065.html#a00394", [
       [ "enableWait", "a00065.html#ac4c03e680f6c2070c50e9cbb7eae64fc", null ],
       [ "enableStop", "a00065.html#a26f09db30cdfe918931fb6e2ea0545ad", null ],
       [ "enableDebug", "a00065.html#ac46160e5425428c3f6b2bd7a9103539e", null ]
     ] ],
-    [ "wdog_config_t", "a00065.html#a00394", [
+    [ "wdog_config_t", "a00065.html#a00393", [
       [ "enableWdog", "a00065.html#a871dc017463d6cc5d31121b40affa1a4", null ],
       [ "workMode", "a00065.html#a52dd1d98958c48e0a342e3ffe9a1c351", null ],
       [ "enableInterrupt", "a00065.html#aa749ba919bb8ddf9b52fda7781afa6b5", null ],

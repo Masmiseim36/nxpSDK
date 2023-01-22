@@ -1,16 +1,16 @@
 var a00082 =
 [
-    [ "wm8904_fll_config_t", "a00082.html#a00545", [
+    [ "wm8904_fll_config_t", "a00082.html#a00544", [
       [ "source", "a00082.html#a8f428fb7c12a19ade6f5e1256eb2d3ab", null ],
       [ "refClock_HZ", "a00082.html#ad5031f45aa290813407c23fde9362395", null ],
       [ "outputClock_HZ", "a00082.html#ab58ab790fa57e24806ef762dc9cbbbae", null ]
     ] ],
-    [ "wm8904_audio_format_t", "a00082.html#a00543", [
+    [ "wm8904_audio_format_t", "a00082.html#a00542", [
       [ "fsRatio", "a00082.html#ae347b1f33c3ffb4ada81e4f92f411078", null ],
       [ "sampleRate", "a00082.html#a70e2ebf219579d09e01e1be2260eef85", null ],
       [ "bitWidth", "a00082.html#a796424731fc3253256f504201023c0c8", null ]
     ] ],
-    [ "wm8904_config_t", "a00082.html#a00544", [
+    [ "wm8904_config_t", "a00082.html#a00543", [
       [ "master", "a00082.html#a1aabe6eeed1fdd3e9f52237c546c84b0", null ],
       [ "sysClkSource", "a00082.html#a425f10e0fb06972de639c70355365993", null ],
       [ "fll", "a00082.html#a4a1ff0eefd3d6487397e623427c911e0", null ],
@@ -24,7 +24,7 @@ var a00082 =
       [ "slaveAddress", "a00082.html#a8b64f19353f3640c5a7a405ee5e12288", null ],
       [ "i2cConfig", "a00082.html#ae4fc1a1b270220bf34ae6b240ab0c2a6", null ]
     ] ],
-    [ "wm8904_handle_t", "a00082.html#a00546", [
+    [ "wm8904_handle_t", "a00082.html#a00545", [
       [ "config", "a00082.html#a70c31d1408f2812d276e3410d6a7e559", null ],
       [ "i2cHandle", "a00082.html#a191e10654e7aea123e3f9dbd453c9140", null ]
     ] ],

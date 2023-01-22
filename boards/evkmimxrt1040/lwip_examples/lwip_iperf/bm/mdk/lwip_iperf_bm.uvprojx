@@ -331,7 +331,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1042XJM5B, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, ENET_RXBUFF_NUM=14, ENET_RXBD_NUM=9, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -443,27 +443,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -496,26 +476,6 @@
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
@@ -534,6 +494,26 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -563,22 +543,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>lwiperf.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
             <File>
-              <FileName>lwiperf.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -586,29 +571,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1753,6 +1758,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -1913,28 +1938,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -1949,16 +1954,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2312,7 +2307,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1042XJM5B, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, ENET_RXBUFF_NUM=14, ENET_RXBD_NUM=9, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2424,27 +2419,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -2477,26 +2452,6 @@
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
@@ -2515,6 +2470,26 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2544,22 +2519,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>lwiperf.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
             <File>
-              <FileName>lwiperf.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2567,29 +2547,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3734,6 +3734,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -3894,28 +3914,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -3930,16 +3930,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -4293,7 +4283,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1042XJM5B, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, ENET_RXBUFF_NUM=14, ENET_RXBD_NUM=9, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4405,27 +4395,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -4458,26 +4428,6 @@
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
@@ -4496,6 +4446,26 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4525,22 +4495,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>lwiperf.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
             <File>
-              <FileName>lwiperf.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4548,29 +4523,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5715,6 +5710,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -5875,28 +5890,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -5911,16 +5906,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -6274,7 +6259,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1042XJM5B, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, ENET_RXBUFF_NUM=14, ENET_RXBD_NUM=9, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6386,27 +6371,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -6439,26 +6404,6 @@
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
@@ -6477,6 +6422,26 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -6506,22 +6471,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>lwiperf.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
             <File>
-              <FileName>lwiperf.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6529,29 +6499,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7696,6 +7686,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -7856,28 +7866,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -7892,16 +7882,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -8255,7 +8235,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1042XJM5B, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, ENET_RXBUFF_NUM=14, ENET_RXBD_NUM=9, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8367,27 +8347,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -8420,26 +8380,6 @@
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
@@ -8458,6 +8398,26 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -8487,22 +8447,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>lwiperf.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
             <File>
-              <FileName>lwiperf.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8510,29 +8475,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9677,6 +9662,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -9837,28 +9842,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -9873,16 +9858,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -10236,7 +10211,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1042XJM5B, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, ENET_RXBUFF_NUM=14, ENET_RXBD_NUM=9, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1042/drivers;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10348,27 +10323,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mdio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_enet_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet_mdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>phy</GroupName>
+          <GroupName>component/phy</GroupName>
           <Files>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
@@ -10401,26 +10356,6 @@
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
@@ -10439,6 +10374,26 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -10468,22 +10423,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>lwiperf.c</FileName>
+              <FileName>fsl_silicon_id.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
             <File>
-              <FileName>lwiperf.h</FileName>
+              <FileName>fsl_silicon_id.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10491,29 +10451,49 @@
           <GroupName>lwip/port</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+              <FileName>ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_priv.h</FileName>
+              <FileName>ethernetif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</FilePath>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_mmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_mmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernetif_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/ethernetif_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_sanitychecks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_sanitychecks.h</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11658,6 +11638,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/lwiperf</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>lwiperf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -11818,28 +11818,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
@@ -11854,16 +11834,6 @@
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>

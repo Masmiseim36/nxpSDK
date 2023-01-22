@@ -60,4 +60,5 @@
 #define CONFIG_BT_SETTINGS              1
 #define CONFIG_BT_KEYS_OVERWRITE_OLDEST 1
 
+#define CONFIG_BT_BLE_DISABLE 1
 #include "edgefast_bluetooth_config.h"

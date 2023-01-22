@@ -25,7 +25,7 @@
 #define CONFIG_BT_BUF_ACL_TX_COUNT          3
 #define CONFIG_BT_BUF_ACL_RX_SIZE           73
 #define CONFIG_BT_BUF_ACL_RX_COUNT          3
-#define CONFIG_BT_BUF_EVT_RX_SIZE           68
+#define CONFIG_BT_BUF_EVT_RX_SIZE           255
 #define CONFIG_BT_BUF_EVT_RX_COUNT          3
 #define CONFIG_BT_BUF_EVT_DISCARDABLE_SIZE  43
 #define CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT 20
@@ -44,7 +44,6 @@
 #define CONFIG_BT_HCI_RESERVE         0
 #define CONFIG_BT_RECV_BLOCKING       1
 #define CONFIG_BT_RX_STACK_SIZE       2048
-#define CONFIG_BT_RX_PRIO             8
 #define CONFIG_BT_DRIVER_RX_HIGH_PRIO 6
 
 #define CONFIG_BT_FILTER_ACCEPT_LIST         1
@@ -70,9 +69,9 @@
 /*
  * ATT and GATT Options
  */
-#define CONFIG_BT_ATT_ENFORCE_FLOW  1
-#define CONFIG_BT_ATT_PREPARE_COUNT 8
-/* #define CONFIG_BT_EATT 1 */
+#define CONFIG_BT_ATT_ENFORCE_FLOW               1
+#define CONFIG_BT_ATT_PREPARE_COUNT              8
+#define CONFIG_BT_EATT                           1
 #define CONFIG_BT_EATT_MAX                       5
 #define CONFIG_BT_EATT_SEC_LEVEL                 1
 #define CONFIG_BT_GATT_AUTO_SEC_REQ              1
@@ -81,6 +80,7 @@
 #define CONFIG_BT_GATT_CACHING                   1
 #define CONFIG_BT_GATT_CLIENT                    1
 #define CONFIG_BT_GATT_READ_MULTIPLE             1
+#define CONFIG_BT_GATT_NOTIFY_MULTIPLE           1
 #define CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS    1
 #define CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS     1
 #define CONFIG_BT_PERIPHERAL_PREF_MIN_INT        24
@@ -134,7 +134,7 @@
  */
 
 /* @TEST_ANCHOR */
-#define WIFI_IW416_BOARD_AW_AM510_USD
+#define WIFI_IW416_BOARD_MURATA_1XK_USD
 /* @END_TEST_ANCHOR */
 /*#define WIFI_IW416_BOARD_AW_AM457_USD*/
 /*#define WIFI_88W8987_BOARD_AW_CM358_USD*/

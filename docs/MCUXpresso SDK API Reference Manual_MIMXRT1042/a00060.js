@@ -1,11 +1,11 @@
 var a00060 =
 [
-    [ "rtwdog_work_mode_t", "a00060.html#a00469", [
+    [ "rtwdog_work_mode_t", "a00060.html#a00468", [
       [ "enableWait", "a00060.html#ab54bf4ab423e60be41368acdb2602439", null ],
       [ "enableStop", "a00060.html#ae8caa5a6c04d0f3dcafba6ac6adb9905", null ],
       [ "enableDebug", "a00060.html#ab26c42c1815cfdc9b8b5f759db9be94d", null ]
     ] ],
-    [ "rtwdog_config_t", "a00060.html#a00468", [
+    [ "rtwdog_config_t", "a00060.html#a00467", [
       [ "enableRtwdog", "a00060.html#a4d385e66b0c28b471ad83fe2e6fc6a1b", null ],
       [ "clockSource", "a00060.html#aff561a937f074058a0565d2ffded113b", null ],
       [ "prescaler", "a00060.html#adf6d7a1cdf7d57cc6f2893d3eef8f0e2", null ],

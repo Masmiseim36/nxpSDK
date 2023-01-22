@@ -415,28 +415,29 @@ int streamer_set_master_clock(int sample_rate)
         case 12000:
         case 24000:
         {
-            divider = 63;
+            divider = 15;
             break;
         }
         case 8000:
         {
-            predivider = 1;
+            divider = 23;
+            break;
         }
         case 16000:
         {
-            divider = 47;
+            divider = 11;
             break;
         }
         case 32000:
         {
-            divider = 23;
+            divider = 5;
             break;
         }
         case 22050:
         case 44100:
         case 48000:
         default:
-            divider = 31;
+            divider = 7;
             break;
     }
 

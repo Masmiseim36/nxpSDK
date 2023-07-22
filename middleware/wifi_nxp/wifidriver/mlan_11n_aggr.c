@@ -152,3 +152,47 @@ done:
     return ret;
 }
 
+#if defined(RW610)
+#ifdef AMSDU_IN_AMPDU
+int wlan_11n_form_amsdu_pkt(t_u8 *amsdu_buf, t_u8 *data, int pkt_len, int *pad)
+{
+    int dt_offset, amsdu_buf_offset;
+    Rfc1042Hdr_t snap = {
+        0xaa,               /* LLC DSAP */
+        0xaa,               /* LLC SSAP */
+        0x03,               /* LLC CTRL */
+        {0x00, 0x00, 0x00}, /* SNAP OUI */
+        0x0000              /* SNAP type */
+        /*
+         * This field will be overwritten
+         * later with ethertype
+         */
+    };
+
+    ENTER();
+
+    memcpy(amsdu_buf, data, (MLAN_MAC_ADDR_LENGTH)*2);
+    dt_offset = amsdu_buf_offset = (MLAN_MAC_ADDR_LENGTH)*2;
+
+    snap.snap_type = *(t_u16 *)(data + dt_offset);
+    dt_offset += sizeof(t_u16);
+    *(t_u16 *)(amsdu_buf + amsdu_buf_offset) =
+        mlan_htons(pkt_len + LLC_SNAP_LEN - ((2 * MLAN_MAC_ADDR_LENGTH) + sizeof(t_u16)));
+    amsdu_buf_offset += sizeof(t_u16);
+    memcpy(amsdu_buf + amsdu_buf_offset, &snap, LLC_SNAP_LEN);
+    amsdu_buf_offset += LLC_SNAP_LEN;
+#ifdef CONFIG_IMU_GDMA
+    HAL_ImuGdmaCopyData(amsdu_buf + amsdu_buf_offset, data + dt_offset, pkt_len - dt_offset);
+#else
+    memcpy(amsdu_buf + amsdu_buf_offset, data + dt_offset, pkt_len - dt_offset);
+#endif
+    *pad = (((pkt_len + LLC_SNAP_LEN) & 3)) ? (4 - (((pkt_len + LLC_SNAP_LEN)) & 3)) : 0;
+    if (*pad)
+        memset(amsdu_buf + pkt_len + LLC_SNAP_LEN, 0, *pad);
+
+    LEAVE();
+    return pkt_len + LLC_SNAP_LEN + *pad;
+}
+#endif
+#endif
+

@@ -185,11 +185,12 @@
       <files mask="MIMXRT1176xxxxx_cm4_ram_0x1400.scf"/>
     </source>
     <source path="mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1170_ram_0x1400.ini"/>
+      <files mask="evkmimxrt1170_ram_cm4_0x1400.ini"/>
       <files mask="evkmimxrt1170_ram_cm4.ini"/>
       <files mask="evkmimxrt1170_cm4_sdram_init.ini"/>
       <files mask="evkmimxrt1170_cm4_flexspi_nor.ini"/>
       <files mask="evkmimxrt1170_flexspi_nor_sdram.ini"/>
+      <files mask="evkmimxrt1170_cm4_sdram_init_txt.ini"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="hello_world.c"/>

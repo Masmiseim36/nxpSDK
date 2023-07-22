@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,7 +19,11 @@
 #include "RdspCycleCounter.h"
 #include "RdspDeviceConfig.h"
 
-#if defined(PLATFORM_RT1060)
+#if defined(PLATFORM_RT1040)
+#define DEVICE_ID    Device_IMXRT1040_CM7
+#define RDSP_NUM_MIC 2
+
+#elif defined(PLATFORM_RT1060)
 #define DEVICE_ID    Device_IMXRT1060_CM7
 #define RDSP_NUM_MIC 2
 
@@ -73,7 +77,7 @@ int VoiceSeeker_Initialize(void *arg)
         return MALLOC_FAIL;
     }
 
-#if defined(PLATFORM_RT1060)
+#if (defined(PLATFORM_RT1060) || defined(PLATFORM_RT1040))
     /* AUD-EXP-42448 board rev B */
     // MIC0
     if (vsl_config.num_mics > 0)

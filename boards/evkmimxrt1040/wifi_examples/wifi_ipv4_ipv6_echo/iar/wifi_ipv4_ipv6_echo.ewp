@@ -392,6 +392,7 @@
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1510,6 +1511,7 @@
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2457,6 +2459,18 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</name>
         </file>
         <file>
@@ -2528,6 +2542,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_api.c</name>
@@ -3729,6 +3755,21 @@
           </file>
         </group>
       </group>
+    </group>
+  </group>
+  <group>
+    <name>edgefast_wifi</name>
+    <group>
+      <name>source</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</name>
+      </file>
+    </group>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include/wpl.h</name>
+      </file>
     </group>
   </group>
   <group>

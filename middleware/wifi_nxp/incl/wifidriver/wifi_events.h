@@ -19,6 +19,8 @@ enum wifi_event
     WIFI_EVENT_UAP_STARTED = 0,
     /** uAP Client Assoc */
     WIFI_EVENT_UAP_CLIENT_ASSOC,
+    /** uAP Client connected */
+    WIFI_EVENT_UAP_CLIENT_CONN,
     /** uAP Client De-authentication */
     WIFI_EVENT_UAP_CLIENT_DEAUTH,
     /** uAP Network Address Configuration */
@@ -53,8 +55,10 @@ enum wifi_event
     WIFI_EVENT_NET_INTERFACE_CONFIG,
     /** WEP configuration */
     WIFI_EVENT_WEP_CONFIG,
-    /** MAC address configuration */
-    WIFI_EVENT_MAC_ADDR_CONFIG,
+    /** STA MAC address configuration */
+    WIFI_EVENT_STA_MAC_ADDR_CONFIG,
+    /** UAP MAC address configuration */
+    WIFI_EVENT_UAP_MAC_ADDR_CONFIG,
     /** Network DHCP configuration */
     WIFI_EVENT_NET_DHCP_CONFIG,
     /** Supplicant PMK */
@@ -67,6 +71,8 @@ enum wifi_event
     WIFI_EVENT_IEEE_PS,
     /** Deep Sleep */
     WIFI_EVENT_DEEP_SLEEP,
+    /** WNM ps */
+    WIFI_EVENT_WNM_PS,
     /** PS Invalid */
     WIFI_EVENT_PS_INVALID,
     /** HS configuration */
@@ -75,6 +81,8 @@ enum wifi_event
     WIFI_EVENT_ERR_MULTICAST,
     /** error Unicast */
     WIFI_EVENT_ERR_UNICAST,
+    /** 802.11K/11V neighbor report */
+    WIFI_EVENT_NLIST_REPORT,
     /* Add Block Ack */
     /** 802.11N add block ack */
     WIFI_EVENT_11N_ADDBA,
@@ -95,6 +103,13 @@ enum wifi_event
 #ifdef CONFIG_WIFI_FW_DEBUG
     /* WiFi FW Debug Info */
     WIFI_EVENT_FW_DEBUG_INFO,
+#endif
+    /* Event to indicate RX Management Frame */
+    WIFI_EVENT_MGMT_FRAME,
+#ifdef IW61x
+    /*IMD3 Calibration events for IW61X */
+    WIFI_EVENT_IMD3_CAL_START,
+    WIFI_EVENT_IMD3_CAL_END,
 #endif
     /** Event to indicate end of Wi-Fi events */
     WIFI_EVENT_LAST,

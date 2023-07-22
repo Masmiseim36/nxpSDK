@@ -71,6 +71,7 @@ set(CMAKE_MODULE_PATH
     ${SdkRootDirPath}/middleware/sdmmc
     ${SdkRootDirPath}/components/gpio
     ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/middleware/edgefast_wifi
     ${SdkRootDirPath}/devices/MIMXRT1042
     ${SdkRootDirPath}/components/uart
     ${SdkRootDirPath}/components/serial_manager
@@ -112,6 +113,8 @@ include(middleware_lwip_MIMXRT1042)
 include(middleware_wifi_MIMXRT1042)
 
 include(middleware_lwip_contrib_ping_MIMXRT1042)
+
+include(middleware_edgefast_wifi_nxp_MIMXRT1042)
 
 include(driver_clock_MIMXRT1042)
 
@@ -156,6 +159,8 @@ include(driver_usdhc_MIMXRT1042)
 include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1042)
 
 include(middleware_wifi_common_files_MIMXRT1042)
+
+include(middleware_edgefast_wifi_MIMXRT1042)
 
 include(utilities_misc_utilities_MIMXRT1042)
 

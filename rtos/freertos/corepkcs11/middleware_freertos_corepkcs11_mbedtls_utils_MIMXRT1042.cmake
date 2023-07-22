@@ -13,5 +13,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 
 include(middleware_pkcs11_MIMXRT1042)
 
-include(middleware_mbedtls_MIMXRT1042)
+include(middleware_mbedtls_port_ksdk_MIMXRT1042)
 

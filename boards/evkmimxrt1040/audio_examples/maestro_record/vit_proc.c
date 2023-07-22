@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,23 +25,27 @@
 #define BYTE_DEPTH         2
 #define NUMBER_OF_CHANNELS 1
 #define VIT_CMD_TIME_SPAN  3.0
-#define MODEL_LOCATION     VIT_MODEL_IN_ROM
 #define VIT_OPERATING_MODE VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 
 #if defined(PLATFORM_RT1040)
-#define DEVICE_ID VIT_IMXRT1040
+#define DEVICE_ID      VIT_IMXRT1040
+#define MODEL_LOCATION VIT_MODEL_IN_RAM
 
 #elif defined(PLATFORM_RT1050)
-#define DEVICE_ID VIT_IMXRT1050
+#define DEVICE_ID      VIT_IMXRT1050
+#define MODEL_LOCATION VIT_MODEL_IN_ROM
 
 #elif defined(PLATFORM_RT1060)
-#define DEVICE_ID VIT_IMXRT1060
+#define DEVICE_ID      VIT_IMXRT1060
+#define MODEL_LOCATION VIT_MODEL_IN_ROM
 
 #elif defined(PLATFORM_RT1160)
-#define DEVICE_ID VIT_IMXRT1160
+#define DEVICE_ID      VIT_IMXRT1160
+#define MODEL_LOCATION VIT_MODEL_IN_ROM
 
 #elif defined(PLATFORM_RT1170)
-#define DEVICE_ID VIT_IMXRT1170
+#define DEVICE_ID      VIT_IMXRT1170
+#define MODEL_LOCATION VIT_MODEL_IN_ROM
 
 #else
 #error "No platform selected"
@@ -156,10 +160,10 @@ int VIT_Initialize(void *arg)
     switch (Vit_Language)
     {
         case CN:
-            VIT_Status = VIT_SetModel(VIT_Model_cn, VIT_MODEL_IN_ROM);
+            VIT_Status = VIT_SetModel(VIT_Model_cn, MODEL_LOCATION);
             break;
         default:
-            VIT_Status = VIT_SetModel(VIT_Model_en, VIT_MODEL_IN_ROM);
+            VIT_Status = VIT_SetModel(VIT_Model_en, MODEL_LOCATION);
     }
     if (VIT_Status != VIT_SUCCESS)
     {

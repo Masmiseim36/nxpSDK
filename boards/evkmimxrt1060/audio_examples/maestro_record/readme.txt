@@ -40,6 +40,10 @@ Type "help" to see the command list. Similar description will be displayed on se
 
 For custom VIT model generation (defining own wake words and voice commands) please use https://vit.nxp.com/
 
+Note:
+    - If more than one channel is used and VIT is enabled, please enable VoiceSeeker.
+        - The VoiceSeeker that combines multiple channels into one must be used, as VIT can only work with one channel.
+
 
 Toolchain supported
 ===================

@@ -61,29 +61,13 @@ typedef struct
  * is associated with. Properties can be used to configure the individual
  * pipeline elements.
  */
-static ElementPropertyLookup property_lookup_table[] = {{PROP_AUDIOSRC_MASK, ELEMENT_AUDIO_SRC_INDEX},
-#ifdef STREAMER_ENABLE_FILESRC
-                                                        {PROP_FILESRC_MASK, ELEMENT_FILE_SRC_INDEX},
-#endif
-#ifdef STREAMER_ENABLE_MEM_SRC
-                                                        {PROP_MEMSRC_MASK, ELEMENT_MEM_SRC_INDEX},
-#endif
-                                                        {PROP_NETBUFSRC_MASK, ELEMENT_NETBUF_SRC_INDEX},
-                                                        {PROP_DECODER_MASK, ELEMENT_DECODER_INDEX},
-                                                        {PROP_AUDIOSINK_MASK, ELEMENT_AUDIO_SINK_INDEX},
-#ifdef STREAMER_ENABLE_FILE_SINK
-                                                        {PROP_FILESINK_MASK, ELEMENT_FILE_SINK_INDEX},
-#endif
-#ifdef STREAMER_ENABLE_MEM_SINK
-                                                        {PROP_MEMSINK_MASK, ELEMENT_MEM_SINK_INDEX},
-#endif
-#ifdef STREAMER_ENABLE_VIT_SINK
-                                                        {PROP_VITSINK_MASK, ELEMENT_VIT_INDEX},
-#endif
-#ifdef STREAMER_ENABLE_AUDIO_PROC
-                                                        {PROP_AUDIO_PROC_MASK, ELEMENT_AUDIO_PROC_INDEX},
-#endif
-                                                        {PROP_ENCODER_MASK, ELEMENT_ENCODER_INDEX}};
+static ElementPropertyLookup property_lookup_table[] = {
+    {PROP_AUDIOSRC_MASK, ELEMENT_AUDIO_SRC_INDEX}, {PROP_FILESRC_MASK, ELEMENT_FILE_SRC_INDEX},
+    {PROP_MEMSRC_MASK, ELEMENT_MEM_SRC_INDEX},     {PROP_NETBUFSRC_MASK, ELEMENT_NETBUF_SRC_INDEX},
+    {PROP_DECODER_MASK, ELEMENT_DECODER_INDEX},    {PROP_AUDIOSINK_MASK, ELEMENT_AUDIO_SINK_INDEX},
+    {PROP_FILESINK_MASK, ELEMENT_FILE_SINK_INDEX}, {PROP_MEMSINK_MASK, ELEMENT_MEM_SINK_INDEX},
+    {PROP_VITSINK_MASK, ELEMENT_VIT_INDEX},        {PROP_AUDIO_PROC_MASK, ELEMENT_AUDIO_PROC_INDEX},
+    {PROP_ENCODER_MASK, ELEMENT_ENCODER_INDEX}};
 
 /*
  * GLOBAL FUNCTIONS

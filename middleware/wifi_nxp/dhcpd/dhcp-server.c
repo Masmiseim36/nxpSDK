@@ -745,6 +745,7 @@ int dhcp_free_allocations(void)
 
 static int send_gratuitous_arp(uint32_t ip)
 {
+    uint8_t sta_mac[ETH_HW_ADDR_LEN];
     int sock;
     struct arp_packet pkt;
     struct sockaddr_in to_addr;
@@ -762,8 +763,8 @@ static int send_gratuitous_arp(uint32_t ip)
 
     (void)memset(pkt.targ_hw_addr, 0xff, ETH_HW_ADDR_LEN);
     (void)memset(pkt.rcpt_hw_addr, 0xff, ETH_HW_ADDR_LEN);
-    (void)wlan_get_mac_address(pkt.sndr_hw_addr);
-    (void)wlan_get_mac_address(pkt.src_hw_addr);
+    (void)wlan_get_mac_address(sta_mac, pkt.sndr_hw_addr);
+    (void)memcpy(pkt.src_hw_addr, pkt.sndr_hw_addr, ETH_HW_ADDR_LEN);
     sock = net_socket(AF_INET, SOCK_DGRAM, 0);
     if (sock < 0)
     {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
  *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
@@ -127,8 +127,7 @@
 #include <wifi.h>
 #include <wlan_11d.h>
 
-#define WLAN_DRV_VERSION "v1.3.r42.p4"
-
+#define WLAN_DRV_VERSION "v1.3.r44.p2"
 /* Configuration */
 
 #define CONFIG_WLAN_KNOWN_NETWORKS 5U
@@ -239,6 +238,10 @@ typedef enum
 #define CARD_WAKEUP_GPIO_PIN 16 //?
 #endif
 
+/** BITMAP for Action frame */
+#define WLAN_MGMT_ACTION MBIT(13)
+
+
 /** Enum for wlan errors*/
 enum wm_wlan_errno
 {
@@ -313,6 +316,8 @@ enum wlan_event_reason
     WLAN_REASON_UAP_SUCCESS,
     /** A wireless client has joined uAP's BSS network */
     WLAN_REASON_UAP_CLIENT_ASSOC,
+    /** A wireless client has auhtenticated and connected to uAP's BSS network */
+    WLAN_REASON_UAP_CLIENT_CONN,
     /** A wireless client has left uAP's BSS network */
     WLAN_REASON_UAP_CLIENT_DISSOC,
     /** The WLAN Connection Manager has failed to start uAP */
@@ -321,7 +326,10 @@ enum wlan_event_reason
     WLAN_REASON_UAP_STOP_FAILED,
     /** The WLAN Connection Manager has stopped uAP */
     WLAN_REASON_UAP_STOPPED,
-
+    /** The WLAN Connection Manager has received subscribed RSSI low event on station interface as per configured
+       threshold and frequency. If CONFIG_11K, CONFIG_11V, CONFIG_11R or CONFIG_ROAMING enabled then RSSI low event is
+       processed internally.*/
+    WLAN_REASON_RSSI_LOW,
 };
 
 /** Wakeup events for which wakeup will occur */
@@ -406,6 +414,7 @@ typedef enum _Host_Sleep_Action
 } Host_Sleep_Action;
 
 
+
 /** Scan Result */
 struct wlan_scan_result
 {
@@ -440,6 +449,14 @@ struct wlan_scan_result
     unsigned wpa2 : 1;
     /** The network uses WPA3 SAE security */
     unsigned wpa3_sae : 1;
+#ifdef CONFIG_11R
+    /** The network uses FT 802.1x security (For internal use only)*/
+    unsigned ft_1x : 1;
+    /** The network uses FT PSK security (For internal use only)*/
+    unsigned ft_psk : 1;
+    /** The network uses FT SAE security (For internal use only)*/
+    unsigned ft_sae : 1;
+#endif
 
     /** The signal strength of the beacon */
     unsigned char rssi;
@@ -458,6 +475,20 @@ struct wlan_scan_result
 
     /** DTIM Period */
     uint8_t dtim_period;
+
+    /** MFPC bit of AP*/
+    t_u8 ap_mfpc;
+    /** MFPR bit of AP*/
+    t_u8 ap_mfpr;
+
+#ifdef CONFIG_11K
+    /** Neigbort report support (For internal use only)*/
+    bool neighbor_report_supported;
+#endif
+#ifdef CONFIG_11V
+    /* bss transition support (For internal use only)*/
+    bool bss_transition_supported;
+#endif
 };
 
 typedef enum
@@ -521,6 +552,9 @@ enum wlan_security_type
     WLAN_SECURITY_WPA,
     /** The network uses WPA2 security with PSK. */
     WLAN_SECURITY_WPA2,
+    /** The network uses WPA2 security with PSK(SHA-1 and SHA-256).This security mode
+     * is specific to uAP or SoftAP only */
+    WLAN_SECURITY_WPA2_SHA256,
     /** The network uses WPA/WPA2 mixed security with PSK */
     WLAN_SECURITY_WPA_WPA2_MIXED,
     /** The network can use any security method. This is often used when
@@ -588,6 +622,10 @@ struct wlan_network_security
     /** Length of the WPA3 SAE Password, \ref WLAN_PASSWORD_MIN_LENGTH to \ref
      * WLAN_PASSWORD_MAX_LENGTH.  Ignored for networks with no security. */
     size_t password_len;
+    /** PWE derivation */
+    uint8_t pwe_derivation;
+    /** transition disable */
+    uint8_t transition_disable;
     /** Pairwise Master Key.  When pmk_valid is set, this is the PMK calculated
      * from the PSK for WPA/PSK networks.  If pmk_valid is not set, this field
      * is not valid.  When adding networks with \ref wlan_add_network, users
@@ -684,6 +722,21 @@ typedef wifi_ext_coex_stats_t wlan_ext_coex_stats_t;
  */
 typedef wifi_ext_coex_config_t wlan_ext_coex_config_t;
 #endif
+
+#ifdef CONFIG_WIFI_CLOCKSYNC
+/** Configuration for Clock Sync GPIO TSF latch
+ * \ref wifi_clock_sync_gpio_tsf_t
+ */
+typedef wifi_clock_sync_gpio_tsf_t wlan_clock_sync_gpio_tsf_t;
+/** Configuration for TSF info
+ * \ref wifi_tsf_info_t
+ */
+typedef wifi_tsf_info_t wlan_tsf_info_t;
+#endif
+
+
+typedef wifi_mgmt_frame_t wlan_mgmt_frame_t;
+
 
 
 int verify_scan_duration_value(int scan_duration);
@@ -864,12 +917,47 @@ struct wlan_network
      * WLAN_SECURITY_WILDCARD.
      */
     unsigned security_specific : 1;
+#ifdef CONFIG_11R
+    /* Mobility Domain ID */
+    uint16_t mdid;
+    /** The network uses FT 802.1x security (For internal use only)*/
+    unsigned ft_1x : 1;
+    /** The network uses FT PSK security (For internal use only)*/
+    unsigned ft_psk : 1;
+    /** The network uses FT SAE security (For internal use only)*/
+    unsigned ft_sae : 1;
+#endif
     /** Beacon period of associated BSS */
     uint16_t beacon_period;
     /** DTIM period of associated BSS */
     uint8_t dtim_period;
+#ifdef CONFIG_WIFI_CAPA
+    /** Wireless capabilities of uAP network 802.11n, 802.11ac or/and 802.11ax*/
+    uint8_t wlan_capa;
+#endif
+#ifdef CONFIG_11V
+    /** BTM mode */
+    uint8_t btm_mode;
+    /* bss transition support (For internal use only)*/
+    bool bss_transition_supported;
+#endif
+#ifdef CONFIG_11K
+    /* Neighbor report support (For internal use only)*/
+    bool neighbor_report_supported;
+#endif
 };
 
+#if defined(RW610)
+typedef enum
+{
+    CLI_DISABLE_WIFI,
+    CLI_ENABLE_WIFI,
+    CLI_RESET_WIFI,
+} cli_reset_option;
+#endif
+
+
+typedef wifi_uap_client_disassoc_t wlan_uap_client_disassoc_t;
 
 /* WLAN Connection Manager API */
 
@@ -928,6 +1016,28 @@ int wlan_stop(void);
  */
 void wlan_deinit(int action);
 
+#if defined(RW610)
+/** Reset driver.
+ *  \param ResetOption option including enable, disable or reset wifi driver
+ *  can be chosen.
+ */
+void wlan_reset(cli_reset_option ResetOption);
+/** Stop and Remove all wireless network (Access Point).
+ *
+ *  \return WM_SUCCESS if successful.
+ */
+int wlan_remove_all_networks(void);
+/**
+ * This API destroy all tasks.
+ */
+void wlan_destroy_all_tasks(void);
+/** Retrieve the status information of if wlan started.
+ *
+ *  \return TRUE if started.
+ *  \return FALSE if not started.
+ */
+bool wlan_is_started();
+#endif
 /** WLAN initialize micro-AP network information
  *
  * This API intializes a default micro-AP network. The network ssid, passphrase
@@ -1113,17 +1223,16 @@ int wlan_stop_network(const char *name);
 
 /** Retrieve the wireless MAC address of station/micro-AP interface.
  *
- *  This function copies the MAC address of the wireless interface to
- *  the 6-byte array pointed to by \a dest.  In the event of an error, nothing
- *  is copied to \a dest.
+ *  This function copies the MAC address of the station interface to sta mac address and uAP interface to uap mac
+ * address.
  *
- *  \param[out] dest A pointer to a 6-byte array where the MAC address will be
- *              copied.
+ *  \param[out] sta_mac A pointer to sta mac addr array.
+ *  \param[out] uap_mac A pointer to uap mac addr array.
  *
  *  \return WM_SUCCESS if the MAC address was copied.
- *  \return -WM_E_INVAL if \a dest is NULL.
+ *  \return -WM_E_INVAL if \a sta_mac or uap_mac is NULL.
  */
-int wlan_get_mac_address(unsigned char *dest);
+int wlan_get_mac_address(unsigned char *sta_mac, unsigned char *uap_mac);
 
 /** Retrieve the IP address configuration of the station interface.
  *
@@ -1439,7 +1548,7 @@ int wlan_enable_low_pwr_mode();
 #endif
 
 /**
- * Configure ED MAC mode in Wireless Firmware.
+ * Configure ED MAC mode for Station in Wireless Firmware.
  *
  * \note When ed mac mode is enabled,
  * Wireless Firmware will behave following way:
@@ -1471,7 +1580,39 @@ int wlan_enable_low_pwr_mode();
 int wlan_set_ed_mac_mode(wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl);
 
 /**
- * This API can be used to get current ED MAC MODE configuration.
+ * Configure ED MAC mode for Micro AP in Wireless Firmware.
+ *
+ * \note When ed mac mode is enabled,
+ * Wireless Firmware will behave following way:
+ *
+ * when background noise had reached -70dB or above,
+ * WiFi chipset/module should hold data transmitting
+ * until condition is removed.
+ * It is applicable for both 5GHz and 2.4GHz bands.
+ *
+ * \param[in] wlan_ed_mac_ctrl  Struct with following parameters
+ *	 ed_ctrl_2g	     0  - disable EU adaptivity for 2.4GHz band
+ *                           1  - enable EU adaptivity for 2.4GHz band
+ *
+ *       ed_offset_2g        0  - Default Energy Detect threshold (Default: 0x9)
+ *                           offset value range: 0x80 to 0x7F
+ *
+ * \note If 5GH enabled then add following parameters
+ *
+ *       ed_ctrl_5g          0  - disable EU adaptivity for 5GHz band
+ *                           1  - enable EU adaptivity for 5GHz band
+ *
+ *       ed_offset_5g        0  - Default Energy Detect threshold(Default: 0xC)
+ *                           offset value range: 0x80 to 0x7F
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ *
+ */
+int wlan_set_uap_ed_mac_mode(wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl);
+
+/**
+ * This API can be used to get current ED MAC MODE configuration for Station.
  *
  * \param[out] wlan_ed_mac_ctrl A pointer to \ref wlan_ed_mac_ctrl_t
  * 			with parameters mentioned in above set API.
@@ -1481,6 +1622,18 @@ int wlan_set_ed_mac_mode(wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl);
  *
  */
 int wlan_get_ed_mac_mode(wlan_ed_mac_ctrl_t *wlan_ed_mac_ctrl);
+
+/**
+ * This API can be used to get current ED MAC MODE configuration for Micro AP.
+ *
+ * \param[out] wlan_ed_mac_ctrl A pointer to \ref wlan_ed_mac_ctrl_t
+ * 			with parameters mentioned in above set API.
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ *
+ */
+int wlan_get_uap_ed_mac_mode(wlan_ed_mac_ctrl_t *wlan_ed_mac_ctrl);
 
 /** Set wireless calibration data in WLAN firmware.
  *
@@ -1497,12 +1650,15 @@ void wlan_set_cal_data(uint8_t *cal_data, unsigned int cal_data_size);
  *
  * This function may be called to set wireless MAC Address in firmware.
  * This should be call before \ref wlan_init() function.
+ * When called after wlan init done, the incoming mac is treated as the sta mac address directly. And mac[4] plus 1 the
+ * modifed mac as the UAP mac address.
  *
  * \param[in] mac The MAC Address in 6 byte array format like
  *                uint8_t mac[] = { 0x00, 0x50, 0x43, 0x21, 0x19, 0x6E};
  *
  */
 void wlan_set_mac_addr(uint8_t *mac);
+
 
 
 
@@ -1669,16 +1825,11 @@ int wlan_get_tsf(uint32_t *tsf_high, uint32_t *tsf_low);
  *            \ref WAKE_ON_MULTICAST,
  *            \ref WAKE_ON_ARP_BROADCAST,
  *            \ref WAKE_ON_MGMT_FRAME
- *            wnm_set 1: wnm is set. 0: wnm is not set.
- *            wnm_sleep_time: wnm sleep interval.(number of dtims)
  *
  * \return WM_SUCCESS if the call was successful.
  * \return WLAN_ERROR_STATE if the call was made in a state where such an
  *         operation is illegal.
  * \return -WM_FAIL otherwise.
- *
- * \note     This function should be used after station gets connected
- *           to a network.
  *
  */
 int wlan_ieeeps_on(unsigned int wakeup_conditions);
@@ -1695,6 +1846,7 @@ int wlan_ieeeps_on(unsigned int wakeup_conditions);
  *
  */
 int wlan_ieeeps_off(void);
+
 
 /** Turn on Deep Sleep Power Save mode.
  *
@@ -2330,12 +2482,13 @@ int wlan_set_ext_coex_config(const wlan_ext_coex_config_t ext_coex_config);
  *
  * \param[in] bss_type  BSS Type of interface.
  * \param[in] index IE index.
+ * \param[in] mgmt_bitmap_index mgmt bitmap index.
  *
  * \return WM_SUCCESS if successful.
  * \return -WM_FAIL if unsuccessful.
  *
  */
-int wlan_clear_mgmt_ie(enum wlan_bss_type bss_type, IEEEtypes_ElementId_t index);
+int wlan_clear_mgmt_ie(enum wlan_bss_type bss_type, IEEEtypes_ElementId_t index, int mgmt_bitmap_index);
 
 /**
  * Get current status of 11d support.
@@ -2633,6 +2786,40 @@ void wlan_sta_ampdu_rx_enable(void);
  * when station is a receiver.
  */
 void wlan_sta_ampdu_rx_disable(void);
+
+#if defined(RW610)
+/**
+ * This API can be used to enable AMPDU support on the go
+ * when uap is a transmitter.
+ *
+ * \note By default the uap AMPDU TX support is on if
+ * configuration option is enabled in defconfig.
+ */
+void wlan_uap_ampdu_tx_enable(void);
+
+/**
+ * This API can be used to disable AMPDU support on the go
+ * when uap is a transmitter.
+ *
+ *\note By default the uap AMPDU RX support is on if
+ * configuration option is enabled in defconfig.
+ *
+ */
+void wlan_uap_ampdu_tx_disable(void);
+
+/**
+ * This API can be used to enable AMPDU support on the go
+ * when uap is a receiver.
+ */
+void wlan_uap_ampdu_rx_enable(void);
+
+/**
+ * This API can be used to disable AMPDU support on the go
+ * when uap is a receiver.
+ */
+void wlan_uap_ampdu_rx_disable(void);
+
+#endif
 
 /**
  * Set number of channels and channel number used during automatic
@@ -3137,17 +3324,23 @@ int wlan_set_crypto_AES_GCMP_decrypt(const t_u8 *Key,
 int wlan_send_hostcmd(
     void *cmd_buf, uint32_t cmd_buf_len, void *host_resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
 
-#ifdef CONFIG_11AX
-/**
- * Use this API to set the set 11AX Tx OMI.
+
+#ifdef CONFIG_WIFI_CLOCKSYNC
+/** Set Clock Sync GPIO based TSF
  *
- * \param[in] 11AX tx_omi value to be sent to Firmware
+ * \param[in] tsf_latch Clock Sync TSF latch parameters to be sent to Firmware
  *
- * \return WM_SUCCESS if operation is successful.
- * \return -WM_FAIL if command fails.
+ * \return WM_SUCCESS if successful otherwise failure.
  */
-int wlan_set_11ax_tx_omi(const t_u16 tx_omi);
-#endif
+int wlan_set_clocksync_cfg(const wlan_clock_sync_gpio_tsf_t *tsf_latch);
+/** Get TSF info from firmware using GPIO latch
+ *
+ * \param[out] tsf_info TSF info parameter received from Firmware
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_get_tsf_info(wlan_tsf_info_t *tsf_info);
+#endif /* CONFIG_WIFI_CLOCKSYNC */
 
 #ifdef CONFIG_HEAP_DEBUG
 /**
@@ -3159,5 +3352,141 @@ void wlan_show_os_mem_stat();
 #endif
 
 
+#ifdef CONFIG_11R
+/**
+ * Start FT roaming : This API is used to initiate fast BSS transition based
+ * roaming.
+ *
+ * \param[in] bssid       BSSID of AP to roam
+ * \param[in] channel     Channel of AP to roam
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_ft_roam(const t_u8 *bssid, const t_u8 channel);
+#endif
 
+/**
+ * This API can be used to start/stop the management frame forwards
+ * to host through datapath.
+ *
+ * \param[in] bss_type The interface from which management frame needs to be
+ *            collected.
+ * \param[in] mgmt_subtype_mask     Management Subtype Mask
+ *            If Bit X is set in mask, it means that IEEE Management Frame
+ *            SubTyoe X is to be filtered and passed through to host.
+ *            Bit                   Description
+ *            [31:14]               Reserved
+ *            [13]                  Action frame
+ *            [12:9]                Reserved
+ *            [8]                   Beacon
+ *            [7:6]                 Reserved
+ *            [5]                   Probe response
+ *            [4]                   Probe request
+ *            [3]                   Reassociation response
+ *            [2]                   Reassociation request
+ *            [1]                   Association response
+ *            [0]                   Association request
+ *            Support multiple bits set.
+ *            0 = stop forward frame
+ *            1 = start forward frame
+ *\param[in] rx_mgmt_callback The receive callback where the received management
+ *           frames are passed.
+ *
+ * \return WM_SUCCESS if operation is successful.
+ * \return -WM_FAIL if command fails.
+ *
+ * \note Pass Management Subtype Mask all zero to disable all the management
+ *       frame forward to host.
+ */
+int wlan_rx_mgmt_indication(const enum wlan_bss_type bss_type,
+                            const uint32_t mgmt_subtype_mask,
+                            int (*rx_mgmt_callback)(const enum wlan_bss_type bss_type,
+                                                    const wlan_mgmt_frame_t *frame,
+                                                    const size_t len));
+
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+void wlan_wmm_tx_stats_dump(int bss_type);
+#endif
+
+#ifdef CONFIG_EXT_SCAN_SUPPORT
+/**
+ * Set scan channel gap.
+ * \param[in] scan_chan_gap      Time gap to be used between two consecutive channels scan.
+ *
+ */
+void wlan_set_scan_channel_gap(unsigned scan_chan_gap);
+#endif
+
+#ifdef CONFIG_11K
+/**
+ * enable/disable host 11k feature
+ *
+ * \param[in] enable_11k the value of 11k configuration.
+ * \return WM_SUCCESS if successful otherwise failure.
+ *
+ */
+int wlan_host_11k_cfg(int enable_11k);
+
+/**
+ * host send neighbor report request
+ *
+ * \param[in] ssid the SSID for neighbor report
+ * \note ssid parameter is optional
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_host_11k_neighbor_req(t_u8 *ssid);
+#endif
+
+#ifdef CONFIG_11V
+/**
+ * host send bss transition management query
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_host_11v_bss_trans_query(t_u8 query_reason);
+#endif
+
+#ifdef CONFIG_MBO
+/**
+ * enable/disable MBO feature
+ *
+ * \param[in] enable_mbo the value of mbo configuration.
+ * \return WM_SUCCESS if successful otherwise failure.
+ *
+ */
+int wlan_host_mbo_cfg(int enable_mbo);
+
+/**
+ * mbo channel operation preference configuration
+ *
+ * \param[in] ch0 channel number.
+ * \param[in] prefer0 operation preference for ch0.
+ * \param[in] ch1 channel number.
+ * \param[in] prefer1 operation preference for ch1.
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_mbo_peferch_cfg(t_u8 ch0, t_u8 pefer0, t_u8 ch1, t_u8 pefer1);
+#endif
+
+
+
+
+
+
+
+
+
+#if defined(CONFIG_11K) || defined(CONFIG_11V) || defined(CONFIG_ROAMING)
+/**
+ * Use this API to set the RSSI threshold value for low RSSI event subscription.
+ * When RSSI falls below this threshold firmware will generate the low RSSI event to driver.
+ * This low RSSI event is used when either of CONFIG_11R, CONFIG_11K, CONFIG_11V or CONFIG_ROAMING is enabled.
+ * NOTE: By default rssi low threshold is set at -70 dbm
+ *
+ * \param[in]     threshold      Threshold rssi value to be set
+ *
+ * \return        void
+ */
+void wlan_set_rssi_low_threshold(uint8_t threshold);
+#endif
 #endif /* __WLAN_H__ */

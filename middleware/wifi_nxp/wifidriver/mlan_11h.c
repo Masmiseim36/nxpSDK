@@ -214,3 +214,4 @@ t_bool wlan_11h_radar_detect_required(mlan_private *priv, t_u8 channel)
     return required;
 }
 
+

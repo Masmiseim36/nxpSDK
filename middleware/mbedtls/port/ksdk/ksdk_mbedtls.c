@@ -2583,14 +2583,14 @@ int mbedtls_mpi_add_abs(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_ModAdd(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, N, sizeN, ptrC, &sizeC,
                                     kCAAM_PKHA_IntegerArith);
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -2723,14 +2723,14 @@ int mbedtls_mpi_sub_abs(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_ModSub1(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, N, sizeN, ptrC, &sizeC);
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -2880,7 +2880,7 @@ int mbedtls_mpi_mul_mpi(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
  */
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_ModMul(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, N, sizeN, ptrC, &sizeC,
@@ -2888,7 +2888,7 @@ int mbedtls_mpi_mul_mpi(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
                                     kCAAM_PKHA_TimingEqualized);
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -3013,14 +3013,14 @@ int mbedtls_mpi_mod_mpi(mbedtls_mpi *R, const mbedtls_mpi *A, const mbedtls_mpi 
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_ModRed(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, ptrC, &sizeC,
                                     kCAAM_PKHA_IntegerArith);
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -3210,7 +3210,7 @@ int mbedtls_mpi_exp_mod(
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_ModExp(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrN, sizeN, ptrE, sizeE, ptrN, &sizeN,
@@ -3218,7 +3218,7 @@ int mbedtls_mpi_exp_mod(
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -3343,14 +3343,14 @@ int mbedtls_mpi_gcd(mbedtls_mpi *G, const mbedtls_mpi *A, const mbedtls_mpi *B)
         {
 #if defined(MBEDTLS_THREADING_C)
             if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-                return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+                CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
             ret = (int)CAAM_PKHA_ModRed(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, ptrA, &sizeA,
                                         kCAAM_PKHA_IntegerArith);
 
 #if defined(MBEDTLS_THREADING_C)
             if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-                return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+                CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
             if (ret != kStatus_Success)
@@ -3359,7 +3359,7 @@ int mbedtls_mpi_gcd(mbedtls_mpi *G, const mbedtls_mpi *A, const mbedtls_mpi *B)
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_ModGcd(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, ptrC, &sizeC,
@@ -3367,7 +3367,7 @@ int mbedtls_mpi_gcd(mbedtls_mpi *G, const mbedtls_mpi *A, const mbedtls_mpi *B)
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -3504,7 +3504,7 @@ int mbedtls_mpi_inv_mod(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
         {
 #if defined(MBEDTLS_THREADING_C)
             if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-                return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+                CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
             ret = (int)CAAM_PKHA_ModRed(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrN, sizeN, ptrA, &sizeA,
@@ -3512,7 +3512,7 @@ int mbedtls_mpi_inv_mod(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
 
 #if defined(MBEDTLS_THREADING_C)
             if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-                return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+                CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
             if (ret != kStatus_Success)
@@ -3521,7 +3521,7 @@ int mbedtls_mpi_inv_mod(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_ModInv(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrN, sizeN, ptrC, &sizeC,
@@ -3529,7 +3529,7 @@ int mbedtls_mpi_inv_mod(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -3647,7 +3647,7 @@ int mbedtls_mpi_is_prime(const mbedtls_mpi *X, int (*f_rng)(void *, unsigned cha
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         ret = (int)CAAM_PKHA_PrimalityTest(CAAM_INSTANCE, &s_caamHandle, (unsigned char *)&random, sizeof(random),
@@ -3655,7 +3655,7 @@ int mbedtls_mpi_is_prime(const mbedtls_mpi *X, int (*f_rng)(void *, unsigned cha
 
 #if defined(MBEDTLS_THREADING_C)
         if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-            return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+            CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
         if (ret != kStatus_Success)
@@ -3912,7 +3912,7 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
 
 #if defined(MBEDTLS_THREADING_C)
     if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-        return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+        CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
     /* Multiply */
@@ -3921,7 +3921,7 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
 
 #if defined(MBEDTLS_THREADING_C)
     if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-        return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+        CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
     if (status != kStatus_Success)
@@ -4177,7 +4177,7 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
 
 #if defined(MBEDTLS_THREADING_C)
     if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-        return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+        CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
     /* Multiply */
@@ -4186,7 +4186,7 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
 
 #if defined(MBEDTLS_THREADING_C)
     if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_caam_mutex) != 0)
-        return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+        CLEAN_RETURN(MBEDTLS_ERR_THREADING_MUTEX_ERROR);
 #endif /* MBEDTLS_THREADING_C */
 
     if (status != kStatus_Success)

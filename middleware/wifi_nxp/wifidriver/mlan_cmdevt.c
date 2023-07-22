@@ -62,25 +62,6 @@ mlan_status wlan_prepare_cmd(IN mlan_private *pmpriv,
                                      NULL);
 }
 
-#ifdef CONFIG_11AX
-/**
- *  @brief Fetch bitmap rate index
- *
- *  @param rate_scope  A pointer to MrvlRateScope_t
- *
- *  @return            bitmap rate index
- */
-static t_u16 wlan_get_bitmap_index(MrvlRateScope_t *rate_scope)
-{
-    t_u16 index = 0;
-    if (rate_scope != MNULL)
-    {
-        index += NELEMENTS(rate_scope->ht_mcs_rate_bitmap);
-        index += NELEMENTS(rate_scope->vht_mcs_rate_bitmap);
-    }
-    return index;
-}
-#endif
 
 /**
  *  @brief This function prepares command of power mode
@@ -304,16 +285,11 @@ mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS
     pmpriv->tx_rate      = resp->params.tx_rate.tx_rate;
     pmpriv->tx_rate_info = resp->params.tx_rate.tx_rate_info;
 
-#ifdef CONFIG_11AX
-    if ((mlan_rate_format)(pmpriv->tx_rate_info & 0x3U) == MLAN_RATE_FORMAT_HE)
-        pmpriv->ext_tx_rate_info = resp->params.tx_rate.ext_tx_rate_info;
-    else
-#endif
 
         if (!pmpriv->is_data_rate_auto)
     {
-        pmpriv->data_rate =
-            wlan_index_to_data_rate(pmadapter, pmpriv->tx_rate, pmpriv->tx_rate_info, pmpriv->ext_tx_rate_info);
+        pmpriv->data_rate = wlan_index_to_data_rate(pmadapter, pmpriv->tx_rate, pmpriv->tx_rate_info
+        );
     }
 
     if (pioctl != NULL)
@@ -326,9 +302,6 @@ mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS
 #endif
 #ifdef CONFIG_11AC
             if ((mlan_rate_format)(pmpriv->tx_rate_info & 0x3U) == MLAN_RATE_FORMAT_VHT
-#ifdef CONFIG_11AX
-                || ((mlan_rate_format)(pmpriv->tx_rate_info & 0x3U) == MLAN_RATE_FORMAT_HE)
-#endif
             )
             {
                 /* VHT rate */
@@ -366,26 +339,18 @@ mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS
             /* Tx rate info */
 #ifdef CONFIG_11AC
             if ((mlan_rate_format)(pmpriv->tx_rate_info & 0x3U) == MLAN_RATE_FORMAT_VHT
-#ifdef CONFIG_11AX
-                || (mlan_rate_format)(pmpriv->tx_rate_info & 0x3U) == MLAN_RATE_FORMAT_HE
-#endif
             )
             {
                 /* VHT/HE rate */
                 rate->param.data_rate.tx_rate_format = (mlan_rate_format)(pmpriv->tx_rate_info & 0x3U);
                 rate->param.data_rate.tx_ht_bw       = (t_u32)((pmpriv->tx_rate_info & 0xC) >> 2);
 
-#ifdef CONFIG_11AX
-                if ((mlan_rate_format)(pmpriv->tx_rate_info & 0x3U) == MLAN_RATE_FORMAT_HE)
-                    rate->param.data_rate.tx_ht_gi =
-                        (pmpriv->tx_rate_info & 0x10) >> 4 | (pmpriv->tx_rate_info & 0x80) >> 6;
-                else
-#endif
                     rate->param.data_rate.tx_ht_gi = (t_u32)((pmpriv->tx_rate_info & 0x10) >> 4);
                 rate->param.data_rate.tx_nss       = (pmpriv->tx_rate) >> 4;
                 rate->param.data_rate.tx_mcs_index = (t_u32)((pmpriv->tx_rate) & 0xF);
                 rate->param.data_rate.tx_data_rate =
-                    wlan_index_to_data_rate(pmadapter, pmpriv->tx_rate, pmpriv->tx_rate_info, pmpriv->ext_tx_rate_info);
+                    wlan_index_to_data_rate(pmadapter, pmpriv->tx_rate, pmpriv->tx_rate_info
+                    );
             }
             else
 #endif
@@ -397,7 +362,8 @@ mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS
                 rate->param.data_rate.tx_ht_gi       = (pmpriv->tx_rate_info & 0x10U) >> 4U;
                 rate->param.data_rate.tx_mcs_index   = pmpriv->tx_rate;
                 rate->param.data_rate.tx_data_rate =
-                    wlan_index_to_data_rate(pmadapter, pmpriv->tx_rate, pmpriv->tx_rate_info, pmpriv->ext_tx_rate_info);
+                    wlan_index_to_data_rate(pmadapter, pmpriv->tx_rate, pmpriv->tx_rate_info
+                    );
             }
             else
             {
@@ -414,26 +380,18 @@ mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS
             /* Rx rate info */
 #ifdef CONFIG_11AC
             if ((mlan_rate_format)(pmpriv->rxpd_rate_info & 0x3U) == MLAN_RATE_FORMAT_VHT
-#ifdef CONFIG_11AX
-                || (pmpriv->rxpd_rate_info & 0x3) == MLAN_RATE_FORMAT_HE
-#endif
             )
             {
                 /* VHT/HE rate */
                 rate->param.data_rate.rx_rate_format = (mlan_rate_format)(pmpriv->rxpd_rate_info & 0x3);
                 rate->param.data_rate.rx_ht_bw       = (t_u32)((pmpriv->rxpd_rate_info & 0xC) >> 2);
 
-#ifdef CONFIG_11AX
-                if ((pmpriv->rxpd_rate_info & 0x3) == MLAN_RATE_FORMAT_HE)
-                    rate->param.data_rate.rx_ht_gi =
-                        (pmpriv->rxpd_rate_info & 0x10) >> 4 | (pmpriv->rxpd_rate_info & 0x80) >> 6;
-                else
-#endif
                     rate->param.data_rate.rx_ht_gi = (t_u32)((pmpriv->rxpd_rate_info & 0x10) >> 4);
                 rate->param.data_rate.rx_nss       = (pmpriv->rxpd_rate) >> 4;
                 rate->param.data_rate.rx_mcs_index = (t_u32)((pmpriv->rxpd_rate) & 0xF);
-                rate->param.data_rate.rx_data_rate = wlan_index_to_data_rate(
-                    pmadapter, pmpriv->rxpd_rate, pmpriv->rxpd_rate_info, pmpriv->ext_tx_rate_info);
+                rate->param.data_rate.rx_data_rate =
+                    wlan_index_to_data_rate(pmadapter, pmpriv->rxpd_rate, pmpriv->rxpd_rate_info
+                    );
             }
             else
 #endif
@@ -444,8 +402,9 @@ mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS
                 rate->param.data_rate.rx_ht_bw       = (pmpriv->rxpd_rate_info & 0xCU) >> 2U;
                 rate->param.data_rate.rx_ht_gi       = (pmpriv->rxpd_rate_info & 0x10U) >> 4U;
                 rate->param.data_rate.rx_mcs_index   = pmpriv->rxpd_rate;
-                rate->param.data_rate.rx_data_rate   = wlan_index_to_data_rate(
-                    pmadapter, pmpriv->rxpd_rate, pmpriv->rxpd_rate_info, pmpriv->ext_tx_rate_info);
+                rate->param.data_rate.rx_data_rate =
+                    wlan_index_to_data_rate(pmadapter, pmpriv->rxpd_rate, pmpriv->rxpd_rate_info
+                    );
             }
             else
             {
@@ -481,7 +440,8 @@ mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS
 mlan_status wlan_cmd_tx_rate_cfg(IN pmlan_private pmpriv,
                                  IN HostCmd_DS_COMMAND *cmd,
                                  IN t_u16 cmd_action,
-                                 IN t_void *pdata_buf)
+                                 IN t_void *pdata_buf,
+                                 IN mlan_ioctl_req *pioctl_buf)
 {
     HostCmd_DS_TX_RATE_CFG *rate_cfg = &cmd->params.tx_rate_cfg;
     MrvlRateScope_t *rate_scope;
@@ -513,19 +473,6 @@ mlan_status wlan_cmd_tx_rate_cfg(IN pmlan_private pmpriv,
             rate_scope->vht_mcs_rate_bitmap[i] =
                 wlan_cpu_to_le16(pbitmap_rates[2U + NELEMENTS(rate_scope->ht_mcs_rate_bitmap) + i]);
         }
-#ifdef CONFIG_11AX
-        if (IS_FW_SUPPORT_11AX(pmpriv->adapter))
-        {
-            for (i = 0; i < NELEMENTS(rate_scope->he_mcs_rate_bitmap); i++)
-                rate_scope->he_mcs_rate_bitmap[i] =
-                    wlan_cpu_to_le16(pbitmap_rates[2U + wlan_get_bitmap_index(rate_scope) + i]);
-        }
-        else
-        {
-            rate_scope->length = wlan_cpu_to_le16(sizeof(MrvlRateScope_t) - sizeof(rate_scope->he_mcs_rate_bitmap) -
-                                                  sizeof(MrvlIEtypesHeader_t));
-        }
-#endif
     }
     else
     {
@@ -540,19 +487,6 @@ mlan_status wlan_cmd_tx_rate_cfg(IN pmlan_private pmpriv,
             rate_scope->vht_mcs_rate_bitmap[i] =
                 wlan_cpu_to_le16(pmpriv->bitmap_rates[2U + NELEMENTS(rate_scope->ht_mcs_rate_bitmap) + i]);
         }
-#ifdef CONFIG_11AX
-        if (IS_FW_SUPPORT_11AX(pmpriv->adapter))
-        {
-            for (i = 0; i < NELEMENTS(rate_scope->he_mcs_rate_bitmap); i++)
-                rate_scope->he_mcs_rate_bitmap[i] =
-                    wlan_cpu_to_le16(pmpriv->bitmap_rates[2U + wlan_get_bitmap_index(rate_scope) + i]);
-        }
-        else
-        {
-            rate_scope->length = wlan_cpu_to_le16(sizeof(MrvlRateScope_t) - sizeof(rate_scope->he_mcs_rate_bitmap) -
-                                                  sizeof(MrvlIEtypesHeader_t));
-        }
-#endif
     }
 
     rate_drop                 = (MrvlRateDropPattern_t *)(void *)((t_u8 *)rate_scope + sizeof(MrvlRateScope_t));
@@ -562,6 +496,7 @@ mlan_status wlan_cmd_tx_rate_cfg(IN pmlan_private pmpriv,
 
     cmd->size = wlan_cpu_to_le16(S_DS_GEN + sizeof(HostCmd_DS_TX_RATE_CFG) + sizeof(MrvlRateScope_t) +
                                  sizeof(MrvlRateDropPattern_t));
+
 
     LEAVE();
     return MLAN_STATUS_SUCCESS;
@@ -625,17 +560,6 @@ mlan_status wlan_ret_tx_rate_cfg(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND 
                         wlan_le16_to_cpu(prate_scope->vht_mcs_rate_bitmap[i]);
                 }
 
-#endif
-#ifdef CONFIG_11AX
-                if (IS_FW_SUPPORT_11AX(pmadapter))
-                {
-                    for (i = 0; i < NELEMENTS(prate_scope->he_mcs_rate_bitmap); i++)
-                    {
-                        pmpriv->bitmap_rates[2 + sizeof(prate_scope->ht_mcs_rate_bitmap) / sizeof(t_u16) +
-                                             sizeof(prate_scope->vht_mcs_rate_bitmap) / sizeof(t_u16) + i] =
-                            wlan_le16_to_cpu(prate_scope->he_mcs_rate_bitmap[i]);
-                    }
-                }
 #endif
                 break;
                 /* Add RATE_DROP tlv here */
@@ -712,20 +636,6 @@ mlan_status wlan_ret_tx_rate_cfg(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND 
                 ds_rate->param.rate_cfg.nss += MLAN_RATE_NSS1;
             }
 #endif
-#ifdef CONFIG_11AX
-            /* check the HE rate */
-            if (IS_FW_SUPPORT_11AX(pmadapter))
-            {
-                index = wlan_get_rate_index(pmadapter, &pmpriv->bitmap_rates[18], 16);
-                if (index != -1)
-                {
-                    ds_rate->param.rate_cfg.rate_format = MLAN_RATE_FORMAT_HE;
-                    ds_rate->param.rate_cfg.rate        = index % 16;
-                    ds_rate->param.rate_cfg.nss         = index / 16;
-                    ds_rate->param.rate_cfg.nss += MLAN_RATE_NSS1;
-                }
-            }
-#endif
             PRINTM(MINFO, "Rate index is %d\n", ds_rate->param.rate_cfg.rate);
 
 #ifdef SD8801
@@ -792,6 +702,8 @@ mlan_status wlan_cmd_get_tsf(pmlan_private pmpriv, IN HostCmd_DS_COMMAND *cmd, I
 
 
 
+
+
 /**
  *  @brief This function handles the command response of get_hw_spec
  *
@@ -812,9 +724,6 @@ mlan_status wlan_ret_get_hw_spec(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND 
     t_u16 tlv_type           = 0;
     t_u16 tlv_len            = 0;
     MrvlIEtypesHeader_t *tlv = MNULL;
-#ifdef CONFIG_11AX
-    MrvlIEtypes_Extension_t *ext_tlv = MNULL;
-#endif
     MrvlIEtypes_fw_cap_info_t *fw_cap_tlv = MNULL;
     ENTER();
 
@@ -995,18 +904,6 @@ mlan_status wlan_ret_get_hw_spec(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND 
         tlv_len  = wlan_le16_to_cpu(tlv->len);
         switch (tlv_type)
         {
-#ifdef CONFIG_11AX
-            case TLV_TYPE_EXTENSION_ID:
-                ext_tlv = (MrvlIEtypes_Extension_t *)tlv;
-                if (ext_tlv->ext_id == HE_CAPABILITY)
-                {
-                    ext_tlv->type          = tlv_type;
-                    ext_tlv->len           = tlv_len;
-                    pmadapter->enable_11ax = MTRUE;
-                    wlan_update_11ax_cap(pmadapter, (MrvlIEtypes_Extension_t *)ext_tlv);
-                }
-                break;
-#endif
             case TLV_TYPE_FW_CAP_INFO:
                 fw_cap_tlv             = (MrvlIEtypes_fw_cap_info_t *)(void *)tlv;
                 pmadapter->fw_cap_info = wlan_le32_to_cpu(fw_cap_tlv->fw_cap_info);
@@ -1163,5 +1060,182 @@ done:
     return ret;
 }
 #endif
+
+
+#ifdef CONFIG_WIFI_CLOCKSYNC
+/**
+ *  @brief This function prepares command of GPIO TSF LATCH.
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param cmd          A pointer to HostCmd_DS_COMMAND structure
+ *  @param cmd_action   The action: GET or SET
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req buf
+ *  @param pdata_buf    A pointer to data buffer
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_cmd_gpio_tsf_latch(
+    pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u16 cmd_action, mlan_ioctl_req *pioctl_buf, t_void *pdata_buf)
+{
+    HostCmd_DS_GPIO_TSF_LATCH_PARAM_CONFIG *gpio_tsf_config = &cmd->params.gpio_tsf_latch;
+    mlan_ds_gpio_tsf_latch *cfg                             = (mlan_ds_gpio_tsf_latch *)pdata_buf;
+    mlan_ds_misc_cfg *misc_cfg                              = (mlan_ds_misc_cfg *)pioctl_buf->pbuf;
+
+    mlan_ds_tsf_info *tsf_info                               = (mlan_ds_tsf_info *)pdata_buf;
+    MrvlIEtypes_GPIO_TSF_LATCH_CONFIG *gpio_tsf_latch_config = MNULL;
+    MrvlIEtypes_GPIO_TSF_LATCH_REPORT *gpio_tsf_latch_report = MNULL;
+    t_u8 *tlv                                                = MNULL;
+    ENTER();
+
+    cmd->size               = sizeof(HostCmd_DS_GPIO_TSF_LATCH_PARAM_CONFIG) + S_DS_GEN;
+    cmd->command            = wlan_cpu_to_le16(HostCmd_GPIO_TSF_LATCH_PARAM_CONFIG);
+    gpio_tsf_config->action = wlan_cpu_to_le16(cmd_action);
+    if (cmd_action == HostCmd_ACT_GEN_SET)
+    {
+        tlv = (t_u8 *)gpio_tsf_config->tlv_buf;
+        if (misc_cfg->sub_command == (t_u32)MLAN_OID_MISC_GPIO_TSF_LATCH)
+        {
+            gpio_tsf_latch_config              = (MrvlIEtypes_GPIO_TSF_LATCH_CONFIG *)tlv;
+            gpio_tsf_latch_config->header.type = wlan_cpu_to_le16(TLV_TYPE_GPIO_TSF_LATCH_CONFIG);
+            gpio_tsf_latch_config->header.len =
+                wlan_cpu_to_le16(sizeof(MrvlIEtypes_GPIO_TSF_LATCH_CONFIG) - sizeof(MrvlIEtypesHeader_t));
+            gpio_tsf_latch_config->clock_sync_mode              = cfg->clock_sync_mode;
+            gpio_tsf_latch_config->clock_sync_Role              = cfg->clock_sync_Role;
+            gpio_tsf_latch_config->clock_sync_gpio_pin_number   = cfg->clock_sync_gpio_pin_number;
+            gpio_tsf_latch_config->clock_sync_gpio_level_toggle = cfg->clock_sync_gpio_level_toggle;
+            gpio_tsf_latch_config->clock_sync_gpio_pulse_width  = wlan_cpu_to_le16(cfg->clock_sync_gpio_pulse_width);
+            cmd->size += sizeof(MrvlIEtypes_GPIO_TSF_LATCH_CONFIG);
+            tlv += sizeof(MrvlIEtypes_GPIO_TSF_LATCH_CONFIG);
+            PRINTM(
+                MCMND,
+                "Set GPIO TSF latch config: \r\nMode=%d Role=%d, \r\nGPIO Pin Number=%d, \r\nGPIO level/toggle=%d GPIO "
+                "pulse "
+                "width=%d\n\r",
+                cfg->clock_sync_mode, cfg->clock_sync_Role, cfg->clock_sync_gpio_pin_number,
+                cfg->clock_sync_gpio_level_toggle, (int)cfg->clock_sync_gpio_pulse_width);
+        }
+    }
+    else if (cmd_action == HostCmd_ACT_GEN_GET)
+    {
+        tlv = (t_u8 *)gpio_tsf_config->tlv_buf;
+        if (misc_cfg->sub_command == (t_u32)MLAN_OID_MISC_GPIO_TSF_LATCH)
+        {
+            gpio_tsf_latch_config              = (MrvlIEtypes_GPIO_TSF_LATCH_CONFIG *)tlv;
+            gpio_tsf_latch_config->header.type = wlan_cpu_to_le16(TLV_TYPE_GPIO_TSF_LATCH_CONFIG);
+            gpio_tsf_latch_config->header.len =
+                wlan_cpu_to_le16(sizeof(MrvlIEtypes_GPIO_TSF_LATCH_CONFIG) - sizeof(MrvlIEtypesHeader_t));
+            cmd->size += sizeof(MrvlIEtypes_GPIO_TSF_LATCH_CONFIG);
+            tlv += sizeof(MrvlIEtypes_GPIO_TSF_LATCH_CONFIG);
+        }
+
+        if (misc_cfg->sub_command == (t_u32)MLAN_OID_MISC_GET_TSF_INFO)
+        {
+            gpio_tsf_latch_report = (MrvlIEtypes_GPIO_TSF_LATCH_REPORT *)tlv;
+            (void)memset(gpio_tsf_latch_report, 0, sizeof(MrvlIEtypes_GPIO_TSF_LATCH_REPORT));
+            gpio_tsf_latch_report->header.type = wlan_cpu_to_le16(TLV_TYPE_GPIO_TSF_LATCH_REPORT);
+            gpio_tsf_latch_report->header.len =
+                wlan_cpu_to_le16(sizeof(MrvlIEtypes_GPIO_TSF_LATCH_REPORT) - sizeof(MrvlIEtypesHeader_t));
+            gpio_tsf_latch_report->tsf_format = wlan_cpu_to_le16(tsf_info->tsf_format);
+            PRINTM(MCMND, "Get TSF info: format=%d\n\r", tsf_info->tsf_format);
+            cmd->size += sizeof(MrvlIEtypes_GPIO_TSF_LATCH_REPORT);
+        }
+    }
+    cmd->size = wlan_cpu_to_le16(cmd->size);
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief This function handles the command response of GPIO TSF Latch
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_ret_gpio_tsf_latch(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf)
+{
+    HostCmd_DS_GPIO_TSF_LATCH_PARAM_CONFIG *gpio_tsf_config  = &resp->params.gpio_tsf_latch;
+    mlan_ds_misc_cfg *cfg                                    = MNULL;
+    MrvlIEtypes_GPIO_TSF_LATCH_CONFIG *gpio_tsf_latch_config = MNULL;
+    MrvlIEtypes_GPIO_TSF_LATCH_REPORT *gpio_tsf_latch_report = MNULL;
+    MrvlIEtypesHeader_t *tlv                                 = MNULL;
+    t_u16 tlv_buf_left                                       = 0;
+    t_u16 tlv_type                                           = 0;
+    t_u16 tlv_len                                            = 0;
+
+    ENTER();
+    if (wlan_le16_to_cpu(gpio_tsf_config->action) == HostCmd_ACT_GEN_GET)
+    {
+        if (pioctl_buf)
+        {
+            cfg          = (mlan_ds_misc_cfg *)pioctl_buf->pbuf;
+            tlv          = (MrvlIEtypesHeader_t *)(gpio_tsf_config->tlv_buf);
+            tlv_buf_left = resp->size - (sizeof(HostCmd_DS_GPIO_TSF_LATCH_PARAM_CONFIG) + S_DS_GEN);
+            while (tlv_buf_left >= sizeof(MrvlIEtypesHeader_t))
+            {
+                tlv_type = wlan_le16_to_cpu(tlv->type);
+                tlv_len  = wlan_le16_to_cpu(tlv->len);
+                if (tlv_buf_left < (tlv_len + sizeof(MrvlIEtypesHeader_t)))
+                {
+                    PRINTM(MCMND, "Error processing gpio tsf latch config TLVs, bytes left < TLV length\n");
+                    break;
+                }
+                switch (tlv_type)
+                {
+                    case TLV_TYPE_GPIO_TSF_LATCH_CONFIG:
+                        if (cfg->sub_command == (t_u32)MLAN_OID_MISC_GPIO_TSF_LATCH)
+                        {
+                            gpio_tsf_latch_config                            = (MrvlIEtypes_GPIO_TSF_LATCH_CONFIG *)tlv;
+                            cfg->param.gpio_tsf_latch_config.clock_sync_mode = gpio_tsf_latch_config->clock_sync_mode;
+                            cfg->param.gpio_tsf_latch_config.clock_sync_Role = gpio_tsf_latch_config->clock_sync_Role;
+                            cfg->param.gpio_tsf_latch_config.clock_sync_gpio_pin_number =
+                                gpio_tsf_latch_config->clock_sync_gpio_pin_number;
+                            cfg->param.gpio_tsf_latch_config.clock_sync_gpio_level_toggle =
+                                gpio_tsf_latch_config->clock_sync_gpio_level_toggle;
+                            cfg->param.gpio_tsf_latch_config.clock_sync_gpio_pulse_width =
+                                wlan_le16_to_cpu(gpio_tsf_latch_config->clock_sync_gpio_pulse_width);
+                            PRINTM(
+                                MCMND,
+                                "Get GPIO TSF latch config: Mode=%d Role=%d, GPIO Pin Number=%d, GPIO level/toggle=%d "
+                                "GPIO pulse width=%d\n\r",
+                                cfg->param.gpio_tsf_latch_config.clock_sync_mode,
+                                cfg->param.gpio_tsf_latch_config.clock_sync_Role,
+                                cfg->param.gpio_tsf_latch_config.clock_sync_gpio_pin_number,
+                                cfg->param.gpio_tsf_latch_config.clock_sync_gpio_level_toggle,
+                                (int)cfg->param.gpio_tsf_latch_config.clock_sync_gpio_pulse_width);
+                        }
+                        break;
+                    case TLV_TYPE_GPIO_TSF_LATCH_REPORT:
+                        if (cfg->sub_command == (t_u32)MLAN_OID_MISC_GET_TSF_INFO)
+                        {
+                            gpio_tsf_latch_report          = (MrvlIEtypes_GPIO_TSF_LATCH_REPORT *)tlv;
+                            cfg->param.tsf_info.tsf_format = wlan_le16_to_cpu(gpio_tsf_latch_report->tsf_format);
+                            cfg->param.tsf_info.tsf_info   = wlan_le16_to_cpu(gpio_tsf_latch_report->tsf_info);
+                            cfg->param.tsf_info.tsf        = wlan_le64_to_cpu(gpio_tsf_latch_report->tsf);
+                            cfg->param.tsf_info.tsf_offset = wlan_le16_to_cpu(gpio_tsf_latch_report->tsf_offset);
+                            PRINTM(MCMND, "Get GPIO TSF latch report : format=%d\n info=%d tsf=%llu offset=%d\r\n",
+                                   cfg->param.tsf_info.tsf_format, cfg->param.tsf_info.tsf_info,
+                                   cfg->param.tsf_info.tsf, cfg->param.tsf_info.tsf_offset);
+                        }
+                        break;
+                    default:
+                        wifi_d("gpio tsf latch: Unknown tlv type");
+                        break;
+                }
+                tlv_buf_left -= tlv_len + sizeof(MrvlIEtypesHeader_t);
+                tlv = (MrvlIEtypesHeader_t *)((t_u8 *)tlv + tlv_len + sizeof(MrvlIEtypesHeader_t));
+            }
+            if (cfg->sub_command == (t_u32)MLAN_OID_MISC_GPIO_TSF_LATCH)
+                pioctl_buf->data_read_written = sizeof(mlan_ds_gpio_tsf_latch);
+            else if (cfg->sub_command == (t_u32)MLAN_OID_MISC_GET_TSF_INFO)
+                pioctl_buf->data_read_written = sizeof(mlan_ds_tsf_info);
+        }
+    }
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+#endif /* CONFIG_WIFI_CLOCKSYNC */
 
 

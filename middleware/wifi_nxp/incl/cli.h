@@ -32,6 +32,11 @@ struct cli_command
     void (*function)(int argc, char **argv);
 };
 
+/*lookup_command declaration for coexapp */
+#ifdef COEX_APP_SUPPORT
+const struct cli_command *lookup_command(char *name, int len);
+#endif
+
 /** Register a CLI command
  *
  * This function registers a command with the command-line interface.

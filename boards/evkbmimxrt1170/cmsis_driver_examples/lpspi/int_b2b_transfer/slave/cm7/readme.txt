@@ -11,8 +11,8 @@ This example uses the transactional API in LPSPI driver.
 Toolchain supported
 ===================
 - Keil MDK  5.37
-- IAR embedded Workbench  9.30.1
-- MCUXpresso  11.6.0
+- IAR embedded Workbench  9.32.1
+- MCUXpresso  11.7.0
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -69,15 +69,3 @@ Slave transmit data to master has completed!
 
  Slave example is running...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Known issue: 
-	project: cmsis_lpspi_int_b2b_transfer_slave@cm7
-	compilers and targets: mcux: debug
-	                       mdk: flexspi_nor_release	
-			       armgcc: flexspi_nor_debug;flexspi_nor_release
-	issue: cannot transfer data successfully. Issues will be fixed on next release.
-
-	project: cmsis_lpspi_int_b2b_transfer_slave@cm4
-	compilers and targets: iar: flexspi_nor_release
-	                       mdk: flexspi_nor_release	
-			       armgcc: flexspi_nor_debug;flexspi_nor_release
-	issue: cannot transfer data successfully. Issues will be fixed on next release.

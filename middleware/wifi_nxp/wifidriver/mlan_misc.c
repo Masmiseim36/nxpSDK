@@ -84,6 +84,55 @@ t_void wlan_free_mlan_buffer(mlan_adapter *pmadapter, pmlan_buffer pmbuf)
 
 
 
+/**
+ *   @brief This function processes the 802.11 mgmt Frame
+ *
+ *   @param priv      A pointer to mlan_private
+ *   @param payload   A pointer to the received buffer
+ *   @param payload_len Length of the received buffer
+ *
+ *   @return        MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
+ */
+mlan_status wlan_process_802dot11_mgmt_pkt(IN mlan_private *priv, IN t_u8 *payload, IN t_u32 payload_len, RxPD *rxpd)
+{
+    mlan_status ret                   = MLAN_STATUS_SUCCESS;
+    wlan_802_11_header *pieee_pkt_hdr = MNULL;
+    t_u16 sub_type                    = 0;
+    ENTER();
+    /* Check packet type-subtype and compare with mgmt_passthru_mask If event
+       is needed to host, just eventify it */
+    pieee_pkt_hdr = (wlan_802_11_header *)payload;
+    sub_type      = IEEE80211_GET_FC_MGMT_FRAME_SUBTYPE(pieee_pkt_hdr->frm_ctl);
+    if ((((1 << sub_type) & priv->mgmt_frame_passthru_mask) == 0) && (sub_type != SUBTYPE_ACTION))
+    {
+        PRINTM(MINFO, "Dropping mgmt frame for subtype %d.\n", sub_type);
+        LEAVE();
+        return ret;
+    }
+    switch (sub_type)
+    {
+        case SUBTYPE_ACTION:
+            ret = wlan_process_mgmt_action(payload, payload_len, rxpd);
+            if (ret == MLAN_STATUS_SUCCESS)
+            {
+                return ret;
+            }
+            break;
+        case SUBTYPE_ASSOC_REQUEST:
+        case SUBTYPE_REASSOC_REQUEST:
+        case SUBTYPE_DISASSOC:
+        case SUBTYPE_DEAUTH:
+        case SUBTYPE_AUTH:
+        case SUBTYPE_PROBE_RESP:
+            break;
+        default:
+            PRINTM(MINFO, "Unexpected pkt subtype \n");
+            break;
+    }
+    LEAVE();
+    return ret;
+}
+
 
 /**
  *  @brief Add Extended Capabilities IE
@@ -112,10 +161,15 @@ void wlan_add_ext_capa_info_ie(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss
         pext_cap->ext_cap.TDLSSupport = 1;
     }
 
-
-#ifdef CONFIG_11AX
-    if (wlan_check_11ax_twt_supported(pmpriv, pbss_desc))
-        SET_EXTCAP_TWT_REQ(pmpriv->ext_cap);
+#ifdef CONFIG_11V
+    if (pbss_desc->pext_cap->ext_cap.BSS_Transition == true)
+    {
+        pext_cap->ext_cap.BSS_Transition = 1;
+    }
+    else
+    {
+        pext_cap->ext_cap.BSS_Transition = 0;
+    }
 #endif
     *pptlv_out += sizeof(MrvlIETypes_ExtCap_t);
 
@@ -216,14 +270,6 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
             bitmap_rates[i] = 0x0;
         }
 #endif
-#ifdef CONFIG_11AX
-        /* [18..25] HE */
-        /* Support all HE-MCSs rate for NSS1 and 2 */
-        for (i = 18; i < 20; i++)
-            bitmap_rates[i] = 0x0FFF;
-        for (i = 20; i < NELEMENTS(bitmap_rates); i++)
-            bitmap_rates[i] = 0x0;
-#endif
     }
     else
     {
@@ -273,25 +319,6 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
             {
                 bitmap_rates[10 + nss - MLAN_RATE_NSS1] = (shift_index << rate_index);
                 ret                                     = MLAN_STATUS_SUCCESS;
-            }
-        }
-#endif
-#ifdef CONFIG_11AX
-        if (rate_format == MLAN_RATE_FORMAT_HE)
-        {
-            if (IS_FW_SUPPORT_11AX(pmadapter))
-            {
-                if ((rate_index <= MLAN_RATE_INDEX_MCS11) && (MLAN_RATE_NSS1 <= nss) && (nss <= MLAN_RATE_NSS2))
-                {
-                    bitmap_rates[18 + nss - MLAN_RATE_NSS1] = (1 << rate_index);
-                    ret                                     = MLAN_STATUS_SUCCESS;
-                }
-            }
-            else
-            {
-                PRINTM(MERROR, "Error! Fw doesn't support 11AX\n");
-                LEAVE();
-                return MLAN_STATUS_FAILURE;
             }
         }
 #endif
@@ -429,3 +456,65 @@ mlan_status wlan_misc_ioctl_low_pwr_mode(IN pmlan_adapter pmadapter, IN pmlan_io
     return ret;
 }
 #endif // WLAN_LOW_POWER_ENABLE
+
+#ifdef CONFIG_WIFI_CLOCKSYNC
+/**
+ *  @brief Set/Get GPIO TSF Latch config
+ *
+ *  @param pmadapter	A pointer to mlan_adapter structure
+ *  @param pioctl_req	A pointer to ioctl request buffer
+ *
+ *  @return		MLAN_STATUS_SUCCESS --success, otherwise fail
+ */
+mlan_status wlan_misc_gpio_tsf_latch_config(pmlan_adapter pmadapter, pmlan_ioctl_req pioctl_req)
+{
+    mlan_status ret            = MLAN_STATUS_SUCCESS;
+    mlan_ds_misc_cfg *misc_cfg = MNULL;
+    t_u16 cmd_action           = 0;
+    mlan_private *pmpriv       = pmadapter->priv[pioctl_req->bss_index];
+
+    ENTER();
+
+    misc_cfg = (mlan_ds_misc_cfg *)pioctl_req->pbuf;
+    if (pioctl_req->action == MLAN_ACT_SET)
+        cmd_action = HostCmd_ACT_GEN_SET;
+    else
+        cmd_action = HostCmd_ACT_GEN_GET;
+
+    /* Send request to firmware */
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_GPIO_TSF_LATCH_PARAM_CONFIG, cmd_action, 0, (t_void *)pioctl_req,
+                           &misc_cfg->param.gpio_tsf_latch_config);
+
+    LEAVE();
+    return ret;
+}
+
+/**
+ *  @brief Get TSF info
+ *
+ *  @param pmadapter	A pointer to mlan_adapter structure
+ *  @param pioctl_req	A pointer to ioctl request buffer
+ *
+ *  @return		MLAN_STATUS_SUCCESS --success, otherwise fail
+ */
+mlan_status wlan_misc_get_tsf_info(pmlan_adapter pmadapter, pmlan_ioctl_req pioctl_req)
+{
+    mlan_status ret            = MLAN_STATUS_SUCCESS;
+    mlan_ds_misc_cfg *misc_cfg = MNULL;
+    t_u16 cmd_action           = 0;
+    mlan_private *pmpriv       = pmadapter->priv[pioctl_req->bss_index];
+
+    ENTER();
+
+    misc_cfg   = (mlan_ds_misc_cfg *)pioctl_req->pbuf;
+    cmd_action = HostCmd_ACT_GEN_GET;
+
+    /* Send request to firmware */
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_GPIO_TSF_LATCH_PARAM_CONFIG, cmd_action, 0, (t_void *)pioctl_req,
+                           &misc_cfg->param.tsf_info);
+
+    LEAVE();
+    return ret;
+}
+#endif /* CONFIG_WIFI_CLOCKSYNC */
+

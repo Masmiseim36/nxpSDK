@@ -172,7 +172,7 @@ const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]
 
 #endif /* OGG_OPUS_DEC */
 
-#ifdef AAC_DEC
+#if defined(AAC_DEC) && !defined(__ICCARM__)
     {
         &AACDecoderGetMemorySize,
         &AACDecoderInit,

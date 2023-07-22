@@ -24,7 +24,7 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(azure_iot_embedded_sdk_adu_se050)
 
-set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release release)
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
 
 set(MCUX_SDK_PROJECT_NAME azure_iot_embedded_sdk_adu_se050.elf)
 

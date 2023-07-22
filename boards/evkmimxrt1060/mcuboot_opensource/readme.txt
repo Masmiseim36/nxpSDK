@@ -36,7 +36,7 @@ List of boards with projects supporting flash remapping function:
     - MIMXRT1060-EVKB
     - MIMXRT1064-EVK
     - MIMXRT1170-EVK
-
+    - MIMXRT1170-EVKB
 
 Signing the application image
 -----------------------------

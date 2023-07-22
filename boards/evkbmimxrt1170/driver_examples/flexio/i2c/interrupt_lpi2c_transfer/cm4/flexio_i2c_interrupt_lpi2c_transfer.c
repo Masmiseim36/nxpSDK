@@ -31,8 +31,8 @@
 #define FLEXIO_I2C_SDA_PIN 11U
 #define FLEXIO_I2C_SCL_PIN 10U
 
-/* I2C Baudrate 100K */
-#define I2C_BAUDRATE (100000)
+/* I2C Baudrate 1K */
+#define I2C_BAUDRATE (1000)
 /* I2C Slave Address */
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
 /* The length of data */

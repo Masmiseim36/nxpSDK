@@ -1063,4 +1063,46 @@ void os_disable_all_interrupts(void);
 /** Enable all interrupts at NVIC lebel */
 void os_enable_all_interrupts(void);
 
+#if defined(RW610)
+/* Init value for rand generator seed */
+extern uint32_t wm_rand_seed;
+
+/** This function initialize the seed for rand generator
+ *  @return a uint32_t random numer
+ */
+static inline void os_srand(uint32_t seed)
+{
+    wm_rand_seed = seed;
+}
+
+/** This function generate a random number
+ *  @return a uint32_t random numer
+ */
+static inline uint32_t os_rand()
+{
+    if (wm_rand_seed == -1)
+        os_srand(os_ticks_get());
+    wm_rand_seed = (uint32_t)((((uint64_t)wm_rand_seed * 279470273UL) % 4294967291UL) & 0xFFFFFFFFUL);
+    return wm_rand_seed;
+}
+
+/** This function generate a random number in a range
+ *  @param [in] low  range low
+ *  @param [in] high range high
+ *  @return a uint32_t random numer
+ */
+static inline uint32_t os_rand_range(uint32_t low, uint32_t high)
+{
+    uint32_t tmp;
+    if (low == high)
+        return low;
+    if (low > high)
+    {
+        tmp  = low;
+        low  = high;
+        high = tmp;
+    }
+    return (low + os_rand() % (high - low));
+}
+#endif
 #endif /* ! _WM_OS_H_ */

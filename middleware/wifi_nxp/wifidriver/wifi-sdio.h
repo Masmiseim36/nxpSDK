@@ -34,16 +34,7 @@
 
 #define WLAN_MAGIC_NUM (('W' << 0) | ('L' << 8) | ('F' << 16) | ('W' << 24))
 
-#ifndef CONFIG_11AC
-/* fixme: sizeof(HostCmd_DS_COMMAND) is 1132 bytes. So have kept this at
-   the current size.
-*/
-#define WIFI_FW_CMDBUF_SIZE 1400U
-#else
-/* In 802.11ac sizeof(HostCmd_CMD_CHANNEL_TRPC_CONFIG) is 1572 bytes.
- */
-#define WIFI_FW_CMDBUF_SIZE 1580U
-#endif /* CONFIG_11AC */
+#define WIFI_FW_CMDBUF_SIZE 2100U
 
 #define WIFI_RESP_WAIT_TIME 10
 

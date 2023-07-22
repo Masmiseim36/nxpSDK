@@ -17,6 +17,8 @@
 #include "fsl_debug_console.h"
 
 #define MLAN_WMSDK_MAX_WPA_IE_LEN 256U
+#define MLAN_MAX_MDIE_LEN         10U
+#define MLAN_MAX_VENDOR_IE_LEN    100U
 
 #include "mlan.h"
 #include "mlan_join.h"
@@ -28,9 +30,6 @@
 #include "mlan_11n.h"
 #include "mlan_11h.h"
 #include "mlan_11ac.h"
-#ifdef CONFIG_11AX
-#include "mlan_11ax.h"
-#endif
 #include "mlan_11n_aggr.h"
 #ifndef RW610
 #include "mlan_sdio.h"
@@ -40,7 +39,13 @@
 #include "mlan_uap.h"
 #include <wifi-debug.h>
 #include "wifi-internal.h"
-
+#include "mlan_action.h"
+#ifdef CONFIG_11V
+#include "mlan_11v.h"
+#endif
+#ifdef CONFIG_11K
+#include "mlan_11k.h"
+#endif
 /* #define CONFIG_WIFI_DEBUG */
 
 #ifdef CONFIG_WIFI_DEBUG
@@ -116,6 +121,7 @@ extern country_code_t wifi_11d_country;
 
 extern os_rw_lock_t sleep_rwlock;
 
+
 extern bool sta_ampdu_rx_enable;
 #ifdef DUMP_PACKET_MAC
 void dump_mac_addr(const char *msg, unsigned char *addr);
@@ -187,7 +193,6 @@ wifi_sub_band_set_t *get_sub_band_from_country(country_code_t country, t_u8 *nr_
 wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8 *nr_sb);
 #endif
 int wifi_set_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t id, void *buf, unsigned int buf_len);
-int wifi_clear_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index);
 #ifdef SD8801
 int wifi_get_ext_coex_stats(wifi_ext_coex_stats_t *ext_coex_stats);
 int wifi_set_ext_coex_config(const wifi_ext_coex_config_t *ext_coex_config);
@@ -257,15 +262,18 @@ int wifi_send_scan_cmd(t_u8 bss_mode,
                        const t_u8 num_channels,
                        const wifi_scan_channel_list_t *chan_list,
                        const t_u8 num_probes,
+#ifdef CONFIG_EXT_SCAN_SUPPORT
+                       const t_u16 scan_chan_gap,
+#endif
                        const bool keep_previous_scan,
                        const bool active_scan_triggered);
 int wifi_stop_smart_mode(void);
 const char *wifi_get_country_str(country_code_t country);
 int wifi_remove_key(int bss_index, bool is_pairwise, const uint8_t key_index, const uint8_t *mac_addr);
 int wifi_enable_ecsa_support(void);
-int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl);
+int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl, int bss_type);
 int wifi_get_pmfcfg(t_u8 *mfpc, t_u8 *mfpr);
-int wifi_get_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl);
+int wifi_get_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl, int bss_type);
 int wifi_set_pmfcfg(t_u8 mfpc, t_u8 mfpr);
 int wifi_set_chanlist(wifi_chanlist_t *chanlist);
 int wifi_get_txpwrlimit(wifi_SubBand_t subband, wifi_txpwrlimit_t *txpwrlimit);
@@ -277,4 +285,80 @@ int wifi_send_rssi_info_cmd(wifi_rssi_info_t *rssi_info);
 void wifi_set_curr_bss_channel(uint8_t channel);
 int wifi_get_chanlist(wifi_chanlist_t *chanlist);
 int wifi_set_eu_crypto(EU_Crypto *Crypto_Data, enum _crypto_algorithm Algorithm, t_u16 EncDec);
+int wifi_set_rx_mgmt_indication(unsigned int bss_type, unsigned int mgmt_subtype_mask);
+mlan_status wlan_cmd_rx_mgmt_indication(IN pmlan_private pmpriv,
+                                        IN HostCmd_DS_COMMAND *cmd,
+                                        IN t_u16 cmd_action,
+                                        IN t_void *pdata_buf);
+wlan_mgmt_pkt *wifi_PrepDefaultMgtMsg(t_u8 sub_type,
+                                      mlan_802_11_mac_addr *DestAddr,
+                                      mlan_802_11_mac_addr *SrcAddr,
+                                      mlan_802_11_mac_addr *Bssid,
+                                      t_u16 pkt_len);
+#ifdef CONFIG_11K
+/**
+ * rrm scan callback function to process scan results
+ *
+ * \param[in] count the count of available scan results
+ * \return WM_SUCCESS if successful otherwise failure.
+ *
+ */
+int _wlan_rrm_scan_cb(unsigned int count);
+
+/**
+ * rrm scan request
+ *
+ * \param[in] wlan_scan_param the scan parameters
+ * \param[in] scan_cb_param the rm scan parameters
+ *
+ */
+void wlan_rrm_request_scan(wlan_scan_params_v2_t *wlan_scan_param, wlan_rrm_scan_cb_param *scan_cb_param);
+#endif
+
+int wrapper_bssdesc_first_set(int bss_index,
+                              uint8_t *BssId,
+                              bool *is_ibss_bit_set,
+                              int *ssid_len,
+                              uint8_t *ssid,
+                              uint8_t *Channel,
+                              uint8_t *RSSI,
+                              uint16_t *beacon_period,
+                              uint16_t *dtim_period,
+                              _SecurityMode_t *WPA_WPA2_WEP,
+                              _Cipher_t *wpa_mcstCipher,
+                              _Cipher_t *wpa_ucstCipher,
+                              _Cipher_t *rsn_mcstCipher,
+                              _Cipher_t *rsn_ucstCipher,
+                              t_u8 *ap_mfpc,
+                              t_u8 *ap_mfpr);
+
+int wrapper_bssdesc_second_set(int bss_index,
+                               bool *phtcap_ie_present,
+                               bool *phtinfo_ie_present,
+                               bool *wmm_ie_present,
+                               uint16_t *band,
+                               bool *wps_IE_exist,
+                               uint16_t *wps_session,
+                               bool *wpa2_entp_IE_exist,
+#ifdef CONFIG_11R
+                               uint16_t *mdid,
+#endif
+#ifdef CONFIG_11K
+                               bool *neighbor_report_supported,
+#endif
+#ifdef CONFIG_11V
+                               bool *bss_transition_supported,
+#endif
+                               uint8_t *trans_mode,
+                               uint8_t *trans_bssid,
+                               int *trans_ssid_len,
+                               uint8_t *trans_ssid
+#ifdef CONFIG_MBO
+                               ,
+                               bool *mbo_assoc_disallowed
+#endif
+);
+
+
+
 #endif /* __MLAN_API_H__ */

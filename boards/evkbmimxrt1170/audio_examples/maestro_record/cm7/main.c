@@ -66,7 +66,7 @@ wm8962_config_t wm8962Config = {
     .bus          = kWM8962_BusI2S,
     .format       = {.mclk_HZ    = 24576000U,
                .sampleRate = kWM8962_AudioSampleRate16KHz,
-               .bitWidth   = kWM8962_AudioBitWidth16bit},
+               .bitWidth   = kWM8962_AudioBitWidth32bit},
     .masterSlave  = false,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8962, .codecDevConfig = &wm8962Config};

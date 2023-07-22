@@ -19,5 +19,5 @@ include(middleware_pkcs11_MIMXRT1062)
 
 include(middleware_lwip_MIMXRT1062)
 
-include(middleware_mbedtls_MIMXRT1062)
+include(middleware_mbedtls_port_ksdk_MIMXRT1062)
 

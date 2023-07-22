@@ -44,4 +44,7 @@ extern t_bool wlan_11h_radar_detect_required(mlan_private *priv, t_u8 channel);
 
 
 
+/** Get non-DFS channel */
+extern mlan_status wlan_get_non_dfs_chan(mlan_private *priv, t_u8 *chan);
+
 #endif /*_MLAN_11H_ */

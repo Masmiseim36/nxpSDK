@@ -8,7 +8,6 @@
 #include "board.h"
 #include "streamer_pcm_app.h"
 #include "fsl_codec_common.h"
-#include "fsl_wm8960.h"
 #include "app_definitions.h"
 #include "fsl_cache.h"
 #include "fsl_debug_console.h"
@@ -151,6 +150,8 @@ static sai_sample_rate_t _pcm_map_sample_rate(uint32_t sample_rate)
             return kSAI_SampleRate32KHz;
         case 44100:
             return kSAI_SampleRate44100Hz;
+        case 96000:
+            return kSAI_SampleRate96KHz;
         case 48000:
         default:
             return kSAI_SampleRate48KHz;
@@ -250,7 +251,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &pcmHandle.saiTxHandle, &saiConfig);
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, masterClockHz, _pcm_map_sample_rate(sample_rate),
-                          _pcm_map_word_width(pcm->bit_width), DEMO_CHANNEL_NUM);
+                          _pcm_map_word_width(pcm->bit_width), (pcm->num_channels == 1) ? 2 : pcm->num_channels);
     /* Enable SAI transmit and FIFO error interrupts. */
     SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
 
@@ -363,6 +364,11 @@ int streamer_set_master_clock(int sample_rate)
         case 32000:
         {
             divider = 5;
+            break;
+        }
+        case 96000:
+        {
+            divider = 3;
             break;
         }
         case 22050:

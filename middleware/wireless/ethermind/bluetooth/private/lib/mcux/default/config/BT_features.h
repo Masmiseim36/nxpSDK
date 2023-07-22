@@ -1016,7 +1016,7 @@
  *
  *  This flag enables hooks to simulate security vulnerabilities.
  */
-#define BT_SECURITY_VU_VALIDATION
+/* #define BT_SECURITY_VU_VALIDATION */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Generic Access Profile Specific Flags ============================ */

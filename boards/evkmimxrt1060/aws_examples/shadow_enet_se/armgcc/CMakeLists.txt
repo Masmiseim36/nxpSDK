@@ -119,10 +119,10 @@ set(CMAKE_MODULE_PATH
     ${SdkRootDirPath}/components/serial_manager
     ${SdkRootDirPath}/components/lists
     ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface
+    ${SdkRootDirPath}/rtos/freertos/backoffalgorithm
     ${SdkRootDirPath}/rtos/freertos/coremqtt-agent
     ${SdkRootDirPath}/rtos/freertos/coremqtt
-    ${SdkRootDirPath}/rtos/freertos/backoffalgorithm
+    ${SdkRootDirPath}/middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface
     ${SdkRootDirPath}/middleware/aws_iot/device-shadow
     ${SdkRootDirPath}/rtos/freertos/corejson
     ${SdkRootDirPath}/middleware/tinycbor
@@ -223,13 +223,13 @@ include(driver_lpi2c_MIMXRT1062)
 
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
-include(middleware_iot_reference_mqtt_agent_interface_MIMXRT1062)
+include(middleware_freertos_backoffalgorithm_MIMXRT1062)
 
 include(middleware_freertos_coremqtt-agent_MIMXRT1062)
 
 include(middleware_freertos_coremqtt_MIMXRT1062)
 
-include(middleware_freertos_backoffalgorithm_MIMXRT1062)
+include(middleware_iot_reference_mqtt_agent_interface_MIMXRT1062)
 
 include(middleware_aws_iot_device_shadow_MIMXRT1062)
 

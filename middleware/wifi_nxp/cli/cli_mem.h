@@ -10,7 +10,11 @@
 
 #ifndef _CLI_MEM_H_
 #define _CLI_MEM_H_
-#define INBUF_SIZE 256
+/** The original INBUF_SIZE is 256.
+ *  When verifing maximum password length for WPA3,
+ *  it will cause an "input buffer overflow" error, so it is expanded to 512.
+ */
+#define INBUF_SIZE 512
 
 #define BUF_ALLOCATED '1'
 #define BUF_AVAILABLE '0'

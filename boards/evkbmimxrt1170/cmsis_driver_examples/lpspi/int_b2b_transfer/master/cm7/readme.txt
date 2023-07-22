@@ -10,9 +10,9 @@ This example uses the transactional API in LPSPI driver.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -87,16 +87,3 @@ LPSPI transfer all data matched!
  Input any char to run again
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Known issue: 
-	project: cmsis_lpspi_int_b2b_transfer_master@cm7
-	compilers and targets: mdk: debug;release;sdram_debug;sdram_release	
-						   armgcc: debug;release;sdram_debug;sdram_release
-						   iar: debug;release;sdram_debug;sdram_release
-	issue: cannot transfer data successfully. Issues will be fixed on next release.
-	
-	project: cmsis_lpspi_int_b2b_transfer_master@cm4
-	compilers and targets: mcux: debug;release
-	                       mdk: debug;release;sdram_debug;sdram_release	
-						   armgcc: debug;release;sdram_debug;sdram_release
-						   iar: debug;release;sdram_debug;sdram_release;flexspi_nor_release
-	issue: cannot transfer data successfully. Issues will be fixed on next release.

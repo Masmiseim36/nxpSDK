@@ -30,6 +30,14 @@
 #define MOD_GROUPS 7
 
 
+#ifdef CONFIG_WIFI_CAPA
+#ifdef CONFIG_11AC
+#define WIFI_SUPPORT_11AC (1 << 2)
+#endif
+#define WIFI_SUPPORT_11N    (1 << 1)
+#define WIFI_SUPPORT_LEGACY (1 << 0)
+#endif
+
 #if 0
 /** channel_field.flags */
 #define CHANNEL_FLAGS_TURBO                   0x0010
@@ -203,8 +211,19 @@ typedef struct
     uint16_t owe : 1;
     /** WPA 3 SAE */
     uint16_t wpa3_sae : 1;
+#ifdef CONFIG_11R
+    /** FT 802.1x */
+    uint16_t ft_1x : 1;
+    /** FT PSK  */
+    uint16_t ft_psk : 1;
+    /** FT SAE */
+    uint16_t ft_sae : 1;
+    /** Reserved 7 bits */
+    uint16_t rsvd : 7;
+#else
     /** Reserved 10 bits */
     uint16_t rsvd : 10;
+#endif
 
 } _SecurityMode_t;
 
@@ -227,13 +246,15 @@ struct wifi_scan_result
     uint8_t Channel;                    /*!< Channel associated to the BSSID */
     uint8_t RSSI;                       /*!< Received signal strength */
     uint16_t beacon_period;             /*!< Beacon period */
-    uint8_t dtim_period;                /*!< DTIM period */
+    uint16_t dtim_period;               /*!< DTIM period */
     _SecurityMode_t WPA_WPA2_WEP;       /*!< Security mode info */
     _Cipher_t wpa_mcstCipher;           /*!< WPA multicast cipher */
     _Cipher_t wpa_ucstCipher;           /*!< WPA unicast cipher */
     _Cipher_t rsn_mcstCipher;           /*!< No security multicast cipher */
     _Cipher_t rsn_ucstCipher;           /*!< No security unicast cipher */
     bool is_pmf_required;               /*!< Is pmf required flag */
+    t_u8 ap_mfpc;                       /*!< MFPC bit of AP */
+    t_u8 ap_mfpr;                       /*!< MFPR bit of AP */
 
     /*!<
      **  WPA_WPA2 = 0 => Security not enabled
@@ -254,6 +275,20 @@ struct wifi_scan_result
     uint8_t trans_bssid[MLAN_MAC_ADDR_LENGTH]; /*!< Trans bssid array */
     uint8_t trans_ssid[MLAN_MAX_SSID_LENGTH];  /*!< Trans ssid array */
     int trans_ssid_len;                        /*!< Trans bssid length */
+#ifdef CONFIG_MBO
+    bool mbo_assoc_disallowed; /*!< MBO disallowed */
+#endif
+#ifdef CONFIG_11R
+    uint16_t mdid;
+#endif
+#ifdef CONFIG_11K
+    /** Neigbort report support */
+    bool neighbor_report_supported;
+#endif
+#ifdef CONFIG_11V
+    /** bss transition support */
+    bool bss_transition_supported;
+#endif
 };
 
 /** MAC address */
@@ -331,7 +366,7 @@ typedef PACK_START struct _wifi_rate_cfg_t
     t_u32 rate_index;
     /** Rate rate */
     t_u32 rate;
-#ifdef CONFIG_11AC
+#if defined(CONFIG_11AC) || defined(CONFIG_11AX)
     /** NSS */
     t_u32 nss;
 #endif
@@ -496,7 +531,7 @@ typedef struct
     t_u32 avg_tbtt_offset;
 } wifi_tbtt_offset_t;
 
-#define BIT(n)                           (1 << n)
+#define BIT(n)                           (1U << (n))
 #define WOWLAN_MAX_PATTERN_LEN           20
 #define WOWLAN_MAX_OFFSET_LEN            50
 #define MAX_NUM_FILTERS                  10
@@ -509,9 +544,9 @@ typedef struct
 #define MEF_AUTO_PING                    0x20
 #define MEF_NS_RESP                      0x40
 #define MEF_MAGIC_PKT                    0x80
-#define CRITERIA_BROADCAST               BIT(0)
-#define CRITERIA_UNICAST                 BIT(1)
-#define CRITERIA_MULTICAST               BIT(3)
+#define CRITERIA_BROADCAST               MBIT(0)
+#define CRITERIA_UNICAST                 MBIT(1)
+#define CRITERIA_MULTICAST               MBIT(3)
 
 #define MAX_NUM_ENTRIES  8
 #define MAX_NUM_BYTE_SEQ 6
@@ -597,7 +632,7 @@ typedef struct _wifi_flt_cfg
     /** Number of entries */
     t_u16 nentries;
     /** MEF entry*/
-    wifi_mef_entry_t mef_entry;
+    wifi_mef_entry_t mef_entry[MAX_NUM_ENTRIES];
 } wifi_flt_cfg_t;
 
 /* User defined pattern struct */
@@ -828,9 +863,7 @@ typedef PACK_START struct
     /** Chnannel descriptor */
     wifi_channel_desc_t chan_desc;
     /** Channel Modulation groups */
-#ifdef CONFIG_11AX
-    wifi_txpwrlimit_entry_t txpwrlimit_entry[20];
-#elif defined(CONFIG_11AC)
+#if   defined(CONFIG_11AC)
     wifi_txpwrlimit_entry_t txpwrlimit_entry[16];
 #else
     wifi_txpwrlimit_entry_t txpwrlimit_entry[10];
@@ -849,9 +882,41 @@ typedef PACK_START struct
     /** Number of Channels */
     t_u8 num_chans;
     /** TRPC config */
+#if defined(IW61x)
+    wifi_txpwrlimit_config_t txpwrlimit_config[43];
+#else
     wifi_txpwrlimit_config_t txpwrlimit_config[40];
+#endif
 } PACK_END wifi_txpwrlimit_t;
 
+
+#ifdef CONFIG_WIFI_CLOCKSYNC
+typedef PACK_START struct
+{
+    /**clock sync Mode */
+    t_u8 clock_sync_mode;
+    /**clock sync Role */
+    t_u8 clock_sync_Role;
+    /**clock sync GPIO Pin Number */
+    t_u8 clock_sync_gpio_pin_number;
+    /**clock sync GPIO Level or Toggle */
+    t_u8 clock_sync_gpio_level_toggle;
+    /**clock sync GPIO Pulse Width */
+    t_u16 clock_sync_gpio_pulse_width;
+} PACK_END wifi_clock_sync_gpio_tsf_t;
+
+typedef PACK_START struct
+{
+    /**get tsf info format */
+    t_u16 tsf_format;
+    /**tsf info */
+    t_u16 tsf_info;
+    /**tsf */
+    t_u64 tsf;
+    /**Positive or negative offset in microsecond from Beacon TSF to GPIO toggle TSF  */
+    t_s32 tsf_offset;
+} PACK_END wifi_tsf_info_t;
+#endif /* CONFIG_WIFI_CLOCKSYNC */
 
 
 /** Wifi frame types */
@@ -935,7 +1000,7 @@ typedef PACK_START struct _wifi_mgmt_frame_t
     /** Address 4 */
     t_u8 addr4[MLAN_MAC_ADDR_LENGTH];
     /** Frame payload */
-    t_u8 payload[0];
+    t_u8 payload[1];
 } PACK_END wifi_mgmt_frame_t;
 
 /** Calibration Data */
@@ -984,6 +1049,10 @@ typedef PACK_START struct _wifi_scan_params_v2_t
     wifi_scan_channel_list_t chan_list[MAX_CHANNEL_LIST];
     /** Number of probes */
     t_u8 num_probes;
+#ifdef CONFIG_EXT_SCAN_SUPPORT
+    /** scan channel gap */
+    t_u16 scan_chan_gap;
+#endif
     /** Callback to be called when scan is completed */
     int (*cb)(unsigned int count);
 } PACK_END wifi_scan_params_v2_t;
@@ -1094,6 +1163,9 @@ typedef struct
     t_u32 free_cnt;
 } wifi_os_mem_info;
 #endif
+
+
+
 
 
 #endif /* __WIFI_DECL_H__ */

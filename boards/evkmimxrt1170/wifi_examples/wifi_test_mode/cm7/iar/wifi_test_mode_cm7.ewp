@@ -2415,6 +2415,18 @@
           <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</name>
         </file>
         <file>
@@ -2486,6 +2498,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifidriver/mlan_api.c</name>

@@ -105,6 +105,7 @@
       <include_path path="." project_relative_path="source" type="c_include"/>
       <include_path path="../../../../../devices/MIMXRT1176" project_relative_path="devices/MIMXRT1176" type="c_include"/>
       <include_path path="../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="." type="c_include"/>
+      <include_path path="freemaster" project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="board" type="c_include"/>
       <include_path path="../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="." type="asm_include"/>
     </include_paths>
@@ -175,7 +176,7 @@
       <files mask="clock_config.h"/>
       <files mask="board.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
+    <source path="freemaster" project_relative_path="source" type="c_include">
       <files mask="freemaster_cfg.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">

@@ -2,7 +2,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#ifdef _IAR_TOOL_
+#ifdef __ICCARM__
 #define inline inline
 #else
 #define inline __inline
@@ -45,7 +45,6 @@
 
 /* Define to 1 if you have the <alloca.h> header file. */
 // #define HAVE_ALLOCA_H
-
 
 /* NE10 library is installed on host. Make sure it is on target! */
 /* #undef HAVE_ARM_NE10 */
@@ -210,6 +209,4 @@
 #define restrict __restrict
 #endif
 
-
 #endif
-

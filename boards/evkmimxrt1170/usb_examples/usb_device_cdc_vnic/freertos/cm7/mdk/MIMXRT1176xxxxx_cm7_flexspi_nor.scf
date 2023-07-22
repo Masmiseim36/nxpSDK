@@ -8,7 +8,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.1, 2022-04-02
-**     Build:               b220402
+**     Build:               b221022
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -41,7 +41,11 @@
 #define m_interrupts_size              0x00000400
 
 #define m_text_start                   0x30002400
+#if (defined(__use_flash64MB__))
+#define m_text_size                    0x03FBDC00
+#else
 #define m_text_size                    0x00FBDC00
+#endif
 
 #define m_qacode_start                 0x00000000
 #define m_qacode_size                  0x00040000
@@ -63,9 +67,13 @@
   #define m_data2_size                 0x00080000
 #endif
 
+#if (defined(__use_flash64MB__))
+#define m_core1_image_start            0x33FC0000
+#define m_core1_image_size             0x00040000
+#else
 #define m_core1_image_start            0x30FC0000
 #define m_core1_image_size             0x00040000
-
+#endif
 /* Sizes */
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__

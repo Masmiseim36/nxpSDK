@@ -32,7 +32,7 @@
 /********************************************************
    Local Functions
 ********************************************************/
-#if 0
+#ifdef CONFIG_11AC
 /**
  *  @brief determine the center frquency center index for bandwidth
  *         of 80 MHz and 160 MHz
@@ -45,92 +45,105 @@
  *  @return             channel center frequency center, if found; O, otherwise
  */
 
-t_u8 wlan_get_center_freq_idx(
-    IN  mlan_private     *pmpriv,
-    IN  t_u8              band,
-    IN  t_u32             pri_chan,
-    IN  t_u8              chan_bw)
+t_u8 wlan_get_center_freq_idx(IN mlan_private *pmpriv, IN t_u8 band, IN t_u32 pri_chan, IN t_u8 chan_bw)
 {
     t_u8 center_freq_idx = 0;
 
-    if (band & BAND_AAC) {
+    if ((band & BAND_AAC) != 0U)
+    {
         switch (pri_chan)
         {
-        case 36:
-        case 40:
-        case 44:
-        case 48:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
+            case 36:
+            case 40:
+            case 44:
+            case 48:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 42;
+                }
+                break;
+            case 52:
+            case 56:
+            case 60:
+            case 64:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 58;
+                }
+                else if (chan_bw == (t_u8)CHANNEL_BW_160MHZ)
+                {
+                    center_freq_idx = 50;
+                }
+                else
+                {
+                    /* Do nothing */
+                }
+                break;
+            case 100:
+            case 104:
+            case 108:
+            case 112:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 106;
+                }
+                break;
+            case 116:
+            case 120:
+            case 124:
+            case 128:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 122;
+                }
+                else if (chan_bw == (t_u8)CHANNEL_BW_160MHZ)
+                {
+                    center_freq_idx = 114;
+                }
+                else
+                {
+                    /* Do nothing */
+                }
+                break;
+            case 132:
+            case 136:
+            case 140:
+            case 144:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 138;
+                }
+                break;
+            case 149:
+            case 153:
+            case 157:
+            case 161:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 155;
+                }
+                break;
+            case 165:
+            case 169:
+            case 173:
+            case 177:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 171;
+                }
+                break;
+            case 184:
+            case 188:
+            case 192:
+            case 196:
+                if (chan_bw == (t_u8)CHANNEL_BW_80MHZ)
+                {
+                    center_freq_idx = 190;
+                }
+                break;
+            default: /* error. go to the default */
                 center_freq_idx = 42;
                 break;
-            }
-        case 52:
-        case 56:
-        case 60:
-        case 64:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
-                center_freq_idx = 58;
-                break;
-            }
-            else if (chan_bw == CHANNEL_BW_160MHZ) {
-                center_freq_idx = 50;
-                break;
-            }
-        case 100:
-        case 104:
-        case 108:
-        case 112:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
-                center_freq_idx = 106;
-                break;
-            }
-        case 116:
-        case 120:
-        case 124:
-        case 128:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
-                center_freq_idx = 122;
-                break;
-            }
-            else if (chan_bw == CHANNEL_BW_160MHZ) {
-                center_freq_idx = 114;
-                break;
-            }
-        case 132:
-        case 136:
-        case 140:
-        case 144:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
-                center_freq_idx = 138;
-                break;
-            }
-        case 149:
-        case 153:
-        case 157:
-        case 161:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
-                center_freq_idx = 155;
-                break;
-            }
-        case 165:
-        case 169:
-        case 173:
-        case 177:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
-                center_freq_idx = 171;
-                break;
-            }
-        case 184:
-        case 188:
-        case 192:
-        case 196:
-            if (chan_bw == CHANNEL_BW_80MHZ) {
-                center_freq_idx = 190;
-                break;
-            }
-
-        default: /* error. go to the default */
-            center_freq_idx = 42;
         }
     }
     return center_freq_idx;
@@ -151,7 +164,7 @@ static t_u8 wlan_get_nss_vht_mcs(t_u16 mcs_map_set)
     {
         if (GET_VHTNSSMCS(mcs_map_set, nss) != NO_NSS_SUPPORT)
         {
-            nss_map |= 1 << (nss - 1U);
+            nss_map |= 1U << (nss - 1U);
         }
     }
     PRINTM(MCMND, "Supported nss bit map:0x%02x\n", nss_map);
@@ -233,6 +246,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
     t_u32 cfg_value         = 0;
     t_u32 hw_value          = 0;
     t_u8 nss                = 0;
+    t_u16 no_nss_support    = NO_NSS_SUPPORT;
 
     ENTER();
 
@@ -240,13 +254,13 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
     (MBIT(4) | MBIT(5) | MBIT(6) | MBIT(7) | MBIT(11) | MBIT(12) | MBIT(19) | MBIT(20) | MBIT(21) | MBIT(22) | \
      MBIT(28) | MBIT(29))
 
-    if (action == MLAN_ACT_SET)
+    if (action == (t_u8)MLAN_ACT_SET)
     {
         /** SET operation */
         /** validate the user input and correct it if necessary */
         if (pmpriv->bss_role == MLAN_BSS_ROLE_STA)
         {
-            if (vht_cfg->txrx == 3)
+            if (vht_cfg->txrx == 3U)
             {
                 PRINTM(MERROR, "Configuration of VHT capabilities for TX/RX 3 is not supported in STA mode!\n");
                 return MLAN_STATUS_FAILURE;
@@ -254,7 +268,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
         }
         if (pmpriv->bss_role == MLAN_BSS_ROLE_UAP)
         {
-            if (vht_cfg->txrx != 3)
+            if (vht_cfg->txrx != 3U)
             {
                 PRINTM(MERROR, "Configuration of VHT capabilities for TX/RX %d is not supported in UAP mode!\n",
                        vht_cfg->txrx);
@@ -304,13 +318,13 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
             {
                 vht_cfg->vht_rx_mcs = GET_VHTMCS(pmadapter->usr_dot_11ac_mcs_support);
             }
-            for (nss = 1; nss <= 8; nss++)
+            for (nss = 1; nss <= 8U; nss++)
             {
                 cfg_value = GET_VHTNSSMCS(vht_cfg->vht_rx_mcs, nss);
                 hw_value  = GET_DEVNSSRXMCS(pmadapter->hw_dot_11ac_mcs_support, nss);
                 if ((hw_value == NO_NSS_SUPPORT) || (cfg_value == NO_NSS_SUPPORT))
                 {
-                    SET_VHTNSSMCS(vht_cfg->vht_rx_mcs, nss, NO_NSS_SUPPORT);
+                    SET_VHTNSSMCS(vht_cfg->vht_rx_mcs, nss, no_nss_support);
                 }
                 else
                 {
@@ -323,13 +337,13 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
             {
                 vht_cfg->vht_tx_mcs = GET_VHTMCS(pmadapter->usr_dot_11ac_mcs_support >> 16);
             }
-            for (nss = 1; nss <= 8; nss++)
+            for (nss = 1; nss <= 8U; nss++)
             {
                 cfg_value = GET_VHTNSSMCS(vht_cfg->vht_tx_mcs, nss);
                 hw_value  = GET_DEVNSSTXMCS(pmadapter->hw_dot_11ac_mcs_support, nss);
                 if ((hw_value == NO_NSS_SUPPORT) || (cfg_value == NO_NSS_SUPPORT))
                 {
-                    SET_VHTNSSMCS(vht_cfg->vht_tx_mcs, nss, NO_NSS_SUPPORT);
+                    SET_VHTNSSMCS(vht_cfg->vht_tx_mcs, nss, no_nss_support);
                 }
                 else
                 {
@@ -360,7 +374,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
         {
             /* maximum VHT configuration used in association */
 
-            if (action == MLAN_ACT_SET)
+            if (action == (t_u8)MLAN_ACT_SET)
             {
                 if (vht_cfg->band == BAND_SELECT_BG)
                 {
@@ -405,16 +419,16 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
                 vht_cfg->vht_rx_mcs = GET_DEVRXMCSMAP(pmadapter->usr_dot_11ac_mcs_support);
                 vht_cfg->vht_tx_mcs = GET_DEVTXMCSMAP(pmadapter->usr_dot_11ac_mcs_support);
                 vht_cfg->vht_rx_max_rate =
-                    wlan_convert_mcsmap_to_maxrate(pmpriv, vht_cfg->band, (t_u16)vht_cfg->vht_rx_mcs);
+                    wlan_convert_mcsmap_to_maxrate(pmpriv, (t_u8)vht_cfg->band, (t_u16)vht_cfg->vht_rx_mcs);
                 vht_cfg->vht_tx_max_rate =
-                    wlan_convert_mcsmap_to_maxrate(pmpriv, vht_cfg->band, (t_u16)vht_cfg->vht_tx_mcs);
+                    wlan_convert_mcsmap_to_maxrate(pmpriv, (t_u8)vht_cfg->band, (t_u16)vht_cfg->vht_tx_mcs);
             }
             LEAVE();
             return ret;
         }
     }
 
-    if (action == MLAN_ACT_SET)
+    if (action == (t_u8)MLAN_ACT_SET)
     {
         cmd_action = HostCmd_ACT_GEN_SET;
     }
@@ -697,9 +711,9 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
 
     max_mcs = (t_u8)((mcs_map >> (2U * nss)) & 0x3U);
     /* if max_mcs is 3, nss must be 0 (SS = 1). Thus, max mcs is MCS 9*/
-    if (max_mcs >= 3)
+    if (max_mcs >= 3U)
     {
-        max_mcs = 2;
+        max_mcs = (t_u8)2U;
     }
 
     if (GET_VHTCAP_CHWDSET(usr_vht_cap_info) != 0U)
@@ -709,7 +723,7 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
         if (max_mcs >= 1U && max_rate == 0U)
         {
             /* MCS9 is not supported in NSS6 */
-            max_rate = max_rate_lgi_160MHZ[nss][max_mcs - 1];
+            max_rate = max_rate_lgi_160MHZ[nss][max_mcs - 1U];
         }
     }
     else
@@ -720,7 +734,7 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
             if (max_mcs >= 1U && max_rate == 0U)
             {
                 /* MCS9 is not supported in NSS3 */
-                max_rate = max_rate_lgi_80MHZ[nss][max_mcs - 1];
+                max_rate = max_rate_lgi_80MHZ[nss][max_mcs - 1U];
             }
         }
         else
@@ -735,7 +749,7 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
                 /* MCS9 is not supported in NSS1/2/4/5/7/8 */
                 if (max_mcs >= 1U && max_rate == 0U)
                 {
-                    max_rate = max_rate_lgi_20MHZ[nss][max_mcs - 1];
+                    max_rate = max_rate_lgi_20MHZ[nss][max_mcs - 1U];
                 }
             }
         }
@@ -759,10 +773,11 @@ void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, t
     mlan_adapter *pmadapter = priv->adapter;
     t_u16 mcs_map_user      = 0;
     t_u16 mcs_map_resp      = 0;
-    t_u16 mcs_map_result    = 0;
+    t_u32 mcs_map_result    = 0U;
     t_u16 mcs_user          = 0;
     t_u16 mcs_resp          = 0;
     t_u16 nss;
+    t_u16 no_nss_support = NO_NSS_SUPPORT;
 
     ENTER();
 
@@ -777,14 +792,14 @@ void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, t
     {
         mcs_map_resp = wlan_le16_to_cpu(pvht_cap->vht_cap.mcs_sets.rx_mcs_map);
     }
-    mcs_map_result = 0;
+    mcs_map_result = 0U;
     for (nss = 1; nss <= 8U; nss++)
     {
         mcs_user = GET_VHTNSSMCS(mcs_map_user, nss);
         mcs_resp = GET_VHTNSSMCS(mcs_map_resp, nss);
         if ((mcs_user == NO_NSS_SUPPORT) || (mcs_resp == NO_NSS_SUPPORT))
         {
-            SET_VHTNSSMCS(mcs_map_result, nss, NO_NSS_SUPPORT);
+            SET_VHTNSSMCS(mcs_map_result, nss, no_nss_support);
         }
         else
         {
@@ -795,7 +810,7 @@ void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, t
     pvht_cap->vht_cap.mcs_sets.rx_mcs_map = wlan_cpu_to_le16(mcs_map_result);
 
     /* rx highest rate */
-    pvht_cap->vht_cap.mcs_sets.rx_max_rate = wlan_convert_mcsmap_to_maxrate(priv, bands, mcs_map_result);
+    pvht_cap->vht_cap.mcs_sets.rx_max_rate = wlan_convert_mcsmap_to_maxrate(priv, (t_u8)bands, (t_u16)mcs_map_result);
     pvht_cap->vht_cap.mcs_sets.rx_max_rate = wlan_cpu_to_le16(pvht_cap->vht_cap.mcs_sets.rx_max_rate);
 
     /* tx MCS Set find the minimum of the user tx mcs and ap tx mcs */
@@ -804,14 +819,14 @@ void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, t
     {
         mcs_map_resp = wlan_le16_to_cpu(pvht_cap->vht_cap.mcs_sets.tx_mcs_map);
     }
-    mcs_map_result = 0;
+    mcs_map_result = 0U;
     for (nss = 1; nss <= 8U; nss++)
     {
         mcs_user = GET_VHTNSSMCS(mcs_map_user, nss);
         mcs_resp = GET_VHTNSSMCS(mcs_map_resp, nss);
         if ((mcs_user == NO_NSS_SUPPORT) || (mcs_resp == NO_NSS_SUPPORT))
         {
-            SET_VHTNSSMCS(mcs_map_result, nss, NO_NSS_SUPPORT);
+            SET_VHTNSSMCS(mcs_map_result, nss, no_nss_support);
         }
         else
         {
@@ -822,7 +837,7 @@ void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, t
     /* tx MCS map */
     pvht_cap->vht_cap.mcs_sets.tx_mcs_map = wlan_cpu_to_le16(mcs_map_result);
     /* tx highest rate */
-    pvht_cap->vht_cap.mcs_sets.tx_max_rate = wlan_convert_mcsmap_to_maxrate(priv, bands, mcs_map_result);
+    pvht_cap->vht_cap.mcs_sets.tx_max_rate = wlan_convert_mcsmap_to_maxrate(priv, (t_u8)bands, (t_u16)mcs_map_result);
     pvht_cap->vht_cap.mcs_sets.tx_max_rate = wlan_cpu_to_le16(pvht_cap->vht_cap.mcs_sets.tx_max_rate);
 
     LEAVE();
@@ -902,7 +917,7 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
         return 0;
     }
     /* VHT Capabilities IE */
-    if (pbss_desc->pvht_cap != MNULL && wlan_get_nss_vht_mcs(pbss_desc->pvht_cap->vht_cap.mcs_sets.rx_mcs_map))
+    if (pbss_desc->pvht_cap != MNULL && wlan_get_nss_vht_mcs(pbss_desc->pvht_cap->vht_cap.mcs_sets.rx_mcs_map) != 0U)
     {
         pvht_cap = (MrvlIETypes_VHTCap_t *)(void *)*ppbuffer;
         (void)__memset(pmadapter, pvht_cap, 0, sizeof(MrvlIETypes_VHTCap_t));
@@ -911,11 +926,11 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
         (void)__memcpy(pmadapter, (t_u8 *)pvht_cap + sizeof(MrvlIEtypesHeader_t),
                        (t_u8 *)pbss_desc->pvht_cap + sizeof(IEEEtypes_Header_t), pvht_cap->header.len);
 
-        wlan_fill_vht_cap_tlv(pmpriv, pvht_cap, pbss_desc->bss_band, MTRUE);
+        wlan_fill_vht_cap_tlv(pmpriv, pvht_cap, pbss_desc->bss_band, (t_u8)MTRUE);
 
         HEXDUMP("VHT_CAPABILITIES IE", (t_u8 *)pvht_cap, sizeof(MrvlIETypes_VHTCap_t));
         *ppbuffer += sizeof(MrvlIETypes_VHTCap_t);
-        ret_len += sizeof(MrvlIETypes_VHTCap_t);
+        ret_len += (int)sizeof(MrvlIETypes_VHTCap_t);
         pvht_cap->header.len = wlan_cpu_to_le16(pvht_cap->header.len);
     }
     else
@@ -930,7 +945,7 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
     pmrvl_oper_mode->header.type = wlan_cpu_to_le16(OPER_MODE_NTF);
     pmrvl_oper_mode->header.len  = (t_u16)sizeof(t_u8);
 
-    if (pmadapter->usr_dot_11ac_opermode_bw || pmadapter->usr_dot_11ac_opermode_nss)
+    if (pmadapter->usr_dot_11ac_opermode_bw != 0U || pmadapter->usr_dot_11ac_opermode_nss != 0U)
     {
         pmrvl_oper_mode->oper_mode |= (pmadapter->usr_dot_11ac_opermode_nss - 1U) << 4U;
         pmrvl_oper_mode->oper_mode |= pmadapter->usr_dot_11ac_opermode_bw - 1U;
@@ -974,7 +989,7 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
     }
     HEXDUMP("OPER MODE NTF IE", (t_u8 *)pmrvl_oper_mode, sizeof(MrvlIETypes_OperModeNtf_t));
     *ppbuffer += sizeof(MrvlIETypes_OperModeNtf_t);
-    ret_len += sizeof(MrvlIETypes_OperModeNtf_t);
+    ret_len += (int)sizeof(MrvlIETypes_OperModeNtf_t);
     pmrvl_oper_mode->header.len = wlan_cpu_to_le16(pmrvl_oper_mode->header.len);
 
     LEAVE();
@@ -1048,7 +1063,7 @@ mlan_status wlan_cmd_11ac_cfg(IN pmlan_private pmpriv,
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11AC_CFG) + S_DS_GEN);
     if (pmpriv->bss_type == MLAN_BSS_TYPE_UAP)
     {
-        cmd->seq_num = (0x01) << 12;
+        cmd->seq_num = (t_u16)(0x01U) << 12;
     }
     vhtcfg->action      = wlan_cpu_to_le16(cmd_action);
     vhtcfg->band_config = (t_u8)(vht_cfg->band & 0xFFU);
@@ -1142,12 +1157,12 @@ t_u8 wlan_11ac_bandconfig_allowed(mlan_private *pmpriv, t_u16 bss_band)
 {
     if (pmpriv->bss_mode == MLAN_BSS_MODE_IBSS)
     {
-        if ((bss_band & BAND_G) != 0)
+        if ((bss_band & BAND_G) != 0U)
         {
             return (t_u8)(pmpriv->adapter->adhoc_start_band & BAND_GAC);
         }
 #ifdef CONFIG_5GHz_SUPPORT
-        else if ((bss_band & BAND_A) != 0)
+        else if ((bss_band & BAND_A) != 0U)
         {
             return (t_u8)(pmpriv->adapter->adhoc_start_band & BAND_AAC);
         }
@@ -1158,12 +1173,12 @@ t_u8 wlan_11ac_bandconfig_allowed(mlan_private *pmpriv, t_u16 bss_band)
     }
     else
     {
-        if ((bss_band & BAND_G) != 0)
+        if ((bss_band & BAND_G) != 0U)
         {
             return (t_u8)(pmpriv->config_bands & BAND_GAC);
         }
 #ifdef CONFIG_5GHz_SUPPORT
-        else if ((bss_band & BAND_A) != 0)
+        else if ((bss_band & BAND_A) != 0U)
         {
             return (t_u8)(pmpriv->config_bands & BAND_AAC);
         }

@@ -28,8 +28,8 @@
 #include "firmware_dnld.h"
 
 /* Buffer pointers to point to command and, command response buffer */
-static uint8_t fw_cmd_buf[WIFI_FW_CMDBUF_SIZE];
-static t_u16 seqnum;
+static uint8_t ctrl_cmd_buf[WIFI_FW_CMDBUF_SIZE];
+static int seqnum;
 // static int pm_handle;
 
 /*
@@ -180,7 +180,6 @@ void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface)
     if (ptxpd->tx_pkt_type == 0xe5U)
     {
         ptxpd->tx_pkt_offset = 0x14; /* Override for special frame */
-        payloadlen -= ptxpd->tx_pkt_offset + INTF_HEADER_LEN;
     }
     ptxpd->tx_control = 0;
 #ifdef CONFIG_WMM
@@ -372,6 +371,14 @@ static mlan_status wlan_decode_rx_packet(t_u8 *pmbuf, t_u32 upld_type)
         msg.event = (uint16_t)upld_type;
         (void)memcpy((void *)msg.data, (const void *)pmbuf, sdiopkt->size);
 
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+        if (upld_type == MLAN_TYPE_EVENT && sdiopkt->hostcmd.command == EVENT_TX_DATA_PAUSE)
+        {
+            wifi_handle_event_data_pause(msg.data);
+            wifi_free_eventbuf(msg.data);
+            return MLAN_STATUS_SUCCESS;
+        }
+#endif
         ret = os_queue_send(bus.event_queue, &msg, os_msec_to_ticks(WIFI_RESP_WAIT_TIME));
 
         if (ret != WM_SUCCESS)
@@ -504,7 +511,7 @@ static void _wlan_set_cal_data(void)
     (void)memset(outbuf, 0, SDIO_OUTBUF_LEN);
 
     /* sdiopkt = outbuf */
-    wifi_prepare_set_cal_data_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_set_cal_data_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -529,7 +536,7 @@ static void _wlan_reconfigure_tx_buffers(void)
     (void)memset(outbuf, 0, SDIO_OUTBUF_LEN);
 
     /* sdiopkt = outbuf */
-    wifi_prepare_reconfigure_tx_buf_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_reconfigure_tx_buf_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
 
@@ -556,7 +563,7 @@ static void wlan_get_channel_region_cfg(void)
     uint32_t resp;
     (void)memset(outbuf, 0, buflen);
     /* sdiopkt = outbuf */
-    wifi_prepare_get_channel_region_cfg_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_get_channel_region_cfg_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -576,7 +583,7 @@ static void wlan_get_hw_spec(void)
     uint32_t resp;
     (void)memset(outbuf, 0, buflen);
     /* sdiopkt = outbuf */
-    wifi_prepare_get_hw_spec_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_get_hw_spec_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -598,7 +605,7 @@ static void wlan_get_mac_addr(void)
     (void)memset(outbuf, 0, buflen);
 
     /* sdiopkt = outbuf */
-    wifi_prepare_get_mac_addr_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_get_mac_addr_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -622,7 +629,7 @@ static void wlan_get_fw_ver_ext(int version_str_sel)
     (void)memset(outbuf, 0, buflen);
 
     /* sdiopkt = outbuf */
-    wifi_prepare_get_fw_ver_ext_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num(), version_str_sel);
+    wifi_prepare_get_fw_ver_ext_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num(), version_str_sel);
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -647,7 +654,7 @@ static void wlan_get_value_1(void)
     (void)memset(outbuf, 0, buflen);
 
     /* sdiopkt = outbuf */
-    wifi_prepare_get_value1(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_get_value1(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -670,7 +677,7 @@ static void _wlan_set_mac_addr(void)
     (void)memset(outbuf, 0, buflen);
 
     /* sdiopkt = outbuf */
-    wifi_prepare_set_mac_addr_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_set_mac_addr_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -713,7 +720,7 @@ static void wlan_enable_amsdu(void)
     (void)memset(outbuf, 0, buflen);
 
     /* sdiopkt = outbuf */
-    wifi_prepare_enable_amsdu_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_enable_amsdu_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -757,7 +764,7 @@ static void wlan_set_mac_ctrl(void)
     (void)memset(outbuf, 0, buflen);
 
     /* sdiopkt = outbuf */
-    wlan_prepare_mac_control_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wlan_prepare_mac_control_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -808,7 +815,7 @@ static int wlan_set_low_power_mode()
 
     /* sdiopkt = outbuf */
 
-    wifi_prepare_low_power_mode_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    wifi_prepare_low_power_mode_cmd(&sdiopkt->hostcmd, (t_u16)wlan_get_next_seq_num());
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
     sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
@@ -1025,7 +1032,7 @@ int wlan_send_sdio_cmd(t_u8 *buf, t_u32 tx_blocks, t_u32 buflen)
 
 int wifi_send_cmdbuffer(t_u32 tx_blocks, t_u32 len)
 {
-    return wlan_send_sdio_cmd(fw_cmd_buf, tx_blocks, len);
+    return wlan_send_sdio_cmd(ctrl_cmd_buf, tx_blocks, len);
 }
 #ifdef CONFIG_WMM
 extern int retry_attempts;
@@ -2031,7 +2038,7 @@ void sd_wifi_deinit(void)
 HostCmd_DS_COMMAND *wifi_get_command_buffer(void)
 {
     /* First 4 bytes reserved for SDIO pkt header */
-    return (HostCmd_DS_COMMAND *)(void *)(fw_cmd_buf + INTF_HEADER_LEN);
+    return (HostCmd_DS_COMMAND *)(void *)(ctrl_cmd_buf + INTF_HEADER_LEN);
 }
 
 /**

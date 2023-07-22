@@ -13,3 +13,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 
 include(middleware_freertos-kernel_MIMXRT1062)
 
+include(component_mflash_file_MIMXRT1062)
+

@@ -637,17 +637,8 @@ WIFIReturnCode_t WIFI_GetIP(uint8_t *pucIPAddr)
 
 WIFIReturnCode_t WIFI_GetMAC(uint8_t *pucMac)
 {
-    if (pucMac == NULL)
-    {
-        return eWiFiFailure;
-    }
-
-    if (WM_SUCCESS != wlan_get_mac_address(pucMac))
-    {
-        return eWiFiFailure;
-    }
-
-    return eWiFiSuccess;
+    /* FIX ME. */
+    return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 

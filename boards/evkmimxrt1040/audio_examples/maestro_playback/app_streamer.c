@@ -12,6 +12,7 @@
 #include "app_data.h"
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
+#include "app_definitions.h"
 #include "main.h"
 #include "maestro_logging.h"
 
@@ -194,7 +195,92 @@ void STREAMER_Stop(streamer_handle_t *handle)
         ringbuf_clear(audioBuffer);
     }
 }
+#ifdef MULTICHANNEL_EXAMPLE
+status_t STREAMER_PCM_Create(char *filename, int volume)
+{
+    STREAMER_CREATE_PARAM params;
+    osa_task_def_t thread_attr;
+    ELEMENT_PROPERTY_T prop;
+    int ret;
 
+    eap_att_control_t *control = get_eap_att_control();
+
+    /* Create message process thread */
+    thread_attr.tpriority = OSA_PRIORITY_HIGH;
+    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
+    thread_attr.pthread   = &STREAMER_MessageTask;
+    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
+    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)control);
+    if (KOSA_StatusSuccess != ret)
+    {
+        return kStatus_Fail;
+    }
+
+    /* Create streamer */
+    strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
+    params.stack_size = STREAMER_TASK_STACK_SIZE;
+    params.task_name  = STREAMER_TASK_NAME;
+#ifdef EAP_PROC
+    if (get_app_data()->num_channels == 2)
+    {
+        params.pipeline_type = STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO;
+    }
+    else
+    {
+        params.pipeline_type = STREAM_PIPELINE_PCM_AUDIO;
+    }
+#else
+    params.pipeline_type = STREAM_PIPELINE_PCM_AUDIO;
+#endif /* EAP_PROC */
+    params.task_name    = STREAMER_TASK_NAME;
+    params.in_dev_name  = "";
+    params.out_dev_name = "";
+
+    streamer = streamer_create(&params);
+    if (!streamer)
+    {
+        return kStatus_Fail;
+    }
+
+    prop.prop = PROP_FILESRC_SET_LOCATION;
+    prop.val  = (uintptr_t)filename;
+
+    streamer_set_property(streamer, prop, true);
+
+    prop.prop = PROP_FILESRC_SET_SAMPLE_RATE;
+    prop.val  = DEMO_SAMPLE_RATE;
+
+    streamer_set_property(streamer, prop, true);
+
+    prop.prop = PROP_FILESRC_SET_NUM_CHANNELS;
+    prop.val  = get_app_data()->num_channels;
+
+    streamer_set_property(streamer, prop, true);
+
+    prop.prop = PROP_FILESRC_SET_BIT_WIDTH;
+    prop.val  = DEMO_BIT_WIDTH;
+
+    streamer_set_property(streamer, prop, true);
+
+    prop.prop = PROP_FILESRC_SET_CHUNK_SIZE;
+    prop.val  = get_app_data()->num_channels * DEMO_BYTE_WIDTH * DEMO_SAMPLE_RATE / 100;
+
+    streamer_set_property(streamer, prop, true);
+
+    prop.prop = PROP_AUDIOSINK_SET_VOLUME;
+    prop.val  = volume;
+    streamer_set_property(streamer, prop, true);
+
+#ifdef EAP_PROC
+    if (get_app_data()->num_channels == 2)
+    {
+        register_post_process(streamer);
+    }
+#endif
+
+    return kStatus_Success;
+}
+#else
 status_t STREAMER_file_Create(char *filename, int volume)
 {
     STREAMER_CREATE_PARAM params;
@@ -217,15 +303,15 @@ status_t STREAMER_file_Create(char *filename, int volume)
 
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
-    params.stack_size = STREAMER_TASK_STACK_SIZE;
+    params.stack_size    = STREAMER_TASK_STACK_SIZE;
 #ifdef EAP_PROC
     params.pipeline_type = STREAM_PIPELINE_AUDIO_PROC;
 #else
     params.pipeline_type = STREAM_PIPELINE_FILESYSTEM;
 #endif
-    params.task_name    = STREAMER_TASK_NAME;
-    params.in_dev_name  = "";
-    params.out_dev_name = "";
+    params.task_name     = STREAMER_TASK_NAME;
+    params.in_dev_name   = "";
+    params.out_dev_name  = "";
 
     streamer = streamer_create(&params);
     if (!streamer)
@@ -245,7 +331,7 @@ status_t STREAMER_file_Create(char *filename, int volume)
 
     return kStatus_Success;
 }
-
+#endif
 /* EAP Audio Tuning Tool control integration - START */
 /* this functions should not be called internally to prevent possible issues caused by broken state machine */
 eap_att_code_t play()
@@ -257,9 +343,12 @@ eap_att_code_t play()
     //     set_debug_level(LOGLVL_DEBUG);
     //     get_debug_state();
     streamer_pcm_init();
-
+#ifdef MULTICHANNEL_EXAMPLE
+    if (STREAMER_PCM_Create((char *)get_eap_att_control()->input, DEMO_VOLUME) == kStatus_Success)
+#else
     if (STREAMER_file_Create((char *)get_eap_att_control()->input, (int)get_eap_att_control()->volume) ==
         kStatus_Success)
+#endif
     {
         if (streamer_set_state(streamer, 0, STATE_PLAYING, true) == 0)
         {

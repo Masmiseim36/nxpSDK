@@ -418,11 +418,11 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt-agent/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/interface</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/device-shadow/source/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/device-shadow/source/interface</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/include</state>
@@ -1582,11 +1582,11 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt-agent/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/interface</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/device-shadow/source/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/device-shadow/source/interface</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/include</state>
@@ -4450,6 +4450,21 @@
       </file>
     </group>
     <group>
+      <name>backoffalgorithm</name>
+      <group>
+        <name>source</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</name>
+        </file>
+        <group>
+          <name>include</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
       <name>coremqtt-agent</name>
       <group>
         <name>source</name>
@@ -4514,21 +4529,6 @@
           <name>interface</name>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/interface/transport_interface.h</name>
-          </file>
-        </group>
-      </group>
-    </group>
-    <group>
-      <name>backoffalgorithm</name>
-      <group>
-        <name>source</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</name>
-        </file>
-        <group>
-          <name>include</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</name>
           </file>
         </group>
       </group>

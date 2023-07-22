@@ -40,7 +40,7 @@ struct iperf_test_context
 };
 
 static struct iperf_test_context ctx;
-static os_timer_t ptimer;
+static os_timer_t ptimer = NULL;
 static ip_addr_t server_address;
 static ip_addr_t bind_address;
 static bool multicast;
@@ -119,7 +119,11 @@ static void lwiperf_report(void *arg,
             (void)PRINTF(" Port %d \r\n", remote_port);
             (void)PRINTF(" Bytes Transferred %llu \r\n", bytes_transferred);
             (void)PRINTF(" Duration (ms) %d \r\n", ms_duration);
+#if defined(RW610)
+            (void)PRINTF(" Bandwidth (Mbitpsec) %.2f \r\n", (double)bandwidth_kbitpsec / 1000U);
+#else
             (void)PRINTF(" Bandwidth (Mbitpsec) %d \r\n", bandwidth_kbitpsec / 1000U);
+#endif
         }
     }
     else
@@ -294,7 +298,6 @@ static void iperf_test_abort(void *arg)
         lwiperf_abort(test_ctx->iperf_session);
         test_ctx->iperf_session = NULL;
     }
-
     (void)PRINTF("IPERF ABORT DONE\r\n");
     (void)memset(&ctx, 0, sizeof(struct iperf_test_context));
 }
@@ -746,10 +749,16 @@ int iperf_cli_init(void)
         }
     }
 
+    if (ctx.iperf_session != NULL)
+    {
+        lwiperf_abort(ctx.iperf_session);
+    }
+
     (void)memset(&ctx, 0, sizeof(struct iperf_test_context));
 
-    rv = os_timer_create(&ptimer, "UDP Poll Timer", 1U / portTICK_PERIOD_MS, timer_poll_udp_client, (void *)0,
-                         OS_TIMER_PERIODIC, OS_TIMER_AUTO_ACTIVATE);
+    if (ptimer == NULL)
+        rv = os_timer_create(&ptimer, "UDP Poll Timer", 1U / portTICK_PERIOD_MS, timer_poll_udp_client, (void *)0,
+                             OS_TIMER_PERIODIC, OS_TIMER_AUTO_ACTIVATE);
 
     if (rv != WM_SUCCESS)
     {

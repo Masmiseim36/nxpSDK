@@ -103,7 +103,7 @@
           <value>LWIP_DHCP=1</value>
           <value>MBEDTLS_CONFIG_FILE='"mbedtls_config_client.h"'</value>
           <value>ENET_RXBUFF_NUM=14</value>
-          <value>SHELL_BUFFER_SIZE=128</value>
+          <value>SHELL_BUFFER_SIZE=128U</value>
           <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
           <value>MFLASH_FILE_BASEADDR=14221312</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>

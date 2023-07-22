@@ -14,3 +14,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 
 include(middleware_freertos_coremqtt-agent_MIMXRT1176_cm7)
 
+include(middleware_freertos-kernel_MIMXRT1176_cm7)
+

@@ -9,6 +9,8 @@
     <definition extID="component.wm8960_adapter.MIMXRT1042"/>
     <definition extID="component.codec_i2c.MIMXRT1042"/>
     <definition extID="component.lpi2c_adapter.MIMXRT1042"/>
+    <definition extID="component.codec_adapters.MIMXRT1042"/>
+    <definition extID="component.cs42448_adapter.MIMXRT1042"/>
     <definition extID="platform.drivers.sai_edma.MIMXRT1042"/>
     <definition extID="platform.drivers.dmamux.MIMXRT1042"/>
     <definition extID="platform.drivers.edma.MIMXRT1042"/>
@@ -20,6 +22,7 @@
     <definition extID="middleware.vit.cm7.MIMXRT1042"/>
     <definition extID="CMSIS_DSP_Source.MIMXRT1042"/>
     <definition extID="component.igpio_adapter.MIMXRT1042"/>
+    <definition extID="middleware.voice_seeker.cm7.MIMXRT1042"/>
     <definition extID="middleware.fatfs.MIMXRT1042"/>
     <definition extID="middleware.fatfs.sd.MIMXRT1042"/>
     <definition extID="middleware.maestro_framework.opus.MIMXRT1042"/>
@@ -42,11 +45,13 @@
     <definition extID="platform.drivers.xip_device.MIMXRT1042"/>
     <definition extID="platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1042"/>
+    <definition extID="driver.cs42448.MIMXRT1042"/>
     <definition extID="middleware.sdmmc.osa.freertos.MIMXRT1042"/>
     <definition extID="component.osa_free_rtos.MIMXRT1042"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1042"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1042"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1042"/>
+    <definition extID="middleware.voice_seeker.rdsp_utilities_public.MIMXRT1042"/>
     <definition extID="driver.soc_flexram_allocate.MIMXRT1042"/>
     <definition extID="middleware.maestro_framework.doc.MIMXRT1042"/>
     <definition extID="middleware.maestro_framework.streamer.MIMXRT1042"/>
@@ -60,14 +65,14 @@
     <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="mdk"/>
   </externalDefinitions>
-  <example id="evkmimxrt1040_maestro_record" name="maestro_record" dependency="platform.drivers.lpi2c.MIMXRT1042 platform.drivers.sai.MIMXRT1042 driver.wm8960.MIMXRT1042 driver.codec.MIMXRT1042 platform.drivers.common.MIMXRT1042 component.wm8960_adapter.MIMXRT1042 component.codec_i2c.MIMXRT1042 component.lpi2c_adapter.MIMXRT1042 platform.drivers.sai_edma.MIMXRT1042 platform.drivers.dmamux.MIMXRT1042 platform.drivers.edma.MIMXRT1042 middleware.sdmmc.sd.MIMXRT1042 middleware.sdmmc.common.MIMXRT1042 middleware.sdmmc.host.usdhc.MIMXRT1042 middleware.sdmmc.host.usdhc.freertos.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 middleware.vit.cm7.MIMXRT1042 CMSIS_DSP_Source.MIMXRT1042 component.igpio_adapter.MIMXRT1042 middleware.fatfs.MIMXRT1042 middleware.fatfs.sd.MIMXRT1042 middleware.maestro_framework.opus.MIMXRT1042 platform.drivers.flexram.MIMXRT1042 middleware.freertos-kernel.heap_4.MIMXRT1042 middleware.maestro_framework.MIMXRT1042 utility.shell.MIMXRT1042 platform.drivers.clock.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 utility.debug_console.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.serial_manager.MIMXRT1042 component.lists.MIMXRT1042 component.serial_manager_uart.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 platform.utilities.assert.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 platform.drivers.xip_device.MIMXRT1042 platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 middleware.sdmmc.osa.freertos.MIMXRT1042 component.osa_free_rtos.MIMXRT1042 middleware.freertos-kernel.MIMXRT1042 middleware.freertos-kernel.extension.MIMXRT1042 platform.drivers.usdhc.MIMXRT1042 driver.soc_flexram_allocate.MIMXRT1042 middleware.maestro_framework.doc.MIMXRT1042 middleware.maestro_framework.streamer.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042" category="audio_examples">
+  <example id="evkmimxrt1040_maestro_record" name="maestro_record" dependency="platform.drivers.lpi2c.MIMXRT1042 platform.drivers.sai.MIMXRT1042 driver.wm8960.MIMXRT1042 driver.codec.MIMXRT1042 platform.drivers.common.MIMXRT1042 component.wm8960_adapter.MIMXRT1042 component.codec_i2c.MIMXRT1042 component.lpi2c_adapter.MIMXRT1042 component.codec_adapters.MIMXRT1042 component.cs42448_adapter.MIMXRT1042 platform.drivers.sai_edma.MIMXRT1042 platform.drivers.dmamux.MIMXRT1042 platform.drivers.edma.MIMXRT1042 middleware.sdmmc.sd.MIMXRT1042 middleware.sdmmc.common.MIMXRT1042 middleware.sdmmc.host.usdhc.MIMXRT1042 middleware.sdmmc.host.usdhc.freertos.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 middleware.vit.cm7.MIMXRT1042 CMSIS_DSP_Source.MIMXRT1042 component.igpio_adapter.MIMXRT1042 middleware.voice_seeker.cm7.MIMXRT1042 middleware.fatfs.MIMXRT1042 middleware.fatfs.sd.MIMXRT1042 middleware.maestro_framework.opus.MIMXRT1042 platform.drivers.flexram.MIMXRT1042 middleware.freertos-kernel.heap_4.MIMXRT1042 middleware.maestro_framework.MIMXRT1042 utility.shell.MIMXRT1042 platform.drivers.clock.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 utility.debug_console.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.serial_manager.MIMXRT1042 component.lists.MIMXRT1042 component.serial_manager_uart.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 platform.utilities.assert.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 platform.drivers.xip_device.MIMXRT1042 platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 driver.cs42448.MIMXRT1042 middleware.sdmmc.osa.freertos.MIMXRT1042 component.osa_free_rtos.MIMXRT1042 middleware.freertos-kernel.MIMXRT1042 middleware.freertos-kernel.extension.MIMXRT1042 platform.drivers.usdhc.MIMXRT1042 middleware.voice_seeker.rdsp_utilities_public.MIMXRT1042 driver.soc_flexram_allocate.MIMXRT1042 middleware.maestro_framework.doc.MIMXRT1042 middleware.maestro_framework.streamer.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042" category="audio_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
       <memoryBlock id="BOARD_FLASH_evkmimxrt1040" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
-      <memoryBlock id="SRAM_DTC_evkmimxrt1040" name="SRAM_DTC" addr="20000000" size="00008000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_OC_evkmimxrt1040" name="SRAM_OC" addr="20200000" size="00078000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_DTC_evkmimxrt1040" name="SRAM_DTC" addr="20000000" size="00010000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC_evkmimxrt1040" name="SRAM_OC" addr="20200000" size="00070000" type="RAM" access="RW"/>
       <memoryBlock id="BOARD_SDRAM_evkmimxrt1040" name="BOARD_SDRAM" addr="80000000" size="01E00000" type="RAM" access="RW"/>
       <memoryBlock id="NCACHE_REGION_evkmimxrt1040" name="NCACHE_REGION" addr="81E00000" size="00200000" type="RAM" access="RW"/>
     </memory>
@@ -92,12 +97,14 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_WM8960_ENABLE</value>
+          <value>CODEC_MULTI_ADAPTERS=1</value>
           <value>SD_ENABLED</value>
           <value>DISABLEFLOAT16</value>
           <value>SAI_XFER_QUEUE_SIZE=2</value>
           <value>HAVE_CONFIG_H</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>CODEC_CS42448_ENABLE</value>
           <value>SDK_OS_FREE_RTOS</value>
           <value>CASCFG_PLATFORM_FREERTOS</value>
           <value>FSL_OS_SELECTED=SDK_OS_FREERTOS</value>

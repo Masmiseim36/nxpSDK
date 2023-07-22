@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.13.0 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.13.0" format_version="3.10" api_version="2.0.0" configuration="a4d3e54755c18cc2f5598d2c76a2dacc" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
-  <!--Timestamp (UTC): 2023-01-18 13:18:09.272580-->
-  <!--This manifest is generated based on sdk repo commit: 9add71d10bd80a4b245f4f3ad49616fb10c8144f-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.13.1 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.13.1" format_version="3.10" api_version="2.0.0" configuration="b206bf2c2a63920d6ed669255db18c0e" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
+  <!--Timestamp (UTC): 2023-03-27 22:30:09.491144-->
+  <!--This manifest is generated based on sdk repo commit: 7a3cf97dd3582e3ee8a98ede814ff1f2a45ea519-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -9,12 +9,11 @@
   <externalDefinitions>
     <definition extID="evkbmimxrt1060"/>
   </externalDefinitions>
-  <ksdk id="MCUXpresso2130" name="MCUXpresso2130" version="2.13.0" revision="667 2023-01-18"/>
+  <ksdk id="MCUXpresso2131" name="MCUXpresso2131" version="2.13.1" revision="679 2023-03-27"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
     <compiler id="compiler_iar" name="iar" type="iar"/>
-    <compiler id="compiler_mwcc56800e" name="mwcc56800e" type="mwcc56800e"/>
   </compilers>
   <toolchainSettings>
     <toolchainSetting id="com.nxp.mcuxpresso" name="mcuxpresso" version="11.7.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" toolchain="mcuxpresso">
@@ -42,7 +41,6 @@
     <toolchain id="armgcc" name="GCC_ARM_Embedded_10-2021.10" version="10.3.1" full_name="GCC ARM Embedded 10-2021.10" compiler="compiler_gcc" type="armgcc" vendor="GCC ARM Embedded" vendor_url="http://launchpad.net/gcc-arm-embedded"/>
     <toolchain id="mdk" name="Keil_MDK" version="5.37" full_name="Keil MDK" compiler="compiler_armclang" type="mdk" vendor="ARM" vendor_url="http://www.arm.com"/>
     <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" version="9.32.1" full_name="IAR Embedded Workbench for ARM" compiler="compiler_iar" type="iar" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
-    <toolchain id="cwmcu" name="CodeWarrior_Development_Studio" version="11.1" full_name="CodeWarrior Development Studio" compiler="compiler_mwcc56800e" type="cwmcu" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com"/>
     <toolchain id="mcuxpresso" name="MCUXpresso_IDE" version="11.7.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" type="mcuxpresso" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com">
       <debug>
         <debug_configuration id="com.crt.advproject.config.exe.release" name="Release Configuration" probe="LinkServer">
@@ -181,11 +179,6 @@ ${load}</script>
         <example id="evkmimxrt1060_bee" name="bee" brief="This driver example should demonstrate how to setup BEE driver for on the fly decryption of data stored in QSPI memory region. The BEE is configuerd to decrypt all data starting from location 0x6000_0000 to 0x6001_0000 using AES ECB mode with user specified key. If the BEE_KEY_SEL fuse is programmed, then OTPMK key will be used instead.The example itself does not perform any data decryption operation over QSPI. It is used only as a BEE setup guide." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/bee" path="boards/evkmimxrt1060/driver_examples/bee">
           <external path="boards/evkmimxrt1060/driver_examples/bee" type="xml">
             <files mask="bee_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_bt_tester" name="bt_tester" brief="The ethermind auto PTS testing application." toolchain="iar" compiler="compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/bt_tester">
-          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/bt_tester" type="xml">
-            <files mask="bt_tester_v3_10.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_bubble_peripheral" name="bubble_peripheral" brief="The bubble level demo demonstrates basic usage of the on-board accelerometer to implement a bubble level. A bubble level utilizes two axes to visually show deviation from a level plane (0 degrees) on a given axis. You can open the mex file with MCUXpresso Config Tool to do further configuration of pin, clock and peripheral." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/bubble_peripheral">
@@ -1478,6 +1471,11 @@ ${load}</script>
             <files mask="lvgl_guider_v3_10.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_lvgl_guider_bm" name="lvgl_guider_bm" brief="LVGL project used with GUI Guider on baremetal." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lvgl_examples" path="boards/evkmimxrt1060/lvgl_examples/lvgl_guider_bm">
+          <external path="boards/evkmimxrt1060/lvgl_examples/lvgl_guider_bm" type="xml">
+            <files mask="lvgl_guider_bm_v3_10.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_lwip_dhcp_bm" name="lwip_dhcp_bm" brief="The lwip_dhcp demo application demonstrates a DHCP demo on the lwIP TCP/IP stack.The application acts as a DHCP client and prints the status as it is progressing.Once the interface is being bound to an IP address obtained from DHCP server, address information is printed." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1060/lwip_examples/lwip_dhcp/bm">
           <external path="boards/evkmimxrt1060/lwip_examples/lwip_dhcp/bm" type="xml">
             <files mask="lwip_dhcp_bm_v3_10.xml"/>
@@ -1796,11 +1794,6 @@ ${load}</script>
         <example id="evkmimxrt1060_rtwdog" name="rtwdog" brief="The RTWDOG Example project is to demonstrate usage of the KSDK rtwdog driver.In this example, fast testing is first implemented to test the rtwdog.After this, refreshing the watchdog in None-window mode and window mode is executed.Note rtwdog is disabled in SystemInit function which means rtwdog is disabledafter chip emerges from reset." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/rtwdog" path="boards/evkmimxrt1060/driver_examples/rtwdog">
           <external path="boards/evkmimxrt1060/driver_examples/rtwdog" type="xml">
             <files mask="rtwdog_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_safety_iec60730b" name="safety_iec60730b" brief="This example demonstrates the core self-test of the IEC60730B." toolchain="iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/safety_iec60730b">
-          <external path="boards/evkmimxrt1060/demo_apps/safety_iec60730b" type="xml">
-            <files mask="safety_iec60730b_v3_10.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_sai" name="sai" brief="The SAI Demo application demonstrates complicated digital audio playback and record case. The demo provide these features below:1. Duplex audio transfer, record and playback at same time.2. Playback a 250 Hz sine wave data generated by CMSIS-DSP library. Also compute the fundamental frequency using Fast Fourier Transform with CMSIS-DSP library.3. Record a 5 seconds audio to sdcard with a FatFs system. After record, playback it. This feature may only existed in platform which support sdhc." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/sai">
@@ -2161,81 +2154,6 @@ ${load}</script>
         </debug_configuration>
       </debug_configurations>
     </board>
-    <board id="evkmimxrt1060_om13790host" name="EVK-MIMXRT1060-OM13790HOST" href="https://www.nxp.com/pip/OM13790" version="1.0.0" package="MIMXRT1062DVL6A" type="kit">
-      <description>i.MX RT1060 Evaluation Kit with USB Type-C Shield Board for Kinetis Freedom and LPC Boards</description>
-      <image path="boards/evkmimxrt1060_om13790host" type="image">
-        <files mask="evkmimxrt1060_om13790host.png"/>
-      </image>
-      <memory>
-        <memoryBlock id="BOARD_FLASH_evkmimxrt1060_om13790host" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkmimxrt1060_om13790host" name="BOARD_SDRAM" addr="80000000" size="01e00000" type="RAM" access="RW"/>
-        <memoryBlock id="NCACHE_REGION_evkmimxrt1060_om13790host" name="NCACHE_REGION" addr="81e00000" size="00200000" type="RAM" access="RW"/>
-      </memory>
-      <total_memory flash_size_kb="8192" ram_size_kb="32768"/>
-      <examples>
-        <example id="evkmimxrt1060_om13790host_usb_pd_alt_mode_dp_host_bm" name="usb_pd_alt_mode_dp_host_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_alt_mode_dp_host_freertos" name="usb_pd_alt_mode_dp_host_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_bm" name="usb_pd_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/bm" type="xml">
-            <files mask="usb_pd_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_charger_battery_bm" name="usb_pd_charger_battery_bm" brief="the application simulate battery product , it prints the battery percent continually. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/bm" type="xml">
-            <files mask="usb_pd_charger_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_charger_battery_freertos" name="usb_pd_charger_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/freertos" type="xml">
-            <files mask="usb_pd_charger_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_freertos" name="usb_pd_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/freertos" type="xml">
-            <files mask="usb_pd_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_sink_battery_bm" name="usb_pd_sink_battery_bm" brief="The application simulate battery product , it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/bm" type="xml">
-            <files mask="usb_pd_sink_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_sink_battery_freertos" name="usb_pd_sink_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/freertos" type="xml">
-            <files mask="usb_pd_sink_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_source_charger_bm" name="usb_pd_source_charger_bm" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/bm" type="xml">
-            <files mask="usb_pd_source_charger_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_source_charger_freertos" name="usb_pd_source_charger_freertos" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/freertos" type="xml">
-            <files mask="usb_pd_source_charger_freertos_v3_10.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="BOARD_FLASH_evkmimxrt1060_om13790host">
-              <driverBinary path="devices/MIMXRT1062/mcuxpresso" type="binary">
-                <files mask="MIMXRT1060_SFDP_QSPI.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
   </boards>
   <devices>
     <device id="MIMXRT1062xxxxA" name="MIMXRT1062" version="1.0.0" full_name="MIMXRT1062xxxxA" family="MIMXRT1060" platform="i.MX">
@@ -2330,41 +2248,6 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
-        <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="project_template.evkmimxrt1060_om13790host.MIMXRT1062" name="evkmimxrt1060_om13790host" brief="BOARD_Project_Template evkmimxrt1060_om13790host" version="1.0.0" full_name="BOARD_Project_Template evkmimxrt1060_om13790host" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Board Support/SDK Project Template" user_visible="true" type="project_template" package_base_path="boards/evkmimxrt1060_om13790host/project_template" project_base_path="evkmimxrt1060_om13790host/project_template">
-      <dependencies>
-        <all>
-          <component_dependency value="device.MIMXRT1062_startup.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.lpuart.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.common.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.iomuxc.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.igpio.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.xip_device.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062"/>
-          <component_dependency value="utility.debug_console.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.clock.MIMXRT1062"/>
-          <component_dependency value="component.lpuart_adapter.MIMXRT1062"/>
-          <component_dependency value="component.serial_manager_uart.MIMXRT1062"/>
-          <component_dependency value="component.serial_manager.MIMXRT1062"/>
-        </all>
-      </dependencies>
-      <source relative_path="./" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="dcd.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="peripherals.c"/>
-      </source>
-      <source relative_path="./" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="dcd.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="peripherals.h"/>
-      </source>
-      <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
@@ -4825,20 +4708,6 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_adapter_pit_time_stamp.c"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="component.reset_adapter.MIMXRT1062" name="reset_adapter" brief="Component reset_adapter" version="1.0.0" full_name="Component reset_adapter" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="abstraction_layer" package_base_path="components/reset" project_base_path="component/reset">
-      <dependencies>
-        <component_dependency value="platform.drivers.common.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="./" type="c_include">
-        <files mask="fsl_adapter_reset.h"/>
-      </source>
-      <source relative_path="./" type="src">
-        <files mask="fsl_adapter_reset.c"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -28312,8 +28181,6 @@ ${load}</script>
         <files mask="MCUXpresso SDK USB Stack Device Reference Manual.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Device User's Guide.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Host User's Guide.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C PD Stack Reference Manual.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C Power Delivery Stack User's Guide.pdf"/>
       </source>
     </component>
     <component id="docs.eiq.MIMXRT1062" name="eiq" brief="Docs eiq" version="1.0.0" full_name="Docs eiq" devices="MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/EIQ" project_base_path="EIQ">
@@ -28383,17 +28250,6 @@ ${load}</script>
       </dependencies>
       <source relative_path="./" type="doc">
         <files mask="eRPC Getting Started User's Guide.pdf"/>
-      </source>
-    </component>
-    <component id="docs.safety.rt.MIMXRT1062" name="safetyrt" brief="Docs safetyrt" version="1.0.0" full_name="Docs safetyrt" devices="MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/safety" project_base_path="safety">
-      <dependencies>
-        <component_dependency value="middleware.safety.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="./" type="doc">
-        <files mask="IEC60730B_Example_Release_Notes_v4_3.pdf"/>
-        <files mask="IEC60730B_Example_User_Guide_IMXrt_v4_3.pdf"/>
-        <files mask="IEC60730B_Library_Release_Notes_CM4_CM7_v4_3.pdf"/>
-        <files mask="IEC60730B_Library_User_Guide_CM4_CM7_v4_3.pdf"/>
       </source>
     </component>
     <component id="docs.wifi.MIMXRT1062" name="doc_wifi" brief="Wi-Fi documentation" version="1.0.0" full_name="Wi-Fi documentation" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/wireless/Wi-Fi" project_base_path="wireless/Wi-Fi">
@@ -30305,7 +30161,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.lpspi.MIMXRT1062" name="lpspi" brief="LPSPI Driver" version="2.4.0" full_name="LPSPI Driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1062/drivers" project_base_path="drivers">
+    <component id="platform.drivers.lpspi.MIMXRT1062" name="lpspi" brief="LPSPI Driver" version="2.4.3" full_name="LPSPI Driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1062/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1062"/>
       </dependencies>
@@ -31876,7 +31732,7 @@ ${load}</script>
         <files mask="project.yml"/>
       </source>
     </component>
-    <component id="middleware.aws_iot.device_shadow.MIMXRT1062" name="device-shadow-for-aws-iot-embedded-sdk" brief="Client library for using the AWS IoT Device Shadow service on embedded devices." version="1.0.2" full_name="Device-Shadow-for-AWS-IoT-embedded-sdk" devices="MIMXRT1062xxxxA" category="AWS IoT/Device-Shadow-for-AWS-IoT-embedded-sdk" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/device-shadow" project_base_path="aws_iot/device-shadow">
+    <component id="middleware.aws_iot.device_shadow.MIMXRT1062" name="device_shadow" brief="Client library for using the AWS IoT Device Shadow service on embedded devices." version="1.0.2" full_name="Device Shadow" devices="MIMXRT1062xxxxA" category="AWS IoT/Device Shadow" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/device-shadow" project_base_path="aws_iot/device-shadow">
       <dependencies>
         <component_dependency value="middleware.aws_iot.device_shadow.template.MIMXRT1062"/>
       </dependencies>
@@ -31895,7 +31751,10 @@ ${load}</script>
         <include_path relative_path="source/interface" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.aws_iot.device_shadow.template.MIMXRT1062" name="device_shadow configuration template" brief="Template configuration file to be edited by user." version="1.0.0" full_name="device_shadow configuration template" devices="MIMXRT1062xxxxA" category="AWS IoT/Device-Shadow-for-AWS-IoT-embedded-sdk" user_visible="false" type="project_template" package_base_path="middleware/aws_iot/device-shadow" project_base_path="aws_iot/device-shadow">
+    <component id="middleware.aws_iot.device_shadow.template.MIMXRT1062" name="device_shadow configuration template" brief="Template configuration file to be edited by user." version="1.0.0" full_name="device_shadow configuration template" devices="MIMXRT1062xxxxA" category="AWS IoT/Device Shadow" user_visible="false" type="project_template" package_base_path="middleware/aws_iot/device-shadow" project_base_path="aws_iot/device-shadow">
+      <dependencies>
+        <component_dependency value="middleware.iot_reference.logging.MIMXRT1062"/>
+      </dependencies>
       <source relative_path="template" type="c_include">
         <files mask="shadow_config.h"/>
       </source>
@@ -31903,7 +31762,7 @@ ${load}</script>
         <include_path relative_path="template" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.aws_iot.device_shadow.unused.MIMXRT1062" name="AWS IoT device shadow for_aws - unused files" brief="Client library for using the AWS IoT Device Shadow service on embedded devices. Unused files." version="1.0.2" full_name="Device-Shadow-for-AWS-IoT-embedded-sdk - unused files" devices="MIMXRT1062xxxxA" category="AWS IoT/Device-Shadow-for-AWS-IoT-embedded-sdk" user_visible="false" type="middleware" package_base_path="middleware/aws_iot/device-shadow" project_base_path="aws_iot/device-shadow">
+    <component id="middleware.aws_iot.device_shadow.unused.MIMXRT1062" name="AWS IoT device shadow for_aws - unused files" brief="Client library for using the AWS IoT Device Shadow service on embedded devices. Unused files." version="1.0.2" full_name="Device Shadow - unused files" devices="MIMXRT1062xxxxA" category="AWS IoT/Device Shadow" user_visible="false" type="middleware" package_base_path="middleware/aws_iot/device-shadow" project_base_path="aws_iot/device-shadow">
       <source relative_path="./" type="other">
         <files mask="CHANGELOG.md"/>
         <files mask="LICENSE"/>
@@ -32208,7 +32067,7 @@ ${load}</script>
         <files mask="project.yml"/>
       </source>
     </component>
-    <component id="middleware.aws_iot.ota.MIMXRT1062" name="ota-for-aws-iot-embedded-sdk" brief="Client library for using the AWS Over-the-air Update service on embedded devices." version="3.4.0" full_name="ota-for-aws-iot-embedded-sdk" devices="MIMXRT1062xxxxA" category="AWS IoT/ota-for-aws-iot-embedded-sdk" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/ota" project_base_path="aws_iot/ota">
+    <component id="middleware.aws_iot.ota.MIMXRT1062" name="ota-for-aws-iot-embedded-sdk" brief="Client library for using the AWS Over-the-air Update service on embedded devices." version="3.4.0" full_name="ota-for-aws-iot-embedded-sdk" devices="MIMXRT1062xxxxA" category="AWS IoT/ota-for-aws-iot-embedded-sdk" user_visible="false" type="middleware" package_base_path="middleware/aws_iot/ota" project_base_path="aws_iot/ota">
       <dependencies>
         <all>
           <component_dependency value="middleware.freertos.corejson.MIMXRT1062"/>
@@ -32249,7 +32108,7 @@ ${load}</script>
         <include_path relative_path="source/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.aws_iot.ota.freertos.MIMXRT1062" name="ota-for-aws-iot-embedded-sdk - freertos" brief="Client library for using the AWS Over-the-air Update service on embedded devices. FreeRTOS port." version="3.4.0" full_name="ota-for-aws-iot-embedded-sdk - FreeRTOS" devices="MIMXRT1062xxxxA" category="AWS IoT/ota-for-aws-iot-embedded-sdk" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/ota" project_base_path="aws_iot/ota">
+    <component id="middleware.aws_iot.ota.freertos.MIMXRT1062" name="ota-for-aws-iot-embedded-sdk - freertos" brief="Client library for using the AWS Over-the-air Update service on embedded devices. FreeRTOS port." version="3.4.0" full_name="ota-for-aws-iot-embedded-sdk - FreeRTOS" devices="MIMXRT1062xxxxA" category="AWS IoT/ota-for-aws-iot-embedded-sdk" user_visible="false" type="middleware" package_base_path="middleware/aws_iot/ota" project_base_path="aws_iot/ota">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -45637,7 +45496,7 @@ ${load}</script>
         <include_path relative_path="template/ARM_CM4F" project_relative_path="../../source" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos.backoffalgorithm.MIMXRT1062" name="backoffalgorithm" brief="Algorithm for calculating exponential backoff with jitter for network retry attempts." version="1.3.0" full_name="backoffalgorithm" devices="MIMXRT1062xxxxA" category="backoffalgorithm/backoffalgorithm" user_visible="true" type="middleware" package_base_path="rtos/freertos/backoffalgorithm" project_base_path="freertos/backoffalgorithm">
+    <component id="middleware.freertos.backoffalgorithm.MIMXRT1062" name="backoff_algorithm" brief="Algorithm for calculating exponential backoff with jitter for network retry attempts." version="1.3.0" full_name="Backoff Algorithm" devices="MIMXRT1062xxxxA" category="AWS IoT/Backoff Algorithm" user_visible="true" type="middleware" package_base_path="rtos/freertos/backoffalgorithm" project_base_path="freertos/backoffalgorithm">
       <source relative_path="source" type="src">
         <files mask="backoff_algorithm.c"/>
       </source>
@@ -45651,7 +45510,7 @@ ${load}</script>
         <include_path relative_path="source/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos.backoffalgorithm.unused.MIMXRT1062" name="backoffalgorithm - unused files" brief="Algorithm for calculating exponential backoff with jitter for network retry attempts. Unused files." version="1.3.0" full_name="backoffalgorithm - unused files" devices="MIMXRT1062xxxxA" category="backoffalgorithm/backoffalgorithm" user_visible="false" type="middleware" package_base_path="rtos/freertos/backoffalgorithm" project_base_path="freertos/backoffalgorithm">
+    <component id="middleware.freertos.backoffalgorithm.unused.MIMXRT1062" name="Backoff Algorithm - unused files" brief="Algorithm for calculating exponential backoff with jitter for network retry attempts. Unused files." version="1.3.0" full_name="Backoff Algorithm - unused files" devices="MIMXRT1062xxxxA" category="AWS IoT/Backoff Algorithm" user_visible="false" type="middleware" package_base_path="rtos/freertos/backoffalgorithm" project_base_path="freertos/backoffalgorithm">
       <source relative_path="./" type="script">
         <files mask="backoffAlgorithmFilePaths.cmake"/>
       </source>
@@ -45713,7 +45572,7 @@ ${load}</script>
         <files mask="project.yml"/>
       </source>
     </component>
-    <component id="middleware.freertos.corehttp.MIMXRT1062" name="corehttp" brief="Client implementation of the HTTP/1.1 specification for embedded devices." version="3.0.0" full_name="coreHTTP" devices="MIMXRT1062xxxxA" category="AWS IoT/coreHTTP" user_visible="true" type="middleware" package_base_path="rtos/freertos/corehttp" project_base_path="freertos/corehttp">
+    <component id="middleware.freertos.corehttp.MIMXRT1062" name="corehttp" brief="Client implementation of the HTTP/1.1 specification for embedded devices." version="3.0.0" full_name="coreHTTP" devices="MIMXRT1062xxxxA" category="AWS IoT/coreHTTP" user_visible="false" type="middleware" package_base_path="rtos/freertos/corehttp" project_base_path="freertos/corehttp">
       <dependencies>
         <component_dependency value="middleware.llhttp.MIMXRT1062"/>
       </dependencies>
@@ -45736,7 +45595,7 @@ ${load}</script>
         <include_path relative_path="source/interface" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos.corehttp.unused.MIMXRT1062" name="corehttp" brief="Client implementation of the HTTP/1.1 specification for embedded devices." version="3.0.0" full_name="coreHTTP" devices="MIMXRT1062xxxxA" category="AWS IoT/coreHTTP" user_visible="true" type="middleware" package_base_path="rtos/freertos/corehttp" project_base_path="freertos/corehttp">
+    <component id="middleware.freertos.corehttp.unused.MIMXRT1062" name="corehttp" brief="Client implementation of the HTTP/1.1 specification for embedded devices." version="3.0.0" full_name="coreHTTP" devices="MIMXRT1062xxxxA" category="AWS IoT/coreHTTP" user_visible="false" type="middleware" package_base_path="rtos/freertos/corehttp" project_base_path="freertos/corehttp">
       <source relative_path="./" type="other">
         <files mask="CHANGELOG.md"/>
         <files mask="LICENSE"/>
@@ -46268,7 +46127,7 @@ ${load}</script>
         <files mask="project.yml"/>
       </source>
     </component>
-    <component id="middleware.freertos.coremqtt.MIMXRT1062" name="coremqtt" brief="Client implementation of the MQTT 3.1.1 specification for embedded devices." version="2.1.0" full_name="coreMQTT" devices="MIMXRT1062xxxxA" category="AWS IoT/coreMQTT" user_visible="true" type="middleware" package_base_path="rtos/freertos/coremqtt" project_base_path="freertos/coremqtt">
+    <component id="middleware.freertos.coremqtt.MIMXRT1062" name="coremqtt" brief="Client implementation of the MQTT 3.1.1 specification for embedded devices." version="2.1.0" full_name="coreMQTT" devices="MIMXRT1062xxxxA" category="AWS IoT/coreMQTT" user_visible="false" type="middleware" package_base_path="rtos/freertos/coremqtt" project_base_path="freertos/coremqtt">
       <dependencies>
         <component_dependency value="middleware.freertos.coremqtt.template.MIMXRT1062"/>
       </dependencies>
@@ -46295,7 +46154,7 @@ ${load}</script>
         <include_path relative_path="source/interface" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos.coremqtt-agent.MIMXRT1062" name="coremqtt-agent" brief="Agent for thread-safe use of coreMQTT." version="1.2.0" full_name="coreMQTT-Agent" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="rtos/freertos/coremqtt-agent" project_base_path="freertos/coremqtt-agent">
+    <component id="middleware.freertos.coremqtt-agent.MIMXRT1062" name="coremqtt-agent" brief="Agent for thread-safe use of coreMQTT." version="1.2.0" full_name="coreMQTT-Agent" devices="MIMXRT1062xxxxA" category="AWS IoT/coreMQTT-Agent" user_visible="false" type="middleware" package_base_path="rtos/freertos/coremqtt-agent" project_base_path="freertos/coremqtt-agent">
       <defines>
         <define name="MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG" value=""/>
       </defines>
@@ -46320,7 +46179,7 @@ ${load}</script>
         <include_path relative_path="source/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos.coremqtt-agent.unused.MIMXRT1062" name="coremqtt-agent  - unused files" brief="Agent for thread-safe use of coreMQTT. Unused files." version="1.2.0" full_name="coreMQTT-Agent  - unused files" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="false" type="middleware" package_base_path="rtos/freertos/coremqtt-agent" project_base_path="freertos/coremqtt-agent">
+    <component id="middleware.freertos.coremqtt-agent.unused.MIMXRT1062" name="coremqtt-agent  - unused files" brief="Agent for thread-safe use of coreMQTT. Unused files." version="1.2.0" full_name="coreMQTT-Agent  - unused files" devices="MIMXRT1062xxxxA" category="AWS IoT/coreMQTT-Agent" user_visible="false" type="middleware" package_base_path="rtos/freertos/coremqtt-agent" project_base_path="freertos/coremqtt-agent">
       <source relative_path="./" type="other">
         <files mask="CHANGELOG.md"/>
         <files mask="CODE_OF_CONDUCT.md"/>
@@ -47037,7 +46896,7 @@ ${load}</script>
         <include_path relative_path="source/interface" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos.corepkcs11.MIMXRT1062" name="corepkcs11" brief="Software implementation of the PKCS #11 standard." version="3.5.0" full_name="corePKCS11" devices="MIMXRT1062xxxxA" category="AWS IoT/corePKCS11" user_visible="true" type="middleware" package_base_path="rtos/freertos/corepkcs11" project_base_path="freertos/corepkcs11">
+    <component id="middleware.freertos.corepkcs11.MIMXRT1062" name="corepkcs11" brief="Software implementation of the PKCS #11 standard." version="3.5.0" full_name="corePKCS11" devices="MIMXRT1062xxxxA" category="AWS IoT/corePKCS11" user_visible="false" type="middleware" package_base_path="rtos/freertos/corepkcs11" project_base_path="freertos/corepkcs11">
       <dependencies>
         <all>
           <component_dependency value="middleware.pkcs11.MIMXRT1062"/>
@@ -47061,11 +46920,11 @@ ${load}</script>
         <include_path relative_path="source/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos.corepkcs11.mbedtls.MIMXRT1062" name="corepkcs11 mbedtls" brief="PKCS #11, mbedtls port." version="3.5.0" full_name="corePKCS11 mbedtls" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/corePKCS11" user_visible="true" type="middleware" package_base_path="rtos/freertos/corepkcs11" project_base_path="freertos/corepkcs11">
+    <component id="middleware.freertos.corepkcs11.mbedtls.MIMXRT1062" name="corepkcs11 mbedtls" brief="PKCS #11, mbedtls port." version="3.5.0" full_name="corePKCS11 mbedtls" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/corePKCS11" user_visible="false" type="middleware" package_base_path="rtos/freertos/corepkcs11" project_base_path="freertos/corepkcs11">
       <dependencies>
         <all>
-          <component_dependency value="middleware.pkcs11.MIMXRT1062"/>
-          <component_dependency value="middleware.mbedtls.MIMXRT1062"/>
+          <component_dependency value="middleware.mbedtls.port.ksdk.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos.corepkcs11.MIMXRT1062"/>
         </all>
       </dependencies>
       <source relative_path="source/portable/mbedtls" type="src">
@@ -47075,11 +46934,11 @@ ${load}</script>
         <files mask="middleware_freertos_corepkcs11_mbedtls_MIMXRT1062.cmake" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1062" name="corepkcs11 mbedtls_utils" brief="PKCS #11, mbedtls_utils" version="3.5.0" full_name="corePKCS11 mbedtls_utils" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/corePKCS11" user_visible="true" type="middleware" package_base_path="rtos/freertos/corepkcs11" project_base_path="freertos/corepkcs11">
+    <component id="middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1062" name="corepkcs11 mbedtls_utils" brief="PKCS #11, mbedtls_utils" version="3.5.0" full_name="corePKCS11 mbedtls_utils" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/corePKCS11" user_visible="false" type="middleware" package_base_path="rtos/freertos/corepkcs11" project_base_path="freertos/corepkcs11">
       <dependencies>
         <all>
           <component_dependency value="middleware.pkcs11.MIMXRT1062"/>
-          <component_dependency value="middleware.mbedtls.MIMXRT1062"/>
+          <component_dependency value="middleware.mbedtls.port.ksdk.MIMXRT1062"/>
         </all>
       </dependencies>
       <source relative_path="source/dependency/3rdparty/mbedtls_utils" type="src">
@@ -48395,7 +48254,7 @@ ${load}</script>
         <files mask="uncrustify.complexity.cfg"/>
       </source>
     </component>
-    <component id="middleware.iot_reference.cli.MIMXRT1062" name="cli" brief="CLI, IoT reference common example component" version="1.0.0" full_name="CLI" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/iot-reference/examples/common/cli" project_base_path="aws_iot/iot-reference/examples/common/cli">
+    <component id="middleware.iot_reference.cli.MIMXRT1062" name="cli" brief="CLI, IoT reference common example component" version="1.0.0" full_name="CLI" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="false" type="middleware" package_base_path="middleware/aws_iot/iot-reference/examples/common/cli" project_base_path="aws_iot/iot-reference/examples/common/cli">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -48416,9 +48275,13 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.iot_reference.kvstore.MIMXRT1062" name="kvstore" brief="kvstore, IoT reference common example component" version="1.0.0" full_name="kvstore" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/iot-reference/examples/common/kvstore" project_base_path="aws_iot/iot-reference/examples/common/kvstore">
+    <component id="middleware.iot_reference.kvstore.MIMXRT1062" name="kvstore" brief="kvstore, IoT reference common example component" version="1.0.0" full_name="kvstore" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="false" type="middleware" package_base_path="middleware/aws_iot/iot-reference/examples/common/kvstore" project_base_path="aws_iot/iot-reference/examples/common/kvstore">
       <dependencies>
-        <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
+        <all>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
+          <component_dependency value="middleware.iot_reference.template.MIMXRT1062"/>
+          <component_dependency value="component.mflash_file.MIMXRT1062"/>
+        </all>
       </dependencies>
       <source relative_path="./" type="src">
         <files mask="kvstore.c"/>
@@ -48451,12 +48314,16 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.iot_reference.mqtt_agent.MIMXRT1062" name="mqtt_agent" brief="mqtt_agent, IoT reference common example component" version="1.0.0" full_name="mqtt_agent" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/iot-reference/examples/common/mqtt_agent" project_base_path="aws_iot/iot-reference/examples/common/mqtt_agent">
+    <component id="middleware.iot_reference.mqtt_agent.MIMXRT1062" name="mqtt_agent" brief="mqtt_agent, IoT reference common example component" version="1.0.0" full_name="mqtt_agent" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/iot-reference/examples/common/mqtt_agent" project_base_path="aws_iot/iot-reference/examples/common/mqtt_agent">
       <dependencies>
         <all>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
-          <component_dependency value="middleware.iot_reference.mqtt_agent_interface.MIMXRT1062"/>
           <component_dependency value="middleware.freertos.backoffalgorithm.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos.coremqtt-agent.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos.corepkcs11.MIMXRT1062"/>
+          <component_dependency value="middleware.iot_reference.kvstore.MIMXRT1062"/>
+          <component_dependency value="middleware.iot_reference.mqtt_agent_interface.MIMXRT1062"/>
+          <component_dependency value="middleware.iot_reference.template.MIMXRT1062"/>
         </all>
       </dependencies>
       <source relative_path="./" type="src">
@@ -48472,9 +48339,12 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.iot_reference.mqtt_agent_interface.MIMXRT1062" name="mqtt-agent-interface" brief="mqtt-agent-interface, IoT reference common example component" version="1.0.0" full_name="mqtt-agent-interface" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface" project_base_path="aws_iot/iot-reference/mqtt-agent-interface">
+    <component id="middleware.iot_reference.mqtt_agent_interface.MIMXRT1062" name="mqtt-agent-interface" brief="mqtt-agent-interface, IoT reference common example component" version="1.0.0" full_name="mqtt-agent-interface" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="false" type="middleware" package_base_path="middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface" project_base_path="aws_iot/iot-reference/mqtt-agent-interface">
       <dependencies>
-        <component_dependency value="middleware.freertos.coremqtt-agent.MIMXRT1062"/>
+        <all>
+          <component_dependency value="middleware.freertos.coremqtt-agent.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
+        </all>
       </dependencies>
       <source relative_path="./" type="src">
         <files mask="freertos_agent_message.c"/>
@@ -48547,6 +48417,24 @@ ${load}</script>
         <files mask="middleware_iot_reference_shadow_tasks_MIMXRT1062.cmake" hidden="true"/>
       </source>
     </component>
+    <component id="middleware.iot_reference.template.MIMXRT1062" name="AWS IoT configuration template" brief="Template configuration file to be edited by user." version="1.0.0" full_name="AWS IoT configuration template" devices="MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="false" type="project_template" package_base_path="middleware/aws_iot/iot-reference" project_base_path="aws_iot/iot-reference">
+      <defines>
+        <define name="LWIP_DNS" value="1"/>
+      </defines>
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
+          <component_dependency value="middleware.iot_reference.logging.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="template" type="c_include">
+        <files mask="demo_config.h"/>
+        <files mask="kvstore_config.h"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="template" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="middleware.iot_reference.transport_mbedtls.MIMXRT1062" name="transport_mbedtls" brief="transport_mbedtls, IoT reference common example component" version="1.0.0" full_name="transport_mbedtls" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls" project_base_path="aws_iot/iot-reference/FreeRTOS/transport_mbedtls">
       <dependencies>
         <all>
@@ -48554,8 +48442,8 @@ ${load}</script>
           <component_dependency value="middleware.freertos.corepkcs11.MIMXRT1062"/>
           <component_dependency value="middleware.pkcs11.MIMXRT1062"/>
           <component_dependency value="middleware.lwip.MIMXRT1062"/>
-          <component_dependency value="middleware.mbedtls.MIMXRT1062"/>
-          <component_dependency value="middleware.iot_reference.transport_mbedtls.template.MIMXRT1062"/>
+          <component_dependency value="middleware.mbedtls.port.ksdk.MIMXRT1062"/>
+          <component_dependency value="middleware.iot_reference.template.MIMXRT1062"/>
         </all>
       </dependencies>
       <source relative_path="./" type="src">
@@ -48571,21 +48459,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.iot_reference.transport_mbedtls.template.MIMXRT1062" name="transport_mbedtls configuration template" brief="Template configuration file to be edited by user." version="1.0.0" full_name="transport_mbedtls configuration template" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="AWS IoT/AWS common libraries" user_visible="true" type="project_template" package_base_path="middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls" project_base_path="aws_iot/iot-reference/FreeRTOS/transport_mbedtls">
-      <defines>
-        <define name="LWIP_DNS" value="1"/>
-      </defines>
-      <dependencies>
-        <all>
-          <component_dependency value="middleware.freertos.coremqtt.MIMXRT1062"/>
-          <component_dependency value="middleware.freertos.corepkcs11.MIMXRT1062"/>
-          <component_dependency value="middleware.pkcs11.MIMXRT1062"/>
-          <component_dependency value="middleware.lwip.MIMXRT1062"/>
-          <component_dependency value="middleware.mbedtls.MIMXRT1062"/>
-        </all>
-      </dependencies>
-    </component>
-    <component id="cmsis.drivers.include.MIMXRT1062" name="issdk_cmsis_drivers" brief="CMSIS Core header files" version="1.7.0" full_name="Middleware issdk drivers cmsis_drivers" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="CMSIS/Driver/Include" project_base_path="CMSIS_driver">
+    <component id="cmsis.drivers.include.MIMXRT1062" name="issdk_cmsis_drivers" brief="CMSIS Core header files" version="1.7.0" full_name="Middleware issdk drivers cmsis_drivers" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="CMSIS/Driver/Include" project_base_path="CMSIS_driver">
       <source relative_path="./" type="c_include">
         <files mask="Driver_SPI.h"/>
         <files mask="Driver_I2C.h"/>
@@ -48693,7 +48567,7 @@ ${load}</script>
         <include_path relative_path="drivers/gpio" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.drivers.host.MIMXRT1062" name="issdk_host" brief="ISSDK Host Interface Service" version="1.7.0" full_name="Middleware issdk drivers host" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="host">
+    <component id="middleware.issdk.drivers.host.MIMXRT1062" name="issdk_host" brief="ISSDK Host Interface Service" version="1.7.0" full_name="Middleware issdk drivers host" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="host">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MIMXRT1062"/>
@@ -48735,7 +48609,7 @@ ${load}</script>
         <include_path relative_path="drivers/systick" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.allregdefs.MIMXRT1062" name="issdk_allregdefs" brief="ISSDK Sensors RegDefs" version="1.8.0" full_name="Middleware issdk sensor allregdefs" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.allregdefs.MIMXRT1062" name="issdk_allregdefs" brief="ISSDK Sensors RegDefs" version="1.8.0" full_name="Middleware issdk sensor allregdefs" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48764,7 +48638,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxas21002.MIMXRT1062" name="issdk_fxas21002" brief="ISSDK FXAS21002 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxas21002" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxas21002.MIMXRT1062" name="issdk_fxas21002" brief="ISSDK FXAS21002 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxas21002" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48785,7 +48659,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxlc95000.MIMXRT1062" name="issdk_fxlc95000" brief="ISSDK FXLC95000 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxlc95000" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxlc95000.MIMXRT1062" name="issdk_fxlc95000" brief="ISSDK FXLC95000 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxlc95000" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48803,7 +48677,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxls8471q.MIMXRT1062" name="issdk_fxls8471q" brief="ISSDK FXLS8471 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxls8471q" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxls8471q.MIMXRT1062" name="issdk_fxls8471q" brief="ISSDK FXLS8471 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxls8471q" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48821,7 +48695,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxls8962.MIMXRT1062" name="issdk_fxls8962" brief="ISSDK FXLS8962 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxls8962" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxls8962.MIMXRT1062" name="issdk_fxls8962" brief="ISSDK FXLS8962 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxls8962" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48839,7 +48713,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxls896xaf.MIMXRT1062" name="issdk_fxls896xaf" brief="ISSDK FXLS896xAF Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor FXLS896xAF" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxls896xaf.MIMXRT1062" name="issdk_fxls896xaf" brief="ISSDK FXLS896xAF Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor FXLS896xAF" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48857,7 +48731,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxls8974cf.MIMXRT1062" name="issdk_fxls8974cf" brief="ISSDK FXLS8974CF Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor FXLS8974CF" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxls8974cf.MIMXRT1062" name="issdk_fxls8974cf" brief="ISSDK FXLS8974CF Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor FXLS8974CF" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48875,7 +48749,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxos8700.MIMXRT1062" name="issdk_fxos8700" brief="ISSDK FXOS8700 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxos8700" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxos8700.MIMXRT1062" name="issdk_fxos8700" brief="ISSDK FXOS8700 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxos8700" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48896,7 +48770,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.fxpq3115.MIMXRT1062" name="issdk_fxpq3115" brief="ISSDK FXPQ3115 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxpq3115" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.fxpq3115.MIMXRT1062" name="issdk_fxpq3115" brief="ISSDK FXPQ3115 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor fxpq3115" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48932,7 +48806,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.interface.common.MIMXRT1062" name="issdk_interfaces" brief="ISSDK Sensor Interface Common" version="1.7.0" full_name="Middleware issdk sensor interface common" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="interfaces">
+    <component id="middleware.issdk.sensor.interface.common.MIMXRT1062" name="issdk_interfaces" brief="ISSDK Sensor Interface Common" version="1.7.0" full_name="Middleware issdk sensor interface common" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="interfaces">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48977,7 +48851,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.mag3110.MIMXRT1062" name="issdk_mag3110" brief="ISSDK MAG3110 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mag3110" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.mag3110.MIMXRT1062" name="issdk_mag3110" brief="ISSDK MAG3110 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mag3110" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -48995,7 +48869,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.mma845x.MIMXRT1062" name="issdk_mma845x" brief="ISSDK MMA845x Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma845x" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.mma845x.MIMXRT1062" name="issdk_mma845x" brief="ISSDK MMA845x Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma845x" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -49013,7 +48887,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.mma8491q.MIMXRT1062" name="issdk_mma8491q" brief="ISSDK MMA8491 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma8491q" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.mma8491q.MIMXRT1062" name="issdk_mma8491q" brief="ISSDK MMA8491 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma8491q" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -49031,7 +48905,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.mma865x.MIMXRT1062" name="issdk_mma865x" brief="ISSDK MMA865x Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma865x" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.mma865x.MIMXRT1062" name="issdk_mma865x" brief="ISSDK MMA865x Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma865x" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -49049,7 +48923,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.mma9553.MIMXRT1062" name="issdk_mma9553" brief="ISSDK MMA9553 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma9553" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.mma9553.MIMXRT1062" name="issdk_mma9553" brief="ISSDK MMA9553 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mma9553" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -49067,7 +48941,7 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.sensor.mpl3115.MIMXRT1062" name="issdk_mpl3115" brief="ISSDK MPL3115 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mpl3115" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
+    <component id="middleware.issdk.sensor.mpl3115.MIMXRT1062" name="issdk_mpl3115" brief="ISSDK MPL3115 Sensor Driver Files" version="1.8.0" full_name="Middleware issdk sensor mpl3115" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
           <component_dependency value="CMSIS_Driver_Include.I2C.MIMXRT1062"/>
@@ -58163,106 +58037,6 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.safety.MIMXRT1062" name="safety" brief="NXP Safety IEC60730B Library" version="1.0.0" full_name="Middleware safety" devices="MIMXRT1062xxxxA" user_visible="true" type="other" package_base_path="middleware/safety_iec60730b" project_base_path="safety_iec60730b">
-      <source relative_path="safety/v4_3/core_test/cm4_cm7/register" project_relative_path="safety/register" type="c_include" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="iec60730b_cm4_cm7_reg.h"/>
-      </source>
-      <source relative_path="safety/v4_3/core_test/cm4_cm7/ram" project_relative_path="safety/ram" type="c_include" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="iec60730b_cm4_cm7_ram.h"/>
-      </source>
-      <source relative_path="safety/v4_3/core_test/cm4_cm7/flash" project_relative_path="safety/flash" type="c_include" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="iec60730b_cm4_cm7_flash.h"/>
-      </source>
-      <source relative_path="safety/v4_3/core_test/cm4_cm7/stack" project_relative_path="safety/stack" type="c_include" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="iec60730b_cm4_cm7_stack.h"/>
-      </source>
-      <source relative_path="safety/v4_3/core_test/cm4_cm7/programCounter" project_relative_path="safety/programCounter" type="c_include" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="iec60730b_cm4_cm7_pc.h"/>
-      </source>
-      <source relative_path="safety/v4_3/core_test/cm4_cm7/programCounter" project_relative_path="safety/programCounter" type="asm_include" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="iec60730b_cm4_cm7_pc_object.S"/>
-      </source>
-      <source relative_path="safety/v4_3/core_test/cm4_cm7" project_relative_path="safety/" type="c_include" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="iec60730b_core.h"/>
-      </source>
-      <source relative_path="safety/v4_3" project_relative_path="safety" type="c_include">
-        <files mask="iec60730b.h"/>
-        <files mask="iec60730b_types.h"/>
-      </source>
-      <source relative_path="safety/v4_3/compiler" project_relative_path="safety/compiler" type="c_include">
-        <files mask="asm_mac_common.h"/>
-      </source>
-      <source relative_path="safety/v4_3/common_test/wdog" project_relative_path="safety/wdog" type="src">
-        <files mask="iec60730b_wdog.c"/>
-      </source>
-      <source relative_path="safety/v4_3/common_test/wdog" project_relative_path="safety/wdog" type="c_include">
-        <files mask="iec60730b_wdog.h"/>
-      </source>
-      <source relative_path="safety/v4_3/common_test/tsi" project_relative_path="safety/tsi" type="c_include">
-        <files mask="iec60730b_tsi.h"/>
-      </source>
-      <source relative_path="safety/v4_3/common_test/dio" project_relative_path="safety/dio" type="c_include">
-        <files mask="iec60730b_dio_ext.h"/>
-        <files mask="iec60730b_dio.h"/>
-      </source>
-      <source relative_path="safety/v4_3/common_test/clock" project_relative_path="safety/clock" type="c_include">
-        <files mask="iec60730b_clock.h"/>
-      </source>
-      <source relative_path="safety/v4_3/common_test/aio" project_relative_path="safety/aio" type="c_include">
-        <files mask="iec60730b_aio.h"/>
-      </source>
-      <source relative_path="safety/v4_3/common_test/flash" project_relative_path="safety/flash" type="c_include">
-        <files mask="iec60730b_invariable_memory.h"/>
-      </source>
-      <source toolchain="iar" relative_path="safety/v4_3" project_relative_path="safety" type="lib" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="IEC60730B_M4_M7_IAR_v4_1.a"/>
-      </source>
-      <source toolchain="iar" relative_path="safety/v4_3" project_relative_path="safety" type="lib" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="IEC60730B_M4_M7_COM_IAR_v4_3.a"/>
-      </source>
-      <source toolchain="mdk" relative_path="safety/v4_3" project_relative_path="safety" type="lib" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="IEC60730B_M4_M7_KEIL_v4_1.lib"/>
-      </source>
-      <source toolchain="mdk" relative_path="safety/v4_3" project_relative_path="safety" type="lib" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="IEC60730B_M4_M7_COM_KEIL_v4_3.lib"/>
-      </source>
-      <source toolchain="mcuxpresso" relative_path="safety/v4_3" project_relative_path="safety" type="lib" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="libIEC60730B_M4_M7_MCUX_v4_1.a"/>
-      </source>
-      <source toolchain="mcuxpresso" relative_path="safety/v4_3" project_relative_path="safety" type="lib" device_cores="core0_MIMXRT1062xxxxA">
-        <files mask="libIEC60730B_M4_M7_COM_MCUX_v4_3.a"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/register" project_relative_path="safety/register" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/ram" project_relative_path="safety/ram" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/flash" project_relative_path="safety/flash" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/stack" project_relative_path="safety/stack" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/programCounter" project_relative_path="safety/programCounter" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7" project_relative_path="safety/" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3" project_relative_path="safety/" type="c_include"/>
-        <include_path relative_path="safety/v4_3/compiler" project_relative_path="safety/compiler" type="c_include"/>
-        <include_path relative_path="safety/v4_3/common_test/wdog" project_relative_path="safety/wdog" type="c_include"/>
-        <include_path relative_path="safety/v4_3/common_test/tsi" project_relative_path="safety/tsi" type="c_include"/>
-        <include_path relative_path="safety/v4_3/common_test/dio" project_relative_path="safety/dio" type="c_include"/>
-        <include_path relative_path="safety/v4_3/common_test/clock" project_relative_path="safety/clock" type="c_include"/>
-        <include_path relative_path="safety/v4_3/common_test/flash" project_relative_path="safety/flash" type="c_include"/>
-        <include_path relative_path="safety/v4_3/common_test/aio" project_relative_path="safety/aio" type="c_include"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/register" project_relative_path="safety/register" type="asm_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/ram" project_relative_path="safety/ram" type="asm_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/flash" project_relative_path="safety/flash" type="asm_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/stack" project_relative_path="safety/stack" type="asm_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7/programCounter" project_relative_path="safety/programCounter" type="asm_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3/core_test/cm4_cm7" project_relative_path="safety/" type="asm_include" device_cores="core0_MIMXRT1062xxxxA"/>
-        <include_path relative_path="safety/v4_3" project_relative_path="safety/" type="asm_include"/>
-        <include_path relative_path="safety/v4_3/compiler" project_relative_path="safety/compiler" type="asm_include"/>
-        <include_path relative_path="safety/v4_3/common_test/wdog" project_relative_path="safety/wdog" type="asm_include"/>
-        <include_path relative_path="safety/v4_3/common_test/tsi" project_relative_path="safety/tsi" type="asm_include"/>
-        <include_path relative_path="safety/v4_3/common_test/dio" project_relative_path="safety/dio" type="asm_include"/>
-        <include_path relative_path="safety/v4_3/common_test/clock" project_relative_path="safety/clock" type="asm_include"/>
-        <include_path relative_path="safety/v4_3/common_test/aio" project_relative_path="safety/aio" type="asm_include"/>
-        <include_path relative_path="devices/MIMXRT1062" project_relative_path="MIMXRT1062" type="asm_include"/>
-      </include_paths>
-    </component>
     <component id="middleware.sdmmc.common.MIMXRT1062" name="sdmmc_common" brief="Middleware sdmmc common" version="2.3.0" full_name="SDMMC common stack" devices="MIMXRT1062xxxxA" category="Memories/SDMMC Stack" user_visible="false" type="middleware" package_base_path="middleware/sdmmc" project_base_path="sdmmc">
       <source relative_path="common" project_relative_path="inc" type="c_include">
         <files mask="fsl_sdmmc_spec.h"/>
@@ -59728,7 +59502,7 @@ ${load}</script>
         <files mask="ebox.c" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.tinycbor.MIMXRT1062" name="tinycbor" brief="Concise Binary Object Representation (CBOR) Library" version="0.6.0" full_name="TinyCBOR" devices="MIMXRT1062xxxxA" category="TinyCBOR/TinyCBOR" user_visible="true" type="middleware" package_base_path="middleware/tinycbor" project_base_path="tinycbor">
+    <component id="middleware.tinycbor.MIMXRT1062" name="tinycbor" brief="Concise Binary Object Representation (CBOR) Library" version="0.6.0" full_name="TinyCBOR" devices="MIMXRT1062xxxxA" category="AWS IoT/TinyCBOR" user_visible="true" type="middleware" package_base_path="middleware/tinycbor" project_base_path="tinycbor">
       <source relative_path="src" type="c_include">
         <files mask="cbor.h"/>
         <files mask="cborinternal_p.h"/>
@@ -59752,7 +59526,7 @@ ${load}</script>
         <include_path relative_path="src" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.tinycbor.unused.MIMXRT1062" name="tinycbor - unused files" brief="Concise Binary Object Representation (CBOR) Library. Unused files." version="0.6.0" full_name="TinyCBOR - unused files" devices="MIMXRT1062xxxxA" category="TinyCBOR/TinyCBOR" user_visible="false" type="middleware" package_base_path="middleware/tinycbor" project_base_path="tinycbor">
+    <component id="middleware.tinycbor.unused.MIMXRT1062" name="tinycbor - unused files" brief="Concise Binary Object Representation (CBOR) Library. Unused files." version="0.6.0" full_name="TinyCBOR - unused files" devices="MIMXRT1062xxxxA" category="AWS IoT/TinyCBOR" user_visible="false" type="middleware" package_base_path="middleware/tinycbor" project_base_path="tinycbor">
       <source relative_path="./" type="other">
         <files mask="Doxyfile"/>
         <files mask="LICENSE"/>
@@ -60372,143 +60146,6 @@ ${load}</script>
         <include_path relative_path="phy" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.usb.pd.MIMXRT1062" name="PD Stack" brief="Middleware usb_pd" version="2.8.4" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.phy.ptn5110.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-        <files mask="usb_pd_auto_policy.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_connect.c"/>
-        <files mask="usb_pd_interface.c"/>
-        <files mask="usb_pd_msg.c"/>
-        <files mask="usb_pd_policy.c"/>
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.altmode.MIMXRT1062" name="PD Alternate Mode" brief="Middleware usb_pd altmode" version="2.8.4" full_name="USB Type-C PD Alternate Mode" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="src">
-        <files mask="usb_pd_alt_mode.c"/>
-        <files mask="usb_pd_alt_mode_dp.c"/>
-      </source>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include">
-        <files mask="usb_pd_alt_mode.h"/>
-        <files mask="usb_pd_alt_mode_dp.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_altmode_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb_pd.common_header.MIMXRT1062" name="USB PD Common Header" brief="Middleware usb pd common_header" version="2.8.4" full_name="USB PD Common Header" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB PD Common Header" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="component.osa.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="include" type="c_include">
-        <files mask="usb.h"/>
-        <files mask="usb_misc.h"/>
-        <files mask="usb_spec.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_common_header_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="include" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.compliance_test_report.MIMXRT1062" name="PD Compliance Test Report" brief="Middleware usb_pd compliance_test_report" version="2.8.4" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/usb" project_base_path="./">
-      <source relative_path="pd/compliance_test_report/ellisys/consumer_provider" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_snk" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_src" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/provider_consumer" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_dock" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_host" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-    </component>
-    <component id="middleware.usb_pd.config_header.MIMXRT1062" name="PD Config Header" brief="USB Type-C PD Stack" version="2.8.4" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" user_visible="true" type="project_template" package_base_path="middleware/usb" project_base_path="source">
-      <source relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include">
-        <files mask="usb_pd_config.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.phy.ptn5110.MIMXRT1062" name="PD PTN5110 Driver" brief="Middleware usb_pd phy ptn5110" version="2.8.4" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <all>
-          <component_dependency value="component.igpio_adapter.MIMXRT1062"/>
-          <component_dependency value="component.lpi2c_adapter.MIMXRT1062"/>
-          <component_dependency value="component.osa.MIMXRT1062"/>
-          <component_dependency value="middleware.usb_pd.config_header.MIMXRT1062"/>
-          <component_dependency value="middleware.usb_pd.common_header.MIMXRT1062"/>
-        </all>
-      </dependencies>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include">
-        <files mask="usb_pd_ptn5110.h"/>
-        <files mask="usb_pd_ptn5110_register.h"/>
-      </source>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="src">
-        <files mask="usb_pd_ptn5110_connect.c"/>
-        <files mask="usb_pd_ptn5110_hal.c"/>
-        <files mask="usb_pd_ptn5110_interface.c"/>
-        <files mask="usb_pd_ptn5110_msg.c"/>
-      </source>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include">
-        <files mask="usb_pd_i2c.h"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="src">
-        <files mask="usb_pd_i2c.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_phy_ptn5110_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include"/>
-        <include_path relative_path="pd" type="c_include"/>
-        <include_path relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include"/>
-      </include_paths>
-    </component>
     <component id="middleware.vit.cm7.MIMXRT1062" name="vit" brief="Voice intelligent technology library for Cortex M7" version="4.7.5" full_name="middleware vit cm7" devices="MIMXRT1062xxxxA" category="Audio/Voice intelligent technology library" user_visible="true" type="middleware" package_base_path="middleware/vit" project_base_path="vit">
       <dependencies>
         <component_dependency value="middleware.vit.template.MIMXRT1062"/>
@@ -60550,6 +60187,32 @@ ${load}</script>
       <include_paths>
         <include_path relative_path="RT1060_CortexM7/Lib" type="c_include"/>
         <include_path relative_path="RT1060_CortexM7/Lib/Inc" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.voice_seeker.cm7.MIMXRT1062" name="voice_seeker" brief="Voice seeker library for Cortex M7" version="0.6.0" full_name="middleware voice_seeker cm7" devices="MIMXRT1062xxxxA" category="Voice/VoiceSeeker library" user_visible="true" type="middleware" package_base_path="middleware/voice_seeker" project_base_path="voice_seeker">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.voice_seeker.template.MIMXRT1062"/>
+          <component_dependency value="middleware.voice_seeker.rdsp_utilities_public.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source toolchain="armgcc mcuxpresso" relative_path="ARM_CortexM7/include" type="c_include">
+        <files mask="RdspCycleCounter.h"/>
+        <files mask="RdspDeviceConfig.h"/>
+        <files mask="RdspStatusCodes.h"/>
+        <files mask="libVoiceSeekerLight.h"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso" relative_path="ARM_CortexM7/lib" type="lib">
+        <files mask="libvoiceseeker_no_aec.a"/>
+      </source>
+      <source exclude="true" relative_path="./" type="doc">
+        <files mask="license.txt" hidden="true"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_voice_seeker_cm7_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="ARM_CortexM7/include" toolchain="armgcc mcuxpresso" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.voice_seeker.rdsp_utilities_public.MIMXRT1062" name="voice_seeker memory utils" brief="Voice seeker memory utilities" version="0.6.0" full_name="middleware voice_seeker memory utils" devices="MIMXRT1062xxxxA" category="Voice/VoiceSeeker library" user_visible="true" type="middleware" package_base_path="middleware/voice_seeker/rdsp_utilities_public" project_base_path="voice_seeker/rdsp_utilities_public">
@@ -60848,6 +60511,10 @@ ${load}</script>
         <files mask="mlan_11n.h"/>
         <files mask="mlan_11n_aggr.h"/>
         <files mask="mlan_11n_rxreorder.h"/>
+        <files mask="mlan_11v.h"/>
+        <files mask="mlan_action.h"/>
+        <files mask="mlan_11k.h"/>
+        <files mask="mlan_mbo.h"/>
         <files mask="mlan_api.h"/>
         <files mask="mlan_fw.h"/>
         <files mask="mlan_ieee.h"/>
@@ -60868,6 +60535,10 @@ ${load}</script>
         <files mask="mlan_11n.c"/>
         <files mask="mlan_11n_aggr.c"/>
         <files mask="mlan_11n_rxreorder.c"/>
+        <files mask="mlan_11v.c"/>
+        <files mask="mlan_action.c"/>
+        <files mask="mlan_11k.c"/>
+        <files mask="mlan_mbo.c"/>
         <files mask="mlan_api.c"/>
         <files mask="mlan_cfp.c"/>
         <files mask="mlan_cmdevt.c"/>

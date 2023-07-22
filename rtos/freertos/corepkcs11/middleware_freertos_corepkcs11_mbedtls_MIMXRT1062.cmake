@@ -6,7 +6,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(middleware_pkcs11_MIMXRT1062)
+include(middleware_mbedtls_port_ksdk_MIMXRT1062)
 
-include(middleware_mbedtls_MIMXRT1062)
+include(middleware_freertos_corepkcs11_MIMXRT1062)
 

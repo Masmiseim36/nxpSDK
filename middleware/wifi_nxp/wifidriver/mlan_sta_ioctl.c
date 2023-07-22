@@ -398,7 +398,7 @@ static mlan_status wlan_power_ioctl_set_power_ext(IN pmlan_adapter pmadapter, IN
     MrvlTypes_Power_Group_t *pg_tlv = MNULL;
     Power_Group_t *pg               = MNULL;
     int mod_class;
-    t_u32 data[4];
+    t_u32 data[4] = {0};
     t_u8 ht_bw;
 
     ENTER();
@@ -1142,6 +1142,43 @@ exit:
 }
 
 
+/**
+ *  @brief Get/Set subscribe event
+ *
+ *  @param pmadapter    A pointer to mlan_adapter structure
+ *  @param pioctl_req   A pointer to ioctl request buffer
+ *
+ *  @return             MLAN_STATUS_PENDING -- success, otherwise fail
+ */
+mlan_status wlan_misc_ioctl_subscribe_evt(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
+{
+    mlan_private *pmpriv   = pmadapter->priv[pioctl_req->bss_index];
+    mlan_status ret        = MLAN_STATUS_SUCCESS;
+    mlan_ds_misc_cfg *misc = MNULL;
+    t_u16 cmd_action       = 0;
+
+    ENTER();
+
+    misc = (mlan_ds_misc_cfg *)pioctl_req->pbuf;
+    if (pioctl_req->action == MLAN_ACT_SET)
+    {
+        cmd_action = HostCmd_ACT_GEN_SET;
+    }
+    else
+    {
+        cmd_action = HostCmd_ACT_GEN_GET;
+    }
+
+    /* Send command to firmware */
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_SUBSCRIBE_EVENT, cmd_action, 0, (t_void *)pioctl_req,
+                           &misc->param.subscribe_event);
+
+    if (ret == MLAN_STATUS_SUCCESS)
+        ret = MLAN_STATUS_PENDING;
+
+    LEAVE();
+    return ret;
+}
 
 
 /**
@@ -1185,6 +1222,14 @@ static mlan_status wlan_misc_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioct
             status = wlan_misc_ioctl_low_pwr_mode(pmadapter, pioctl_req);
             break;
 #endif // WLAN_LOW_POWER_ENABLE
+#ifdef CONFIG_WIFI_CLOCKSYNC
+        case MLAN_OID_MISC_GPIO_TSF_LATCH:
+            status = wlan_misc_gpio_tsf_latch_config(pmadapter, pioctl_req);
+            break;
+        case MLAN_OID_MISC_GET_TSF_INFO:
+            status = wlan_misc_get_tsf_info(pmadapter, pioctl_req);
+            break;
+#endif /* CONFIG_WIFI_CLOCKSYNC */
         default:
             pioctl_req->status_code = MLAN_ERROR_IOCTL_INVALID;
 

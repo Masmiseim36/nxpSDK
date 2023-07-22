@@ -64,6 +64,16 @@ Change log:
 /** Macros for Data Alignment : address */
 #define ALIGN_ADDR(p, a) ((((t_ptr)(p)) + (((t_ptr)(a)) - 1U)) & ~(((t_ptr)(a)) - 1U))
 
+#ifndef MACSTR
+/** MAC address security format */
+#define MACSTR "%02x:XX:XX:XX:%02x:%02x"
+#endif
+
+#ifndef MAC2STR
+/** MAC address security print arguments */
+#define MAC2STR(a) (a)[0], (a)[4], (a)[5]
+#endif
+
 /** Return the byte offset of a field in the given structure */
 #define MLAN_FIELD_OFFSET(type, field) ((t_u32)(t_ptr) & (((type *)0)->field))
 /** Return aligned offset */
@@ -97,7 +107,11 @@ Change log:
 #define MLAN_STA_AMPDU_DEF_TXWINSIZE 8
 #else
 /** Default Win size attached during ADDBA request */
+#ifdef RW610
+#define MLAN_STA_AMPDU_DEF_TXWINSIZE 64
+#else
 #define MLAN_STA_AMPDU_DEF_TXWINSIZE 16
+#endif
 #endif
 #ifndef MLAN_STA_AMPDU_DEF_RXWINSIZE
 #ifdef SD8801
@@ -112,8 +126,12 @@ Change log:
 /** Default Win size attached during ADDBA request */
 #define MLAN_UAP_AMPDU_DEF_TXWINSIZE 8
 #else
+#ifdef RW610
+#define MLAN_UAP_AMPDU_DEF_TXWINSIZE 64
+#else
 /** Default Win size attached during ADDBA request */
 #define MLAN_UAP_AMPDU_DEF_TXWINSIZE 16
+#endif
 #endif
 #ifdef SD8801
 /** Default Win size attached during ADDBA response */
@@ -143,10 +161,6 @@ Change log:
 #define MLAN_RATE_INDEX_MCS7 19
 /** Rate index for MCS 9 */
 #define MLAN_RATE_INDEX_MCS9 21
-#ifdef CONFIG_11AX
-/** Rate index for MCS11 */
-#define MLAN_RATE_INDEX_MCS11 11
-#endif
 /** Rate index for MCS 32 */
 #define MLAN_RATE_INDEX_MCS32 44
 /** Rate index for MCS 127 */
@@ -697,6 +711,8 @@ typedef MLAN_PACK_START struct _mlan_ds_misc_custom_ie
     tlvbuf_max_mgmt_ie max_mgmt_ie;
 } MLAN_PACK_END mlan_ds_misc_custom_ie;
 
+/** csi event data structure */
+
 #ifdef PRAGMA_PACK
 #pragma pack(pop)
 #endif
@@ -782,6 +798,12 @@ typedef struct _mlan_callbacks
       mlan_status(*moal_get_system_time) (IN t_void * pmoal_handle,
                                           OUT t_u32 * psec, OUT t_u32 * pusec);
 #endif /* 0 */
+
+      /** moal_memcpy_ext */
+      t_void *(*moal_memcpy_ext)(t_void *pmoal, t_void *pdest,
+                       const t_void *psrc, t_u32 num,
+                       t_u32 dest_size);
+
        /** moal_init_timer*/
     mlan_status (*moal_init_timer)(IN t_void *pmoal_handle,
                                    OUT t_void **pptimer,
@@ -801,6 +823,16 @@ typedef struct _mlan_callbacks
     mlan_status (*moal_spin_lock)(IN t_void *pmoal_handle, IN t_void *plock);
     /** moal_spin_unlock */
     mlan_status (*moal_spin_unlock)(IN t_void *pmoal_handle, IN t_void *plock);
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+    /** moal_init_semaphore */
+    mlan_status (*moal_init_semaphore)(IN t_void *pmoal_handle, IN const char *name, OUT t_void **pplock);
+    /** moal_free_semaphore */
+    mlan_status (*moal_free_semaphore)(IN t_void *pmoal_handle, IN t_void **pplock);
+    /** moal_semaphore_get */
+    mlan_status (*moal_semaphore_get)(IN t_void *pmoal_handle, IN t_void **pplock);
+    /** moal_semaphore_put */
+    mlan_status (*moal_semaphore_put)(IN t_void *pmoal_handle, IN t_void **pplock);
+#endif
 #if 0
     /** moal_print */
       t_void(*moal_print) (IN t_void * pmoal_handle,

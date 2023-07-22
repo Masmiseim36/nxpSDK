@@ -331,7 +331,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, IMX_RT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PKCS11_SESSION_OPEN, DEBUG_CONSOLE_ENABLE_ECHO, DEBUG_CONSOLE_RECEIVE_BUFFER_LEN=2048, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, MFLASH_FILE_BASEADDR=7340032, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, SDK_DEBUGCONSOLE_UART, NO_SECURE_CHANNEL_SUPPORT, MBEDTLS, mqttconfigENABLE_METRICS=0, MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../ota;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1062;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/aws_iot/iot-reference/examples/common/cli;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../middleware/aws_iot/ota/source/include;../../../../../middleware/aws_iot/ota/source/portable/os;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/tinycbor/src;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11</IncludePath>
+              <IncludePath>..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../ota;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1062;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/aws_iot/iot-reference/examples/common/cli;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../middleware/aws_iot/ota/source/include;../../../../../middleware/aws_iot/ota/source/portable/os;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/tinycbor/src;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3858,32 +3858,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/iot-reference/mqtt-agent-interface</GroupName>
+          <GroupName>freertos/backoffalgorithm/source</GroupName>
           <Files>
             <File>
-              <FileName>freertos_agent_message.c</FileName>
+              <FileName>backoff_algorithm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_agent_message.c</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_command_pool.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_command_pool.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/iot-reference/mqtt-agent-interface/include</GroupName>
+          <GroupName>freertos/backoffalgorithm/source/include</GroupName>
           <Files>
             <File>
-              <FileName>freertos_agent_message.h</FileName>
+              <FileName>backoff_algorithm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_agent_message.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_command_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_command_pool.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3993,22 +3983,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/backoffalgorithm/source</GroupName>
+          <GroupName>aws_iot/iot-reference/mqtt-agent-interface</GroupName>
           <Files>
             <File>
-              <FileName>backoff_algorithm.c</FileName>
+              <FileName>freertos_agent_message.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_agent_message.c</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_command_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_command_pool.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/backoffalgorithm/source/include</GroupName>
+          <GroupName>aws_iot/iot-reference/mqtt-agent-interface/include</GroupName>
           <Files>
             <File>
-              <FileName>backoff_algorithm.h</FileName>
+              <FileName>freertos_agent_message.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_agent_message.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_command_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_command_pool.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5552,7 +5552,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, IMX_RT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PKCS11_SESSION_OPEN, DEBUG_CONSOLE_ENABLE_ECHO, DEBUG_CONSOLE_RECEIVE_BUFFER_LEN=2048, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, MFLASH_FILE_BASEADDR=7340032, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, SDK_DEBUGCONSOLE_UART, NO_SECURE_CHANNEL_SUPPORT, MBEDTLS, mqttconfigENABLE_METRICS=0, MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../ota;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1062;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/aws_iot/iot-reference/examples/common/cli;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../middleware/aws_iot/ota/source/include;../../../../../middleware/aws_iot/ota/source/portable/os;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/tinycbor/src;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11</IncludePath>
+              <IncludePath>..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../ota;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1062;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/aws_iot/iot-reference/examples/common/cli;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../middleware/aws_iot/ota/source/include;../../../../../middleware/aws_iot/ota/source/portable/os;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common/https_client;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/tinycbor/src;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/sss/plugin/pkcs11</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9079,32 +9079,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/iot-reference/mqtt-agent-interface</GroupName>
+          <GroupName>freertos/backoffalgorithm/source</GroupName>
           <Files>
             <File>
-              <FileName>freertos_agent_message.c</FileName>
+              <FileName>backoff_algorithm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_agent_message.c</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_command_pool.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_command_pool.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/iot-reference/mqtt-agent-interface/include</GroupName>
+          <GroupName>freertos/backoffalgorithm/source/include</GroupName>
           <Files>
             <File>
-              <FileName>freertos_agent_message.h</FileName>
+              <FileName>backoff_algorithm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_agent_message.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_command_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_command_pool.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9214,22 +9204,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/backoffalgorithm/source</GroupName>
+          <GroupName>aws_iot/iot-reference/mqtt-agent-interface</GroupName>
           <Files>
             <File>
-              <FileName>backoff_algorithm.c</FileName>
+              <FileName>freertos_agent_message.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/backoff_algorithm.c</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_agent_message.c</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_command_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/freertos_command_pool.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/backoffalgorithm/source/include</GroupName>
+          <GroupName>aws_iot/iot-reference/mqtt-agent-interface/include</GroupName>
           <Files>
             <File>
-              <FileName>backoff_algorithm.h</FileName>
+              <FileName>freertos_agent_message.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/backoffalgorithm/source/include/backoff_algorithm.h</FilePath>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_agent_message.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_command_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include/freertos_command_pool.h</FilePath>
             </File>
           </Files>
         </Group>

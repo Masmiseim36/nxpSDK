@@ -529,6 +529,7 @@ int main( int argc, char *argv[] )
     
 #if defined(MBEDTLS_ECP_C)
     (void) curve_list; /* Unused in some configurations where no benchmark uses ECC */
+    (void) set_ecp_curve; /* Unused in some configurations where no benchmark uses ECC */
 #endif    
 
 #if defined(FREESCALE_KSDK_BM)

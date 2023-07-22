@@ -110,110 +110,18 @@ static void wlan_pmfcfg_get(int argc, char *argv[])
     }
 }
 
-static void dump_wlan_set_antcfg_usage(void)
-{
-    (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-set-antcfg <ant mode> [evaluate_time] \r\n");
-    (void)PRINTF("\r\n");
-    (void)PRINTF("\t<ant mode>: \r\n");
-    (void)PRINTF("\t           Bit 0   -- Tx/Rx antenna 1\r\n");
-    (void)PRINTF("\t           Bit 1   -- Tx/Rx antenna 2\r\n");
-    (void)PRINTF("\t           0xFFFF  -- Tx/Rx antenna diversity\r\n");
-    (void)PRINTF("\t[evaluate_time]: \r\n");
-    (void)PRINTF("\t           if ant mode = 0xFFFF, SAD evaluate time interval,\r\n");
-    (void)PRINTF("\t           default value is 6s(0x1770)\r\n");
-}
-
-static void wlan_antcfg_set(int argc, char *argv[])
-{
-    int ret;
-    uint32_t ant_mode;
-    uint16_t evaluate_time = 0;
-
-    if ((argc != 2) && ((argc != 3)))
-    {
-        dump_wlan_set_antcfg_usage();
-        return;
-    }
-
-    errno    = 0;
-    ant_mode = (uint32_t)strtol(argv[1], NULL, 16);
-    if (errno != 0)
-    {
-        (void)PRINTF("Error during strtoul errno:%d", errno);
-    }
-
-    if ((argc == 3) && (ant_mode != 0xFFFFU))
-    {
-        dump_wlan_set_antcfg_usage();
-        return;
-    }
-
-    errno = 0;
-    if (argc == 3)
-    {
-        evaluate_time = (uint16_t)strtol(argv[2], NULL, 16);
-    }
-    if (errno != 0)
-    {
-        (void)PRINTF("Error during strtoul errno:%d", errno);
-    }
-
-    ret = wlan_set_antcfg(ant_mode, evaluate_time);
-    if (ret == WM_SUCCESS)
-    {
-        (void)PRINTF("Antenna configuration successful\r\n");
-    }
-    else
-    {
-        (void)PRINTF("Antenna configuration failed\r\n");
-        dump_wlan_set_antcfg_usage();
-    }
-}
-
-static void dump_wlan_get_antcfg_usage(void)
-{
-    (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-get-antcfg \r\n");
-}
-
-static void wlan_antcfg_get(int argc, char *argv[])
-{
-    int ret;
-    uint32_t ant_mode;
-    uint16_t evaluate_time = 0;
-
-    if (argc != 1)
-    {
-        dump_wlan_get_antcfg_usage();
-        return;
-    }
-
-    ret = wlan_get_antcfg(&ant_mode, &evaluate_time);
-    if (ret == WM_SUCCESS)
-    {
-        (void)PRINTF("Mode of Tx/Rx path is : %x\r\n", ant_mode);
-        if (ant_mode == 0XFFFFU)
-        {
-            (void)PRINTF("Evaluate time : %x\r\n", evaluate_time);
-        }
-    }
-    else
-    {
-        (void)PRINTF("antcfg configuration read failed\r\n");
-        dump_wlan_get_antcfg_usage();
-    }
-}
-
 static void dump_wlan_set_ed_mac_mode_usage(void)
 {
     (void)PRINTF("Usage:\r\n");
 #ifdef CONFIG_5GHz_SUPPORT
-    (void)PRINTF("wlan-set-ed-mac-mode <ed_ctrl_2g> <ed_offset_2g> <ed_ctrl_5g> <ed_offset_5g>\r\n");
+    (void)PRINTF("wlan-set-ed-mac-mode <interface> <ed_ctrl_2g> <ed_offset_2g> <ed_ctrl_5g> <ed_offset_5g>\r\n");
 #else
-    (void)PRINTF("wlan-set-ed-mac-mode <ed_ctrl_2g> <ed_offset_2g>\r\n");
+    (void)PRINTF("wlan-set-ed-mac-mode <interface> <ed_ctrl_2g> <ed_offset_2g>\r\n");
 #endif
     (void)PRINTF("\r\n");
+    (void)PRINTF("\tinterface \r\n");
+    (void)PRINTF("\t    # 0       - for STA\r\n");
+    (void)PRINTF("\t    # 1       - for uAP\r\n");
     (void)PRINTF("\ted_ctrl_2g \r\n");
     (void)PRINTF("\t    # 0       - disable EU adaptivity for 2.4GHz band\r\n");
     (void)PRINTF("\t    # 1       - enable EU adaptivity for 2.4GHz band\r\n");
@@ -234,38 +142,45 @@ static void wlan_ed_mac_mode_set(int argc, char *argv[])
 {
     int ret;
     wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl;
+    t_u8 interface;
 
 #ifdef CONFIG_5GHz_SUPPORT
-    if (argc != 5)
+    if (argc != 6)
 #else
-    if (argc != 3)
+    if (argc != 4)
 #endif
     {
         dump_wlan_set_ed_mac_mode_usage();
         return;
     }
 
+    errno     = 0;
+    interface = (t_u8)strtol(argv[1], NULL, 16);
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
     errno                       = 0;
-    wlan_ed_mac_ctrl.ed_ctrl_2g = (t_u16)strtol(argv[1], NULL, 16);
+    wlan_ed_mac_ctrl.ed_ctrl_2g = (t_u16)strtol(argv[2], NULL, 16);
     if (errno != 0)
     {
         (void)PRINTF("Error during strtoul errno:%d", errno);
     }
     errno                         = 0;
-    wlan_ed_mac_ctrl.ed_offset_2g = (t_s16)strtol(argv[2], NULL, 16);
+    wlan_ed_mac_ctrl.ed_offset_2g = (t_s16)strtol(argv[3], NULL, 16);
     if (errno != 0)
     {
         (void)PRINTF("Error during strtoul errno:%d", errno);
     }
 #ifdef CONFIG_5GHz_SUPPORT
     errno                       = 0;
-    wlan_ed_mac_ctrl.ed_ctrl_5g = (t_u16)strtol(argv[3], NULL, 16);
+    wlan_ed_mac_ctrl.ed_ctrl_5g = (t_u16)strtol(argv[4], NULL, 16);
     if (errno != 0)
     {
         (void)PRINTF("Error during strtoul errno:%d", errno);
     }
     errno                         = 0;
-    wlan_ed_mac_ctrl.ed_offset_5g = (t_s16)strtol(argv[4], NULL, 16);
+    wlan_ed_mac_ctrl.ed_offset_5g = (t_s16)strtol(argv[5], NULL, 16);
     if (errno != 0)
     {
         (void)PRINTF("Error during strtoul errno:%d", errno);
@@ -285,7 +200,14 @@ static void wlan_ed_mac_mode_set(int argc, char *argv[])
     }
 #endif
 
-    ret = wlan_set_ed_mac_mode(wlan_ed_mac_ctrl);
+    if (interface == MLAN_BSS_TYPE_STA)
+    {
+        ret = wlan_set_ed_mac_mode(wlan_ed_mac_ctrl);
+    }
+    else
+    {
+        ret = wlan_set_uap_ed_mac_mode(wlan_ed_mac_ctrl);
+    }
     if (ret == WM_SUCCESS)
     {
         (void)PRINTF("ED MAC MODE settings configuration successful\r\n");
@@ -300,21 +222,39 @@ static void wlan_ed_mac_mode_set(int argc, char *argv[])
 static void dump_wlan_get_ed_mac_mode_usage(void)
 {
     (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-get-ed-mac-mode \r\n");
+    (void)PRINTF("wlan-get-ed-mac-mode <interface>\r\n");
+    (void)PRINTF("\r\n");
+    (void)PRINTF("\tinterface \r\n");
+    (void)PRINTF("\t    # 0       - for STA\r\n");
+    (void)PRINTF("\t    # 1       - for uAP\r\n");
 }
 
 static void wlan_ed_mac_mode_get(int argc, char *argv[])
 {
     int ret;
     wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl;
+    int interface;
 
-    if (argc != 1)
+    if (argc != 2)
     {
         dump_wlan_get_ed_mac_mode_usage();
         return;
     }
+    errno     = 0;
+    interface = (t_u8)strtol(argv[1], NULL, 16);
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
 
-    ret = wlan_get_ed_mac_mode(&wlan_ed_mac_ctrl);
+    if (interface == MLAN_BSS_TYPE_STA)
+    {
+        ret = wlan_get_ed_mac_mode(&wlan_ed_mac_ctrl);
+    }
+    else
+    {
+        ret = wlan_get_uap_ed_mac_mode(&wlan_ed_mac_ctrl);
+    }
     if (ret == WM_SUCCESS)
     {
         (void)PRINTF("EU adaptivity for 2.4GHz band : %s\r\n",
@@ -393,10 +333,8 @@ static void dump_wlan_set_regioncode_usage(void)
     (void)PRINTF("0x30 : ETSI, Australia, Republic of Korea\r\n");
     (void)PRINTF("0x32 : France\r\n");
     (void)PRINTF("0x40 : Japan\r\n");
-    (void)PRINTF("0x41 : Japan\r\n");
     (void)PRINTF("0x50 : China\r\n");
-    (void)PRINTF("0xFE : Japan\r\n");
-    (void)PRINTF("0xFF : Special\r\n");
+    (void)PRINTF("0xFF : Japan Special\r\n");
 }
 
 static void test_wlan_set_regioncode(int argc, char **argv)
@@ -619,7 +557,7 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                 {
                     (void)PRINTF("    MCS:  Auto\n");
                 }
-                (void)PRINTF("    Rate: %u Mbps\r\n", datarate->rx_data_rate / 2U);
+                (void)PRINTF("    Rate: %.2f Mbps\r\n", (double)datarate->rx_data_rate / 2);
             }
         }
 #endif
@@ -633,21 +571,17 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
 static void dump_wlan_set_txratecfg_usage(void)
 {
     (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-set-txratecfg <format> <index> ");
+    (void)PRINTF("wlan-set-txratecfg <format> <index>");
 #ifdef CONFIG_11AC
-    (void)PRINTF("<nss>\r\n");
-#else
-    (void)PRINTF("\r\n");
+    (void)PRINTF(" <nss>");
 #endif
+    (void)PRINTF("\r\n");
     (void)PRINTF("\tWhere\r\n");
     (void)PRINTF("\t<format> - This parameter specifies the data rate format used in this command\r\n");
     (void)PRINTF("\t        0:    LG\r\n");
     (void)PRINTF("\t        1:    HT\r\n");
 #ifdef CONFIG_11AC
     (void)PRINTF("\t        2:    VHT\r\n");
-#endif
-#ifdef CONFIG_11AX
-    (void)PRINTF("\t        3:    HE\r\n");
 #endif
     (void)PRINTF("\t        0xff: Auto\r\n");
     (void)PRINTF("\t<index> - This parameter specifies the rate or MCS index\r\n");
@@ -685,21 +619,6 @@ static void dump_wlan_set_txratecfg_usage(void)
     (void)PRINTF("\t        7       MCS7\r\n");
     (void)PRINTF("\t        8       MCS8\r\n");
     (void)PRINTF("\t        9       MCS9\r\n");
-#endif
-#ifdef CONFIG_11AX
-    (void)PRINTF("\tIf <format> is 3 (HE),\r\n");
-    (void)PRINTF("\t        0       MCS0\r\n");
-    (void)PRINTF("\t        1       MCS1\r\n");
-    (void)PRINTF("\t        2       MCS2\r\n");
-    (void)PRINTF("\t        3       MCS3\r\n");
-    (void)PRINTF("\t        4       MCS4\r\n");
-    (void)PRINTF("\t        5       MCS5\r\n");
-    (void)PRINTF("\t        6       MCS6\r\n");
-    (void)PRINTF("\t        7       MCS7\r\n");
-    (void)PRINTF("\t        8       MCS8\r\n");
-    (void)PRINTF("\t        9       MCS9\r\n");
-    (void)PRINTF("\t        10      MCS10\r\n");
-    (void)PRINTF("\t        11      MCS11\r\n");
 #endif
 #if defined(CONFIG_11AX) || defined(CONFIG_11AC)
     (void)PRINTF("\t<nss> - This parameter specifies the NSS. It is valid only for VHT and HE\r\n");
@@ -754,9 +673,7 @@ static void test_wlan_set_txratecfg(int argc, char **argv)
     }
 #endif
 
-#ifdef CONFIG_11AX
-    if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 3U)
-#elif defined(CONFIG_11AC)
+#if   defined(CONFIG_11AC)
     if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 2U)
 #else
 if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 1U)
@@ -1140,47 +1057,145 @@ static void test_wlan_get_chanlist(int argc, char **argv)
     }
 }
 
-#ifdef CONFIG_11AX
-static void dump_wlan_set_txomi_usage()
+
+#ifdef CONFIG_WIFI_CLOCKSYNC
+static void dump_wlan_get_tsf_info_usage(void)
 {
     (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-set-tx-omi <tx-omi>\r\n");
-    (void)PRINTF("where, tx-omi =\r\n");
-    (void)PRINTF("Bit 0-2: Rx NSS\r\n");
-    (void)PRINTF("Bit 3-4: Channel Width\r\n");
-    (void)PRINTF("Bit 6  : Tx NSTS (applies to client mode only)\r\n");
+    (void)PRINTF("wlan-get-tsfinfo <tsf_format>\r\n");
+    (void)PRINTF("where, tsf_format =\r\n");
+    (void)PRINTF("0:    Report GPIO assert TSF\r\n");
+    (void)PRINTF("1:    Report Beacon TSF and Offset (valid if CONFIG Mode 2)\r\n");
 }
 
-static void test_wlan_set_tx_omi(int argc, char **argv)
+static void test_get_tsf_info(int argc, char **argv)
 {
-    int ret;
-
-    uint16_t tx_omi;
-
+    wlan_tsf_info_t tsf_info;
+    (void)memset(&tsf_info, 0, sizeof(wlan_tsf_info_t));
     if (argc != 2)
     {
-        dump_wlan_set_txomi_usage();
+        dump_wlan_get_tsf_info_usage();
         return;
     }
 
-    errno  = 0;
-    tx_omi = (uint16_t)strtol(argv[1], NULL, 0);
+    errno               = 0;
+    tsf_info.tsf_format = (uint16_t)strtol(argv[1], NULL, 0);
 
     if (errno != 0)
-        (void)PRINTF("Error during strtoul errno:%d", errno);
-
-    ret = wlan_set_11ax_tx_omi(tx_omi);
-
-    if (ret == WM_SUCCESS)
     {
-        (void)PRINTF("TX OMI: 0x%x set\r\n", tx_omi);
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
+
+    int rv = wlan_get_tsf_info(&tsf_info);
+
+    if (rv != WM_SUCCESS)
+    {
+        (void)PRINTF("Unable to get TSF info\r\n");
     }
     else
     {
-        (void)PRINTF("Unable to set TX OMI: 0x%x\r\n", tx_omi);
+        (void)PRINTF("tsf format:              %d\n\r", tsf_info.tsf_format);
+        (void)PRINTF("tsf info:                %d\n\r", tsf_info.tsf_info);
+        (void)PRINTF("tsf:                     %llu\n\r", tsf_info.tsf);
+        (void)PRINTF("tsf offset:              %d\n\r", tsf_info.tsf_offset);
     }
 }
-#endif
+
+static void dump_wlan_set_clocksync_cfg_usage(void)
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-clocksync <mode> <role> <gpio_pin> <gpio_level> <pulse width>\r\n");
+    (void)PRINTF("Set WIFI TSF based clock sync setting. \r\nWhere, \r\n");
+    (void)PRINTF("<mode> is use to configure GPIO TSF latch mode\r\n");
+    (void)PRINTF("\t\t0:    GPIO level\r\n");
+    (void)PRINTF("\t\t1:    GPIO toggle\r\n");
+    (void)PRINTF("\t\t2:    GPIO toggle on Next Beacon\r\n");
+    (void)PRINTF("<role> \r\n");
+    (void)PRINTF("\t\t0: when mode set to 0 or 1\r\n");
+    (void)PRINTF("\t\t1:  AP\r\n");
+    (void)PRINTF("\t\t2: STA\r\n");
+    (void)PRINTF("<gpio pin number>\r\n");
+    (void)PRINTF("<GPIO Level/Toggle>\r\n");
+    (void)PRINTF("\t\tmode = 0\r\n");
+    (void)PRINTF("\t\t0: low    1: high\r\n");
+    (void)PRINTF("\t\tmode = 1 or 2\r\n");
+    (void)PRINTF("\t\t0: low to high\r\n");
+    (void)PRINTF("\t\t1: high to low\r\n");
+    (void)PRINTF("GPIO pulse width\r\n");
+    (void)PRINTF("\t\tmode = 0,  reserved, set to 0\r\n");
+    (void)PRINTF("\t\tmode 1 or 2\r\n");
+    (void)PRINTF("\t\t0: GPIO remain on toggle level (high or low)\r\n");
+    (void)PRINTF("\t\tNon-0: GPIO pulse width in microseconds (min 1 us)\r\n");
+}
+
+static void test_set_clocksync_cfg(int argc, char **argv)
+{
+    wlan_clock_sync_gpio_tsf_t tsf_latch;
+
+    if (argc != 6)
+    {
+        dump_wlan_set_clocksync_cfg_usage();
+        return;
+    }
+
+    errno                     = 0;
+    tsf_latch.clock_sync_mode = (uint8_t)strtol(argv[1], NULL, 0);
+
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
+
+    errno                     = 0;
+    tsf_latch.clock_sync_Role = (uint8_t)strtol(argv[2], NULL, 0);
+
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
+
+    errno                                = 0;
+    tsf_latch.clock_sync_gpio_pin_number = (uint8_t)strtol(argv[3], NULL, 0);
+
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
+
+    errno                                  = 0;
+    tsf_latch.clock_sync_gpio_level_toggle = (uint8_t)strtol(argv[4], NULL, 0);
+
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
+
+    errno                                 = 0;
+    tsf_latch.clock_sync_gpio_pulse_width = (uint16_t)strtol(argv[5], NULL, 0);
+
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
+
+    int rv = wlan_set_clocksync_cfg(&tsf_latch);
+
+    if (rv != WM_SUCCESS)
+    {
+        (void)PRINTF("Unable to set clocksync config\r\n");
+    }
+    else
+    {
+        (void)PRINTF("Clock Sync config set as:\r\n");
+        (void)PRINTF("Mode                 :%d\n\r", tsf_latch.clock_sync_mode);
+        (void)PRINTF("Role                 :%d\n\r", tsf_latch.clock_sync_Role);
+        (void)PRINTF("GPIO Pin Number      :%d\n\r", tsf_latch.clock_sync_gpio_pin_number);
+        (void)PRINTF("GPIO Level or Toggle :%d\n\r", tsf_latch.clock_sync_gpio_level_toggle);
+        (void)PRINTF("GPIO Pulse Width     :%d\n\r", tsf_latch.clock_sync_gpio_pulse_width);
+    }
+}
+#endif /* CONFIG_WIFI_CLOCKSYNC */
+
 
 static struct cli_command wlan_enhanced_commands[] = {
     {"wlan-set-regioncode", "<region-code>", test_wlan_set_regioncode},
@@ -1199,17 +1214,17 @@ static struct cli_command wlan_enhanced_commands[] = {
     {"wlan-get-data-rate", NULL, test_wlan_get_data_rate},
     {"wlan-set-pmfcfg", "<mfpc> <mfpr>", wlan_pmfcfg_set},
     {"wlan-get-pmfcfg", NULL, wlan_pmfcfg_get},
-    {"wlan-set-antcfg", "<ant mode> [evaluate_time]", wlan_antcfg_set},
-    {"wlan-get-antcfg", NULL, wlan_antcfg_get},
 #ifdef CONFIG_5GHz_SUPPORT
-    {"wlan-set-ed-mac-mode", "<ed_ctrl_2g> <ed_offset_2g> <ed_ctrl_5g> <ed_offset_5g>", wlan_ed_mac_mode_set},
+    {"wlan-set-ed-mac-mode", "<interface> <ed_ctrl_2g> <ed_offset_2g> <ed_ctrl_5g> <ed_offset_5g>",
+     wlan_ed_mac_mode_set},
 #else
-    {"wlan-set-ed-mac-mode", "<ed_ctrl_2g> <ed_offset_2g>", wlan_ed_mac_mode_set},
+    {"wlan-set-ed-mac-mode", "<interface> <ed_ctrl_2g> <ed_offset_2g>", wlan_ed_mac_mode_set},
 #endif
-    {"wlan-get-ed-mac-mode", NULL, wlan_ed_mac_mode_get},
-#ifdef CONFIG_11AX
-    {"wlan-set-tx-omi", "<tx-omi>", test_wlan_set_tx_omi},
-#endif
+    {"wlan-get-ed-mac-mode", "<interface>", wlan_ed_mac_mode_get},
+#ifdef CONFIG_WIFI_CLOCKSYNC
+    {"wlan-get-tsfinfo", "<format-type>", test_get_tsf_info},
+    {"wlan-set-clocksync", "<mode> <role> <gpio_pin> <gpio_level> <pulse width>", test_set_clocksync_cfg},
+#endif /* CONFIG_WIFI_CLOCKSYNC */
 };
 
 int wlan_enhanced_cli_init(void)

@@ -235,7 +235,7 @@
           <state>LWIP_DHCP=1</state>
           <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>ENET_RXBUFF_NUM=14</state>
-          <state>SHELL_BUFFER_SIZE=128</state>
+          <state>SHELL_BUFFER_SIZE=128U</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SDIO_ENABLED</state>
@@ -1373,7 +1373,7 @@
           <state>LWIP_DHCP=1</state>
           <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>ENET_RXBUFF_NUM=14</state>
-          <state>SHELL_BUFFER_SIZE=128</state>
+          <state>SHELL_BUFFER_SIZE=128U</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SDIO_ENABLED</state>
@@ -3310,6 +3310,18 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</name>
         </file>
         <file>
@@ -3381,6 +3393,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_api.c</name>

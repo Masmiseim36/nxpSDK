@@ -71,11 +71,13 @@ PACK_STRUCT_END
 /* The time to block waiting for input. */
 #define emacBLOCK_TIME_WAITING_FOR_INPUT ((portTickType)100)
 /*------------------------------------------------------*/
-extern int wlan_get_mac_address(unsigned char *dest);
+extern int wlan_get_mac_address(unsigned char *sta_mac, unsigned char *uap_mac);
 extern void wlan_wake_up_card(void);
 
 
 
+
+void wrapper_wlan_update_uap_rxrate_info(RxPD *rxpd);
 
 int wrapper_wlan_handle_rx_packet(t_u16 datalen, RxPD *rxpd, void *p, void *payload);
 

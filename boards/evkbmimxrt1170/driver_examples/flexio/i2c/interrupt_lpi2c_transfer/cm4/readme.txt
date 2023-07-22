@@ -6,9 +6,9 @@ In this example, a flexio simulated i2c master connect to a LPI2C slave
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -55,3 +55,8 @@ Slave received data :
 0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
 0x18  0x19  0x1A  0x1B  0x1C  0x1D  0x1E  0x1F
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Note:
+In ARMCC: When reading from the flash, 64M flash requires 4 bytes of address, which leads to slow code 
+execution in the flash and flexio FIFO underflow. The project use a method to reduce the baud rate. 
+Other methods include putting fsl_flexio_i2c.c fsl_flexio_i2c_master.c fsl_lpi2c.c code in RAM 
+or modifying qspiflash_config in evkbmimxrt1170_flexspi_nor_config.c file to use shorter flash address and smaller flash space.

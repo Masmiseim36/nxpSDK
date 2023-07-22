@@ -65,15 +65,20 @@
  * This contains a list of all elements and their initialization functions.
  * There should be an entry for each element of the 'StreamElementType' enum.
  */
-static const ElementInit element_list[TYPE_ELEMENT_LAST] = {
+static const ElementInit element_list[] = {
 /* Source elements (with one or more source and no sink pads) */
 #ifdef STREAMER_ENABLE_FILESRC
     /*! TYPE_ELEMENT_FILE_SRC */
     {sizeof(ElementFileSrc), filesrc_init},
+#else
+    {0, NULL},
 #endif
+
 #ifdef STREAMER_ENABLE_MEM_SRC
     /*! TYPE_ELEMENT_MEM_SRC */
     {sizeof(ElementMemSrc), memsrc_init},
+#else
+    {0, NULL},
 #endif
 
     /*! TYPE_ELEMENT_NETBUF_SRC */
@@ -81,40 +86,42 @@ static const ElementInit element_list[TYPE_ELEMENT_LAST] = {
 
     /*! TYPE_ELEMENT_AUDIO_SRC */
     {sizeof(ElementAudioSrc), audiosrc_init},
+
 /* Sink elements (with one more sink and no source pads) */
 #ifdef STREAMER_ENABLE_FILE_SINK
     /*! TYPE_ELEMENT_FILE_SINK */
     {sizeof(ElementFileSink), filesink_init_element},
+#else
+    {0, NULL},
 #endif
+
 #ifdef STREAMER_ENABLE_MEM_SINK
     /*! TYPE_ELEMENT_MEM_SINK */
     {sizeof(ElementMemSink), memsink_init_element},
+#else
+    {0, NULL},
 #endif
+
     /*! TYPE_ELEMENT_AUDIO_SINK */
     {sizeof(ElementAudioSink), audiosink_init_element},
+
     /*! TYPE_ELEMENT_DECODER */
     {sizeof(ElementDecoder), decoder_init_element},
+
 #ifdef STREAMER_ENABLE_ENCODER
     /*! TYPE_ELEMENT_ENCODER */
     {sizeof(ElementEncoder), encoder_init_element},
 #else
     {0, NULL},
 #endif
-#ifdef STREAMER_ENABLE_PARSER
-    /* Mux/Demux element (with one or more sink and source pads */
-    /*! TYPE_ELEMENT_AVPARSER */
-    {sizeof(ElementAVParser), parser_init},
-#endif
-#ifdef STREAMER_ENABLE_NETSRC
-    /*! TYPE_ELEMENT_NETWORK_SRC */
-    {sizeof(ElementNetSrc), netsrc_init},
-#endif
+
 #ifdef STREAMER_ENABLE_VIT_SINK
     /*! TYPE_ELEMENT_VIT_SINK */
     {sizeof(ElementVitSink), vitsink_init_element},
 #else
     {0, NULL},
 #endif
+
 #ifdef STREAMER_ENABLE_AUDIO_PROC
     /*! TYPE_ELEMENT_AUDIO_PROC */
     {sizeof(ElementAudioProc), audio_proc_init_element},

@@ -2026,6 +2026,26 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
             </File>
             <File>
+              <FileName>mlan_11v.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</FilePath>
+            </File>
+            <File>
               <FileName>mlan_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
@@ -2149,6 +2169,26 @@
               <FileName>mlan_11n_rxreorder.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</FilePath>
             </File>
             <File>
               <FileName>mlan_api.c</FileName>
@@ -7222,6 +7262,26 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
             </File>
             <File>
+              <FileName>mlan_11v.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</FilePath>
+            </File>
+            <File>
               <FileName>mlan_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
@@ -7345,6 +7405,26 @@
               <FileName>mlan_11n_rxreorder.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</FilePath>
             </File>
             <File>
               <FileName>mlan_api.c</FileName>

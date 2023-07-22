@@ -136,7 +136,12 @@ typedef UINT16 EM_RESULT;
 
 /* Abstractions for String library functions */
 #define EM_str_len(s)                 strlen((char *)(s))
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION))
+/*Need to add below call to avoid warnings in KEIL Projects*/
+#define EM_str_n_len(s, sz)           MIN(strlen((char *)s), (sz))
+#else
 #define EM_str_n_len(s, sz)           strnlen((char *)(s), (sz))
+#endif /* defined(__CC_ARM) || (defined(__ARMCC_VERSION)) */
 #define EM_str_copy(d, s)             (void)strcpy((char *)(d), (char *)(s))
 #define EM_str_n_copy(d, s, n)        (void)strncpy((char *)(d), (char *)(s), n)
 #define EM_str_cmp(s1, s2)            strcmp((char *)(s1), (char *)(s2))

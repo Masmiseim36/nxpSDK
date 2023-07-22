@@ -1058,7 +1058,8 @@ static usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         if ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_STANDARD)
         {
             /* Handle the standard request, only handle the request in request array. */
-            if (deviceSetup->bRequest < (sizeof(s_UsbDeviceStandardRequest) / 4U))
+            if (deviceSetup->bRequest <
+                ((sizeof(s_UsbDeviceStandardRequest)) / (sizeof(usb_standard_request_callback_t))))
             {
                 if (s_UsbDeviceStandardRequest[deviceSetup->bRequest] != (usb_standard_request_callback_t)NULL)
                 {

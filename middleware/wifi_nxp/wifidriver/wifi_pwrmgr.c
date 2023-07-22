@@ -90,9 +90,9 @@ int wifi_send_hs_cfg_cmd(mlan_bss_type interface, t_u32 ipv4_addr, t_u16 action,
 #ifdef RW610
         hs_cfg_obj.gpio = 0xff;
 #else
-        hs_cfg_obj.gpio       = HOST_WAKEUP_GPIO_PIN;
+        hs_cfg_obj.gpio = HOST_WAKEUP_GPIO_PIN;
 #endif
-        pdata_buf             = &hs_cfg_obj;
+        pdata_buf = &hs_cfg_obj;
 
         /* wake conditions for broadcast is
          * enabled when bit 0 is set.
@@ -179,13 +179,14 @@ static int wifi_send_power_save_command(ENH_PS_MODES action, t_u16 ps_bitmap, ml
 
 int wifi_enter_ieee_power_save(void)
 {
-        return wifi_send_power_save_command(EN_AUTO_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
+    return wifi_send_power_save_command(EN_AUTO_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
 }
 
 int wifi_exit_ieee_power_save(void)
 {
-        return wifi_send_power_save_command(DIS_AUTO_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
+    return wifi_send_power_save_command(DIS_AUTO_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
 }
+
 
 int wifi_enter_deepsleep_power_save(void)
 {
@@ -375,7 +376,8 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
     else if (ps_mode->action == (t_u16)SLEEP_CONFIRM)
     {
         wcmdr_d("#");
-        if (ieeeps_enabled || deepsleepps_enabled)
+        if (ieeeps_enabled || deepsleepps_enabled
+        )
         {
             mlan_adap->ps_state = PS_STATE_SLEEP;
         }

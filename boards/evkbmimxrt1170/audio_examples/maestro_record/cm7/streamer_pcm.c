@@ -39,7 +39,7 @@ static const pdm_channel_config_t channelConfig = {
 #else
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
 #endif
-    .gain = kPDM_DfOutputGain7,
+    .gain = kPDM_DfOutputGain5,
 };
 
 /*! @brief SAI EDMA transmit callback
@@ -163,6 +163,8 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
         if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
             return -1;
     }
+
+    DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
 
     /* Start the consecutive transfer */
     SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);

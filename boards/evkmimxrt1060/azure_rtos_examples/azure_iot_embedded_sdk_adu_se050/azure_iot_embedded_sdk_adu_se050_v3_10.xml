@@ -192,8 +192,6 @@
       <files mask="build_flexspi_nor_debug.sh"/>
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
     </source>
     <source path="mcux/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="main_text.ldt"/>
@@ -208,7 +206,6 @@
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1062/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.ld"/>
-      <files mask="MIMXRT1062xxxxx_ram.ld"/>
     </source>
     <source path="mdk" project_relative_path="evkmimxrt1060" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1060_flexspi_nor_mcubootable.ini"/>

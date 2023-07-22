@@ -7,6 +7,7 @@ Depending on target platform there are different features of the demo enabled.
 
     - File decoding and playback
     - EAP effects during file playback
+    - Multi-channel playback
 
 The application is controlled by commands from a shell interface using serial console.
 
@@ -93,3 +94,7 @@ Copyright  2022  NXP
 [APP_Shell_Task] start
 
 >> [APP_SDCARD_Task] SD card drive mounted
+
+Known issues
+
+1. MP3 decoder has issues with some of the files. One of the channels can be sometimes distorted or missing parts of the signal.

@@ -25,11 +25,11 @@
 #define wifi_e(...) wmlog_e("wifi", ##__VA_ARGS__)
 #define wifi_w(...) wmlog_w("wifi", ##__VA_ARGS__)
 
-#ifdef CONFIG_WIFI_FW_DEBUG
+#ifdef CONFIG_WIFI_EXTRA_DEBUG
 #define wifi_d(...) wmlog("wifi", ##__VA_ARGS__)
 #else
 #define wifi_d(...)
-#endif /* ! CONFIG_WIFI_DEBUG */
+#endif /* ! CONFIG_WIFI_EXTRA_DEBUG */
 
 #define ampdu_e(...) wmlog_e("ampdu", ##__VA_ARGS__)
 #define ampdu_w(...) wmlog_w("ampdu", ##__VA_ARGS__)

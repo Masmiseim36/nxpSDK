@@ -143,8 +143,7 @@ extern void AUDIO_DMA_EDMA_Start();
 extern void BOARD_Codec_Init();
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 extern void CTIMER_CaptureInit(void);
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)))
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
 extern void audio_fro_trim_up(void);
 extern void audio_fro_trim_down(void);
 #endif
@@ -283,8 +282,7 @@ usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker = {
     .speakerReservedSpace       = 0,
     .speakerDetachOrNoInput     = 0,
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)))
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
     .froTrimIntervalCount     = 0,
     .usbFroTicksPrev          = 0,
     .usbFroTicksEma           = AUDIO_FRO_USB_SOF_INTERVAL_TICK_COUNT,
@@ -2287,8 +2285,7 @@ void USB_DeviceAudioSpeakerStatusReset(void)
     g_UsbDeviceAudioSpeaker.speakerDetachOrNoInput        = 0;
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
     g_UsbDeviceAudioSpeaker.audioPllTicksPrev = 0U;
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)))
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
     g_UsbDeviceAudioSpeaker.usbFroTicksPrev          = 0U;
     g_UsbDeviceAudioSpeaker.usbFroTicksEma           = AUDIO_FRO_USB_SOF_INTERVAL_TICK_COUNT;
     g_UsbDeviceAudioSpeaker.usbFroTickEmaFrac        = 0U;
@@ -2585,8 +2582,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 }
 
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-#if (((defined USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS)) || \
-     ((defined USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI)))
+#if (defined USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS)
 void CTIMER_SOF_TOGGLE_HANDLER_FRO(uint32_t i)
 {
     uint32_t currentCtCap = 0, pllCountPeriod = 0;
@@ -2698,7 +2694,7 @@ void CTIMER_SOF_TOGGLE_HANDLER_FRO(uint32_t i)
         }
     }
 }
-#endif /* USB_DEVICE_CONFIG_LPCIP3511FS  USB_DEVICE_CONFIG_KHCI*/
+#endif /* USB_DEVICE_CONFIG_LPCIP3511FS */
 
 void CTIMER_SOF_TOGGLE_HANDLER_PLL(uint32_t i)
 {

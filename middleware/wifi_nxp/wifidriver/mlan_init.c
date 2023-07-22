@@ -132,7 +132,15 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->pmfcfg.mfpc = 0;
     priv->pmfcfg.mfpr = 0;
 
-
+#ifdef CONFIG_11K
+    priv->enable_host_11k = (t_u8)MFALSE;
+#endif
+#ifdef CONFIG_11K
+    priv->neighbor_rep_token = (t_u8)1U;
+#endif
+#ifdef CONFIG_11V
+    priv->bss_trans_query_token = (t_u8)1U;
+#endif
     for (i = 0; i < MAX_NUM_TID; i++)
     {
         priv->addba_reject[i] = ADDBA_RSP_STATUS_ACCEPT;
@@ -223,9 +231,13 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->hw_dot_11ac_mcs_support   = 0;
     pmadapter->usr_dot_11ac_opermode_bw  = 0;
     pmadapter->usr_dot_11ac_opermode_nss = 0;
-#ifdef CONFIG_11AX
-    pmadapter->enable_11ax = MFALSE;
+#ifdef CONFIG_WIFI_CAPA
+    pmadapter->usr_dot_11n_enable = MFALSE;
+#ifdef CONFIG_11AC
+    pmadapter->usr_dot_11ac_enable = MFALSE;
 #endif
+#endif
+
     /* Initialize 802.11d */
     wlan_11d_init(pmadapter);
     wlan_11h_init(pmadapter);
@@ -276,6 +288,21 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
                 util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->wmm.tid_tbl_ptr[j].ra_list, MTRUE,
                                     priv->adapter->callbacks.moal_init_lock);
             }
+
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+            /* wmm enhanced reuses 4 ac xmit queues */
+            for (j = 0; j < MAX_AC_QUEUES; ++j)
+            {
+                if (priv->adapter->callbacks.moal_init_semaphore(pmadapter->pmoal_handle, "ra_list_sem",
+                                                                 &priv->wmm.tid_tbl_ptr[j].ra_list.plock) !=
+                    MLAN_STATUS_SUCCESS)
+                    return MLAN_STATUS_FAILURE;
+#ifdef CONFIG_WMM_ENH_DEBUG
+                util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->wmm.hist_ra[j], MFALSE, MNULL);
+#endif
+            }
+#endif
+
             util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->tx_ba_stream_tbl_ptr, MTRUE,
                                 pmadapter->callbacks.moal_init_lock);
             util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->rx_reorder_tbl_ptr, MTRUE,

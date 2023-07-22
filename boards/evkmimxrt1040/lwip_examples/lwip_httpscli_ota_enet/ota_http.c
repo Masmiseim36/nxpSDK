@@ -189,7 +189,7 @@ int OtaHttp_GetFileSize(const char *fPath, uint32_t *fSize, const struct OtaHttp
          * return type, however, unsigned long and uint32_t should be
          * of equal size.
          */
-        if (!isspace(*endptr) || size == 0 || size >= UINT32_MAX)
+        if (!isspace((int)*endptr) || size == 0 || size >= UINT32_MAX)
         {
             return -HTTPInvalidResponse;
         }

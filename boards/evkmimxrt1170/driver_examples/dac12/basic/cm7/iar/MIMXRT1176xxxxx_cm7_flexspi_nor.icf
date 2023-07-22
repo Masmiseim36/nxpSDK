@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.1, 2022-04-02
-**     Build:               b220402
+**     Build:               b221022
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -31,7 +31,11 @@ define symbol m_interrupts_start       = 0x30002000;
 define symbol m_interrupts_end         = 0x300023FF;
 
 define symbol m_text_start             = 0x30002400;
-define symbol m_text_end               = 0x30FBFFFF;
+if (isdefinedsymbol(__use_flash64MB__)) {
+  define symbol m_text_end               = 0x33FBFFFF;
+} else{
+  define symbol m_text_end               = 0x30FBFFFF;
+}
 
 define symbol m_interrupts_ram_start   = 0x20000000;
 define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset__;
@@ -64,9 +68,13 @@ define symbol m_boot_hdr_ivt_start           = 0x30001000;
 define symbol m_boot_hdr_boot_data_start     = 0x30001020;
 define symbol m_boot_hdr_dcd_data_start      = 0x30001030;
 
+if (isdefinedsymbol(__use_flash64MB__)) {
+define exported symbol core1_image_start     = 0x33FC0000;
+define exported symbol core1_image_end       = 0x33FFFFFF;
+} else{
 define exported symbol core1_image_start     = 0x30FC0000;
 define exported symbol core1_image_end       = 0x30FFFFFF;
-
+}
 /* Sizes */
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;

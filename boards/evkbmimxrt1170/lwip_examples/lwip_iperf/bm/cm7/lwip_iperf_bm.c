@@ -115,8 +115,8 @@ extern phy_rtl8211f_resource_t g_phy_resource;
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
 #ifndef IPERF_UDP_CLIENT_RATE
-#define IPERF_UDP_CLIENT_RATE (1 * 1024 * 1024) /* 1 Mbit/s */
-#endif                                          /* IPERF_UDP_CLIENT_RATE */
+#define IPERF_UDP_CLIENT_RATE (100 * 1024 * 1024) /* 100 Mbit/s */
+#endif                                            /* IPERF_UDP_CLIENT_RATE */
 
 #ifndef IPERF_CLIENT_AMOUNT
 #define IPERF_CLIENT_AMOUNT (-1000) /* 10 seconds */

@@ -169,6 +169,10 @@ int main(void)
     flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
 #endif
 
+#if defined(EXAMPLE_CAN_BIT_RATE)
+    flexcanConfig.bitRate = EXAMPLE_CAN_BIT_RATE;
+#endif
+
 /* If special quantum setting is needed, set the timing parameters. */
 #if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
     flexcanConfig.timingConfig.phaseSeg1 = PSEG1;

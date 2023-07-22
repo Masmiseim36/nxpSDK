@@ -269,6 +269,10 @@ extern t_u32 drvdbg;
 #define memcmp(adapter, s1, s2, len) adapter->callbacks.moal_memcmp(adapter->pmoal_handle, s1, s2, len)
 #endif /* 0 */
 
+/* memcpy_ext rountine */
+#define memcpy_ext(adapter, to, from, len, size) \
+    (adapter->callbacks.moal_memcpy_ext(adapter->pmoal_handle, to, from, len, size))
+
 /** Find number of elements */
 #ifndef NELEMENTS
 #define NELEMENTS(x) (sizeof(x) / sizeof(x[0]))
@@ -503,6 +507,8 @@ extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
 #define MLAN_TYPE_DATA 0U
 /** Type event */
 #define MLAN_TYPE_EVENT 3U
+/** Type null data */
+#define MLAN_TYPE_NULL_DATA 4
 
 
 
@@ -647,6 +653,12 @@ typedef struct _txAggr_t
     t_u8 ampdu_ap;
     /** AMSDU */
     t_u8 amsdu;
+#if defined(RW610)
+#ifdef AMSDU_IN_AMPDU
+    /** peer AMSDU */
+    t_u8 amsdu_peer;
+#endif
+#endif
 } tx_aggr_t;
 
 /** RA list table */
@@ -675,6 +687,10 @@ struct _raListTbl
     t_u16 max_amsdu;
     /** tx_pause flag */
     t_u8 tx_pause;
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+    /** drop packet count  */
+    t_u16 drop_count;
+#endif
 };
 
 /** TID table */
@@ -724,6 +740,12 @@ typedef struct _wmm_desc
     mlan_scalar tx_pkts_queued;
     /** Tracks highest priority with a packet queued */
     mlan_scalar highest_queued_prio;
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH) && defined(CONFIG_WMM_ENH_DEBUG)
+    /** Restored historical ralists for debug */
+    mlan_list_head hist_ra[MAX_AC_QUEUES];
+    /** Restored historical ralists count */
+    t_u8 hist_ra_count[MAX_AC_QUEUES];
+#endif
 } wmm_desc_t;
 
 /** Security structure */
@@ -733,6 +755,10 @@ typedef struct _wlan_802_11_security_t
     t_u8 wpa_enabled;
     /** WPA TKIP flag */
     bool is_wpa_tkip;
+#ifdef CONFIG_11R
+    /** FT attempt flag */
+    bool is_ft;
+#endif
     /** E-Supplicant enabled flag */
     t_u8 ewpa_enabled;
     /** WPA2 enabled flag */
@@ -830,6 +856,13 @@ typedef enum _state_11d_t
     ENABLE_11D  = 1UL,
 } state_11d_t;
 
+/** State of 11h */
+typedef enum _state_11h_t
+{
+    DISABLE_11H = 0UL,
+    ENABLE_11H  = 1UL,
+} state_11h_t;
+
 #define DEFAULT_11D_STATE DISABLE_11D
 
 /** Domain regulatory information */
@@ -924,6 +957,24 @@ typedef struct
                                                      t_void *pioctl_buf);
 } wlan_11d_apis_t;
 
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+typedef struct
+{
+    mlan_list_head free_list;
+    int free_cnt;
+} outbuf_pool_t;
+
+typedef struct
+{
+    t_u16 tx_no_media;
+    t_u16 tx_err_mem;
+    t_u16 tx_wmm_retried_drop;
+    t_u16 tx_wmm_pause_drop;
+    t_u16 tx_wmm_pause_replaced;
+    t_u16 rx_reorder_drop;
+} wlan_pkt_stat_t;
+#endif
+
 /** mlan_operations data structure */
 typedef struct _mlan_operations
 {
@@ -940,7 +991,16 @@ typedef struct _mlan_operations
     /** BSS role */
     mlan_bss_role bss_role;
 } mlan_operations;
-
+#ifdef RW610
+/**Adapter_operations data structure*/
+typedef struct _bus_operations
+{
+    /** interface to check if fw is hang */
+    bool (*fw_is_hang)(void);
+    /**Interface header length*/
+    t_u32 intf_header_len;
+} bus_operations;
+#endif
 /** Private structure for MLAN */
 struct _mlan_private
 {
@@ -986,27 +1046,21 @@ struct _mlan_private
     t_u8 rxpd_htinfo;
 #else
     t_u8 tx_rate_info;
-    /*HE tx tone mode and DCM info*/
-    t_u8 ext_tx_rate_info;
     /** rxpd_htinfo */
     t_u8 rxpd_rate_info;
 #endif
 
-#ifdef CONFIG_11AX
-    /** UAP 11ax flag */
-    t_u8 is_11ax_enabled;
-    /** length of hw he capability */
-    t_u8 user_hecap_len;
-    /** user configured 802.11ax HE capability */
-    t_u8 user_he_cap[54];
-    /** length of hw he capability */
-    t_u8 user_2g_hecap_len;
-    /** user configured 802.11ax HE capability */
-    t_u8 user_2g_he_cap[54];
-#endif
+
+    t_u8 ssid_filter;
 
     /** max amsdu size */
     t_u16 max_amsdu;
+#if defined(RW610)
+#ifdef AMSDU_IN_AMPDU
+    /** amsdu enabled */
+    t_bool is_amsdu_enabled;
+#endif
+#endif
     /** UAP 11n flag */
     bool is_11n_enabled;
     /** UAP 11ac flag */
@@ -1101,6 +1155,12 @@ struct _mlan_private
     t_u8 wpa_ie[MLAN_WMSDK_MAX_WPA_IE_LEN];
     /** WPA IE length */
     t_u8 wpa_ie_len;
+#ifdef CONFIG_11R
+    /** MD IE */
+    t_u8 md_ie[5];
+    /** MD IE length */
+    size_t md_ie_len;
+#endif
     /** GTK set flag */
     t_u8 wpa_is_gtk_set;
     /** mgmt frame passthru mask */
@@ -1141,6 +1201,14 @@ struct _mlan_private
     /** function table */
     mlan_operations ops;
 
+#ifdef CONFIG_11K
+    t_u8 enable_host_11k;
+    int rrm_mgmt_bitmap_index;
+    t_u8 neighbor_rep_token;
+#endif
+#ifdef CONFIG_11V
+    t_u8 bss_trans_query_token;
+#endif
 
     /** Port Control mode */
     bool port_ctrl_mode;
@@ -1159,6 +1227,15 @@ struct _mlan_private
     t_u8 ip_addr[IPADDR_LEN];
     t_u32 hotspot_cfg;
     ExtCap_t ext_cap;
+    /* interface pause status */
+    t_u8 tx_pause;
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+    wlan_pkt_stat_t driver_error_cnt;
+#endif
+#ifdef CONFIG_MBO
+    t_u8 enable_mbo;
+    int mbo_mgmt_bitmap_index;
+#endif
 };
 
 /** BA stream status */
@@ -1177,12 +1254,21 @@ struct _TxBAStreamTbl
     /** TxBAStreamTbl next node */
     TxBAStreamTbl *pnext;
     /** TID */
+#if defined(RW610)
+    int ampdu_stat[MAX_NUM_TID];
+#else
     int tid;
+#endif
     /** RA */
     t_u8 ra[MLAN_MAC_ADDR_LENGTH];
     /** BA stream status */
     baStatus_e ba_status;
     t_u8 amsdu;
+#if defined(RW610)
+    t_u32 txpkt_cnt;
+    t_u32 txba_thresh;
+    t_u8 ampdu_supported[MAX_NUM_TID];
+#endif
 };
 
 /** RX reorder table */
@@ -1304,10 +1390,6 @@ struct _sta_node
     bool is_11n_enabled;
     /** 11ac flag */
     bool is_11ac_enabled;
-#ifdef CONFIG_11AX
-    t_u8 is_11ax_enabled;
-    IEEEtypes_HECap_t he_cap;
-#endif
     /** AMPDU STA */
     t_u8 ampdu_sta[MAX_NUM_TID];
     /** last rx_seq */
@@ -1453,6 +1535,7 @@ typedef struct
 
 
 
+
 /** mlan_init_para structure */
 typedef struct _mlan_init_para
 {
@@ -1488,7 +1571,12 @@ struct _mlan_adapter
     mlan_callbacks callbacks;
     /** Init parameters */
     mlan_init_para init_para;
-
+#ifdef RW610
+    /** bus operations*/
+    bus_operations bus_ops;
+#endif
+    /** In reset status now */
+    t_u8 in_reset;
     /** IO port */
     t_u32 ioport;
     /** STATUS variables */
@@ -1618,6 +1706,10 @@ struct _mlan_adapter
     t_u32 usr_dot_11n_dev_cap_a;
     /** MIMO abstraction of MCSs supported by device */
     t_u8 usr_dev_mcs_support;
+#ifdef CONFIG_WIFI_CAPA
+    /** user configured 11n enable/disable */
+    t_u8 usr_dot_11n_enable;
+#endif
     /** Enable 11n support for adhoc start */
     bool adhoc_11n_enabled;
     /** Adhoc Secondary Channel Bandwidth */
@@ -1631,6 +1723,10 @@ struct _mlan_adapter
     t_u8 tx_vhtinfo;
     /** rxpd_vhtinfo */
     t_u8 rxpd_vhtinfo;
+#ifdef CONFIG_WIFI_CAPA
+    /** user configured 11ac enable/disable */
+    t_u8 usr_dot_11ac_enable;
+#endif
     /** 802.11ac Device Capabilities for 2.4GHz */
     t_u32 usr_dot_11ac_dev_cap_bg;
     /** 802.11ac Device Capabilities for 5GHz */
@@ -1644,18 +1740,6 @@ struct _mlan_adapter
     /** user dot 11ac_opermode_nss */
     t_u8 usr_dot_11ac_opermode_nss;
 
-#ifdef CONFIG_11AX
-    /** enable 11ax flag */
-    t_u8 enable_11ax;
-    /** length of hw he capability */
-    t_u8 hw_hecap_len;
-    /** 802.11ax HE capability */
-    t_u8 hw_he_cap[54];
-    /** length of hw 2.4G he capability */
-    t_u8 hw_2g_hecap_len;
-    /** 802.11ax 2.4G HE capability */
-    t_u8 hw_2g_he_cap[54];
-#endif
     /** max mgmt IE index in device */
     t_u16 max_mgmt_ie_index;
 #ifdef OTP_CHANINFO
@@ -1673,6 +1757,16 @@ struct _mlan_adapter
     t_u8 tx_power_table_a_cols;
 #endif
 #endif
+#if defined(RW610)
+#ifdef CONFIG_WIFI_TX_BUFF
+    /** Tx buffer size */
+    t_u16 tx_buffer_size;
+#endif
+#endif
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+    /* wmm buffer pool */
+    outbuf_pool_t outbuf_pool;
+#endif
 };
 
 /** Ethernet packet type for EAPOL */
@@ -1683,6 +1777,8 @@ struct _mlan_adapter
 #define MLAN_ETHER_PKT_TYPE_OFFSET (12)
 
 mlan_status wlan_cmd_get_tsf(pmlan_private pmpriv, IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action);
+
+
 
 
 mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter);
@@ -1713,6 +1809,8 @@ void wlan_clear_scan_bss(void);
 mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter);
 /** Handle received packet, has extra handling for aggregate packets */
 mlan_status wlan_handle_rx_packet(pmlan_adapter pmadapter, pmlan_buffer pmbuf);
+/** Transmit a null data packet */
+mlan_status wlan_send_null_packet(pmlan_private priv, t_u8 flags);
 
 
 /** Clean Tx Rx queues */
@@ -1731,6 +1829,8 @@ mlan_status wlan_cmd_enh_power_mode(pmlan_private pmpriv,
                                     IN t_u16 ps_bitmap,
                                     IN t_void *pdata_buf);
 
+mlan_status wlan_process_802dot11_mgmt_pkt(mlan_private *priv, t_u8 *payload, t_u32 payload_len, RxPD *rxpd);
+
 
 mlan_status wlan_cmd_remain_on_channel(IN pmlan_private pmpriv,
                                        IN HostCmd_DS_COMMAND *cmd,
@@ -1742,11 +1842,26 @@ mlan_status wlan_cmd_remain_on_channel(IN pmlan_private pmpriv,
 mlan_status wlan_cmd_tx_rate_cfg(IN pmlan_private pmpriv,
                                  IN HostCmd_DS_COMMAND *cmd,
                                  IN t_u16 cmd_action,
-                                 IN t_void *pdata_buf);
+                                 IN t_void *pdata_buf,
+                                 IN mlan_ioctl_req *pioctl_buf);
 mlan_status wlan_ret_tx_rate_cfg(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND *resp, IN void *pioctl);
 
 mlan_status wlan_rate_ioctl_cfg(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
 mlan_status wlan_ret_802_11_tx_rate_query(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND *resp, IN void *pioctl);
+
+
+/** Handler to get current operating class */
+/* For several features, such as DPP and MBO, we need the global operating class. */
+mlan_status wlan_get_global_nonglobal_oper_class(
+    mlan_private *pmpriv, t_u8 channel, t_u8 bw, t_u8 *oper_class, t_u8 *global_op_class);
+
+#define wlan_get_curr_oper_class(pmpriv, channel, bw, oper_class) \
+    wlan_get_global_nonglobal_oper_class(pmpriv, channel, bw, oper_class, MNULL)
+#define wlan_get_curr_global_oper_class(pmpriv, channel, bw, oper_class) \
+    wlan_get_global_nonglobal_oper_class(pmpriv, channel, bw, MNULL, oper_class)
+
+/** Handler to add supported operating class IE */
+int wlan_add_supported_oper_class_ie(mlan_private *pmpriv, t_u8 **pptlv_out, t_u8 curr_oper_class);
 
 /** Process received packet */
 mlan_status wlan_process_rx_packet(pmlan_adapter pmadapter, pmlan_buffer pmbuf);
@@ -1845,7 +1960,10 @@ t_u8 wlan_get_txpwr_of_chan_from_cfp(mlan_private *pmpriv, t_u8 channel);
 #ifdef SD8801
 t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter, t_u8 index, t_u8 ht_info);
 #else
-t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter, t_u8 index, t_u8 tx_rate_info, t_u8 ext_rate_info);
+t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter,
+                              t_u8 index,
+                              t_u8 tx_rate_info
+);
 #endif
 /** Get active data rates */
 t_u32 wlan_get_active_data_rates(mlan_private *pmpriv,
@@ -1943,6 +2061,9 @@ sta_node *wlan_get_station_entry(mlan_private *priv, t_u8 *mac);
 mlan_status wlan_ret_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, void *pioctl_buf);
 #endif
 
+#ifdef CONFIG_11R
+t_u8 wlan_ft_akm_is_used(mlan_private *pmpriv, t_u8 *rsn_ie);
+#endif
 
 /** find specific ie */
 #if 0
@@ -2003,10 +2124,19 @@ void wlan_free_fw_cfp_tables(mlan_adapter *pmadapter);
 // mlan_status wlan_misc_chan_reg_cfg(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
 #endif
 
+#ifdef CONFIG_WIFI_CLOCKSYNC
+mlan_status wlan_cmd_gpio_tsf_latch(
+    pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u16 cmd_action, mlan_ioctl_req *pioctl_buf, t_void *pdata_buf);
+mlan_status wlan_ret_gpio_tsf_latch(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf);
+mlan_status wlan_misc_gpio_tsf_latch_config(pmlan_adapter pmadapter, pmlan_ioctl_req pioctl_req);
+mlan_status wlan_misc_get_tsf_info(pmlan_adapter pmadapter, pmlan_ioctl_req pioctl_req);
+#endif /* CONFIG_WIFI_CLOCKSYNC */
+
 
 #define BW_20MHZ 0
 #define BW_40MHZ 1
 #define BW_80MHZ 2
+
 
 /**
  *  @brief RA based queueing

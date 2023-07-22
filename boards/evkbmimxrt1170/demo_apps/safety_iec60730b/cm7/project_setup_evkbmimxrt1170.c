@@ -19,9 +19,7 @@
  *
  *          Enables the watchdog. Also in Wait and Stop mode. Updates are allowed
  *
- * @param   timeout
- * @param   window
- * @param   prescaler
+ * @param   wd_setup_value      //watchdog setup value for timeout
  *
  * @return  None
  */
@@ -254,7 +252,9 @@ void SerialInit()
 
     LPUART_Init(APPLICATION_SERIAL_BASE, &LPUART_1_config, BOARD_DebugConsoleSrcFreq());
 
+    #if FMSTR_SERIAL_ENABLE
     FMSTR_SerialSetBaseAddress(APPLICATION_SERIAL_BASE);
+    #endif //FMSTR_SERIAL_ENABLE
 }
 
 /*!

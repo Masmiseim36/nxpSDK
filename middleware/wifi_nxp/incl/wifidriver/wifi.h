@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
  *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
@@ -12,6 +12,7 @@
 
 #ifndef __WIFI_H__
 #define __WIFI_H__
+
 
 
 
@@ -48,12 +49,25 @@ enum
     WIFI_ERROR_FW_NOT_DETECTED,
 };
 
+/** WiFi driver TX/RX data status */
+enum
+{
+    /** Data in running status */
+    WIFI_DATA_RUNNING = 0,
+    /** Data in block status */
+    WIFI_DATA_BLOCK = 1,
+};
+
 typedef enum
 {
-    MGMT_RSN_IE              = 48,
+    MGMT_RSN_IE = 48,
+#ifdef CONFIG_11K
+    MGMT_RRM_ENABLED_CAP = 70,
+#endif
     MGMT_VENDOR_SPECIFIC_221 = 221,
     MGMT_WPA_IE              = MGMT_VENDOR_SPECIFIC_221,
     MGMT_WPS_IE              = MGMT_VENDOR_SPECIFIC_221,
+    MGMT_MBO_IE              = MGMT_VENDOR_SPECIFIC_221,
 } IEEEtypes_ElementId_t;
 
 /** 802.11d country codes */
@@ -80,6 +94,12 @@ typedef PACK_START enum {
     /** China */
     COUNTRY_CN,
 } PACK_END country_code_t;
+
+typedef struct wifi_uap_client_disassoc
+{
+    int reason_code;
+    t_u8 sta_addr[MLAN_MAC_ADDR_LENGTH];
+} wifi_uap_client_disassoc_t;
 
 /**
  * Initialize Wi-Fi driver module.
@@ -123,6 +143,37 @@ int wifi_init_fcc(const uint8_t *fw_start_addr, const size_t size);
  *
  */
 void wifi_deinit(void);
+#ifdef RW610
+/**
+ * This API can be used to destroy all wifi driver tasks.
+ */
+void wifi_destroy_wifidriver_tasks(void);
+/**
+ * This API can be used to get IMU task lock.
+ */
+int wifi_imu_get_task_lock(void);
+/**
+ * This API can be used to put IMU task lock.
+ */
+int wifi_imu_put_task_lock(void);
+/**
+ * This API can be used to judge if wifi firmware is hang.
+ */
+bool wifi_fw_is_hang(void);
+/**
+ * This API can be used to send shutdown command to FW.
+ */
+int wifi_send_shutdown_cmd(void);
+#endif
+/**
+ * This API can be used to set wifi driver tx status.
+ */
+void wifi_set_tx_status(t_u8 status);
+
+/**
+ * This API can be used to set wifi driver rx status.
+ */
+void wifi_set_rx_status(t_u8 status);
 
 /**
  * Register Data callback function with Wi-Fi Driver to receive
@@ -222,11 +273,99 @@ void wifi_sta_ampdu_tx_enable(void);
  */
 void wifi_sta_ampdu_tx_disable(void);
 
+#if defined(RW610)
+/**
+ * This API can be used to set tid to enable AMPDU support on the go
+ * when station is a transmitter.
+ * @param[in] tid tid value
+ */
+void wifi_sta_ampdu_tx_enable_per_tid(t_u8 tid);
+
+/**
+ * This API can be used to check if tid to enable AMPDU is allowed
+ * when station is a transmitter.
+ * @param[in] tid tid value
+ * @return MTRUE or MFALSE
+ */
+t_u8 wifi_sta_ampdu_tx_enable_per_tid_is_allowed(t_u8 tid);
+#endif
+
 /**
  * This API can be used to enable AMPDU support on the go
  * when station is a receiver.
  */
 void wifi_sta_ampdu_rx_enable(void);
+
+#if defined(RW610)
+/**
+ * This API can be used to set tid to enable AMPDU support on the go
+ * when station is a receiver.
+ * @param[in] tid tid value
+ */
+void wifi_sta_ampdu_rx_enable_per_tid(t_u8 tid);
+
+/**
+ * This API can be used to check if tid to enable AMPDU is allowed
+ * when station is a receiver.
+ * @param[in] tid tid value
+ * @return MTRUE or MFALSE
+ */
+t_u8 wifi_sta_ampdu_rx_enable_per_tid_is_allowed(t_u8 tid);
+
+/**
+ * This API can be used to enable AMPDU support on the go
+ * when uap is a receiver.
+ */
+void wifi_uap_ampdu_rx_enable(void);
+
+/**
+ * This API can be used to set tid to enable AMPDU support on the go
+ * when uap is a receiver.
+ * @param[in] tid tid value
+ */
+void wifi_uap_ampdu_rx_enable_per_tid(t_u8 tid);
+
+/**
+ * This API can be used to check if tid to enable AMPDU is allowed
+ * when uap is a receiver.
+ * @param[in] tid tid value
+ * @return MTRUE or MFALSE
+ */
+t_u8 wifi_uap_ampdu_rx_enable_per_tid_is_allowed(t_u8 tid);
+
+/**
+ * This API can be used to disable AMPDU support on the go
+ * when uap is a receiver.
+ */
+void wifi_uap_ampdu_rx_disable(void);
+
+/**
+ * This API can be used to enable AMPDU support on the go
+ * when uap is a transmitter.
+ */
+void wifi_uap_ampdu_tx_enable(void);
+
+/**
+ * This API can be used to set tid to enable AMPDU support on the go
+ * when uap is a transmitter.
+ * @param[in] tid tid value
+ */
+void wifi_uap_ampdu_tx_enable_per_tid(t_u8 tid);
+
+/**
+ * This API can be used to check if tid to enable AMPDU is allowed
+ * when uap is a transmitter.
+ * @param[in] tid tid value
+ * @return MTRUE or MFALSE
+ */
+t_u8 wifi_uap_ampdu_tx_enable_per_tid_is_allowed(t_u8 tid);
+
+/**
+ * This API can be used to disable AMPDU support on the go
+ * when uap is a transmitter.
+ */
+void wifi_uap_ampdu_tx_disable(void);
+#endif
 
 /**
  * This API can be used to disable AMPDU support on the go
@@ -262,6 +401,7 @@ unsigned wifi_get_last_cmd_sent_ms(void);
 uint32_t wifi_get_value1(void);
 
 uint8_t *wifi_get_outbuf(uint32_t *outbuf_len);
+
 
 
 
@@ -373,8 +513,19 @@ void wifi_set_mac_addr(uint8_t *mac);
  * @param[in] mac The new MAC Address
  *
  */
-void _wifi_set_mac_addr(uint8_t *mac);
+void _wifi_set_mac_addr(uint8_t *mac, mlan_bss_type bss_type);
 
+#if defined(RW610)
+#ifdef CONFIG_WIFI_TX_BUFF
+/**
+ * Check whether the tx buffer size setting is reasonable.
+ *
+ * \param[in]   buf_size The tx buffer size
+ *
+ */
+bool wifi_calibrate_tx_buf_size(uint16_t buf_size);
+#endif
+#endif
 
 int wifi_get_wpa_ie_in_assoc(uint8_t *wpa_ie);
 
@@ -462,7 +613,8 @@ typedef enum
 {
     REG_MAC = 1,
     REG_BBP,
-    REG_RF
+    REG_RF,
+    REG_CAU
 } wifi_reg_t;
 
 int wifi_mem_access(uint16_t action, uint32_t addr, uint32_t *value);
@@ -612,6 +764,8 @@ void wifi_wake_up_card(uint32_t *resp);
 
 int wrapper_wlan_11d_enable(void);
 
+int wifi_11h_enable(void);
+
 int wrapper_wlan_cmd_11n_addba_rspgen(void *saved_event_buff);
 
 int wrapper_wlan_cmd_11n_delba_rspgen(void *saved_event_buff);
@@ -626,6 +780,8 @@ int wifi_uap_start(mlan_bss_type type,
                    char *password,
                    int channel,
                    wifi_scan_chan_list_t scan_chan_list,
+                   uint8_t pwe_derivation,
+                   uint8_t transition_disable,
                    bool mfpc,
                    bool mfpr
 );
@@ -636,13 +792,15 @@ mlan_status wrapper_wlan_sta_ampdu_enable(t_u8 tid);
 mlan_status wrapper_wlan_sta_ampdu_enable(void);
 #endif
 
-mlan_status wrapper_wlan_upa_ampdu_enable(const uint8_t *addr);
+mlan_status wrapper_wlan_uap_ampdu_enable(const uint8_t *addr);
 
 
-
-void handle_cdint(int error);
 
 int wifi_set_packet_filters(wifi_flt_cfg_t *flt_cfg);
+
+#ifdef CONFIG_WIFI_CAPA
+void wifi_uap_config_wifi_capa(uint8_t wlan_capa);
+#endif
 
 int wifi_uap_stop(enum wlan_bss_type type);
 int wifi_uap_set_bandwidth(const t_u8 bandwidth);
@@ -650,6 +808,85 @@ int wifi_uap_set_bandwidth(const t_u8 bandwidth);
 
 
 
+
+#ifdef CONFIG_11K
+#define BEACON_REPORT_BUF_SIZE 1400
+
+/* Reporting Detail values */
+enum wlan_rrm_beacon_reporting_detail
+{
+    WLAN_RRM_REPORTING_DETAIL_NONE                    = 0,
+    WLAN_RRM_REPORTING_DETAIL_AS_REQUEST              = 1,
+    WLAN_RRM_REPORTING_DETAIL_ALL_FIELDS_AND_ELEMENTS = 2,
+};
+
+typedef struct _wlan_rrm_beacon_report_data
+{
+    t_u8 token;
+    t_u8 ssid[MLAN_MAX_SSID_LENGTH];
+    t_u8 ssid_length;
+    t_u8 bssid[MLAN_MAC_ADDR_LENGTH];
+    t_u8 channel[MAX_CHANNEL_LIST];
+    t_u8 channel_num;
+    t_u8 last_ind;
+    t_u16 duration;
+    enum wlan_rrm_beacon_reporting_detail report_detail;
+    t_u8 bits_field[32];
+} wlan_rrm_beacon_report_data;
+
+typedef struct _wlan_rrm_scan_cb_param
+{
+    wlan_rrm_beacon_report_data rep_data;
+    t_u8 dialog_tok;
+    t_u8 dst_addr[MLAN_MAC_ADDR_LENGTH];
+    t_u8 protect;
+} wlan_rrm_scan_cb_param;
+
+int wifi_host_11k_cfg(int enable_11k);
+
+/**
+ * host send neighbor report request
+ * \param[in] ssid ssid for neighbor report
+ */
+int wifi_host_11k_neighbor_req(t_u8 *ssid);
+#endif
+
+#ifdef CONFIG_11V
+/**
+ * host send bss transition management query
+ */
+int wifi_host_11v_bss_trans_query(t_u8 query_reason);
+#endif
+
+#if defined(CONFIG_11K) || defined(CONFIG_11V)
+/* Neighbor List Mode values */
+enum wlan_nlist_mode
+{
+#if defined(CONFIG_11K)
+    WLAN_NLIST_11K = 1,
+#endif
+#if defined(CONFIG_11V)
+    WLAN_NLIST_11V           = 2,
+    WLAN_NLIST_11V_PREFERRED = 3,
+#endif
+};
+
+typedef struct _wlan_nlist_report_param
+{
+    enum wlan_nlist_mode nlist_mode;
+    t_u8 num_channels;
+    t_u8 channels[MAX_NUM_CHANS_IN_NBOR_RPT];
+#if defined(CONFIG_11V)
+    t_u8 btm_mode;
+    t_u8 bssid[MLAN_MAC_ADDR_LENGTH];
+    t_u8 dialog_token;
+    t_u8 dst_addr[MLAN_MAC_ADDR_LENGTH];
+    t_u8 protect;
+#endif
+} wlan_nlist_report_param;
+#endif
+
+int wifi_clear_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index, int mgmt_bitmap_index);
 
 
 int wifi_set_auto_arp(t_u32 *ipv4_addr);
@@ -661,9 +898,11 @@ int wifi_raw_packet_send(const t_u8 *packet, t_u32 length);
 
 int wifi_raw_packet_recv(t_u8 **data, t_u32 *pkt_type);
 
-#ifdef CONFIG_11AX
-int wifi_set_11ax_tx_omi(const t_u16 tx_omi);
-#endif
+
+#ifdef CONFIG_WIFI_CLOCKSYNC
+int wifi_set_clocksync_cfg(const wifi_clock_sync_gpio_tsf_t *tsf_latch, mlan_bss_type bss_type);
+int wifi_get_tsf_info(wifi_tsf_info_t *tsf_info);
+#endif /* CONFIG_WIFI_CLOCKSYNC */
 
 #ifdef CONFIG_RF_TEST_MODE
 
@@ -732,6 +971,11 @@ void wifi_register_fw_dump_cb(int (*wifi_usb_mount_cb)(),
                               int (*wifi_usb_file_close_cb)());
 #endif
 #ifdef CONFIG_WMM
+int wifi_wmm_get_pkt_prio(t_u8 *buf, t_u8 *tid, bool *is_udp_frame);
+#ifdef CONFIG_WMM_ENH
+/* handle EVENT_TX_DATA_PAUSE */
+void wifi_handle_event_data_pause(void *data);
+#else
 #define BK_MAX_BUF 4
 #define BE_MAX_BUF 4
 #define VI_MAX_BUF 4
@@ -739,12 +983,22 @@ void wifi_register_fw_dump_cb(int (*wifi_usb_mount_cb)(),
 
 bool is_wifi_wmm_queue_full(mlan_wmm_ac_e queue);
 
-int wifi_wmm_get_pkt_prio(t_u8 *buf, t_u8 *tid, bool *is_udp_frame);
-
 uint8_t *wifi_wmm_get_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);
+#if defined(RW610)
+#ifdef AMSDU_IN_AMPDU
+uint8_t *wifi_get_wmm_send_outbuf(mlan_wmm_ac_e ac, t_u8 offset);
 #endif
+#endif
+#endif /* CONFIG_WMM_ENH */
+#endif /* CONFIG_WMM */
+
+#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+void wifi_wmm_tx_stats_dump(int bss_type);
+#endif
+
 wifi_domain_param_t *get_11d_domain_params(country_code_t country, wifi_sub_band_set_t *sub_band, t_u8 nr_sb);
 
+int wifi_set_rssi_low_threshold(const uint8_t low_rssi);
 
 #ifdef CONFIG_HEAP_DEBUG
 /**
@@ -753,6 +1007,45 @@ wifi_domain_param_t *get_11d_domain_params(country_code_t country, wifi_sub_band
  * \return void.
  */
 void wifi_show_os_mem_stat();
+#endif
+
+
+/**
+ *Frame Tx - Injecting Wireless frames from Host
+ *
+ * This function is used to Inject Wireless frames from application
+ * directly.
+ *
+ * \note All injected frames will be sent on station interface. Application
+ * needs minimum of 2 KBytes stack for successful operation.
+ * Also application have to take care of allocating buffer for 802.11 Wireless
+ * frame (Header + Data) and freeing allocated buffer. Also this
+ * API may not work when Power Save is enabled on station interface.
+ *
+ * \param[in] bss_type The interface on which management frame needs to be send.
+ * \param[in] buff Buffer holding 802.11 Wireless frame (Header + Data).
+ * \param[in] len Length of the 802.11 Wireless frame.
+ *
+ * \return WM_SUCCESS on success or error code.
+ *
+ **/
+
+int wifi_inject_frame(const enum wlan_bss_type bss_type, const uint8_t *buff, const size_t len);
+
+#ifdef CONFIG_MBO
+int wifi_host_mbo_cfg(int enable_mbo);
+int wifi_mbo_preferch_cfg(t_u8 ch0, t_u8 pefer0, t_u8 ch1, t_u8 pefer1);
+int wifi_mbo_send_preferch_wnm(t_u8 *src_addr, t_u8 *target_bssid, t_u8 ch0, t_u8 pefer0, t_u8 ch1, t_u8 pefer1);
+#endif
+
+
+#if defined(CONFIG_WMM_UAPSD) || defined(CONFIG_WMM)
+int wifi_set_wmm_qos_cfg(t_u8 qos_cfg);
+void wifi_set_sleep_period(uint16_t sleep_period);
+#endif
+
+#ifdef CONFIG_WMM
+t_u8 wifi_wmm_get_packet_cnt(void);
 #endif
 
 

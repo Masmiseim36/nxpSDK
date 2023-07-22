@@ -76,7 +76,8 @@ static volatile bool g_nvWriteBackState[STORAGE_NUM_TYPES];
 /* Case1:when CONFIG_BT_SETTINGS is not enable, NvmSaveBuf and ssign are used to save data from mindtree stack
    Case2: when both CONFIG_BT_SETTINGS and STORAGE_IDLE_TASK_SYNC_ENABLE are enable, NvmSaveBuf and ssign are used to cache data from mindtree stack.
 */
-DECL_STATIC UCHAR NvmSaveBuf[CONFIG_NVM_SIZE];
+DECL_STATIC UINT32 u32NvmSaveBuf[(CONFIG_NVM_SIZE - 1U)/sizeof(UINT32) + 1U];
+DECL_STATIC UCHAR * NvmSaveBuf = (UCHAR *)&u32NvmSaveBuf[0];
 DECL_STATIC UINT16 nv_offset;
 #if (STORAGE_SKEY_SIZE != 0)
 /* Storage Signature Key array */

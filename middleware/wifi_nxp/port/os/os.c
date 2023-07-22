@@ -1218,8 +1218,10 @@ void os_rwlock_write_unlock(os_rw_lock_t *lock)
 void os_rwlock_delete(os_rw_lock_t *lock)
 {
     lock->reader_cb = NULL;
-    (void)os_semaphore_delete(&(lock->rw_lock));
-    (void)os_mutex_delete(&(lock->reader_mutex));
+    if (lock->rw_lock)
+        (void)os_semaphore_delete(&(lock->rw_lock));
+    if (lock->reader_mutex)
+        (void)os_mutex_delete(&(lock->reader_mutex));
     lock->reader_count = 0;
 }
 

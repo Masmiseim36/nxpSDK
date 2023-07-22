@@ -408,7 +408,7 @@ cleanup:
 
 static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-    int ret, image;
+    int image;
     status_t status;
     uint32_t imgstate;
 
@@ -442,7 +442,7 @@ static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, c
     status = bl_get_image_state(image, &imgstate);
     if (status != kStatus_Success)
     {
-        PRINTF("Failed to get state of image %u (ret %d)", image, status);
+        PRINTF("Failed to get state of image %u (status %d)", image, status);
         return kStatus_SHELL_Error;
     }
 
@@ -453,7 +453,7 @@ static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, c
         status = bl_update_image_state(image, kSwapType_ReadyForTest);
         if (status != kStatus_Success)
         {
-            PRINTF("FAILED to mark image state as ReadyForTest (ret=%d)\n", status);
+            PRINTF("FAILED to mark image state as ReadyForTest (status=%d)\n", status);
             return kStatus_SHELL_Error;
         }
     }
@@ -471,7 +471,7 @@ static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, c
         status = bl_update_image_state(image, kSwapType_Permanent);
         if (status != kStatus_Success)
         {
-            PRINTF("FAILED to accept image (ret=%d)\n", status);
+            PRINTF("FAILED to accept image (status=%d)\n", status);
             return kStatus_SHELL_Error;
         }
     }

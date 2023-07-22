@@ -76,6 +76,7 @@ set(CMAKE_MODULE_PATH
     ${SdkRootDirPath}/middleware/sdmmc
     ${SdkRootDirPath}/components/gpio
     ${SdkRootDirPath}/middleware/lwip
+    ${SdkRootDirPath}/middleware/edgefast_wifi
     ${SdkRootDirPath}/devices/MIMXRT1176/drivers
     ${SdkRootDirPath}/devices/MIMXRT1176
     ${SdkRootDirPath}/components/uart
@@ -115,6 +116,8 @@ include(middleware_freertos-kernel_heap_4_MIMXRT1176_cm7)
 include(middleware_lwip_MIMXRT1176_cm7)
 
 include(middleware_wifi_MIMXRT1176_cm7)
+
+include(middleware_edgefast_wifi_nxp_MIMXRT1176_cm7)
 
 include(utility_shell_MIMXRT1176_cm7)
 
@@ -171,6 +174,8 @@ include(driver_memory_MIMXRT1176_cm7)
 include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1176_cm7)
 
 include(middleware_wifi_common_files_MIMXRT1176_cm7)
+
+include(middleware_edgefast_wifi_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
 

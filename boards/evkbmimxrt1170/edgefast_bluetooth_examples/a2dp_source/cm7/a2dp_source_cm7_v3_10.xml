@@ -1076,7 +1076,7 @@
     <source path="../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller" project_relative_path="bt_ble/port/pal/mcux/bluetooth/controller" type="src">
       <files mask="controller_wifi_nxp.c"/>
     </source>
-    <source path="../../../../../middleware/edgefast_bluetooth/output/templates/config/edgefast_bluetooth_config.h" project_relative_path="edgefast/bluetooth/edgefast_bluetooth/include" type="c_include" exclude="true">
+    <source path="../../../../../middleware/edgefast_bluetooth/output/templates/config" project_relative_path="edgefast/bluetooth/edgefast_bluetooth/include" type="c_include" exclude="true">
       <files mask="edgefast_bluetooth_config.h" hidden="true"/>
     </source>
   </example>

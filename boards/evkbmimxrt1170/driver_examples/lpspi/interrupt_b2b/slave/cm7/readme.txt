@@ -10,9 +10,9 @@ This example does not use the transactional API in LPSPI driver. It's a demonstr
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
+- IAR embedded Workbench  9.32.1
 - Keil MDK  5.37
-- MCUXpresso  11.6.0
+- MCUXpresso  11.7.0
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -68,12 +68,3 @@ LPSPI transfer all data matched!
  30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F
 End of slave example! 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Known issue: 
-	project: lpspi_interrupt_b2b_transfer_slave@cm7
-	compilers and targets: mcux: debug
-	issue: cannot transfer data successfully. Issues will be fixed on next release.
-	
-	project: lpspi_interrupt_b2b_transfer_slave@cm4
-	compilers and targets: armgcc: flexspi_nor_debug
-	issue: cannot transfer data successfully. Issues will be fixed on next release.

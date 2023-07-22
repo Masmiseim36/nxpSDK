@@ -26,13 +26,13 @@
 #define PROMPT        "\r\n# "
 #define HALT_MSG      "CLI_HALT"
 #define NUM_BUFFERS   1
-#define MAX_COMMANDS  50U
+#define MAX_COMMANDS  100U
 #define IN_QUEUE_SIZE 4
 
 #define RX_WAIT   OS_WAIT_FOREVER
 #define SEND_WAIT OS_WAIT_FOREVER
 
-#define CONFIG_CLI_STACK_SIZE 4096
+#define CONFIG_CLI_STACK_SIZE (5120)
 
 static os_mutex_t cli_mutex;
 static os_queue_pool_define(queue_data, IN_QUEUE_SIZE);
@@ -61,7 +61,11 @@ static os_thread_stack_define(cli_stack, CONFIG_CLI_STACK_SIZE);
  * If len is 0 then full match will be performed else upto len bytes.
  * Returns: a pointer to the corresponding cli_command struct or NULL.
  */
+#ifdef COEX_APP_SUPPORT
+const struct cli_command *lookup_command(char *name, int len)
+#else
 static const struct cli_command *lookup_command(char *name, int len)
+#endif
 {
     unsigned int i = 0;
     unsigned int n = 0;

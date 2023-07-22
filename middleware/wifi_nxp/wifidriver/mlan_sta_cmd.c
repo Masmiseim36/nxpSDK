@@ -1163,7 +1163,6 @@ mlan_status wlan_cmd_auto_reconnect(IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_act
     return MLAN_STATUS_SUCCESS;
 }
 
-#if 0
 /**
  *  @brief This function prepares command of rx management indication
  *
@@ -1194,10 +1193,198 @@ mlan_status wlan_cmd_rx_mgmt_indication(IN pmlan_private pmpriv,
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
-#endif
 
 
 
+
+/**
+ *  @brief This function prepares command of subscribe event.
+ *
+ *  @param pmpriv    	A pointer to mlan_private structure
+ *  @param cmd          A pointer to HostCmd_DS_COMMAND structure
+ *  @param cmd_action   the action: GET or SET
+ *  @param pdata_buf    A pointer to data buffer
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_cmd_subscribe_event(IN pmlan_private pmpriv,
+                                     IN HostCmd_DS_COMMAND *cmd,
+                                     IN t_u16 cmd_action,
+                                     IN t_void *pdata_buf)
+{
+    mlan_ds_subscribe_evt *sub_evt                      = (mlan_ds_subscribe_evt *)pdata_buf;
+    HostCmd_DS_SUBSCRIBE_EVENT *evt                     = (HostCmd_DS_SUBSCRIBE_EVENT *)&cmd->params.subscribe_event;
+    t_u16 cmd_size                                      = 0;
+    t_u8 *tlv                                           = MNULL;
+    MrvlIEtypes_BeaconLowRssiThreshold_t *rssi_low      = MNULL;
+    MrvlIEtypes_BeaconLowSnrThreshold_t *snr_low        = MNULL;
+    MrvlIEtypes_FailureCount_t *fail_count              = MNULL;
+    MrvlIEtypes_BeaconsMissed_t *beacon_missed          = MNULL;
+    MrvlIEtypes_BeaconHighRssiThreshold_t *rssi_high    = MNULL;
+    MrvlIEtypes_BeaconHighSnrThreshold_t *snr_high      = MNULL;
+    MrvlIEtypes_DataLowRssiThreshold_t *data_rssi_low   = MNULL;
+    MrvlIEtypes_DataLowSnrThreshold_t *data_snr_low     = MNULL;
+    MrvlIEtypes_DataHighRssiThreshold_t *data_rssi_high = MNULL;
+    MrvlIEtypes_DataHighSnrThreshold_t *data_snr_high   = MNULL;
+    MrvlIEtypes_LinkQualityThreshold_t *link_quality    = MNULL;
+    MrvlIETypes_PreBeaconMissed_t *pre_bcn_missed       = MNULL;
+
+    ENTER();
+
+    cmd->command = wlan_cpu_to_le16(HostCmd_CMD_802_11_SUBSCRIBE_EVENT);
+    evt->action  = wlan_cpu_to_le16(cmd_action);
+    cmd_size     = sizeof(HostCmd_DS_SUBSCRIBE_EVENT) + S_DS_GEN;
+    if (cmd_action == HostCmd_ACT_GEN_GET)
+        goto done;
+    if (sub_evt->evt_action == SUBSCRIBE_EVT_ACT_BITWISE_CLR)
+    {
+        evt->action       = wlan_cpu_to_le16(SUBSCRIBE_EVT_ACT_BITWISE_CLR);
+        evt->event_bitmap = wlan_cpu_to_le16(sub_evt->evt_bitmap);
+        goto done;
+    }
+
+#define HostCmd_ACT_BITWISE_SET 0x02
+    evt->action       = wlan_cpu_to_le16(HostCmd_ACT_BITWISE_SET);
+    evt->event_bitmap = wlan_cpu_to_le16(sub_evt->evt_bitmap);
+    tlv               = (t_u8 *)cmd + cmd_size;
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_RSSI_LOW)
+    {
+        rssi_low              = (MrvlIEtypes_BeaconLowRssiThreshold_t *)tlv;
+        rssi_low->header.type = wlan_cpu_to_le16(TLV_TYPE_RSSI_LOW);
+        rssi_low->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        rssi_low->value     = sub_evt->low_rssi;
+        rssi_low->frequency = sub_evt->low_rssi_freq;
+        tlv += sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_SNR_LOW)
+    {
+        snr_low              = (MrvlIEtypes_BeaconLowSnrThreshold_t *)tlv;
+        snr_low->header.type = wlan_cpu_to_le16(TLV_TYPE_SNR_LOW);
+        snr_low->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_BeaconLowSnrThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        snr_low->value     = sub_evt->low_snr;
+        snr_low->frequency = sub_evt->low_snr_freq;
+        tlv += sizeof(MrvlIEtypes_BeaconLowSnrThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_BeaconLowSnrThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_MAX_FAIL)
+    {
+        fail_count              = (MrvlIEtypes_FailureCount_t *)tlv;
+        fail_count->header.type = wlan_cpu_to_le16(TLV_TYPE_FAILCOUNT);
+        fail_count->header.len  = wlan_cpu_to_le16(sizeof(MrvlIEtypes_FailureCount_t) - sizeof(MrvlIEtypesHeader_t));
+        fail_count->value       = sub_evt->failure_count;
+        fail_count->frequency   = sub_evt->failure_count_freq;
+        tlv += sizeof(MrvlIEtypes_FailureCount_t);
+        cmd_size += sizeof(MrvlIEtypes_FailureCount_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_BEACON_MISSED)
+    {
+        beacon_missed              = (MrvlIEtypes_BeaconsMissed_t *)tlv;
+        beacon_missed->header.type = wlan_cpu_to_le16(TLV_TYPE_BCNMISS);
+        beacon_missed->header.len = wlan_cpu_to_le16(sizeof(MrvlIEtypes_BeaconsMissed_t) - sizeof(MrvlIEtypesHeader_t));
+        beacon_missed->value      = sub_evt->beacon_miss;
+        beacon_missed->frequency  = sub_evt->beacon_miss_freq;
+        tlv += sizeof(MrvlIEtypes_BeaconsMissed_t);
+        cmd_size += sizeof(MrvlIEtypes_BeaconsMissed_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_RSSI_HIGH)
+    {
+        rssi_high              = (MrvlIEtypes_BeaconHighRssiThreshold_t *)tlv;
+        rssi_high->header.type = wlan_cpu_to_le16(TLV_TYPE_RSSI_HIGH);
+        rssi_high->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_BeaconHighRssiThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        rssi_high->value     = sub_evt->high_rssi;
+        rssi_high->frequency = sub_evt->high_rssi_freq;
+        tlv += sizeof(MrvlIEtypes_BeaconHighRssiThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_BeaconHighRssiThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_SNR_HIGH)
+    {
+        snr_high              = (MrvlIEtypes_BeaconHighSnrThreshold_t *)tlv;
+        snr_high->header.type = wlan_cpu_to_le16(TLV_TYPE_SNR_HIGH);
+        snr_high->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_BeaconHighSnrThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        snr_high->value     = sub_evt->high_snr;
+        snr_high->frequency = sub_evt->high_snr_freq;
+        tlv += sizeof(MrvlIEtypes_BeaconHighSnrThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_BeaconHighSnrThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_DATA_RSSI_LOW)
+    {
+        data_rssi_low              = (MrvlIEtypes_DataLowRssiThreshold_t *)tlv;
+        data_rssi_low->header.type = wlan_cpu_to_le16(TLV_TYPE_RSSI_LOW_DATA);
+        data_rssi_low->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_DataLowRssiThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        data_rssi_low->value     = sub_evt->data_low_rssi;
+        data_rssi_low->frequency = sub_evt->data_low_rssi_freq;
+        tlv += sizeof(MrvlIEtypes_DataLowRssiThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_DataLowRssiThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_DATA_SNR_LOW)
+    {
+        data_snr_low              = (MrvlIEtypes_DataLowSnrThreshold_t *)tlv;
+        data_snr_low->header.type = wlan_cpu_to_le16(TLV_TYPE_SNR_LOW_DATA);
+        data_snr_low->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_DataLowSnrThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        data_snr_low->value     = sub_evt->data_low_snr;
+        data_snr_low->frequency = sub_evt->data_low_snr_freq;
+        tlv += sizeof(MrvlIEtypes_DataLowSnrThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_DataLowSnrThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_DATA_RSSI_HIGH)
+    {
+        data_rssi_high              = (MrvlIEtypes_DataHighRssiThreshold_t *)tlv;
+        data_rssi_high->header.type = wlan_cpu_to_le16(TLV_TYPE_RSSI_HIGH_DATA);
+        data_rssi_high->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_DataHighRssiThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        data_rssi_high->value     = sub_evt->data_high_rssi;
+        data_rssi_high->frequency = sub_evt->data_high_rssi_freq;
+        tlv += sizeof(MrvlIEtypes_DataHighRssiThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_DataHighRssiThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_DATA_SNR_HIGH)
+    {
+        data_snr_high              = (MrvlIEtypes_DataHighSnrThreshold_t *)tlv;
+        data_snr_high->header.type = wlan_cpu_to_le16(TLV_TYPE_SNR_HIGH_DATA);
+        data_snr_high->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_DataHighSnrThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        data_snr_high->value     = sub_evt->data_high_snr;
+        data_snr_high->frequency = sub_evt->data_high_snr_freq;
+        tlv += sizeof(MrvlIEtypes_DataHighSnrThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_DataHighSnrThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_LINK_QUALITY)
+    {
+        link_quality              = (MrvlIEtypes_LinkQualityThreshold_t *)tlv;
+        link_quality->header.type = wlan_cpu_to_le16(TLV_TYPE_LINK_QUALITY);
+        link_quality->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_LinkQualityThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        link_quality->link_snr              = wlan_cpu_to_le16(sub_evt->link_snr);
+        link_quality->link_snr_freq         = wlan_cpu_to_le16(sub_evt->link_snr_freq);
+        link_quality->link_rate             = wlan_cpu_to_le16(sub_evt->link_rate);
+        link_quality->link_rate_freq        = wlan_cpu_to_le16(sub_evt->link_rate_freq);
+        link_quality->link_tx_latency       = wlan_cpu_to_le16(sub_evt->link_tx_latency);
+        link_quality->link_tx_lantency_freq = wlan_cpu_to_le16(sub_evt->link_tx_lantency_freq);
+        tlv += sizeof(MrvlIEtypes_LinkQualityThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_LinkQualityThreshold_t);
+    }
+    if (sub_evt->evt_bitmap & SUBSCRIBE_EVT_PRE_BEACON_LOST)
+    {
+        pre_bcn_missed              = (MrvlIETypes_PreBeaconMissed_t *)tlv;
+        pre_bcn_missed->header.type = wlan_cpu_to_le16(TLV_TYPE_PRE_BCNMISS);
+        pre_bcn_missed->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIETypes_PreBeaconMissed_t) - sizeof(MrvlIEtypesHeader_t));
+        pre_bcn_missed->value     = sub_evt->pre_beacon_miss;
+        pre_bcn_missed->frequency = 0;
+        tlv += sizeof(MrvlIETypes_PreBeaconMissed_t);
+        cmd_size += sizeof(MrvlIETypes_PreBeaconMissed_t);
+    }
+done:
+    cmd->size = wlan_cpu_to_le16(cmd_size);
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
 
 /**
  *  @brief This function prepares command of OTP user data.
@@ -1238,6 +1425,8 @@ static mlan_status wlan_cmd_otp_user_data(IN pmlan_private pmpriv,
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
+
+
 
 
 /********************************************************
@@ -1284,7 +1473,7 @@ mlan_status wlan_ops_sta_prepare_cmd(IN t_void *priv,
             ret = wlan_cmd_mac_multicast_adr(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
         case HostCmd_CMD_TX_RATE_CFG:
-            ret = wlan_cmd_tx_rate_cfg(pmpriv, cmd_ptr, cmd_action, pdata_buf);
+            ret = wlan_cmd_tx_rate_cfg(pmpriv, cmd_ptr, cmd_action, pdata_buf, pioctl_buf);
             break;
         case HostCmd_CMD_802_11_RF_ANTENNA:
             ret = wlan_cmd_802_11_rf_antenna(pmpriv, cmd_ptr, cmd_action, pdata_buf);
@@ -1375,20 +1564,23 @@ mlan_status wlan_ops_sta_prepare_cmd(IN t_void *priv,
         case HostCmd_CMD_802_11_REMAIN_ON_CHANNEL:
             ret = wlan_cmd_remain_on_channel(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
+        case HostCmd_CMD_802_11_SUBSCRIBE_EVENT:
+            ret = wlan_cmd_subscribe_event(pmpriv, cmd_ptr, cmd_action, pdata_buf);
+            break;
         case HostCmd_CMD_OTP_READ_USER_DATA:
             ret = wlan_cmd_otp_user_data(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
         case HostCmd_CMD_GET_TSF:
             ret = wlan_cmd_get_tsf(pmpriv, cmd_ptr, cmd_action);
             break;
+#ifdef CONFIG_WIFI_CLOCKSYNC
+        case HostCmd_GPIO_TSF_LATCH_PARAM_CONFIG:
+            ret = wlan_cmd_gpio_tsf_latch(pmpriv, cmd_ptr, cmd_action, pioctl_buf, pdata_buf);
+            break;
+#endif /* CONFIG_WIFI_CLOCKSYNC */
 #ifdef CONFIG_RF_TEST_MODE
         case HostCmd_CMD_MFG_COMMAND:
             ret = wlan_cmd_mfg(pmpriv, cmd_ptr, cmd_action, pdata_buf);
-            break;
-#endif
-#ifdef CONFIG_11AX
-        case HostCmd_CMD_11AX_CMD:
-            ret = wlan_cmd_11ax_cmd(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
 #endif
         default:

@@ -50,8 +50,7 @@ volatile static uint8_t s_microFrameCountIp3511HS = 0;
 extern void BOARD_SetCodecMuteUnmute(bool);
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 extern void CTIMER_CaptureInit(void);
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)))
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
 extern void audio_fro_trim_up(void);
 extern void audio_fro_trim_down(void);
 #endif
@@ -1915,8 +1914,7 @@ usb_status_t USB_DeviceAudioUnifiedConfigureEndpointStatus(usb_device_handle han
 }
 
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)))
+#if (defined USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS)
 void CTIMER_SOF_TOGGLE_HANDLER_FRO(uint32_t i)
 {
     uint32_t currentCtCap = 0, pllCountPeriod = 0;
@@ -2028,7 +2026,7 @@ void CTIMER_SOF_TOGGLE_HANDLER_FRO(uint32_t i)
         }
     }
 }
-#endif /* USB_DEVICE_CONFIG_LPCIP3511FS  USB_DEVICE_CONFIG_KHCI*/
+#endif /* USB_DEVICE_CONFIG_LPCIP3511FS */
 
 void CTIMER_SOF_TOGGLE_HANDLER_PLL(uint32_t i)
 {
@@ -2172,8 +2170,7 @@ void USB_DeviceAudioSpeakerStatusReset(void)
     g_deviceComposite->audioUnified.speakerDetachOrNoInput        = 0;
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
     g_deviceComposite->audioUnified.audioPllTicksPrev = 0U;
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)))
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
     g_deviceComposite->audioUnified.usbFroTicksPrev          = 0U;
     g_deviceComposite->audioUnified.usbFroTicksEma           = AUDIO_FRO_USB_SOF_INTERVAL_TICK_COUNT;
     g_deviceComposite->audioUnified.usbFroTickEmaFrac        = 0U;
@@ -2446,8 +2443,7 @@ usb_status_t USB_DeviceAudioUnifiedInit(usb_device_composite_struct_t *deviceCom
         g_deviceComposite->audioUnified.currentInterfaceAlternateSetting[i] = 0;
     }
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)))
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
     g_deviceComposite->audioUnified.froTrimIntervalCount     = 0;
     g_deviceComposite->audioUnified.usbFroTicksPrev          = 0;
     g_deviceComposite->audioUnified.usbFroTicksEma           = AUDIO_FRO_USB_SOF_INTERVAL_TICK_COUNT;

@@ -398,11 +398,16 @@ int EAP_Execute(void *arg, void *inputBuffer, int size)
 
     EAP_AudioTime += LVM_FRAME_SIZE_MS;
 
-    LVM_Status = LVM_Process(EAP_hInstance,           /* Instance handle */
+    LVM_Status = LVM_Process(EAP_hInstance, /* Instance handle */
+#ifdef MULTICHANNEL_EXAMPLE
+                             (LVM_INT32 *)data_ptr,   /* Input buffer */
+                             (LVM_INT32 **)outBuffer, /* Output buffer */
+#else
                              (LVM_INT16 *)data_ptr,   /* Input buffer */
                              (LVM_INT16 **)outBuffer, /* Output buffer */
-                             size / num_channel,      /* Number of samples to process */
-                             EAP_AudioTime);          /* Audio Time*/
+#endif
+                             size / num_channel, /* Number of samples to process */
+                             EAP_AudioTime);     /* Audio Time*/
 
 #if (ALGORITHM_XO == 1)
 
@@ -516,9 +521,11 @@ LVM_ReturnStatus_en EAP_SetFSandChannels(ext_proc_args *args)
         case 48000:
             control->controlParam->SampleRate = LVM_FS_48000;
             break;
+        case 96000:
+            control->controlParam->SampleRate = LVM_FS_96000;
+            break;
         case 64000:
         case 88200:
-        case 96000:
         case 128000:
         case 176400:
         case 192000:

@@ -151,6 +151,7 @@ static int ping_recv(int s, uint16_t seq_no, int *ttl)
     struct sockaddr_in from;
     struct ip_hdr *iphdr;
     struct icmp_echo_hdr *iecho;
+    int i = 0;
 
     while ((len = lwip_recvfrom(s, buf, sizeof(buf), 0, (struct sockaddr *)(void *)&from,
                                 (socklen_t *)(void *)&fromlen)) > 0)
@@ -171,6 +172,16 @@ static int ping_recv(int s, uint16_t seq_no, int *ttl)
                  * displayed in ping statistics */
                 *ttl = (int)(iphdr->_ttl);
                 return WM_SUCCESS;
+            }
+            else
+            {
+                /* Function raw_input may put multiple pieces of data in conn->recvmbox,
+                 * waiting to select the data we want */
+                i++;
+                if(i > 10)
+                {
+                    return -WM_FAIL;
+                }
             }
         }
     }

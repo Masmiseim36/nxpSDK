@@ -77,7 +77,7 @@ Running the demo
 		   port:        TCP port number
 
 		"echo_tcp_server port":
-		   Listens for incoming connection and sends back every received data.
+		   Listens for one incoming connection and sends back every received data.
 		 Usage:
 		   port:        TCP port number
 

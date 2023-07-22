@@ -80,6 +80,7 @@ set(CMAKE_MODULE_PATH
     ${SdkRootDirPath}/components/gpio
     ${SdkRootDirPath}/middleware/fatfs
     ${SdkRootDirPath}/middleware/maestro/mcu-audio/opus
+    ${SdkRootDirPath}/middleware/voice_seeker
     ${SdkRootDirPath}/rtos/freertos/freertos-kernel
     ${SdkRootDirPath}/middleware/maestro
     ${SdkRootDirPath}/devices/MIMXRT1062/utilities
@@ -91,6 +92,7 @@ set(CMAKE_MODULE_PATH
     ${SdkRootDirPath}/boards/evkmimxrt1060/xip
     ${SdkRootDirPath}/CMSIS/Core/Include
     ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/middleware/voice_seeker/rdsp_utilities_public
     ${SdkRootDirPath}/middleware/maestro/streamer
 )
 
@@ -139,6 +141,8 @@ include(middleware_fatfs_sd_MIMXRT1062)
 
 include(middleware_maestro_framework_opus_MIMXRT1062)
 
+include(middleware_voice_seeker_cm7_MIMXRT1062)
+
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 
 include(middleware_maestro_framework_MIMXRT1062)
@@ -185,6 +189,8 @@ include(middleware_freertos-kernel_extension_MIMXRT1062)
 
 include(driver_usdhc_MIMXRT1062)
 
+include(middleware_voice_seeker_rdsp_utilities_public_MIMXRT1062)
+
 include(middleware_maestro_framework_doc_MIMXRT1062)
 
 include(middleware_maestro_framework_streamer_MIMXRT1062)
@@ -203,6 +209,10 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/voice_seeker/ARM_CortexM7/lib/libvoiceseeker_no_aec.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
@@ -217,6 +227,10 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libflac.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/voice_seeker/ARM_CortexM7/lib/libvoiceseeker_no_aec.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)

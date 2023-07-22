@@ -132,12 +132,12 @@
       <files mask="config.cmake"/>
       <files mask="build_release.bat"/>
       <files mask="build_release.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
       <files mask="build_debug.bat"/>
       <files mask="build_debug.sh"/>
       <files mask="build_sdram_debug.bat"/>
       <files mask="build_sdram_debug.sh"/>
+      <files mask="build_sdram_release.bat"/>
+      <files mask="build_sdram_release.sh"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="littlefs_shell.c"/>

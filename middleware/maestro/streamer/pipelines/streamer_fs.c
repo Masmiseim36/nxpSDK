@@ -42,7 +42,7 @@ static StreamerFileSrcConfig file_src_cfg_lookup_table[] = {
     {"opus", DECODER_TYPE_OGG_OPUS, PARSER_TYPE_BY_PASS},
     {"ogg", DECODER_TYPE_OGG_OPUS, PARSER_TYPE_BY_PASS},
 #endif
-#ifdef CASCFG_ENABLE_AAC_CODEC
+#if defined(CASCFG_ENABLE_AAC_CODEC) && !defined(__ICCARM__)
     {"aac", DECODER_TYPE_AAC, PARSER_TYPE_BY_PASS},
 #endif
 #ifdef CASCFG_ENABLE_FLAC_CODEC
@@ -70,13 +70,11 @@ int streamer_build_fs_pipeline(int8_t pipeline_index,
 
     switch (pipeline_type)
     {
-#ifdef STREAMER_ENABLE_FILESRC
         case STREAM_PIPELINE_FILESYSTEM:
         case STREAM_PIPELINE_AUDIO_PROC:
             file_src_idx  = ELEMENT_FILE_SRC_INDEX;
             file_src_type = TYPE_ELEMENT_FILE_SRC;
             break;
-#endif
 
         case STREAM_PIPELINE_NETBUF:
             file_src_idx  = ELEMENT_NETBUF_SRC_INDEX;

@@ -23,6 +23,10 @@
 #endif
 #include "wifi-internal.h"
 
+#ifdef CONFIG_MBO
+#include "mlan_mbo.h"
+#endif
+
 /*
  * Bit 0 : Assoc Req
  * Bit 1 : Assoc Resp
@@ -46,6 +50,8 @@
 #define MGMT_MASK_PROBE_RESP 0x20
 /** Mask for beacon frame */
 #define MGMT_MASK_BEACON 0x100
+/** Mask for action frame */
+#define MGMT_MASK_ACTION 0x2000
 /** Mask to clear previous settings */
 #define MGMT_MASK_CLEAR 0x000
 
@@ -60,12 +66,6 @@ mlan_status wlan_cmd_802_11_deauthenticate(IN pmlan_private pmpriv, IN HostCmd_D
 mlan_status wlan_cmd_reg_access(IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action, IN t_void *pdata_buf);
 mlan_status wlan_cmd_mem_access(IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action, IN t_void *pdata_buf);
 mlan_status wlan_cmd_auto_reconnect(IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action, IN t_void *pdata_buf);
-#if 0
-mlan_status wlan_cmd_rx_mgmt_indication(IN pmlan_private pmpriv,
-                                        IN HostCmd_DS_COMMAND *cmd,
-                                        IN t_u16 cmd_action,
-                                        IN t_void *pdata_buf);
-#endif
 mlan_status wlan_misc_ioctl_region(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
 
 int wifi_set_mac_multicast_addr(const char *mlist, t_u32 num_of_addr);
@@ -73,6 +73,22 @@ int wifi_send_disable_supplicant(int mode);
 int wifi_send_rf_channel_cmd(wifi_rf_channel_t *rf_channel);
 int wifi_get_set_rf_tx_power(t_u16 cmd_action, wifi_tx_power_t *tx_power);
 
+#ifdef RW610
+int wifi_send_shutdown_cmd()
+{
+    HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
+
+    wifi_get_command_lock();
+
+    cmd->command = HostCmd_CMD_FUNC_SHUTDOWN;
+    cmd->size    = S_DS_GEN;
+    cmd->seq_num = 0x0;
+    cmd->result  = 0x0;
+
+    wifi_wait_for_cmdresp(NULL);
+    return WM_SUCCESS;
+}
+#endif
 int wifi_deauthenticate(uint8_t *bssid)
 {
     HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
@@ -123,6 +139,9 @@ int wifi_reg_access(wifi_reg_t reg_type, uint16_t action, uint32_t offset, uint3
             break;
         case REG_RF:
             hostcmd = HostCmd_CMD_RF_REG_ACCESS;
+            break;
+        case REG_CAU:
+            hostcmd = HostCmd_CMD_CAU_REG_ACCESS;
             break;
         default:
             wifi_e("Incorrect register type");
@@ -334,7 +353,7 @@ int wifi_set_packet_filters(wifi_flt_cfg_t *flt_cfg)
     mef_entry_header *entry_hdr;
     t_u8 *buf = (t_u8 *)cmd, *filter_buf = NULL;
     t_u32 buf_len;
-    int i;
+    int i, j;
     mef_op op;
     t_u32 dnum;
 
@@ -346,177 +365,157 @@ int wifi_set_packet_filters(wifi_flt_cfg_t *flt_cfg)
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_MEF_CFG);
     buf_len      = S_DS_GEN;
 
-    /** Fill HostCmd_DS_MEF_CFG*/
+    /** Fill HostCmd_DS_MEF_CFG */
     mef_hdr           = (HostCmd_DS_MEF_CFG *)(void *)(buf + buf_len);
     mef_hdr->criteria = wlan_cpu_to_le32(flt_cfg->criteria);
     mef_hdr->nentries = wlan_cpu_to_le16(flt_cfg->nentries);
     buf_len += sizeof(HostCmd_DS_MEF_CFG);
 
-    /** Fill entry header data*/
-    entry_hdr         = (mef_entry_header *)(void *)(buf + buf_len);
-    entry_hdr->mode   = flt_cfg->mef_entry.mode;
-    entry_hdr->action = flt_cfg->mef_entry.action;
-    buf_len += sizeof(mef_entry_header);
-
-    for (i = 0; i < flt_cfg->mef_entry.filter_num; i++)
+    for (i = 0; i < flt_cfg->nentries; i++)
     {
-        if (flt_cfg->mef_entry.filter_item[i].type == TYPE_DNUM_EQ)
+        /** Fill entry header data */
+        entry_hdr         = (mef_entry_header *)(buf + buf_len);
+        entry_hdr->mode   = flt_cfg->mef_entry[i].mode;
+        entry_hdr->action = flt_cfg->mef_entry[i].action;
+        buf_len += sizeof(mef_entry_header);
+        for (j = 0; j < flt_cfg->mef_entry[i].filter_num; j++)
         {
-            /* Format of decimal num:
-             * |   5 bytes  |    5 bytes    |    5 bytes    |        1 byte         |
-             * |   pattern  |     offset    |  num of bytes |  type (TYPE_DNUM_EQ)  |
-             */
+            if (flt_cfg->mef_entry[i].filter_item[j].type == TYPE_DNUM_EQ)
+            {
+                /* Format of decimal num:
+                 * |   5 bytes  |    5 bytes    |    5 bytes    |        1 byte         |
+                 * |   pattern  |     offset    |  num of bytes |  type (TYPE_DNUM_EQ)  |
+                 */
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            filter_buf = (t_u8 *)(buf + buf_len);
+                /* push pattern */
+                op.operand_type = OPERAND_DNUM;
+                dnum            = flt_cfg->mef_entry[i].filter_item[j].pattern;
+                (void)memcpy(filter_buf, &dnum, sizeof(dnum));
+                (void)memcpy(filter_buf + sizeof(dnum), &(op.operand_type), 1);
+                buf_len += sizeof(dnum) + 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            /* push pattern */
-            op.operand_type = OPERAND_DNUM;
-            dnum            = flt_cfg->mef_entry.filter_item[i].pattern;
-            (void)memcpy((void *)filter_buf, (const void *)&dnum, sizeof(dnum));
-            (void)memcpy((void *)(filter_buf + sizeof(dnum)), (const void *)&(op.operand_type), 1);
-            buf_len += sizeof(dnum) + 1;
+                /* push offset */
+                op.operand_type = OPERAND_DNUM;
+                dnum            = flt_cfg->mef_entry[i].filter_item[j].offset;
+                (void)memcpy(filter_buf, &dnum, sizeof(dnum));
+                (void)memcpy(filter_buf + sizeof(dnum), &(op.operand_type), 1);
+                buf_len += sizeof(dnum) + 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            filter_buf = (t_u8 *)(buf + buf_len);
+                /* push num of bytes */
+                op.operand_type = OPERAND_DNUM;
+                dnum            = flt_cfg->mef_entry[i].filter_item[j].num_bytes;
+                (void)memcpy(filter_buf, &dnum, sizeof(dnum));
+                (void)memcpy(filter_buf + sizeof(dnum), &(op.operand_type), 1);
+                buf_len += sizeof(dnum) + 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            /* push offset */
-            op.operand_type = OPERAND_DNUM;
-            dnum            = flt_cfg->mef_entry.filter_item[i].offset;
-            (void)memcpy((void *)filter_buf, (const void *)&dnum, sizeof(dnum));
-            (void)memcpy((void *)(filter_buf + sizeof(dnum)), (const void *)&(op.operand_type), 1);
-            buf_len += sizeof(dnum) + 1;
+                /* push type */
+                op.operand_type = TYPE_DNUM_EQ;
+                (void)memcpy(filter_buf, &(op.operand_type), 1);
+                buf_len += 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
+            }
+            else if (flt_cfg->mef_entry[i].filter_item[j].type == TYPE_BYTE_EQ)
+            {
+                /* Format of byte seq:
+                 * |   5 bytes  |      val      |    5 bytes    |        1 byte         |
+                 * |   repeat   |   bytes seq   |    offset     |  type (TYPE_BYTE_EQ)  |
+                 */
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            filter_buf = (t_u8 *)(buf + buf_len);
+                /* push repeat */
+                op.operand_type = OPERAND_DNUM;
+                dnum            = flt_cfg->mef_entry[i].filter_item[j].repeat;
+                (void)memcpy(filter_buf, &dnum, sizeof(dnum));
+                (void)memcpy(filter_buf + sizeof(dnum), &(op.operand_type), 1);
+                buf_len += sizeof(dnum) + 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            /* push num of bytes */
-            op.operand_type = OPERAND_DNUM;
-            dnum            = flt_cfg->mef_entry.filter_item[i].num_bytes;
-            (void)memcpy((void *)filter_buf, (const void *)&dnum, sizeof(dnum));
-            (void)memcpy((void *)(filter_buf + sizeof(dnum)), (const void *)&(op.operand_type), 1);
-            buf_len += sizeof(dnum) + 1;
+                /* push bytes seq */
+                op.operand_type = OPERAND_BYTE_SEQ;
+                (void)memcpy(filter_buf, flt_cfg->mef_entry[i].filter_item[j].byte_seq,
+                             flt_cfg->mef_entry[i].filter_item[j].num_byte_seq);
+                (void)memcpy(filter_buf + flt_cfg->mef_entry[i].filter_item[j].num_byte_seq,
+                             &(flt_cfg->mef_entry[i].filter_item[j].num_byte_seq), 1);
+                (void)memcpy(filter_buf + flt_cfg->mef_entry[i].filter_item[j].num_byte_seq + 1, &(op.operand_type), 1);
+                buf_len += flt_cfg->mef_entry[i].filter_item[j].num_byte_seq + 2;
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            filter_buf = (t_u8 *)(buf + buf_len);
+                /* push offset */
+                op.operand_type = OPERAND_DNUM;
+                dnum            = flt_cfg->mef_entry[i].filter_item[j].offset;
+                (void)memcpy(filter_buf, &dnum, sizeof(dnum));
+                (void)memcpy(filter_buf + sizeof(dnum), &(op.operand_type), 1);
+                buf_len += sizeof(dnum) + 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            /* push type */
-            op.operand_type = TYPE_DNUM_EQ;
-            (void)memcpy((void *)filter_buf, (const void *)&(op.operand_type), 1);
-            buf_len += 1;
+                /* push type */
+                op.operand_type = TYPE_BYTE_EQ;
+                (void)memcpy(filter_buf, &(op.operand_type), 1);
+                buf_len += 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
+            }
+            else if (flt_cfg->mef_entry[i].filter_item[j].type == TYPE_BIT_EQ)
+            {
+                /* Format of bit seq:
+                 * |   val      |    5 bytes    |      val      |        1 byte         |
+                 * | bytes seq  |    offset     |    mask seq   |  type (TYPE_BIT_EQ)   |
+                 */
+                filter_buf = (t_u8 *)(buf + buf_len);
 
-            filter_buf = (t_u8 *)(buf + buf_len);
+                /* push bytes seq */
+                op.operand_type = OPERAND_BYTE_SEQ;
+                (void)memcpy(filter_buf, flt_cfg->mef_entry[i].filter_item[j].byte_seq,
+                             flt_cfg->mef_entry[i].filter_item[j].num_byte_seq);
+                (void)memcpy(filter_buf + flt_cfg->mef_entry[i].filter_item[j].num_byte_seq,
+                             &(flt_cfg->mef_entry[i].filter_item[j].num_byte_seq), 1);
+                (void)memcpy(filter_buf + flt_cfg->mef_entry[i].filter_item[j].num_byte_seq + 1, &(op.operand_type), 1);
+                buf_len += flt_cfg->mef_entry[i].filter_item[j].num_byte_seq + 2;
+                filter_buf = (t_u8 *)(buf + buf_len);
+
+                /* push offset */
+                op.operand_type = OPERAND_DNUM;
+                dnum            = flt_cfg->mef_entry[i].filter_item[j].offset;
+                (void)memcpy(filter_buf, &dnum, sizeof(dnum));
+                (void)memcpy(filter_buf + sizeof(dnum), &(op.operand_type), 1);
+                buf_len += sizeof(dnum) + 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
+
+                /* push mask seq */
+                op.operand_type = OPERAND_BYTE_SEQ;
+                (void)memcpy(filter_buf, flt_cfg->mef_entry[i].filter_item[j].mask_seq,
+                             flt_cfg->mef_entry[i].filter_item[j].num_mask_seq);
+                (void)memcpy(filter_buf + flt_cfg->mef_entry[i].filter_item[j].num_mask_seq,
+                             &(flt_cfg->mef_entry[i].filter_item[j].num_mask_seq), 1);
+                (void)memcpy(filter_buf + flt_cfg->mef_entry[i].filter_item[j].num_mask_seq + 1, &(op.operand_type), 1);
+                buf_len += flt_cfg->mef_entry[i].filter_item[j].num_mask_seq + 2;
+                filter_buf = (t_u8 *)(buf + buf_len);
+
+                /* push type */
+                op.operand_type = TYPE_BIT_EQ;
+                (void)memcpy(filter_buf, &(op.operand_type), 1);
+                buf_len += 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
+            }
+            else
+                goto done;
+            if (j != 0)
+            {
+                filter_buf      = (t_u8 *)(buf + buf_len);
+                op.operand_type = flt_cfg->mef_entry[i].rpn[j];
+                (void)memcpy(filter_buf, &(op.operand_type), 1);
+                buf_len += 1;
+                filter_buf = (t_u8 *)(buf + buf_len);
+            }
         }
-        else if (flt_cfg->mef_entry.filter_item[i].type == TYPE_BYTE_EQ)
-        {
-            /* Format of byte seq:
-             * |   5 bytes  |      val      |    5 bytes    |        1 byte         |
-             * |   repeat   |   bytes seq   |    offset     |  type (TYPE_BYTE_EQ)  |
-             */
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push repeat */
-            op.operand_type = OPERAND_DNUM;
-            dnum            = flt_cfg->mef_entry.filter_item[i].repeat;
-            (void)memcpy((void *)filter_buf, (const void *)&dnum, sizeof(dnum));
-            (void)memcpy((void *)(filter_buf + sizeof(dnum)), (const void *)&(op.operand_type), 1);
-            buf_len += sizeof(dnum) + 1;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push bytes seq */
-            op.operand_type = OPERAND_BYTE_SEQ;
-            (void)memcpy((void *)filter_buf, (const void *)flt_cfg->mef_entry.filter_item[i].byte_seq,
-                         flt_cfg->mef_entry.filter_item[i].num_byte_seq);
-            (void)memcpy((void *)(filter_buf + flt_cfg->mef_entry.filter_item[i].num_byte_seq),
-                         (const void *)&(flt_cfg->mef_entry.filter_item[i].num_byte_seq), 1);
-            (void)memcpy((void *)(filter_buf + flt_cfg->mef_entry.filter_item[i].num_byte_seq + 1),
-                         (const void *)&(op.operand_type), 1);
-            buf_len += flt_cfg->mef_entry.filter_item[i].num_byte_seq + 2;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push offset */
-            op.operand_type = OPERAND_DNUM;
-            dnum            = flt_cfg->mef_entry.filter_item[i].offset;
-            (void)memcpy((void *)filter_buf, (const void *)&dnum, sizeof(dnum));
-            (void)memcpy((void *)(filter_buf + sizeof(dnum)), (const void *)&(op.operand_type), 1);
-            buf_len += sizeof(dnum) + 1;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push type */
-            op.operand_type = TYPE_BYTE_EQ;
-            (void)memcpy((void *)filter_buf, (const void *)&(op.operand_type), 1);
-            buf_len += 1;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-        }
-        else if (flt_cfg->mef_entry.filter_item[i].type == TYPE_BIT_EQ)
-        {
-            /* Format of bit seq:
-             * |   val      |    5 bytes    |      val      |        1 byte         |
-             * | bytes seq  |    offset     |    mask seq   |  type (TYPE_BIT_EQ)   |
-             */
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push bytes seq */
-            op.operand_type = OPERAND_BYTE_SEQ;
-            (void)memcpy((void *)filter_buf, (const void *)flt_cfg->mef_entry.filter_item[i].byte_seq,
-                         flt_cfg->mef_entry.filter_item[i].num_byte_seq);
-            (void)memcpy((void *)(filter_buf + flt_cfg->mef_entry.filter_item[i].num_byte_seq),
-                         (const void *)&(flt_cfg->mef_entry.filter_item[i].num_byte_seq), 1);
-            (void)memcpy((void *)(filter_buf + flt_cfg->mef_entry.filter_item[i].num_byte_seq + 1),
-                         (const void *)&(op.operand_type), 1);
-            buf_len += flt_cfg->mef_entry.filter_item[i].num_byte_seq + 2;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push offset */
-            op.operand_type = OPERAND_DNUM;
-            dnum            = flt_cfg->mef_entry.filter_item[i].offset;
-            (void)memcpy((void *)filter_buf, (const void *)&dnum, sizeof(dnum));
-            (void)memcpy((void *)(filter_buf + sizeof(dnum)), (const void *)&(op.operand_type), 1);
-            buf_len += sizeof(dnum) + 1;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push mask seq */
-            op.operand_type = OPERAND_BYTE_SEQ;
-            (void)memcpy((void *)filter_buf, (const void *)flt_cfg->mef_entry.filter_item[i].mask_seq,
-                         flt_cfg->mef_entry.filter_item[i].num_mask_seq);
-            (void)memcpy((void *)(filter_buf + flt_cfg->mef_entry.filter_item[i].num_mask_seq),
-                         (const void *)&(flt_cfg->mef_entry.filter_item[i].num_mask_seq), 1);
-            (void)memcpy((void *)(filter_buf + flt_cfg->mef_entry.filter_item[i].num_mask_seq + 1),
-                         (const void *)&(op.operand_type), 1);
-            buf_len += flt_cfg->mef_entry.filter_item[i].num_mask_seq + 2;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            /* push type */
-            op.operand_type = TYPE_BIT_EQ;
-            (void)memcpy((void *)filter_buf, (const void *)&(op.operand_type), 1);
-            buf_len += 1;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-        }
-        else
-        {
-            goto done;
-        }
-
-        if (i != 0)
-        {
-            filter_buf = (t_u8 *)(buf + buf_len);
-
-            op.operand_type = flt_cfg->mef_entry.rpn[i];
-            (void)memcpy((void *)filter_buf, (const void *)&(op.operand_type), 1);
-            buf_len += 1;
-
-            filter_buf = (t_u8 *)(buf + buf_len);
-        }
+        if (filter_buf != NULL)
+            entry_hdr->len = (t_u32)filter_buf - (t_u32)entry_hdr - sizeof(mef_entry_header);
     }
 
-    entry_hdr->len = buf_len - sizeof(HostCmd_DS_MEF_CFG) - S_DS_GEN - sizeof(mef_entry_header);
-    cmd->size      = wlan_cpu_to_le16(buf_len);
+    cmd->size = wlan_cpu_to_le16(buf_len);
 done:
     (void)wifi_wait_for_cmdresp(NULL);
 
@@ -1113,6 +1112,9 @@ int wifi_send_scan_cmd(t_u8 bss_mode,
                        const t_u8 num_channels,
                        const wifi_scan_channel_list_t *chan_list,
                        const t_u8 num_probes,
+#ifdef CONFIG_EXT_SCAN_SUPPORT
+                       const t_u16 scan_chan_gap,
+#endif
                        const bool keep_previous_scan,
                        const bool active_scan_triggered)
 {
@@ -1753,8 +1755,16 @@ static wifi_sub_band_set_t subband_CS_2_4GHz[] = {{1, 9, 20}, {10, 2, 10}};
 
 #ifdef CONFIG_5GHz_SUPPORT
 
+#if defined(IW61x)
+/* Region: US(US) 5 GHz */
+wifi_sub_band_set_t subband_US_5_GHz[] = {{36, 8, 20}, {100, 11, 20}, {149, 8, 20}};
+
+/* Region: France(FR) or Singapore(SG) 5 GHz */
+wifi_sub_band_set_t subband_SG_FR_5_GHz[] = {{36, 8, 20}, {100, 11, 20}, {149, 5, 20}};
+#else
 /* Region: US(US) or France(FR) or Singapore(SG) 5 GHz */
 static wifi_sub_band_set_t subband_US_SG_FR_5_GHz[] = {{36, 8, 20}, {100, 11, 20}, {149, 5, 20}};
+#endif
 
 /* Region: Canada(CA) 5 GHz */
 static wifi_sub_band_set_t subband_CA_5_GHz[] = {{36, 8, 20}, {100, 5, 20}, {132, 3, 20}, {149, 5, 20}};
@@ -1809,6 +1819,13 @@ int wifi_set_region_code(t_u32 region_code)
     mlan_ds_misc_cfg misc = {
         .param.region_code = region_code,
     };
+
+    if ((misc.param.region_code == 0x41) || (misc.param.region_code == 0xFE))
+    {
+        (void)PRINTF("Region code 0XFF is used for Japan to support channels of both 2.4GHz band and 5GHz band.\r\n");
+        (void)PRINTF("Region code 0X40 is used for Japan to support channels of 5GHz band.\r\n");
+        return -WM_FAIL;
+    }
 
     mlan_ioctl_req req = {
         .bss_index = 0,
@@ -1950,7 +1967,7 @@ static wifi_sub_band_set_t *get_sub_band_from_region_code(int region_code, t_u8 
             ret_band = subband_EU_AU_KR_CN_2_4GHz;
             break;
         case 0xFF:
-            return subband_JP_2_4GHz;
+            ret_band = subband_JP_2_4GHz;
             break;
         case 0xAA:
             ret_band = subband_WWSM_2_4GHz;
@@ -1976,10 +1993,19 @@ wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8
             ret_band = subband_WWSM_5_GHz;
             break;
         case COUNTRY_US:
+#if defined(IW61x)
+            *nr_sb   = 3;
+            ret_band = subband_US_5_GHz;
+            break;
+#endif
         case COUNTRY_SG:
         case COUNTRY_FR:
-            *nr_sb   = 3;
+            *nr_sb = 3;
+#if defined(IW61x)
+            ret_band = subband_SG_FR_5_GHz;
+#else
             ret_band = subband_US_SG_FR_5_GHz;
+#endif
             break;
         case COUNTRY_CA:
             *nr_sb   = 4;
@@ -1999,9 +2025,13 @@ wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8
             ret_band = subband_CN_5_GHz;
             break;
         default:
-            *nr_sb   = 3;
+            *nr_sb = 3;
+#if defined(IW61x)
+            ret_band = subband_US_5_GHz;
+#else
             ret_band = subband_US_SG_FR_5_GHz;
             break;
+#endif
     }
     return ret_band;
 }
@@ -2014,9 +2044,17 @@ static wifi_sub_band_set_t *get_sub_band_from_region_code_5ghz(int region_code, 
     switch (region_code)
     {
         case 0x10:
+#if defined(IW61x)
+            *nr_sb = 3;
+            return subband_US_5_GHz;
+#endif
         case 0x32:
-            *nr_sb   = 3;
+            *nr_sb = 3;
+#if defined(IW61x)
+            ret_band = subband_SG_FR_5_GHz;
+#else
             ret_band = subband_US_SG_FR_5_GHz;
+#endif
             break;
         case 0x20:
             *nr_sb   = 4;
@@ -2038,8 +2076,12 @@ static wifi_sub_band_set_t *get_sub_band_from_region_code_5ghz(int region_code, 
             ret_band = subband_WWSM_5_GHz;
             break;
         default:
-            *nr_sb   = 3;
+            *nr_sb = 3;
+#if defined(IW61x)
+            ret_band = subband_US_5_GHz;
+#else
             ret_band = subband_US_SG_FR_5_GHz;
+#endif
             break;
     }
     return ret_band;
@@ -2182,7 +2224,7 @@ int wifi_set_country(country_code_t country)
     if (wlan_enable_11d() != WM_SUCCESS)
     {
         wifi_e("unable to enabled 11d feature\r\n");
-        return WM_FAIL;
+        return -WM_FAIL;
     }
 
     wifi_11d_country = country;
@@ -2214,36 +2256,27 @@ bool wifi_is_ecsa_enabled(void)
     return mlan_adap->ecsa_enable;
 }
 
-static int get_free_mgmt_ie_index(void)
+static int get_free_mgmt_ie_index(unsigned int *mgmt_ie_index)
 {
-    if (!(mgmt_ie_index_bitmap & MBIT(0)))
+    unsigned int idx;
+
+    for (idx = 0; idx < 32; idx++)
     {
-        return 0;
+        if ((mgmt_ie_index_bitmap & MBIT((t_u32)idx)) == 0U)
+        {
+            *mgmt_ie_index = idx;
+            return WM_SUCCESS;
+        }
     }
-    else if (!(mgmt_ie_index_bitmap & MBIT(1)))
-    {
-        return 1;
-    }
-    else if (!(mgmt_ie_index_bitmap & MBIT(2)))
-    {
-        return 2;
-    }
-    else if (!(mgmt_ie_index_bitmap & MBIT(3)))
-    {
-        return 3;
-    }
-    else
-    {
-        return -1;
-    }
+    return -WM_FAIL;
 }
 
-static void set_ie_index(int index)
+static void set_ie_index(unsigned int index)
 {
     mgmt_ie_index_bitmap |= (MBIT(index));
 }
 
-static void clear_ie_index(int index)
+static void clear_ie_index(unsigned int index)
 {
     mgmt_ie_index_bitmap &= ~(MBIT(index));
 }
@@ -2292,17 +2325,27 @@ static int wifi_config_ext_coex(int action,
 }
 #endif
 
-static int wifi_config_mgmt_ie(
-    mlan_bss_type bss_type, t_u16 action, IEEEtypes_ElementId_t index, void *buffer, unsigned int *ie_len)
+static bool ie_index_is_set(unsigned int index)
+{
+    return (mgmt_ie_index_bitmap & (MBIT(index))) ? MTRUE : MFALSE;
+}
+
+static int wifi_config_mgmt_ie(mlan_bss_type bss_type,
+                               t_u16 action,
+                               IEEEtypes_ElementId_t index,
+                               void *buffer,
+                               unsigned int *ie_len,
+                               int mgmt_bitmap_index)
 {
     uint8_t *buf, *pos;
     IEEEtypes_Header_t *ptlv_header = NULL;
     uint16_t buf_len                = 0;
     tlvbuf_custom_ie *tlv           = NULL;
     custom_ie *ie_ptr               = NULL;
-    int mgmt_ie_index               = -1;
+    unsigned int mgmt_ie_index      = -1;
     int total_len =
         sizeof(tlvbuf_custom_ie) + 2U * (sizeof(custom_ie) - MAX_IE_SIZE) + sizeof(IEEEtypes_Header_t) + *ie_len;
+    int ret = WM_SUCCESS;
 
     buf = (uint8_t *)os_mem_alloc(total_len);
     if (buf == MNULL)
@@ -2330,31 +2373,25 @@ static int wifi_config_mgmt_ie(
                MGMT_WPS_IE = MGMT_VENDOR_SPECIFIC_221
                */
 
-            if (index != MGMT_RSN_IE && index != MGMT_VENDOR_SPECIFIC_221)
+            if (!ie_index_is_set(mgmt_bitmap_index))
             {
                 os_mem_free(buf);
                 return -WM_FAIL;
             }
 
-            /* Clear WPS IE */
             ie_ptr->mgmt_subtype_mask = MGMT_MASK_CLEAR;
             ie_ptr->ie_length         = 0;
-            ie_ptr->ie_index          = index;
+            ie_ptr->ie_index          = (t_u16)mgmt_bitmap_index;
 
-            ie_ptr                    = (custom_ie *)(void *)(((uint8_t *)ie_ptr) + sizeof(custom_ie) - MAX_IE_SIZE);
-            ie_ptr->mgmt_subtype_mask = MGMT_MASK_CLEAR;
-            ie_ptr->ie_length         = 0;
-            ie_ptr->ie_index          = (t_u16)index + 1U;
-            tlv->length               = 2U * (sizeof(custom_ie) - MAX_IE_SIZE);
+            tlv->length = sizeof(custom_ie) - MAX_IE_SIZE;
             buf_len += tlv->length;
-            clear_ie_index(index);
+            clear_ie_index(mgmt_bitmap_index);
         }
         else
         {
-            /* Set WPS IE */
-            mgmt_ie_index = get_free_mgmt_ie_index();
+            ret = get_free_mgmt_ie_index(&mgmt_ie_index);
 
-            if (mgmt_ie_index < 0)
+            if (WM_SUCCESS != ret)
             {
                 os_mem_free(buf);
                 return -WM_FAIL;
@@ -2433,20 +2470,20 @@ static int wifi_config_mgmt_ie(
 
 int wifi_get_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index, void *buf, unsigned int *buf_len)
 {
-    return wifi_config_mgmt_ie(bss_type, HostCmd_ACT_GEN_GET, index, buf, buf_len);
+    return wifi_config_mgmt_ie(bss_type, HostCmd_ACT_GEN_GET, index, buf, buf_len, 0);
 }
 
 int wifi_set_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t id, void *buf, unsigned int buf_len)
 {
     unsigned int data_len = buf_len;
 
-    return wifi_config_mgmt_ie(bss_type, HostCmd_ACT_GEN_SET, id, buf, &data_len);
+    return wifi_config_mgmt_ie(bss_type, HostCmd_ACT_GEN_SET, id, buf, &data_len, 0);
 }
 
-int wifi_clear_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index)
+int wifi_clear_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index, int mgmt_bitmap_index)
 {
     unsigned int data_len = 0;
-    return wifi_config_mgmt_ie(bss_type, HostCmd_ACT_GEN_SET, index, NULL, &data_len);
+    return wifi_config_mgmt_ie(bss_type, HostCmd_ACT_GEN_SET, index, NULL, &data_len, mgmt_bitmap_index);
 }
 
 #ifdef SD8801
@@ -2653,6 +2690,158 @@ void wifi_set_curr_bss_channel(uint8_t channel)
 }
 
 
+#ifdef CONFIG_11K
+int wifi_host_11k_cfg(int enable_11k)
+{
+    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
+    IEEEtypes_RrmElement_t rrmCap;
+    int ret = (int)MLAN_STATUS_SUCCESS;
+
+    if (enable_11k == (int)pmpriv->enable_host_11k)
+    {
+        return (int)MLAN_STATUS_SUCCESS;
+    }
+
+    if (enable_11k == 1)
+    {
+        rrmCap.element_id = (t_u8)MGMT_RRM_ENABLED_CAP;
+        rrmCap.len        = (t_u8)sizeof(IEEEtypes_RrmEnabledCapabilities_t);
+        wlan_dot11k_formatRrmCapabilities(&(rrmCap.RrmEnabledCapabilities), 100);
+        pmpriv->rrm_mgmt_bitmap_index = wifi_set_mgmt_ie(MLAN_BSS_TYPE_STA, MGMT_RRM_ENABLED_CAP,
+                                                         (void *)&(rrmCap.RrmEnabledCapabilities), rrmCap.len);
+    }
+    else
+    {
+        ret = wifi_clear_mgmt_ie(MLAN_BSS_TYPE_STA, MGMT_RRM_ENABLED_CAP, pmpriv->rrm_mgmt_bitmap_index);
+    }
+    pmpriv->enable_host_11k = (t_u8)enable_11k;
+
+    return ret;
+}
+
+int wifi_host_11k_neighbor_req(t_u8 *ssid)
+{
+    if (wlan_strlen((t_s8 *)ssid) > IEEEtypes_SSID_SIZE)
+    {
+        return -WM_FAIL;
+    }
+    else
+    {
+        return wlan_send_mgmt_rm_neighbor_request(mlan_adap->priv[0], ssid, (t_u8)wlan_strlen((t_s8 *)ssid));
+    }
+}
+#endif
+
+#ifdef CONFIG_11V
+int wifi_host_11v_bss_trans_query(t_u8 query_reason)
+{
+    return wlan_send_mgmt_bss_trans_query(mlan_adap->priv[0], query_reason);
+}
+#endif
+
+#ifdef CONFIG_MBO
+int wifi_host_mbo_cfg(int enable_mbo)
+{
+    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
+    IEEEtypes_VendorSpecific_t mboie;
+    int ret = (int)MLAN_STATUS_SUCCESS;
+    t_u8 *pos;
+    int meas_vend_hdr_len = 0;
+
+    if ((t_u8)enable_mbo == pmpriv->enable_mbo)
+    {
+        /* Do nothing */
+        return (int)MLAN_STATUS_SUCCESS;
+    }
+
+    if (enable_mbo != 0)
+    {
+        mboie.vend_hdr.element_id = (IEEEtypes_ElementId_e)MGMT_MBO_IE;
+        pos                       = mboie.vend_hdr.oui;
+        pos                       = wlan_add_mbo_oui(pos);
+        pos                       = wlan_add_mbo_oui_type(pos);
+        pos                       = wlan_add_mbo_cellular_cap(pos);
+        meas_vend_hdr_len         = pos - mboie.vend_hdr.oui;
+        mboie.vend_hdr.len        = (t_u8)meas_vend_hdr_len;
+        pmpriv->mbo_mgmt_bitmap_index =
+            wifi_set_mgmt_ie(MLAN_BSS_TYPE_STA, MGMT_MBO_IE, (void *)&(mboie.vend_hdr.oui), mboie.vend_hdr.len);
+    }
+    else
+    {
+        ret = wifi_clear_mgmt_ie(MLAN_BSS_TYPE_STA, MGMT_MBO_IE, pmpriv->mbo_mgmt_bitmap_index);
+    }
+    pmpriv->enable_mbo = (t_u8)enable_mbo;
+
+    return ret;
+}
+
+int wifi_mbo_preferch_cfg(t_u8 ch0, t_u8 pefer0, t_u8 ch1, t_u8 pefer1)
+{
+    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
+    IEEEtypes_VendorSpecific_t mboie;
+    int ret = (int)MLAN_STATUS_SUCCESS;
+    t_u8 *pos;
+    int meas_vend_hdr_len = 0;
+
+    if (0U == pmpriv->enable_mbo)
+    {
+        wifi_e("Please enable MBO first!");
+        return (int)MLAN_STATUS_FAILURE;
+    }
+
+    if (pmpriv->enable_mbo != 0U)
+    {
+        /* remove MBO OCE IE in case there is already a MBO OCE IE. */
+        ret                       = wifi_clear_mgmt_ie(MLAN_BSS_TYPE_STA, MGMT_MBO_IE, pmpriv->mbo_mgmt_bitmap_index);
+        mboie.vend_hdr.element_id = (IEEEtypes_ElementId_e)MGMT_MBO_IE;
+        pos                       = mboie.vend_hdr.oui;
+        pos                       = wlan_add_mbo_oui(pos);
+        pos                       = wlan_add_mbo_oui_type(pos);
+        pos                       = wlan_add_mbo_cellular_cap(pos);
+        pos                       = wlan_add_mbo_prefer_ch(pos, ch0, pefer0, ch1, pefer1);
+        meas_vend_hdr_len         = pos - mboie.vend_hdr.oui;
+        mboie.vend_hdr.len        = (t_u8)meas_vend_hdr_len;
+        pmpriv->mbo_mgmt_bitmap_index =
+            wifi_set_mgmt_ie(MLAN_BSS_TYPE_STA, MGMT_MBO_IE, (void *)&(mboie.vend_hdr.oui), mboie.vend_hdr.len);
+    }
+
+    return ret;
+}
+
+int wifi_mbo_send_preferch_wnm(t_u8 *src_addr, t_u8 *target_bssid, t_u8 ch0, t_u8 pefer0, t_u8 ch1, t_u8 pefer1)
+{
+    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
+    IEEEtypes_VendorSpecific_t mboie;
+    int ret = (int)MLAN_STATUS_SUCCESS;
+    t_u8 *pos;
+    int meas_vend_hdr_len = 0;
+
+    if (0U == pmpriv->enable_mbo)
+    {
+        wifi_e("Please enable MBO first!\r\n");
+        return (int)MLAN_STATUS_FAILURE;
+    }
+
+    if (pmpriv->enable_mbo != 0U)
+    {
+        mboie.vend_hdr.element_id = (IEEEtypes_ElementId_e)MGMT_MBO_IE;
+        pos                       = mboie.vend_hdr.oui;
+        pos                       = wlan_add_mbo_oui(pos);
+        pos                       = wlan_add_mbo_oui_type(pos);
+        pos                       = wlan_add_mbo_cellular_cap(pos);
+        pos                       = wlan_add_mbo_prefer_ch(pos, ch0, pefer0, ch1, pefer1);
+        meas_vend_hdr_len         = pos - mboie.vend_hdr.oui;
+        mboie.vend_hdr.len        = (t_u8)meas_vend_hdr_len;
+        /*Wi-Fi CERTIFIED Agile Multiband. Test Plan v1.4 section 2.5.1 Test bed AP requirements. For 2.4/5 GHz:?E MFPC
+         * (bit 7) set to 1?E MFPR (bit 6) set to 0*/
+        wlan_send_mgmt_wnm_notification(src_addr, target_bssid, target_bssid, (t_u8 *)&mboie,
+                                        mboie.vend_hdr.len + (t_u8)2U, false);
+    }
+
+    return ret;
+}
+#endif
+
 #ifdef OTP_CHANINFO
 int wifi_get_fw_region_and_cfp_tables(void)
 {
@@ -2682,7 +2871,7 @@ void wifi_free_fw_region_and_cfp_tables(void)
 }
 #endif
 
-int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl)
+int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl, int bss_type)
 {
     int ret;
 
@@ -2691,13 +2880,13 @@ int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl)
         return -WM_FAIL;
     }
 
-    mlan_private *pmpriv    = (mlan_private *)mlan_adap->priv[0];
+    mlan_private *pmpriv    = (mlan_private *)mlan_adap->priv[bss_type];
     HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
 
     (void)wifi_get_command_lock();
 
     cmd->command = HostCmd_CMD_ED_MAC_MODE;
-    cmd->seq_num = 0x0;
+    cmd->seq_num = HostCmd_SET_SEQ_NO_BSS_INFO(0 /* seq_num */, 0 /* bss_num */, bss_type);
     cmd->result  = 0x0;
     cmd->size    = S_DS_GEN + sizeof(HostCmd_CONFIG_ED_MAC_MODE);
 
@@ -2706,9 +2895,13 @@ int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl)
     ed_mac_mode->ed_ctrl_2g   = wlan_cpu_to_le16(wifi_ed_mac_ctrl->ed_ctrl_2g);
     ed_mac_mode->ed_offset_2g = wlan_cpu_to_le16(wifi_ed_mac_ctrl->ed_offset_2g);
 #ifdef CONFIG_5GHz_SUPPORT
-    ed_mac_mode->ed_ctrl_5g         = wlan_cpu_to_le16(wifi_ed_mac_ctrl->ed_ctrl_5g);
-    ed_mac_mode->ed_offset_5g       = wlan_cpu_to_le16(wifi_ed_mac_ctrl->ed_offset_5g);
+    ed_mac_mode->ed_ctrl_5g   = wlan_cpu_to_le16(wifi_ed_mac_ctrl->ed_ctrl_5g);
+    ed_mac_mode->ed_offset_5g = wlan_cpu_to_le16(wifi_ed_mac_ctrl->ed_offset_5g);
+#if defined(IW61x)
+    ed_mac_mode->ed_bitmap_txq_lock = 0x1e00ff;
+#else
     ed_mac_mode->ed_bitmap_txq_lock = 0xff;
+#endif
 #endif
 
     pmpriv->ed_mac_mode.ed_ctrl_2g   = wlan_cpu_to_le16(wifi_ed_mac_ctrl->ed_ctrl_2g);
@@ -2722,9 +2915,9 @@ int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl)
     return ret;
 }
 
-int wifi_get_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl)
+int wifi_get_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl, int bss_type)
 {
-    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
+    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[bss_type];
 
     if (wifi_ed_mac_ctrl == MNULL)
     {
@@ -3014,3 +3207,59 @@ int wifi_set_eu_crypto(EU_Crypto *Crypto_Data, enum _crypto_algorithm Algorithm,
 
     return wifi_wait_for_cmdresp(Crypto_Data);
 }
+
+int wifi_set_rx_mgmt_indication(unsigned int bss_type, unsigned int mgmt_subtype_mask)
+{
+    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
+
+    mlan_ds_rx_mgmt_indication rx_mgmt_indication;
+
+    memset(&rx_mgmt_indication, 0x00, sizeof(mlan_ds_rx_mgmt_indication));
+
+    rx_mgmt_indication.mgmt_subtype_mask = mgmt_subtype_mask;
+
+    wifi_get_command_lock();
+    HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
+
+    cmd->command = HostCmd_CMD_RX_MGMT_IND;
+    cmd->seq_num = HostCmd_SET_SEQ_NO_BSS_INFO(0U /* seq_num */, 0U /* bss_num */, bss_type);
+    cmd->result = 0x0;
+
+    wlan_cmd_rx_mgmt_indication(pmpriv, cmd, HostCmd_ACT_GEN_SET, &rx_mgmt_indication);
+
+    wifi_wait_for_cmdresp(NULL);
+
+    return wm_wifi.cmd_resp_status;
+}
+
+wlan_mgmt_pkt *wifi_PrepDefaultMgtMsg(t_u8 sub_type,
+                                      mlan_802_11_mac_addr *DestAddr,
+                                      mlan_802_11_mac_addr *SrcAddr,
+                                      mlan_802_11_mac_addr *Bssid,
+                                      t_u16 pkt_len)
+{
+    wlan_mgmt_pkt *pmgmt_pkt_hdr    = MNULL;
+    IEEEtypes_FrameCtl_t *mgmt_fc_p = MNULL;
+    t_u8 *pBuf                      = MNULL;
+
+    pBuf = os_mem_calloc(pkt_len);
+    if (pBuf == MNULL)
+    {
+        return MNULL;
+    }
+
+    pmgmt_pkt_hdr = (wlan_mgmt_pkt *)(void *)pBuf;
+    /* 802.11 header */
+    mgmt_fc_p           = (IEEEtypes_FrameCtl_t *)(void *)&pmgmt_pkt_hdr->wlan_header.frm_ctl;
+    mgmt_fc_p->sub_type = sub_type;
+    mgmt_fc_p->type     = (t_u8)IEEE_TYPE_MANAGEMENT;
+    (void)memcpy(pmgmt_pkt_hdr->wlan_header.addr1, DestAddr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(pmgmt_pkt_hdr->wlan_header.addr2, SrcAddr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(pmgmt_pkt_hdr->wlan_header.addr3, Bssid, MLAN_MAC_ADDR_LENGTH);
+
+    return pmgmt_pkt_hdr;
+}
+
+
+
+

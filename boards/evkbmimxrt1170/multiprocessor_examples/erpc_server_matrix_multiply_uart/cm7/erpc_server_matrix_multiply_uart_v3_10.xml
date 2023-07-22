@@ -37,8 +37,8 @@
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
     <definition extID="iar"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>

@@ -56,6 +56,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../camera_support.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../hal/hal_evkmimxrt1170.c"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

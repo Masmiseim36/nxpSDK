@@ -155,7 +155,7 @@ int main(void)
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
     CRYPTO_InitHardware();
 #endif /* CONFIG_BT_SMP */
-
+    (void)memset(&timerConfig, 0, sizeof(timer_config_t));
     timerConfig.instance    = 1;
     timerConfig.srcClock_Hz = CLOCK_GetRootClockFreq(kCLOCK_Root_Bus);
     status                  = (osa_status_t)TM_Init(&timerConfig);

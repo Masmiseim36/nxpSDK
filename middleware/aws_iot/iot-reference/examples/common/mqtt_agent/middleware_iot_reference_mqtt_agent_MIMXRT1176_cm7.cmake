@@ -13,7 +13,13 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 
 include(middleware_freertos-kernel_MIMXRT1176_cm7)
 
-include(middleware_iot_reference_mqtt_agent_interface_MIMXRT1176_cm7)
-
 include(middleware_freertos_backoffalgorithm_MIMXRT1176_cm7)
+
+include(middleware_freertos_coremqtt-agent_MIMXRT1176_cm7)
+
+include(middleware_freertos_corepkcs11_MIMXRT1176_cm7)
+
+include(middleware_iot_reference_kvstore_MIMXRT1176_cm7)
+
+include(middleware_iot_reference_mqtt_agent_interface_MIMXRT1176_cm7)
 

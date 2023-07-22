@@ -53,10 +53,13 @@ SHELL_COMMAND_DEFINE(version, "\r\n\"version\": Display component versions\r\n",
 
 SHELL_COMMAND_DEFINE(record_mic,
                      "\r\n\"record_mic\": Record MIC audio and either:\r\n"
+#ifdef VOICE_SEEKER_PROC
+                     " - perform VoiceSeeker processing\r\n"
+#endif
 #ifdef VIT_PROC
                      " - perform voice recognition (VIT)\r\n"
 #endif
-                     " - playback on WM8904 codec\r\n"
+                     " - playback on codec\r\n"
 #ifdef SD_ENABLED
                      " - store samples to file.\r\n"
 #endif
@@ -145,9 +148,15 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
 #endif
     else
     {
+#ifdef SD_ENABLED
+        /* Save the samples to the file with the defined name */
+        out_sink  = FILE_SINK;
+        file_name = argv[1];
+#else
         PRINTF("Sink parameter not specified!\r\n");
         PRINTF("Default audio sink will be used.\r\n");
         out_sink = AUDIO_SINK;
+#endif
     }
 
     if ((argc > 2))

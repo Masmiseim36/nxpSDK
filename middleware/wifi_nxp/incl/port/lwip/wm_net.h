@@ -155,6 +155,14 @@ static inline uint32_t net_inet_aton(const char *cp)
     return addr.s_addr;
 }
 
+/** set MAC hardware address to lwip network interface
+ *
+ * \param[in] stamac sta MAC address.
+ * \param[in] uapmac uap MAC address.
+ *
+ */
+void net_wlan_set_mac_address(unsigned char *stamac, unsigned char *uapmac);
+
 /**
  * Get network host entry
  *
@@ -446,4 +454,9 @@ void net_ipv6stack_init(struct netif *netif);
 void net_stat(void);
 
 
+void rx_mgmt_register_callback(int (*rx_mgmt_cb_fn)(const enum wlan_bss_type bss_type,
+                                                    const wifi_mgmt_frame_t *frame,
+                                                    const size_t len));
+
+void rx_mgmt_deregister_callback(void);
 #endif /* _WM_NET_H_ */

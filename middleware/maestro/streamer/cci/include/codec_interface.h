@@ -124,7 +124,7 @@ extern int32_t OggOPUSGetIOFrameSize(int32_t *in_size, int32_t *out_size);
 #endif
 
 /* AAC */
-#ifdef CASCFG_ENABLE_AAC_CODEC
+#if defined(CASCFG_ENABLE_AAC_CODEC) && !defined(__ICCARM__)
 extern int32_t AACDecoderGetMemorySize();
 extern int32_t AACDecoderInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
 extern int32_t AACDecoderDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);

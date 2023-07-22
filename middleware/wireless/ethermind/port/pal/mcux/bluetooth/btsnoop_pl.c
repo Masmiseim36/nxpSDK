@@ -16,6 +16,11 @@
 #define CONFIG_BT_SNOOP 1
 #endif /* CONFIG_BT_SNOOP */
 
+/*
+*READ_BTSNOOP_FILENAME can be defined if user want to enter the btsnoop file name manually
+*/
+
+/*#define READ_BTSNOOP_FILENAME */
 #ifdef BT_SNOOP
 
 #if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
@@ -45,9 +50,18 @@ API_RESULT btsnoop_open_pl (void)
     /* Reset */
     BT_mem_set(bt_snoop_file_name, 0, sizeof(bt_snoop_file_name));
 
+#ifdef READ_BTSNOOP_FILENAME
+    UCHAR bt_snoop_name_location ;
+	bt_snoop_name_location = BT_str_len(EM_FOPS_BASE) + BT_str_len(EM_FOPS_PATH_SEP);
+	BT_str_n_copy(bt_snoop_file_name, EM_FOPS_BASE, BT_str_len(EM_FOPS_BASE));
+	BT_str_n_copy(bt_snoop_file_name + BT_str_len(EM_FOPS_BASE), EM_FOPS_PATH_SEP, BT_str_len(EM_FOPS_PATH_SEP));
+	printf("Enter the btsnoop filename\n");
+	scanf("%44s",&bt_snoop_file_name[bt_snoop_name_location]);
+	printf("btsnoop filename = %s\n",bt_snoop_file_name);
+#else
     /* Add Prefix */
     BT_str_n_copy(bt_snoop_file_name, BT_SNOOP_FILE_NAME, BT_str_len(BT_SNOOP_FILE_NAME));
-
+#endif /*READ_BTSNOOP_FILENAME*/
     retval = BT_fops_file_open
              (
                  bt_snoop_file_name,

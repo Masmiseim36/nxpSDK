@@ -74,13 +74,19 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
     /* Enable auto data rate */
     priv->is_data_rate_auto = MTRUE;
     priv->data_rate         = 0;
-
+#ifdef CONFIG_11K
+    priv->neighbor_rep_token = (t_u8)1U;
+#endif
+#ifdef CONFIG_11V
+    priv->bss_trans_query_token = (t_u8)1U;
+#endif
     if (priv->bss_mode == MLAN_BSS_MODE_IBSS)
     {
         priv->adhoc_state                        = (t_u8)ADHOC_IDLE;
         priv->adhoc_is_link_sensed               = MFALSE;
         priv->intf_state_11h.adhoc_auto_sel_chan = MTRUE;
     }
+
 
     if (drv_disconnect == MTRUE)
     {

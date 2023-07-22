@@ -389,7 +389,7 @@ int main(void)
     GPIO_PinInit(GPIO12, 12, &gpio_config);
     SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
     GPIO_WritePinOutput(GPIO12, 12, 1);
-    SDK_DelayAtLeastUs(150000, CLOCK_GetFreq(kCLOCK_CpuClk));
+    SDK_DelayAtLeastUs(6, CLOCK_GetFreq(kCLOCK_CpuClk));
 
     PRINTF("Start the soem_gpio_pulse baremetal example...\r\n");
 

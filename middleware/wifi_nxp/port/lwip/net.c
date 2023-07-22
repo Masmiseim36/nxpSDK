@@ -215,18 +215,31 @@ static void wm_netif_ipv6_status_callback(struct netif *n)
 }
 #endif /* CONFIG_IPV6 */
 
+void net_wlan_set_mac_address(unsigned char *stamac, unsigned char *uapmac)
+{
+    (void)memcpy(&g_mlan.netif.hwaddr[0], &stamac[0], MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(&g_uap.netif.hwaddr[0], &uapmac[0], MLAN_MAC_ADDR_LENGTH);
+}
+
 int net_wlan_init(void)
 {
     int ret;
+
+#ifdef RW610
+    (void)wifi_register_data_input_callback(&handle_data_packet);
+    (void)wifi_register_amsdu_data_input_callback(&handle_amsdu_data_packet);
+    (void)wifi_register_deliver_packet_above_callback(&handle_deliver_packet_above);
+    (void)wifi_register_wrapper_net_is_ip_or_ipv6_callback(&wrapper_net_is_ip_or_ipv6);
+#endif
     if (!net_wlan_init_done)
     {
         net_ipv4stack_init();
-
+#ifndef RW610
         (void)wifi_register_data_input_callback(&handle_data_packet);
         (void)wifi_register_amsdu_data_input_callback(&handle_amsdu_data_packet);
         (void)wifi_register_deliver_packet_above_callback(&handle_deliver_packet_above);
         (void)wifi_register_wrapper_net_is_ip_or_ipv6_callback(&wrapper_net_is_ip_or_ipv6);
-
+#endif
         ip_2_ip4(&g_mlan.ipaddr)->addr = INADDR_ANY;
         ret = netifapi_netif_add(&g_mlan.netif, ip_2_ip4(&g_mlan.ipaddr), ip_2_ip4(&g_mlan.ipaddr),
                                  ip_2_ip4(&g_mlan.ipaddr), NULL, lwip_netif_init, tcpip_input);
@@ -545,7 +558,11 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
     wm_netif_status_callback_ptr = NULL;
 
 #ifdef CONFIG_IPV6
+#ifdef RW610
+    if (if_handle == &g_mlan || if_handle == &g_uap)
+#else
     if (if_handle == &g_mlan)
+#endif
     {
         for (i = 0; i < CONFIG_MAX_IPV6_ADDRESSES; i++)
         {

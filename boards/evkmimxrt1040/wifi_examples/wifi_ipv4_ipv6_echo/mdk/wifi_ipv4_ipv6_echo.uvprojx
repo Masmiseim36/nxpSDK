@@ -331,7 +331,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1042XJM5B, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SHELL_BUFFER_SIZE=160U, SDK_OS_FREE_RTOS, SDIO_ENABLED, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../..;../../../../../devices/MIMXRT1042/drivers;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../middleware/wifi_nxp;../../../../../components/gpio;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../devices/MIMXRT1042/utilities;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</IncludePath>
+              <IncludePath>..;../../common;../../..;../../../../../devices/MIMXRT1042/drivers;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../middleware/wifi_nxp;../../../../../components/gpio;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../devices/MIMXRT1042/utilities;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/edgefast_wifi/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -681,6 +681,26 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
             </File>
             <File>
+              <FileName>mlan_11v.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</FilePath>
+            </File>
+            <File>
               <FileName>mlan_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
@@ -804,6 +824,26 @@
               <FileName>mlan_11n_rxreorder.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</FilePath>
             </File>
             <File>
               <FileName>mlan_api.c</FileName>
@@ -2548,6 +2588,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>edgefast_wifi/source</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -2892,6 +2942,16 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>edgefast_wifi/include</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/include/wpl.h</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
     <Target>
@@ -3222,7 +3282,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1042XJM5B, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SHELL_BUFFER_SIZE=160U, SDK_OS_FREE_RTOS, SDIO_ENABLED, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../..;../../../../../devices/MIMXRT1042/drivers;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../middleware/wifi_nxp;../../../../../components/gpio;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../devices/MIMXRT1042/utilities;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</IncludePath>
+              <IncludePath>..;../../common;../../..;../../../../../devices/MIMXRT1042/drivers;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../middleware/wifi_nxp;../../../../../components/gpio;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../devices/MIMXRT1042/utilities;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/edgefast_wifi/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3572,6 +3632,26 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
             </File>
             <File>
+              <FileName>mlan_11v.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</FilePath>
+            </File>
+            <File>
               <FileName>mlan_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
@@ -3695,6 +3775,26 @@
               <FileName>mlan_11n_rxreorder.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</FilePath>
             </File>
             <File>
               <FileName>mlan_api.c</FileName>
@@ -5439,6 +5539,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>edgefast_wifi/source</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -5780,6 +5890,16 @@
               <FileName>os.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/include</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/include/wpl.h</FilePath>
             </File>
           </Files>
         </Group>

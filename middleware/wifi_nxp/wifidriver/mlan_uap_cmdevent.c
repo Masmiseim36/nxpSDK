@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides the handling of AP mode command and event
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
  *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
@@ -47,6 +47,7 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
     MrvlIEtypes_dtim_period_t *tlv_dtim_period     = MNULL;
     MrvlIEtypes_RatesParamSet_t *tlv_rates         = MNULL;
     MrvlIEtypes_bcast_ssid_t *tlv_bcast_ssid = MNULL;
+    MrvlIEtypes_auth_type_t *tlv_auth_type               = MNULL;
     MrvlIEtypes_channel_band_t *tlv_chan_band            = MNULL;
     MrvlIEtypes_ChanListParamSet_t *tlv_chan_list        = MNULL;
     ChanScanParamSet_t *pscan_chan                       = MNULL;
@@ -188,6 +189,18 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         tlv += sizeof(tlv_chan_list->header) + (sizeof(ChanScanParamSet_t) * bss->param.bss_config.num_of_chan);
     }
 
+    if ((bss->param.bss_config.auth_mode <= MLAN_AUTH_MODE_SHARED) ||
+        (bss->param.bss_config.auth_mode == MLAN_AUTH_MODE_AUTO))
+    {
+        tlv_auth_type                 = (MrvlIEtypes_auth_type_t *)tlv;
+        tlv_auth_type->header.type    = wlan_cpu_to_le16(TLV_TYPE_AUTH_TYPE);
+        tlv_auth_type->header.len     = wlan_cpu_to_le16(sizeof(MrvlIEtypes_auth_type_t) - sizeof(MrvlIEtypesHeader_t));
+        tlv_auth_type->auth_type      = (t_u8)bss->param.bss_config.auth_mode;
+        tlv_auth_type->PWE_derivation = (t_u8)bss->param.bss_config.pwe_derivation;
+        tlv_auth_type->transition_disable = (t_u8)bss->param.bss_config.transition_disable;
+        cmd_size += sizeof(MrvlIEtypes_auth_type_t);
+        tlv += sizeof(MrvlIEtypes_auth_type_t);
+    }
 
     if (bss->param.bss_config.protocol != 0U)
     {
@@ -290,6 +303,14 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         tlv_htcap->ht_cap.ampdu_param = bss->param.bss_config.ampdu_param;
         (void)__memcpy(pmpriv->adapter, tlv_htcap->ht_cap.supported_mcs_set, bss->param.bss_config.supported_mcs_set,
                        16);
+#ifdef CONFIG_WIFI_CAPA
+        /* Disable 802.11n */
+        if (!pmpriv->adapter->usr_dot_11n_enable)
+        {
+            tlv_htcap->ht_cap.supported_mcs_set[0] = 0;
+            tlv_htcap->ht_cap.supported_mcs_set[4] = 0;
+        }
+#endif
         tlv_htcap->ht_cap.ht_ext_cap = wlan_cpu_to_le16(bss->param.bss_config.ht_ext_cap);
         tlv_htcap->ht_cap.tx_bf_cap  = wlan_cpu_to_le32(bss->param.bss_config.tx_bf_cap);
         tlv_htcap->ht_cap.asel       = bss->param.bss_config.asel;
@@ -323,6 +344,13 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
     HostCmd_DS_SYS_CONFIG *sys_config         = (HostCmd_DS_SYS_CONFIG *)&cmd->params.sys_config;
     MrvlIEtypes_channel_band_t *chan_band_tlv = MNULL, *pdat_tlv_cb = MNULL;
     MrvlIEtypes_max_sta_count_t *max_sta_cnt_tlv = MNULL, *pdat_tlv_ccb = MNULL;
+    mlan_ds_misc_custom_ie *cust_ie = MNULL;
+    MrvlIEtypesHeader_t *ie_header  = (MrvlIEtypesHeader_t *)sys_config->tlv_buffer;
+    t_u8 *ie                        = (t_u8 *)sys_config->tlv_buffer + sizeof(MrvlIEtypesHeader_t);
+    t_u16 req_len = 0, travel_len = 0;
+    custom_ie *cptr = MNULL;
+
+
     mlan_status ret = MLAN_STATUS_SUCCESS;
 
     ENTER();
@@ -370,6 +398,32 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
                         max_sta_cnt_tlv->max_sta_count = 0;
                     }
                     ret = MLAN_STATUS_SUCCESS;
+                    break;
+                case TLV_TYPE_MGMT_IE:
+                    cust_ie         = (mlan_ds_misc_custom_ie *)pdata_buf;
+                    cmd->size       = wlan_cpu_to_le16(sizeof(HostCmd_DS_SYS_CONFIG) - 1 + S_DS_GEN +
+                                                 sizeof(MrvlIEtypesHeader_t) + cust_ie->len);
+                    ie_header->type = wlan_cpu_to_le16(TLV_TYPE_MGMT_IE);
+                    ie_header->len  = wlan_cpu_to_le16(cust_ie->len);
+
+                    if (ie && &cust_ie->ie_data_list[0])
+                    {
+                        req_len    = cust_ie->len;
+                        travel_len = 0;
+                        /* conversion for index, mask, len */
+                        if (req_len == sizeof(t_u16))
+                            cust_ie->ie_data_list[0].ie_index = wlan_cpu_to_le16(cust_ie->ie_data_list[0].ie_index);
+                        while (req_len > sizeof(t_u16))
+                        {
+                            cptr = (custom_ie *)(((t_u8 *)&cust_ie->ie_data_list) + travel_len);
+                            travel_len += cptr->ie_length + sizeof(custom_ie) - MAX_IE_SIZE;
+                            req_len -= cptr->ie_length + sizeof(custom_ie) - MAX_IE_SIZE;
+                            cptr->ie_index          = wlan_cpu_to_le16(cptr->ie_index);
+                            cptr->mgmt_subtype_mask = wlan_cpu_to_le16(cptr->mgmt_subtype_mask);
+                            cptr->ie_length         = wlan_cpu_to_le16(cptr->ie_length);
+                        }
+                        (void)__memcpy(pmpriv->adapter, ie, cust_ie->ie_data_list, cust_ie->len);
+                    }
                     break;
                 default:
                     PRINTM(MERROR, "Wrong data, or missing TLV_TYPE 0x%04x handler.\n", *(t_u16 *)pdata_buf);
@@ -610,7 +664,7 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
             ret = wlan_cmd_11n_delba(pmpriv, cmd_ptr, pdata_buf);
             break;
         case HostCmd_CMD_TX_RATE_CFG:
-            ret = wlan_cmd_tx_rate_cfg(pmpriv, cmd_ptr, cmd_action, pdata_buf);
+            ret = wlan_cmd_tx_rate_cfg(pmpriv, cmd_ptr, cmd_action, pdata_buf, pioctl_buf);
             break;
         case HostCmd_CMD_802_11_TX_RATE_QUERY:
             cmd_ptr->command = wlan_cpu_to_le16(HostCmd_CMD_802_11_TX_RATE_QUERY);
@@ -621,6 +675,11 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
         case HostCmd_CMD_11AC_CFG:
             ret = wlan_cmd_11ac_cfg(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
+#ifdef CONFIG_WIFI_CLOCKSYNC
+        case HostCmd_GPIO_TSF_LATCH_PARAM_CONFIG:
+            ret = wlan_cmd_gpio_tsf_latch(pmpriv, cmd_ptr, cmd_action, pioctl_buf, pdata_buf);
+            break;
+#endif
         default:
             PRINTM(MERROR, "PREP_CMD: unknown command- %#x\n", cmd_no);
             if (pioctl_req != NULL)

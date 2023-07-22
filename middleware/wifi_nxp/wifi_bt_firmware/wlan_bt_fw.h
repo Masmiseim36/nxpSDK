@@ -17,8 +17,8 @@
 #elif defined(IW61x)
 #include "sduart_nw61x.h"
 #elif defined(RW610)
-static const unsigned char *wlan_fw_bin   = (void *)0;
-static const unsigned int wlan_fw_bin_len = 0;
+const unsigned char *wlan_fw_bin   = (void *)0;
+const unsigned int wlan_fw_bin_len = 0;
 #endif
 
 #endif /* __WLAN_BT_FW_H__ */

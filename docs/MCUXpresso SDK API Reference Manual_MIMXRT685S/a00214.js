@@ -1,5 +1,5 @@
 var a00214 =
 [
-    [ "DMIC DMA Driver", "a00018.html", "a00018" ],
-    [ "DMIC Driver", "a00017.html", "a00017" ]
+    [ "casper_driver", "a00215.html", "a00215" ],
+    [ "casper_driver_pkha", "a00216.html", "a00216" ]
 ];

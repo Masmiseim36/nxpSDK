@@ -79,3 +79,6 @@ NOTE: To be able to build the DSP project, please see the document
 NOTE: DSP image can only be debugged using J-Link debugger.  See again
 'Getting Started with Xplorer for EVK-MIMXRT685.pdf' for more information.
 
+Known issue: When starting the "usb_speaker" after the "usb_mic" command, the sound output may be distorted.
+    Please power cycle the board.
+

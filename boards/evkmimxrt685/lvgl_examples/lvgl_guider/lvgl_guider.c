@@ -18,15 +18,16 @@
 #include "events_init.h"
 #include "custom.h"
 
+#include "fsl_dma.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR       DMA0
 
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
 static volatile bool s_lvgl_initialized = false;
 lv_ui guider_ui;
 
@@ -79,6 +80,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+    DMA_Init(EXAMPLE_LPSPI_MASTER_DMA_BASEADDR);
 
     stat = xTaskCreate(AppTask, "lvgl", configMINIMAL_STACK_SIZE + 800, NULL, tskIDLE_PRIORITY + 2, NULL);
 

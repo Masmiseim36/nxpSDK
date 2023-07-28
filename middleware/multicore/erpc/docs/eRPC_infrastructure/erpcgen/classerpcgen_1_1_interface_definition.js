@@ -10,7 +10,7 @@ var classerpcgen_1_1_interface_definition =
     [ "getCodecType", "classerpcgen_1_1_interface_definition.html#a2a45c0e81d8bd7a4dca963c537d48aa6", null ],
     [ "getGlobals", "classerpcgen_1_1_interface_definition.html#a75ea44989d648f061e056a0860c6b006", null ],
     [ "getIdlCrc16", "classerpcgen_1_1_interface_definition.html#a7bd623bb9995c6fbb279a2a6819331bb", null ],
-    [ "getOutputDirectory", "classerpcgen_1_1_interface_definition.html#a88555ec3da97a4c7e917592edba7181f", null ],
+    [ "getOutputDirectory", "classerpcgen_1_1_interface_definition.html#a08eb713f1b2972f0a0b8ffed40c8d455", null ],
     [ "getOutputFilename", "classerpcgen_1_1_interface_definition.html#accf4b920cee5f58be75e2fbef4de7943", null ],
     [ "getProgramName", "classerpcgen_1_1_interface_definition.html#a3db153cb26de7b9e86d6b5d4dc3fb822", null ],
     [ "getProgramSymbol", "classerpcgen_1_1_interface_definition.html#abd6d7f87727f2a0df1f64b17b01ef3cc", null ],

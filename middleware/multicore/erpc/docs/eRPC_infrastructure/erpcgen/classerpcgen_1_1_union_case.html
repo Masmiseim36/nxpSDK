@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -163,9 +163,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a241420156aafe313bac344b5f6ff61e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_case.html#a241420156aafe313bac344b5f6ff61e0">caseMemberIsVoid</a> () const </td></tr>
 <tr class="memdesc:a241420156aafe313bac344b5f6ff61e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns information if case is void type.  <a href="#a241420156aafe313bac344b5f6ff61e0">More...</a><br /></td></tr>
 <tr class="separator:a241420156aafe313bac344b5f6ff61e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cbe4d615ff794dff0ac49d0f5376f38"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_case.html#a2cbe4d615ff794dff0ac49d0f5376f38">getDescription</a> () const </td></tr>
-<tr class="memdesc:a2cbe4d615ff794dff0ac49d0f5376f38"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about case members.  <a href="#a2cbe4d615ff794dff0ac49d0f5376f38">More...</a><br /></td></tr>
-<tr class="separator:a2cbe4d615ff794dff0ac49d0f5376f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaf10d58bc8455e8440fa232ec35a5c6"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_case.html#acaf10d58bc8455e8440fa232ec35a5c6">getDescription</a> () const  override</td></tr>
+<tr class="memdesc:acaf10d58bc8455e8440fa232ec35a5c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about case members.  <a href="#acaf10d58bc8455e8440fa232ec35a5c6">More...</a><br /></td></tr>
+<tr class="separator:acaf10d58bc8455e8440fa232ec35a5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac49bff6bd8c8d74426e46b19f6e81394"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_struct_member.html">StructMember</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_case.html#ac49bff6bd8c8d74426e46b19f6e81394">getUnionMemberDeclaration</a> (const std::string &amp;name)</td></tr>
 <tr class="memdesc:ac49bff6bd8c8d74426e46b19f6e81394"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns union member declaration.  <a href="#ac49bff6bd8c8d74426e46b19f6e81394">More...</a><br /></td></tr>
 <tr class="separator:ac49bff6bd8c8d74426e46b19f6e81394"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,33 +234,33 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#af62148192831515bdb2a451ac2b29bba">printAnnotations</a> ()</td></tr>
 <tr class="memdesc:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about annotation.  <a href="#af62148192831515bdb2a451ac2b29bba">More...</a><br /></td></tr>
 <tr class="separator:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a883f6744741ad9076cb427c39c3783a4">findAnnotation</a> (std::string name, Annotation::program_lang_t lang)</td></tr>
-<tr class="memdesc:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#a883f6744741ad9076cb427c39c3783a4">More...</a><br /></td></tr>
-<tr class="separator:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#acc5781b006ddfee4823e33698f9b65a6">getAnnotations</a> (std::string name, Annotation::program_lang_t lang)</td></tr>
-<tr class="memdesc:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#acc5781b006ddfee4823e33698f9b65a6">More...</a><br /></td></tr>
-<tr class="separator:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2636fe953d4551caf6333ebeb489654 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#ae2636fe953d4551caf6333ebeb489654">findAnnotation</a> (const std::string &amp;name, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:ae2636fe953d4551caf6333ebeb489654 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#ae2636fe953d4551caf6333ebeb489654">More...</a><br /></td></tr>
+<tr class="separator:ae2636fe953d4551caf6333ebeb489654 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa72941a7f8c5429e64d5813140254814 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#aa72941a7f8c5429e64d5813140254814">getAnnotations</a> (const std::string &amp;name, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:aa72941a7f8c5429e64d5813140254814 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#aa72941a7f8c5429e64d5813140254814">More...</a><br /></td></tr>
+<tr class="separator:aa72941a7f8c5429e64d5813140254814 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a3bcd445c92c9ae8c225ac053809a590e">getAnnotations</a> () const </td></tr>
 <tr class="memdesc:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all <a class="el" href="classerpcgen_1_1_symbol.html" title="Base class for all named declarations in the IDL. ">Symbol</a> annotations.  <a href="#a3bcd445c92c9ae8c225ac053809a590e">More...</a><br /></td></tr>
 <tr class="separator:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a6935af23ecdcd2f9fb2a02f92ebae1f9">getAnnValue</a> (const std::string annName, Annotation::program_lang_t lang)</td></tr>
-<tr class="memdesc:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#a6935af23ecdcd2f9fb2a02f92ebae1f9">More...</a><br /></td></tr>
-<tr class="separator:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a44d832e6e7934e13f6d6ab1d8799cbdf">getAnnStringValue</a> (const std::string annName, Annotation::program_lang_t lang)</td></tr>
-<tr class="memdesc:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#a44d832e6e7934e13f6d6ab1d8799cbdf">More...</a><br /></td></tr>
-<tr class="separator:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad981d183f24126d1e29d6b4ea9fafc3d inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#ad981d183f24126d1e29d6b4ea9fafc3d">getAnnValue</a> (const std::string &amp;annName, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:ad981d183f24126d1e29d6b4ea9fafc3d inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#ad981d183f24126d1e29d6b4ea9fafc3d">More...</a><br /></td></tr>
+<tr class="separator:ad981d183f24126d1e29d6b4ea9fafc3d inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26ae166eee66896446987022b8c4d66b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a26ae166eee66896446987022b8c4d66b">getAnnStringValue</a> (const std::string &amp;annName, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:a26ae166eee66896446987022b8c4d66b inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#a26ae166eee66896446987022b8c4d66b">More...</a><br /></td></tr>
+<tr class="separator:a26ae166eee66896446987022b8c4d66b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a85fc3b86b1d1935f3017f8d5db3a2111">getMlComment</a> ()</td></tr>
 <tr class="memdesc:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns multiline comment for this symbol declared in IDL file.  <a href="#a85fc3b86b1d1935f3017f8d5db3a2111">More...</a><br /></td></tr>
 <tr class="separator:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfff1c0850b243effae7c8c9911f2f53 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#adfff1c0850b243effae7c8c9911f2f53">setMlComment</a> (std::string comment)</td></tr>
-<tr class="memdesc:adfff1c0850b243effae7c8c9911f2f53 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set multiline comment for this symbol declared in IDL file.  <a href="#adfff1c0850b243effae7c8c9911f2f53">More...</a><br /></td></tr>
-<tr class="separator:adfff1c0850b243effae7c8c9911f2f53 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9e1ad47651cd7b056b619040f52fe6e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#ae9e1ad47651cd7b056b619040f52fe6e">setMlComment</a> (const std::string &amp;comment)</td></tr>
+<tr class="memdesc:ae9e1ad47651cd7b056b619040f52fe6e inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set multiline comment for this symbol declared in IDL file.  <a href="#ae9e1ad47651cd7b056b619040f52fe6e">More...</a><br /></td></tr>
+<tr class="separator:ae9e1ad47651cd7b056b619040f52fe6e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acec60e332ab5bf223e8c5d92f9a732f0 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#acec60e332ab5bf223e8c5d92f9a732f0">getIlComment</a> ()</td></tr>
 <tr class="memdesc:acec60e332ab5bf223e8c5d92f9a732f0 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns inline comment for this symbol declared in IDL file.  <a href="#acec60e332ab5bf223e8c5d92f9a732f0">More...</a><br /></td></tr>
 <tr class="separator:acec60e332ab5bf223e8c5d92f9a732f0 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cf5481c123404b46a6574135ff6631e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a9cf5481c123404b46a6574135ff6631e">setIlComment</a> (std::string comment)</td></tr>
-<tr class="memdesc:a9cf5481c123404b46a6574135ff6631e inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set inline comment for this symbol declared in IDL file.  <a href="#a9cf5481c123404b46a6574135ff6631e">More...</a><br /></td></tr>
-<tr class="separator:a9cf5481c123404b46a6574135ff6631e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f1eff615713ccbb8c0b3ee62460dfb inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a04f1eff615713ccbb8c0b3ee62460dfb">setIlComment</a> (const std::string &amp;comment)</td></tr>
+<tr class="memdesc:a04f1eff615713ccbb8c0b3ee62460dfb inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set inline comment for this symbol declared in IDL file.  <a href="#a04f1eff615713ccbb8c0b3ee62460dfb">More...</a><br /></td></tr>
+<tr class="separator:a04f1eff615713ccbb8c0b3ee62460dfb inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -521,7 +521,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2cbe4d615ff794dff0ac49d0f5376f38"></a>
+<a class="anchor" id="acaf10d58bc8455e8440fa232ec35a5c6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -537,7 +537,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

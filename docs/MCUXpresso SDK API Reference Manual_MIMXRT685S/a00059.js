@@ -1,10 +1,10 @@
 var a00059 =
 [
-    [ "tfa9xxx_audio_format_t", "a00059.html#a00386", [
+    [ "tfa9xxx_audio_format_t", "a00059.html#a00388", [
       [ "sampleRate", "a00059.html#ae0e719bec66a9d233fa3db4ae4991fa3", null ],
       [ "bitWidth", "a00059.html#aa505212b56c026b254ea5421a1cbc4a4", null ]
     ] ],
-    [ "tfa9xxx_config_t", "a00059.html#a00387", [
+    [ "tfa9xxx_config_t", "a00059.html#a00389", [
       [ "protocol", "a00059.html#abbdfdfad60cc085970ec6cf71aee7d72", null ],
       [ "format", "a00059.html#a7dd52e26e4a180fd4881618e84aaa21e", null ],
       [ "slaveAddress", "a00059.html#a1e9567bd97b98ddab3553be6e4061446", null ],
@@ -12,7 +12,7 @@ var a00059 =
       [ "tfaContainer", "a00059.html#ac9e05c7babd994c5515e55cc217bcd6c", null ],
       [ "deviceIndex", "a00059.html#a7fc2b59816a2d8d000672018cd6d8eaf", null ]
     ] ],
-    [ "tfa9xxx_handle_t", "a00059.html#a00388", [
+    [ "tfa9xxx_handle_t", "a00059.html#a00390", [
       [ "config", "a00059.html#ac47cd17dafd0ca9a4c96171c8973fdb2", null ],
       [ "i2cHandle", "a00059.html#a9f0489512e1b1455f10ee7cf8b5d430f", null ]
     ] ],

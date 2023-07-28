@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['message_20buffer_20factory_20setup',['Message Buffer Factory Setup',['../group__message__buffer__factory__setup.html',1,'']]],
-  ['messaging_20unit',['Messaging Unit',['../group__mu__transport.html',1,'']]],
-  ['memory',['Memory',['../group__port__mem.html',1,'']]]
+  ['lpi2c_5fslave_5ftransport',['Lpi2c_slave_transport',['../group__lpi2c__slave__transport.html',1,'']]],
+  ['lpspi_5fslave_5ftransport',['Lpspi_slave_transport',['../group__lpspi__slave__transport.html',1,'']]]
 ];

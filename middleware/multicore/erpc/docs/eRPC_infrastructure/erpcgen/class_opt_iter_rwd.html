@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -131,14 +131,14 @@ Inheritance diagram for OptIterRwd:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a423096b4a0a327ba3d8b35affba27194"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_opt_iter_rwd.html#a423096b4a0a327ba3d8b35affba27194">curr</a> (void)=0</td></tr>
-<tr class="separator:a423096b4a0a327ba3d8b35affba27194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1f8bdab1547454c004548dfbc94ab08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1f8bdab1547454c004548dfbc94ab08"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_opt_iter_rwd.html#ad1f8bdab1547454c004548dfbc94ab08">next</a> (void)=0</td></tr>
-<tr class="memdesc:ad1f8bdab1547454c004548dfbc94ab08"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_opt_iter_rwd.html#ad1f8bdab1547454c004548dfbc94ab08" title="next() advances to the next item. ">next()</a> advances to the next item. <br /></td></tr>
-<tr class="separator:ad1f8bdab1547454c004548dfbc94ab08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96cea8a611e7ebe97ac98efb9e6cd612"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_opt_iter_rwd.html#a96cea8a611e7ebe97ac98efb9e6cd612">operator()</a> (void)=0</td></tr>
-<tr class="separator:a96cea8a611e7ebe97ac98efb9e6cd612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1eefaee2725247b4013ffe6c481bed4"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_opt_iter_rwd.html#ac1eefaee2725247b4013ffe6c481bed4">curr</a> (void) override=0</td></tr>
+<tr class="separator:ac1eefaee2725247b4013ffe6c481bed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632087fd8853ac470820d822958c6b29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a632087fd8853ac470820d822958c6b29"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_opt_iter_rwd.html#a632087fd8853ac470820d822958c6b29">next</a> (void) override=0</td></tr>
+<tr class="memdesc:a632087fd8853ac470820d822958c6b29"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_opt_iter_rwd.html#a632087fd8853ac470820d822958c6b29" title="next() advances to the next item. ">next()</a> advances to the next item. <br /></td></tr>
+<tr class="separator:a632087fd8853ac470820d822958c6b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0cf0598d69205045726f455350c040"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_opt_iter_rwd.html#aaa0cf0598d69205045726f455350c040">operator()</a> (void) override=0</td></tr>
+<tr class="separator:aaa0cf0598d69205045726f455350c040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e7eb2be49bb8d31c67b8f435392505e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e7eb2be49bb8d31c67b8f435392505e"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_opt_iter_rwd.html#a0e7eb2be49bb8d31c67b8f435392505e">rewind</a> (void)=0</td></tr>
 <tr class="memdesc:a0e7eb2be49bb8d31c67b8f435392505e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_opt_iter_rwd.html#a0e7eb2be49bb8d31c67b8f435392505e" title="rewind() resets the &quot;current-element&quot; to the first one in the &quot;list&quot; ">rewind()</a> resets the "current-element" to the first one in the "list" <br /></td></tr>
@@ -147,7 +147,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class for a rewindable <a class="el" href="class_opt_iter.html">OptIter</a> </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a423096b4a0a327ba3d8b35affba27194"></a>
+<a class="anchor" id="ac1eefaee2725247b4013ffe6c481bed4"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -164,19 +164,19 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_opt_iter_rwd.html#a423096b4a0a327ba3d8b35affba27194">curr()</a> returns the current item in the iterator without advancing on to the next item. If we are at the end of items then NULL is returned. </p>
+<p><a class="el" href="class_opt_iter_rwd.html#ac1eefaee2725247b4013ffe6c481bed4">curr()</a> returns the current item in the iterator without advancing on to the next item. If we are at the end of items then NULL is returned. </p>
 
 <p>Implements <a class="el" href="class_opt_iter.html#a83fee36a05864e23eebc91b251ac9743">OptIter</a>.</p>
 
-<p>Implemented in <a class="el" href="class_opt_str_tok_iter.html#a85afcfa933f6fff8efc21ce4954da8c1">OptStrTokIter</a>, and <a class="el" href="class_opt_argv_iter.html#a70d15a4bae80ed858537090aec78260e">OptArgvIter</a>.</p>
+<p>Implemented in <a class="el" href="class_opt_str_tok_iter.html#a5ced627669e12b46c71bbadf2122d388">OptStrTokIter</a>, and <a class="el" href="class_opt_argv_iter.html#a9503c4f54502242bd06696b3e9e00172">OptArgvIter</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a96cea8a611e7ebe97ac98efb9e6cd612"></a>
+<a class="anchor" id="aaa0cf0598d69205045726f455350c040"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -193,7 +193,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -201,7 +201,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 
 <p>Reimplemented from <a class="el" href="class_opt_iter.html#a039ef9ac21ffb563eedbc76cd42c5e02">OptIter</a>.</p>
 
-<p>Implemented in <a class="el" href="class_opt_str_tok_iter.html#a567cea49a789e8ad7c8c4099e54f5905">OptStrTokIter</a>, and <a class="el" href="class_opt_argv_iter.html#a99914f7a15d154f4aab85229142ca8de">OptArgvIter</a>.</p>
+<p>Implemented in <a class="el" href="class_opt_str_tok_iter.html#a522146a37cd593db364a5c84ef66ecef">OptStrTokIter</a>, and <a class="el" href="class_opt_argv_iter.html#af522c847171ff79432cda88f37ffa848">OptArgvIter</a>.</p>
 
 </div>
 </div>

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,9 +101,9 @@ $(document).ready(function(){initNavTree('a00043.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Power Driver</div>  </div>
 </div><!--header-->
@@ -113,22 +113,25 @@ $(document).ready(function(){initNavTree('a00043.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00346"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00346">power_pad_vrange_t</a></td></tr>
-<tr class="memdesc:a00346"><td class="mdescLeft">&#160;</td><td class="mdescRight">pad voltage range configuration.  <a href="a00043.html#a00346">More...</a><br/></td></tr>
-<tr class="separator:a00346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00348"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00348">power_pad_vrange_t</a></td></tr>
+<tr class="memdesc:a00348"><td class="mdescLeft">&#160;</td><td class="mdescRight">pad voltage range configuration.  <a href="a00043.html#a00348">More...</a><br/></td></tr>
+<tr class="separator:a00348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gad7b390514bc10f7c22b430b2b411a21a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gad7b390514bc10f7c22b430b2b411a21a">PMIC_VDDCORE_RECOVERY_TIME_IGNORE</a>&#160;&#160;&#160;(0xFFFFFFFFU)</td></tr>
 <tr class="memdesc:gad7b390514bc10f7c22b430b2b411a21a"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMIC is used but vddcore supply is always above LVD threshold.  <a href="#gad7b390514bc10f7c22b430b2b411a21a">More...</a><br/></td></tr>
 <tr class="separator:gad7b390514bc10f7c22b430b2b411a21a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0534d0c316fa4fe4638687d09f7e1fbd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga0534d0c316fa4fe4638687d09f7e1fbd">POWER_INVALID_VOLT_LEVEL</a>&#160;&#160;&#160;(0xFFFFFFFFU)</td></tr>
-<tr class="memdesc:ga0534d0c316fa4fe4638687d09f7e1fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid voltage level.  <a href="#ga0534d0c316fa4fe4638687d09f7e1fbd">More...</a><br/></td></tr>
-<tr class="separator:ga0534d0c316fa4fe4638687d09f7e1fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga15f4422b6c26f96a9713f34a4f059664"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga15f4422b6c26f96a9713f34a4f059664"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga15f4422b6c26f96a9713f34a4f059664">SYSCTL0_TUPLE_REG</a>(reg)&#160;&#160;&#160;(*((volatile uint32_t *)(((uint32_t)(SYSCTL0)) + (((uint32_t)(reg)) &amp; 0xFFFU))))</td></tr>
 <tr class="memdesc:ga15f4422b6c26f96a9713f34a4f059664"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMIC mode pin configuration API parameter. <br/></td></tr>
 <tr class="separator:ga15f4422b6c26f96a9713f34a4f059664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga15f214b2d38f6b142814a0a46ef14b9a"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga15f214b2d38f6b142814a0a46ef14b9a">power_vddcore_set_func_t</a> )(uint32_t millivolt)</td></tr>
+<tr class="memdesc:ga15f214b2d38f6b142814a0a46ef14b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function used to change VDDCORE when the VDDCORE is supplied by external PMIC.  <a href="#ga15f214b2d38f6b142814a0a46ef14b9a">More...</a><br/></td></tr>
+<tr class="separator:ga15f214b2d38f6b142814a0a46ef14b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -240,9 +243,36 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga2f55d6cc7c679e991a1e594bae7ca0f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Voltage operation range.  <a href="a00043.html#ga2f55d6cc7c679e991a1e594bae7ca0f0">More...</a><br/></td></tr>
 <tr class="separator:ga2f55d6cc7c679e991a1e594bae7ca0f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9043cf2a6084c43b8b0c451f537724c2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga9043cf2a6084c43b8b0c451f537724c2">power_vddcore_src_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00043.html#gga9043cf2a6084c43b8b0c451f537724c2a71f69b0e3418eec19794d04fc03b0c46">kVddCoreSrc_LDO</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00043.html#gga9043cf2a6084c43b8b0c451f537724c2a437c60afa31dc290f0631b52fb6b8e6f">kVddCoreSrc_PMIC</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga9043cf2a6084c43b8b0c451f537724c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">VDDCORE supply source.  <a href="a00043.html#ga9043cf2a6084c43b8b0c451f537724c2">More...</a><br/></td></tr>
+<tr class="separator:ga9043cf2a6084c43b8b0c451f537724c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga831ac12ac01bba368ebfdde23418946c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga831ac12ac01bba368ebfdde23418946c">power_control_for_pmic_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00043.html#gga831ac12ac01bba368ebfdde23418946ca333a9b1956d11fb3f5d39ac52329004c">kVddCoreOnMode1</a> = 0x2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00043.html#gga831ac12ac01bba368ebfdde23418946ca7a05aff1439d3fc24c52ab7c00a27f6c">kVddCoreOnMode2</a> = 0x4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00043.html#gga831ac12ac01bba368ebfdde23418946caaf42b9a61a7bf410c9e819958bba4347">kVddCoreOnMode3</a> = 0x8U, 
+<br/>
+&#160;&#160;<a class="el" href="a00043.html#gga831ac12ac01bba368ebfdde23418946ca5da1b33c59dfe0c14bbdd856f691e10e">kVdd1v8OnMode1</a> = 0x20U, 
+<br/>
+&#160;&#160;<a class="el" href="a00043.html#gga831ac12ac01bba368ebfdde23418946ca885d81662994092082afa266c2d3aa2e">kVdd1v8OnMode2</a> = 0x40U, 
+<br/>
+&#160;&#160;<a class="el" href="a00043.html#gga831ac12ac01bba368ebfdde23418946ca6cecbc2aa4dbfa3a06a917e473291bc0">kVdd1v8OnMode3</a> = 0x80U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga831ac12ac01bba368ebfdde23418946c"><td class="mdescLeft">&#160;</td><td class="mdescRight">vddcore or vdd1v8 power on selection for different PMIC mode.  <a href="a00043.html#ga831ac12ac01bba368ebfdde23418946c">More...</a><br/></td></tr>
+<tr class="separator:ga831ac12ac01bba368ebfdde23418946c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga8fb07d65f0b0af3e87414a9b5609892e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga8fb07d65f0b0af3e87414a9b5609892e">POWER_PmicPowerModeSelectControl</a> (uint32_t vddSelect)</td></tr>
+<tr class="memdesc:ga8fb07d65f0b0af3e87414a9b5609892e"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to set vddcore or vdd1v8 power on for PMIC modes which is responded to PDRUNCFG0[PMIC_MODE] or PDSLEEPCFG0[PMIC_MODE] select pin values.  <a href="#ga8fb07d65f0b0af3e87414a9b5609892e">More...</a><br/></td></tr>
+<tr class="separator:ga8fb07d65f0b0af3e87414a9b5609892e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacf3a138e73725bb8c50290295259bfa4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gacf3a138e73725bb8c50290295259bfa4">POWER_EnablePD</a> (pd_bit_t en)</td></tr>
 <tr class="memdesc:gacf3a138e73725bb8c50290295259bfa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to enable PDRUNCFG bit in the Sysctl0.  <a href="#gacf3a138e73725bb8c50290295259bfa4">More...</a><br/></td></tr>
 <tr class="separator:gacf3a138e73725bb8c50290295259bfa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -288,7 +318,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <tr class="memitem:ga6a0bafa723d0a4ec45fe6ad14bbe2f91"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00043.html#ga415d6dd5b9c784fbc62c098816c31d14">body_bias_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga6a0bafa723d0a4ec45fe6ad14bbe2f91">POWER_GetBodyBiasMode</a> (pmic_mode_reg_t reg)</td></tr>
 <tr class="memdesc:ga6a0bafa723d0a4ec45fe6ad14bbe2f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get RBB/FBB bit value.  <a href="#ga6a0bafa723d0a4ec45fe6ad14bbe2f91">More...</a><br/></td></tr>
 <tr class="separator:ga6a0bafa723d0a4ec45fe6ad14bbe2f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6bf09385a1955837b34995ba6bd4158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gac6bf09385a1955837b34995ba6bd4158">POWER_SetPadVolRange</a> (const <a class="el" href="a00043.html#a00346">power_pad_vrange_t</a> *config)</td></tr>
+<tr class="memitem:gac6bf09385a1955837b34995ba6bd4158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gac6bf09385a1955837b34995ba6bd4158">POWER_SetPadVolRange</a> (const <a class="el" href="a00043.html#a00348">power_pad_vrange_t</a> *config)</td></tr>
 <tr class="memdesc:gac6bf09385a1955837b34995ba6bd4158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure pad voltage level.  <a href="#gac6bf09385a1955837b34995ba6bd4158">More...</a><br/></td></tr>
 <tr class="separator:gac6bf09385a1955837b34995ba6bd4158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2a3cb038fed2619db8228ae0f2327c1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a3cb038fed2619db8228ae0f2327c1f"></a>
@@ -304,8 +334,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <tr class="memdesc:gaae264215d0180f0d9bd0ed2864013197"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC exit Rbb &amp; Fbb mode function call. <br/></td></tr>
 <tr class="separator:gaae264215d0180f0d9bd0ed2864013197"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga17b5192a01af90ecd326f0cd8266d44f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga17b5192a01af90ecd326f0cd8266d44f">POWER_SetLdoVoltageForFreq</a> (<a class="el" href="a00043.html#ga879d6a59bf7fc0b3c5969d4e467ea04d">power_part_temp_range_t</a> tempRange, <a class="el" href="a00043.html#ga2f55d6cc7c679e991a1e594bae7ca0f0">power_volt_op_range_t</a> voltOpRange, uint32_t cm33Freq, uint32_t dspFreq)</td></tr>
-<tr class="memdesc:ga17b5192a01af90ecd326f0cd8266d44f"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Set Ldo volatage for particular frequency. NOTE: The API is only valid when MAINPLLCLKDIV[7:0] and DSPPLLCLKDIV[7:0] are 0. If LVD falling trip voltage is higher than the required core voltage for particular frequency, LVD voltage will be decreased to safe level to avoid unexpected LVD reset or interrupt event.  <a href="#ga17b5192a01af90ecd326f0cd8266d44f">More...</a><br/></td></tr>
+<tr class="memdesc:ga17b5192a01af90ecd326f0cd8266d44f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deprecated and replaced by <a class="el" href="a00043.html#ga3bce0f4d75853f022d36a1e865b58672" title="PMC Set volatage for particular frequency with given minimum value. POWER_SetVddCoreSupplySrc should ...">POWER_SetVoltageForFreq()</a>! PMC Set Ldo volatage for particular frequency. NOTE: The API is only valid when MAINPLLCLKDIV[7:0] and DSPPLLCLKDIV[7:0] are 0. If LVD falling trip voltage is higher than the required core voltage for particular frequency, LVD voltage will be decreased to safe level to avoid unexpected LVD reset or interrupt event.  <a href="#ga17b5192a01af90ecd326f0cd8266d44f">More...</a><br/></td></tr>
 <tr class="separator:ga17b5192a01af90ecd326f0cd8266d44f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c91598172b667c713ac605654ded908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga9c91598172b667c713ac605654ded908">POWER_SetVddCoreSupplySrc</a> (<a class="el" href="a00043.html#ga9043cf2a6084c43b8b0c451f537724c2">power_vddcore_src_t</a> src)</td></tr>
+<tr class="memdesc:ga9c91598172b667c713ac605654ded908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set VDDCORE supply source, PMIC or on-chip regulator.  <a href="#ga9c91598172b667c713ac605654ded908">More...</a><br/></td></tr>
+<tr class="separator:ga9c91598172b667c713ac605654ded908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c2ab1ac72cae98f4cca0e87bf85f38a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga2c2ab1ac72cae98f4cca0e87bf85f38a">POWER_SetPmicCoreSupplyFunc</a> (<a class="el" href="a00043.html#ga15f214b2d38f6b142814a0a46ef14b9a">power_vddcore_set_func_t</a> func)</td></tr>
+<tr class="memdesc:ga2c2ab1ac72cae98f4cca0e87bf85f38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the core supply setting function if PMIC is used. The function is not needed and ignored when using the onchip regulator to supply VDDCORE.  <a href="#ga2c2ab1ac72cae98f4cca0e87bf85f38a">More...</a><br/></td></tr>
+<tr class="separator:ga2c2ab1ac72cae98f4cca0e87bf85f38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bce0f4d75853f022d36a1e865b58672"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga3bce0f4d75853f022d36a1e865b58672">POWER_SetVoltageForFreq</a> (<a class="el" href="a00043.html#ga879d6a59bf7fc0b3c5969d4e467ea04d">power_part_temp_range_t</a> tempRange, <a class="el" href="a00043.html#ga2f55d6cc7c679e991a1e594bae7ca0f0">power_volt_op_range_t</a> voltOpRange, uint32_t cm33Freq, uint32_t dspFreq, uint32_t mini_volt)</td></tr>
+<tr class="memdesc:ga3bce0f4d75853f022d36a1e865b58672"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Set volatage for particular frequency with given minimum value. <a class="el" href="a00043.html#ga9c91598172b667c713ac605654ded908" title="Set VDDCORE supply source, PMIC or on-chip regulator. ">POWER_SetVddCoreSupplySrc</a> should be called in advance to tell power driver the supply source. If PMIC is used, the VDDCORE setting function should be set by <a class="el" href="a00043.html#ga2c2ab1ac72cae98f4cca0e87bf85f38a" title="Set the core supply setting function if PMIC is used. The function is not needed and ignored when usi...">POWER_SetPmicCoreSupplyFunc</a> before this API is called. NOTE: The API is only valid when MAINPLLCLKDIV[7:0] and DSPPLLCLKDIV[7:0] are 0. If LVD falling trip voltage is higher than therequired core voltage for particular frequency, LVD voltage will be decreased to safe level to avoid unexpected LVD reset or interrupt event.  <a href="#ga3bce0f4d75853f022d36a1e865b58672">More...</a><br/></td></tr>
+<tr class="separator:ga3bce0f4d75853f022d36a1e865b58672"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafbdad7c38f2c3bc2c7132fb2d0900f1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gafbdad7c38f2c3bc2c7132fb2d0900f1a">POWER_SetLvdFallingTripVoltage</a> (<a class="el" href="a00043.html#ga505e9ff78630230f448738e3c24ea7d2">power_lvd_falling_trip_vol_val_t</a> volt)</td></tr>
 <tr class="memdesc:gafbdad7c38f2c3bc2c7132fb2d0900f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set vddcore low voltage detection falling trip voltage.  <a href="#gafbdad7c38f2c3bc2c7132fb2d0900f1a">More...</a><br/></td></tr>
 <tr class="separator:gafbdad7c38f2c3bc2c7132fb2d0900f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -349,20 +388,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <tr class="memdesc:gac28a380c6f92d302c5d99f30cc126fe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power Library API to return the library version.  <a href="#gac28a380c6f92d302c5d99f30cc126fe5">More...</a><br/></td></tr>
 <tr class="separator:gac28a380c6f92d302c5d99f30cc126fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga89a40d18f3eb6706969a30338a503f43"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga89a40d18f3eb6706969a30338a503f43">powerLowCm33FreqLevel</a> [2][3]</td></tr>
-<tr class="memdesc:ga89a40d18f3eb6706969a30338a503f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frequency levels defined in power library.  <a href="#ga89a40d18f3eb6706969a30338a503f43">More...</a><br/></td></tr>
-<tr class="separator:ga89a40d18f3eb6706969a30338a503f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga566dde551cccfbff838b7f6f474e525b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga566dde551cccfbff838b7f6f474e525b">FSL_POWER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
-<tr class="memdesc:ga566dde551cccfbff838b7f6f474e525b"><td class="mdescLeft">&#160;</td><td class="mdescRight">power driver version 2.3.2.  <a href="#ga566dde551cccfbff838b7f6f474e525b">More...</a><br/></td></tr>
+<tr class="memitem:ga566dde551cccfbff838b7f6f474e525b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga566dde551cccfbff838b7f6f474e525b">FSL_POWER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
+<tr class="memdesc:ga566dde551cccfbff838b7f6f474e525b"><td class="mdescLeft">&#160;</td><td class="mdescRight">power driver version 2.5.0.  <a href="#ga566dde551cccfbff838b7f6f474e525b">More...</a><br/></td></tr>
 <tr class="separator:ga566dde551cccfbff838b7f6f474e525b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00346" id="a00346"></a>
+<a name="a00348" id="a00348"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -447,7 +480,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_POWER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
+          <td class="memname">#define FSL_POWER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -466,15 +499,17 @@ Driver version</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga0534d0c316fa4fe4638687d09f7e1fbd"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga15f214b2d38f6b142814a0a46ef14b9a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define POWER_INVALID_VOLT_LEVEL&#160;&#160;&#160;(0xFFFFFFFFU)</td>
+          <td class="memname">typedef void(* power_vddcore_set_func_t)(uint32_t millivolt)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Refer to <a class="el" href="a00043.html#ga9c91598172b667c713ac605654ded908" title="Set VDDCORE supply source, PMIC or on-chip regulator. ">POWER_SetVddCoreSupplySrc()</a> </p>
 
 </div>
 </div>
@@ -685,7 +720,84 @@ Driver version</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga9043cf2a6084c43b8b0c451f537724c2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00043.html#ga9043cf2a6084c43b8b0c451f537724c2">power_vddcore_src_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9043cf2a6084c43b8b0c451f537724c2a71f69b0e3418eec19794d04fc03b0c46"></a>kVddCoreSrc_LDO</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is supplied by onchip regulator. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9043cf2a6084c43b8b0c451f537724c2a437c60afa31dc290f0631b52fb6b8e6f"></a>kVddCoreSrc_PMIC</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is supplied by external PMIC. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga831ac12ac01bba368ebfdde23418946c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00043.html#ga831ac12ac01bba368ebfdde23418946c">power_control_for_pmic_mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>vddcore and vdd1v8 are always on in mode0. Refer to PMC-&gt;PMICCFG. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga831ac12ac01bba368ebfdde23418946ca333a9b1956d11fb3f5d39ac52329004c"></a>kVddCoreOnMode1</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is powered in PMIC mode1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga831ac12ac01bba368ebfdde23418946ca7a05aff1439d3fc24c52ab7c00a27f6c"></a>kVddCoreOnMode2</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is powered in PMIC mode2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga831ac12ac01bba368ebfdde23418946caaf42b9a61a7bf410c9e819958bba4347"></a>kVddCoreOnMode3</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is powered in PMIC mode3. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga831ac12ac01bba368ebfdde23418946ca5da1b33c59dfe0c14bbdd856f691e10e"></a>kVdd1v8OnMode1</em>&nbsp;</td><td class="fielddoc">
+<p>VDD1V8 is powered in PMIC mode1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga831ac12ac01bba368ebfdde23418946ca885d81662994092082afa266c2d3aa2e"></a>kVdd1v8OnMode2</em>&nbsp;</td><td class="fielddoc">
+<p>VDD1V8 is powered in PMIC mode2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga831ac12ac01bba368ebfdde23418946ca6cecbc2aa4dbfa3a06a917e473291bc0"></a>kVdd1v8OnMode3</em>&nbsp;</td><td class="fielddoc">
+<p>VDD1V8 is powered in PMIC mode3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga8fb07d65f0b0af3e87414a9b5609892e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_PmicPowerModeSelectControl </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>vddSelect</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If not set, the driver will use default configurations for different PMIC mode. The default configuration is as below. PMIC_MODE: power mode select 0b00 run mode, all supplies on. 0b01 deep sleep mode, all supplies on. 0b10 deep powerdown mode, vddcore off. 0b11 full deep powerdown mode vdd1v8 and vddcore off.</p>
+<p>Note, be cautious to modify the VDD state in different PMIC mode. When the default configuration is changed, use exclude_from_pd[0] to configure the PMIC mode for deep sleep and power down mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vddSelect</td><td>the ORd value of <a class="el" href="a00043.html#ga831ac12ac01bba368ebfdde23418946c">power_control_for_pmic_mode</a>. Defines run (all supplies on), deep power-down (VDDCORE off), and true deep power-down (VDD1V8 and VDDCORE off). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="gacf3a138e73725bb8c50290295259bfa4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -967,7 +1079,7 @@ Driver version</h2></td></tr>
         <tr>
           <td class="memname">void POWER_SetPadVolRange </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00043.html#a00346">power_pad_vrange_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00043.html#a00348">power_pad_vrange_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1029,6 +1141,105 @@ Driver version</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true for success and false for CPU frequency out of specified voltOpRange. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9c91598172b667c713ac605654ded908"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetVddCoreSupplySrc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga9043cf2a6084c43b8b0c451f537724c2">power_vddcore_src_t</a>&#160;</td>
+          <td class="paramname"><em>src</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">src</td><td>: <a class="el" href="a00043.html#ga9043cf2a6084c43b8b0c451f537724c2" title="VDDCORE supply source. ">power_vddcore_src_t</a>, VDDCore supply source </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2c2ab1ac72cae98f4cca0e87bf85f38a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetPmicCoreSupplyFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga15f214b2d38f6b142814a0a46ef14b9a">power_vddcore_set_func_t</a>&#160;</td>
+          <td class="paramname"><em>func</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>: <a class="el" href="a00043.html#ga15f214b2d38f6b142814a0a46ef14b9a" title="Callback function used to change VDDCORE when the VDDCORE is supplied by external PMIC...">power_vddcore_set_func_t</a>, the PMIC core supply voltage set function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3bce0f4d75853f022d36a1e865b58672"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool POWER_SetVoltageForFreq </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga879d6a59bf7fc0b3c5969d4e467ea04d">power_part_temp_range_t</a>&#160;</td>
+          <td class="paramname"><em>tempRange</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga2f55d6cc7c679e991a1e594bae7ca0f0">power_volt_op_range_t</a>&#160;</td>
+          <td class="paramname"><em>voltOpRange</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>cm33Freq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>dspFreq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mini_volt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tempRange</td><td>: part temperature range </td></tr>
+    <tr><td class="paramname">voltOpRange</td><td>: voltage operation range. </td></tr>
+    <tr><td class="paramname">cm33Freq</td><td>: CM33 CPU clock frequency value </td></tr>
+    <tr><td class="paramname">dspFreq</td><td>: DSP CPU clock frequency value </td></tr>
+    <tr><td class="paramname">mini_volt</td><td>: minimum voltage in millivolt(mV) for VDDCORE. Should &lt;= 1130mV, 0 means use the core frequency to calculate voltage. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true for success and false for CPU frequency out of specified voltOpRange or failed to set voltage. </dd></dl>
 
 </div>
 </div>
@@ -1218,7 +1429,7 @@ Driver version</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Enable the interrupt for wake-up from deep sleep mode. Some interrupts are typically used in sleep mode only and will not occur during deep-sleep mode because relevant clocks are stopped. However, it is possible to enable those clocks (significantly increasing power consumption in the reduced power mode), making these wake-ups possible. </p>
-<dl class="section note"><dt>Note</dt><dd>This function also enables the interrupt in the NVIC (EnableIRQ() is called internally). </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function also enables the interrupt in the NVIC (<a class="el" href="a00217.html#ga2b92855a9ebf6eadeed1527b8339d50a" title="Enable specific interrupt. ">EnableIRQ()</a> is called internally). </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">interrupt</td><td>The IRQ number. </td></tr>
@@ -1242,7 +1453,7 @@ Driver version</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Disable the interrupt for wake-up from deep sleep mode. Some interrupts are typically used in sleep mode only and will not occur during deep-sleep mode because relevant clocks are stopped. However, it is possible to enable those clocks (significantly increasing power consumption in the reduced power mode), making these wake-ups possible. </p>
-<dl class="section note"><dt>Note</dt><dd>This function also disables the interrupt in the NVIC (DisableIRQ() is called internally). </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function also disables the interrupt in the NVIC (<a class="el" href="a00217.html#ga7f9bbd23e70eaf6670d3425683753961" title="Disable specific interrupt. ">DisableIRQ()</a> is called internally). </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">interrupt</td><td>The IRQ number. </td></tr>
@@ -1266,19 +1477,6 @@ Driver version</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>version number of the power library </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="ga89a40d18f3eb6706969a30338a503f43"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint32_t powerLowCm33FreqLevel[2][3]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>

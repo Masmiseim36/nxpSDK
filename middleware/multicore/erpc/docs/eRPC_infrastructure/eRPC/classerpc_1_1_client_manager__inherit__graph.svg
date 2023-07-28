@@ -29,7 +29,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classerpc_1_1_client_server_common.html" target="_top" xlink:title="Common class inheritand by client and server class. ">
+<g id="a_node2"><a xlink:href="classerpc_1_1_client_server_common.html" target="_top" xlink:title="Common class inherited by client and server class. ">
 <polygon fill="white" stroke="black" points="7,-112.5 7,-131.5 139,-131.5 139,-112.5 7,-112.5"/>
 <text text-anchor="middle" x="73" y="-119.5" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::ClientServerCommon</text>
 </a>

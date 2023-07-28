@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SWO</title>
+<title>MCUXpresso SDK API Reference Manual: UTICK: MictoTick Timer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,76 +98,289 @@ $(document).ready(function(){initNavTree('a00242.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#files">Files</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">SWO<div class="ingroups"><a class="el" href="a00240.html">Debug Console</a></div></div>  </div>
+<div class="title">UTICK: MictoTick Timer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>Serial wire output is a mechanism for ARM targets to output signal from core through a single pin. Some IDEs also support SWO, such IAR and KEIL, both input and output are supported, see below for details.</p>
-<h1><a class="anchor" id="SWOSDKGrps"></a>
-Guide SWO for SDK</h1>
-<p><b>NOTE:</b> After the setting both "printf" and "PRINTF" are available for debugging, JlinkSWOViewer can be used to capture the output log.</p>
-<h2>Step 1: Setting up the environment</h2>
-<ol type="1">
-<li>Define SERIAL_PORT_TYPE_SWO in your project settings.</li>
-<li>Prepare code, the port and baudrate can be decided by application, clkSrcFreq should be mcu core clock frequency: <div class="fragment"><div class="line"><a class="code" href="a00240.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(instance, baudRate, <a class="code" href="a00052.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>, clkSrcFreq);</div>
-</div><!-- fragment --></li>
-<li>Use PRINTF or printf to print some thing in application. <h2>Step 2: Building the project</h2>
-</li>
-</ol>
-<h2>Step 3: Download and run project</h2>
-<h1><a class="anchor" id="SWOIARGrps"></a>
-Guide SWO for IAR</h1>
-<p><b>NOTE:</b> After the setting both "printf" and "scanf" are available for debugging.</p>
-<h2>Step 1: Setting up the environment</h2>
-<ol type="1">
-<li>Choose project -&gt; "Options" -&gt; "Debugger" -&gt; "J-Link/J-Trace".</li>
-<li>Choose tab "J-Link/J-Trace" -&gt; "Connection" tab -&gt; "SWD".</li>
-<li>Choose tab "General Options" -&gt; "Library Configurations", select Semihosted, select Via SWO.</li>
-<li>To configure the hardware’s generation of trace data, click the SWO Configuration button available in the SWO Configuration dialog box. ●The value of the CPU clock option must reflect the frequency of the CPU clock speed at which the application executes. Note also that the settings you make are preserved between debug sessions. ●To decrease the amount of transmissions on the communication channel, you can disable the Timestamp option. Alternatively, set a lower rate for PC Sampling or use a higher SWO clock frequency.</li>
-<li>Open the SWO Trace window from J-LINK,and click the Activate button to enable trace data collection.</li>
-<li>There are three cases for this SDK_DEBUGCONSOLE_UART whether or not defined. a: if use uppercase PRINTF to output log,The SDK_DEBUGCONSOLE_UART defined or not defined will not effect debug function. b: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to zero,then debug function ok. c: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to one,then debug function ok.</li>
-</ol>
-<p><b>NOTE:</b> Case a or c only apply at example which enable swo function,the SDK_DEBUGCONSOLE_UART definition in fsl_debug_console.h. For case a and c, Do and not do the above third step will be not affect function.</p>
-<ol type="1">
-<li>Start the project by choosing Project&gt;Download and Debug. <h2>Step 2: Building the project</h2>
-</li>
-</ol>
-<h2>Step 3: Starting swo</h2>
-<ol type="1">
-<li>Download and debug application.</li>
-<li>Choose View -&gt; Terminal I/O to display the output from the I/O operations.</li>
-<li>Run application.</li>
-</ol>
-<h1><a class="anchor" id="SWOKeilGrps"></a>
-Guide SWO for Keil µVision</h1>
-<p><b>NOTE:</b> After the setting both "printf" and "scanf" are available for debugging.</p>
-<h2>Step 1: Setting up the environment</h2>
-<ol type="1">
-<li>There are three cases for this SDK_DEBUGCONSOLE_UART whether or not defined. a: if use uppercase PRINTF to output log,the SDK_DEBUGCONSOLE_UART definition does not affect the functionality and skip the second step directly. b: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to zero,then start the second step. c: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to one,then skip the second step directly.</li>
-</ol>
-<p><b>NOTE:</b> Case a or c only apply at example which enable swo function,the SDK_DEBUGCONSOLE_UART definition in fsl_debug_console.h.</p>
-<ol type="1">
-<li>In menu bar, click Management Run-Time Environment icon, select Compiler, unfold I/O, enable STDERR/STDIN/STDOUT and set the variant to ITM.</li>
-<li>Open Project&gt;Options for target or using Alt+F7 or click.</li>
-<li>Select “Debug” tab, select “J-Link/J-Trace Cortex” and click “Setting button”.</li>
-<li>Select “Debug” tab and choose Port:SW, then select "Trace" tab, choose "Enable" and click OK, please make sure the Core clock is set correctly, enable autodetect max SWO clk, enable ITM Stimulus Ports 0.</li>
-</ol>
-<h2>Step 3: Building the project</h2>
-<ol type="1">
-<li>Compile and link the project by choosing Project&gt;Build Target or using F7.</li>
-</ol>
-<h2>Step 4: Run the project</h2>
-<ol type="1">
-<li>Choose “Debug” on menu bar or Ctrl F5.</li>
-<li>In menu bar, choose "Serial Window" and click to "Debug (printf) Viewer".</li>
-<li>Run line by line to see result in Console Window.</li>
-</ol>
-<h1><a class="anchor" id="SWOMCUXGrps"></a>
-Guide SWO for MCUXpresso IDE</h1>
-<p><b>NOTE:</b> MCUX support SWO for LPC-Link2 debug probe only.</p>
-<h1><a class="anchor" id="SWOARMGCCGrps"></a>
-Guide SWO for ARMGCC</h1>
-<p><b>NOTE:</b> ARMGCC has no library support SWO. </p>
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the UTICK module of MCUXpresso SDK devices.</p>
+<p>UTICK driver is created to help user to operate the UTICK module. The UTICK timer can be used as a low power timer. The APIs can be used to enable the UTICK module, initialize it and set the time. UTICK can be used as a wake up source from low power mode.</p>
+<h1><a class="anchor" id="UTICKTpyUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/utick </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:a00201"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00201.html">fsl_utick.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga4f7c7bdd94699bdc40c684a07f347c3f"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a> )(void)</td></tr>
+<tr class="memdesc:ga4f7c7bdd94699bdc40c684a07f347c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK callback function.  <a href="#ga4f7c7bdd94699bdc40c684a07f347c3f">More...</a><br/></td></tr>
+<tr class="separator:ga4f7c7bdd94699bdc40c684a07f347c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga18f6018b1dd6708a8ad6c90d4a6b2b51"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#ga18f6018b1dd6708a8ad6c90d4a6b2b51">utick_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00242.html#gga18f6018b1dd6708a8ad6c90d4a6b2b51aaeeddd009e9c2424172ad197ead2d97b">kUTICK_Onetime</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00242.html#gga18f6018b1dd6708a8ad6c90d4a6b2b51a865f02b62034aa073e56629375dee16e">kUTICK_Repeat</a> = 0x1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga18f6018b1dd6708a8ad6c90d4a6b2b51"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK timer operational mode.  <a href="a00242.html#ga18f6018b1dd6708a8ad6c90d4a6b2b51">More...</a><br/></td></tr>
+<tr class="separator:ga18f6018b1dd6708a8ad6c90d4a6b2b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:gaba15862a7512fc2a9c3bcccdb8b76bbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#gaba15862a7512fc2a9c3bcccdb8b76bbf">FSL_UTICK_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
+<tr class="memdesc:gaba15862a7512fc2a9c3bcccdb8b76bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK driver version 2.0.5.  <a href="#gaba15862a7512fc2a9c3bcccdb8b76bbf">More...</a><br/></td></tr>
+<tr class="separator:gaba15862a7512fc2a9c3bcccdb8b76bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga612c590e311ff59c5036d9cf9b3d5141"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#ga612c590e311ff59c5036d9cf9b3d5141">UTICK_Init</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga612c590e311ff59c5036d9cf9b3d5141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an UTICK by turning its bus clock on.  <a href="#ga612c590e311ff59c5036d9cf9b3d5141">More...</a><br/></td></tr>
+<tr class="separator:ga612c590e311ff59c5036d9cf9b3d5141"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga926b042935b415c79beaa6d2552309e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#ga926b042935b415c79beaa6d2552309e0">UTICK_Deinit</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga926b042935b415c79beaa6d2552309e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a UTICK instance.  <a href="#ga926b042935b415c79beaa6d2552309e0">More...</a><br/></td></tr>
+<tr class="separator:ga926b042935b415c79beaa6d2552309e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1073003f8cf4c006ee7b6258556b4df9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#ga1073003f8cf4c006ee7b6258556b4df9">UTICK_GetStatusFlags</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga1073003f8cf4c006ee7b6258556b4df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Status Flags.  <a href="#ga1073003f8cf4c006ee7b6258556b4df9">More...</a><br/></td></tr>
+<tr class="separator:ga1073003f8cf4c006ee7b6258556b4df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42e9e599ac4c314382bc0e99f4ca4d52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#ga42e9e599ac4c314382bc0e99f4ca4d52">UTICK_ClearStatusFlags</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga42e9e599ac4c314382bc0e99f4ca4d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Status Interrupt Flags.  <a href="#ga42e9e599ac4c314382bc0e99f4ca4d52">More...</a><br/></td></tr>
+<tr class="separator:ga42e9e599ac4c314382bc0e99f4ca4d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b314cad747ef275f03fb8cd11b524ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#ga5b314cad747ef275f03fb8cd11b524ee">UTICK_SetTick</a> (UTICK_Type *base, <a class="el" href="a00242.html#ga18f6018b1dd6708a8ad6c90d4a6b2b51">utick_mode_t</a> mode, uint32_t count, <a class="el" href="a00242.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a> cb)</td></tr>
+<tr class="memdesc:ga5b314cad747ef275f03fb8cd11b524ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts UTICK.  <a href="#ga5b314cad747ef275f03fb8cd11b524ee">More...</a><br/></td></tr>
+<tr class="separator:ga5b314cad747ef275f03fb8cd11b524ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1399bca52f347f0db63b88cda0973b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html#gaf1399bca52f347f0db63b88cda0973b8">UTICK_HandleIRQ</a> (UTICK_Type *base, <a class="el" href="a00242.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a> cb)</td></tr>
+<tr class="memdesc:gaf1399bca52f347f0db63b88cda0973b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK Interrupt Service Handler.  <a href="#gaf1399bca52f347f0db63b88cda0973b8">More...</a><br/></td></tr>
+<tr class="separator:gaf1399bca52f347f0db63b88cda0973b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaba15862a7512fc2a9c3bcccdb8b76bbf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_UTICK_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga4f7c7bdd94699bdc40c684a07f347c3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* utick_callback_t)(void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga18f6018b1dd6708a8ad6c90d4a6b2b51"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00242.html#ga18f6018b1dd6708a8ad6c90d4a6b2b51">utick_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga18f6018b1dd6708a8ad6c90d4a6b2b51aaeeddd009e9c2424172ad197ead2d97b"></a>kUTICK_Onetime</em>&nbsp;</td><td class="fielddoc">
+<p>Trigger once. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga18f6018b1dd6708a8ad6c90d4a6b2b51a865f02b62034aa073e56629375dee16e"></a>kUTICK_Repeat</em>&nbsp;</td><td class="fielddoc">
+<p>Trigger repeatedly. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga612c590e311ff59c5036d9cf9b3d5141"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_Init </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga926b042935b415c79beaa6d2552309e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function shuts down Utick bus clock</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1073003f8cf4c006ee7b6258556b4df9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t UTICK_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This returns the status flag</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status register value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga42e9e599ac4c314382bc0e99f4ca4d52"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This clears intr status flag</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5b314cad747ef275f03fb8cd11b524ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_SetTick </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00242.html#ga18f6018b1dd6708a8ad6c90d4a6b2b51">utick_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00242.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function starts a repeat/onetime countdown with an optional callback</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+    <tr><td class="paramname">mode</td><td>UTICK timer mode (ie kUTICK_onetime or kUTICK_repeat) </td></tr>
+    <tr><td class="paramname">count</td><td>UTICK timer mode (ie kUTICK_onetime or kUTICK_repeat) </td></tr>
+    <tr><td class="paramname">cb</td><td>UTICK callback (can be left as NULL if none, otherwise should be a void func(void)) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf1399bca52f347f0db63b88cda0973b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_HandleIRQ </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00242.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function handles the interrupt and refers to the callback array in the driver to callback user (as per request in <a class="el" href="a00242.html#ga5b314cad747ef275f03fb8cd11b524ee" title="Starts UTICK. ">UTICK_SetTick()</a>). if no user callback is scheduled, the interrupt will simply be cleared.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+    <tr><td class="paramname">cb</td><td>callback scheduled for this instance of UTICK </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

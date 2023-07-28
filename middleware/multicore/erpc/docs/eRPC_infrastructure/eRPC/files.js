@@ -29,6 +29,8 @@ var files =
         [ "m_mutex", "classerpc_1_1_inter_thread_buffer_transport.html#a0fe81cb63071c7d696cc2a3d0291df67", null ]
       ] ]
     ] ],
+    [ "erpc_lpi2c_slave_transport.hpp", "erpc__lpi2c__slave__transport_8hpp.html", null ],
+    [ "erpc_lpspi_slave_transport.hpp", "erpc__lpspi__slave__transport_8hpp.html", null ],
     [ "erpc_manually_constructed.hpp", "erpc__manually__constructed_8hpp.html", "erpc__manually__constructed_8hpp" ],
     [ "erpc_mbf_setup.h", "erpc__mbf__setup_8h.html", "erpc__mbf__setup_8h" ],
     [ "erpc_message_buffer.hpp", "erpc__message__buffer_8hpp.html", [

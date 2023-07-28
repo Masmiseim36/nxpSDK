@@ -1,6 +1,6 @@
 <map id="erpc::ArbitratedClientManager" name="erpc::ArbitratedClientManager">
 <area shape="rect" id="node2" href="$classerpc_1_1_client_manager.html" title="Base client implementation. " alt="" coords="1291,109,1429,136"/>
-<area shape="rect" id="node3" href="$classerpc_1_1_client_server_common.html" title="Common class inheritand by client and server class. " alt="" coords="1065,79,1241,105"/>
+<area shape="rect" id="node3" href="$classerpc_1_1_client_server_common.html" title="Common class inherited by client and server class. " alt="" coords="1065,79,1241,105"/>
 <area shape="rect" id="node4" href="$classerpc_1_1_codec_factory.html" title="Abstract interface for codec factory. " alt="" coords="737,5,873,32"/>
 <area shape="rect" id="node5" href="$classerpc_1_1_transport.html" title="Abstract interface for transport layer. " alt="" coords="750,145,859,172"/>
 <area shape="rect" id="node7" href="$classerpc_1_1_transport_arbitrator.html" title="Interposer to share transport between client and server. " alt="" coords="1072,220,1235,247"/>

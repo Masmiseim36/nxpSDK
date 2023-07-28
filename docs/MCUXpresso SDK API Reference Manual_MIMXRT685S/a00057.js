@@ -1,14 +1,14 @@
 var a00057 =
 [
-    [ "spi_dma_handle_t", "a00057.html#a00271", [
-      [ "kStatus_OTP_InvalidAddress", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00", null ],
-      [ "kStatus_OTP_ProgramFail", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93", null ],
-      [ "kStatus_OTP_CrcFail", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4", null ],
-      [ "kStatus_OTP_Error", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa6b2812dc3a772696674644021963e9e5", null ],
-      [ "kStatus_OTP_EccCheckFail", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa04c03b460d85fa1a71ec9b190fa69ec0", null ],
-      [ "kStatus_OTP_Locked", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181faa6a221a15bbe35240999f04e44cffdc7", null ],
-      [ "kStatus_OTP_Timeout", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa365cd204f0eb037f13fcdc9eec986cc4", null ],
-      [ "kStatus_OTP_CrcCheckPass", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fac1090e0c604ff9bb4f40c88653b482c5", null ],
+    [ "spi_dma_handle_t", "a00057.html#a00274", [
+      [ "kStatus_OTP_InvalidAddress", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00", null ],
+      [ "kStatus_OTP_ProgramFail", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93", null ],
+      [ "kStatus_OTP_CrcFail", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4", null ],
+      [ "kStatus_OTP_Error", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181fa6b2812dc3a772696674644021963e9e5", null ],
+      [ "kStatus_OTP_EccCheckFail", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181fa04c03b460d85fa1a71ec9b190fa69ec0", null ],
+      [ "kStatus_OTP_Locked", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181faa6a221a15bbe35240999f04e44cffdc7", null ],
+      [ "kStatus_OTP_Timeout", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181fa365cd204f0eb037f13fcdc9eec986cc4", null ],
+      [ "kStatus_OTP_CrcCheckPass", "a00234.html#gga5d76b81b0ad4c19007a781d4edb8181fac1090e0c604ff9bb4f40c88653b482c5", null ],
       [ "txInProgress", "a00057.html#aaabe40c6b90d200b13e68ac7217fff22", null ],
       [ "rxInProgress", "a00057.html#a685da0814b5b3310007a857d5def7bfb", null ],
       [ "txHandle", "a00057.html#ac1c68e2b431fe999805c73a98e147a2f", null ],

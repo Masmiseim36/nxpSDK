@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,13 +217,13 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=1</state>
           <state>DEBUG</state>
+          <state>_DEBUG=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -231,6 +231,7 @@
           <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -359,15 +360,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -489,7 +490,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -692,7 +693,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1103,7 +1104,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1190,7 +1191,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1207,7 +1208,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1230,7 +1231,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1309,7 +1310,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1323,6 +1324,7 @@
           <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1451,15 +1453,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1581,7 +1583,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1784,7 +1786,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2195,7 +2197,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2282,7 +2284,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2299,7 +2301,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2322,7 +2324,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2401,13 +2403,13 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=0</state>
           <state>NDEBUG</state>
+          <state>_DEBUG=0</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -2415,6 +2417,7 @@
           <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2543,15 +2546,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2673,7 +2676,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2876,7 +2879,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3287,7 +3290,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3374,7 +3377,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3391,7 +3394,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3414,7 +3417,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3493,7 +3496,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3507,6 +3510,7 @@
           <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3635,15 +3639,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../mimxrt685audevk/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3765,7 +3769,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3967,7 +3971,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4369,6 +4373,27 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+  </group>
+  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
@@ -4417,33 +4442,24 @@
     </file>
   </group>
   <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-  </group>
-  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</name>
@@ -4464,43 +4480,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_pint.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</name>
@@ -4509,10 +4492,31 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_pint.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</name>
@@ -4521,10 +4525,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</name>
@@ -4632,6 +4636,9 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
     </file>
     <file>
@@ -4643,22 +4650,13 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</name>
-    </file>
   </group>
   <group>
     <name>component</name>
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
@@ -4675,23 +4673,11 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
       </file>
-    </group>
-    <group>
-      <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
     </group>
     <group>
@@ -4701,6 +4687,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
     <group>
@@ -4719,6 +4714,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/timer/fsl_adapter_mrt.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
       </file>
     </group>
   </group>

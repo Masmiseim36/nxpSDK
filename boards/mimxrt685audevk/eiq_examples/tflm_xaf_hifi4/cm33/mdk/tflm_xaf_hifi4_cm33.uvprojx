@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf;..;../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf;..;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include;../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -369,7 +369,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -497,6 +497,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -532,28 +547,33 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>codec/port/cs42448</GroupName>
           <Files>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_codec_cs42448_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
+              <FileName>fsl_codec_cs42448_adapter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
@@ -603,6 +623,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_dsp.h</FileName>
@@ -687,46 +727,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port/cs42448</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_cs42448_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_cs42448_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
           <Files>
             <File>
@@ -743,6 +743,26 @@
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/bm</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -823,26 +843,6 @@
               <FileName>virtqueue.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/environment/bm</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_specific.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1353,9 +1353,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf;..;../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf;..;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include;../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1389,7 +1389,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1517,6 +1517,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -1552,28 +1567,33 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>codec/port/cs42448</GroupName>
           <Files>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_codec_cs42448_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
+              <FileName>fsl_codec_cs42448_adapter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
@@ -1623,6 +1643,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_dsp.h</FileName>
@@ -1707,46 +1747,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port/cs42448</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_cs42448_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_cs42448_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
           <Files>
             <File>
@@ -1763,6 +1763,26 @@
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/bm</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1843,26 +1863,6 @@
               <FileName>virtqueue.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/environment/bm</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_specific.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>

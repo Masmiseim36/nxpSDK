@@ -7,10 +7,10 @@ buffer and output to the CODEC, where the audio data will be heard from lineout.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- MCUXpresso  11.8.0
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
 
 Hardware requirements
 =====================
@@ -53,5 +53,5 @@ The following lines are printed to the serial terminal when the demo program is 
     Configure I2S
 
 This example transfers data from DMIC to Codec. Connect headphone/earphone on audio out of the board.
-Speak into the DMIC or play audio near the DMIC (U40, U41), and you will hear sound on the left channel of
+Speak into the DMIC or play audio near the DMIC (U40), and you will hear sound on the left channel of
 headphone/earphone.

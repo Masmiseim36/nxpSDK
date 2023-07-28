@@ -13,10 +13,10 @@ All the layer examples are executed in 2 flavours: synchronous and asynchronous.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- MCUXpresso  11.7.0
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
+- IAR embedded Workbench  9.40.1
+- MCUXpresso  11.8.0
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
 
 Hardware requirements
 =====================

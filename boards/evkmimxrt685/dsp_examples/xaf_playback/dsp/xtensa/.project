@@ -343,26 +343,6 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_sema42.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_sema42.h</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_sema42.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_sema42.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>drivers/fsl_spi.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_spi.c</locationURI>
@@ -418,56 +398,6 @@
       <locationURI>PARENT-6-PROJECT_LOC/components/uart/fsl_adapter_usart.c</locationURI>
     </link>
     <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_port_uart.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_uart.h</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_port_uart.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_uart.c</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_manager.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.h</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_port_internal.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_internal.h</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_manager.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.c</locationURI>
-    </link>
-    <link>
       <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -486,6 +416,26 @@
       <name>drivers/fsl_usart.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_usart.c</locationURI>
+    </link>
+    <link>
+      <name>component/serial_manager</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/serial_manager/fsl_component_serial_port_uart.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_uart.h</locationURI>
+    </link>
+    <link>
+      <name>component/serial_manager</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/serial_manager/fsl_component_serial_port_uart.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_uart.c</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -728,64 +678,34 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_gpio.c</locationURI>
     </link>
     <link>
-      <name>drivers</name>
+      <name>component/serial_manager</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_common.h</name>
+      <name>component/serial_manager/fsl_component_serial_manager.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.h</locationURI>
     </link>
     <link>
-      <name>drivers</name>
+      <name>component/serial_manager</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_common.c</name>
+      <name>component/serial_manager/fsl_component_serial_port_internal.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_internal.h</locationURI>
     </link>
     <link>
-      <name>drivers</name>
+      <name>component/serial_manager</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_common_dsp.c</name>
+      <name>component/serial_manager/fsl_component_serial_manager.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common_dsp.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_common_dsp.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.c</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -858,6 +778,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</locationURI>
     </link>
     <link>
+      <name>component/lists</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/lists/fsl_component_generic_list.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.h</locationURI>
+    </link>
+    <link>
+      <name>component/lists</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/lists/fsl_component_generic_list.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.c</locationURI>
+    </link>
+    <link>
       <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -866,6 +806,66 @@
       <name>drivers/fsl_iopctl.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_iopctl.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_sema42.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_sema42.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_sema42.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_sema42.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos/rpmsg_env_xos.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_queue.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/env/xos/rpmsg_queue.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/xos</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/xos/rpmsg_env_specific.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h</locationURI>
     </link>
     <link>
       <name>rpmsg_lite/include</name>
@@ -986,46 +986,6 @@
       <name>rpmsg_lite/include/rpmsg_env.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/env/xos</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/env/xos/rpmsg_env_xos.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_queue.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/env/xos</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/env/xos/rpmsg_queue.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/environment/xos</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/include/environment/xos/rpmsg_env_specific.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
@@ -2433,6 +2393,46 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>drivers/fsl_common.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common_dsp.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common_dsp.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>drivers/fsl_clock.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_clock.h</locationURI>
@@ -2488,6 +2488,36 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_flexcomm.c</locationURI>
     </link>
     <link>
+      <name>EAP/EAP_Includes</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/EAP_Includes/EAP16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/EAP_Includes/EAP16.h</locationURI>
+    </link>
+    <link>
+      <name>utilities</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>utilities/fsl_str.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/str/fsl_str.c</locationURI>
+    </link>
+    <link>
+      <name>utilities</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>utilities/fsl_str.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/str/fsl_str.h</locationURI>
+    </link>
+    <link>
       <name>device</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2526,16 +2556,6 @@
       <name>device/system_MIMXRT685S_dsp.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/EAP_Includes</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/EAP_Includes/EAP16.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/EAP_Includes/EAP16.h</locationURI>
     </link>
   </linkedResources>
 </projectDescription>

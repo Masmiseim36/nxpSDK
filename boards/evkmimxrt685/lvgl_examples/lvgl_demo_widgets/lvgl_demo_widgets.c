@@ -16,9 +16,11 @@
 #include "lvgl.h"
 #include "demos/lv_demos.h"
 
+#include "fsl_dma.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR       DMA0
 
 static volatile bool s_lvgl_initialized = false;
 
@@ -70,6 +72,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+    DMA_Init(EXAMPLE_LPSPI_MASTER_DMA_BASEADDR);
 
     stat = xTaskCreate(AppTask, "lvgl", configMINIMAL_STACK_SIZE + 800, NULL, tskIDLE_PRIORITY + 2, NULL);
 

@@ -49,8 +49,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXF_CORE_ID=0")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXF_CFG_CORES_NUM=1")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DHAVE_XOS")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DHIFI_ONLY_XAF")
@@ -60,6 +58,10 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFIO_LOCAL_FS")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT685SFVKB_dsp")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_XOS=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -83,11 +85,25 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -INLINE:requested")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-unused")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-missing-braces")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fmessage-length=0")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mno-mul16")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mno-mul32")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mno-div32")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fsigned-char")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mlongcalls")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -INLINE:requested")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
@@ -107,8 +123,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXF_CORE_ID=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXF_CFG_CORES_NUM=1")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DHAVE_XOS")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DHIFI_ONLY_XAF")
@@ -118,6 +132,10 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFIO_LOCAL_FS")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT685SFVKB_dsp")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_XOS=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -139,19 +157,33 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -INLINE:requested")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wno-unused")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wno-missing-braces")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fmessage-length=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mno-mul16")
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mno-mul32")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mno-div32")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fsigned-char")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mlongcalls")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -INLINE:requested")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MIMXRT685SFVKB_dsp")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
@@ -165,6 +197,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsigned-char")
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-unused")
+
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-missing-braces")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fmessage-length=0")
@@ -173,11 +207,11 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MIMXRT685SFVKB_dsp")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
 
@@ -188,6 +222,8 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} --xtensa-system=${XTENSA
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fsigned-char")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wno-unused")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wno-missing-braces")
 
@@ -239,15 +275,15 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/vorbi
 
 include_directories(${ProjDirPath}/../../../../../../components/gpio)
 
-include_directories(${ProjDirPath}/../../../../../../components/lists)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include)
+include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include)
 
@@ -317,21 +353,16 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_spi.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_spi.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_spi_dma.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_spi_dma.h"
 "${ProjDirPath}/../../../../../../components/uart/fsl_adapter_uart.h"
 "${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_ctimer.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_ctimer.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_dma.c"
@@ -348,12 +379,9 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_dmic_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common_dsp.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common_dsp.h"
-"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
-"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart_dma.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
@@ -361,7 +389,15 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h"
@@ -374,10 +410,6 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/rbtree.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-audio-codec.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-base.c"
@@ -502,6 +534,10 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common_dsp.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,25 +217,25 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=1</state>
           <state>DEBUG</state>
+          <state>_DEBUG=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -362,15 +362,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
@@ -494,7 +494,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -699,7 +699,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1109,7 +1109,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1196,7 +1196,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1213,7 +1213,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1236,7 +1236,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1315,7 +1315,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1328,12 +1328,12 @@
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1460,15 +1460,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
@@ -1592,7 +1592,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1797,7 +1797,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2207,7 +2207,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2294,7 +2294,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2311,7 +2311,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2334,7 +2334,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2413,25 +2413,25 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=0</state>
           <state>NDEBUG</state>
+          <state>_DEBUG=0</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2558,15 +2558,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
@@ -2690,7 +2690,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2895,7 +2895,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3305,7 +3305,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3392,7 +3392,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3409,7 +3409,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3432,7 +3432,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3511,7 +3511,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3524,12 +3524,12 @@
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3656,15 +3656,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
@@ -3788,7 +3788,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3992,7 +3992,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4393,9 +4393,24 @@
     </settings>
   </configuration>
   <group>
-    <name>doc</name>
+    <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
   </group>
   <group>
@@ -4420,24 +4435,9 @@
     </file>
   </group>
   <group>
-    <name>board</name>
+    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
+      <name>$PROJ_DIR$/../readme.txt</name>
     </file>
   </group>
   <group>
@@ -4445,7 +4445,31 @@
     <group>
       <name>device</name>
       <group>
+        <name>class</name>
+        <group>
+          <name>printer</name>
+          <file>
+            <name>$PROJ_DIR$/../usb_device_printer.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../usb_device_printer.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_class.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_class.h</name>
+        </file>
+      </group>
+      <group>
         <name>source</name>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
+        </file>
         <group>
           <name>lpcip3511</name>
           <file>
@@ -4456,12 +4480,6 @@
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
         </file>
         <file>
@@ -4470,24 +4488,6 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
         </file>
-      </group>
-      <group>
-        <name>class</name>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.h</name>
-        </file>
-        <group>
-          <name>printer</name>
-          <file>
-            <name>$PROJ_DIR$/../usb_device_printer.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../usb_device_printer.h</name>
-          </file>
-        </group>
       </group>
       <group>
         <name>include</name>
@@ -4525,45 +4525,6 @@
     <name>freertos</name>
     <group>
       <name>freertos-kernel</name>
-      <group>
-        <name>portable</name>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
-        <group>
-          <name>IAR</name>
-          <group>
-            <name>ARM_CM33_NTZ</name>
-            <group>
-              <name>non_secure</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
-              </file>
-            </group>
-          </group>
-        </group>
-      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
       </file>
@@ -4636,6 +4597,45 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
       </file>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM33_NTZ</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
       </file>
@@ -4651,7 +4651,73 @@
     </group>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</name>
     </file>
@@ -4671,22 +4737,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</name>
@@ -4695,19 +4749,19 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</name>
@@ -4729,7 +4783,34 @@
     </file>
   </group>
   <group>
+    <name>MIMXRT685S</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</name>
+    </file>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/startup_MIMXRT685S_cm33.s</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>flash_config</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../flash_config/flash_config.h</name>
+    </file>
+  </group>
+  <group>
     <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
     </file>
@@ -4745,87 +4826,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>flash_config</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../flash_config/flash_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>MIMXRT685S</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</name>
-    </file>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/startup_MIMXRT685S_cm33.s</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>CMSIS</name>

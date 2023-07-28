@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/mpi_loader;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1118,7 +1118,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/mpi_loader;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1903,7 +1903,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/mpi_loader;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -2688,7 +2688,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/mpi_loader;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>

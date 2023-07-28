@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1204,6 +1204,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -1339,6 +1349,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -1362,6 +1382,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -1491,6 +1516,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1527,26 +1577,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1883,7 +1913,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1917,7 +1947,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2753,6 +2783,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -2888,6 +2928,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -2911,6 +2961,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -3040,6 +3095,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -3076,26 +3156,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3432,7 +3492,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3466,7 +3526,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -4302,6 +4362,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -4437,6 +4507,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -4460,6 +4540,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -4589,6 +4674,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -4625,26 +4735,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4981,7 +5071,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5015,7 +5105,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -5851,6 +5941,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -5986,6 +6086,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -6009,6 +6119,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -6138,6 +6253,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -6174,26 +6314,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
           </Files>
         </Group>

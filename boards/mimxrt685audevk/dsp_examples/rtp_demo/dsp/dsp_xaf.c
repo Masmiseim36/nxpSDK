@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -74,6 +74,16 @@ static void dsp_xaf_free(void *ptr, int32_t id)
     free(ptr);
 }
 
+void DSP_PRINTF(const char* ptr, ...)
+{
+    va_list ap;
+    SEMA42_Lock(APP_SEMA42, SEMA_PRINTF_NUM, SEMA_CORE_ID_DSP);
+    va_start(ap, ptr);
+    DbgConsole_Vprintf(ptr, ap);
+    va_end(ap);
+    SEMA42_Unlock(APP_SEMA42, SEMA_PRINTF_NUM);
+}
+
 static void timer_expired(void *arg)
 {
     XosSem *frame_elapsed = (XosSem *)arg;
@@ -140,15 +150,15 @@ void dsp_xaf_init(dsp_handle_t *dsp)
 
     DSP_PRINTF("\r\n");
 
-    DSP_PRINTF("Cadence Xtensa Audio Framework\r\n");
-    DSP_PRINTF("  Library Name    : %s\r\n", version[0]);
-    DSP_PRINTF("  Library Version : %s\r\n", version[1]);
-    DSP_PRINTF("  API Version     : %s\r\n", version[2]);
+    DSP_PRINTF("[dsp_xaf] Cadence Xtensa Audio Framework\r\n");
+    DSP_PRINTF("[dsp_xaf] Library Name    : %s\r\n", version[0]);
+    DSP_PRINTF("[dsp_xaf] Library Version : %s\r\n", version[1]);
+    DSP_PRINTF("[dsp_xaf] API Version     : %s\r\n", version[2]);
     DSP_PRINTF("\r\n");
 
-    DSP_PRINTF("%s\r\n", xa_g711_get_lib_name_string());
-    DSP_PRINTF("  Library Version : %s\r\n", xa_g711_get_lib_version_string());
-    DSP_PRINTF("  API Version     : %s\r\n", xa_g711_get_lib_api_version_string());
+    DSP_PRINTF("[dsp_xaf] %s\r\n", xa_g711_get_lib_name_string());
+    DSP_PRINTF("[dsp_xaf] Library Version : %s\r\n", xa_g711_get_lib_version_string());
+    DSP_PRINTF("[dsp_xaf] API Version     : %s\r\n", xa_g711_get_lib_api_version_string());
 
     DSP_PRINTF("\r\n");
 }

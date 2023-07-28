@@ -369,7 +369,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -445,16 +445,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -475,6 +465,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -483,6 +483,26 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -530,16 +550,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
@@ -548,6 +558,11 @@
               <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1079,7 +1094,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1155,16 +1170,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -1185,6 +1190,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -1193,6 +1208,26 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1240,16 +1275,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
@@ -1258,6 +1283,11 @@
               <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1789,7 +1819,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1865,16 +1895,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -1895,6 +1915,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -1903,6 +1933,26 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1950,16 +2000,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
@@ -1968,6 +2008,11 @@
               <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2499,7 +2544,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2575,16 +2620,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_trng.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -2605,6 +2640,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -2613,6 +2658,26 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -2660,16 +2725,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
@@ -2678,6 +2733,11 @@
               <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
           </Files>
         </Group>

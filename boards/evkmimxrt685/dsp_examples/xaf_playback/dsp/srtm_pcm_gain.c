@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -141,7 +141,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
     if ((dsp->buffer_in.data == 0) || (dsp->buffer_in.size == 0) || (dsp->buffer_out.data == 0) ||
         (dsp->buffer_out.size == 0))
     {
-        DSP_PRINTF("Invalid IO Buffers!\n");
+        DSP_PRINTF("[DSP Gain] Invalid IO Buffers!\n");
         exit(-1);
     }
 
@@ -155,7 +155,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
     ret = xaf_adev_open(&p_adev, &device_config);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Gain] xaf_adev_open failure: %d\r\n", ret);
         return -1;
     }
 
@@ -168,7 +168,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
     ret = xaf_comp_create(p_adev, &p_pcm_gain, &comp_config);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Gain] xaf_comp_create failure: %d\r\n", ret);
         return -1;
     }
 
@@ -178,7 +178,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
     xaf_comp_process(p_adev, p_pcm_gain, NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Gain] xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
         return -1;
     }
 
@@ -193,7 +193,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
             ret = xaf_comp_process(p_adev, p_pcm_gain, pcm_gain_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
             if (ret != XAF_NO_ERR)
             {
-                DSP_PRINTF("xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
+                DSP_PRINTF("[DSP Gain] xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
                 return -1;
             }
         }
@@ -205,7 +205,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
         ret = xaf_comp_get_status(p_adev, p_pcm_gain, &pcm_gain_status, &pcm_gain_info[0]);
         if (ret != XAF_NO_ERR)
         {
-            DSP_PRINTF("xaf_comp_get_status failure: %d\r\n", ret);
+            DSP_PRINTF("[DSP Gain] xaf_comp_get_status failure: %d\r\n", ret);
             return -1;
         }
 
@@ -217,7 +217,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
 
     if (pcm_gain_status != XAF_INIT_DONE)
     {
-        DSP_PRINTF("ERROR: Failed to initialize gainer component\r\n");
+        DSP_PRINTF("[DSP Gain] ERROR: Failed to initialize gainer component\r\n");
         return -1;
     }
 
@@ -242,14 +242,14 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
     ret = xaf_comp_delete(p_pcm_gain);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Gain] xaf_comp_delete failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Gain] xaf_adev_close failure: %d\r\n", ret);
         return -1;
     }
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: OSTIMER: OS Event Timer Driver</title>
+<title>MCUXpresso SDK API Reference Manual: INPUTMUX: Input Multiplexing Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,285 +100,233 @@ $(document).ready(function(){initNavTree('a00235.html','');});
 <div class="header">
   <div class="summary">
 <a href="#files">Files</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">OSTIMER: OS Event Timer Driver</div>  </div>
+<div class="title">INPUTMUX: Input Multiplexing Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the OSTIMER module of MCUXpresso SDK devices. OSTIMER driver is created to help user to operate the OSTIMER module. The OSTIMER timer can be used as a low power timer. The APIs can be used to enable the OSTIMER module, initialize it and set the match time, get the current timer count. And the raw value in OS timer register is gray-code type, so both decimal and gray-code format API were added for users. OSTIMER can be used as a wake up source from low power mode.</p>
-<h1><a class="anchor" id="OSTIMERFunc"></a>
-Function groups</h1>
-<p>The OSTIMER driver supports operating the module as a time counter.</p>
-<h2><a class="anchor" id="OSTIMERInit"></a>
-Initialization and deinitialization</h2>
-<p>The <a class="el" href="a00235.html#ga575fcffb115c76d2986d8c64a152ea7b" title="Initializes an OSTIMER by turning its bus clock on. ">OSTIMER_Init()</a> function will initialize the OSTIMER and enable the clock for OSTIMER. The <a class="el" href="a00235.html#gacabf48efa9079adc9d71f64c29863f68" title="Deinitializes a OSTIMER instance. ">OSTIMER_Deinit()</a> function will shut down the bus clock of OSTIMER.</p>
-<h2><a class="anchor" id="OSTIMERsTATUS"></a>
-OSTIMER status</h2>
-<p>The function <a class="el" href="a00235.html#ga20486459bd687b67ccbe23a186320fea" title="Get OSTIMER status Flags. ">OSTIMER_GetStatusFlags()</a> will get the current status flag of OSTIMER. The function OSTIMER_ClearStatusFlag() will help clear the status flags.</p>
-<h2><a class="anchor" id="OSTIMERMatchValue"></a>
-OSTIMER set match value</h2>
-<p>For OSTIMER, allow users set the match in two ways, set match value with raw data(gray code) and st the match value with common data(decimal format). <a class="el" href="a00235.html#gac1d3a55e30354fbf5ade50456da6dfcc" title="Set the match raw value for OSTIMER. ">OSTIMER_SetMatchRawValue()</a> is used with gray code and <a class="el" href="a00235.html#gafa080f88a75d1a6e3fbe17482f89fe70" title="Set the match value for OSTIMER. ">OSTIMER_SetMatchValue()</a> is used together with decimal data.</p>
-<h2><a class="anchor" id="OSTIMERTimerCount"></a>
-OSTIMER get timer count</h2>
-<p>The OSTIMER driver allow users to get the timer count in two ways, getting the gray code value by using <a class="el" href="a00235.html#ga8e8b5d2e9d62a5f59fbb0d0de5991b9a" title="Get the capture value from OSTIMER. ">OSTIMER_GetCaptureRawValue()</a> and getting the decimal data by using <a class="el" href="a00235.html#gaedcc9b8f01a37ce8505348300b2af7f1" title="Get current timer count value from OSTIMER. ">OSTIMER_GetCurrentTimerValue()</a>.</p>
-<h1><a class="anchor" id="OSTIMERUseCase"></a>
+<p>The MCUXpresso SDK provides a driver for the Input multiplexing (INPUTMUX). <br/>
+It configures the inputs to the pin interrupt block, DMA trigger, and frequency measure function. Once configured, the clock is not needed for the inputmux. <br/>
+ </p>
+<h1><a class="anchor" id="INPUTMUXInit"></a>
+Input Multiplexing Driver operation</h1>
+<p>INPUTMUX_AttachSignal function configures the specified input</p>
+<h1><a class="anchor" id="INPUTMUXTypUC"></a>
 Typical use case</h1>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/ostimer/ </p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/inputmux </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00181"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html">fsl_ostimer.h</a></td></tr>
+<tr class="memitem:a00164"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00164.html">fsl_inputmux.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00099"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html">fsl_inputmux_connections.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gacf52fa3c35d54caf94c639603261ebb4"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> )(void)</td></tr>
-<tr class="memdesc:gacf52fa3c35d54caf94c639603261ebb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ostimer callback function.  <a href="#gacf52fa3c35d54caf94c639603261ebb4">More...</a><br/></td></tr>
-<tr class="separator:gacf52fa3c35d54caf94c639603261ebb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga227df33dfe2aed994d27887b6cdbe801"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga227df33dfe2aed994d27887b6cdbe801"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga227df33dfe2aed994d27887b6cdbe801">SCT0_PMUX_ID</a>&#160;&#160;&#160;0x00U</td></tr>
+<tr class="memdesc:ga227df33dfe2aed994d27887b6cdbe801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periphinmux IDs. <br/></td></tr>
+<tr class="separator:ga227df33dfe2aed994d27887b6cdbe801"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaac312289965a1d084b78995332c8bcdb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaac312289965a1d084b78995332c8bcdb">_ostimer_flags</a> { <a class="el" href="a00235.html#ggaac312289965a1d084b78995332c8bcdba55d291c3a4ec78cbc55f05847146e8b4">kOSTIMER_MatchInterruptFlag</a> = (OSTIMER_OSEVENT_CTRL_OSTIMER_INTRFLAG_MASK)
+<tr class="memitem:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6578893c8d3f1a355f3d6a1f134d742a">kINPUTMUX_Sct0PinInp0ToSct0</a> = 0U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba1e042af47b407b5b414e22bab7f3e87d">kINPUTMUX_DebugHaltedToSct0</a> = 23U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba55c96954290ceb81ca5340dc369e8398">kINPUTMUX_GpioPort1Pin31ToPintsel</a> = 63U + (PINTSEL_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6bd295ca0d4418fd4a6901f24203e94f">kINPUTMUX_FlexspiToDspInterrupt</a> = 34U + (DSP_INT_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba8a32cbc30569942384aa1836c9feb437">kINPUTMUX_FreqmeGpioClkToFreqmeas</a> = 6U + (FREQMEAS_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba51b1f9f4cdacbdd3702e513740a99549">kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</a> = 18U + (CT32BIT0_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba2fe1df092eb9829f95bf7608b40ba928">kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</a> = 18U + (CT32BIT1_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bac920efa83706e1b4626d54c3a96398bf">kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</a> = 18U + (CT32BIT2_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba5b9e39446b7f0a2829a31c76bb276148">kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</a> = 18U + (CT32BIT3_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163babdf35ff88b3936fe3d7c28177336db05">kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</a> = 18U + (CT32BIT4_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bafe834f88ae7cdc34c3ddbb9786911b85">kINPUTMUX_FlexspiTxToDma0</a> = 29U + (DMA0_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bab53933a01ac425ec701b55a472d76ca1">kINPUTMUX_FlexspiTxToDma1</a> = 29U + (DMA1_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba93afc4bf5035aa077e7ceb1a124c3ecd">kINPUTMUX_Dma0OtrigChannel32ToTriginChannels</a> = 32U + (DMA0_OTRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
+<br/>
  }</td></tr>
-<tr class="memdesc:gaac312289965a1d084b78995332c8bcdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">OSTIMER status flags.  <a href="a00235.html#gaac312289965a1d084b78995332c8bcdb">More...</a><br/></td></tr>
-<tr class="separator:gaac312289965a1d084b78995332c8bcdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX connections type.  <a href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">More...</a><br/></td></tr>
+<tr class="separator:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1be6152afb5eac6042f6488947f16b1e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1eaf9eff4ec73dd1f30aa917eb601d6c7f1">kINPUTMUX_Dmac0InputTriggerPint0Ena</a> = 0U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1ea879489de7ef5e4309eaaad821c024275">kINPUTMUX_Dmac0InputTriggerFlexspiTxEna</a> = 29U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1ea789f2d65e85b5e3cf8d50ea036dd6eda">kINPUTMUX_Dmac1InputTriggerFlexspiTxEna</a> = 29U + (DMA1_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1ea39953ac87dbad66ae3c4ec1f862c91ef">kINPUTMUX_HashCryptToDmac0Ch30RequestEna</a> = 30U + (DMA0_REQ_ENA0_ID &lt;&lt; ENA_SHIFT)
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1be6152afb5eac6042f6488947f16b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX signal enable/disable type.  <a href="a00235.html#ga1be6152afb5eac6042f6488947f16b1e">More...</a><br/></td></tr>
+<tr class="separator:ga1be6152afb5eac6042f6488947f16b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gae02fecc3b8aab2a9d3f40f07ca7114a4">INPUTMUX_Init</a> (INPUTMUX_Type *base)</td></tr>
+<tr class="memdesc:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize INPUTMUX peripheral.  <a href="#gae02fecc3b8aab2a9d3f40f07ca7114a4">More...</a><br/></td></tr>
+<tr class="separator:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaa4f141e3874109e45c2a6f9be027e0ee">INPUTMUX_AttachSignal</a> (INPUTMUX_Type *base, uint32_t index, <a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a> connection)</td></tr>
+<tr class="memdesc:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a signal.  <a href="#gaa4f141e3874109e45c2a6f9be027e0ee">More...</a><br/></td></tr>
+<tr class="separator:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaf84e3b0d7a06af86ea6f1ac0d6edf382">INPUTMUX_Deinit</a> (INPUTMUX_Type *base)</td></tr>
+<tr class="memdesc:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize INPUTMUX peripheral.  <a href="#gaf84e3b0d7a06af86ea6f1ac0d6edf382">More...</a><br/></td></tr>
+<tr class="separator:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gab236ace723c08a0a7b8b1df2b34ee375"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gab236ace723c08a0a7b8b1df2b34ee375">FSL_OSTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
-<tr class="memdesc:gab236ace723c08a0a7b8b1df2b34ee375"><td class="mdescLeft">&#160;</td><td class="mdescRight">OSTIMER driver version.  <a href="#gab236ace723c08a0a7b8b1df2b34ee375">More...</a><br/></td></tr>
-<tr class="separator:gab236ace723c08a0a7b8b1df2b34ee375"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga575fcffb115c76d2986d8c64a152ea7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga575fcffb115c76d2986d8c64a152ea7b">OSTIMER_Init</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:ga575fcffb115c76d2986d8c64a152ea7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an OSTIMER by turning its bus clock on.  <a href="#ga575fcffb115c76d2986d8c64a152ea7b">More...</a><br/></td></tr>
-<tr class="separator:ga575fcffb115c76d2986d8c64a152ea7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacabf48efa9079adc9d71f64c29863f68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gacabf48efa9079adc9d71f64c29863f68">OSTIMER_Deinit</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:gacabf48efa9079adc9d71f64c29863f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a OSTIMER instance.  <a href="#gacabf48efa9079adc9d71f64c29863f68">More...</a><br/></td></tr>
-<tr class="separator:gacabf48efa9079adc9d71f64c29863f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga781cdfc8f94edec6214964abccb43d59"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga781cdfc8f94edec6214964abccb43d59">OSTIMER_GrayToDecimal</a> (uint64_t gray)</td></tr>
-<tr class="memdesc:ga781cdfc8f94edec6214964abccb43d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate the value from gray-code to decimal.  <a href="#ga781cdfc8f94edec6214964abccb43d59">More...</a><br/></td></tr>
-<tr class="separator:ga781cdfc8f94edec6214964abccb43d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7d0d290d85412702670d7d4b0a87b62"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaf7d0d290d85412702670d7d4b0a87b62">OSTIMER_DecimalToGray</a> (uint64_t dec)</td></tr>
-<tr class="memdesc:gaf7d0d290d85412702670d7d4b0a87b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate the value from decimal to gray-code.  <a href="#gaf7d0d290d85412702670d7d4b0a87b62">More...</a><br/></td></tr>
-<tr class="separator:gaf7d0d290d85412702670d7d4b0a87b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga20486459bd687b67ccbe23a186320fea"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga20486459bd687b67ccbe23a186320fea">OSTIMER_GetStatusFlags</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:ga20486459bd687b67ccbe23a186320fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get OSTIMER status Flags.  <a href="#ga20486459bd687b67ccbe23a186320fea">More...</a><br/></td></tr>
-<tr class="separator:ga20486459bd687b67ccbe23a186320fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa8ce064965da4ddae0d318f8dd2f7a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaaa8ce064965da4ddae0d318f8dd2f7a5">OSTIMER_ClearStatusFlags</a> (OSTIMER_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaaa8ce064965da4ddae0d318f8dd2f7a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Status Interrupt Flags.  <a href="#gaaa8ce064965da4ddae0d318f8dd2f7a5">More...</a><br/></td></tr>
-<tr class="separator:gaaa8ce064965da4ddae0d318f8dd2f7a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1d3a55e30354fbf5ade50456da6dfcc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gac1d3a55e30354fbf5ade50456da6dfcc">OSTIMER_SetMatchRawValue</a> (OSTIMER_Type *base, uint64_t count, <a class="el" href="a00235.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> cb)</td></tr>
-<tr class="memdesc:gac1d3a55e30354fbf5ade50456da6dfcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the match raw value for OSTIMER.  <a href="#gac1d3a55e30354fbf5ade50456da6dfcc">More...</a><br/></td></tr>
-<tr class="separator:gac1d3a55e30354fbf5ade50456da6dfcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa080f88a75d1a6e3fbe17482f89fe70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gafa080f88a75d1a6e3fbe17482f89fe70">OSTIMER_SetMatchValue</a> (OSTIMER_Type *base, uint64_t count, <a class="el" href="a00235.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> cb)</td></tr>
-<tr class="memdesc:gafa080f88a75d1a6e3fbe17482f89fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the match value for OSTIMER.  <a href="#gafa080f88a75d1a6e3fbe17482f89fe70">More...</a><br/></td></tr>
-<tr class="separator:gafa080f88a75d1a6e3fbe17482f89fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1df9495c6a1f63f621510a6f0fd767d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gad1df9495c6a1f63f621510a6f0fd767d">OSTIMER_SetMatchRegister</a> (OSTIMER_Type *base, uint64_t value)</td></tr>
-<tr class="memdesc:gad1df9495c6a1f63f621510a6f0fd767d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value to OSTIMER MATCH register directly.  <a href="#gad1df9495c6a1f63f621510a6f0fd767d">More...</a><br/></td></tr>
-<tr class="separator:gad1df9495c6a1f63f621510a6f0fd767d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31eb0176e79686beb6084fb432eb18d0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga31eb0176e79686beb6084fb432eb18d0">OSTIMER_EnableMatchInterrupt</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:ga31eb0176e79686beb6084fb432eb18d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the OSTIMER counter match interrupt.  <a href="#ga31eb0176e79686beb6084fb432eb18d0">More...</a><br/></td></tr>
-<tr class="separator:ga31eb0176e79686beb6084fb432eb18d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf60122d7b4717f4f1703a03e452b724e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaf60122d7b4717f4f1703a03e452b724e">OSTIMER_DisableMatchInterrupt</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:gaf60122d7b4717f4f1703a03e452b724e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the OSTIMER counter match interrupt.  <a href="#gaf60122d7b4717f4f1703a03e452b724e">More...</a><br/></td></tr>
-<tr class="separator:gaf60122d7b4717f4f1703a03e452b724e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8a253a9a44e2073f4ac6673d025aa60"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaa8a253a9a44e2073f4ac6673d025aa60">OSTIMER_GetCurrentTimerRawValue</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:gaa8a253a9a44e2073f4ac6673d025aa60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current timer raw count value from OSTIMER.  <a href="#gaa8a253a9a44e2073f4ac6673d025aa60">More...</a><br/></td></tr>
-<tr class="separator:gaa8a253a9a44e2073f4ac6673d025aa60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedcc9b8f01a37ce8505348300b2af7f1"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaedcc9b8f01a37ce8505348300b2af7f1">OSTIMER_GetCurrentTimerValue</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:gaedcc9b8f01a37ce8505348300b2af7f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current timer count value from OSTIMER.  <a href="#gaedcc9b8f01a37ce8505348300b2af7f1">More...</a><br/></td></tr>
-<tr class="separator:gaedcc9b8f01a37ce8505348300b2af7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga8e8b5d2e9d62a5f59fbb0d0de5991b9a">OSTIMER_GetCaptureRawValue</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the capture value from OSTIMER.  <a href="#ga8e8b5d2e9d62a5f59fbb0d0de5991b9a">More...</a><br/></td></tr>
-<tr class="separator:ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga877efd24b60e479795af41dc365561c5"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga877efd24b60e479795af41dc365561c5">OSTIMER_GetCaptureValue</a> (OSTIMER_Type *base)</td></tr>
-<tr class="memdesc:ga877efd24b60e479795af41dc365561c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the capture value from OSTIMER.  <a href="#ga877efd24b60e479795af41dc365561c5">More...</a><br/></td></tr>
-<tr class="separator:ga877efd24b60e479795af41dc365561c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad80c44c301cf21a8d5762de871d22632"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gad80c44c301cf21a8d5762de871d22632">OSTIMER_HandleIRQ</a> (OSTIMER_Type *base, <a class="el" href="a00235.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> cb)</td></tr>
-<tr class="memdesc:gad80c44c301cf21a8d5762de871d22632"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS timer interrupt Service Handler.  <a href="#gad80c44c301cf21a8d5762de871d22632">More...</a><br/></td></tr>
-<tr class="separator:gad80c44c301cf21a8d5762de871d22632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga166fc4ada71e4fa9e160774700c976d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga166fc4ada71e4fa9e160774700c976d7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga166fc4ada71e4fa9e160774700c976d7">FSL_INPUTMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
+<tr class="memdesc:ga166fc4ada71e4fa9e160774700c976d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group interrupt driver version for SDK. <br/></td></tr>
+<tr class="separator:ga166fc4ada71e4fa9e160774700c976d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab236ace723c08a0a7b8b1df2b34ee375"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_OSTIMER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gacf52fa3c35d54caf94c639603261ebb4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* ostimer_callback_t)(void)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaac312289965a1d084b78995332c8bcdb"></a>
+<a class="anchor" id="ga7ac6f6ac5dd2b621eabb60d2ab48163b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00235.html#gaac312289965a1d084b78995332c8bcdb">_ostimer_flags</a></td>
+          <td class="memname">enum <a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaac312289965a1d084b78995332c8bcdba55d291c3a4ec78cbc55f05847146e8b4"></a>kOSTIMER_MatchInterruptFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Match interrupt flag bit, sets if the match value was reached. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba6578893c8d3f1a355f3d6a1f134d742a"></a>kINPUTMUX_Sct0PinInp0ToSct0</em>&nbsp;</td><td class="fielddoc">
+<p>SCT INMUX. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba1e042af47b407b5b414e22bab7f3e87d"></a>kINPUTMUX_DebugHaltedToSct0</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba55c96954290ceb81ca5340dc369e8398"></a>kINPUTMUX_GpioPort1Pin31ToPintsel</em>&nbsp;</td><td class="fielddoc">
+<p>DSP Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba6bd295ca0d4418fd4a6901f24203e94f"></a>kINPUTMUX_FlexspiToDspInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>Frequency measure. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba8a32cbc30569942384aa1836c9feb437"></a>kINPUTMUX_FreqmeGpioClkToFreqmeas</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier0 capture input mux. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba51b1f9f4cdacbdd3702e513740a99549"></a>kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier1 capture input mux. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba2fe1df092eb9829f95bf7608b40ba928"></a>kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier2 capture input mux. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bac920efa83706e1b4626d54c3a96398bf"></a>kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier3 capture input mux. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba5b9e39446b7f0a2829a31c76bb276148"></a>kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier4 capture input mux. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163babdf35ff88b3936fe3d7c28177336db05"></a>kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 ITRIG. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bafe834f88ae7cdc34c3ddbb9786911b85"></a>kINPUTMUX_FlexspiTxToDma0</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 ITRIG. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bab53933a01ac425ec701b55a472d76ca1"></a>kINPUTMUX_FlexspiTxToDma1</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 OTRIG. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba93afc4bf5035aa077e7ceb1a124c3ecd"></a>kINPUTMUX_Dma0OtrigChannel32ToTriginChannels</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 OTRIG. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga1be6152afb5eac6042f6488947f16b1e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00235.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1eaf9eff4ec73dd1f30aa917eb601d6c7f1"></a>kINPUTMUX_Dmac0InputTriggerPint0Ena</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 input trigger source enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea879489de7ef5e4309eaaad821c024275"></a>kINPUTMUX_Dmac0InputTriggerFlexspiTxEna</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 input trigger source enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea789f2d65e85b5e3cf8d50ea036dd6eda"></a>kINPUTMUX_Dmac1InputTriggerFlexspiTxEna</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 REQ signal. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea39953ac87dbad66ae3c4ec1f862c91ef"></a>kINPUTMUX_HashCryptToDmac0Ch30RequestEna</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 REQ signal. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga575fcffb115c76d2986d8c64a152ea7b"></a>
+<a class="anchor" id="gae02fecc3b8aab2a9d3f40f07ca7114a4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OSTIMER_Init </td>
+          <td class="memname">void INPUTMUX_Init </td>
           <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramtype">INPUTMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gacabf48efa9079adc9d71f64c29863f68"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void OSTIMER_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function shuts down OSTIMER bus clock</p>
+<p>This function enables the INPUTMUX clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga781cdfc8f94edec6214964abccb43d59"></a>
+<a class="anchor" id="gaa4f141e3874109e45c2a6f9be027e0ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t OSTIMER_GrayToDecimal </td>
+          <td class="memname">void INPUTMUX_AttachSignal </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>gray</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">gray</td><td>The gray value input. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The decimal value. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf7d0d290d85412702670d7d4b0a87b62"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t OSTIMER_DecimalToGray </td>
-          <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>dec</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dec</td><td>The decimal value. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The gray code of the input value. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga20486459bd687b67ccbe23a186320fea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t OSTIMER_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This returns the status flag. Currently, only match interrupt flag can be got.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status register value </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaaa8ce064965da4ddae0d318f8dd2f7a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void OSTIMER_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramtype">INPUTMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a>&#160;</td>
+          <td class="paramname"><em>connection</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -387,362 +335,50 @@ Initialization and deinitialization</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This clears intrrupt status flag. Currently, only match interrupt flag can be cleared.</p>
+<p>This function gates the INPUTPMUX clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Clear bit mask. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac1d3a55e30354fbf5ade50456da6dfcc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OSTIMER_SetMatchRawValue </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00235.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>cb</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function will set a match value for OSTIMER with an optional callback. And this callback will be called while the data in dedicated pair match register is equals to the value of central EVTIMER. Please note that, the data format is gray-code, if decimal data was desired, please using <a class="el" href="a00235.html#gafa080f88a75d1a6e3fbe17482f89fe70" title="Set the match value for OSTIMER. ">OSTIMER_SetMatchValue()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-    <tr><td class="paramname">count</td><td>OSTIMER timer match value.(Value is gray-code format)</td></tr>
-    <tr><td class="paramname">cb</td><td>OSTIMER callback (can be left as NULL if none, otherwise should be a void func(void)). </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral. </td></tr>
+    <tr><td class="paramname">index</td><td>Destination peripheral to attach the signal to. </td></tr>
+    <tr><td class="paramname">connection</td><td>Selects connection.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>- Set match raw value and enable interrupt Successfully. </td></tr>
-    <tr><td class="paramname">kStatus_Fail</td><td>- Set match raw value fail. </td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gafa080f88a75d1a6e3fbe17482f89fe70"></a>
+<a class="anchor" id="gaf84e3b0d7a06af86ea6f1ac0d6edf382"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OSTIMER_SetMatchValue </td>
+          <td class="memname">void INPUTMUX_Deinit </td>
           <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">INPUTMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00235.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>cb</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function will set a match value for OSTIMER with an optional callback. And this callback will be called while the data in dedicated pair match register is equals to the value of central OS TIMER.</p>
+<p>This function disables the INPUTMUX clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-    <tr><td class="paramname">count</td><td>OSTIMER timer match value.(Value is decimal format, and this value will be translate to Gray code internally.)</td></tr>
-    <tr><td class="paramname">cb</td><td>OSTIMER callback (can be left as NULL if none, otherwise should be a void func(void)). </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>- Set match value and enable interrupt Successfully. </td></tr>
-    <tr><td class="paramname">kStatus_Fail</td><td>- Set match value fail. </td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="gad1df9495c6a1f63f621510a6f0fd767d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void OSTIMER_SetMatchRegister </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function writes the input value to OSTIMER MATCH register directly, it does not touch any other registers. Note that, the data format is gray-code. The function <a class="el" href="a00235.html#gaf7d0d290d85412702670d7d4b0a87b62">OSTIMER_DecimalToGray</a> could convert decimal value to gray code.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-    <tr><td class="paramname">count</td><td>OSTIMER timer match value (Value is gray-code format). </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga31eb0176e79686beb6084fb432eb18d0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void OSTIMER_EnableMatchInterrupt </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Enable the timer counter match interrupt. The interrupt happens when OSTIMER counter matches the value in MATCH registers.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf60122d7b4717f4f1703a03e452b724e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void OSTIMER_DisableMatchInterrupt </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Disable the timer counter match interrupt. The interrupt happens when OSTIMER counter matches the value in MATCH registers.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa8a253a9a44e2073f4ac6673d025aa60"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t OSTIMER_GetCurrentTimerRawValue </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function will get a gray code type timer count value from OS timer register. The raw value of timer count is gray code format.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Raw value of OSTIMER, gray code format. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaedcc9b8f01a37ce8505348300b2af7f1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t OSTIMER_GetCurrentTimerValue </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function will get a decimal timer count value. The RAW value of timer count is gray code format, will be translated to decimal data internally.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Value of OSTIMER which will be formated to decimal value. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t OSTIMER_GetCaptureRawValue </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function will get a captured gray-code value from OSTIMER. The Raw value of timer capture is gray code format.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Raw value of capture register, data format is gray code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga877efd24b60e479795af41dc365561c5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t OSTIMER_GetCaptureValue </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function will get a capture decimal-value from OSTIMER. The RAW value of timer capture is gray code format, will be translated to decimal data internally.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Value of capture register, data format is decimal. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad80c44c301cf21a8d5762de871d22632"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void OSTIMER_HandleIRQ </td>
-          <td>(</td>
-          <td class="paramtype">OSTIMER_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00235.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>cb</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function handles the interrupt and refers to the callback array in the driver to callback user (as per request in <a class="el" href="a00235.html#gafa080f88a75d1a6e3fbe17482f89fe70" title="Set the match value for OSTIMER. ">OSTIMER_SetMatchValue()</a>). if no user callback is scheduled, the interrupt will simply be cleared.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OS timer peripheral base address. </td></tr>
-    <tr><td class="paramname">cb</td><td>callback scheduled for this instance of OS timer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>

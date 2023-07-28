@@ -14,6 +14,8 @@ var annotated_dup =
       [ "FramedTransport", "classerpc_1_1_framed_transport.html", "classerpc_1_1_framed_transport" ],
       [ "I2cSlaveTransport", "classerpc_1_1_i2c_slave_transport.html", "classerpc_1_1_i2c_slave_transport" ],
       [ "InterThreadBufferTransport", "classerpc_1_1_inter_thread_buffer_transport.html", "classerpc_1_1_inter_thread_buffer_transport" ],
+      [ "LPI2cSlaveTransport", "classerpc_1_1_l_p_i2c_slave_transport.html", "classerpc_1_1_l_p_i2c_slave_transport" ],
+      [ "LPSpiSlaveTransport", "classerpc_1_1_l_p_spi_slave_transport.html", "classerpc_1_1_l_p_spi_slave_transport" ],
       [ "ManuallyConstructed", "classerpc_1_1_manually_constructed.html", "classerpc_1_1_manually_constructed" ],
       [ "MessageBuffer", "classerpc_1_1_message_buffer.html", "classerpc_1_1_message_buffer" ],
       [ "MessageBufferFactory", "classerpc_1_1_message_buffer_factory.html", "classerpc_1_1_message_buffer_factory" ],
@@ -47,6 +49,7 @@ var annotated_dup =
     ] ],
     [ "DynamicMessageBufferFactory", "class_dynamic_message_buffer_factory.html", "class_dynamic_message_buffer_factory" ],
     [ "I2C_CLB_USER_DATA_PTR", "struct_i2_c___c_l_b___u_s_e_r___d_a_t_a.html", "struct_i2_c___c_l_b___u_s_e_r___d_a_t_a" ],
+    [ "LPI2C_CLB_USER_DATA_PTR", "struct_l_p_i2_c___c_l_b___u_s_e_r___d_a_t_a.html", "struct_l_p_i2_c___c_l_b___u_s_e_r___d_a_t_a" ],
     [ "RPMsgMessageBufferFactory", "class_r_p_msg_message_buffer_factory.html", "class_r_p_msg_message_buffer_factory" ],
     [ "RPMsgTTYMessageBufferFactory", "class_r_p_msg_t_t_y_message_buffer_factory.html", "class_r_p_msg_t_t_y_message_buffer_factory" ],
     [ "StaticMessageBufferFactory", "class_static_message_buffer_factory.html", "class_static_message_buffer_factory" ]

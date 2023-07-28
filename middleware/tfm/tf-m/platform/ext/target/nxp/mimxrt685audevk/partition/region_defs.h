@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2017-2021 Arm Limited. All rights reserved.
- * Copyright 2019-2020 NXP. All rights reserved.
+ * Copyright (c) 2017-2022 Arm Limited. All rights reserved.
+ * Copyright 2019-2022 NXP. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,7 @@
 #define S_PSP_STACK_SIZE        (0x0000800)
 
 #define NS_HEAP_SIZE            (0x0001000)
-#define NS_MSP_STACK_SIZE       (0x00000A0)
-#define NS_PSP_STACK_SIZE       (0x0000140)
+#define NS_STACK_SIZE           (0x00001E0)
 
 /* This size of buffer is big enough to store an attestation
  * token produced by initial attestation service
@@ -174,9 +173,9 @@ security tier by programing corresponding registers in secure AHB controller. */
                                   FLASH_NS_PARTITION_SIZE)
 
 /* Code SRAM area */
-#define TOTAL_CODE_SRAM_SIZE     (0x8000) /* SRAM X region */
-#define S_CODE_SRAM_ALIAS_BASE   (0x14000000)
-#define NS_CODE_SRAM_ALIAS_BASE  (0x04000000)
+#define S_RAM_CODE_SIZE          (0x8000) /* SRAM X region */
+#define S_RAM_CODE_START         (0x14000000)
+#define NS_RAM_CODE_START        (0x04000000)
 
 #ifdef BL2
 /* Bootloader regions */

@@ -13,9 +13,5 @@ var searchData=
   ['tfa9xxx_5fsetplaychannel',['TFA9XXX_SetPlayChannel',['../a00059.html#gad89435440dc3d13a138e90f74ad19e49',1,'fsl_tfa9xxx.h']]],
   ['tfa9xxx_5fsetvolume',['TFA9XXX_SetVolume',['../a00059.html#ga9e95cbcbd8b21dd14480345c666c910e',1,'fsl_tfa9xxx.h']]],
   ['tfa9xxx_5fstart',['TFA9XXX_Start',['../a00059.html#ga65aadcf752d494bd7bf86ad1251f6f54',1,'fsl_tfa9xxx.h']]],
-  ['tfa9xxx_5fstop',['TFA9XXX_Stop',['../a00059.html#ga960e6ea9ce122c491d819724f5ceae81',1,'fsl_tfa9xxx.h']]],
-  ['trng_5fdeinit',['TRNG_Deinit',['../a00061.html#gacdcc7542e374e611c888008a227b878c',1,'fsl_trng.h']]],
-  ['trng_5fgetdefaultconfig',['TRNG_GetDefaultConfig',['../a00061.html#ga3f90793dd83a0ac2249fdcb8fa762c6a',1,'fsl_trng.h']]],
-  ['trng_5fgetrandomdata',['TRNG_GetRandomData',['../a00061.html#gaac12716aedb0b05e8be3e96433c8ad56',1,'fsl_trng.h']]],
-  ['trng_5finit',['TRNG_Init',['../a00061.html#gaefef4539a93045832f10d28f094d26ea',1,'fsl_trng.h']]]
+  ['tfa9xxx_5fstop',['TFA9XXX_Stop',['../a00059.html#ga960e6ea9ce122c491d819724f5ceae81',1,'fsl_tfa9xxx.h']]]
 ];

@@ -32,28 +32,9 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCPU_MIMXRT685SFVKB_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DTFM_LVL=2 \
-    -DITS_MAX_ASSET_SIZE=512 \
-    -DPS_MAX_ASSET_SIZE=512 \
     -DOS_DYNAMIC_MEM_SIZE=7168 \
-    -DTFM_CRYPTO_TEST_ALG_CCM \
-    -DTFM_CRYPTO_TEST_HKDF \
-    -DTEST_FRAMEWORK_NS \
-    -DTEST_FRAMEWORK_S \
-    -DTEST_NS_ITS \
-    -DTEST_NS_PS \
-    -DTEST_NS_PLATFORM \
-    -DT_COSE_USE_PSA_CRYPTO \
-    -DTEST_NS_CRYPTO \
-    -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE \
-    -DTEST_NS_QCBOR \
-    -DTFM_PARTITION_IPC_TEST \
-    -DTEST_NS_IPC \
-    -DTFM_PSA_API \
-    -DTEST_NS_CORE \
-    -DTFM_ENABLE_PERIPH_ACCESS_TEST \
-    -DTEST_NS_SLIH_IRQ \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
+    -DTFM_LVL=2 \
     -DCONFIG_TFM_FLOAT_ABI=2 \
     -DCONFIG_TFM_ENABLE_CP10CP11 \
     -DCONFIG_TFM_LAZY_STACKING \
@@ -62,14 +43,37 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCONFIG_TFM_USE_TRUSTZONE \
     -DATTEST_TOKEN_PROFILE_PSA_IOT_1 \
     -DPLATFORM_DEFAULT_CRYPTO_KEYS \
+    -DPS_ENCRYPTION \
+    -DTFM_CRYPTO_TEST_ALG_CBC \
+    -DTFM_CRYPTO_TEST_ALG_CCM \
+    -DTFM_CRYPTO_TEST_ALG_GCM \
+    -DTFM_CRYPTO_TEST_ALG_SHA_512 \
+    -DTFM_CRYPTO_TEST_HKDF \
+    -DTFM_CRYPTO_TEST_ECDH \
+    -DTEST_FRAMEWORK_NS \
+    -DTEST_FRAMEWORK_S \
+    -DTEST_NS_PS \
+    -DTEST_NS_PLATFORM \
+    -DTEST_NS_QCBOR \
+    -DTFM_PARTITION_IPC_TEST \
+    -DTEST_NS_IPC \
+    -DTEST_NS_SLIH_IRQ \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DTEST_NS_ITS \
+    -DTEST_NS_CRYPTO \
+    -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE \
+    -DT_COSE_USE_PSA_CRYPTO \
+    -DQCBOR_DISABLE_FLOAT_HW_USE \
+    -DUSEFULBUF_DISABLE_ALL_FLOAT \
+    -DQCBOR_DISABLE_PREFERRED_FLOAT \
     -DTEST_NS_ATTESTATION \
-    -DMCUXPRESSO_SDK \
     -O1 \
     -g \
     -O0 \
     -Wno-unused-variable \
     -Wno-unused-but-set-variable \
     -Wno-return-type \
+    -Wno-maybe-uninitialized \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -91,28 +95,9 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCPU_MIMXRT685SFVKB_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DTFM_LVL=2 \
-    -DITS_MAX_ASSET_SIZE=512 \
-    -DPS_MAX_ASSET_SIZE=512 \
     -DOS_DYNAMIC_MEM_SIZE=7168 \
-    -DTFM_CRYPTO_TEST_ALG_CCM \
-    -DTFM_CRYPTO_TEST_HKDF \
-    -DTEST_FRAMEWORK_NS \
-    -DTEST_FRAMEWORK_S \
-    -DTEST_NS_ITS \
-    -DTEST_NS_PS \
-    -DTEST_NS_PLATFORM \
-    -DT_COSE_USE_PSA_CRYPTO \
-    -DTEST_NS_CRYPTO \
-    -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE \
-    -DTEST_NS_QCBOR \
-    -DTFM_PARTITION_IPC_TEST \
-    -DTEST_NS_IPC \
-    -DTFM_PSA_API \
-    -DTEST_NS_CORE \
-    -DTFM_ENABLE_PERIPH_ACCESS_TEST \
-    -DTEST_NS_SLIH_IRQ \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
+    -DTFM_LVL=2 \
     -DCONFIG_TFM_FLOAT_ABI=2 \
     -DCONFIG_TFM_ENABLE_CP10CP11 \
     -DCONFIG_TFM_LAZY_STACKING \
@@ -121,12 +106,35 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCONFIG_TFM_USE_TRUSTZONE \
     -DATTEST_TOKEN_PROFILE_PSA_IOT_1 \
     -DPLATFORM_DEFAULT_CRYPTO_KEYS \
+    -DPS_ENCRYPTION \
+    -DTFM_CRYPTO_TEST_ALG_CBC \
+    -DTFM_CRYPTO_TEST_ALG_CCM \
+    -DTFM_CRYPTO_TEST_ALG_GCM \
+    -DTFM_CRYPTO_TEST_ALG_SHA_512 \
+    -DTFM_CRYPTO_TEST_HKDF \
+    -DTFM_CRYPTO_TEST_ECDH \
+    -DTEST_FRAMEWORK_NS \
+    -DTEST_FRAMEWORK_S \
+    -DTEST_NS_PS \
+    -DTEST_NS_PLATFORM \
+    -DTEST_NS_QCBOR \
+    -DTFM_PARTITION_IPC_TEST \
+    -DTEST_NS_IPC \
+    -DTEST_NS_SLIH_IRQ \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DTEST_NS_ITS \
+    -DTEST_NS_CRYPTO \
+    -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE \
+    -DT_COSE_USE_PSA_CRYPTO \
+    -DQCBOR_DISABLE_FLOAT_HW_USE \
+    -DUSEFULBUF_DISABLE_ALL_FLOAT \
+    -DQCBOR_DISABLE_PREFERRED_FLOAT \
     -DTEST_NS_ATTESTATION \
-    -DMCUXPRESSO_SDK \
     -Os \
     -Wno-unused-variable \
     -Wno-unused-but-set-variable \
     -Wno-return-type \
+    -Wno-maybe-uninitialized \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -145,8 +153,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
     -DDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -168,8 +176,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -190,6 +198,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -g \
+    -Wl,--no-warn-rwx-segment \
     -mcpu=cortex-m33 \
     -Wall \
     -fno-common \
@@ -212,10 +221,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns_pre.ld -static \
+    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
+    -Wl,--no-warn-rwx-segment \
     -mcpu=cortex-m33 \
     -Wall \
     -fno-common \
@@ -238,5 +248,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns_pre.ld -static \
+    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld -static \
 ")

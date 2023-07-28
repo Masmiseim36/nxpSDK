@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, SCANF_ADVANCED_ENABLE=1, SCANF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, SCANF_ADVANCED_ENABLE=1, SCANF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../dsp_examples/nn_demo/cm33;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
+              <IncludePath>..;../../../../dsp_examples/nn_demo/cm33;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/pca9420;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG, DSP_IMAGE_COPY_TO_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, SCANF_ADVANCED_ENABLE=1, SCANF_FLOAT_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../dsp/binary</IncludePath>
+              <IncludePath>../../dsp/binary;..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -368,13 +368,28 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x600" --predefine="-D__heap_size__=0x60000" --predefine="-D__use_shmem__=1"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x600" --predefine="-D__heap_size__=0x60000" --predefine="-D__use_shmem__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>dsp_binary</GroupName>
+          <Files>
+            <File>
+              <FileName>dsp_text_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_data_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -618,23 +633,38 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dsp_binary</GroupName>
-          <Files>
-            <File>
-              <FileName>dsp_text_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_data_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_dsp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -706,36 +736,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dsp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</FilePath>
@@ -798,8 +798,43 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>rpmsg_lite/include</GroupName>
           <Files>
+            <File>
+              <FileName>rpmsg_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+            </File>
             <File>
               <FileName>rpmsg_lite.h</FileName>
               <FileType>5</FileType>
@@ -840,10 +875,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
             <File>
-              <FileName>rpmsg_queue.h</FileName>
+              <FileName>rpmsg_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -858,26 +918,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>rpmsg_lite/virtio</GroupName>
           <Files>
             <File>
@@ -888,22 +928,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <GroupName>pmic_driver</GroupName>
           <Files>
             <File>
-              <FileName>rpmsg_env_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_specific.h</FileName>
+              <FileName>fsl_pca9420.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -934,41 +969,6 @@
               <FileName>portmacrocommon.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacrocommon.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_m33</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_platform.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1061,6 +1061,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1074,16 +1084,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1124,46 +1124,6 @@
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1334,6 +1294,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1668,9 +1668,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, SCANF_ADVANCED_ENABLE=1, SCANF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, SCANF_ADVANCED_ENABLE=1, SCANF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../dsp_examples/nn_demo/cm33;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
+              <IncludePath>..;../../../../dsp_examples/nn_demo/cm33;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/pca9420;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1688,7 +1688,7 @@
               <MiscControls/>
               <Define>NDEBUG, DSP_IMAGE_COPY_TO_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, SCANF_ADVANCED_ENABLE=1, SCANF_FLOAT_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../dsp/binary</IncludePath>
+              <IncludePath>../../dsp/binary;..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1704,13 +1704,28 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x600" --predefine="-D__heap_size__=0x60000" --predefine="-D__use_shmem__=1"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x600" --predefine="-D__heap_size__=0x60000" --predefine="-D__use_shmem__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>dsp_binary</GroupName>
+          <Files>
+            <File>
+              <FileName>dsp_text_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_data_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -1954,23 +1969,38 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dsp_binary</GroupName>
-          <Files>
-            <File>
-              <FileName>dsp_text_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_data_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_dsp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -2042,36 +2072,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dsp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</FilePath>
@@ -2134,8 +2134,43 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>rpmsg_lite/include</GroupName>
           <Files>
+            <File>
+              <FileName>rpmsg_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+            </File>
             <File>
               <FileName>rpmsg_lite.h</FileName>
               <FileType>5</FileType>
@@ -2176,10 +2211,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
             <File>
-              <FileName>rpmsg_queue.h</FileName>
+              <FileName>rpmsg_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2194,26 +2254,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>rpmsg_lite/virtio</GroupName>
           <Files>
             <File>
@@ -2224,22 +2264,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <GroupName>pmic_driver</GroupName>
           <Files>
             <File>
-              <FileName>rpmsg_env_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_specific.h</FileName>
+              <FileName>fsl_pca9420.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2270,41 +2305,6 @@
               <FileName>portmacrocommon.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacrocommon.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_m33</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_platform.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2397,6 +2397,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2410,16 +2420,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2460,46 +2460,6 @@
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2670,6 +2630,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

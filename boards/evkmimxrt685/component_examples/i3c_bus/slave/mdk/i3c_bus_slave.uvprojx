@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -431,31 +431,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/i3c_bus</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_i3c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -482,6 +457,31 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i3c_bus</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_i3c_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1068,7 +1068,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1102,7 +1102,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1165,31 +1165,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/i3c_bus</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_i3c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -1216,6 +1191,31 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i3c_bus</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_i3c_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1802,7 +1802,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1836,7 +1836,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1899,31 +1899,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/i3c_bus</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_i3c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -1950,6 +1925,31 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i3c_bus</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_i3c_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2536,7 +2536,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/i3c_bus;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2570,7 +2570,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2633,31 +2633,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/i3c_bus</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_i3c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_i3c_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -2684,6 +2659,31 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i3c_bus</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_i3c_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i3c_bus/fsl_component_i3c.c</FilePath>
             </File>
           </Files>
         </Group>

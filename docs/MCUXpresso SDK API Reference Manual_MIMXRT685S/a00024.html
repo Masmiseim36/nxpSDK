@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Hashcrypt AES</title>
+<title>MCUXpresso SDK API Reference Manual: Hashcrypt HASH</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,214 +101,100 @@ $(document).ready(function(){initNavTree('a00024.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Hashcrypt AES<div class="ingroups"><a class="el" href="a00226.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
+<div class="title">Hashcrypt HASH<div class="ingroups"><a class="el" href="a00230.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00260"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00260">hashcrypt_handle_t</a></td></tr>
-<tr class="memdesc:a00260"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify HASHCRYPT's key resource.  <a href="a00024.html#a00260">More...</a><br/></td></tr>
-<tr class="separator:a00260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00315"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a></td></tr>
+<tr class="memdesc:a00315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage type used to save hash context.  <a href="a00024.html#a00315">More...</a><br/></td></tr>
+<tr class="separator:a00315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gac8b498d3aa014ca9ea26a73569784ae0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac8b498d3aa014ca9ea26a73569784ae0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>&#160;&#160;&#160;16U</td></tr>
-<tr class="memdesc:gac8b498d3aa014ca9ea26a73569784ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES block size in bytes. <br/></td></tr>
-<tr class="separator:gac8b498d3aa014ca9ea26a73569784ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc879a329aeebb2374413abfc5083a21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gabc879a329aeebb2374413abfc5083a21">HASHCRYPT_HASH_CTX_SIZE</a>&#160;&#160;&#160;22</td></tr>
+<tr class="memdesc:gabc879a329aeebb2374413abfc5083a21"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT HASH Context size.  <a href="#gabc879a329aeebb2374413abfc5083a21">More...</a><br/></td></tr>
+<tr class="separator:gabc879a329aeebb2374413abfc5083a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga99fbd5e3f32ab77bad5665b2132d303e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga99fbd5e3f32ab77bad5665b2132d303e">hashcrypt_aes_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00024.html#gga99fbd5e3f32ab77bad5665b2132d303ea0b341ebc1af794d7d780776eae7050f8">kHASHCRYPT_AesEcb</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00024.html#gga99fbd5e3f32ab77bad5665b2132d303eadfeddaa9cff97dab711a4a4264c48b07">kHASHCRYPT_AesCbc</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00024.html#gga99fbd5e3f32ab77bad5665b2132d303ea3252c207115c92c80180015ef4ee417f">kHASHCRYPT_AesCtr</a> = 2U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga99fbd5e3f32ab77bad5665b2132d303e"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES mode.  <a href="a00024.html#ga99fbd5e3f32ab77bad5665b2132d303e">More...</a><br/></td></tr>
-<tr class="separator:ga99fbd5e3f32ab77bad5665b2132d303e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62d58d7deb14dcf07d6fe879a5c85647"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga62d58d7deb14dcf07d6fe879a5c85647">hashcrypt_aes_keysize_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00024.html#gga62d58d7deb14dcf07d6fe879a5c85647aa955c404a22333ebc64caaeed4aedb95">kHASHCRYPT_Aes128</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00024.html#gga62d58d7deb14dcf07d6fe879a5c85647a7b547726c7eb6dd8e0cb25a9b6e55a0b">kHASHCRYPT_Aes192</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00024.html#gga62d58d7deb14dcf07d6fe879a5c85647a0db84e68020267772cf2359d370c099d">kHASHCRYPT_Aes256</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00024.html#gga62d58d7deb14dcf07d6fe879a5c85647abb6ec83ec0ef173f82e610e700f61e67">kHASHCRYPT_InvalidKey</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga62d58d7deb14dcf07d6fe879a5c85647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of AES key.  <a href="a00024.html#ga62d58d7deb14dcf07d6fe879a5c85647">More...</a><br/></td></tr>
-<tr class="separator:ga62d58d7deb14dcf07d6fe879a5c85647"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga593f0275c17035f079f9b9b0cdeed4d6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga593f0275c17035f079f9b9b0cdeed4d6">hashcrypt_key_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00024.html#gga593f0275c17035f079f9b9b0cdeed4d6acaad99c28b932ad32149eba64816e2d7">kHASHCRYPT_UserKey</a> = 0xc3c3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00024.html#gga593f0275c17035f079f9b9b0cdeed4d6aa0ccddd84bfdaa8a87561a1b228df303">kHASHCRYPT_SecretKey</a> = 0x3c3cU
-<br/>
- }</td></tr>
-<tr class="memdesc:ga593f0275c17035f079f9b9b0cdeed4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT key source selection.  <a href="a00024.html#ga593f0275c17035f079f9b9b0cdeed4d6">More...</a><br/></td></tr>
-<tr class="separator:ga593f0275c17035f079f9b9b0cdeed4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gae5749cb2ff6548699a66eea40667f7c6"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gae5749cb2ff6548699a66eea40667f7c6">hashcrypt_callback_t</a> )(HASHCRYPT_Type *base, <a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gae5749cb2ff6548699a66eea40667f7c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT background hash callback function.  <a href="#gae5749cb2ff6548699a66eea40667f7c6">More...</a><br/></td></tr>
+<tr class="separator:gae5749cb2ff6548699a66eea40667f7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga516111a46b4c1e6d172005f1cf9546e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga516111a46b4c1e6d172005f1cf9546e3">HASHCRYPT_AES_SetKey</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *key, size_t keySize)</td></tr>
-<tr class="memdesc:ga516111a46b4c1e6d172005f1cf9546e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set AES key to hashcrypt_handle_t struct and optionally to HASHCRYPT.  <a href="#ga516111a46b4c1e6d172005f1cf9546e3">More...</a><br/></td></tr>
-<tr class="separator:ga516111a46b4c1e6d172005f1cf9546e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga417b271e51105b9506b5b9b5fe89cf74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga417b271e51105b9506b5b9b5fe89cf74">HASHCRYPT_AES_EncryptEcb</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size)</td></tr>
-<tr class="memdesc:ga417b271e51105b9506b5b9b5fe89cf74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES on one or multiple 128-bit block(s).  <a href="#ga417b271e51105b9506b5b9b5fe89cf74">More...</a><br/></td></tr>
-<tr class="separator:ga417b271e51105b9506b5b9b5fe89cf74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f171677c79d7903cd6e66409565b83e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga0f171677c79d7903cd6e66409565b83e">HASHCRYPT_AES_DecryptEcb</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size)</td></tr>
-<tr class="memdesc:ga0f171677c79d7903cd6e66409565b83e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES on one or multiple 128-bit block(s).  <a href="#ga0f171677c79d7903cd6e66409565b83e">More...</a><br/></td></tr>
-<tr class="separator:ga0f171677c79d7903cd6e66409565b83e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa71be50a4d4417e46fb8aae6c85759aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaa71be50a4d4417e46fb8aae6c85759aa">HASHCRYPT_AES_EncryptCbc</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[16])</td></tr>
-<tr class="memdesc:gaa71be50a4d4417e46fb8aae6c85759aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using CBC block mode.  <a href="#gaa71be50a4d4417e46fb8aae6c85759aa">More...</a><br/></td></tr>
-<tr class="separator:gaa71be50a4d4417e46fb8aae6c85759aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf65c31d69a8ad1d985091fa5de5dfa17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaf65c31d69a8ad1d985091fa5de5dfa17">HASHCRYPT_AES_DecryptCbc</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[16])</td></tr>
-<tr class="memdesc:gaf65c31d69a8ad1d985091fa5de5dfa17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using CBC block mode.  <a href="#gaf65c31d69a8ad1d985091fa5de5dfa17">More...</a><br/></td></tr>
-<tr class="separator:gaf65c31d69a8ad1d985091fa5de5dfa17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga209a497b9766b85ac2a76d3b3b5f3163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga209a497b9766b85ac2a76d3b3b5f3163">HASHCRYPT_AES_CryptCtr</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *input, uint8_t *output, size_t size, uint8_t counter[<a class="el" href="a00024.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>], uint8_t counterlast[<a class="el" href="a00024.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>], size_t *szLeft)</td></tr>
-<tr class="memdesc:ga209a497b9766b85ac2a76d3b3b5f3163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts or decrypts AES using CTR block mode.  <a href="#ga209a497b9766b85ac2a76d3b3b5f3163">More...</a><br/></td></tr>
-<tr class="separator:ga209a497b9766b85ac2a76d3b3b5f3163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e0d6e211b37c9f82cff48fe9e80115d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga8e0d6e211b37c9f82cff48fe9e80115d">HASHCRYPT_AES_CryptOfb</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *input, uint8_t *output, size_t size, const uint8_t iv[<a class="el" href="a00024.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>])</td></tr>
-<tr class="memdesc:ga8e0d6e211b37c9f82cff48fe9e80115d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts or decrypts AES using OFB block mode.  <a href="#ga8e0d6e211b37c9f82cff48fe9e80115d">More...</a><br/></td></tr>
-<tr class="separator:ga8e0d6e211b37c9f82cff48fe9e80115d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23c43c66d7654bbf9b116b7a949ead60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga23c43c66d7654bbf9b116b7a949ead60">HASHCRYPT_AES_EncryptCfb</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[16])</td></tr>
-<tr class="memdesc:ga23c43c66d7654bbf9b116b7a949ead60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using CFB block mode.  <a href="#ga23c43c66d7654bbf9b116b7a949ead60">More...</a><br/></td></tr>
-<tr class="separator:ga23c43c66d7654bbf9b116b7a949ead60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3b9c8a805fbd8b004fcde0add292f3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaa3b9c8a805fbd8b004fcde0add292f3a">HASHCRYPT_AES_DecryptCfb</a> (HASHCRYPT_Type *base, hashcrypt_handle_t *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[16])</td></tr>
-<tr class="memdesc:gaa3b9c8a805fbd8b004fcde0add292f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using CFB block mode.  <a href="#gaa3b9c8a805fbd8b004fcde0add292f3a">More...</a><br/></td></tr>
-<tr class="separator:gaa3b9c8a805fbd8b004fcde0add292f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabdb13d49e7b828fa64af17230f3ac799"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gabdb13d49e7b828fa64af17230f3ac799">HASHCRYPT_SHA</a> (HASHCRYPT_Type *base, <a class="el" href="a00232.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a> algo, const uint8_t *input, size_t inputSize, uint8_t *output, size_t *outputSize)</td></tr>
+<tr class="memdesc:gabdb13d49e7b828fa64af17230f3ac799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create HASH on given data.  <a href="#gabdb13d49e7b828fa64af17230f3ac799">More...</a><br/></td></tr>
+<tr class="separator:gabdb13d49e7b828fa64af17230f3ac799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga704d85f639d6e7c6a1450bc20a68425d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga704d85f639d6e7c6a1450bc20a68425d">HASHCRYPT_SHA_Init</a> (HASHCRYPT_Type *base, <a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, <a class="el" href="a00232.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a> algo)</td></tr>
+<tr class="memdesc:ga704d85f639d6e7c6a1450bc20a68425d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize HASH context.  <a href="#ga704d85f639d6e7c6a1450bc20a68425d">More...</a><br/></td></tr>
+<tr class="separator:ga704d85f639d6e7c6a1450bc20a68425d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73e2339a36879daa7aa54491387ba103"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga73e2339a36879daa7aa54491387ba103">HASHCRYPT_SHA_Update</a> (HASHCRYPT_Type *base, <a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, const uint8_t *input, size_t inputSize)</td></tr>
+<tr class="memdesc:ga73e2339a36879daa7aa54491387ba103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to current HASH.  <a href="#ga73e2339a36879daa7aa54491387ba103">More...</a><br/></td></tr>
+<tr class="separator:ga73e2339a36879daa7aa54491387ba103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7ff02fc54187b62585a4e3d940b8037"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gad7ff02fc54187b62585a4e3d940b8037">HASHCRYPT_SHA_Finish</a> (HASHCRYPT_Type *base, <a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, uint8_t *output, size_t *outputSize)</td></tr>
+<tr class="memdesc:gad7ff02fc54187b62585a4e3d940b8037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize hashing.  <a href="#gad7ff02fc54187b62585a4e3d940b8037">More...</a><br/></td></tr>
+<tr class="separator:gad7ff02fc54187b62585a4e3d940b8037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00260" id="a00260"></a>
+<a name="a00315" id="a00315"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _hashcrypt_handle</td>
+          <td class="memname">struct hashcrypt_hash_ctx_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a6d6ef2e298c4ec98101a8f29c1261d7e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a6d6ef2e298c4ec98101a8f29c1261d7e">keyWord</a> [8]</td></tr>
-<tr class="memdesc:a6d6ef2e298c4ec98101a8f29c1261d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy of user key (set by <a class="el" href="a00024.html#ga516111a46b4c1e6d172005f1cf9546e3" title="Set AES key to hashcrypt_handle_t struct and optionally to HASHCRYPT. ">HASHCRYPT_AES_SetKey()</a>.  <a href="#a6d6ef2e298c4ec98101a8f29c1261d7e">More...</a><br/></td></tr>
-<tr class="separator:a6d6ef2e298c4ec98101a8f29c1261d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae167acd173ddcd399298c21c7c78a119"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00024.html#ga593f0275c17035f079f9b9b0cdeed4d6">hashcrypt_key_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ae167acd173ddcd399298c21c7c78a119">keyType</a></td></tr>
-<tr class="memdesc:ae167acd173ddcd399298c21c7c78a119"><td class="mdescLeft">&#160;</td><td class="mdescRight">For operations with key (such as AES encryption/decryption), specify key type.  <a href="#ae167acd173ddcd399298c21c7c78a119">More...</a><br/></td></tr>
-<tr class="separator:ae167acd173ddcd399298c21c7c78a119"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a6d6ef2e298c4ec98101a8f29c1261d7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hashcrypt_handle_t::keyWord[8]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae167acd173ddcd399298c21c7c78a119"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00024.html#ga593f0275c17035f079f9b9b0cdeed4d6">hashcrypt_key_t</a> hashcrypt_handle_t::keyType</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga99fbd5e3f32ab77bad5665b2132d303e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00024.html#ga99fbd5e3f32ab77bad5665b2132d303e">hashcrypt_aes_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga99fbd5e3f32ab77bad5665b2132d303ea0b341ebc1af794d7d780776eae7050f8"></a>kHASHCRYPT_AesEcb</em>&nbsp;</td><td class="fielddoc">
-<p>AES ECB mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga99fbd5e3f32ab77bad5665b2132d303eadfeddaa9cff97dab711a4a4264c48b07"></a>kHASHCRYPT_AesCbc</em>&nbsp;</td><td class="fielddoc">
-<p>AES CBC mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga99fbd5e3f32ab77bad5665b2132d303ea3252c207115c92c80180015ef4ee417f"></a>kHASHCRYPT_AesCtr</em>&nbsp;</td><td class="fielddoc">
-<p>AES CTR mode. </p>
-</td></tr>
+<tr class="memitem:aba5d9f488c9182dcb4fcf4b2fc96b3a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba5d9f488c9182dcb4fcf4b2fc96b3a7"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aba5d9f488c9182dcb4fcf4b2fc96b3a7">x</a> [<a class="el" href="a00024.html#gabc879a329aeebb2374413abfc5083a21">HASHCRYPT_HASH_CTX_SIZE</a>]</td></tr>
+<tr class="memdesc:aba5d9f488c9182dcb4fcf4b2fc96b3a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">storage <br/></td></tr>
+<tr class="separator:aba5d9f488c9182dcb4fcf4b2fc96b3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga62d58d7deb14dcf07d6fe879a5c85647"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gabc879a329aeebb2374413abfc5083a21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00024.html#ga62d58d7deb14dcf07d6fe879a5c85647">hashcrypt_aes_keysize_t</a></td>
+          <td class="memname">#define HASHCRYPT_HASH_CTX_SIZE&#160;&#160;&#160;22</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga62d58d7deb14dcf07d6fe879a5c85647aa955c404a22333ebc64caaeed4aedb95"></a>kHASHCRYPT_Aes128</em>&nbsp;</td><td class="fielddoc">
-<p>AES 128 bit key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga62d58d7deb14dcf07d6fe879a5c85647a7b547726c7eb6dd8e0cb25a9b6e55a0b"></a>kHASHCRYPT_Aes192</em>&nbsp;</td><td class="fielddoc">
-<p>AES 192 bit key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga62d58d7deb14dcf07d6fe879a5c85647a0db84e68020267772cf2359d370c099d"></a>kHASHCRYPT_Aes256</em>&nbsp;</td><td class="fielddoc">
-<p>AES 256 bit key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga62d58d7deb14dcf07d6fe879a5c85647abb6ec83ec0ef173f82e610e700f61e67"></a>kHASHCRYPT_InvalidKey</em>&nbsp;</td><td class="fielddoc">
-<p>AES invalid key. </p>
-</td></tr>
-</table>
 
 </div>
 </div>
-<a class="anchor" id="ga593f0275c17035f079f9b9b0cdeed4d6"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gae5749cb2ff6548699a66eea40667f7c6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00024.html#ga593f0275c17035f079f9b9b0cdeed4d6">hashcrypt_key_t</a></td>
+          <td class="memname">typedef void(* hashcrypt_callback_t)(HASHCRYPT_Type *base, <a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga593f0275c17035f079f9b9b0cdeed4d6acaad99c28b932ad32149eba64816e2d7"></a>kHASHCRYPT_UserKey</em>&nbsp;</td><td class="fielddoc">
-<p>HASHCRYPT user key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga593f0275c17035f079f9b9b0cdeed4d6aa0ccddd84bfdaa8a87561a1b228df303"></a>kHASHCRYPT_SecretKey</em>&nbsp;</td><td class="fielddoc">
-<p>HASHCRYPT secret key (dedicated hw bus from PUF) </p>
-</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga516111a46b4c1e6d172005f1cf9546e3"></a>
+<a class="anchor" id="gabdb13d49e7b828fa64af17230f3ac799"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_SetKey </td>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -316,293 +202,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sets the AES key for encryption/decryption with the hashcrypt_handle_t structure. The hashcrypt_handle_t input argument specifies key source.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>HASHCRYPT peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Handle used for the request. </td></tr>
-    <tr><td class="paramname">key</td><td>0-mod-4 aligned pointer to AES key. </td></tr>
-    <tr><td class="paramname">keySize</td><td>AES key size in bytes. Shall equal 16, 24 or 32. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status from set key operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga417b271e51105b9506b5b9b5fe89cf74"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptEcb </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Encrypts AES. The source plaintext and destination ciphertext can overlap in system memory.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0f171677c79d7903cd6e66409565b83e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptEcb </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Decrypts AES. The source ciphertext and destination plaintext can overlap in system memory.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output cipher text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from decrypt operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa71be50a4d4417e46fb8aae6c85759aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptCbc </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>iv</em>[16]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf65c31d69a8ad1d985091fa5de5dfa17"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptCbc </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>iv</em>[16]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from decrypt operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga209a497b9766b85ac2a76d3b3b5f3163"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_CryptCtr </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00232.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a>&#160;</td>
+          <td class="paramname"><em>algo</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -613,32 +214,20 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>inputSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>counter</em>[HASHCRYPT_AES_BLOCK_SIZE], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>counterlast</em>[HASHCRYPT_AES_BLOCK_SIZE], </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>szLeft</em>&#160;</td>
+          <td class="paramname"><em>outputSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -647,30 +236,28 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encrypts or decrypts AES using CTR block mode. AES CTR mode uses only forward AES cipher and same algorithm for encryption and decryption. The only difference between encryption and decryption is that, for encryption, the input argument is plain text and the output argument is cipher text. For decryption, the input argument is cipher text and the output argument is plain text.</p>
+<p>Perform the full SHA in one function call. The function is blocking.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data for CTR block mode </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output data for CTR block mode </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">counter</td><td>Input counter (updates on return) </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">counterlast</td><td>Output cipher of last counter, for chained CTR calls (statefull encryption). NULL can be passed if chained calls are not used. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">szLeft</td><td>Output number of bytes in left unused in counterlast block. NULL can be passed if chained calls are not used. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the one call hash operation. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8e0d6e211b37c9f82cff48fe9e80115d"></a>
+<a class="anchor" id="ga704d85f639d6e7c6a1450bc20a68425d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_CryptOfb </td>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA_Init </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -678,8 +265,50 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00232.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a>&#160;</td>
+          <td class="paramname"><em>algo</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the HASH.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ctx</td><td>Output hash context </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of initialization </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga73e2339a36879daa7aa54491387ba103"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA_Update </td>
+          <td>(</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -690,20 +319,57 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>inputSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add data to current HASH. This can be called repeatedly with an arbitrary amount of data to be hashed. The functions blocks. If it returns kStatus_Success, the running hash has been updated (HASHCRYPT has processed the input data), so the memory at <code>input</code> pointer can be released back to system. The HASHCRYPT context buffer is updated with the running hash and with all necessary information to support possible context switch.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>HASH context </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the hash update operation </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad7ff02fc54187b62585a4e3d940b8037"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA_Finish </td>
+          <td>(</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>output</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>iv</em>[HASHCRYPT_AES_BLOCK_SIZE]&#160;</td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>outputSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -712,143 +378,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encrypts or decrypts AES using OFB block mode. AES OFB mode uses only forward AES cipher and same algorithm for encryption and decryption. The only difference between encryption and decryption is that, for encryption, the input argument is plain text and the output argument is cipher text. For decryption, the input argument is cipher text and the output argument is plain text.</p>
+<p>Outputs the final hash (computed by HASHCRYPT_HASH_Update()) and erases the context.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data for OFB block mode </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output data for OFB block mode </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Input hash context </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">outputSize</td><td>Optional parameter (can be passed as NULL). On function entry, it specifies the size of output[] buffer. On function return, it stores the number of updated output bytes. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga23c43c66d7654bbf9b116b7a949ead60"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptCfb </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>iv</em>[16]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa3b9c8a805fbd8b004fcde0add292f3a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptCfb </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hashcrypt_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>iv</em>[16]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the hash finish operation </dd></dl>
 
 </div>
 </div>

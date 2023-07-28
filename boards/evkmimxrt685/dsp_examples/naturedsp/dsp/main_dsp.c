@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -49,13 +49,13 @@ int main(void)
     BOARD_InitDebugConsole();
     BOARD_InitClock();
 
-    PRINTF("\r\nRunning NatureDSP library on DSP core\r\n");
+    PRINTF("\r\n[DSP Main] Running NatureDSP library on DSP core\r\n");
 
     NatureDSP_Signal_get_library_version(version);
-    PRINTF("NatureDSP library version: %s\r\n", version);
+    PRINTF("[DSP Main] NatureDSP library version: %s\r\n", version);
 
     NatureDSP_Signal_get_library_api_version(version);
-    PRINTF("NatureDSP library API version: %s\r\n\r\n", version);
+    PRINTF("[DSP Main] NatureDSP library API version: %s\r\n\r\n", version);
 
     TEST_FFT();
     TEST_VEC_DOT();

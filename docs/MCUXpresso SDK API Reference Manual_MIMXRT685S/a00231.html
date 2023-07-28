@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: IAP: In Application Programming Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Hashcrypt Background HASH</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,49 +99,117 @@ $(document).ready(function(){initNavTree('a00231.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#files">Files</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">IAP: In Application Programming Driver</div>  </div>
+<div class="title">Hashcrypt Background HASH<div class="ingroups"><a class="el" href="a00230.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the In Application Programming (IAP). <br/>
-It provides a set of functions to call the on-chip in application programming interface. User code executing from on-chip RAM can call these function to read information like part id, read and write flash, read and write ffr. <br/>
- </p>
-<h2>IAP Basic Operations</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/iap </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00036"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00036.html">IAP Boot Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00020"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html">IAP FlexSPI Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00232"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html">IAP OTP Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00161"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00161.html">fsl_iap.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga06aad21ce0e8a056b5c2fd4775cac8bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ga06aad21ce0e8a056b5c2fd4775cac8bf">FSL_IAP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
-<tr class="memdesc:ga06aad21ce0e8a056b5c2fd4775cac8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP driver version 2.1.2.  <a href="#ga06aad21ce0e8a056b5c2fd4775cac8bf">More...</a><br/></td></tr>
-<tr class="separator:ga06aad21ce0e8a056b5c2fd4775cac8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaf7a0a7647b12bbfa27490a1ecf84ed75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gaf7a0a7647b12bbfa27490a1ecf84ed75">HASHCRYPT_SHA_SetCallback</a> (HASHCRYPT_Type *base, <a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, <a class="el" href="a00024.html#gae5749cb2ff6548699a66eea40667f7c6">hashcrypt_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memdesc:gaf7a0a7647b12bbfa27490a1ecf84ed75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the HASHCRYPT handle for background hashing.  <a href="#gaf7a0a7647b12bbfa27490a1ecf84ed75">More...</a><br/></td></tr>
+<tr class="separator:gaf7a0a7647b12bbfa27490a1ecf84ed75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19c0131424db9a618d164fdb6ffa470e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ga19c0131424db9a618d164fdb6ffa470e">HASHCRYPT_SHA_UpdateNonBlocking</a> (HASHCRYPT_Type *base, <a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, const uint8_t *input, size_t inputSize)</td></tr>
+<tr class="memdesc:ga19c0131424db9a618d164fdb6ffa470e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create running hash on given data.  <a href="#ga19c0131424db9a618d164fdb6ffa470e">More...</a><br/></td></tr>
+<tr class="separator:ga19c0131424db9a618d164fdb6ffa470e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga06aad21ce0e8a056b5c2fd4775cac8bf"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaf7a0a7647b12bbfa27490a1ecf84ed75"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_IAP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td>
+          <td class="memname">void HASHCRYPT_SHA_SetCallback </td>
+          <td>(</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00024.html#gae5749cb2ff6548699a66eea40667f7c6">hashcrypt_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function initializes the hash context for background hashing (Non-blocking) APIs. This is less typical interface to hash function, but can be used for parallel processing, when main CPU has something else to do. Example is digital signature RSASSA-PKCS1-V1_5-VERIFY((n,e),M,S) algorithm, where background hashing of M can be started, then CPU can compute S^e mod n (in parallel with background hashing) and once the digest becomes available, CPU can proceed to comparison of EM with EM'.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ctx</td><td>Hash context. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">callback</td><td>Callback function. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">userData</td><td>User data (to be passed as an argument to callback function, once callback is invoked from isr). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga19c0131424db9a618d164fdb6ffa470e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA_UpdateNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00024.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>inputSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configures the HASHCRYPT to compute new running hash as AHB master and returns immediately. HASHCRYPT AHB Master mode supports only aligned <code>input</code> address and can be called only once per continuous block of data. Every call to this function must be preceded with <a class="el" href="a00024.html#ga704d85f639d6e7c6a1450bc20a68425d" title="Initialize HASH context. ">HASHCRYPT_SHA_Init()</a> and finished with <a class="el" href="a00024.html#gad7ff02fc54187b62585a4e3d940b8037" title="Finalize hashing. ">HASHCRYPT_SHA_Finish()</a>. Once callback function is invoked by HASHCRYPT isr, it should set a flag for the main application to finalize the hashing (padding) and to read out the final digest by calling <a class="el" href="a00024.html#gad7ff02fc54187b62585a4e3d940b8037" title="Finalize hashing. ">HASHCRYPT_SHA_Finish()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
+    <tr><td class="paramname">ctx</td><td>Specifies callback. Last incomplete 512-bit block of the input is copied into clear buffer for padding. </td></tr>
+    <tr><td class="paramname">input</td><td>32-bit word aligned pointer to Input data. </td></tr>
+    <tr><td class="paramname">inputSize</td><td>Size of input data in bytes (must be word aligned) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the hash update operation. </dd></dl>
 
 </div>
 </div>

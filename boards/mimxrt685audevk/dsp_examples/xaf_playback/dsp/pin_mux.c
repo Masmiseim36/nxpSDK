@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -133,6 +133,69 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_INV_DI);
     /* PORT0 PIN23 (coords: C9) is configured as FC3_RXD_SDA_MOSI_DATA */
     IOPCTL_PinMuxSet(IOPCTL, 0U, 23U, port0_pin23_config);
+
+    const uint32_t port0_pin7_config = (/* Pin is configured as FC1_SCK */
+                                        IOPCTL_PIO_FUNC1 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Enables input buffer function */
+                                        IOPCTL_PIO_INBUF_EN |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Full drive enable */
+                                        IOPCTL_PIO_FULLDRIVE_EN |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT0 PIN7 (coords: J2) is configured as FC1_SCK */
+    IOPCTL_PinMuxSet(IOPCTL, 0U, 7U, port0_pin7_config);
+
+    const uint32_t port0_pin8_config = (/* Pin is configured as FC1_TXD_SCL_MISO_WS */
+                                        IOPCTL_PIO_FUNC1 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Enables input buffer function */
+                                        IOPCTL_PIO_INBUF_EN |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Full drive enable */
+                                        IOPCTL_PIO_FULLDRIVE_EN |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT0 PIN8 (coords: K4) is configured as FC1_TXD_SCL_MISO_WS */
+    IOPCTL_PinMuxSet(IOPCTL, 0U, 8U, port0_pin8_config);
+
+    const uint32_t port0_pin9_config = (/* Pin is configured as FC1_RXD_SDA_MOSI_DATA */
+                                        IOPCTL_PIO_FUNC1 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Enables input buffer function */
+                                        IOPCTL_PIO_INBUF_EN |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Full drive enable */
+                                        IOPCTL_PIO_FULLDRIVE_EN |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT0 PIN9 (coords: L3) is configured as FC1_RXD_SDA_MOSI_DATA */
+    IOPCTL_PinMuxSet(IOPCTL, 0U, 9U, port0_pin9_config);
 }
 /***********************************************************************************************************************
  * EOF

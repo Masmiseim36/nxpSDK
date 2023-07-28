@@ -1,26 +1,19 @@
 var a00022 =
 [
-    [ "flexspi_dma_handle_t", "a00022.html#a00258", [
-      [ "txDmaHandle", "a00022.html#a4a39fe76e651a3353c88481c46ed02e5", null ],
-      [ "rxDmaHandle", "a00022.html#a9d30eb057fce28654c11c2e3e301fa68", null ],
-      [ "transferSize", "a00022.html#ac5cd76e7a53e77b4d79f8538b286ceae", null ],
-      [ "nsize", "a00022.html#a7a04560a50c902c4d011185f1de67ac2", null ],
-      [ "nbytes", "a00022.html#ab926caad3624825a0158bad6345425e0", null ],
-      [ "count", "a00022.html#a57a3b1754a366f46da521a9aaee4ac49", null ],
-      [ "state", "a00022.html#a9a7821c4c4b9d5070c5099aade580f0b", null ],
-      [ "completionCallback", "a00022.html#a1ec14b8db3a737ba2e8d0fb14d0df366", null ],
-      [ "userData", "a00022.html#ab38608589f1f143d4a8c162e370538c0", null ]
+    [ "gpio_pin_config_t", "a00022.html#a00314", [
+      [ "pinDirection", "a00022.html#a70aed128003103272f5740f12fbff525", null ],
+      [ "outputLogic", "a00022.html#a9d37ffd9a2943f10a91095759bd52da5", null ]
     ] ],
-    [ "FSL_FLEXSPI_DMA_DRIVER_VERSION", "a00022.html#ga88a6420b0e382026fef680d6ae211b3a", null ],
-    [ "flexspi_dma_callback_t", "a00022.html#ga4548186e58deb0eba54955ce18d5906c", null ],
-    [ "flexspi_dma_transfer_nsize_t", "a00022.html#ga4fd2904aa9ac7635bbececd7d6ee66f5", [
-      [ "kFLEXPSI_DMAnSize1Bytes", "a00022.html#gga4fd2904aa9ac7635bbececd7d6ee66f5a70268646bc68431622c0e5fe8d48bb6b", null ],
-      [ "kFLEXPSI_DMAnSize2Bytes", "a00022.html#gga4fd2904aa9ac7635bbececd7d6ee66f5ab1e97a8fd4dbe4ace93240af810d3889", null ],
-      [ "kFLEXPSI_DMAnSize4Bytes", "a00022.html#gga4fd2904aa9ac7635bbececd7d6ee66f5a798df88378715bd1d5b21e7cabdc873c", null ]
+    [ "FSL_GPIO_DRIVER_VERSION", "a00022.html#ga5aa5229cbd041b11bcf8417ba12896b2", null ],
+    [ "gpio_pin_direction_t", "a00022.html#gada41ca0a2ce239fe125ee96833e715c0", [
+      [ "kGPIO_DigitalInput", "a00022.html#ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4", null ],
+      [ "kGPIO_DigitalOutput", "a00022.html#ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9", null ]
     ] ],
-    [ "FLEXSPI_TransferCreateHandleDMA", "a00022.html#gae88b65d392f6c30ce5732124afe0e95a", null ],
-    [ "FLEXSPI_TransferUpdateSizeDMA", "a00022.html#ga9be1bdb2969ccbe519ec6ebb5c1a234d", null ],
-    [ "FLEXSPI_TransferDMA", "a00022.html#ga7cac9456562361635cfa34361faa9fed", null ],
-    [ "FLEXSPI_TransferAbortDMA", "a00022.html#gaab504891f94a7ed4d8895f8ac706e518", null ],
-    [ "FLEXSPI_TransferGetTransferCountDMA", "a00022.html#gade38f72f518dab6e49a8ac8781f8382b", null ]
+    [ "GPIO_PortInit", "a00022.html#ga6fabd21856d350fc0b60ffea3bbca200", null ],
+    [ "GPIO_PinInit", "a00022.html#ga9b8fa194d8fa5a1bf933a709d4dde014", null ],
+    [ "GPIO_PinWrite", "a00022.html#ga2a1113d96cdf973bb5b1eade3521adf8", null ],
+    [ "GPIO_PinRead", "a00022.html#gabad8dfa62a3e414cc23ff8b32eea81d0", null ],
+    [ "GPIO_PortSet", "a00022.html#ga7206f7b805b8a3c68044345dbbba0a41", null ],
+    [ "GPIO_PortClear", "a00022.html#ga185ddb6848a644b40e0620ef6b4ce2cf", null ],
+    [ "GPIO_PortToggle", "a00022.html#ga07e3b8c21dad1debec7986f214a70975", null ]
 ];

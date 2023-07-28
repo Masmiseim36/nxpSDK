@@ -49,9 +49,9 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DBOOT_HEADER_ENABLE=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DMCUXPRESSO_SDK \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -64,6 +64,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -74,8 +75,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DBOOT_HEADER_ENABLE=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DMCUXPRESSO_SDK \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -88,6 +89,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -99,9 +101,9 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DBOOT_HEADER_ENABLE=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DMCUXPRESSO_SDK \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -114,6 +116,7 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -125,8 +128,8 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DBOOT_HEADER_ENABLE=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DMCUXPRESSO_SDK \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -139,6 +142,7 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -148,7 +152,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -162,6 +165,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -170,7 +174,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DNDEBUG \
     -DMCUXPRESSO_SDK \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -184,6 +187,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -193,7 +197,6 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -207,6 +210,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -215,7 +219,6 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -DNDEBUG \
     -DMCUXPRESSO_SDK \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -229,6 +232,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")

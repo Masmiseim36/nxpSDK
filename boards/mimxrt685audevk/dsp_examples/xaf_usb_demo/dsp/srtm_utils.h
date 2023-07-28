@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 #include "ringbuffer.h"
 #include "rpmsg_queue.h"
 
-#if (INIT_DEBUG_CONSOLE == 1)
-#define DSP_PRINTF PRINTF
-#else
-#define DSP_PRINTF printf
-#endif
+#define APP_SEMA42 SEMA42
+#define SEMA_PRINTF_NUM	  0
+#define SEMA_STARTUP_NUM  1
+#define SEMA_CORE_ID_DSP  3
+void DSP_PRINTF(const char* ptr, ...);
 
 /*******************************************************************************
  * Definitions

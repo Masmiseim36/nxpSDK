@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Hashcrypt: The Cryptographic Accelerator</title>
+<title>MCUXpresso SDK API Reference Manual: SPI CMSIS driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,40 +98,72 @@ $(document).ready(function(){initNavTree('a00226.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Hashcrypt: The Cryptographic Accelerator</div>  </div>
+<div class="title">SPI CMSIS driver<div class="ingroups"><a class="el" href="a00225.html">SPI: Serial Peripheral Interface Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Hashcrypt peripheral. The Hashcrypt peripheral provides one or more engines to perform specific symmetric crypto algorithms, including hashing and en/decryption. The cryptographic acceleration is normally used in conjunction with pure-hardware blocks for hashing and symmetric cryptography, thereby providing performance and energy efficiency for a range of cryptographic uses.</p>
-<p>Blocking synchronous APIs are provided for selected cryptographic algorithms using Hashcrypt hardware. The driver interface intends to be easily integrated with generic software crypto libraries such as mbedTLS. The Hashcrypt operations are complete (and results are made availabe for further usage) when a function returns. When called, these functions do not return until an Hashcrypt operation is complete. These functions use main CPU for simple polling loops to determine operation complete or error status and also for plaintext or ciphertext data movements. These functions provide typical interface to upper layer or application software. There is one non-blocking function provided for the purpose of background hashing. <a class="el" href="a00227.html#ga19c0131424db9a618d164fdb6ffa470e" title="Create running hash on given data. ">HASHCRYPT_SHA_UpdateNonBlocking()</a> starts hashing of an input message while the CPU can continue executing.</p>
-<h1><a class="anchor" id="HASHCRYPTInit"></a>
-Hashcrypt Driver Initialization and deinitialization</h1>
-<p>Hashcrypt Driver is initialized by calling the <a class="el" href="a00252.html#ga02f8a8a22a0ac96e7ac823da4cacd585" title="Enables clock and disables reset for HASHCRYPT peripheral. ">HASHCRYPT_Init()</a> function, it enables clock and disables reset for Hashcrypt peripheral. Hashcrypt Driver is deinitialized by calling the <a class="el" href="a00252.html#ga2561c8bc17a4b2143a0cc7c46de64fbe" title="Disables clock for HASHCRYPT peripheral. ">HASHCRYPT_Deinit()</a> function, it sisables clock and enables reset.</p>
-<h1><a class="anchor" id="HASHCRYPTRtos"></a>
-Comments about API usage in RTOS</h1>
-<p>Hashcrypt operations provided by this driver are not re-entrant. Thus, application software shall ensure the Hashcrypt module operation is not requested from different tasks or interrupt service routines while an operation is in progress.</p>
-<h1><a class="anchor" id="HASHCRYPTIsr"></a>
-Comments about API usage in interrupt handler</h1>
-<p>APIs can be used from interrupt handler although execution time shall be considered (interrupt latency increases considerably).</p>
-<h1><a class="anchor" id="HASHCRYPTx"></a>
-Hashcrypt Driver Examples</h1>
-<h2><a class="anchor" id="HASHCRYPTSimpleEx"></a>
-Simple examples</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/hashcrypt/ </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00024"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html">Hashcrypt AES</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00227"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html">Hashcrypt Background HASH</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00025"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html">Hashcrypt HASH</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<p>This section describes the programming interface of the SPI Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<h1><a class="anchor" id="SPIFunGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="SPIGetVersionOps"></a>
+SPI CMSIS GetVersion Operation</h2>
+<p>This function group will return the SPI CMSIS Driver version to user.</p>
+<h2><a class="anchor" id="SPIGetCapOps"></a>
+SPI CMSIS GetCapabilities Operation</h2>
+<p>This function group will return the capabilities of this driver.</p>
+<h2><a class="anchor" id="SPIInitResetOps"></a>
+SPI CMSIS Initialize and Uninitialize Operation</h2>
+<p>This function will initialize and uninitialize the instance in master mode or slave mode. And this API must be called before you configure an instance or after you Deinit an instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
+<h2><a class="anchor" id="SPITransOps"></a>
+SPI CMSIS Transfer Operation</h2>
+<p>This function group controls the transfer, master send/receive data, and slave send/receive data.</p>
+<h2><a class="anchor" id="SPIStatusOps"></a>
+SPI CMSIS Status Operation</h2>
+<p>This function group gets the SPI transfer status.</p>
+<h2><a class="anchor" id="SPIControlOps"></a>
+SPI CMSIS Control Operation</h2>
+<p>This function can configure instance as master mode or slave mode, set baudrate for master mode transfer, get current baudrate of master mode transfer,set transfer data bits and other control command.</p>
+<h1><a class="anchor" id="SPITpyUC"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="SPIMasterOps"></a>
+Master Operation</h2>
+<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
+<div class="line">uint8_t masterRxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line">uint8_t masterTxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*SPI master init*/</span></div>
+<div class="line">DRIVER_MASTER_SPI.Initialize(SPI_MasterSignalEvent_t);</div>
+<div class="line">DRIVER_MASTER_SPI.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">DRIVER_MASTER_SPI.Control(ARM_SPI_MODE_MASTER, TRANSFER_BAUDRATE);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Start master transfer */</span></div>
+<div class="line">DRIVER_MASTER_SPI.Transfer(masterTxData, masterRxData, TRANSFER_SIZE);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Master power off */</span></div>
+<div class="line">DRIVER_MASTER_SPI.PowerControl(ARM_POWER_OFF);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Master uninitialize */</span></div>
+<div class="line">DRIVER_MASTER_SPI.Uninitialize();</div>
+</div><!-- fragment --><h2><a class="anchor" id="LPSPISlaveOps"></a>
+Slave Operation</h2>
+<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
+<div class="line">uint8_t slaveRxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line">uint8_t slaveTxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*SPI slave init*/</span></div>
+<div class="line">DRIVER_SLAVE_SPI.Initialize(SPI_SlaveSignalEvent_t);</div>
+<div class="line">DRIVER_SLAVE_SPI.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">DRIVER_SLAVE_SPI.Control(ARM_SPI_MODE_SLAVE, <span class="keyword">false</span>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Start slave transfer */</span></div>
+<div class="line">DRIVER_SLAVE_SPI.Transfer(slaveTxData, slaveRxData, TRANSFER_SIZE);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* slave power off */</span></div>
+<div class="line">DRIVER_SLAVE_SPI.PowerControl(ARM_POWER_OFF);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* slave uninitialize */</span></div>
+<div class="line">DRIVER_SLAVE_SPI.Uninitialize();</div>
+</div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

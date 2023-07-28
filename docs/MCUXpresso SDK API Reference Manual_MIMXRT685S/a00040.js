@@ -1,77 +1,40 @@
 var a00040 =
 [
-    [ "mmc_usr_param_t", "a00040.html#a00344", [
-      [ "ioStrength", "a00040.html#a8f74c9dd9fd1f4d4982010c9c8f81d1a", null ],
-      [ "maxFreq", "a00040.html#a4329e1d007e30129bb4544a58bd84f13", null ],
-      [ "capability", "a00040.html#ae3d0401fb63d202b3d1d1cbb7c741468", null ]
+    [ "mrt_config_t", "a00040.html#a00345", [
+      [ "enableMultiTask", "a00040.html#aa8d8b810ee17770fd48674454f59bb08", null ]
     ] ],
-    [ "mmc_card_t", "a00040.html#a00339", [
-      [ "host", "a00040.html#a12ab48f6985e78ef81d34ab22b8fc878", null ],
-      [ "usrParam", "a00040.html#ad1054b9eecc0633e8ca70ba164918b2a", null ],
-      [ "isHostReady", "a00040.html#ab14a00fcc66890836622884227bd1873", null ],
-      [ "noInteralAlign", "a00040.html#a306fbd3a3215259f9b380f8e8423f172", null ],
-      [ "busClock_Hz", "a00040.html#a70c3243e9802d253fb260c6ee2557c8e", null ],
-      [ "relativeAddress", "a00040.html#a2056ad945bf983dcf197d682508d1035", null ],
-      [ "enablePreDefinedBlockCount", "a00040.html#ac163495eae9eb73be22075956d62aa64", null ],
-      [ "flags", "a00040.html#a234ecfb0c811094377b4b829ea3ba0ac", null ],
-      [ "internalBuffer", "a00040.html#ac62c08dd4ae6fa2938127e5ca556b614", null ],
-      [ "ocr", "a00040.html#a0b3899f0be098f696fd5bc212d4b597e", null ],
-      [ "cid", "a00040.html#a31922f2befc3b24acfae2fb948a1398b", null ],
-      [ "csd", "a00040.html#a70c9d4972f53e5b156eb65ed719e773a", null ],
-      [ "extendedCsd", "a00040.html#a1abe5e60e629c2e8cd6f52f70c147053", null ],
-      [ "blockSize", "a00040.html#a4cbb05171fc7209226ac22515fcdf365", null ],
-      [ "userPartitionBlocks", "a00040.html#aaf035e6ccfee3bd92ef690d2aff5254d", null ],
-      [ "bootPartitionBlocks", "a00040.html#af76cbe7469a71b0695dae5b8e42088bf", null ],
-      [ "eraseGroupBlocks", "a00040.html#a73c3b6a62f48d65719f95ae41ad9456d", null ],
-      [ "currentPartition", "a00040.html#a8be2e5d491724a446334e871f06207af", null ],
-      [ "hostVoltageWindowVCCQ", "a00040.html#ae9a7cc5d13cc3cb5b7921f4d4073e681", null ],
-      [ "hostVoltageWindowVCC", "a00040.html#ac9c494f7476052a7eff992d03abdd0d5", null ],
-      [ "busTiming", "a00040.html#aa77eb86df76d49460eb2b9de2a2a3ccd", null ],
-      [ "busWidth", "a00040.html#aed7ad8dbb338c62d7290c6b8fcea0d09", null ],
-      [ "lock", "a00040.html#a90649f0ffe1dc3f76848f91bd1e94416", null ]
+    [ "FSL_MRT_DRIVER_VERSION", "a00040.html#gae39f6122bd73a5156d40291962f7507f", null ],
+    [ "mrt_chnl_t", "a00040.html#gaece5c1972e35dec2efcce98847a09622", [
+      [ "kMRT_Channel_0", "a00040.html#ggaece5c1972e35dec2efcce98847a09622a27e83d437e2798b19c59c2af4d99e1dc", null ],
+      [ "kMRT_Channel_1", "a00040.html#ggaece5c1972e35dec2efcce98847a09622a44b7807f36fe0a21240e721d46d8f9d7", null ],
+      [ "kMRT_Channel_2", "a00040.html#ggaece5c1972e35dec2efcce98847a09622a17597fb66d9b1d3e97b318db79267f52", null ],
+      [ "kMRT_Channel_3", "a00040.html#ggaece5c1972e35dec2efcce98847a09622af57e6e009258a71bc3a2890aedff34b3", null ]
     ] ],
-    [ "FSL_MMC_DRIVER_VERSION", "a00040.html#gaa853e6ed145fdde29cb8277c789ab5cb", null ],
-    [ "mmc_io_strength_t", "a00040.html#ga5615d27683e82898b6d4526eff8efcd8", [
-      [ "kMMC_SupportHighSpeed26MHZFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329a0f2e16ba804bfabd3c81fee5fa780c95", null ],
-      [ "kMMC_SupportHighSpeed52MHZFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329adb778db370818747d81df90b23298bf1", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ180V300VFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329af873861eb6356bd1a236d4741d3bd382", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ120VFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329ab26ad5455afddab2dd5909435243d8de", null ],
-      [ "kMMC_SupportHS200200MHZ180VFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329a39b3765119b6f0134b9c3d00e78ccdc3", null ],
-      [ "kMMC_SupportHS200200MHZ120VFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329a7875676a63cb3e3f3bce09d60b12cf88", null ],
-      [ "kMMC_SupportHS400DDR200MHZ180VFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329a5b1fc45cb6e3fee016907e5d13f1ad83", null ],
-      [ "kMMC_SupportHS400DDR200MHZ120VFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329af2976472059a8701c26ed30e0f28c5fa", null ],
-      [ "kMMC_SupportHighCapacityFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329a067279b27baf58ed3266df38e848b128", null ],
-      [ "kMMC_SupportAlternateBootFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329ac18882ad0cc699401c3e3483633ed77b", null ],
-      [ "kMMC_SupportDDRBootFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329af9baef828e6536d54f64295e1ce57548", null ],
-      [ "kMMC_SupportHighSpeedBootFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329a57438a043537958e8324400ce3788ed0", null ],
-      [ "kMMC_SupportEnhanceHS400StrobeFlag", "a00040.html#ggadbaf9202177df73e6880eab6e6aab329a39d546b05b2c725a822419330606bba5", null ]
+    [ "mrt_timer_mode_t", "a00040.html#gad481f648f1c89a1eab327530d6fef1d0", [
+      [ "kMRT_RepeatMode", "a00040.html#ggad481f648f1c89a1eab327530d6fef1d0a6b415c060dc09ed293ec3dda829cb257", null ],
+      [ "kMRT_OneShotMode", "a00040.html#ggad481f648f1c89a1eab327530d6fef1d0abe4ba0a30bc09f1921a0504eb826b3dc", null ],
+      [ "kMRT_OneShotStallMode", "a00040.html#ggad481f648f1c89a1eab327530d6fef1d0add9f55173bb54f623c955c29c22dd5b2", null ]
     ] ],
-    [ "mmc_sleep_awake_t", "a00040.html#gab89d4d12909a44eb53f0f366ea542cf4", [
-      [ "kMMC_Sleep", "a00040.html#ggab89d4d12909a44eb53f0f366ea542cf4a766aba45b5704265a1dfdf8d8d1ef5b2", null ],
-      [ "kMMC_Awake", "a00040.html#ggab89d4d12909a44eb53f0f366ea542cf4a68ce50ee0ddf66b369033f79da5328e9", null ]
+    [ "mrt_interrupt_enable_t", "a00040.html#ga9d2f90ae2c6f99410e2908dac8cc6943", [
+      [ "kMRT_TimerInterruptEnable", "a00040.html#gga9d2f90ae2c6f99410e2908dac8cc6943a2a5e8ee568da2c888093b732f2157ea5", null ]
     ] ],
-    [ "MMC_Init", "a00040.html#ga03f006d98725caeee8162ebb1250ff86", null ],
-    [ "MMC_Deinit", "a00040.html#gab67cdb5a21909356c4abadf3a4d8b40c", null ],
-    [ "MMC_CardInit", "a00040.html#ga9adb1349b4f9415c631e94a375bc7db0", null ],
-    [ "MMC_CardDeinit", "a00040.html#ga83e4e9e390a6c817f06999bbf887a3b3", null ],
-    [ "MMC_HostInit", "a00040.html#ga44f98e6d4caefbac4ee0237890f651e6", null ],
-    [ "MMC_HostDeinit", "a00040.html#ga56005088e0e2a575190bf7829520c7f1", null ],
-    [ "MMC_HostDoReset", "a00040.html#ga260f33fc882cd4eaef78f05ef9069fc9", null ],
-    [ "MMC_HostReset", "a00040.html#ga4f61aee1889a7a09e6dea3735714b1ce", null ],
-    [ "MMC_SetCardPower", "a00040.html#ga5231adac523a9314ba4aceb89e67c492", null ],
-    [ "MMC_CheckReadOnly", "a00040.html#gac08db377dfecee284aedd579d445999a", null ],
-    [ "MMC_ReadBlocks", "a00040.html#ga60a99fbb416b500761d668779ebe01f7", null ],
-    [ "MMC_WriteBlocks", "a00040.html#ga504ade2cd3eeb1891913271521bc9562", null ],
-    [ "MMC_EraseGroups", "a00040.html#ga90ca5cb83516ede64e9af6ece3439bab", null ],
-    [ "MMC_SelectPartition", "a00040.html#gad36b22249e056b0dda1da583a5530d61", null ],
-    [ "MMC_SetBootConfig", "a00040.html#gafd26b8b19b85f99d23175bfb3ddf6ff0", null ],
-    [ "MMC_StartBoot", "a00040.html#ga86dbfbd824a0f5243a960d343e3f9176", null ],
-    [ "MMC_SetBootConfigWP", "a00040.html#ga9b18b799d48e0b39672d89d5f6148548", null ],
-    [ "MMC_ReadBootData", "a00040.html#ga1e27e4af5916f5f501cd1d9912a42643", null ],
-    [ "MMC_StopBoot", "a00040.html#ga1976bb2986bd2dd53de05101cde394a7", null ],
-    [ "MMC_SetBootPartitionWP", "a00040.html#ga4e212f50660aa5fd7ff36a9232fecf93", null ],
-    [ "MMC_EnableCacheControl", "a00040.html#gab41ad4bb9f654d8cd213effffcbbae06", null ],
-    [ "MMC_FlushCache", "a00040.html#ga61bd93105cac69d83956086927d30dce", null ],
-    [ "MMC_SetSleepAwake", "a00040.html#gac8ecc09f078dc2e7e8f85eb24d939ed0", null ],
-    [ "MMC_PollingCardStatusBusy", "a00040.html#ga255bea62892cc6c3859caf2b1a57e24e", null ]
+    [ "mrt_status_flags_t", "a00040.html#ga0bb94508d8cf924c3a6971364377673a", [
+      [ "kMRT_TimerInterruptFlag", "a00040.html#gga0bb94508d8cf924c3a6971364377673aa6942598faf3aef148a850f8850cf01c3", null ],
+      [ "kMRT_TimerRunFlag", "a00040.html#gga0bb94508d8cf924c3a6971364377673aa745c62687191197b48b35dbd1aac40db", null ]
+    ] ],
+    [ "MRT_Init", "a00040.html#ga44091408531a61dfac7c4ee4982be317", null ],
+    [ "MRT_Deinit", "a00040.html#ga5d988ee09b604ab28f1b37320ee8d2d9", null ],
+    [ "MRT_GetDefaultConfig", "a00040.html#gad30aa85105a47b708fd5880a929e5e84", null ],
+    [ "MRT_SetupChannelMode", "a00040.html#ga8f4d38afa34e99ba521d9ca08be06355", null ],
+    [ "MRT_EnableInterrupts", "a00040.html#gae875817838659e596dc1cb1527c948c3", null ],
+    [ "MRT_DisableInterrupts", "a00040.html#ga7a8066680089523fa602dbe58b0c0505", null ],
+    [ "MRT_GetEnabledInterrupts", "a00040.html#ga2e666900eef9bdbd9d9e587d2b7ca2c2", null ],
+    [ "MRT_GetStatusFlags", "a00040.html#gafa8493a0faee1cc356da26ca99a54da8", null ],
+    [ "MRT_ClearStatusFlags", "a00040.html#ga959db20281cfce080c684bd94f667799", null ],
+    [ "MRT_UpdateTimerPeriod", "a00040.html#ga57f3d18e0ec88a5eb04b3282e0f3dc95", null ],
+    [ "MRT_GetCurrentTimerCount", "a00040.html#ga7c0bbb20b4abd7450f860277ef9d8a20", null ],
+    [ "MRT_StartTimer", "a00040.html#ga388dd5041e6c179d637e17cd6e5a607e", null ],
+    [ "MRT_StopTimer", "a00040.html#ga7620866a54acdcc17abab2b46a94dc6c", null ],
+    [ "MRT_GetIdleChannel", "a00040.html#ga320ba098c93a30174254eb763dd37dde", null ],
+    [ "MRT_ReleaseChannel", "a00040.html#ga8e55bb859e4f9b98ea8ec580ed7b106a", null ]
 ];

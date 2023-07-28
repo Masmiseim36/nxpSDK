@@ -94,6 +94,8 @@ initialize by copy {
   readonly object fsl_reset.o,
   readonly object flexspi_octal_flash_ops.o,
   readonly object fsl_clock.o,
+  readonly object ABImemcpy.o,
+  readonly object ABImemset.o,
   section .textrw,
   section CodeQuickAccess,
   section DataQuickAccess

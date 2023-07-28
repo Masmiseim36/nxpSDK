@@ -369,7 +369,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --import-cmse-lib-out=".\debug\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out=".\debug\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1104,7 +1104,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --import-cmse-lib-out=".\flash_debug\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out=".\flash_debug\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1839,7 +1839,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --import-cmse-lib-out=".\release\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out=".\release\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2574,7 +2574,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --import-cmse-lib-out=".\flash_release\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out=".\flash_release\secure_gpio_s_CMSE_lib.o" --diag_suppress L6848E</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>

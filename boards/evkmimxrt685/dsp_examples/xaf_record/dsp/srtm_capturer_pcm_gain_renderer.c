@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -327,7 +327,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
                 break;
 
             default:
-                DSP_PRINTF("Check component type in comp_create_order table\n\r");
+                DSP_PRINTF("[DSP Record] Check component type in comp_create_order table\n\r");
                 return -1;
         }
     }
@@ -342,11 +342,11 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     ret = xaf_adev_open(&p_adev, &device_config);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_adev_open failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("\nAudio Device Ready\n\r");
+    DSP_PRINTF("[DSP Record] Audio Device Ready\n\r");
 
     /* Create and setup all components */
     for (k = 0; k < NUM_COMP_IN_GRAPH; k++)
@@ -363,14 +363,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
         ret = xaf_comp_create(p_adev, &p_comp[cid], &comp_config[cid]);
         if (ret != XAF_NO_ERR)
         {
-            DSP_PRINTF("xaf_comp_create[%d] failure: %d\r\n", k, ret);
+            DSP_PRINTF("[DSP Record] xaf_comp_create[%d] failure: %d\r\n", k, ret);
             return -1;
         }
 
         ret = comp_setup[cid](p_comp[cid], &comp_format[cid], i2s);
         if (ret != XAF_NO_ERR)
         {
-            DSP_PRINTF("comp_setup failure: %d\r\n", ret);
+            DSP_PRINTF("[DSP Record] comp_setup failure: %d\r\n", ret);
             return -1;
         }
     }
@@ -379,14 +379,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     ret = xaf_comp_process(p_adev, p_comp[XA_CAPTURER_0], NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_process XAF_START_FLAG CAPTURER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_process XAF_START_FLAG CAPTURER_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_CAPTURER_0], &comp_status, &info[0]);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_get_status CAPTURER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_get_status CAPTURER_0 failure: %d\r\n", ret);
         return -1;
     }
 
@@ -394,14 +394,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     ret = xaf_comp_process(p_adev, p_comp[XA_RENDERER_0], NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_process XAF_START_FLAG RENDERER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_process XAF_START_FLAG RENDERER_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_RENDERER_0], &comp_status, &info[0]);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_get_status RENDERER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_get_status RENDERER_0 failure: %d\r\n", ret);
         return -1;
     }
 
@@ -409,30 +409,30 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     ret = xaf_connect(p_comp[XA_CAPTURER_0], 0, p_comp[XA_GAIN_0], 0, 4);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_connect CAPTURER_0 -> GAIN_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_connect CAPTURER_0 -> GAIN_0 failure: %d\r\n", ret);
         return -1;
     }
     ret = capturer_start_operation(p_comp[XA_CAPTURER_0]);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("Capturer start operation failure.\r\n");
+        DSP_PRINTF("[DSP Record] Capturer start operation failure.\r\n");
         return -1;
     }
 
-    DSP_PRINTF("connected CAPTURER -> GAIN_0\n\r");
+    DSP_PRINTF("[DSP Record] connected CAPTURER -> GAIN_0\n\r");
 
     /* Start PCM gain */
     ret = xaf_comp_process(p_adev, p_comp[XA_GAIN_0], NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_process XAF_START_FLAG GAIN_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_process XAF_START_FLAG GAIN_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_GAIN_0], &comp_status, &info[0]);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_get_status GAIN_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_get_status GAIN_0 failure: %d\r\n", ret);
         return -1;
     }
 
@@ -441,59 +441,59 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_VOICE_SEEKER_0], 0, 4);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_connect XA_GAIN_0 -> XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_connect XA_GAIN_0 -> XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("connected XA_GAIN_0 -> XA_VOICE_SEEKER_0\n\r");
+    DSP_PRINTF("[DSP Record] connected XA_GAIN_0 -> XA_VOICE_SEEKER_0\n\r");
 
     /* Start VoiceSeeker pre processing */
     ret = xaf_comp_process(p_adev, p_comp[XA_VOICE_SEEKER_0], NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_process XAF_START_FLAG XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_process XAF_START_FLAG XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_VOICE_SEEKER_0], &comp_status, &info[0]);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_get_status XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_get_status XA_VOICE_SEEKER_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_connect(p_comp[XA_VOICE_SEEKER_0], 1, p_comp[XA_VIT_PRE_PROC_0], 0, 4);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_connect XA_VOICE_SEEKER_0 -> XA_VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_connect XA_VOICE_SEEKER_0 -> XA_VIT_PRE_PROC_0 failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("connected XA_VOICE_SEEKER_0 -> XA_VIT_PRE_PROC_0\n\r");
+    DSP_PRINTF("[DSP Record] connected XA_VOICE_SEEKER_0 -> XA_VIT_PRE_PROC_0\n\r");
 
 #else
     ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_VIT_PRE_PROC_0], 0, 4);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_connect XA_GAIN_0 -> VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_connect XA_GAIN_0 -> VIT_PRE_PROC_0 failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("connected XA_GAIN_0 -> XA_VIT_PRE_PROC_0\n\r");
+    DSP_PRINTF("[DSP Record] connected XA_GAIN_0 -> XA_VIT_PRE_PROC_0\n\r");
 #endif
 
     /* Start VIT pre processing */
     ret = xaf_comp_process(p_adev, p_comp[XA_VIT_PRE_PROC_0], NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_process XAF_START_FLAG VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_process XAF_START_FLAG VIT_PRE_PROC_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_VIT_PRE_PROC_0], &comp_status, &info[0]);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_get_status VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_comp_get_status VIT_PRE_PROC_0 failure: %d\r\n", ret);
         return -1;
     }
 
@@ -504,11 +504,11 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     ret = xaf_connect(p_comp[XA_VIT_PRE_PROC_0], 1, p_comp[XA_RENDERER_0], 0, 4);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_connect VIT_PRE_PROC_0 -> RENDERER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_connect VIT_PRE_PROC_0 -> RENDERER_0 failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("connected XA_VIT_PRE_PROC_0 -> XA_RENDERER_0\n\r");
+    DSP_PRINTF("[DSP Record] connected XA_VIT_PRE_PROC_0 -> XA_RENDERER_0\n\r");
 #else
 
     /* Start renderer DMA output.  Will output I2S zeros until valid data is
@@ -518,11 +518,11 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_RENDERER_0], 0, 4);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_connect GAIN_0 -> RENDERER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_connect GAIN_0 -> RENDERER_0 failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("connected XA_GAIN_0 -> XA_RENDERER_0\n\r");
+    DSP_PRINTF("[DSP Record] connected XA_GAIN_0 -> XA_RENDERER_0\n\r");
 #endif
 
     while (1)
@@ -539,7 +539,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
         if (ret != XAF_NO_ERR)
         {
-            DSP_PRINTF("renderer get_config error:%x\n", ret);
+            DSP_PRINTF("[DSP Record] renderer get_config error:%x\n", ret);
             return -1;
         }
     }
@@ -550,7 +550,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
         ret = xaf_comp_delete(p_comp[cid]);
         if (ret != XAF_NO_ERR)
         {
-            DSP_PRINTF("xaf_comp_delete[%d] failure: %d\r\n", k, ret);
+            DSP_PRINTF("[DSP Record] xaf_comp_delete[%d] failure: %d\r\n", k, ret);
             return -1;
         }
     }
@@ -558,11 +558,11 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Record] xaf_adev_close failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("Audio device closed\n\n\r\r");
+    DSP_PRINTF("[DSP Record] Audio device closed\n\n\r\r");
 
     return 0;
 }

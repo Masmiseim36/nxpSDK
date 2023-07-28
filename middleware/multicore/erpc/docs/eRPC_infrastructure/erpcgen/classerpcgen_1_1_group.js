@@ -3,7 +3,7 @@ var classerpcgen_1_1_group =
     [ "interface_list_t", "classerpcgen_1_1_group.html#a6958e110daf1a2f2b67c8495fd93779c", null ],
     [ "symbol_directions_map_t", "classerpcgen_1_1_group.html#a3b4750210cd8a7976f1173059a24fa7f", null ],
     [ "symbols_list_t", "classerpcgen_1_1_group.html#a445d27f77f14b9577850ed5ac2252ced", null ],
-    [ "Group", "classerpcgen_1_1_group.html#af76d5c887e66fe0b796e0fe431821834", null ],
+    [ "Group", "classerpcgen_1_1_group.html#ac05ffa608252acbf3b2924a4c4b3c665", null ],
     [ "addDirToSymbolsMap", "classerpcgen_1_1_group.html#a47b4d062b82dc4f60698ae208fe12b9d", null ],
     [ "addInterface", "classerpcgen_1_1_group.html#a81dcba5930c77239b675580dbd072fd8", null ],
     [ "getDescription", "classerpcgen_1_1_group.html#ae73097061031208b54465344b5454b90", null ],

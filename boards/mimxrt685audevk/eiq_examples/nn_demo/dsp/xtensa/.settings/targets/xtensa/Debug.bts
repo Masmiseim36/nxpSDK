@@ -14,9 +14,9 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/inc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
@@ -34,9 +34,10 @@
               <ListEntry key="XF_CORE_ID" value="0"/>
               <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
               <ListEntry key="NN_ENABLE_xa_nn_inference" value="0"/>
-              <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
+              <ListEntry key="FSL_RTOS_XOS" value="1"/>
+              <ListEntry key="NNLIB_V2" value=""/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
@@ -50,9 +51,11 @@
 -mno-div32&#13;
 -mno-mul16&#13;
 -mno-mul32&#13;
+-Wno-unused&#13;
 -Wno-missing-braces&#13;
 -fmessage-length=0&#13;
--std=gnu99</ListEntry></value>
+-std=gnu99&#13;
+-fsigned-char</ListEntry></value>
           </StringListMapEntry>
         </StringListMapOptions>
         <FlagValueMapOptions>
@@ -98,7 +101,6 @@
             <key>Libraries</key>
             <value inheritance="prepend" flag="-l">
               <ListEntry>xos</ListEntry>
-              <ListEntry>xtutil</ListEntry>
             </value>
           </StringListMapEntry>
           <StringListMapEntry>

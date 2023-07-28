@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram_ns.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../secure_faults_s/mdk/debug/secure_faults_s_CMSE_Lib.o --remove --entry=Reset_Handler</Misc>
+            <Misc>../../secure_faults_s/mdk/debug/secure_faults_s_CMSE_Lib.o --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -426,7 +426,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_faults_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -702,11 +702,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1077,7 +1072,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash_ns.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../secure_faults_s/mdk/flash_debug/secure_faults_s_CMSE_Lib.o --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>../../secure_faults_s/mdk/flash_debug/secure_faults_s_CMSE_Lib.o --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1135,7 +1130,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_faults_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1411,11 +1406,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1786,7 +1776,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram_ns.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../secure_faults_s/mdk/release/secure_faults_s_CMSE_Lib.o --remove --entry=Reset_Handler</Misc>
+            <Misc>../../secure_faults_s/mdk/release/secure_faults_s_CMSE_Lib.o --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1844,7 +1834,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_faults_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2120,11 +2110,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2495,7 +2480,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash_ns.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../secure_faults_s/mdk/flash_release/secure_faults_s_CMSE_Lib.o --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler</Misc>
+            <Misc>../../secure_faults_s/mdk/flash_release/secure_faults_s_CMSE_Lib.o --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2553,7 +2538,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_faults_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2829,11 +2814,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

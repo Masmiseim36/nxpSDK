@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -158,9 +158,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a2c3bd345058aef148a708c7eb8cf6413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a2c3bd345058aef148a708c7eb8cf6413">replaceSymbol</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *oldSym, <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *newSym)</td></tr>
 <tr class="memdesc:a2c3bd345058aef148a708c7eb8cf6413"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will replace old symbol with new symbol in the symbol scope.  <a href="#a2c3bd345058aef148a708c7eb8cf6413">More...</a><br /></td></tr>
 <tr class="separator:a2c3bd345058aef148a708c7eb8cf6413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7384e2d0f0b23f936cb4d6ca9b4cc516"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a7384e2d0f0b23f936cb4d6ca9b4cc516">getSymbolPos</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *sym)</td></tr>
-<tr class="memdesc:a7384e2d0f0b23f936cb4d6ca9b4cc516"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will return symbol position.  <a href="#a7384e2d0f0b23f936cb4d6ca9b4cc516">More...</a><br /></td></tr>
-<tr class="separator:a7384e2d0f0b23f936cb4d6ca9b4cc516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae887ebd5083298aecd8f75bdc6889e0e"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#ae887ebd5083298aecd8f75bdc6889e0e">getSymbolPos</a> (const <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *sym)</td></tr>
+<tr class="memdesc:ae887ebd5083298aecd8f75bdc6889e0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will return symbol position.  <a href="#ae887ebd5083298aecd8f75bdc6889e0e">More...</a><br /></td></tr>
+<tr class="separator:ae887ebd5083298aecd8f75bdc6889e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57a3ab7772138826666b2ec82ac5ad1a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a57a3ab7772138826666b2ec82ac5ad1a">hasParent</a> () const </td></tr>
 <tr class="memdesc:a57a3ab7772138826666b2ec82ac5ad1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return boolean representation about existence of parent.  <a href="#a57a3ab7772138826666b2ec82ac5ad1a">More...</a><br /></td></tr>
 <tr class="separator:a57a3ab7772138826666b2ec82ac5ad1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -314,25 +314,25 @@ void <a class="el" href="classerpcgen_1_1_symbol_scope.html#a2c3bd345058aef148a7
 </div><div class="memdoc">
 
 <p>This function show debug description about the all symbols. </p>
-<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_interface.html#ad799dd9e9c759102652c69086467f73b" title="This function returns description about the interface. ">Interface::getDescription() const</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_interface.html#a61b94d15715bc0fd5330d76286d3cd07" title="This function returns description about the interface. ">Interface::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_function.html#ac08e8cc2245d28b872d271f2d0b62bcc" title="This function returns description about the interface function. ">Function::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_function.html#af58dcfa0fbd736d1d5ee2c59a38df876" title="This function returns description about the interface function. ">Function::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_alias_type.html#abc9fe8e5afcc21b934a1c04636d63aed" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a0cd2b9fc3450bcfe81fabf0217a4cb3e" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_type.html#a48145edf351081224fb2fbc926838a9b" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a355ed861260653ecbc726328d30d2e06" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_type.html#ad5d2a86f6022ef89a185ccc55ccd41bf" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3" title="This function returns description about the void. ">VoidType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_void_type.html#a56a37821b5805994481b41b84e37981a" title="This function returns description about the void. ">VoidType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_array_type.html#a84d08ae35140bdd56c738bd04567d486" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
+std::string <a class="el" href="classerpcgen_1_1_list_type.html#a589a9b0e3935cd4b7825f73e420d2571" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
 
 </div>
 </div>
@@ -436,14 +436,14 @@ void <a class="el" href="classerpcgen_1_1_symbol_scope.html#a2c3bd345058aef148a7
 
 </div>
 </div>
-<a class="anchor" id="a7384e2d0f0b23f936cb4d6ca9b4cc516"></a>
+<a class="anchor" id="ae887ebd5083298aecd8f75bdc6889e0e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int32_t SymbolScope::getSymbolPos </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *&#160;</td>
           <td class="paramname"><em>sym</em></td><td>)</td>
           <td></td>
         </tr>

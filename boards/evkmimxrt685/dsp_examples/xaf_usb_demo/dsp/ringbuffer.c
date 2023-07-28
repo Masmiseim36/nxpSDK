@@ -10,36 +10,51 @@
 #include <stdbool.h>
 
 #include "ringbuffer.h"
+#include "fsl_common_dsp.h"
+
+#define AUDIO_BUFFER_SIZE (32 * 1024)
+
+#ifdef HAVE_FREERTOS
+#include "FreeRTOS.h"
+#include "task.h"
+#else
+#include <xtensa/xos.h>
+#endif
+
+#if (XCHAL_DCACHE_SIZE > 0)
+AT_NONCACHEABLE_SECTION_ALIGN(
+#else
+SDK_ALIGN(
+#endif
+    static ringbuf_t ringbuf, 16
+);
+
+#if (XCHAL_DCACHE_SIZE > 0)
+AT_NONCACHEABLE_SECTION_ALIGN(
+#else
+SDK_ALIGN(
+#endif
+    static uint8_t buffer[AUDIO_BUFFER_SIZE], 16
+);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-ringbuf_t *ringbuf_create(uint32_t size)
+ringbuf_t *ringbuf_create(void)
 {
     ringbuf_t *rb;
 
-    rb = malloc(sizeof(struct ringbuf));
+    rb = &ringbuf;
     if (!rb)
         return NULL;
 
     rb->head = 0;
     rb->tail = 0;
     rb->occ  = 0;
-    rb->size = size;
-    rb->buf  = malloc(size);
-    if (!rb->buf)
-    {
-        free(rb);
-        return NULL;
-    }
+    rb->size = AUDIO_BUFFER_SIZE;
+    rb->buf  = (uint8_t *)&buffer;
 
     return rb;
-}
-
-void ringbuf_destroy(ringbuf_t *rb)
-{
-    free(rb->buf);
-    free(rb);
 }
 
 void ringbuf_clear(ringbuf_t *rb)

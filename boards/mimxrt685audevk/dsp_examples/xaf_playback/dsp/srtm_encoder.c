@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -130,7 +130,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 #endif
         /* Unknown encoder. */
         default:
-            DSP_PRINTF("Encoder failure: unknown codec!\r\n");
+            DSP_PRINTF("[DSP Codec] Encoder failure: unknown codec!\r\n");
             goto error_cleanup;
     }
     xaf_adev_config_default_init(&device_config);
@@ -143,7 +143,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     ret = xaf_adev_open(&p_adev, &device_config);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xaf_adev_open failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
@@ -161,14 +161,14 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     ret                            = xaf_comp_create(p_adev, &p_encoder, &comp_config);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xaf_comp_create failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
     ret = xaf_comp_set_config(p_encoder, param_num, &param[0]);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_set_config failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xaf_comp_set_config failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
@@ -178,7 +178,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     ret = xaf_comp_process(p_adev, p_encoder, NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
@@ -193,7 +193,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
             ret = xaf_comp_process(p_adev, p_encoder, enc_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
             if (ret != XAF_NO_ERR)
             {
-                DSP_PRINTF("xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
+                DSP_PRINTF("[DSP Codec] xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
                 goto error_cleanup;
             }
         }
@@ -205,7 +205,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
         ret = xaf_comp_get_status(p_adev, p_encoder, &enc_status, &enc_info[0]);
         if (ret != XAF_NO_ERR)
         {
-            DSP_PRINTF("xaf_comp_get_status failure: %d\r\n", ret);
+            DSP_PRINTF("[DSP Codec] xaf_comp_get_status failure: %d\r\n", ret);
             goto error_cleanup;
         }
 
@@ -217,7 +217,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 
     if (enc_status != XAF_INIT_DONE)
     {
-        DSP_PRINTF("ERROR: Failed to initialize encoder component\r\n");
+        DSP_PRINTF("[DSP Codec] ERROR: Failed to initialize encoder component\r\n");
         goto error_cleanup;
     }
 
@@ -233,7 +233,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
                             TASK_STACK_SIZE, 7, 0, 0);
     if (ret != XOS_OK)
     {
-        DSP_PRINTF("xos_thread_create failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xos_thread_create failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
@@ -241,28 +241,28 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     ret = xos_thread_join(&enc_thread, &exitcode);
     if (ret != XOS_OK)
     {
-        DSP_PRINTF("xos_thread_join failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xos_thread_join failure: %d\r\n", ret);
         ret = xos_thread_delete(&enc_thread);
         if (ret != XOS_OK)
         {
-            DSP_PRINTF("xos_thread_delete failure: %d\r\n", ret);
+            DSP_PRINTF("[DSP Codec] xos_thread_delete failure: %d\r\n", ret);
         }
         goto error_cleanup;
     }
     if (exitcode != 0)
     {
-        DSP_PRINTF("DSP_ProcessThread exit code: %d\r\n", exitcode);
+        DSP_PRINTF("[DSP Codec] DSP_ProcessThread exit code: %d\r\n", exitcode);
         ret = xos_thread_delete(&enc_thread);
         if (ret != XOS_OK)
         {
-            DSP_PRINTF("xos_thread_delete failure: %d\r\n", ret);
+            DSP_PRINTF("[DSP Codec] xos_thread_delete failure: %d\r\n", ret);
         }
         goto error_cleanup;
     }
     ret = xos_thread_delete(&enc_thread);
     if (ret != XOS_OK)
     {
-        DSP_PRINTF("xos_thread_delete failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xos_thread_delete failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
@@ -270,7 +270,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     ret = xaf_comp_delete(p_encoder);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xaf_comp_delete failure: %d\r\n", ret);
         goto error_cleanup;
     }
     p_encoder = NULL;
@@ -278,7 +278,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
     if (ret != XAF_NO_ERR)
     {
-        DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
+        DSP_PRINTF("[DSP Codec] xaf_adev_close failure: %d\r\n", ret);
         goto error_cleanup;
     }
     p_adev = NULL;
@@ -297,7 +297,7 @@ error_cleanup:
         ret = xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE);
         if (ret != XAF_NO_ERR)
         {
-            DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
+            DSP_PRINTF("[DSP Codec] xaf_adev_close failure: %d\r\n", ret);
         }
         else
         {

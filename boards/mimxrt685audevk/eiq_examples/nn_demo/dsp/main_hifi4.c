@@ -16,20 +16,20 @@
 #include <xtensa/xos.h>
 #include "dsp_nn.h"
 
-#include "dsp_config.h"
 #include "board_hifi4.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_inputmux.h"
 #include "fsl_dma.h"
 #include "pin_mux.h"
+#include "dsp_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
-#define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
 #define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
 #define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
+#define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
+#define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
 
 typedef struct _rpmsg_user_data_t
 {
@@ -199,6 +199,10 @@ int SCHEDULER_MULTICORE(void)
     xos_event_create(&notif_evt, NOTIF_EVT, 0);
 
     my_ept = rpmsg_lite_create_ept(my_rpmsg, DSP_EPT_ADDR, my_ept_read_cb, (void *)&rpmsg_user_data, &my_ept_context);
+
+    /* Send an empty message signaling DSP is ready */
+    memset(&msg, 0, sizeof(srtm_message));
+    rpmsg_lite_send(my_rpmsg, my_ept, MCU_EPT_ADDR, (char*)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
 
     while (1)
     {

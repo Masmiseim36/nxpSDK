@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,6 +15,7 @@
 #include "rpmsg_queue.h"
 #include "rtp.h"
 
+#include "fsl_sema42.h"
 #include "fsl_common.h"
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
 #include "fsl_memory.h"
@@ -31,7 +32,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define INIT_DEBUG_CONSOLE 0
 #define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
 #define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
 
@@ -208,6 +208,8 @@ static int dsp_main_thread(void *arg, int wake_value)
         xos_thread_sleep_msec(10);
     }
 
+    SEMA42_Unlock(APP_SEMA42, SEMA_STARTUP_NUM);
+
     /* Receive RPMsg-Lite messages */
     while (true)
     {
@@ -250,9 +252,7 @@ int main(void)
 
     XOS_Init();
     BOARD_InitBootPins();
-#if INIT_DEBUG_CONSOLE || APP_DSP_ONLY
     BOARD_InitDebugConsole();
-#endif
     BOARD_InitClock();
 
     /* Iniitalize DMA1 which will be shared by capturer and renderer. */
@@ -262,6 +262,9 @@ int main(void)
      * EXTINT19 = DSP INT 23 */
     xos_register_interrupt_handler(XCHAL_EXTINT19_NUM, (XosIntFunc *)DMA_IRQHandle, DMA1);
     xos_interrupt_enable(XCHAL_EXTINT19_NUM);
+
+    /* SEMA42 init */
+    SEMA42_Init(APP_SEMA42);
 
     /* Create main thread */
     xos_thread_create(&thread_main, NULL, dsp_main_thread, &dsp, "dsp_main", dsp_thread_stack, DSP_THREAD_STACK_SIZE,

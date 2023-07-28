@@ -40,11 +40,6 @@ void BOARD_Init()
     /* MUB interrupt signal is selected for DSP interrupt input 1 */
     INPUTMUX_AttachSignal(INPUTMUX, 1U, kINPUTMUX_MuBToDspInterrupt);
 
-    /* attach AUDIO PLL clock to FLEXCOMM1 (I2S1) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM1);
-    /* attach AUDIO PLL clock to FLEXCOMM3 (I2S3) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM3);
-
     /* Initialize DMA1 which will be shared by capturer and renderer. */
     DMA_Init(DMA1);
 

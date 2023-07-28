@@ -27,8 +27,7 @@
 #define S_PSP_STACK_SIZE        (0x0000800)
 
 #define NS_HEAP_SIZE            (0x0001000)
-#define NS_MSP_STACK_SIZE       (0x00000A0)
-#define NS_PSP_STACK_SIZE       (0x0000140)
+#define NS_STACK_SIZE           (0x00001E0)
 
 /* This size of buffer is big enough to store an attestation
  * token produced by initial attestation service
@@ -158,7 +157,7 @@ security tier by programing corresponding registers in secure AHB controller. */
 #define DATA_REGION2_SUBREGION_SIZE     (1024 * 4)  /* 4 KB*/
 #define DATA_REGION2_SIZE               (DATA_REGION2_SUBREGION_NUMBER * DATA_REGION2_SUBREGION_SIZE)      /* 512 KB */
 /* Region 3: RAM16 to RAM29 3.5 MB, (448 * 8 KB) */
-#define DATA_REGION3_SUBREGION_NUMBER   (448)      
+#define DATA_REGION3_SUBREGION_NUMBER   (448)
 #define DATA_REGION3_SUBREGION_SIZE     (1024 * 8)  /* 8 KB*/
 #define DATA_REGION3_SIZE               (DATA_REGION3_SUBREGION_NUMBER * DATA_REGION3_SUBREGION_SIZE)      /* 3.5 MB */
 
@@ -174,9 +173,9 @@ security tier by programing corresponding registers in secure AHB controller. */
                                   FLASH_NS_PARTITION_SIZE)
 
 /* Code SRAM area */
-#define TOTAL_CODE_SRAM_SIZE     (0x8000) /* SRAM X region */
-#define S_CODE_SRAM_ALIAS_BASE   (0x14000000)
-#define NS_CODE_SRAM_ALIAS_BASE  (0x04000000)
+#define S_RAM_CODE_SIZE          (0x8000) /* SRAM X region */
+#define S_RAM_CODE_START         (0x14000000)
+#define NS_RAM_CODE_START        (0x04000000)
 
 #ifdef BL2
 /* Bootloader regions */

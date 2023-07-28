@@ -1,24 +1,29 @@
 var a00235 =
 [
-    [ "FSL_OSTIMER_DRIVER_VERSION", "a00235.html#gab236ace723c08a0a7b8b1df2b34ee375", null ],
-    [ "ostimer_callback_t", "a00235.html#gacf52fa3c35d54caf94c639603261ebb4", null ],
-    [ "_ostimer_flags", "a00235.html#gaac312289965a1d084b78995332c8bcdb", [
-      [ "kOSTIMER_MatchInterruptFlag", "a00235.html#ggaac312289965a1d084b78995332c8bcdba55d291c3a4ec78cbc55f05847146e8b4", null ]
+    [ "SCT0_PMUX_ID", "a00235.html#ga227df33dfe2aed994d27887b6cdbe801", null ],
+    [ "FSL_INPUTMUX_DRIVER_VERSION", "a00235.html#ga166fc4ada71e4fa9e160774700c976d7", null ],
+    [ "inputmux_connection_t", "a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b", [
+      [ "kINPUTMUX_Sct0PinInp0ToSct0", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6578893c8d3f1a355f3d6a1f134d742a", null ],
+      [ "kINPUTMUX_DebugHaltedToSct0", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba1e042af47b407b5b414e22bab7f3e87d", null ],
+      [ "kINPUTMUX_GpioPort1Pin31ToPintsel", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba55c96954290ceb81ca5340dc369e8398", null ],
+      [ "kINPUTMUX_FlexspiToDspInterrupt", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6bd295ca0d4418fd4a6901f24203e94f", null ],
+      [ "kINPUTMUX_FreqmeGpioClkToFreqmeas", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba8a32cbc30569942384aa1836c9feb437", null ],
+      [ "kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba51b1f9f4cdacbdd3702e513740a99549", null ],
+      [ "kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba2fe1df092eb9829f95bf7608b40ba928", null ],
+      [ "kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bac920efa83706e1b4626d54c3a96398bf", null ],
+      [ "kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba5b9e39446b7f0a2829a31c76bb276148", null ],
+      [ "kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163babdf35ff88b3936fe3d7c28177336db05", null ],
+      [ "kINPUTMUX_FlexspiTxToDma0", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bafe834f88ae7cdc34c3ddbb9786911b85", null ],
+      [ "kINPUTMUX_FlexspiTxToDma1", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bab53933a01ac425ec701b55a472d76ca1", null ],
+      [ "kINPUTMUX_Dma0OtrigChannel32ToTriginChannels", "a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba93afc4bf5035aa077e7ceb1a124c3ecd", null ]
     ] ],
-    [ "OSTIMER_Init", "a00235.html#ga575fcffb115c76d2986d8c64a152ea7b", null ],
-    [ "OSTIMER_Deinit", "a00235.html#gacabf48efa9079adc9d71f64c29863f68", null ],
-    [ "OSTIMER_GrayToDecimal", "a00235.html#ga781cdfc8f94edec6214964abccb43d59", null ],
-    [ "OSTIMER_DecimalToGray", "a00235.html#gaf7d0d290d85412702670d7d4b0a87b62", null ],
-    [ "OSTIMER_GetStatusFlags", "a00235.html#ga20486459bd687b67ccbe23a186320fea", null ],
-    [ "OSTIMER_ClearStatusFlags", "a00235.html#gaaa8ce064965da4ddae0d318f8dd2f7a5", null ],
-    [ "OSTIMER_SetMatchRawValue", "a00235.html#gac1d3a55e30354fbf5ade50456da6dfcc", null ],
-    [ "OSTIMER_SetMatchValue", "a00235.html#gafa080f88a75d1a6e3fbe17482f89fe70", null ],
-    [ "OSTIMER_SetMatchRegister", "a00235.html#gad1df9495c6a1f63f621510a6f0fd767d", null ],
-    [ "OSTIMER_EnableMatchInterrupt", "a00235.html#ga31eb0176e79686beb6084fb432eb18d0", null ],
-    [ "OSTIMER_DisableMatchInterrupt", "a00235.html#gaf60122d7b4717f4f1703a03e452b724e", null ],
-    [ "OSTIMER_GetCurrentTimerRawValue", "a00235.html#gaa8a253a9a44e2073f4ac6673d025aa60", null ],
-    [ "OSTIMER_GetCurrentTimerValue", "a00235.html#gaedcc9b8f01a37ce8505348300b2af7f1", null ],
-    [ "OSTIMER_GetCaptureRawValue", "a00235.html#ga8e8b5d2e9d62a5f59fbb0d0de5991b9a", null ],
-    [ "OSTIMER_GetCaptureValue", "a00235.html#ga877efd24b60e479795af41dc365561c5", null ],
-    [ "OSTIMER_HandleIRQ", "a00235.html#gad80c44c301cf21a8d5762de871d22632", null ]
+    [ "inputmux_signal_t", "a00235.html#ga1be6152afb5eac6042f6488947f16b1e", [
+      [ "kINPUTMUX_Dmac0InputTriggerPint0Ena", "a00235.html#gga1be6152afb5eac6042f6488947f16b1eaf9eff4ec73dd1f30aa917eb601d6c7f1", null ],
+      [ "kINPUTMUX_Dmac0InputTriggerFlexspiTxEna", "a00235.html#gga1be6152afb5eac6042f6488947f16b1ea879489de7ef5e4309eaaad821c024275", null ],
+      [ "kINPUTMUX_Dmac1InputTriggerFlexspiTxEna", "a00235.html#gga1be6152afb5eac6042f6488947f16b1ea789f2d65e85b5e3cf8d50ea036dd6eda", null ],
+      [ "kINPUTMUX_HashCryptToDmac0Ch30RequestEna", "a00235.html#gga1be6152afb5eac6042f6488947f16b1ea39953ac87dbad66ae3c4ec1f862c91ef", null ]
+    ] ],
+    [ "INPUTMUX_Init", "a00235.html#gae02fecc3b8aab2a9d3f40f07ca7114a4", null ],
+    [ "INPUTMUX_AttachSignal", "a00235.html#gaa4f141e3874109e45c2a6f9be027e0ee", null ],
+    [ "INPUTMUX_Deinit", "a00235.html#gaf84e3b0d7a06af86ea6f1ac0d6edf382", null ]
 ];

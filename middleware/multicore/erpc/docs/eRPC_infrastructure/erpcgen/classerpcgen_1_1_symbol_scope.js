@@ -12,7 +12,7 @@ var classerpcgen_1_1_symbol_scope =
     [ "end", "classerpcgen_1_1_symbol_scope.html#ad93cefc5d50fe7d4c7adff65bd950db3", null ],
     [ "getParent", "classerpcgen_1_1_symbol_scope.html#a740e7cba7d12e1f06c0ad4485f102dd2", null ],
     [ "getSymbol", "classerpcgen_1_1_symbol_scope.html#a307cfc7cdbb201f06062fddf48b4948a", null ],
-    [ "getSymbolPos", "classerpcgen_1_1_symbol_scope.html#a7384e2d0f0b23f936cb4d6ca9b4cc516", null ],
+    [ "getSymbolPos", "classerpcgen_1_1_symbol_scope.html#ae887ebd5083298aecd8f75bdc6889e0e", null ],
     [ "getSymbolsOfType", "classerpcgen_1_1_symbol_scope.html#a57d278b24988d3e7555399e3813e9d84", null ],
     [ "getSymbolVector", "classerpcgen_1_1_symbol_scope.html#aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01", null ],
     [ "hasParent", "classerpcgen_1_1_symbol_scope.html#a57a3ab7772138826666b2ec82ac5ad1a", null ],

@@ -13,9 +13,11 @@
 #include "lvgl.h"
 #include "demos/lv_demos.h"
 
+#include "fsl_dma.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR       DMA0
 
 /* 1 ms per tick. */
 #ifndef LVGL_TICK_MS
@@ -30,7 +32,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
 static volatile uint32_t s_tick        = 0U;
 static volatile bool s_lvglTaskPending = false;
 
@@ -54,6 +55,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+    DMA_Init(EXAMPLE_LPSPI_MASTER_DMA_BASEADDR);
 
     PRINTF("lvgl bare metal benchmark demo\r\n");
 

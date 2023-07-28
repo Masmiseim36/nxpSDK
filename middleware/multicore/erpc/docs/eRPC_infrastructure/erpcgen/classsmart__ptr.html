@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -160,6 +160,10 @@ Public Member Functions</h2></td></tr>
 <a class="el" href="classsmart__ptr.html">smart_ptr</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmart__ptr.html#a50125e782b484e9d3965de2cfbe38ba2">operator=</a> (<a class="el" href="classsmart__ptr.html">smart_ptr</a>&lt; T &gt; &amp;&amp;other)</td></tr>
 <tr class="memdesc:a50125e782b484e9d3965de2cfbe38ba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator. <br /></td></tr>
 <tr class="separator:a50125e782b484e9d3965de2cfbe38ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12fdbc182eebb7ce6e1a1a1520525a2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12fdbc182eebb7ce6e1a1a1520525a2e"></a>
+<a class="el" href="classsmart__ptr.html">smart_ptr</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmart__ptr.html#a12fdbc182eebb7ce6e1a1a1520525a2e">operator=</a> (ptr_type p)</td></tr>
+<tr class="memdesc:a12fdbc182eebb7ce6e1a1a1520525a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">To allow setting the pointer directly. Equivalent to a call to <a class="el" href="classsmart__ptr.html#a0caae3f1c3cf11d2a63435473b10891d">set()</a>. <br /></td></tr>
+<tr class="separator:a12fdbc182eebb7ce6e1a1a1520525a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d31f37a089eebb2516e349a06696d79"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmart__ptr.html#a7d31f37a089eebb2516e349a06696d79">~smart_ptr</a> ()</td></tr>
 <tr class="separator:a7d31f37a089eebb2516e349a06696d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6d32c0876260a672fc0348baf8ed1b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6d32c0876260a672fc0348baf8ed1b9"></a>
@@ -203,10 +207,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmart__ptr.html#a0b0290ca9165026a0e1563d1f8be7237">operator bool</a> () const </td></tr>
 <tr class="memdesc:a0b0290ca9165026a0e1563d1f8be7237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a boolean indicating whether the object has a pointer set or not. <br /></td></tr>
 <tr class="separator:a0b0290ca9165026a0e1563d1f8be7237"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12fdbc182eebb7ce6e1a1a1520525a2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12fdbc182eebb7ce6e1a1a1520525a2e"></a>
-<a class="el" href="classsmart__ptr.html">smart_ptr</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmart__ptr.html#a12fdbc182eebb7ce6e1a1a1520525a2e">operator=</a> (ptr_type p)</td></tr>
-<tr class="memdesc:a12fdbc182eebb7ce6e1a1a1520525a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">To allow setting the pointer directly. Equivalent to a call to <a class="el" href="classsmart__ptr.html#a0caae3f1c3cf11d2a63435473b10891d">set()</a>. <br /></td></tr>
-<tr class="separator:a12fdbc182eebb7ce6e1a1a1520525a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1aec2e35f454774cc148ce2c0b6dd89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1aec2e35f454774cc148ce2c0b6dd89"></a>
 ptr_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmart__ptr.html#ae1aec2e35f454774cc148ce2c0b6dd89">operator-&gt;</a> ()</td></tr>
 <tr class="memdesc:ae1aec2e35f454774cc148ce2c0b6dd89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Another operator to allow you to treat the object just like a pointer. <br /></td></tr>

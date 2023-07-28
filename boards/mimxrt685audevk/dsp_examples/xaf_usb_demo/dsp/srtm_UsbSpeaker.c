@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -403,7 +403,7 @@ int srtm_usbSpeaker_cleanup(void *arg, int wake_value)
     int32_t exitcode;
     dsp_handle_t *dsp = (dsp_handle_t *)arg;
 
-    DSP_PRINTF("[DSP_CleanupThread] start\r\n");
+    DSP_PRINTF("[DSP_USB_SPEAKER] Cleanup start\r\n");
 
     /* Wait for processing thread to complete before exiting. */
     xos_thread_join(&dsp->process_thread, &exitcode);

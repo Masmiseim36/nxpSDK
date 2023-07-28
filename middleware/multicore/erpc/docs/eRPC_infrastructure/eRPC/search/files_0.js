@@ -14,6 +14,8 @@ var searchData=
   ['erpc_5fframed_5ftransport_2ehpp',['erpc_framed_transport.hpp',['../erpc__framed__transport_8hpp.html',1,'']]],
   ['erpc_5fi2c_5fslave_5ftransport_2ehpp',['erpc_i2c_slave_transport.hpp',['../erpc__i2c__slave__transport_8hpp.html',1,'']]],
   ['erpc_5finter_5fthread_5fbuffer_5ftransport_2ehpp',['erpc_inter_thread_buffer_transport.hpp',['../erpc__inter__thread__buffer__transport_8hpp.html',1,'']]],
+  ['erpc_5flpi2c_5fslave_5ftransport_2ehpp',['erpc_lpi2c_slave_transport.hpp',['../erpc__lpi2c__slave__transport_8hpp.html',1,'']]],
+  ['erpc_5flpspi_5fslave_5ftransport_2ehpp',['erpc_lpspi_slave_transport.hpp',['../erpc__lpspi__slave__transport_8hpp.html',1,'']]],
   ['erpc_5fmanually_5fconstructed_2ehpp',['erpc_manually_constructed.hpp',['../erpc__manually__constructed_8hpp.html',1,'']]],
   ['erpc_5fmbf_5fsetup_2eh',['erpc_mbf_setup.h',['../erpc__mbf__setup_8h.html',1,'']]],
   ['erpc_5fmessage_5fbuffer_2ehpp',['erpc_message_buffer.hpp',['../erpc__message__buffer_8hpp.html',1,'']]],

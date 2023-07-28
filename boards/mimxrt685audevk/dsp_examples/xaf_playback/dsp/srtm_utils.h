@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 #include "ringbuffer.h"
 #include "rpmsg_queue.h"
 
-#if (INIT_DEBUG_CONSOLE == 1)
-#define DSP_PRINTF PRINTF
-#else
-#define DSP_PRINTF printf
-#endif
+#define APP_SEMA42 SEMA42
+#define SEMA_PRINTF_NUM	  0
+#define SEMA_STARTUP_NUM  1
+#define SEMA_CORE_ID_DSP  3
+void DSP_PRINTF(const char* ptr, ...);
 
 /*******************************************************************************
  * Definitions
@@ -40,11 +40,12 @@ typedef struct _dsp_handle_t
 
     void *audio_device;
     void *comp_codec;
+    void *comp_gain;
     void *comp_src;
     void *comp_renderer;
     void *comp_client_proxy;
     void *comp;
-    XosThread dec_thread;
+    XosThread process_thread;
     XosThread buffer_thread;
     XosThread cleanup_thread;
     XosEvent pipeline_event;
@@ -90,6 +91,7 @@ uint32_t DSP_AudioRead(dsp_handle_t *dsp, char *data, uint32_t size);
 uint32_t DSP_AudioWrite(dsp_handle_t *dsp, char *data, uint32_t size);
 uint32_t DSP_AudioReadRing(dsp_handle_t *dsp, char *data, uint32_t size);
 uint32_t DSP_AudioWriteRing(dsp_handle_t *dsp, char *data, uint32_t size);
+uint32_t DSP_AudioSizeRing(dsp_handle_t *dsp);
 
 int DSP_ProcessThread(void *arg, int wake_value);
 int DSP_BufferThread(void *arg, int wake_value);

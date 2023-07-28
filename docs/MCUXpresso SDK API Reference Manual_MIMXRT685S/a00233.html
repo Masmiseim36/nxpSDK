@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: INPUTMUX: Input Multiplexing Driver</title>
+<title>MCUXpresso SDK API Reference Manual: IAP: In Application Programming Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,336 +99,49 @@ $(document).ready(function(){initNavTree('a00233.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a> &#124;
+<a href="#files">Files</a>  </div>
   <div class="headertitle">
-<div class="title">INPUTMUX: Input Multiplexing Driver</div>  </div>
+<div class="title">IAP: In Application Programming Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the Input multiplexing (INPUTMUX). <br/>
-It configures the inputs to the pin interrupt block, DMA trigger, and frequency measure function. Once configured, the clock is not needed for the inputmux. <br/>
+<p>The MCUXpresso SDK provides a driver for the In Application Programming (IAP). <br/>
+It provides a set of functions to call the on-chip in application programming interface. User code executing from on-chip RAM can call these function to read information like part id, read and write flash, read and write ffr. <br/>
  </p>
-<h1><a class="anchor" id="INPUTMUXInit"></a>
-Input Multiplexing Driver operation</h1>
-<p>INPUTMUX_AttachSignal function configures the specified input</p>
-<h1><a class="anchor" id="INPUTMUXTypUC"></a>
-Typical use case</h1>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/inputmux </p>
+<h2>IAP Basic Operations</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/iap </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00035"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html">IAP Boot Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00019"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html">IAP FlexSPI Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00234"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html">IAP OTP Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00163"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html">fsl_inputmux.h</a></td></tr>
+<tr class="memitem:a00162"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00162.html">fsl_iap.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00100"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html">fsl_inputmux_connections.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga227df33dfe2aed994d27887b6cdbe801"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga227df33dfe2aed994d27887b6cdbe801"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#ga227df33dfe2aed994d27887b6cdbe801">SCT0_PMUX_ID</a>&#160;&#160;&#160;0x00U</td></tr>
-<tr class="memdesc:ga227df33dfe2aed994d27887b6cdbe801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periphinmux IDs. <br/></td></tr>
-<tr class="separator:ga227df33dfe2aed994d27887b6cdbe801"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6578893c8d3f1a355f3d6a1f134d742a">kINPUTMUX_Sct0PinInp0ToSct0</a> = 0U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba1e042af47b407b5b414e22bab7f3e87d">kINPUTMUX_DebugHaltedToSct0</a> = 23U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba55c96954290ceb81ca5340dc369e8398">kINPUTMUX_GpioPort1Pin31ToPintsel</a> = 63U + (PINTSEL_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6bd295ca0d4418fd4a6901f24203e94f">kINPUTMUX_FlexspiToDspInterrupt</a> = 34U + (DSP_INT_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba8a32cbc30569942384aa1836c9feb437">kINPUTMUX_FreqmeGpioClkToFreqmeas</a> = 6U + (FREQMEAS_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba51b1f9f4cdacbdd3702e513740a99549">kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</a> = 18U + (CT32BIT0_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba2fe1df092eb9829f95bf7608b40ba928">kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</a> = 18U + (CT32BIT1_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bac920efa83706e1b4626d54c3a96398bf">kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</a> = 18U + (CT32BIT2_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba5b9e39446b7f0a2829a31c76bb276148">kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</a> = 18U + (CT32BIT3_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163babdf35ff88b3936fe3d7c28177336db05">kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</a> = 18U + (CT32BIT4_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bafe834f88ae7cdc34c3ddbb9786911b85">kINPUTMUX_FlexspiTxToDma0</a> = 29U + (DMA0_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bab53933a01ac425ec701b55a472d76ca1">kINPUTMUX_FlexspiTxToDma1</a> = 29U + (DMA1_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba93afc4bf5035aa077e7ceb1a124c3ecd">kINPUTMUX_Dma0OtrigChannel32ToTriginChannels</a> = 32U + (DMA0_OTRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
-<br/>
- }</td></tr>
-<tr class="memdesc:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX connections type.  <a href="a00233.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">More...</a><br/></td></tr>
-<tr class="separator:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1be6152afb5eac6042f6488947f16b1e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga1be6152afb5eac6042f6488947f16b1eaf9eff4ec73dd1f30aa917eb601d6c7f1">kINPUTMUX_Dmac0InputTriggerPint0Ena</a> = 0U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga1be6152afb5eac6042f6488947f16b1ea879489de7ef5e4309eaaad821c024275">kINPUTMUX_Dmac0InputTriggerFlexspiTxEna</a> = 29U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga1be6152afb5eac6042f6488947f16b1ea789f2d65e85b5e3cf8d50ea036dd6eda">kINPUTMUX_Dmac1InputTriggerFlexspiTxEna</a> = 29U + (DMA1_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00233.html#gga1be6152afb5eac6042f6488947f16b1ea39953ac87dbad66ae3c4ec1f862c91ef">kINPUTMUX_HashCryptToDmac0Ch30RequestEna</a> = 30U + (DMA0_REQ_ENA0_ID &lt;&lt; ENA_SHIFT)
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1be6152afb5eac6042f6488947f16b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX signal enable/disable type.  <a href="a00233.html#ga1be6152afb5eac6042f6488947f16b1e">More...</a><br/></td></tr>
-<tr class="separator:ga1be6152afb5eac6042f6488947f16b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#gae02fecc3b8aab2a9d3f40f07ca7114a4">INPUTMUX_Init</a> (INPUTMUX_Type *base)</td></tr>
-<tr class="memdesc:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize INPUTMUX peripheral.  <a href="#gae02fecc3b8aab2a9d3f40f07ca7114a4">More...</a><br/></td></tr>
-<tr class="separator:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#gaa4f141e3874109e45c2a6f9be027e0ee">INPUTMUX_AttachSignal</a> (INPUTMUX_Type *base, uint32_t index, <a class="el" href="a00233.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a> connection)</td></tr>
-<tr class="memdesc:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a signal.  <a href="#gaa4f141e3874109e45c2a6f9be027e0ee">More...</a><br/></td></tr>
-<tr class="separator:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6097bd0adcdc6b8183afa4a6dc6294e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#ga6097bd0adcdc6b8183afa4a6dc6294e3">INPUTMUX_EnableSignal</a> (INPUTMUX_Type *base, <a class="el" href="a00233.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a> signal, bool enable)</td></tr>
-<tr class="memdesc:ga6097bd0adcdc6b8183afa4a6dc6294e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable a signal.  <a href="#ga6097bd0adcdc6b8183afa4a6dc6294e3">More...</a><br/></td></tr>
-<tr class="separator:ga6097bd0adcdc6b8183afa4a6dc6294e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#gaf84e3b0d7a06af86ea6f1ac0d6edf382">INPUTMUX_Deinit</a> (INPUTMUX_Type *base)</td></tr>
-<tr class="memdesc:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize INPUTMUX peripheral.  <a href="#gaf84e3b0d7a06af86ea6f1ac0d6edf382">More...</a><br/></td></tr>
-<tr class="separator:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga166fc4ada71e4fa9e160774700c976d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga166fc4ada71e4fa9e160774700c976d7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#ga166fc4ada71e4fa9e160774700c976d7">FSL_INPUTMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00213.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
-<tr class="memdesc:ga166fc4ada71e4fa9e160774700c976d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group interrupt driver version for SDK. <br/></td></tr>
-<tr class="separator:ga166fc4ada71e4fa9e160774700c976d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06aad21ce0e8a056b5c2fd4775cac8bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#ga06aad21ce0e8a056b5c2fd4775cac8bf">FSL_IAP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
+<tr class="memdesc:ga06aad21ce0e8a056b5c2fd4775cac8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP driver version 2.1.2.  <a href="#ga06aad21ce0e8a056b5c2fd4775cac8bf">More...</a><br/></td></tr>
+<tr class="separator:ga06aad21ce0e8a056b5c2fd4775cac8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga7ac6f6ac5dd2b621eabb60d2ab48163b"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga06aad21ce0e8a056b5c2fd4775cac8bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00233.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a></td>
+          <td class="memname">#define FSL_IAP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba6578893c8d3f1a355f3d6a1f134d742a"></a>kINPUTMUX_Sct0PinInp0ToSct0</em>&nbsp;</td><td class="fielddoc">
-<p>SCT INMUX. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba1e042af47b407b5b414e22bab7f3e87d"></a>kINPUTMUX_DebugHaltedToSct0</em>&nbsp;</td><td class="fielddoc">
-<p>Pin Interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba55c96954290ceb81ca5340dc369e8398"></a>kINPUTMUX_GpioPort1Pin31ToPintsel</em>&nbsp;</td><td class="fielddoc">
-<p>DSP Interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba6bd295ca0d4418fd4a6901f24203e94f"></a>kINPUTMUX_FlexspiToDspInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>Frequency measure. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba8a32cbc30569942384aa1836c9feb437"></a>kINPUTMUX_FreqmeGpioClkToFreqmeas</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier0 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba51b1f9f4cdacbdd3702e513740a99549"></a>kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier1 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba2fe1df092eb9829f95bf7608b40ba928"></a>kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier2 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bac920efa83706e1b4626d54c3a96398bf"></a>kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier3 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba5b9e39446b7f0a2829a31c76bb276148"></a>kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier4 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163babdf35ff88b3936fe3d7c28177336db05"></a>kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 ITRIG. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bafe834f88ae7cdc34c3ddbb9786911b85"></a>kINPUTMUX_FlexspiTxToDma0</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 ITRIG. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bab53933a01ac425ec701b55a472d76ca1"></a>kINPUTMUX_FlexspiTxToDma1</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 OTRIG. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba93afc4bf5035aa077e7ceb1a124c3ecd"></a>kINPUTMUX_Dma0OtrigChannel32ToTriginChannels</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 OTRIG. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga1be6152afb5eac6042f6488947f16b1e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00233.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1eaf9eff4ec73dd1f30aa917eb601d6c7f1"></a>kINPUTMUX_Dmac0InputTriggerPint0Ena</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 input trigger source enable. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea879489de7ef5e4309eaaad821c024275"></a>kINPUTMUX_Dmac0InputTriggerFlexspiTxEna</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 input trigger source enable. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea789f2d65e85b5e3cf8d50ea036dd6eda"></a>kINPUTMUX_Dmac1InputTriggerFlexspiTxEna</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 REQ signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea39953ac87dbad66ae3c4ec1f862c91ef"></a>kINPUTMUX_HashCryptToDmac0Ch30RequestEna</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 REQ signal. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gae02fecc3b8aab2a9d3f40f07ca7114a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void INPUTMUX_Init </td>
-          <td>(</td>
-          <td class="paramtype">INPUTMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function enables the INPUTMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa4f141e3874109e45c2a6f9be027e0ee"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void INPUTMUX_AttachSignal </td>
-          <td>(</td>
-          <td class="paramtype">INPUTMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00233.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a>&#160;</td>
-          <td class="paramname"><em>connection</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the INPUTPMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral. </td></tr>
-    <tr><td class="paramname">index</td><td>Destination peripheral to attach the signal to. </td></tr>
-    <tr><td class="paramname">connection</td><td>Selects connection.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6097bd0adcdc6b8183afa4a6dc6294e3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void INPUTMUX_EnableSignal </td>
-          <td>(</td>
-          <td class="paramtype">INPUTMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00233.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a>&#160;</td>
-          <td class="paramname"><em>signal</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the INPUTPMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral. </td></tr>
-    <tr><td class="paramname">signal</td><td>Enable signal register id and bit offset. </td></tr>
-    <tr><td class="paramname">enable</td><td>Selects enable or disable.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf84e3b0d7a06af86ea6f1ac0d6edf382"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void INPUTMUX_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">INPUTMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables the INPUTMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

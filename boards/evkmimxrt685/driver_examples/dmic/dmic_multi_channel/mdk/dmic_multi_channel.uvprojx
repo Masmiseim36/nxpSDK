@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../components/codec/cs42448;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -444,26 +444,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dmic.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dmic.c</FilePath>
@@ -522,6 +502,26 @@
               <FileName>fsl_i2s_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2s_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -616,6 +616,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -647,21 +662,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1181,9 +1181,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../components/codec/cs42448;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1217,7 +1217,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1293,26 +1293,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dmic.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_dmic.c</FilePath>
@@ -1371,6 +1351,26 @@
               <FileName>fsl_i2s_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2s_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1465,6 +1465,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -1496,21 +1511,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_flexcomm_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</FilePath>
             </File>
           </Files>
         </Group>

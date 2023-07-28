@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, XIP_IMAGE, XIP_EXTERNAL_FLASH, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, MFLASH_FILE_BASEADDR=7340032, SDK_I2C_BASED_COMPONENT_USED=1, SDK_OS_FREE_RTOS, SDIO_ENABLED, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, XIP_IMAGE, XIP_EXTERNAL_FLASH, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=7340032, SDK_I2C_BASED_COMPONENT_USED=1, SDIO_ENABLED, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1</Define>
               <Undefine/>
-              <IncludePath>..;../config_files;../../common;../../..;../../../../../devices/MIMXRT685S/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt685;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../rtos/freertos/freertos-kernel/include;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../middleware/wifi_nxp;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/gpio;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/edgefast_wifi/include;../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</IncludePath>
+              <IncludePath>..;../config_files;../../common;../../..;../../../../../devices/MIMXRT685S/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash/mimxrt685;../../../../../components/flash/mflash;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sdio;../../../../../components/gpio;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../middleware/wifi_nxp/incl/port/lwip/hooks;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/edgefast_wifi/include;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>linker/MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -379,11 +379,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
               <FileName>main_wifi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_wifi.c</FilePath>
@@ -392,6 +387,21 @@
               <FileName>lwipopts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>app_config.h</FileName>
@@ -414,44 +424,9 @@
               <FilePath>../aws_dev_mode_key_provisioning.c</FilePath>
             </File>
             <File>
-              <FileName>core_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>kvstore_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../kvstore_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>shadow_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../shadow_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential_keys.h</FilePath>
+              <FileName>iot_pkcs11_pal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../iot_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -507,6 +482,41 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>config_files</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_pkcs11_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>kvstore_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/kvstore_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>shadow_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/shadow_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1863,6 +1873,26 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt685</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1882,21 +1912,6 @@
               <FileName>mflash_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt685</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1946,188 +1961,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>dhcp-server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/dhcp-server.h</FilePath>
-            </File>
-            <File>
-              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmstats.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmstats.h</FilePath>
-            </File>
-            <File>
-              <FileName>wm_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wm_utils.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmerrno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmerrno.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmlog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmlog.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmtypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmtypes.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wlcmgr</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_11d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan_11d.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wifidriver/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>mlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11ac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ac.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11ax.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ax.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11h.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11h.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_aggr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_aggr.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_rxreorder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_fw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_fw.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ieee.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ieee.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_join.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_join.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_meas.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_meas.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_remap_mem_operations.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_uap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_uap.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_wmm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_wmm.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_main_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>type_decls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ioctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/wifidriver</GroupName>
           <Files>
+            <File>
+              <FileName>wifi-sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.c</FilePath>
+            </File>
             <File>
               <FileName>mlan_11ac.c</FileName>
               <FileType>1</FileType>
@@ -2162,6 +2002,26 @@
               <FileName>mlan_11n_rxreorder.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</FilePath>
             </File>
             <File>
               <FileName>mlan_api.c</FileName>
@@ -2294,9 +2154,19 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi_pwrmgr.c</FilePath>
             </File>
             <File>
-              <FileName>wifi-sdio.c</FileName>
+              <FileName>wifi-wps.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-wps.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
             </File>
             <File>
               <FileName>sdio.c</FileName>
@@ -2318,245 +2188,345 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl</GroupName>
+          <Files>
             <File>
-              <FileName>mlan_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</FilePath>
+              <FileName>dhcp-server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi-sdio.h</FileName>
+              <FileName>wmstats.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmstats.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_ext.h</FilePath>
+            </File>
+            <File>
+              <FileName>wm_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wm_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmerrno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmerrno.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmlog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmlog.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmtypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmtypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel</GroupName>
+          <GroupName>wifi/incl/wlcmgr</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
+              <FileName>wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan.h</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+              <FileName>wlan_11d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan_11d.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <GroupName>wifi/incl/wifidriver</GroupName>
           <Files>
             <File>
-              <FileName>atomic.h</FileName>
+              <FileName>wifi_nxp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_nxp.h</FilePath>
             </File>
             <File>
-              <FileName>croutine.h</FileName>
+              <FileName>mlan_sdio_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
             </File>
             <File>
-              <FileName>deprecated_definitions.h</FileName>
+              <FileName>wifi-decl.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
             </File>
             <File>
-              <FileName>event_groups.h</FileName>
+              <FileName>wifi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
             </File>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>wifi_events.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_prototypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <GroupName>wifi/wifidriver/incl</GroupName>
           <Files>
             <File>
-              <FileName>ReadMe.url</FileName>
+              <FileName>mlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan.h</FilePath>
             </File>
             <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+              <FileName>mlan_11ac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ac.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11ax.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ax.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11h.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11h.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_aggr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_aggr.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_rxreorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_fw.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ieee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ieee.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_join.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_join.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_meas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_meas.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_remap_mem_operations.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_uap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_uap.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_wmm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_wmm.h</FilePath>
+            </File>
+            <File>
+              <FileName>type_decls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ioctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_main_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel/portable</GroupName>
+          <GroupName>wifi/wifidriver/wpa_supp_if/incl</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>rtos_wpa_supp_if.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl/rtos_wpa_supp_if.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_nxp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl/wifi_nxp_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>wifi/wifidriver/wpa_supp_if</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>wifi_nxp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/wifi_nxp.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>rtos_wpa_supp_if.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/rtos_wpa_supp_if.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>wifi_nxp_internal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/wifi_nxp_internal.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <GroupName>wifi/certs</GroupName>
           <Files>
             <File>
-              <FileName>sd8801_wlan.h</FileName>
+              <FileName>ca-cert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/ca-cert.h</FilePath>
             </File>
             <File>
-              <FileName>sduartIW416_wlan_bt.h</FileName>
+              <FileName>client-cert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/client-cert.h</FilePath>
             </File>
             <File>
-              <FileName>sduart8987_wlan_bt.h</FileName>
+              <FileName>client-key.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/client-key.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_bt_fw.h</FileName>
+              <FileName>server-cert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/server-cert.h</FilePath>
+            </File>
+            <File>
+              <FileName>server-key.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/server-key.h</FilePath>
+            </File>
+            <File>
+              <FileName>dh-param.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/dh-param.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2606,36 +2576,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/gpio</GroupName>
           <Files>
             <File>
@@ -2647,6 +2587,106 @@
               <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/dhcpd</GroupName>
+          <Files>
+            <File>
+              <FileName>dhcp-bootp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-bootp.h</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp-priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp-server-main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server-main.c</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp-server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server.c</FilePath>
+            </File>
+            <File>
+              <FileName>dns-server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns-server.c</FilePath>
+            </File>
+            <File>
+              <FileName>dns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/lwip</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_net.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/port/lwip/wm_net.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/lwip</GroupName>
+          <Files>
+            <File>
+              <FileName>net.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/net.c</FilePath>
+            </File>
+            <File>
+              <FileName>netif_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/netif_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_netif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/wifi_netif.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wlcmgr</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan.c</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan_txpwrlimit_cfg.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/lwip/hooks</GroupName>
+          <Files>
+            <File>
+              <FileName>lwip_default_hooks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/port/lwip/hooks/lwip_default_hooks.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/lwip/hooks</GroupName>
+          <Files>
+            <File>
+              <FileName>lwip_default_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/hooks/lwip_default_hooks.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3801,86 +3841,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/dhcpd</GroupName>
-          <Files>
-            <File>
-              <FileName>dhcp-bootp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-bootp.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp-priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-priv.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp-server-main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server-main.c</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp-server.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server.c</FilePath>
-            </File>
-            <File>
-              <FileName>dns-server.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns-server.c</FilePath>
-            </File>
-            <File>
-              <FileName>dns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/lwip</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_net.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/port/lwip/wm_net.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/lwip</GroupName>
-          <Files>
-            <File>
-              <FileName>net.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/net.c</FilePath>
-            </File>
-            <File>
-              <FileName>netif_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/netif_decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_netif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/wifi_netif.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wlcmgr</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan.c</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan_txpwrlimit_cfg.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
           <Files>
             <File>
@@ -4301,12 +4261,172 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/vendors/nxp/pkcs11</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
-              <FileName>iot_pkcs11_pal.c</FileName>
+              <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/vendors/nxp/pkcs11/iot_pkcs11_pal.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <Files>
+            <File>
+              <FileName>atomic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4327,6 +4447,41 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4364,6 +4519,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4377,16 +4542,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4431,67 +4586,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>wifi/incl/port/os</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>wm_os.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
+          <GroupName>wifi/port/os</GroupName>
           <Files>
             <File>
-              <FileName>mlan_sdio_api.h</FileName>
+              <FileName>os.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_bt_fw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
             </File>
             <File>
-              <FileName>wifi-decl.h</FileName>
+              <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
             </File>
             <File>
-              <FileName>wifi.h</FileName>
+              <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_events.h</FileName>
+              <FileName>sduart8987_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduart_nw61x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart_nw61x.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4514,44 +4654,24 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
             <File>
-              <FileName>wm_os.h</FileName>
+              <FileName>fsl_os_abstraction.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
             <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4631,22 +4751,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>iot_crypto.h</FileName>
+              <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src</GroupName>
-          <Files>
             <File>
-              <FileName>iot_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4981,9 +5121,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, XIP_IMAGE, XIP_EXTERNAL_FLASH, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, MFLASH_FILE_BASEADDR=7340032, SDK_I2C_BASED_COMPONENT_USED=1, SDK_OS_FREE_RTOS, SDIO_ENABLED, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, XIP_IMAGE, XIP_EXTERNAL_FLASH, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=7340032, SDK_I2C_BASED_COMPONENT_USED=1, SDIO_ENABLED, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1</Define>
               <Undefine/>
-              <IncludePath>..;../config_files;../../common;../../..;../../../../../devices/MIMXRT685S/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt685;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../rtos/freertos/freertos-kernel/include;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../middleware/wifi_nxp;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/gpio;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/edgefast_wifi/include;../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</IncludePath>
+              <IncludePath>..;../config_files;../../common;../../..;../../../../../devices/MIMXRT685S/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash/mimxrt685;../../../../../components/flash/mflash;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sdio;../../../../../components/gpio;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../middleware/wifi_nxp/incl/port/lwip/hooks;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../middleware/pkcs11;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../rtos/freertos/corejson/source/include;../../../../../middleware/edgefast_wifi/include;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5017,7 +5157,7 @@
             <ScatterFile>linker/MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -5028,11 +5168,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
               <FileName>main_wifi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_wifi.c</FilePath>
@@ -5041,6 +5176,21 @@
               <FileName>lwipopts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>app_config.h</FileName>
@@ -5063,44 +5213,9 @@
               <FilePath>../aws_dev_mode_key_provisioning.c</FilePath>
             </File>
             <File>
-              <FileName>core_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>kvstore_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../kvstore_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>shadow_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../shadow_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential_keys.h</FilePath>
+              <FileName>iot_pkcs11_pal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../iot_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5156,6 +5271,41 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>config_files</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_pkcs11_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>kvstore_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/kvstore_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>shadow_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/shadow_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6512,6 +6662,26 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt685</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6531,21 +6701,6 @@
               <FileName>mflash_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt685</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt685/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6595,188 +6750,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>dhcp-server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/dhcp-server.h</FilePath>
-            </File>
-            <File>
-              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmstats.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmstats.h</FilePath>
-            </File>
-            <File>
-              <FileName>wm_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wm_utils.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmerrno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmerrno.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmlog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmlog.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmtypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wmtypes.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wlcmgr</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_11d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan_11d.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wifidriver/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>mlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11ac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ac.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11ax.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ax.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11h.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11h.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_aggr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_aggr.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_rxreorder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_fw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_fw.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ieee.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ieee.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_join.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_join.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_meas.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_meas.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_remap_mem_operations.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_uap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_uap.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_wmm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_wmm.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_main_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>type_decls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ioctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/wifidriver</GroupName>
           <Files>
+            <File>
+              <FileName>wifi-sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.c</FilePath>
+            </File>
             <File>
               <FileName>mlan_11ac.c</FileName>
               <FileType>1</FileType>
@@ -6811,6 +6791,26 @@
               <FileName>mlan_11n_rxreorder.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11n_rxreorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11v.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_action.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_11k.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_mbo.c</FilePath>
             </File>
             <File>
               <FileName>mlan_api.c</FileName>
@@ -6943,9 +6943,19 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi_pwrmgr.c</FilePath>
             </File>
             <File>
-              <FileName>wifi-sdio.c</FileName>
+              <FileName>wifi-wps.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-wps.c</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
             </File>
             <File>
               <FileName>sdio.c</FileName>
@@ -6967,245 +6977,345 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl</GroupName>
+          <Files>
             <File>
-              <FileName>mlan_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</FilePath>
+              <FileName>dhcp-server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi-sdio.h</FileName>
+              <FileName>wmstats.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmstats.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_ext.h</FilePath>
+            </File>
+            <File>
+              <FileName>wm_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wm_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmerrno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmerrno.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmlog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmlog.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmtypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wmtypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel</GroupName>
+          <GroupName>wifi/incl/wlcmgr</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
+              <FileName>wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan.h</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+              <FileName>wlan_11d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wlcmgr/wlan_11d.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <GroupName>wifi/incl/wifidriver</GroupName>
           <Files>
             <File>
-              <FileName>atomic.h</FileName>
+              <FileName>wifi_nxp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_nxp.h</FilePath>
             </File>
             <File>
-              <FileName>croutine.h</FileName>
+              <FileName>mlan_sdio_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
             </File>
             <File>
-              <FileName>deprecated_definitions.h</FileName>
+              <FileName>wifi-decl.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
             </File>
             <File>
-              <FileName>event_groups.h</FileName>
+              <FileName>wifi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
             </File>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>wifi_events.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_prototypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <GroupName>wifi/wifidriver/incl</GroupName>
           <Files>
             <File>
-              <FileName>ReadMe.url</FileName>
+              <FileName>mlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan.h</FilePath>
             </File>
             <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+              <FileName>mlan_11ac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ac.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11ax.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11ax.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11h.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11h.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_aggr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_aggr.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_rxreorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11v.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11v.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11k.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_11k.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_mbo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_mbo.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_fw.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ieee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ieee.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_join.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_join.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_meas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_meas.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_remap_mem_operations.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_uap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_uap.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_wmm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_wmm.h</FilePath>
+            </File>
+            <File>
+              <FileName>type_decls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ioctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_main_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel/portable</GroupName>
+          <GroupName>wifi/wifidriver/wpa_supp_if/incl</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>rtos_wpa_supp_if.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl/rtos_wpa_supp_if.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_nxp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl/wifi_nxp_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>wifi/wifidriver/wpa_supp_if</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>wifi_nxp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/wifi_nxp.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>rtos_wpa_supp_if.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/rtos_wpa_supp_if.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>wifi_nxp_internal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/wifi_nxp_internal.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <GroupName>wifi/certs</GroupName>
           <Files>
             <File>
-              <FileName>sd8801_wlan.h</FileName>
+              <FileName>ca-cert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/ca-cert.h</FilePath>
             </File>
             <File>
-              <FileName>sduartIW416_wlan_bt.h</FileName>
+              <FileName>client-cert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/client-cert.h</FilePath>
             </File>
             <File>
-              <FileName>sduart8987_wlan_bt.h</FileName>
+              <FileName>client-key.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/client-key.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_bt_fw.h</FileName>
+              <FileName>server-cert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/server-cert.h</FilePath>
+            </File>
+            <File>
+              <FileName>server-key.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/server-key.h</FilePath>
+            </File>
+            <File>
+              <FileName>dh-param.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/certs/dh-param.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -7255,36 +7365,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/gpio</GroupName>
           <Files>
             <File>
@@ -7296,6 +7376,106 @@
               <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/dhcpd</GroupName>
+          <Files>
+            <File>
+              <FileName>dhcp-bootp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-bootp.h</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp-priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp-server-main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server-main.c</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp-server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server.c</FilePath>
+            </File>
+            <File>
+              <FileName>dns-server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns-server.c</FilePath>
+            </File>
+            <File>
+              <FileName>dns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/lwip</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_net.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/port/lwip/wm_net.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/lwip</GroupName>
+          <Files>
+            <File>
+              <FileName>net.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/net.c</FilePath>
+            </File>
+            <File>
+              <FileName>netif_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/netif_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_netif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/wifi_netif.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wlcmgr</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan.c</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan_txpwrlimit_cfg.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/lwip/hooks</GroupName>
+          <Files>
+            <File>
+              <FileName>lwip_default_hooks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/port/lwip/hooks/lwip_default_hooks.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/lwip/hooks</GroupName>
+          <Files>
+            <File>
+              <FileName>lwip_default_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/hooks/lwip_default_hooks.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8450,86 +8630,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/dhcpd</GroupName>
-          <Files>
-            <File>
-              <FileName>dhcp-bootp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-bootp.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp-priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-priv.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp-server-main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server-main.c</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp-server.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dhcp-server.c</FilePath>
-            </File>
-            <File>
-              <FileName>dns-server.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns-server.c</FilePath>
-            </File>
-            <File>
-              <FileName>dns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/dhcpd/dns.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/lwip</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_net.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/port/lwip/wm_net.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/lwip</GroupName>
-          <Files>
-            <File>
-              <FileName>net.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/net.c</FilePath>
-            </File>
-            <File>
-              <FileName>netif_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/netif_decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_netif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/lwip/wifi_netif.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wlcmgr</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan.c</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wlcmgr/wlan_txpwrlimit_cfg.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
           <Files>
             <File>
@@ -8950,12 +9050,172 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/vendors/nxp/pkcs11</GroupName>
+          <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
-              <FileName>iot_pkcs11_pal.c</FileName>
+              <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/vendors/nxp/pkcs11/iot_pkcs11_pal.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <Files>
+            <File>
+              <FileName>atomic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -8976,6 +9236,41 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9013,6 +9308,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -9026,16 +9331,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9080,67 +9375,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>wifi/incl/port/os</GroupName>
           <Files>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>wm_os.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
+          <GroupName>wifi/port/os</GroupName>
           <Files>
             <File>
-              <FileName>mlan_sdio_api.h</FileName>
+              <FileName>os.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_bt_fw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
             </File>
             <File>
-              <FileName>wifi-decl.h</FileName>
+              <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
             </File>
             <File>
-              <FileName>wifi.h</FileName>
+              <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_events.h</FileName>
+              <FileName>sduart8987_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduart_nw61x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart_nw61x.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9163,44 +9443,24 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
             <File>
-              <FileName>wm_os.h</FileName>
+              <FileName>fsl_os_abstraction.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
             <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9280,22 +9540,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>iot_crypto.h</FileName>
+              <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src</GroupName>
-          <Files>
             <File>
-              <FileName>iot_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

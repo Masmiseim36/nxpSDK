@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -144,9 +144,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a33d38fa04f8fbbeb6083877e64e38bcc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a33d38fa04f8fbbeb6083877e64e38bcc">startWriteMessage</a> (<a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> type, uint32_t service, uint32_t request, uint32_t sequence) override</td></tr>
 <tr class="memdesc:a33d38fa04f8fbbeb6083877e64e38bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for write header of message.  <a href="#a33d38fa04f8fbbeb6083877e64e38bcc">More...</a><br /></td></tr>
 <tr class="separator:a33d38fa04f8fbbeb6083877e64e38bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25e2b6cb85c37518be6148f54cbd01e0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a25e2b6cb85c37518be6148f54cbd01e0">writeData</a> (const void *value, uint32_t length)</td></tr>
-<tr class="memdesc:a25e2b6cb85c37518be6148f54cbd01e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for write data stream.  <a href="#a25e2b6cb85c37518be6148f54cbd01e0">More...</a><br /></td></tr>
-<tr class="separator:a25e2b6cb85c37518be6148f54cbd01e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ce6c47bcb25093c3c69277d6c4d98ea"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a7ce6c47bcb25093c3c69277d6c4d98ea">writeData</a> (uint32_t length, const void *value)</td></tr>
+<tr class="memdesc:a7ce6c47bcb25093c3c69277d6c4d98ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for write data stream.  <a href="#a7ce6c47bcb25093c3c69277d6c4d98ea">More...</a><br /></td></tr>
+<tr class="separator:a7ce6c47bcb25093c3c69277d6c4d98ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60715de9345dca91ea57936c60b66470"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a60715de9345dca91ea57936c60b66470">write</a> (bool value) override</td></tr>
 <tr class="memdesc:a60715de9345dca91ea57936c60b66470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for write boolean value.  <a href="#a60715de9345dca91ea57936c60b66470">More...</a><br /></td></tr>
 <tr class="separator:a60715de9345dca91ea57936c60b66470"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,63 +205,63 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a186fe55fbe74ea7c2e1e95eaa165ca9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes an order ID of callback function.  <a href="#a186fe55fbe74ea7c2e1e95eaa165ca9b">More...</a><br /></td></tr>
 <tr class="separator:a186fe55fbe74ea7c2e1e95eaa165ca9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Decoding</div></td></tr>
-<tr class="memitem:af0a055559b9bb42c677311fa3f74f412"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#af0a055559b9bb42c677311fa3f74f412">startReadMessage</a> (<a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *type, uint32_t *service, uint32_t *request, uint32_t *sequence) override</td></tr>
-<tr class="memdesc:af0a055559b9bb42c677311fa3f74f412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read header of message.  <a href="#af0a055559b9bb42c677311fa3f74f412">More...</a><br /></td></tr>
-<tr class="separator:af0a055559b9bb42c677311fa3f74f412"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af12b78761da78e9f140379972ca0cf86"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#af12b78761da78e9f140379972ca0cf86">readData</a> (void *value, uint32_t length)</td></tr>
-<tr class="memdesc:af12b78761da78e9f140379972ca0cf86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read data stream.  <a href="#af12b78761da78e9f140379972ca0cf86">More...</a><br /></td></tr>
-<tr class="separator:af12b78761da78e9f140379972ca0cf86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a427d56bd2db0ed7b1f7b7c67d8c0d415"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a427d56bd2db0ed7b1f7b7c67d8c0d415">read</a> (bool *value) override</td></tr>
-<tr class="memdesc:a427d56bd2db0ed7b1f7b7c67d8c0d415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read boolean value.  <a href="#a427d56bd2db0ed7b1f7b7c67d8c0d415">More...</a><br /></td></tr>
-<tr class="separator:a427d56bd2db0ed7b1f7b7c67d8c0d415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5baff1d4a10053e2c0b56dfe2bf9e80f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a5baff1d4a10053e2c0b56dfe2bf9e80f">read</a> (int8_t *value) override</td></tr>
-<tr class="memdesc:a5baff1d4a10053e2c0b56dfe2bf9e80f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int8_t value.  <a href="#a5baff1d4a10053e2c0b56dfe2bf9e80f">More...</a><br /></td></tr>
-<tr class="separator:a5baff1d4a10053e2c0b56dfe2bf9e80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aced0fbaf03e786b5cb61a21f511fa993"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#aced0fbaf03e786b5cb61a21f511fa993">read</a> (int16_t *value) override</td></tr>
-<tr class="memdesc:aced0fbaf03e786b5cb61a21f511fa993"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int16_t value.  <a href="#aced0fbaf03e786b5cb61a21f511fa993">More...</a><br /></td></tr>
-<tr class="separator:aced0fbaf03e786b5cb61a21f511fa993"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5297f79b72897f6125c2ee7d4366b2ba"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a5297f79b72897f6125c2ee7d4366b2ba">read</a> (int32_t *value) override</td></tr>
-<tr class="memdesc:a5297f79b72897f6125c2ee7d4366b2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int32_t value.  <a href="#a5297f79b72897f6125c2ee7d4366b2ba">More...</a><br /></td></tr>
-<tr class="separator:a5297f79b72897f6125c2ee7d4366b2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd1ed0444ac3a3d4cc5b2e31453747d4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#abd1ed0444ac3a3d4cc5b2e31453747d4">read</a> (int64_t *value) override</td></tr>
-<tr class="memdesc:abd1ed0444ac3a3d4cc5b2e31453747d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int64_t value.  <a href="#abd1ed0444ac3a3d4cc5b2e31453747d4">More...</a><br /></td></tr>
-<tr class="separator:abd1ed0444ac3a3d4cc5b2e31453747d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a602f85457f0e171fb71cc42c92855206"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a602f85457f0e171fb71cc42c92855206">read</a> (uint8_t *value) override</td></tr>
-<tr class="memdesc:a602f85457f0e171fb71cc42c92855206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint8_t value.  <a href="#a602f85457f0e171fb71cc42c92855206">More...</a><br /></td></tr>
-<tr class="separator:a602f85457f0e171fb71cc42c92855206"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff88f0424d25a425bdab209e1642a5d7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#aff88f0424d25a425bdab209e1642a5d7">read</a> (uint16_t *value) override</td></tr>
-<tr class="memdesc:aff88f0424d25a425bdab209e1642a5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint16_t value.  <a href="#aff88f0424d25a425bdab209e1642a5d7">More...</a><br /></td></tr>
-<tr class="separator:aff88f0424d25a425bdab209e1642a5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29a42c307421305c8c62a1dfe663ecdc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a29a42c307421305c8c62a1dfe663ecdc">read</a> (uint32_t *value) override</td></tr>
-<tr class="memdesc:a29a42c307421305c8c62a1dfe663ecdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint32_t value.  <a href="#a29a42c307421305c8c62a1dfe663ecdc">More...</a><br /></td></tr>
-<tr class="separator:a29a42c307421305c8c62a1dfe663ecdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad531970a117fa97fe7b25f47e100a8f5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#ad531970a117fa97fe7b25f47e100a8f5">read</a> (uint64_t *value) override</td></tr>
-<tr class="memdesc:ad531970a117fa97fe7b25f47e100a8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint64_t value.  <a href="#ad531970a117fa97fe7b25f47e100a8f5">More...</a><br /></td></tr>
-<tr class="separator:ad531970a117fa97fe7b25f47e100a8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2023615f880c95092e27ed4fde77a9c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#ae2023615f880c95092e27ed4fde77a9c">read</a> (float *value) override</td></tr>
-<tr class="memdesc:ae2023615f880c95092e27ed4fde77a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read float value.  <a href="#ae2023615f880c95092e27ed4fde77a9c">More...</a><br /></td></tr>
-<tr class="separator:ae2023615f880c95092e27ed4fde77a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab83a7d3e1a82b08189166fdf39a39314"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#ab83a7d3e1a82b08189166fdf39a39314">read</a> (double *value) override</td></tr>
-<tr class="memdesc:ab83a7d3e1a82b08189166fdf39a39314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read double value.  <a href="#ab83a7d3e1a82b08189166fdf39a39314">More...</a><br /></td></tr>
-<tr class="separator:ab83a7d3e1a82b08189166fdf39a39314"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba746dd6016895b40b9a22bf353db634"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#aba746dd6016895b40b9a22bf353db634">readPtr</a> (uintptr_t *value) override</td></tr>
-<tr class="memdesc:aba746dd6016895b40b9a22bf353db634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uintptr value.  <a href="#aba746dd6016895b40b9a22bf353db634">More...</a><br /></td></tr>
-<tr class="separator:aba746dd6016895b40b9a22bf353db634"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a004ffef36c719ebfaf38ab1aadfc55"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a8a004ffef36c719ebfaf38ab1aadfc55">readString</a> (uint32_t *length, char **value) override</td></tr>
-<tr class="memdesc:a8a004ffef36c719ebfaf38ab1aadfc55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read string value.  <a href="#a8a004ffef36c719ebfaf38ab1aadfc55">More...</a><br /></td></tr>
-<tr class="separator:a8a004ffef36c719ebfaf38ab1aadfc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47678ac46db03866845edec1bfba1baa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a47678ac46db03866845edec1bfba1baa">readBinary</a> (uint32_t *length, uint8_t **value) override</td></tr>
-<tr class="memdesc:a47678ac46db03866845edec1bfba1baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read binary value.  <a href="#a47678ac46db03866845edec1bfba1baa">More...</a><br /></td></tr>
-<tr class="separator:a47678ac46db03866845edec1bfba1baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ec0f3a374e4707eae09d23974479bed"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a5ec0f3a374e4707eae09d23974479bed">startReadList</a> (uint32_t *length) override</td></tr>
-<tr class="memdesc:a5ec0f3a374e4707eae09d23974479bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for start read list.  <a href="#a5ec0f3a374e4707eae09d23974479bed">More...</a><br /></td></tr>
-<tr class="separator:a5ec0f3a374e4707eae09d23974479bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a954078bce7c3ddeca7facd3f25d05952"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a954078bce7c3ddeca7facd3f25d05952">startReadUnion</a> (int32_t *discriminator) override</td></tr>
-<tr class="memdesc:a954078bce7c3ddeca7facd3f25d05952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for start read union.  <a href="#a954078bce7c3ddeca7facd3f25d05952">More...</a><br /></td></tr>
-<tr class="separator:a954078bce7c3ddeca7facd3f25d05952"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe58e46a761ba188156ceb25c1465022"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#afe58e46a761ba188156ceb25c1465022">readNullFlag</a> (bool *isNull) override</td></tr>
-<tr class="memdesc:afe58e46a761ba188156ceb25c1465022"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a flag indicating whether the next value is null.  <a href="#afe58e46a761ba188156ceb25c1465022">More...</a><br /></td></tr>
-<tr class="separator:afe58e46a761ba188156ceb25c1465022"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab704e735b8b15b22a66574a866fe6f8a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#ab704e735b8b15b22a66574a866fe6f8a">startReadMessage</a> (<a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> &amp;type, uint32_t &amp;service, uint32_t &amp;request, uint32_t &amp;sequence) override</td></tr>
+<tr class="memdesc:ab704e735b8b15b22a66574a866fe6f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read header of message.  <a href="#ab704e735b8b15b22a66574a866fe6f8a">More...</a><br /></td></tr>
+<tr class="separator:ab704e735b8b15b22a66574a866fe6f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f2abb34bfd874ad8ea64537caf8236f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a6f2abb34bfd874ad8ea64537caf8236f">readData</a> (uint32_t length, void *value)</td></tr>
+<tr class="memdesc:a6f2abb34bfd874ad8ea64537caf8236f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read data stream.  <a href="#a6f2abb34bfd874ad8ea64537caf8236f">More...</a><br /></td></tr>
+<tr class="separator:a6f2abb34bfd874ad8ea64537caf8236f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a075e3e213224ebe0e3a261a24edbe6ef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a075e3e213224ebe0e3a261a24edbe6ef">read</a> (bool &amp;value) override</td></tr>
+<tr class="memdesc:a075e3e213224ebe0e3a261a24edbe6ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read boolean value.  <a href="#a075e3e213224ebe0e3a261a24edbe6ef">More...</a><br /></td></tr>
+<tr class="separator:a075e3e213224ebe0e3a261a24edbe6ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7c565deab4864a5da3d9079497ec4e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a0f7c565deab4864a5da3d9079497ec4e">read</a> (int8_t &amp;value) override</td></tr>
+<tr class="memdesc:a0f7c565deab4864a5da3d9079497ec4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int8_t value.  <a href="#a0f7c565deab4864a5da3d9079497ec4e">More...</a><br /></td></tr>
+<tr class="separator:a0f7c565deab4864a5da3d9079497ec4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9243aaa76b4eebc11457531b7cbe686b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a9243aaa76b4eebc11457531b7cbe686b">read</a> (int16_t &amp;value) override</td></tr>
+<tr class="memdesc:a9243aaa76b4eebc11457531b7cbe686b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int16_t value.  <a href="#a9243aaa76b4eebc11457531b7cbe686b">More...</a><br /></td></tr>
+<tr class="separator:a9243aaa76b4eebc11457531b7cbe686b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24abf0728ec7113b98b03fca31c42f34"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a24abf0728ec7113b98b03fca31c42f34">read</a> (int32_t &amp;value) override</td></tr>
+<tr class="memdesc:a24abf0728ec7113b98b03fca31c42f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int32_t value.  <a href="#a24abf0728ec7113b98b03fca31c42f34">More...</a><br /></td></tr>
+<tr class="separator:a24abf0728ec7113b98b03fca31c42f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86aeb4eb80042d649713db719f618985"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a86aeb4eb80042d649713db719f618985">read</a> (int64_t &amp;value) override</td></tr>
+<tr class="memdesc:a86aeb4eb80042d649713db719f618985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read int64_t value.  <a href="#a86aeb4eb80042d649713db719f618985">More...</a><br /></td></tr>
+<tr class="separator:a86aeb4eb80042d649713db719f618985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afff087e06a90f0b3cf11fc75355f444c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#afff087e06a90f0b3cf11fc75355f444c">read</a> (uint8_t &amp;value) override</td></tr>
+<tr class="memdesc:afff087e06a90f0b3cf11fc75355f444c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint8_t value.  <a href="#afff087e06a90f0b3cf11fc75355f444c">More...</a><br /></td></tr>
+<tr class="separator:afff087e06a90f0b3cf11fc75355f444c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06277392be1c31da77cee8a829c5e6b6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a06277392be1c31da77cee8a829c5e6b6">read</a> (uint16_t &amp;value) override</td></tr>
+<tr class="memdesc:a06277392be1c31da77cee8a829c5e6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint16_t value.  <a href="#a06277392be1c31da77cee8a829c5e6b6">More...</a><br /></td></tr>
+<tr class="separator:a06277392be1c31da77cee8a829c5e6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62cd2825c43bfe93c1cc2fca922daac1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a62cd2825c43bfe93c1cc2fca922daac1">read</a> (uint32_t &amp;value) override</td></tr>
+<tr class="memdesc:a62cd2825c43bfe93c1cc2fca922daac1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint32_t value.  <a href="#a62cd2825c43bfe93c1cc2fca922daac1">More...</a><br /></td></tr>
+<tr class="separator:a62cd2825c43bfe93c1cc2fca922daac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adceb3e0778946d64acba2ede7ed0c7f0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#adceb3e0778946d64acba2ede7ed0c7f0">read</a> (uint64_t &amp;value) override</td></tr>
+<tr class="memdesc:adceb3e0778946d64acba2ede7ed0c7f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uint64_t value.  <a href="#adceb3e0778946d64acba2ede7ed0c7f0">More...</a><br /></td></tr>
+<tr class="separator:adceb3e0778946d64acba2ede7ed0c7f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5bb0b8a639f11e7e834c716924a317"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#aba5bb0b8a639f11e7e834c716924a317">read</a> (float &amp;value) override</td></tr>
+<tr class="memdesc:aba5bb0b8a639f11e7e834c716924a317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read float value.  <a href="#aba5bb0b8a639f11e7e834c716924a317">More...</a><br /></td></tr>
+<tr class="separator:aba5bb0b8a639f11e7e834c716924a317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6064ed3ef421d6deac49ef37ec0f8f18"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a6064ed3ef421d6deac49ef37ec0f8f18">read</a> (double &amp;value) override</td></tr>
+<tr class="memdesc:a6064ed3ef421d6deac49ef37ec0f8f18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read double value.  <a href="#a6064ed3ef421d6deac49ef37ec0f8f18">More...</a><br /></td></tr>
+<tr class="separator:a6064ed3ef421d6deac49ef37ec0f8f18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b1ffb8fc06689fdd7900dcd57f9dfda"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a2b1ffb8fc06689fdd7900dcd57f9dfda">readPtr</a> (uintptr_t &amp;value) override</td></tr>
+<tr class="memdesc:a2b1ffb8fc06689fdd7900dcd57f9dfda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read uintptr value.  <a href="#a2b1ffb8fc06689fdd7900dcd57f9dfda">More...</a><br /></td></tr>
+<tr class="separator:a2b1ffb8fc06689fdd7900dcd57f9dfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa398f40ceba8bb8c6df09052d3abb79a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#aa398f40ceba8bb8c6df09052d3abb79a">readString</a> (uint32_t &amp;length, char **value) override</td></tr>
+<tr class="memdesc:aa398f40ceba8bb8c6df09052d3abb79a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read string value.  <a href="#aa398f40ceba8bb8c6df09052d3abb79a">More...</a><br /></td></tr>
+<tr class="separator:aa398f40ceba8bb8c6df09052d3abb79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed673eaca5c768f28c419990c86820c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#aed673eaca5c768f28c419990c86820c3">readBinary</a> (uint32_t &amp;length, uint8_t **value) override</td></tr>
+<tr class="memdesc:aed673eaca5c768f28c419990c86820c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read binary value.  <a href="#aed673eaca5c768f28c419990c86820c3">More...</a><br /></td></tr>
+<tr class="separator:aed673eaca5c768f28c419990c86820c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1af15313f92dc9dae454570b7ae0e90e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a1af15313f92dc9dae454570b7ae0e90e">startReadList</a> (uint32_t &amp;length) override</td></tr>
+<tr class="memdesc:a1af15313f92dc9dae454570b7ae0e90e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for start read list.  <a href="#a1af15313f92dc9dae454570b7ae0e90e">More...</a><br /></td></tr>
+<tr class="separator:a1af15313f92dc9dae454570b7ae0e90e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d8519b842e307574c4d2b36adde1065"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a0d8519b842e307574c4d2b36adde1065">startReadUnion</a> (int32_t &amp;discriminator) override</td></tr>
+<tr class="memdesc:a0d8519b842e307574c4d2b36adde1065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for start read union.  <a href="#a0d8519b842e307574c4d2b36adde1065">More...</a><br /></td></tr>
+<tr class="separator:a0d8519b842e307574c4d2b36adde1065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40021a080250cd09b8cbcaf0eaff88d0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a40021a080250cd09b8cbcaf0eaff88d0">readNullFlag</a> (bool &amp;isNull) override</td></tr>
+<tr class="memdesc:a40021a080250cd09b8cbcaf0eaff88d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a flag indicating whether the next value is null.  <a href="#a40021a080250cd09b8cbcaf0eaff88d0">More...</a><br /></td></tr>
+<tr class="separator:a40021a080250cd09b8cbcaf0eaff88d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af81ce3b25d504b1841d3cfa91277c63b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#af81ce3b25d504b1841d3cfa91277c63b">readCallback</a> (arrayOfFunPtr callbacks, uint8_t callbacksCount, funPtr *callback) override</td></tr>
 <tr class="memdesc:af81ce3b25d504b1841d3cfa91277c63b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an callback function id and return address of callback function.  <a href="#af81ce3b25d504b1841d3cfa91277c63b">More...</a><br /></td></tr>
 <tr class="separator:af81ce3b25d504b1841d3cfa91277c63b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -373,7 +373,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a25e2b6cb85c37518be6148f54cbd01e0"></a>
+<a class="anchor" id="a7ce6c47bcb25093c3c69277d6c4d98ea"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -383,14 +383,14 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::writeData </td>
           <td>(</td>
-          <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -408,8 +408,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Prototype for write data stream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Pointer to data stream. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Size of data stream in bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Pointer to data stream. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1113,7 +1113,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af0a055559b9bb42c677311fa3f74f412"></a>
+<a class="anchor" id="ab704e735b8b15b22a66574a866fe6f8a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1123,25 +1123,25 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::startReadMessage </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> &amp;&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>service</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>sequence</em>&#160;</td>
         </tr>
         <tr>
@@ -1168,11 +1168,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a45c92dc20df6e8ac78336426a076aff3">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a958e07b9dc0853ab4de4e834b6d54d50">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af12b78761da78e9f140379972ca0cf86"></a>
+<a class="anchor" id="a6f2abb34bfd874ad8ea64537caf8236f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1182,14 +1182,14 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::readData </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1207,15 +1207,15 @@ Additional Inherited Members</h2></td></tr>
 <p>Prototype for read data stream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Pointer to data stream to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Size of data stream in bytes to be read. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Pointer to data stream to be read. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a427d56bd2db0ed7b1f7b7c67d8c0d415"></a>
+<a class="anchor" id="a075e3e213224ebe0e3a261a24edbe6ef"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1225,7 +1225,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">bool *&#160;</td>
+          <td class="paramtype">bool &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1245,11 +1245,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a7ecc6e3071f968c5d6a981d0547bfea9">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#affef2ee164f9b68623858bb00f0a473d">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5baff1d4a10053e2c0b56dfe2bf9e80f"></a>
+<a class="anchor" id="a0f7c565deab4864a5da3d9079497ec4e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1259,7 +1259,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">int8_t *&#160;</td>
+          <td class="paramtype">int8_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1279,11 +1279,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a53c2bbb94896adba25d746d689986e70">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#ac95c32b5a5df22711b6f33410bce7984">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aced0fbaf03e786b5cb61a21f511fa993"></a>
+<a class="anchor" id="a9243aaa76b4eebc11457531b7cbe686b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1293,7 +1293,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">int16_t *&#160;</td>
+          <td class="paramtype">int16_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1313,11 +1313,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#ae9e51e6a7cdb6fa3a68d860f19c7aca8">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a15f6d33b077b5ef3e2b742f749fbacba">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5297f79b72897f6125c2ee7d4366b2ba"></a>
+<a class="anchor" id="a24abf0728ec7113b98b03fca31c42f34"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1327,7 +1327,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">int32_t *&#160;</td>
+          <td class="paramtype">int32_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1347,11 +1347,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a05017d23491278b0f59f560c57ab3d5d">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a2e2799d60b1b167f05d336bb81c0c3dc">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abd1ed0444ac3a3d4cc5b2e31453747d4"></a>
+<a class="anchor" id="a86aeb4eb80042d649713db719f618985"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1361,7 +1361,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">int64_t *&#160;</td>
+          <td class="paramtype">int64_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1381,11 +1381,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#ace6d2cf649c8f0b4345049b9987bdf13">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a4c454256c5fbee7af0d787b196cdf634">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a602f85457f0e171fb71cc42c92855206"></a>
+<a class="anchor" id="afff087e06a90f0b3cf11fc75355f444c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1395,7 +1395,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1415,11 +1415,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a82cbd89666ca2d5e4b0eb3d0930fb120">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a889caecd52e844ddd923596827242c4a">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aff88f0424d25a425bdab209e1642a5d7"></a>
+<a class="anchor" id="a06277392be1c31da77cee8a829c5e6b6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1429,7 +1429,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramtype">uint16_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1449,11 +1449,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a7c1ed0465cb0f4d0f71a1ba6d7a942cf">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a3465fa33778c185a185bdd88356abf1b">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a29a42c307421305c8c62a1dfe663ecdc"></a>
+<a class="anchor" id="a62cd2825c43bfe93c1cc2fca922daac1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1463,7 +1463,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1483,11 +1483,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#ae153d322183c836574bfbd80523aecd8">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a2f52f6345caf32305fdb0ccaf422328d">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad531970a117fa97fe7b25f47e100a8f5"></a>
+<a class="anchor" id="adceb3e0778946d64acba2ede7ed0c7f0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1497,7 +1497,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramtype">uint64_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1517,11 +1517,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#ad7bd847bd77804aaa87ccf5ecae45637">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a3ceb545ee270e51cc26bafb9d2934c20">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae2023615f880c95092e27ed4fde77a9c"></a>
+<a class="anchor" id="aba5bb0b8a639f11e7e834c716924a317"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1531,7 +1531,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">float *&#160;</td>
+          <td class="paramtype">float &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1551,11 +1551,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#ac0d1bcba8691cf04822d9c7f73ce88a6">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#aa9452377a65bb436dec2df69927726fb">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab83a7d3e1a82b08189166fdf39a39314"></a>
+<a class="anchor" id="a6064ed3ef421d6deac49ef37ec0f8f18"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1565,7 +1565,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::read </td>
           <td>(</td>
-          <td class="paramtype">double *&#160;</td>
+          <td class="paramtype">double &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1585,11 +1585,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#ac619e952418dfda6966099aea01eb5f2">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a5f0168758fda4847360a922526f98230">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aba746dd6016895b40b9a22bf353db634"></a>
+<a class="anchor" id="a2b1ffb8fc06689fdd7900dcd57f9dfda"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1599,7 +1599,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::readPtr </td>
           <td>(</td>
-          <td class="paramtype">uintptr_t *&#160;</td>
+          <td class="paramtype">uintptr_t &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1619,11 +1619,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a811b18e4f773c808cf5e50891882d9db">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a187f35a62e822ecb3cdc2a43e9ac6b78">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8a004ffef36c719ebfaf38ab1aadfc55"></a>
+<a class="anchor" id="aa398f40ceba8bb8c6df09052d3abb79a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1633,7 +1633,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::readString </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
@@ -1664,11 +1664,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a0246ac618ddee0373b1b819d804514b8">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#aaec1038fe62ddd12c989f08dc2e60e56">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a47678ac46db03866845edec1bfba1baa"></a>
+<a class="anchor" id="aed673eaca5c768f28c419990c86820c3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1678,7 +1678,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::readBinary </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
@@ -1709,11 +1709,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a71ff08fb3bc541d238bd4785d602690c">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#aa34f455f56b11c83993cc4fe2be52af8">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5ec0f3a374e4707eae09d23974479bed"></a>
+<a class="anchor" id="a1af15313f92dc9dae454570b7ae0e90e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1723,7 +1723,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::startReadList </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>length</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1743,11 +1743,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#adf815ca6e048ac520875bfb11b5a0f0d">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a961a5e0bf1911da2446fb58a6d481712">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a954078bce7c3ddeca7facd3f25d05952"></a>
+<a class="anchor" id="a0d8519b842e307574c4d2b36adde1065"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1757,7 +1757,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::startReadUnion </td>
           <td>(</td>
-          <td class="paramtype">int32_t *&#160;</td>
+          <td class="paramtype">int32_t &amp;&#160;</td>
           <td class="paramname"><em>discriminator</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1777,11 +1777,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a086b4f4e4624fd3df5df560cfab0355a">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#ae08d8fce5eb43efd3cb47187de67c162">erpc::Codec</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afe58e46a761ba188156ceb25c1465022"></a>
+<a class="anchor" id="a40021a080250cd09b8cbcaf0eaff88d0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1791,7 +1791,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::readNullFlag </td>
           <td>(</td>
-          <td class="paramtype">bool *&#160;</td>
+          <td class="paramtype">bool &amp;&#160;</td>
           <td class="paramname"><em>isNull</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1811,7 +1811,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classerpc_1_1_codec.html#a8756f406d613fda6375b4137c3560354">erpc::Codec</a>.</p>
+<p>Implements <a class="el" href="classerpc_1_1_codec.html#a0f5dc329e076ee69789d500a6b12ae14">erpc::Codec</a>.</p>
 
 </div>
 </div>

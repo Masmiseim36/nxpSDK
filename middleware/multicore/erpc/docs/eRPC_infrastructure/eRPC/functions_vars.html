@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -147,6 +147,8 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 : <a class="el" href="classerpc_1_1_dspi_master_transport.html#a7e35cd69fad88e14cc9a014ac2220960">erpc::DspiMasterTransport</a>
 , <a class="el" href="classerpc_1_1_dspi_slave_transport.html#a6725374f2f2360cbe0aa09c6db7bf78f">erpc::DspiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_i2c_slave_transport.html#a0fa88e772514c33bb1b3f5708aaa596b">erpc::I2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_i2c_slave_transport.html#a84a7dffa752c130a91ea8f75aabc0713">erpc::LPI2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_spi_slave_transport.html#a59a687f812c1b971360df2efbfaf6508">erpc::LPSpiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_spi_master_transport.html#a24b88eb93d5e23027b626a2c8b8e0634">erpc::SpiMasterTransport</a>
 , <a class="el" href="classerpc_1_1_spi_slave_transport.html#afb4c69110ca0995cef8b0775a4cca051">erpc::SpiSlaveTransport</a>
 </li>
@@ -219,6 +221,8 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>m_isInited
 : <a class="el" href="classerpc_1_1_dspi_slave_transport.html#a139ca116e48369acf6aa5204d318ed87">erpc::DspiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_i2c_slave_transport.html#a65ac4b13917de31b20ecf811b40c2b25">erpc::I2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_i2c_slave_transport.html#a357689a97b58f48e54fa4dfd3797b5e9">erpc::LPI2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_spi_slave_transport.html#ab805d8cbf4a825d85dcbc8e709c5f3d7">erpc::LPSpiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_spi_slave_transport.html#af056c436a1e790d742f5ea9b2ba833fe">erpc::SpiSlaveTransport</a>
 </li>
 <li>m_isServer
@@ -233,11 +237,17 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>m_logger
 : <a class="el" href="classerpc_1_1_message_loggers.html#afa59675c94a72e77218291d74c995693">erpc::MessageLoggers</a>
 </li>
+<li>m_lpi2cBaseAddr
+: <a class="el" href="classerpc_1_1_l_p_i2c_slave_transport.html#a38b49df1777624c59299ef5e1fe19009">erpc::LPI2cSlaveTransport</a>
+</li>
+<li>m_lpspiBaseAddr
+: <a class="el" href="classerpc_1_1_l_p_spi_slave_transport.html#ac025c4f756702d77b7b381b834a4759d">erpc::LPSpiSlaveTransport</a>
+</li>
 <li>m_messageFactory
 : <a class="el" href="classerpc_1_1_client_server_common.html#ae33a8a209b4bfb1c84d3f737dd37a68e">erpc::ClientServerCommon</a>
 </li>
 <li>m_messageQueue
-: <a class="el" href="classerpc_1_1_r_p_msg_transport.html#a05ba7ce33f48a0c622fd3cec49f4b2a2">erpc::RPMsgTransport</a>
+: <a class="el" href="classerpc_1_1_r_p_msg_transport.html#a6a7660fbe62b38081d214056518157de">erpc::RPMsgTransport</a>
 </li>
 <li>m_messageSize
 : <a class="el" href="classerpc_1_1_framed_transport.html#a2d1167a8481639bb57198ee8e4470749">erpc::FramedTransport::Header</a>
@@ -350,6 +360,8 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 : <a class="el" href="classerpc_1_1_dspi_master_transport.html#a501e211cb4bb575239975b3985b32938">erpc::DspiMasterTransport</a>
 , <a class="el" href="classerpc_1_1_dspi_slave_transport.html#ad6dc53ecff76ff93052cca5d3249bf47">erpc::DspiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_i2c_slave_transport.html#a7ddc5fc56ef7c9b4e596333f57bd6925">erpc::I2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_i2c_slave_transport.html#a213128afd9d8e0d28c37782e6d9daf0a">erpc::LPI2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_spi_slave_transport.html#af1b69837250ddaab8bdda88235a177ea">erpc::LPSpiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_spi_master_transport.html#a10d3ddf6da300518e63c3785e4f21428">erpc::SpiMasterTransport</a>
 , <a class="el" href="classerpc_1_1_spi_slave_transport.html#ac3375047645ccbcc8176f42c6bd5ebf2">erpc::SpiSlaveTransport</a>
 </li>
@@ -379,6 +391,8 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>m_txrxSemaphore
 : <a class="el" href="classerpc_1_1_dspi_slave_transport.html#a00e080725e9d79f86bfff32ae03870e4">erpc::DspiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_i2c_slave_transport.html#a72c757eb0ee7fb70284714163a9a5405">erpc::I2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_i2c_slave_transport.html#a2b04a6937be74e574d2769bdb2e96cb7">erpc::LPI2cSlaveTransport</a>
+, <a class="el" href="classerpc_1_1_l_p_spi_slave_transport.html#ab4c0ebfe9f80e85ec38aec6b804074e0">erpc::LPSpiSlaveTransport</a>
 , <a class="el" href="classerpc_1_1_spi_slave_transport.html#a12ec60aa1622c00be1f7867ced0cdc46">erpc::SpiSlaveTransport</a>
 </li>
 <li>m_txSemaphore

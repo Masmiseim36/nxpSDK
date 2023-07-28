@@ -21,9 +21,11 @@
 #include "MULTIPAGE.h"
 
 #include <stdbool.h>
+#include "fsl_dma.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR       DMA0
 
 #ifndef GUI_NORMAL_FONT
 #define GUI_NORMAL_FONT (&GUI_Font16_ASCII)
@@ -246,6 +248,8 @@ int main(void)
     CLOCK_AttachClk(kFFRO_to_FLEXCOMM5);
     /* Use 16 MHz clock for the I2C2 */
     CLOCK_AttachClk(kSFRO_to_FLEXCOMM2);
+
+    DMA_Init(EXAMPLE_LPSPI_MASTER_DMA_BASEADDR);
 
     PRINTF("GUI demo start.\r\n");
 

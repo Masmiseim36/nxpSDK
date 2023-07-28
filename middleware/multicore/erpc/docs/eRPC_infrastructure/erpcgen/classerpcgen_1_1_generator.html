@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -217,9 +217,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a082365cea9855d5d82bd795768875373"><td class="memItemLeft" align="right" valign="top">cpptempl::data_list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a082365cea9855d5d82bd795768875373">makeGroupIncludesTemplateData</a> (<a class="el" href="classerpcgen_1_1_group.html">Group</a> *group)</td></tr>
 <tr class="memdesc:a082365cea9855d5d82bd795768875373"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets template data for group include directives.  <a href="#a082365cea9855d5d82bd795768875373">More...</a><br /></td></tr>
 <tr class="separator:a082365cea9855d5d82bd795768875373"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f4df36c8ff3bfc8cce766defc3e4b52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_group.html">Group</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a8f4df36c8ff3bfc8cce766defc3e4b52">getGroupByName</a> (std::string name)</td></tr>
-<tr class="memdesc:a8f4df36c8ff3bfc8cce766defc3e4b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns pointer to a group with specified name.  <a href="#a8f4df36c8ff3bfc8cce766defc3e4b52">More...</a><br /></td></tr>
-<tr class="separator:a8f4df36c8ff3bfc8cce766defc3e4b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c168ddae0ecede4131afd9d7881a1c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_group.html">Group</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a2c168ddae0ecede4131afd9d7881a1c5">getGroupByName</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a2c168ddae0ecede4131afd9d7881a1c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns pointer to a group with specified name.  <a href="#a2c168ddae0ecede4131afd9d7881a1c5">More...</a><br /></td></tr>
+<tr class="separator:a2c168ddae0ecede4131afd9d7881a1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abca9eb93f49923bccb75756345ce8733"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#abca9eb93f49923bccb75756345ce8733">isMemberDataTypeUsingForwardDeclaration</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *topSymbol, <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *memberSymbol)</td></tr>
 <tr class="memdesc:abca9eb93f49923bccb75756345ce8733"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns information if member data type symbol is using forward declared type.  <a href="#abca9eb93f49923bccb75756345ce8733">More...</a><br /></td></tr>
 <tr class="separator:abca9eb93f49923bccb75756345ce8733"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,8 +240,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:acc2a4a27796e5946558a8582e80d5b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5fe7d3ed808ec88cfb4f7f99bf87558"><td class="memItemLeft" align="right" valign="top">generator_type_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#ae5fe7d3ed808ec88cfb4f7f99bf87558">m_generatorType</a></td></tr>
 <tr class="separator:ae5fe7d3ed808ec88cfb4f7f99bf87558"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78b99d78e387b186f461167c23e1bd4f"><td class="memItemLeft" align="right" valign="top">boost::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a78b99d78e387b186f461167c23e1bd4f">m_outputDirectory</a></td></tr>
-<tr class="separator:a78b99d78e387b186f461167c23e1bd4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4740c3ff7f7bdb59b1d4b48f424c4af5"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a4740c3ff7f7bdb59b1d4b48f424c4af5">m_outputDirectory</a></td></tr>
+<tr class="separator:a4740c3ff7f7bdb59b1d4b48f424c4af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 is used.</h2></td></tr>
@@ -261,18 +261,18 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 <tr class="memitem:a0d5a57e18b09ac92a911616a569c58d4"><td class="memItemLeft" align="right" valign="top">Annotation::program_lang_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a0d5a57e18b09ac92a911616a569c58d4">getAnnotationLang</a> ()</td></tr>
 <tr class="memdesc:a0d5a57e18b09ac92a911616a569c58d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <a class="el" href="classerpcgen_1_1_generator.html" title="Abstract code generator base class. ">Generator</a> flag used for annotation.  <a href="#a0d5a57e18b09ac92a911616a569c58d4">More...</a><br /></td></tr>
 <tr class="separator:a0d5a57e18b09ac92a911616a569c58d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab61539b04f32c67be527450d81a5e6ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#ab61539b04f32c67be527450d81a5e6ab">findAnnotation</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, std::string name)</td></tr>
-<tr class="memdesc:ab61539b04f32c67be527450d81a5e6ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#ab61539b04f32c67be527450d81a5e6ab">More...</a><br /></td></tr>
-<tr class="separator:ab61539b04f32c67be527450d81a5e6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3847622cf2e371f720d18f442be9e987"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a3847622cf2e371f720d18f442be9e987">getAnnotations</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, std::string name)</td></tr>
-<tr class="memdesc:a3847622cf2e371f720d18f442be9e987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#a3847622cf2e371f720d18f442be9e987">More...</a><br /></td></tr>
-<tr class="separator:a3847622cf2e371f720d18f442be9e987"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cfcd2a2294e23a2a318ebd6906cc80a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a9cfcd2a2294e23a2a318ebd6906cc80a">getAnnValue</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, std::string name)</td></tr>
-<tr class="memdesc:a9cfcd2a2294e23a2a318ebd6906cc80a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#a9cfcd2a2294e23a2a318ebd6906cc80a">More...</a><br /></td></tr>
-<tr class="separator:a9cfcd2a2294e23a2a318ebd6906cc80a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaada1d3103c40f5273aa99dd8d469df6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#aaada1d3103c40f5273aa99dd8d469df6">getAnnStringValue</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, std::string name)</td></tr>
-<tr class="memdesc:aaada1d3103c40f5273aa99dd8d469df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#aaada1d3103c40f5273aa99dd8d469df6">More...</a><br /></td></tr>
-<tr class="separator:aaada1d3103c40f5273aa99dd8d469df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab672805d997de024a3c7f5705cedd07f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#ab672805d997de024a3c7f5705cedd07f">findAnnotation</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, const std::string &amp;name)</td></tr>
+<tr class="memdesc:ab672805d997de024a3c7f5705cedd07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#ab672805d997de024a3c7f5705cedd07f">More...</a><br /></td></tr>
+<tr class="separator:ab672805d997de024a3c7f5705cedd07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40e490aaaf7d466f01e7f7bafa2d480c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a40e490aaaf7d466f01e7f7bafa2d480c">getAnnotations</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, const std::string &amp;name)</td></tr>
+<tr class="memdesc:a40e490aaaf7d466f01e7f7bafa2d480c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#a40e490aaaf7d466f01e7f7bafa2d480c">More...</a><br /></td></tr>
+<tr class="separator:a40e490aaaf7d466f01e7f7bafa2d480c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9da9e69c5c5169d715db7534093639a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a9da9e69c5c5169d715db7534093639a6">getAnnValue</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, const std::string &amp;name)</td></tr>
+<tr class="memdesc:a9da9e69c5c5169d715db7534093639a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#a9da9e69c5c5169d715db7534093639a6">More...</a><br /></td></tr>
+<tr class="separator:a9da9e69c5c5169d715db7534093639a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f388effab62bbe453a0a2789ca8be3e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a0f388effab62bbe453a0a2789ca8be3e">getAnnStringValue</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, const std::string &amp;name)</td></tr>
+<tr class="memdesc:a0f388effab62bbe453a0a2789ca8be3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#a0f388effab62bbe453a0a2789ca8be3e">More...</a><br /></td></tr>
+<tr class="separator:a0f388effab62bbe453a0a2789ca8be3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91fcb350eab3a0fd1ee8d388452f378d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_generator.html#aac14e41bce876c761f554176a9b00203">datatype_vector_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a91fcb350eab3a0fd1ee8d388452f378d">getDataTypesFromSymbolScope</a> (<a class="el" href="classerpcgen_1_1_symbol_scope.html">SymbolScope</a> *scope, <a class="el" href="classerpcgen_1_1_data_type.html#aaf50f761fa731a9393688363841d983b">DataType::data_type_t</a> datatype)</td></tr>
 <tr class="memdesc:a91fcb350eab3a0fd1ee8d388452f378d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns vector of data types from scope.  <a href="#a91fcb350eab3a0fd1ee8d388452f378d">More...</a><br /></td></tr>
 <tr class="separator:a91fcb350eab3a0fd1ee8d388452f378d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,7 +330,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ab61539b04f32c67be527450d81a5e6ab"></a>
+<a class="anchor" id="ab672805d997de024a3c7f5705cedd07f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -346,7 +346,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
@@ -684,7 +684,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#a3c02297f1492e80536de6a693e92faee">erpcgen::PythonGenerator</a>.</p>
+<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#a62823e0d7875b978cf29543dafe60b5a">erpcgen::PythonGenerator</a>.</p>
 
 </div>
 </div>
@@ -714,7 +714,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 
 </div>
 </div>
-<a class="anchor" id="a3847622cf2e371f720d18f442be9e987"></a>
+<a class="anchor" id="a40e490aaaf7d466f01e7f7bafa2d480c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -730,7 +730,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
@@ -758,7 +758,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 
 </div>
 </div>
-<a class="anchor" id="aaada1d3103c40f5273aa99dd8d469df6"></a>
+<a class="anchor" id="a0f388effab62bbe453a0a2789ca8be3e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -774,7 +774,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
@@ -802,7 +802,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 
 </div>
 </div>
-<a class="anchor" id="a9cfcd2a2294e23a2a318ebd6906cc80a"></a>
+<a class="anchor" id="a9da9e69c5c5169d715db7534093639a6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -818,7 +818,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
@@ -934,11 +934,11 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Contains interface function data. </dd></dl>
 
-<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#a17c8b058c824888e052cee0476659ef7">erpcgen::PythonGenerator</a>.</p>
+<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#ab3841ddb0f9ebf4cb63fe8f002d0355c">erpcgen::PythonGenerator</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8f4df36c8ff3bfc8cce766defc3e4b52"></a>
+<a class="anchor" id="a2c168ddae0ecede4131afd9d7881a1c5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -948,7 +948,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
         <tr>
           <td class="memname"><a class="el" href="classerpcgen_1_1_group.html">Group</a> * Generator::getGroupByName </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1146,7 +1146,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Data map with group symbols templates. </dd></dl>
 
-<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#aff03a8fa95169719ea156c784c748dbb">erpcgen::PythonGenerator</a>.</p>
+<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#ac48c017cf8fc45f568774ef8e530013e">erpcgen::PythonGenerator</a>.</p>
 
 </div>
 </div>
@@ -1273,7 +1273,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#a85fe129c6dcb48f5d09a679da07c63be">erpcgen::PythonGenerator</a>.</p>
+<p>Implemented in <a class="el" href="classerpcgen_1_1_python_generator.html#a1314e3edacce05b615d8a5b1394d7933">erpcgen::PythonGenerator</a>.</p>
 
 </div>
 </div>
@@ -1414,7 +1414,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 
 </div>
 </div>
-<a class="anchor" id="a78b99d78e387b186f461167c23e1bd4f"></a>
+<a class="anchor" id="a4740c3ff7f7bdb59b1d4b48f424c4af5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1422,7 +1422,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">boost::filesystem::path erpcgen::Generator::m_outputDirectory</td>
+          <td class="memname">std::filesystem::path erpcgen::Generator::m_outputDirectory</td>
         </tr>
       </table>
   </td>

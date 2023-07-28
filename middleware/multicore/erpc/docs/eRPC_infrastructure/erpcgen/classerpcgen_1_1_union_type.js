@@ -7,7 +7,7 @@ var classerpcgen_1_1_union_type =
     [ "addUnionMemberDeclaration", "classerpcgen_1_1_union_type.html#ac8c6e128c8891eaa4b12cfaebd751de0", null ],
     [ "declarationExists", "classerpcgen_1_1_union_type.html#aa6f52fad4452caf804800c9a01726aca", null ],
     [ "getCases", "classerpcgen_1_1_union_type.html#a48dfb389a100918e91bcef2203e0ad4a", null ],
-    [ "getDescription", "classerpcgen_1_1_union_type.html#aeea76b2bae97a5f2c86fb352279a205e", null ],
+    [ "getDescription", "classerpcgen_1_1_union_type.html#a036ad04e41d4f693c01d851d42fd6eaa", null ],
     [ "getDiscriminatorName", "classerpcgen_1_1_union_type.html#a24ba483c24634b07d88677d775e72fcb", null ],
     [ "getParentStruct", "classerpcgen_1_1_union_type.html#a6f25e14871e1ff00a579a09b255c746f", null ],
     [ "getUnionMemberDeclaration", "classerpcgen_1_1_union_type.html#a5e3e218d7ca62202024b716e65049c7a", null ],

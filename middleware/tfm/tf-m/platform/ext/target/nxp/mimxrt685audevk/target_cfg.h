@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2018-2020 Arm Limited
- * Copyright 2019-2020 NXP. All rights reserved.
+ * Copyright 2019-2020, 2022 NXP. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,14 +30,17 @@ extern "C" {
 #define TARGET_DEBUG_LOG 0
 #endif
 
-#define TFM_DRIVER_STDIO    Driver_USART0
-#define NS_DRIVER_STDIO     Driver_USART0
+#define TFM_DRIVER_STDIO    Driver_USART
+#define NS_DRIVER_STDIO     Driver_USART
 
 /* Predefined NOR flash config options (Macronix Quad SPI Flash MX25U51245GXDI00) */
 #define NOR_FLASH_INSTANCE      0U    /* This the instance number of FLEXSPI, only support 0 */
 #define NOR_FLASH_OPTION0       0xC1000001U /* Macronix QuadSPI flash */
 #define NOR_FLASH_OPTION1       0x20000006U
 #define CACHE_BASE              CACHE64
+#define USART_BASE              USART0
+
+#define FLEXSPI_FLASH_CTX       (SYSCTL0->FLEXSPI_BOOTROM_SCRATCH0)
 
 #define SEC_VIO_IRQn            SECUREVIOLATION_IRQn /* Security Violation Interrupt number synonim */
 

@@ -39,6 +39,7 @@ var files =
     [ "UnionCase.hpp", "_union_case_8hpp_source.html", null ],
     [ "UnionType.hpp", "_union_type_8hpp_source.html", null ],
     [ "UniqueIdChecker.hpp", "_unique_id_checker_8hpp_source.html", null ],
+    [ "Utils.hpp", "_utils_8hpp_source.html", null ],
     [ "Value.hpp", "_value_8hpp_source.html", null ],
     [ "VoidType.hpp", "_void_type_8hpp_source.html", null ]
 ];

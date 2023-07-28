@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -61,18 +61,18 @@ int TEST_FFT()
     int32_t fft_in[FFT_LENGTH] = {0};
     for (i = 0; i < FFT_LENGTH; i++)
         fft_in[i] = fft_in_ref[i];
-    PRINTF("/*FFT TEST START*/\r\n");
+    PRINTF("[DSP Test] /*FFT TEST START*/\r\n");
     tic = get_ccount();
     fft_real32x32(fft_out, fft_in, rfft32_32, NATUREDSP_FFT_SCALING_OPTION);
     toc = get_ccount();
     for (i = 0; i < FFT_LENGTH; i++)
         if (fft_out[i] != fft_out_ref[i])
         {
-            PRINTF("MISMATCH @ %d sample expected %d result %d\r\n", i, fft_out_ref[i], fft_out[i]);
+            PRINTF("[DSP Test] MISMATCH @ %d sample expected %d result %d\r\n", i, fft_out_ref[i], fft_out[i]);
             ret = -1;
         }
-    PRINTF("FFT 256 takes %d cycles\r\n", toc - tic);
-    PRINTF("/*FFT TEST END with %d*/\r\n\r\n", ret);
+    PRINTF("[DSP Test] FFT 256 takes %d cycles\r\n", toc - tic);
+    PRINTF("[DSP Test] /*FFT TEST END with %d*/\r\n\r\n", ret);
     return ret;
 }
 
@@ -86,17 +86,17 @@ const static float32_t vec_dot_out_ref = 138.733643;
 int TEST_VEC_DOT()
 {
     int ret = 0;
-    PRINTF("/*VECTOR DOT TEST START*/\r\n");
+    PRINTF("[DSP Test] /*VECTOR DOT TEST START*/\r\n");
     tic         = get_ccount();
     vec_dot_out = vec_dotf(vec_dot_x, vec_dot_y, 16);
     toc         = get_ccount();
     if (fabsf(vec_dot_out - vec_dot_out_ref) > 0.001)
     {
-        PRINTF("MISMATCH @ expected %f result %f\r\n", vec_dot_out_ref, vec_dot_out);
+        PRINTF("[DSP Test] MISMATCH @ expected %f result %f\r\n", vec_dot_out_ref, vec_dot_out);
         ret = -1;
     }
-    PRINTF("VECTOR DOT 16 takes %d cycles\r\n", toc - tic);
-    PRINTF("/*VECTOR DOT TEST END with %d */\r\n\r\n", ret);
+    PRINTF("[DSP Test] VECTOR DOT 16 takes %d cycles\r\n", toc - tic);
+    PRINTF("[DSP Test] /*VECTOR DOT TEST END with %d */\r\n\r\n", ret);
     return ret;
 }
 
@@ -118,18 +118,18 @@ const static int32_t vec_add_out_ref[VEC_ADD_LENGTH] = {
 int TEST_VEC_ADD()
 {
     int i, ret = 0;
-    PRINTF("/*VECTOR ADD TEST START*/\r\n");
+    PRINTF("[DSP Test] /*VECTOR ADD TEST START*/\r\n");
     tic = get_ccount();
     vec_add32x32_fast(vec_add_out, vec_add_x, vec_add_y, 32);
     toc = get_ccount();
     for (i = 0; i < VEC_ADD_LENGTH; i++)
         if (vec_add_out[i] != vec_add_out_ref[i])
         {
-            PRINTF("MISMATCH @ %d sample expected %d result %d\r\n", i, vec_add_out_ref[i], vec_add_out[i]);
+            PRINTF("[DSP Test] MISMATCH @ %d sample expected %d result %d\r\n", i, vec_add_out_ref[i], vec_add_out[i]);
             ret = -1;
         }
-    PRINTF("VECTOR ADD 32 takes %d cycles\r\n", toc - tic);
-    PRINTF("/*VECTOR ADD TEST END with %d */\r\n\r\n", ret);
+    PRINTF("[DSP Test] VECTOR ADD 32 takes %d cycles\r\n", toc - tic);
+    PRINTF("[DSP Test] /*VECTOR ADD TEST END with %d */\r\n\r\n", ret);
     return ret;
 }
 
@@ -243,17 +243,17 @@ const static float32_t vec_max_out_ref = 6153.711;
 int TEST_VEC_MAX()
 {
     int ret = 0;
-    PRINTF("/*VECTOR MAX TEST START*/\r\n");
+    PRINTF("[DSP Test] /*VECTOR MAX TEST START*/\r\n");
     tic         = get_ccount();
     vec_max_out = vec_maxf(vec_max, 1024);
     toc         = get_ccount();
     if (vec_max_out != vec_max_out_ref)
     {
-        PRINTF("MISMATCH @ expected %f result %f\r\n", vec_max_out_ref, vec_max_out);
+        PRINTF("[DSP Test] MISMATCH @ expected %f result %f\r\n", vec_max_out_ref, vec_max_out);
         ret = -1;
     }
-    PRINTF("VECTOR MAX 1024f takes %d cycles\r\n", toc - tic);
-    PRINTF("/*VECTOR MAX TEST END with %d */\r\n\r\n", ret);
+    PRINTF("[DSP Test] VECTOR MAX 1024f takes %d cycles\r\n", toc - tic);
+    PRINTF("[DSP Test] /*VECTOR MAX TEST END with %d */\r\n\r\n", ret);
     return ret;
 }
 
@@ -461,7 +461,7 @@ int TEST_IIR()
 {
     int i, ret = 0;
     bqriir32x32_df1_handle_t handle;
-    PRINTF("/*IIR TEST START*/\r\n");
+    PRINTF("[DSP Test] /*IIR TEST START*/\r\n");
     handle = bqriir32x32_df1_init(objmem, IIR_M, coef_sos, coef_g, 0);
     tic    = get_ccount();
     bqriir32x32_df1(handle, NULL, iir_out, iir_x, 1024);
@@ -470,12 +470,12 @@ int TEST_IIR()
     {
         if (iir_out[i] != iir_out_ref[i])
         {
-            PRINTF("MISMATCH @ %d sample expected %d result %d\r\n", i, iir_out_ref[i], iir_out[i]);
+            PRINTF("[DSP Test] MISMATCH @ %d sample expected %d result %d\r\n", i, iir_out_ref[i], iir_out[i]);
             ret = -1;
         }
     }
-    PRINTF("IIR 32 1024 takes %d cycles\r\n", toc - tic);
-    PRINTF("/*IIR TEST END with %d */\r\n\r\n", ret);
+    PRINTF("[DSP Test] IIR 32 1024 takes %d cycles\r\n", toc - tic);
+    PRINTF("[DSP Test] /*IIR TEST END with %d */\r\n\r\n", ret);
     return ret;
 }
 
@@ -539,7 +539,7 @@ int TEST_FIR_BLMS()
         fir_r[i] = fir_r_ref[i];
     for (i = 0; i < FIR_LENGTH + FIR_M; i++)
         fir_x[i] = fir_x_ref[i];
-    PRINTF("/*FIR BLMS TEST START*/\r\n");
+    PRINTF("[DSP Test] /*FIR BLMS TEST START*/\r\n");
     norm64 = vec_power32x32(fir_x, 31, 64);
     tic    = get_ccount();
     fir_blms32x32(fir_e, fir_h, fir_r, fir_x, norm64, norm64, 64, 64);
@@ -548,11 +548,11 @@ int TEST_FIR_BLMS()
     {
         if (fir_e[i] != fir_e_ref[i])
         {
-            PRINTF("MISMATCH @ %d sample expected %d result %d\r\n", i, fir_e_ref[i], fir_e[i]);
+            PRINTF("[DSP Test] MISMATCH @ %d sample expected %d result %d\r\n", i, fir_e_ref[i], fir_e[i]);
             ret = -1;
         }
     }
-    PRINTF("FIR BLMS 64 64 takes %d cycles\r\n", toc - tic);
-    PRINTF("/*FIR BLMS TEST END with %d */\r\n\r\n", ret);
+    PRINTF("[DSP Test] FIR BLMS 64 64 takes %d cycles\r\n", toc - tic);
+    PRINTF("[DSP Test] /*FIR BLMS TEST END with %d */\r\n\r\n", ret);
     return ret;
 }

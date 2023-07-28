@@ -34,7 +34,8 @@
           <StringListMapEntry>
             <key>CompilerAdditionalOptions</key>
             <value flag="" inheritance="append">
-                        <ListEntry>-Wno-missing-braces&#13;
+                        <ListEntry>-Wno-unused&#13;
+-Wno-missing-braces&#13;
 -fmessage-length=0&#13;
 -std=gnu99</ListEntry></value>
           </StringListMapEntry>

@@ -10,6 +10,8 @@ var searchData=
   ['_7eframedtransport',['~FramedTransport',['../classerpc_1_1_framed_transport.html#a05359d9edebfc10848c15179d977699a',1,'erpc::FramedTransport']]],
   ['_7eguard',['~Guard',['../classerpc_1_1_mutex_1_1_guard.html#a6f8a90c15176f6715c7056fa4dac29b9',1,'erpc::Mutex::Guard']]],
   ['_7ei2cslavetransport',['~I2cSlaveTransport',['../classerpc_1_1_i2c_slave_transport.html#a0de48d9a3aec43c99b4fc2c6b57cd1d0',1,'erpc::I2cSlaveTransport']]],
+  ['_7elpi2cslavetransport',['~LPI2cSlaveTransport',['../classerpc_1_1_l_p_i2c_slave_transport.html#a3ef922f3dfb8c2cf5e77e699f8461883',1,'erpc::LPI2cSlaveTransport']]],
+  ['_7elpspislavetransport',['~LPSpiSlaveTransport',['../classerpc_1_1_l_p_spi_slave_transport.html#a0b394e5f0886b33a8c2f6196d78120c4',1,'erpc::LPSpiSlaveTransport']]],
   ['_7emessagebufferfactory',['~MessageBufferFactory',['../classerpc_1_1_message_buffer_factory.html#add24390e455e842edc93467feb40e8eb',1,'erpc::MessageBufferFactory']]],
   ['_7emessagelogger',['~MessageLogger',['../classerpc_1_1_message_logger.html#a2faf737b59d295c825ec8a59b2692f1a',1,'erpc::MessageLogger']]],
   ['_7emessageloggers',['~MessageLoggers',['../classerpc_1_1_message_loggers.html#a7be46b1be32ddb2936831eef3b2a15e0',1,'erpc::MessageLoggers']]],

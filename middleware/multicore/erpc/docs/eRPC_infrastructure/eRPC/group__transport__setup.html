@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -170,6 +170,12 @@ DSPI transport setup</h2></td></tr>
 <tr class="separator:gac616eb1f8e41b1ac4b14ebfb231c565e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+LPSPI transport setup</h2></td></tr>
+<tr class="memitem:gacfe5e07c008ba0641ce48ae077bfb5d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#gacfe5e07c008ba0641ce48ae077bfb5d3">erpc_transport_lpspi_slave_init</a> (void *baseAddr, uint32_t baudRate, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:gacfe5e07c008ba0641ce48ae077bfb5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a LPSPI slave transport.  <a href="#gacfe5e07c008ba0641ce48ae077bfb5d3">More...</a><br /></td></tr>
+<tr class="separator:gacfe5e07c008ba0641ce48ae077bfb5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 SPIdev transport setup</h2></td></tr>
 <tr class="memitem:gadb42991295a59e64ef2ba0d26416dfc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#gadb42991295a59e64ef2ba0d26416dfc7">erpc_transport_spidev_master_init</a> (const char *spidev, uint32_t speed_Hz)</td></tr>
 <tr class="memdesc:gadb42991295a59e64ef2ba0d26416dfc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a SPIdev transport.  <a href="#gadb42991295a59e64ef2ba0d26416dfc7">More...</a><br /></td></tr>
@@ -231,6 +237,12 @@ I2C transport setup</h2></td></tr>
 <tr class="memitem:ga1d9f98c8926f281f68dbeca9e21f5ba9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#ga1d9f98c8926f281f68dbeca9e21f5ba9">erpc_transport_i2c_slave_init</a> (void *baseAddr, uint32_t baudRate, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:ga1d9f98c8926f281f68dbeca9e21f5ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an I2C slave transport.  <a href="#ga1d9f98c8926f281f68dbeca9e21f5ba9">More...</a><br /></td></tr>
 <tr class="separator:ga1d9f98c8926f281f68dbeca9e21f5ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+LPI2C transport setup</h2></td></tr>
+<tr class="memitem:gad609adbdfb449e937c7d1aa38651ce91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#gad609adbdfb449e937c7d1aa38651ce91">erpc_transport_lpi2c_slave_init</a> (void *baseAddr, uint32_t baudRate, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:gad609adbdfb449e937c7d1aa38651ce91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an LPI2C slave transport.  <a href="#gad609adbdfb449e937c7d1aa38651ce91">More...</a><br /></td></tr>
+<tr class="separator:gad609adbdfb449e937c7d1aa38651ce91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gadd5c1658590ea80c4c777c872ac4dd94"></a>
@@ -465,6 +477,50 @@ I2C transport setup</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baseAddr</td><td>Base address of DSPI peripheral used in this transport layer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baudRate</td><td>DSPI baud rate. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">srcClock_Hz</td><td>DSPI source clock in Hz.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return NULL or erpc_transport_t instance pointer. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gacfe5e07c008ba0641ce48ae077bfb5d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a> erpc_transport_lpspi_slave_init </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>baseAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baudRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a LPSPI slave transport. </p>
+<p>Create LPSPI slave transport instance, to be used at slave core.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">baseAddr</td><td>Base address of LPSPI peripheral used in this transport layer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">baudRate</td><td>LPSPI baud rate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srcClock_Hz</td><td>LPSPI source clock in Hz.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1060,6 +1116,50 @@ I2C transport setup</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baseAddr</td><td>Base address of I2C peripheral used in this transport layer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baudRate</td><td>SPI baud rate. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">srcClock_Hz</td><td>I2C source clock in Hz.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return NULL or erpc_transport_t instance pointer. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad609adbdfb449e937c7d1aa38651ce91"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a> erpc_transport_lpi2c_slave_init </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>baseAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baudRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an LPI2C slave transport. </p>
+<p>Create LPI2C slave transport instance, to be used at slave core.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">baseAddr</td><td>Base address of LPI2C peripheral used in this transport layer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">baudRate</td><td>SPI baud rate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srcClock_Hz</td><td>LPI2C source clock in Hz.</td></tr>
   </table>
   </dd>
 </dl>

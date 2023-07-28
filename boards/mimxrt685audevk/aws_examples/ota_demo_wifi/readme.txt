@@ -10,12 +10,13 @@ For more information about Wi-Fi module connection see:
     https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
 
 
+
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
@@ -34,27 +35,54 @@ It is recommended to build and program the bootloader first, then go on with the
 Please refer to respective readme of the mcuboot_opensource example and follow the steps there before you continue.
 
 Prior launching the demo it is recommended to pre-build image of modified version of the application to test the OTA update process.
-For the new version to get recognized it is required to use a higher version number in xAppFirmwareVersion structure. This may be achieved e.g. by modifying the initialization macros used.
+For the new version to get recognized it is required to use a higher version number in appFirmwareVersion structure. This may be achieved e.g. by modifying the initialization macros in ota_update.c:
+    #define APP_VERSION_MAJOR 0
+    #define APP_VERSION_MINOR 9
+    #define APP_VERSION_BUILD 3
+
+
+Creating an Application Code Signing Certificate:
+In your working directory, copy the following text and create a file named cert_config.txt. In the text, replace test_signer@amazon.com with your email address.
+------------------------------------
+[ req ]
+prompt             = no
+distinguished_name = my_dn
+
+[ my_dn ]
+commonName = test_signer@amazon.com
+
+[ my_exts ]
+keyUsage         = digitalSignature
+extendedKeyUsage = codeSigning
+------------------------------------
+
+Create an ECDSA code-signing private key:
+    openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:P-256 -pkeyopt ec_param_enc:named_curve -outform PEM -out ecdsasigner.key
+
+Create an ECDSA code-signing certificate:
+    openssl req -new -x509 -config cert_config.txt -extensions my_exts -nodes -days 365 -key ecdsasigner.key -out ecdsasigner.crt
+
+Get the ECDSA public key from the code signing credentials:
+    openssl ec -in ecdsasigner.key -pubout -outform PEM -out ecdsasigner-pub-key.pem
+
 
 For comprehensive guide on seeting up AWS OTA, please see "AWS OTA User Guide.pdf" document.
 
-Before running the demo it is mecessary to configure AWS IoT Console and update some of project files:
+Before running the demo it is need to configure AWS IoT Console and update some of project files:
 
 1.  Create AWS Account: https://console.aws.amazon.com/console/home
 
-2.  Configure device in the AWS IoT Console base on this guide: https://docs.aws.amazon.com/iot/latest/developerguide/iot-sdk-setup.html
+2.  Configure device in the AWS IoT Console base on this guide: https://docs.aws.amazon.com/iot/latest/developerguide/create-iot-resources.html
 
     Make note of example's "Thing name" and "REST API endpoint". These strings need to be set in the "aws_clientcredential.h".
-
     Example:
-        static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
+        #define clientcredentialMQTT_BROKER_ENDPOINT "abcdefgh123456.iot.us-west-2.amazonaws.com"
         #define clientcredentialIOT_THING_NAME "MyExample"
 
-    In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
-
+    Device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
+    Note: be sure to add " at the beginning of a line and \n"\ on every line break.
     Example:
-        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
+        #define keyCLIENT_CERTIFICATE_PEM NULL
 
         Needs to be changed to:
 
@@ -66,9 +94,12 @@ Before running the demo it is mecessary to configure AWS IoT Console and update 
         "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
         "-----END CERTIFICATE-----\n"
 
-    In the same way update the private key array.
+    In the same way update "keyCLIENT_PRIVATE_KEY_PEM" with content of private key file and
+    "keyCODE_VERIFY_PUB_KEY_PEM" with content of code signing public key file (ecdsasigner-pub-key.pem).
 
-3.  In case your board connects to the Internet using WiFi, it is necessary to configure also WiFi parameters in "aws_clientcredential.h",
+    Files "aws_clientcredential.h" and "aws_clientcredential_keys.h" are located in project folder.    
+
+3.  In case your board connects to the Internet using Wi-Fi, it is necessary to configure also Wi-Fi parameters in "aws_clientcredential.h",
     namely "clientcredentialWIFI_SSID" and "clientcredentialWIFI_PASSWORD".
     Otherwise connect board's RJ45 to a network with Internet access.
     Either way the example expects IP configuration to be assigned by DHCP server.

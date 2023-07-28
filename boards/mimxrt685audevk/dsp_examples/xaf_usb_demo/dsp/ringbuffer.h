@@ -34,10 +34,9 @@ extern "C" {
 /*!
  * @brief    Create and initialize a ring buffer structure
  *
- * @param    size Buffer size to be malloc'd
  * @returns  Initialized and allocated pointer to ring buffer object
  */
-ringbuf_t *ringbuf_create(uint32_t size);
+ringbuf_t *ringbuf_create(void);
 
 /*!
  * @brief    Destroy and free ring buffer structure

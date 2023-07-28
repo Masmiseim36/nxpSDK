@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,6 +14,8 @@
 #include "xaf-api.h"
 #include "xa_g711_codec_api.h"
 #include "xa-mixer-api.h"
+#include "fsl_debug_console.h"
+#include "fsl_sema42.h"
 
 #include "dsp_config.h"
 #include "message.h"
@@ -27,11 +29,11 @@ typedef struct _dsp_handle dsp_handle_t;
  * Definitions
  ******************************************************************************/
 
-#if (INIT_DEBUG_CONSOLE == 1)
-#define DSP_PRINTF PRINTF
-#else
-#define DSP_PRINTF printf
-#endif
+#define APP_SEMA42       SEMA42
+#define SEMA_PRINTF_NUM	 0
+#define SEMA_STARTUP_NUM 1
+#define SEMA_CORE_ID_DSP 3
+void DSP_PRINTF(const char* ptr, ...);
 
 /* @brief Number of buffers shared between processor cores */
 #define SHARED_BUFFER_COUNT \

@@ -22,7 +22,7 @@
 #include "region_defs.h"
 #include "tfm_plat_defs.h"
 #include "region.h"
-#include "tfm_assert.h"
+#include "utilities.h"
 #include "tfm_spm_log.h"
 #include "utilities.h"
 
@@ -157,6 +157,9 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
 
 void sau_and_idau_cfg(void)
 {
+    /* Ensure all memory accesses are completed */
+    __DMB();
+
     /* Enables SAU */
     TZ_SAU_Enable();
 
@@ -192,6 +195,10 @@ void sau_and_idau_cfg(void)
     SAU->RLAR = (memory_regions.secondary_partition_limit & SAU_RLAR_LADDR_Msk)
                 | SAU_RLAR_ENABLE_Msk;
 #endif /* BL2 */
+
+    /* Ensure the write is completed and flush pipeline */
+    __DSB();
+    __ISB();
 
 #if TARGET_DEBUG_LOG
     SPMLOG_DBGMSG("=== [SAU NS] =======\r\n");
@@ -269,9 +276,9 @@ int32_t mpc_init_cfg(void)
     
     /* == Region 0 == */
     /* The regions have to be alligned to FLASH_REGION0_SUBREGION_SIZE to cover the AHB Flash Region. */
-    TFM_ASSERT(memory_regions.non_secure_partition_base >= NS_ROM_ALIAS_BASE);
-    TFM_ASSERT(((memory_regions.non_secure_partition_base - NS_ROM_ALIAS_BASE) % FLASH_REGION0_SUBREGION_SIZE) == 0);
-    TFM_ASSERT(((memory_regions.non_secure_partition_limit - NS_ROM_ALIAS_BASE +1) % FLASH_REGION0_SUBREGION_SIZE) == 0);
+    SPM_ASSERT(memory_regions.non_secure_partition_base >= NS_ROM_ALIAS_BASE);
+    SPM_ASSERT(((memory_regions.non_secure_partition_base - NS_ROM_ALIAS_BASE) % FLASH_REGION0_SUBREGION_SIZE) == 0);
+    SPM_ASSERT(((memory_regions.non_secure_partition_limit - NS_ROM_ALIAS_BASE +1) % FLASH_REGION0_SUBREGION_SIZE) == 0);
 
     ns_region_start_id = (memory_regions.non_secure_partition_base - NS_ROM_ALIAS_BASE)/FLASH_REGION0_SUBREGION_SIZE;
     ns_region_end_id = (memory_regions.non_secure_partition_limit - NS_ROM_ALIAS_BASE + 1)/FLASH_REGION0_SUBREGION_SIZE;
@@ -404,8 +411,8 @@ int32_t mpc_init_cfg(void)
         RAM16 to RAM29 3.5 MB, each 256 KB (32 * 8 KB) */
 
     /* The regions have to be alligned to 1 kB to cover the AHB RAM Region */
-    TFM_ASSERT((S_DATA_SIZE % DATA_REGION0_SUBREGION_SIZE) == 0);
-    TFM_ASSERT(((S_DATA_SIZE + NS_DATA_SIZE) % DATA_REGION0_SUBREGION_SIZE) == 0);
+    SPM_ASSERT((S_DATA_SIZE % DATA_REGION0_SUBREGION_SIZE) == 0);
+    SPM_ASSERT(((S_DATA_SIZE + NS_DATA_SIZE) % DATA_REGION0_SUBREGION_SIZE) == 0);
     
     /* Security access rules for RAM (0x3 = all regions set to secure and privileged user access) */
     for(i=0; i < 4; i++)

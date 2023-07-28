@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -45,7 +53,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../board_init.h"
 "${ProjDirPath}/../incbin.S"
 "${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../dsp_support.h"
@@ -56,105 +63,18 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board_init.c"
+"${ProjDirPath}/../board_init.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkmimxrt685/eiq_examples/tflm_xaf_hifi4/hifi4/binary
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/xaf
     ${ProjDirPath}/..
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/xaf/evkmimxrt685_hifi4
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/codec/i2c
-    ${SdkRootDirPath}/devices/MIMXRT685S/drivers
-    ${SdkRootDirPath}/components/i2c
-    ${SdkRootDirPath}/components/codec
-    ${SdkRootDirPath}/components/codec/
-    ${SdkRootDirPath}/components/codec/wm8904
-    ${SdkRootDirPath}/middleware
-    ${SdkRootDirPath}/middleware/multicore
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/devices/MIMXRT685S
-    ${SdkRootDirPath}/boards/evkmimxrt685/flash_config
-    ${SdkRootDirPath}/components/pca9420
-    ${SdkRootDirPath}/devices/MIMXRT685S/utilities
-    ${SdkRootDirPath}/devices/MIMXRT685S/utilities/debug_console_lite
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(component_codec_i2c_MIMXRT685S_cm33)
-
-include(driver_common_MIMXRT685S_cm33)
-
-include(component_i3c_adapter_MIMXRT685S_cm33)
-
-include(driver_codec_MIMXRT685S_cm33)
-
-include(component_wm8904_adapter_MIMXRT685S_cm33)
-
-include(driver_flexcomm_i2c_MIMXRT685S_cm33)
-
-include(driver_i3c_MIMXRT685S_cm33)
-
-include(driver_wm8904_MIMXRT685S_cm33)
-
-include(driver_mu_MIMXRT685S_cm33)
-
-include(middleware_baremetal_MIMXRT685S_cm33)
-
-include(middleware_multicore_rpmsg_lite_evkmimxrt685_bm_MIMXRT685S_cm33)
-
-include(middleware_multicore_rpmsg_lite_MIMXRT685S_cm33)
-
-include(middleware_multicore_rpmsg_lite_bm_MIMXRT685S_cm33)
-
-include(component_lists_MIMXRT685S_cm33)
-
-include(component_usart_adapter_MIMXRT685S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT685S_cm33)
-
-include(device_MIMXRT685S_CMSIS_MIMXRT685S_cm33)
-
-include(device_MIMXRT685S_startup_MIMXRT685S_cm33)
-
-include(driver_cache_cache64_MIMXRT685S_cm33)
-
-include(driver_clock_MIMXRT685S_cm33)
-
-include(driver_dsp_MIMXRT685S_cm33)
-
-include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
-
-include(driver_flexcomm_MIMXRT685S_cm33)
-
-include(driver_flexspi_MIMXRT685S_cm33)
-
-include(driver_inputmux_MIMXRT685S_cm33)
-
-include(driver_lpc_gpio_MIMXRT685S_cm33)
-
-include(driver_lpc_iopctl_MIMXRT685S_cm33)
-
-include(driver_pca9420_MIMXRT685S_cm33)
-
-include(driver_power_MIMXRT685S_cm33)
-
-include(driver_reset_MIMXRT685S_cm33)
-
-include(utility_debug_console_lite_MIMXRT685S_cm33)
-
-include(utility_assert_lite_MIMXRT685S_cm33)
-
-include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
-
-include(utilities_misc_utilities_MIMXRT685S_cm33)
-
-include(driver_inputmux_connections_MIMXRT685S_cm33)
-
+include(${SdkRootDirPath}/devices/MIMXRT685S/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -166,4 +86,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

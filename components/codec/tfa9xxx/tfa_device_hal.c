@@ -70,9 +70,9 @@ uint8_t TFA_Hal_CollectMsg(tfa9xxx_handle_t *handle, uint8_t *chunk, uint32_t le
  * @param handle TFA9XXX handle structure.
  * @param inBuffer Input message buffer.
  * @param outBuffer Output (return) message buffer.
- * @retval #0 Message is processed successfully.
- * @retval #-EIO I2C error.
- * @retval #-EINVAL Message CRC check failed or command inside the message is invalid.
+ * @retval 0 Message is processed successfully.
+ * @retval EIO I2C error.
+ * @retval EINVAL Message CRC check failed or command inside the message is invalid.
  */
 int32_t TFA_Hal_ProcessMsg(tfa9xxx_handle_t *handle, void *inBuffer, void *outBuffer)
 {
@@ -195,9 +195,9 @@ int32_t TFA_I2C_WriteRaw(tfa9xxx_handle_t *handle, uint8_t slave, uint32_t len, 
 /*!
  * @brief Display the data in hex with certain length.
  *
- * @param str
- * @param data
- * @param dumpLength
+ * @param str str to print
+ * @param data data to print
+ * @param length data size
  */
 void TFA_Hal_DumpHex(char *str, uint8_t *data, uint32_t length)
 {

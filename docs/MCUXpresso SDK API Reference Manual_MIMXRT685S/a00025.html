@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Hashcrypt HASH</title>
+<title>MCUXpresso SDK API Reference Manual: I2C Master Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,88 +100,562 @@ $(document).ready(function(){initNavTree('a00025.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Hashcrypt HASH<div class="ingroups"><a class="el" href="a00226.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
+<div class="title">I2C Master Driver<div class="ingroups"><a class="el" href="a00221.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00315"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a></td></tr>
-<tr class="memdesc:a00315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage type used to save hash context.  <a href="a00025.html#a00315">More...</a><br/></td></tr>
-<tr class="separator:a00315"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gabc879a329aeebb2374413abfc5083a21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gabc879a329aeebb2374413abfc5083a21">HASHCRYPT_HASH_CTX_SIZE</a>&#160;&#160;&#160;30</td></tr>
-<tr class="memdesc:gabc879a329aeebb2374413abfc5083a21"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT HASH Context size.  <a href="#gabc879a329aeebb2374413abfc5083a21">More...</a><br/></td></tr>
-<tr class="separator:gabc879a329aeebb2374413abfc5083a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00316"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a00316">i2c_master_config_t</a></td></tr>
+<tr class="memdesc:a00316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I2C master module.  <a href="a00025.html#a00316">More...</a><br/></td></tr>
+<tr class="separator:a00316"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00266"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a00266">i2c_master_transfer_t</a></td></tr>
+<tr class="memdesc:a00266"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-blocking transfer descriptor structure.  <a href="a00025.html#a00266">More...</a><br/></td></tr>
+<tr class="separator:a00266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00265"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a00265">i2c_master_handle_t</a></td></tr>
+<tr class="memdesc:a00265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver handle for master non-blocking APIs.  <a href="a00025.html#a00265">More...</a><br/></td></tr>
+<tr class="separator:a00265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gae5749cb2ff6548699a66eea40667f7c6"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gae5749cb2ff6548699a66eea40667f7c6">hashcrypt_callback_t</a> )(HASHCRYPT_Type *base, <a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
-<tr class="memdesc:gae5749cb2ff6548699a66eea40667f7c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT background hash callback function.  <a href="#gae5749cb2ff6548699a66eea40667f7c6">More...</a><br/></td></tr>
-<tr class="separator:gae5749cb2ff6548699a66eea40667f7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad292a48f957a9b76593c1779d9dce497"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gad292a48f957a9b76593c1779d9dce497">i2c_master_transfer_callback_t</a> )(I2C_Type *base, i2c_master_handle_t *handle, <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
+<tr class="memdesc:gad292a48f957a9b76593c1779d9dce497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master completion callback function pointer type.  <a href="#gad292a48f957a9b76593c1779d9dce497">More...</a><br/></td></tr>
+<tr class="separator:gad292a48f957a9b76593c1779d9dce497"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gabdb13d49e7b828fa64af17230f3ac799"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gabdb13d49e7b828fa64af17230f3ac799">HASHCRYPT_SHA</a> (HASHCRYPT_Type *base, <a class="el" href="a00252.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a> algo, const uint8_t *input, size_t inputSize, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:gabdb13d49e7b828fa64af17230f3ac799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create HASH on given data.  <a href="#gabdb13d49e7b828fa64af17230f3ac799">More...</a><br/></td></tr>
-<tr class="separator:gabdb13d49e7b828fa64af17230f3ac799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga704d85f639d6e7c6a1450bc20a68425d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga704d85f639d6e7c6a1450bc20a68425d">HASHCRYPT_SHA_Init</a> (HASHCRYPT_Type *base, <a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, <a class="el" href="a00252.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a> algo)</td></tr>
-<tr class="memdesc:ga704d85f639d6e7c6a1450bc20a68425d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize HASH context.  <a href="#ga704d85f639d6e7c6a1450bc20a68425d">More...</a><br/></td></tr>
-<tr class="separator:ga704d85f639d6e7c6a1450bc20a68425d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga73e2339a36879daa7aa54491387ba103"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga73e2339a36879daa7aa54491387ba103">HASHCRYPT_SHA_Update</a> (HASHCRYPT_Type *base, <a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, const uint8_t *input, size_t inputSize)</td></tr>
-<tr class="memdesc:ga73e2339a36879daa7aa54491387ba103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to current HASH.  <a href="#ga73e2339a36879daa7aa54491387ba103">More...</a><br/></td></tr>
-<tr class="separator:ga73e2339a36879daa7aa54491387ba103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7ff02fc54187b62585a4e3d940b8037"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gad7ff02fc54187b62585a4e3d940b8037">HASHCRYPT_SHA_Finish</a> (HASHCRYPT_Type *base, <a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:gad7ff02fc54187b62585a4e3d940b8037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize hashing.  <a href="#gad7ff02fc54187b62585a4e3d940b8037">More...</a><br/></td></tr>
-<tr class="separator:gad7ff02fc54187b62585a4e3d940b8037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gab49c827b45635206f06e5737606e4611"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00025.html#ggab49c827b45635206f06e5737606e4611a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00025.html#ggab49c827b45635206f06e5737606e4611a3a7bb24dc8d1c1be8925603eeafe9b30">kI2C_Read</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab49c827b45635206f06e5737606e4611"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of master and slave transfers.  <a href="a00025.html#gab49c827b45635206f06e5737606e4611">More...</a><br/></td></tr>
+<tr class="separator:gab49c827b45635206f06e5737606e4611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87ea07668194cfb46c7c368d2cb42433"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga87ea07668194cfb46c7c368d2cb42433">_i2c_master_transfer_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00025.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a> = 0x00U, 
+<br/>
+&#160;&#160;<a class="el" href="a00025.html#gga87ea07668194cfb46c7c368d2cb42433a5cb44bf860c0482c0ca0165cf0d31d8a">kI2C_TransferNoStartFlag</a> = 0x01U, 
+<br/>
+&#160;&#160;<a class="el" href="a00025.html#gga87ea07668194cfb46c7c368d2cb42433aadf112471ef12f194985a093cd9b9721">kI2C_TransferRepeatedStartFlag</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00025.html#gga87ea07668194cfb46c7c368d2cb42433afb8aeea71b5b7475e3d3df86220db566">kI2C_TransferNoStopFlag</a> = 0x04U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga87ea07668194cfb46c7c368d2cb42433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer option flags.  <a href="a00025.html#ga87ea07668194cfb46c7c368d2cb42433">More...</a><br/></td></tr>
+<tr class="separator:ga87ea07668194cfb46c7c368d2cb42433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab08c1a0d50859637b4305687278941ee"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gab08c1a0d50859637b4305687278941ee">_i2c_transfer_states</a> </td></tr>
+<tr class="memdesc:gab08c1a0d50859637b4305687278941ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">States for the state machine used by transactional APIs.  <a href="a00025.html#gab08c1a0d50859637b4305687278941ee">More...</a><br/></td></tr>
+<tr class="separator:gab08c1a0d50859637b4305687278941ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:gad69f2d63ea756dda60749ff6b09f587d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a> (<a class="el" href="a00025.html#a00316">i2c_master_config_t</a> *masterConfig)</td></tr>
+<tr class="memdesc:gad69f2d63ea756dda60749ff6b09f587d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I2C master peripheral.  <a href="#gad69f2d63ea756dda60749ff6b09f587d">More...</a><br/></td></tr>
+<tr class="separator:gad69f2d63ea756dda60749ff6b09f587d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29f967b3ae8487a36ba2a58deb01ccae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a> (I2C_Type *base, const <a class="el" href="a00025.html#a00316">i2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:ga29f967b3ae8487a36ba2a58deb01ccae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I2C master peripheral.  <a href="#ga29f967b3ae8487a36ba2a58deb01ccae">More...</a><br/></td></tr>
+<tr class="separator:ga29f967b3ae8487a36ba2a58deb01ccae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcf7122f0a38d4d9da0f052fcb167957"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gadcf7122f0a38d4d9da0f052fcb167957">I2C_MasterDeinit</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:gadcf7122f0a38d4d9da0f052fcb167957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the I2C master peripheral.  <a href="#gadcf7122f0a38d4d9da0f052fcb167957">More...</a><br/></td></tr>
+<tr class="separator:gadcf7122f0a38d4d9da0f052fcb167957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07cc6bd20f700249c335893427bf462a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga07cc6bd20f700249c335893427bf462a">I2C_GetInstance</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:ga07cc6bd20f700249c335893427bf462a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an instance number given a base address.  <a href="#ga07cc6bd20f700249c335893427bf462a">More...</a><br/></td></tr>
+<tr class="separator:ga07cc6bd20f700249c335893427bf462a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09137caccbe9a57f6b2ca5e1ce9bdc50"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga09137caccbe9a57f6b2ca5e1ce9bdc50">I2C_MasterReset</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:ga09137caccbe9a57f6b2ca5e1ce9bdc50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a software reset.  <a href="#ga09137caccbe9a57f6b2ca5e1ce9bdc50">More...</a><br/></td></tr>
+<tr class="separator:ga09137caccbe9a57f6b2ca5e1ce9bdc50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga164d97e40eb5ad625a41ad43cf938153"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga164d97e40eb5ad625a41ad43cf938153">I2C_MasterEnable</a> (I2C_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga164d97e40eb5ad625a41ad43cf938153"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the I2C module as master.  <a href="#ga164d97e40eb5ad625a41ad43cf938153">More...</a><br/></td></tr>
+<tr class="separator:ga164d97e40eb5ad625a41ad43cf938153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status</h2></td></tr>
+<tr class="memitem:ga30ea754c9685d10f394989ea19a6be22"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga30ea754c9685d10f394989ea19a6be22">I2C_GetStatusFlags</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:ga30ea754c9685d10f394989ea19a6be22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the I2C status flags.  <a href="#ga30ea754c9685d10f394989ea19a6be22">More...</a><br/></td></tr>
+<tr class="separator:ga30ea754c9685d10f394989ea19a6be22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92a916f2d297de52d3a54f8bd0befb07"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga92a916f2d297de52d3a54f8bd0befb07">I2C_ClearStatusFlags</a> (I2C_Type *base, uint32_t statusMask)</td></tr>
+<tr class="memdesc:ga92a916f2d297de52d3a54f8bd0befb07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the I2C status flag state.  <a href="#ga92a916f2d297de52d3a54f8bd0befb07">More...</a><br/></td></tr>
+<tr class="separator:ga92a916f2d297de52d3a54f8bd0befb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga437271ffb955b77df0a5dee9ea80cc63"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga437271ffb955b77df0a5dee9ea80cc63">I2C_MasterClearStatusFlags</a> (I2C_Type *base, uint32_t statusMask)</td></tr>
+<tr class="memdesc:ga437271ffb955b77df0a5dee9ea80cc63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the I2C master status flag state.  <a href="#ga437271ffb955b77df0a5dee9ea80cc63">More...</a><br/></td></tr>
+<tr class="separator:ga437271ffb955b77df0a5dee9ea80cc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Interrupts</h2></td></tr>
+<tr class="memitem:ga0f6f1f2fe150661f8eb0a072665a9020"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga0f6f1f2fe150661f8eb0a072665a9020">I2C_EnableInterrupts</a> (I2C_Type *base, uint32_t interruptMask)</td></tr>
+<tr class="memdesc:ga0f6f1f2fe150661f8eb0a072665a9020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the I2C interrupt requests.  <a href="#ga0f6f1f2fe150661f8eb0a072665a9020">More...</a><br/></td></tr>
+<tr class="separator:ga0f6f1f2fe150661f8eb0a072665a9020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3e053611231cc886bfa38831a1ac26e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gac3e053611231cc886bfa38831a1ac26e">I2C_DisableInterrupts</a> (I2C_Type *base, uint32_t interruptMask)</td></tr>
+<tr class="memdesc:gac3e053611231cc886bfa38831a1ac26e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the I2C interrupt requests.  <a href="#gac3e053611231cc886bfa38831a1ac26e">More...</a><br/></td></tr>
+<tr class="separator:gac3e053611231cc886bfa38831a1ac26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae652236a25f1b4828d596f32190655f8"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gae652236a25f1b4828d596f32190655f8">I2C_GetEnabledInterrupts</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:gae652236a25f1b4828d596f32190655f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the set of currently enabled I2C interrupt requests.  <a href="#gae652236a25f1b4828d596f32190655f8">More...</a><br/></td></tr>
+<tr class="separator:gae652236a25f1b4828d596f32190655f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Bus operations</h2></td></tr>
+<tr class="memitem:gafeab1d5249a8b39c8d9e1a54a85c23f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gafeab1d5249a8b39c8d9e1a54a85c23f0">I2C_MasterSetBaudRate</a> (I2C_Type *base, uint32_t baudRate_Bps, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:gafeab1d5249a8b39c8d9e1a54a85c23f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the I2C bus frequency for master transactions.  <a href="#gafeab1d5249a8b39c8d9e1a54a85c23f0">More...</a><br/></td></tr>
+<tr class="separator:gafeab1d5249a8b39c8d9e1a54a85c23f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0d0c95b28e307b2d4a6ea420809b9e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gae0d0c95b28e307b2d4a6ea420809b9e4">I2C_MasterSetTimeoutValue</a> (I2C_Type *base, uint8_t timeout_Ms, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:gae0d0c95b28e307b2d4a6ea420809b9e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the I2C bus timeout value.  <a href="#gae0d0c95b28e307b2d4a6ea420809b9e4">More...</a><br/></td></tr>
+<tr class="separator:gae0d0c95b28e307b2d4a6ea420809b9e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b7617034ab51d77786141873fd6ee1c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga4b7617034ab51d77786141873fd6ee1c">I2C_MasterGetBusIdleState</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:ga4b7617034ab51d77786141873fd6ee1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the bus is idle.  <a href="#ga4b7617034ab51d77786141873fd6ee1c">More...</a><br/></td></tr>
+<tr class="separator:ga4b7617034ab51d77786141873fd6ee1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7664234966e4162e952b6d57efcaa8a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga7664234966e4162e952b6d57efcaa8a6">I2C_MasterStart</a> (I2C_Type *base, uint8_t address, <a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a> direction)</td></tr>
+<tr class="memdesc:ga7664234966e4162e952b6d57efcaa8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a START on the I2C bus.  <a href="#ga7664234966e4162e952b6d57efcaa8a6">More...</a><br/></td></tr>
+<tr class="separator:ga7664234966e4162e952b6d57efcaa8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf46a8cc094fc18c6cadea8de71448723"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gaf46a8cc094fc18c6cadea8de71448723">I2C_MasterStop</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:gaf46a8cc094fc18c6cadea8de71448723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a STOP signal on the I2C bus.  <a href="#gaf46a8cc094fc18c6cadea8de71448723">More...</a><br/></td></tr>
+<tr class="separator:gaf46a8cc094fc18c6cadea8de71448723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8137f7b333aafe1e3ff6c9d3852b7dbd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga8137f7b333aafe1e3ff6c9d3852b7dbd">I2C_MasterRepeatedStart</a> (I2C_Type *base, uint8_t address, <a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a> direction)</td></tr>
+<tr class="memdesc:ga8137f7b333aafe1e3ff6c9d3852b7dbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a REPEATED START on the I2C bus.  <a href="#ga8137f7b333aafe1e3ff6c9d3852b7dbd">More...</a><br/></td></tr>
+<tr class="separator:ga8137f7b333aafe1e3ff6c9d3852b7dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b4d71b59e118adc63afbc5434e5e7dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga3b4d71b59e118adc63afbc5434e5e7dd">I2C_MasterWriteBlocking</a> (I2C_Type *base, const void *txBuff, size_t txSize, uint32_t flags)</td></tr>
+<tr class="memdesc:ga3b4d71b59e118adc63afbc5434e5e7dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I2C bus.  <a href="#ga3b4d71b59e118adc63afbc5434e5e7dd">More...</a><br/></td></tr>
+<tr class="separator:ga3b4d71b59e118adc63afbc5434e5e7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba04c62ee636dd8317c2235c3c82aa3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gaba04c62ee636dd8317c2235c3c82aa3b">I2C_MasterReadBlocking</a> (I2C_Type *base, void *rxBuff, size_t rxSize, uint32_t flags)</td></tr>
+<tr class="memdesc:gaba04c62ee636dd8317c2235c3c82aa3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I2C bus.  <a href="#gaba04c62ee636dd8317c2235c3c82aa3b">More...</a><br/></td></tr>
+<tr class="separator:gaba04c62ee636dd8317c2235c3c82aa3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35cae3a5b4aa50ce8db28e3eb703a027"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga35cae3a5b4aa50ce8db28e3eb703a027">I2C_MasterTransferBlocking</a> (I2C_Type *base, i2c_master_transfer_t *xfer)</td></tr>
+<tr class="memdesc:ga35cae3a5b4aa50ce8db28e3eb703a027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a master polling transfer on the I2C bus.  <a href="#ga35cae3a5b4aa50ce8db28e3eb703a027">More...</a><br/></td></tr>
+<tr class="separator:ga35cae3a5b4aa50ce8db28e3eb703a027"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Non-blocking</h2></td></tr>
+<tr class="memitem:ga31e3de02b57801c6896e6045c4a31268"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga31e3de02b57801c6896e6045c4a31268">I2C_MasterTransferCreateHandle</a> (I2C_Type *base, i2c_master_handle_t *handle, <a class="el" href="a00025.html#gad292a48f957a9b76593c1779d9dce497">i2c_master_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memdesc:ga31e3de02b57801c6896e6045c4a31268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new handle for the I2C master non-blocking APIs.  <a href="#ga31e3de02b57801c6896e6045c4a31268">More...</a><br/></td></tr>
+<tr class="separator:ga31e3de02b57801c6896e6045c4a31268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7f76a04b6f6873c52ad176d58901fe9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gac7f76a04b6f6873c52ad176d58901fe9">I2C_MasterTransferNonBlocking</a> (I2C_Type *base, i2c_master_handle_t *handle, i2c_master_transfer_t *xfer)</td></tr>
+<tr class="memdesc:gac7f76a04b6f6873c52ad176d58901fe9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking transaction on the I2C bus.  <a href="#gac7f76a04b6f6873c52ad176d58901fe9">More...</a><br/></td></tr>
+<tr class="separator:gac7f76a04b6f6873c52ad176d58901fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d720842e68161d2d52d56d119f20665"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ga7d720842e68161d2d52d56d119f20665">I2C_MasterTransferGetCount</a> (I2C_Type *base, i2c_master_handle_t *handle, size_t *count)</td></tr>
+<tr class="memdesc:ga7d720842e68161d2d52d56d119f20665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of bytes transferred so far.  <a href="#ga7d720842e68161d2d52d56d119f20665">More...</a><br/></td></tr>
+<tr class="separator:ga7d720842e68161d2d52d56d119f20665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb386e53b2bc64e29b2915bdfac36800"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gabb386e53b2bc64e29b2915bdfac36800">I2C_MasterTransferAbort</a> (I2C_Type *base, i2c_master_handle_t *handle)</td></tr>
+<tr class="memdesc:gabb386e53b2bc64e29b2915bdfac36800"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates a non-blocking I2C master transmission early.  <a href="#gabb386e53b2bc64e29b2915bdfac36800">More...</a><br/></td></tr>
+<tr class="separator:gabb386e53b2bc64e29b2915bdfac36800"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+IRQ handler</h2></td></tr>
+<tr class="memitem:gafbf792484d11820561fa22bb27f73284"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#gafbf792484d11820561fa22bb27f73284">I2C_MasterTransferHandleIRQ</a> (I2C_Type *base, i2c_master_handle_t *handle)</td></tr>
+<tr class="memdesc:gafbf792484d11820561fa22bb27f73284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle master interrupts.  <a href="#gafbf792484d11820561fa22bb27f73284">More...</a><br/></td></tr>
+<tr class="separator:gafbf792484d11820561fa22bb27f73284"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00315" id="a00315"></a>
+<a name="a00316" id="a00316"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct hashcrypt_hash_ctx_t</td>
+          <td class="memname">struct i2c_master_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>This structure holds configuration settings for the I2C peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00025.html#gad69f2d63ea756dda60749ff6b09f587d" title="Provides a default configuration for the I2C master peripheral. ">I2C_MasterGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aba5d9f488c9182dcb4fcf4b2fc96b3a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba5d9f488c9182dcb4fcf4b2fc96b3a7"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#aba5d9f488c9182dcb4fcf4b2fc96b3a7">x</a> [<a class="el" href="a00025.html#gabc879a329aeebb2374413abfc5083a21">HASHCRYPT_HASH_CTX_SIZE</a>]</td></tr>
-<tr class="memdesc:aba5d9f488c9182dcb4fcf4b2fc96b3a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">storage <br/></td></tr>
-<tr class="separator:aba5d9f488c9182dcb4fcf4b2fc96b3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2419131a10906475fd31950f17ac8895"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a2419131a10906475fd31950f17ac8895">enableMaster</a></td></tr>
+<tr class="memdesc:a2419131a10906475fd31950f17ac8895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to enable master mode.  <a href="#a2419131a10906475fd31950f17ac8895">More...</a><br/></td></tr>
+<tr class="separator:a2419131a10906475fd31950f17ac8895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2186844dc87bcde999fc12005f4c550a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a2186844dc87bcde999fc12005f4c550a">baudRate_Bps</a></td></tr>
+<tr class="memdesc:a2186844dc87bcde999fc12005f4c550a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired baud rate in bits per second.  <a href="#a2186844dc87bcde999fc12005f4c550a">More...</a><br/></td></tr>
+<tr class="separator:a2186844dc87bcde999fc12005f4c550a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c6831135c83c013d2a3cfc3e7210357"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a1c6831135c83c013d2a3cfc3e7210357">enableTimeout</a></td></tr>
+<tr class="memdesc:a1c6831135c83c013d2a3cfc3e7210357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable internal timeout function.  <a href="#a1c6831135c83c013d2a3cfc3e7210357">More...</a><br/></td></tr>
+<tr class="separator:a1c6831135c83c013d2a3cfc3e7210357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f981abbbbd75a8a9ca923fafe76a1a3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a4f981abbbbd75a8a9ca923fafe76a1a3">timeout_Ms</a></td></tr>
+<tr class="memdesc:a4f981abbbbd75a8a9ca923fafe76a1a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event timeout and SCL low timeout value.  <a href="#a4f981abbbbd75a8a9ca923fafe76a1a3">More...</a><br/></td></tr>
+<tr class="separator:a4f981abbbbd75a8a9ca923fafe76a1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a2419131a10906475fd31950f17ac8895"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool i2c_master_config_t::enableMaster</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gabc879a329aeebb2374413abfc5083a21"></a>
+<a class="anchor" id="a2186844dc87bcde999fc12005f4c550a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define HASHCRYPT_HASH_CTX_SIZE&#160;&#160;&#160;30</td>
+          <td class="memname">uint32_t i2c_master_config_t::baudRate_Bps</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1c6831135c83c013d2a3cfc3e7210357"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool i2c_master_config_t::enableTimeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4f981abbbbd75a8a9ca923fafe76a1a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t i2c_master_config_t::timeout_Ms</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00266" id="a00266"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _i2c_master_transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>I2C master transfer typedef.</p>
+<p>This structure is used to pass transaction parameters to the <a class="el" href="a00025.html#gac7f76a04b6f6873c52ad176d58901fe9" title="Performs a non-blocking transaction on the I2C bus. ">I2C_MasterTransferNonBlocking()</a> API. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a8835787e1b0f9a4b8868e7cbe53e45d5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a8835787e1b0f9a4b8868e7cbe53e45d5">flags</a></td></tr>
+<tr class="memdesc:a8835787e1b0f9a4b8868e7cbe53e45d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bit mask of options for the transfer.  <a href="#a8835787e1b0f9a4b8868e7cbe53e45d5">More...</a><br/></td></tr>
+<tr class="separator:a8835787e1b0f9a4b8868e7cbe53e45d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b9c4ae818b1194955db51de0f67795f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a3b9c4ae818b1194955db51de0f67795f">slaveAddress</a></td></tr>
+<tr class="memdesc:a3b9c4ae818b1194955db51de0f67795f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The 7-bit slave address.  <a href="#a3b9c4ae818b1194955db51de0f67795f">More...</a><br/></td></tr>
+<tr class="separator:a3b9c4ae818b1194955db51de0f67795f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5b89dc9115b7760431c981e0c1fd443"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ac5b89dc9115b7760431c981e0c1fd443">direction</a></td></tr>
+<tr class="memdesc:ac5b89dc9115b7760431c981e0c1fd443"><td class="mdescLeft">&#160;</td><td class="mdescRight">Either <a class="el" href="a00025.html#ggab49c827b45635206f06e5737606e4611a3a7bb24dc8d1c1be8925603eeafe9b30" title="Master receive. ">kI2C_Read</a> or <a class="el" href="a00025.html#ggab49c827b45635206f06e5737606e4611a93b476b469c2a4bfed5916b458ae9bb0" title="Master transmit. ">kI2C_Write</a>.  <a href="#ac5b89dc9115b7760431c981e0c1fd443">More...</a><br/></td></tr>
+<tr class="separator:ac5b89dc9115b7760431c981e0c1fd443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7facb612714785d4e143e57d47a5af3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ae7facb612714785d4e143e57d47a5af3">subaddress</a></td></tr>
+<tr class="memdesc:ae7facb612714785d4e143e57d47a5af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sub address.  <a href="#ae7facb612714785d4e143e57d47a5af3">More...</a><br/></td></tr>
+<tr class="separator:ae7facb612714785d4e143e57d47a5af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeec8dccf4a49f03ff9a40f5982a24796"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#aeec8dccf4a49f03ff9a40f5982a24796">subaddressSize</a></td></tr>
+<tr class="memdesc:aeec8dccf4a49f03ff9a40f5982a24796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Length of sub address to send in bytes.  <a href="#aeec8dccf4a49f03ff9a40f5982a24796">More...</a><br/></td></tr>
+<tr class="separator:aeec8dccf4a49f03ff9a40f5982a24796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c7f63bd1e7de04e40f5cd733f5c7388"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a8c7f63bd1e7de04e40f5cd733f5c7388">data</a></td></tr>
+<tr class="memdesc:a8c7f63bd1e7de04e40f5cd733f5c7388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to data to transfer.  <a href="#a8c7f63bd1e7de04e40f5cd733f5c7388">More...</a><br/></td></tr>
+<tr class="separator:a8c7f63bd1e7de04e40f5cd733f5c7388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68e2dd69e1e34b1b505270e1e07e8a34"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a68e2dd69e1e34b1b505270e1e07e8a34">dataSize</a></td></tr>
+<tr class="memdesc:a68e2dd69e1e34b1b505270e1e07e8a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes to transfer.  <a href="#a68e2dd69e1e34b1b505270e1e07e8a34">More...</a><br/></td></tr>
+<tr class="separator:a68e2dd69e1e34b1b505270e1e07e8a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a8835787e1b0f9a4b8868e7cbe53e45d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t i2c_master_transfer_t::flags</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>See enumeration <a class="el" href="a00025.html#ga87ea07668194cfb46c7c368d2cb42433" title="Transfer option flags. ">_i2c_master_transfer_flags</a> for available options. Set to 0 or <a class="el" href="a00025.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2" title="Transfer starts with a start signal, stops with a stop signal. ">kI2C_TransferDefaultFlag</a> for normal transfers. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3b9c4ae818b1194955db51de0f67795f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t i2c_master_transfer_t::slaveAddress</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac5b89dc9115b7760431c981e0c1fd443"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a> i2c_master_transfer_t::direction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae7facb612714785d4e143e57d47a5af3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t i2c_master_transfer_t::subaddress</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transferred MSB first. </p>
+
+</div>
+</div>
+<a class="anchor" id="aeec8dccf4a49f03ff9a40f5982a24796"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t i2c_master_transfer_t::subaddressSize</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum size is 4 bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8c7f63bd1e7de04e40f5cd733f5c7388"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* i2c_master_transfer_t::data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a68e2dd69e1e34b1b505270e1e07e8a34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t i2c_master_transfer_t::dataSize</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00265" id="a00265"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _i2c_master_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>I2C master handle typedef.</p>
+<dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:add7ec18bc8239c5c87ffcec2fbcf5dd8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#add7ec18bc8239c5c87ffcec2fbcf5dd8">state</a></td></tr>
+<tr class="memdesc:add7ec18bc8239c5c87ffcec2fbcf5dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer state machine current state.  <a href="#add7ec18bc8239c5c87ffcec2fbcf5dd8">More...</a><br/></td></tr>
+<tr class="separator:add7ec18bc8239c5c87ffcec2fbcf5dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5943d16f5ed6e7c4ebd334cdbc0e2afc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5943d16f5ed6e7c4ebd334cdbc0e2afc"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a5943d16f5ed6e7c4ebd334cdbc0e2afc">transferCount</a></td></tr>
+<tr class="memdesc:a5943d16f5ed6e7c4ebd334cdbc0e2afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates progress of the transfer. <br/></td></tr>
+<tr class="separator:a5943d16f5ed6e7c4ebd334cdbc0e2afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca481b5d3ca6dce53cf440b534ff80c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#aca481b5d3ca6dce53cf440b534ff80c2">remainingBytes</a></td></tr>
+<tr class="memdesc:aca481b5d3ca6dce53cf440b534ff80c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remaining byte count in current state.  <a href="#aca481b5d3ca6dce53cf440b534ff80c2">More...</a><br/></td></tr>
+<tr class="separator:aca481b5d3ca6dce53cf440b534ff80c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9577474c0c4395355174df2b016108de"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a9577474c0c4395355174df2b016108de">buf</a></td></tr>
+<tr class="memdesc:a9577474c0c4395355174df2b016108de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer pointer for current state.  <a href="#a9577474c0c4395355174df2b016108de">More...</a><br/></td></tr>
+<tr class="separator:a9577474c0c4395355174df2b016108de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9cd27efebaa02f0f61af7f43e8ff163"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#ac9cd27efebaa02f0f61af7f43e8ff163">checkAddrNack</a></td></tr>
+<tr class="memdesc:ac9cd27efebaa02f0f61af7f43e8ff163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to check the nack signal is detected during addressing.  <a href="#ac9cd27efebaa02f0f61af7f43e8ff163">More...</a><br/></td></tr>
+<tr class="separator:ac9cd27efebaa02f0f61af7f43e8ff163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6858d3525f762d7aded20e6c95eb19fc"><td class="memItemLeft" align="right" valign="top">i2c_master_transfer_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a6858d3525f762d7aded20e6c95eb19fc">transfer</a></td></tr>
+<tr class="memdesc:a6858d3525f762d7aded20e6c95eb19fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy of the current transfer info.  <a href="#a6858d3525f762d7aded20e6c95eb19fc">More...</a><br/></td></tr>
+<tr class="separator:a6858d3525f762d7aded20e6c95eb19fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15b84b8a94c2b2e5ace0a695c79edd84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#gad292a48f957a9b76593c1779d9dce497">i2c_master_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#a15b84b8a94c2b2e5ace0a695c79edd84">completionCallback</a></td></tr>
+<tr class="memdesc:a15b84b8a94c2b2e5ace0a695c79edd84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function pointer.  <a href="#a15b84b8a94c2b2e5ace0a695c79edd84">More...</a><br/></td></tr>
+<tr class="separator:a15b84b8a94c2b2e5ace0a695c79edd84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad7df570c53adb2e80acd2ba0d39d109"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html#aad7df570c53adb2e80acd2ba0d39d109">userData</a></td></tr>
+<tr class="memdesc:aad7df570c53adb2e80acd2ba0d39d109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application data passed to callback.  <a href="#aad7df570c53adb2e80acd2ba0d39d109">More...</a><br/></td></tr>
+<tr class="separator:aad7df570c53adb2e80acd2ba0d39d109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="add7ec18bc8239c5c87ffcec2fbcf5dd8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t i2c_master_handle_t::state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aca481b5d3ca6dce53cf440b534ff80c2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t i2c_master_handle_t::remainingBytes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9577474c0c4395355174df2b016108de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* i2c_master_handle_t::buf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac9cd27efebaa02f0f61af7f43e8ff163"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool i2c_master_handle_t::checkAddrNack</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6858d3525f762d7aded20e6c95eb19fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">i2c_master_transfer_t i2c_master_handle_t::transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a15b84b8a94c2b2e5ace0a695c79edd84"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00025.html#gad292a48f957a9b76593c1779d9dce497">i2c_master_transfer_callback_t</a> i2c_master_handle_t::completionCallback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aad7df570c53adb2e80acd2ba0d39d109"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* i2c_master_handle_t::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gae5749cb2ff6548699a66eea40667f7c6"></a>
+<a class="anchor" id="gad292a48f957a9b76593c1779d9dce497"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* hashcrypt_callback_t)(HASHCRYPT_Type *base, <a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *ctx, <a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* i2c_master_transfer_callback_t)(I2C_Type *base, i2c_master_handle_t *handle, <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This callback is used only for the non-blocking master transfer API. Specify the callback you wish to use in the call to <a class="el" href="a00025.html#ga31e3de02b57801c6896e6045c4a31268" title="Creates a new handle for the I2C master non-blocking APIs. ">I2C_MasterTransferCreateHandle()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">completionStatus</td><td>Either kStatus_Success or an error code describing how the transfer completed. </td></tr>
+    <tr><td class="paramname">userData</td><td>Arbitrary pointer-sized value passed from the application. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gab49c827b45635206f06e5737606e4611"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab49c827b45635206f06e5737606e4611a93b476b469c2a4bfed5916b458ae9bb0"></a>kI2C_Write</em>&nbsp;</td><td class="fielddoc">
+<p>Master transmit. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab49c827b45635206f06e5737606e4611a3a7bb24dc8d1c1be8925603eeafe9b30"></a>kI2C_Read</em>&nbsp;</td><td class="fielddoc">
+<p>Master receive. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga87ea07668194cfb46c7c368d2cb42433"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00025.html#ga87ea07668194cfb46c7c368d2cb42433">_i2c_master_transfer_flags</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>These enumerations are intended to be OR'd together to form a bit mask of options for the <a class="el" href="a00025.html#a8835787e1b0f9a4b8868e7cbe53e45d5" title="Bit mask of options for the transfer. ">_i2c_master_transfer::flags</a> field. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2"></a>kI2C_TransferDefaultFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Transfer starts with a start signal, stops with a stop signal. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87ea07668194cfb46c7c368d2cb42433a5cb44bf860c0482c0ca0165cf0d31d8a"></a>kI2C_TransferNoStartFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Don't send a start condition, address, and sub address. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87ea07668194cfb46c7c368d2cb42433aadf112471ef12f194985a093cd9b9721"></a>kI2C_TransferRepeatedStartFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Send a repeated start condition. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87ea07668194cfb46c7c368d2cb42433afb8aeea71b5b7475e3d3df86220db566"></a>kI2C_TransferNoStopFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Don't send a stop condition. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab08c1a0d50859637b4305687278941ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00025.html#gab08c1a0d50859637b4305687278941ee">_i2c_transfer_states</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -189,45 +663,700 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gabdb13d49e7b828fa64af17230f3ac799"></a>
+<a class="anchor" id="gad69f2d63ea756dda60749ff6b09f587d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA </td>
+          <td class="memname">void I2C_MasterGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00025.html#a00316">i2c_master_config_t</a> *&#160;</td>
+          <td class="paramname"><em>masterConfig</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function provides the following default configuration for the I2C master peripheral: </p>
+<div class="fragment"><div class="line">*  masterConfig-&gt;<a class="code" href="a00025.html#a2419131a10906475fd31950f17ac8895">enableMaster</a>            = <span class="keyword">true</span>;</div>
+<div class="line">*  masterConfig-&gt;<a class="code" href="a00025.html#a2186844dc87bcde999fc12005f4c550a">baudRate_Bps</a>            = 100000U;</div>
+<div class="line">*  masterConfig-&gt;<a class="code" href="a00025.html#a1c6831135c83c013d2a3cfc3e7210357">enableTimeout</a>           = <span class="keyword">false</span>;</div>
+<div class="line">* </div>
+</div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the master driver with <a class="el" href="a00025.html#ga29f967b3ae8487a36ba2a58deb01ccae" title="Initializes the I2C master peripheral. ">I2C_MasterInit()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">masterConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00025.html#a00316" title="Structure with settings to initialize the I2C master module. ">i2c_master_config_t</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga29f967b3ae8487a36ba2a58deb01ccae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_MasterInit </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00252.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a>&#160;</td>
-          <td class="paramname"><em>algo</em>, </td>
+          <td class="paramtype">const <a class="el" href="a00025.html#a00316">i2c_master_config_t</a> *&#160;</td>
+          <td class="paramname"><em>masterConfig</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function enables the peripheral clock and initializes the I2C master peripheral as described by the user provided configuration. A software reset is performed prior to configuration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">masterConfig</td><td>User provided peripheral configuration. Use <a class="el" href="a00025.html#gad69f2d63ea756dda60749ff6b09f587d" title="Provides a default configuration for the I2C master peripheral. ">I2C_MasterGetDefaultConfig()</a> to get a set of defaults that you can override. </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>Frequency in Hertz of the I2C functional clock. Used to calculate the baud rate divisors, filter widths, and timeout periods. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gadcf7122f0a38d4d9da0f052fcb167957"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_MasterDeinit </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the I2C master peripheral and gates the clock. It also performs a software reset to restore the peripheral to reset conditions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga07cc6bd20f700249c335893427bf462a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t I2C_GetInstance </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If an invalid base address is passed, debug builds will assert. Release builds will just return instance number 0.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>I2C instance number starting from 0. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga09137caccbe9a57f6b2ca5e1ce9bdc50"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_MasterReset </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Restores the I2C master peripheral to reset conditions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga164d97e40eb5ad625a41ad43cf938153"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_MasterEnable </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Pass true to enable or false to disable the specified I2C as master. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga30ea754c9685d10f394989ea19a6be22"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t I2C_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A bit mask with the state of all I2C status flags is returned. For each flag, the corresponding bit in the return value is set if the flag is asserted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>State of the status flags:<ul>
+<li>1: related status flag is set.</li>
+<li>0: related status flag is not set. </li>
+</ul>
+</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00222.html#gaee8495a8bc52a9a7df6e97d1d7ead2cd">_i2c_status_flags</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga92a916f2d297de52d3a54f8bd0befb07"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>statusMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Refer to kI2C_CommonAllClearStatusFlags, kI2C_MasterAllClearStatusFlags and kI2C_SlaveAllClearStatusFlags to see the clearable flags. Attempts to clear other flags has no effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">statusMask</td><td>A bitmask of status flags that are to be cleared. The mask is composed of the members in kI2C_CommonAllClearStatusFlags, kI2C_MasterAllClearStatusFlags and kI2C_SlaveAllClearStatusFlags. You may pass the result of a previous call to <a class="el" href="a00025.html#ga30ea754c9685d10f394989ea19a6be22" title="Gets the I2C status flags. ">I2C_GetStatusFlags()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00222.html#gaee8495a8bc52a9a7df6e97d1d7ead2cd" title="I2C status flags. ">_i2c_status_flags</a>, _i2c_master_status_flags and _i2c_slave_status_flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga437271ffb955b77df0a5dee9ea80cc63"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_MasterClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>statusMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00257.html#_deprecated000003">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00025.html#ga92a916f2d297de52d3a54f8bd0befb07">I2C_ClearStatusFlags</a> The following status register flags can be cleared:<ul>
+<li><a class="el" href="a00222.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda7b487779b58af99a7a8c179545f78ccd" title="The arbitration of the bus was lost. ">kI2C_MasterArbitrationLostFlag</a></li>
+<li><a class="el" href="a00222.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdab5cec1d9be7dc5fb2c106e2b87889517" title="There was an error during start or stop phase of the transaction. ">kI2C_MasterStartStopErrorFlag</a></li>
+</ul>
+</dd></dl>
+<p>Attempts to clear other flags has no effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">statusMask</td><td>A bitmask of status flags that are to be cleared. The mask is composed of <a class="el" href="a00222.html#gaee8495a8bc52a9a7df6e97d1d7ead2cd" title="I2C status flags. ">_i2c_status_flags</a> enumerators OR'd together. You may pass the result of a previous call to <a class="el" href="a00025.html#ga30ea754c9685d10f394989ea19a6be22" title="Gets the I2C status flags. ">I2C_GetStatusFlags()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00222.html#gaee8495a8bc52a9a7df6e97d1d7ead2cd" title="I2C status flags. ">_i2c_status_flags</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0f6f1f2fe150661f8eb0a072665a9020"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interruptMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to enable. See <a class="el" href="a00222.html#ga87c81dd985dad07dc26cb93125a94ec7" title="I2C interrupt enable. ">_i2c_interrupt_enable</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac3e053611231cc886bfa38831a1ac26e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interruptMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to disable. See <a class="el" href="a00222.html#ga87c81dd985dad07dc26cb93125a94ec7" title="I2C interrupt enable. ">_i2c_interrupt_enable</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae652236a25f1b4828d596f32190655f8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I2C_GetEnabledInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A bitmask composed of <a class="el" href="a00222.html#ga87c81dd985dad07dc26cb93125a94ec7" title="I2C interrupt enable. ">_i2c_interrupt_enable</a> enumerators OR'd together to indicate the set of enabled interrupts. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafeab1d5249a8b39c8d9e1a54a85c23f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_MasterSetBaudRate </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baudRate_Bps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The I2C master is automatically disabled and re-enabled as necessary to configure the baud rate. Do not call this function during a transfer, or the transfer is aborted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>I2C functional clock frequency in Hertz. </td></tr>
+    <tr><td class="paramname">baudRate_Bps</td><td>Requested bus frequency in bits per second. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae0d0c95b28e307b2d4a6ea420809b9e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_MasterSetTimeoutValue </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>timeout_Ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If the SCL signal remains low or bus does not have event longer than the timeout value, kI2C_SclTimeoutFlag or kI2C_EventTimeoutFlag is set. This can indicete the bus is held by slave or any fault occurs to the I2C module.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">timeout_Ms</td><td>Timeout value in millisecond. </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>I2C functional clock frequency in Hertz. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4b7617034ab51d77786141873fd6ee1c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool I2C_MasterGetBusIdleState </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Requires the master mode to be enabled.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Bus is busy. </td></tr>
+    <tr><td class="paramname">false</td><td>Bus is idle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7664234966e4162e952b6d57efcaa8a6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterStart </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a>&#160;</td>
+          <td class="paramname"><em>direction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to initiate a new master mode transfer by sending the START signal. The slave address is sent following the I2C START signal.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>I2C peripheral base pointer </td></tr>
+    <tr><td class="paramname">address</td><td>7-bit slave device address. </td></tr>
+    <tr><td class="paramname">direction</td><td>Master transfer directions(transmit/receive). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Successfully send the start signal. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_Busy</td><td>Current bus is busy. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf46a8cc094fc18c6cadea8de71448723"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterStop </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Successfully send the stop signal. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_Timeout</td><td>Send stop signal failed, timeout. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8137f7b333aafe1e3ff6c9d3852b7dbd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterRepeatedStart </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#gab49c827b45635206f06e5737606e4611">i2c_direction_t</a>&#160;</td>
+          <td class="paramname"><em>direction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>I2C peripheral base pointer </td></tr>
+    <tr><td class="paramname">address</td><td>7-bit slave device address. </td></tr>
+    <tr><td class="paramname">direction</td><td>Master transfer directions(transmit/receive). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Successfully send the start signal. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_Busy</td><td>Current bus is busy but not occupied by current I2C master. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3b4d71b59e118adc63afbc5434e5e7dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterWriteBlocking </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>txBuff</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>, </td>
+          <td class="paramname"><em>txSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -236,91 +1365,55 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Perform the full SHA in one function call. The function is blocking.</p>
+<p>Sends up to <em>txSize</em> number of bytes to the previously addressed slave device. The slave may reply with a NAK to any byte in order to terminate the transfer early. If this happens, this function returns <a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00" title="The slave device sent a NAK in response to a byte. ">kStatus_I2C_Nak</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">txBuff</td><td>The pointer to the data to be transferred. </td></tr>
+    <tr><td class="paramname">txSize</td><td>The length in bytes of the data to be transferred. </td></tr>
+    <tr><td class="paramname">flags</td><td>Transfer control flag to control special behavior like suppressing start or stop, for normal transfers use kI2C_TransferDefaultFlag </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the one call hash operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Data was sent successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952" title="The master is already performing a transfer. ">kStatus_I2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00" title="The slave device sent a NAK in response to a byte. ">kStatus_I2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea139b52cc3305ec2c06d0ac94313c221f" title="Arbitration lost error. ">kStatus_I2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga704d85f639d6e7c6a1450bc20a68425d"></a>
+<a class="anchor" id="gaba04c62ee636dd8317c2235c3c82aa3b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA_Init </td>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterReadBlocking </td>
           <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00252.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a>&#160;</td>
-          <td class="paramname"><em>algo</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the HASH.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ctx</td><td>Output hash context </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of initialization </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga73e2339a36879daa7aa54491387ba103"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA_Update </td>
-          <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>rxBuff</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>&#160;</td>
+          <td class="paramname"><em>rxSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -329,47 +1422,42 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Add data to current HASH. This can be called repeatedly with an arbitrary amount of data to be hashed. The functions blocks. If it returns kStatus_Success, the running hash has been updated (HASHCRYPT has processed the input data), so the memory at <code>input</code> pointer can be released back to system. The HASHCRYPT context buffer is updated with the running hash and with all necessary information to support possible context switch.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>HASH context </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">rxBuff</td><td>The pointer to the data to be transferred. </td></tr>
+    <tr><td class="paramname">rxSize</td><td>The length in bytes of the data to be transferred. </td></tr>
+    <tr><td class="paramname">flags</td><td>Transfer control flag to control special behavior like suppressing start or stop, for normal transfers use kI2C_TransferDefaultFlag </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash update operation </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Data was received successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952" title="The master is already performing a transfer. ">kStatus_I2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00" title="The slave device sent a NAK in response to a byte. ">kStatus_I2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea139b52cc3305ec2c06d0ac94313c221f" title="Arbitration lost error. ">kStatus_I2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gad7ff02fc54187b62585a4e3d940b8037"></a>
+<a class="anchor" id="ga35cae3a5b4aa50ce8db28e3eb703a027"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_SHA_Finish </td>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterTransferBlocking </td>
           <td>(</td>
-          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00315">hashcrypt_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
+          <td class="paramtype">i2c_master_transfer_t *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -378,17 +1466,242 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Outputs the final hash (computed by HASHCRYPT_HASH_Update()) and erases the context.</p>
+<dl class="section note"><dt>Note</dt><dd>The API does not return until the transfer succeeds or fails due to arbitration lost or receiving a NAK.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>HASHCRYPT peripheral base address </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Input hash context </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">outputSize</td><td>Optional parameter (can be passed as NULL). On function entry, it specifies the size of output[] buffer. On function return, it stores the number of updated output bytes. </td></tr>
+    <tr><td class="paramname">base</td><td>I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the transfer structure. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash finish operation </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Successfully complete the data transmission. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_Busy</td><td>Previous transmission still not finished. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_Timeout</td><td>Transfer error, wait signal timeout. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_ArbitrationLost</td><td>Transfer error, arbitration lost. </td></tr>
+    <tr><td class="paramname">kStataus_I2C_Nak</td><td>Transfer error, receive NAK during transfer. </td></tr>
+    <tr><td class="paramname">kStataus_I2C_Addr_Nak</td><td>Transfer error, receive NAK during addressing. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga31e3de02b57801c6896e6045c4a31268"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_MasterTransferCreateHandle </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">i2c_master_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#gad292a48f957a9b76593c1779d9dce497">i2c_master_transfer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The creation of a handle is for use with the non-blocking APIs. Once a handle is created, there is not a corresponding destroy handle. If the user wants to terminate a transfer, the <a class="el" href="a00025.html#gabb386e53b2bc64e29b2915bdfac36800" title="Terminates a non-blocking I2C master transmission early. ">I2C_MasterTransferAbort()</a> API shall be called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">handle</td><td>Pointer to the I2C master driver handle. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">callback</td><td>User provided pointer to the asynchronous callback function. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">userData</td><td>User provided pointer to the application callback data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac7f76a04b6f6873c52ad176d58901fe9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterTransferNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">i2c_master_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">i2c_master_transfer_t *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to the I2C master driver handle. </td></tr>
+    <tr><td class="paramname">xfer</td><td>The pointer to the transfer descriptor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>The transaction was started successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952" title="The master is already performing a transfer. ">kStatus_I2C_Busy</a></td><td>Either another master is currently utilizing the bus, or a non-blocking transaction is already in progress. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7d720842e68161d2d52d56d119f20665"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterTransferGetCount </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">i2c_master_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Pointer to the I2C master driver handle. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">count</td><td>Number of bytes transferred so far by the non-blocking transaction. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952" title="The master is already performing a transfer. ">kStatus_I2C_Busy</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gabb386e53b2bc64e29b2915bdfac36800"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterTransferAbort </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">i2c_master_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>It is not safe to call this function from an IRQ handler that has a higher priority than the I2C peripheral's IRQ priority.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to the I2C master driver handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>A transaction was successfully aborted. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#gga61dadd085c1777f559549e05962b2c9ea81ad7cc198436cabbe91ea55c5288747" title="Timeout when waiting for I2C master/slave pending status to set to continue transfer. ">kStatus_I2C_Timeout</a></td><td>Timeout during polling for flags. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gafbf792484d11820561fa22bb27f73284"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_MasterTransferHandleIRQ </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">i2c_master_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This function does not need to be called unless you are reimplementing the nonblocking API's interrupt handler routines to add special functionality. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to the I2C master driver handle. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

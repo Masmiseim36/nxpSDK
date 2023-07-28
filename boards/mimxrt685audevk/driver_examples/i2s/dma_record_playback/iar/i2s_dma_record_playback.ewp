@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -225,9 +225,9 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -350,15 +350,15 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
@@ -485,7 +485,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -688,7 +688,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1097,7 +1097,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1184,7 +1184,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1201,7 +1201,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1224,7 +1224,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1303,7 +1303,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1312,9 +1312,9 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1437,15 +1437,15 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
@@ -1572,7 +1572,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1775,7 +1775,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2184,7 +2184,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2271,7 +2271,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2288,7 +2288,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2311,7 +2311,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2390,7 +2390,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2398,9 +2398,9 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2523,15 +2523,15 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
@@ -2658,7 +2658,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2861,7 +2861,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3270,7 +3270,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3357,7 +3357,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3374,7 +3374,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3397,7 +3397,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3476,7 +3476,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3485,9 +3485,9 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3610,15 +3610,15 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
@@ -3745,7 +3745,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3947,7 +3947,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4352,7 +4352,7 @@
       <name>$PROJ_DIR$/../i2s_dma_record_playback.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../music.h</name>
+      <name>$PROJ_DIR$/../music.h</name>
     </file>
   </group>
   <group>
@@ -4383,6 +4383,36 @@
     </file>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>i2c</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>codec</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
@@ -4395,12 +4425,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/cs42448/fsl_cs42448.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <group>
       <name>port</name>
@@ -4417,21 +4441,33 @@
         <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+    </file>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</name>
     </file>
@@ -4461,6 +4497,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</name>
@@ -4515,54 +4563,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</name>
-    </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>i2c</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_flexcomm_i2c.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
   </group>
   <group>

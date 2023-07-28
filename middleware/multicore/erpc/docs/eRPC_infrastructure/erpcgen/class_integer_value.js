@@ -9,14 +9,14 @@ var class_integer_value =
     [ "IntegerValue", "class_integer_value.html#a022c81735c187721de6f66e373221365", null ],
     [ "IntegerValue", "class_integer_value.html#a30adc31106b678ca4c7d11006b9f187a", null ],
     [ "IntegerValue", "class_integer_value.html#a2904e4789a2fc1f0cb506020befa6092", null ],
-    [ "clone", "class_integer_value.html#a4b76d7076a97491aaa9c4d03eeafc862", null ],
+    [ "clone", "class_integer_value.html#a3deabe8a8adf92125dda239c6b1a9be2", null ],
     [ "getIntType", "class_integer_value.html#a92478d34306651088346be0c2a70b7d6", null ],
-    [ "getSize", "class_integer_value.html#a795a4b606a977b42644565ffa7916e22", null ],
-    [ "getTypeName", "class_integer_value.html#adb9a314b752afcf81f61aa4f2f891113", null ],
+    [ "getSize", "class_integer_value.html#a760e6f932e13f37ac9898a18c2fac623", null ],
+    [ "getTypeName", "class_integer_value.html#a09356e83bfae4059117ffc72d34c2218", null ],
     [ "getValue", "class_integer_value.html#ac0c3aaac1e07df21bdfecb525c29a6ed", null ],
     [ "operator uint64_t", "class_integer_value.html#aef785b5235ec4c6e14334d652193d261", null ],
     [ "operator=", "class_integer_value.html#aa0ff18dfddea6434440598796485b399", null ],
-    [ "toString", "class_integer_value.html#ae4f9e9b14957e0e09c2c60822ae7386f", null ],
+    [ "toString", "class_integer_value.html#ac35a03dae84f8be26a91b38bf553a09e", null ],
     [ "m_intType", "class_integer_value.html#a8a5ee8f0d8c415f07c7274dc81619ca2", null ],
     [ "m_value", "class_integer_value.html#a64bcfeae1eb51f5db340c69126f1d974", null ]
 ];

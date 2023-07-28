@@ -25,9 +25,11 @@ OUTPUT_ROOT := $(ERPC_ROOT)
 TEST_ROOT :=  $(ERPC_ROOT)/test
 
 ifeq "$(is_mingw)" "1"
-    BOOST_ROOT ?= $(ERPC_ROOT)/erpcgen/VisualStudio_v14/boost_1_67_0
-else
-    BOOST_ROOT ?= /usr/local/opt/boost
+    VISUAL_STUDIO_ROOT ?= $(ERPC_ROOT)/erpcgen/VisualStudio_v14
+    MINGW64 ?= $(ERPC_ROOT)/mingw64
+    export PATH := $(MINGW64):$(MINGW64)/bin:$(PATH)
+    CC = gcc
+    CXX = g++
 endif
 
 TARGET_OUTPUT_ROOT = $(OUTPUT_ROOT)/$(DEBUG_OR_RELEASE)/$(os_name)/$(APP_NAME)
@@ -51,9 +53,11 @@ INC_INSTALL_DIR = $(PREFIX)/include/erpc
 # ----------------------------------------------
 
 ERPCGEN ?= $(OUTPUT_ROOT)/$(DEBUG_OR_RELEASE)/$(os_name)/erpcgen/erpcgen
-LD := $(CXX)
+LD = $(CXX)
 PYTHON ?= python
-ifeq (, $(shell which $(PYTHON)))
+ifeq "$(is_mingw)" "1"
+    PYTHON=$(MINGW64)/opt/bin/python3
+else ifeq (, $(shell which $(PYTHON)))
     PYTHON=python3
     ifeq (, $(shell which $(PYTHON)))
         $(error "No python found. Please install python3.")
@@ -70,8 +74,15 @@ endif
 
 # Tool paths. Use different paths for OS X.
 ifeq "$(is_darwin)" "1"
-    FLEX ?= /usr/local/opt/flex/bin/flex
-    BISON ?= /usr/local/opt/bison/bin/bison
+    ifndef FLEX_ROOT
+        FLEX_ROOT := $(shell brew --prefix flex)
+    endif
+    ifndef BISON_ROOT
+        BISON_ROOT := $(shell brew --prefix bison)
+    endif
+
+    FLEX ?= $(FLEX_ROOT)/bin/flex
+    BISON ?= $(BISON_ROOT)/bin/bison
 else ifeq "$(is_linux)" "1"
     FLEX ?= /usr/bin/flex
     BISON ?= /usr/bin/bison
@@ -79,14 +90,17 @@ else ifeq "$(is_cygwin)" "1"
     FLEX ?= /bin/flex
     BISON ?= /bin/bison
 else ifeq "$(is_mingw)" "1"
-    FLEX ?= $(ERPC_ROOT)/erpcgen/VisualStudio_v14/win_flex.exe
-    BISON ?= $(ERPC_ROOT)/erpcgen/VisualStudio_v14/win_bison.exe
+    FLEX ?= $(VISUAL_STUDIO_ROOT)/win_flex.exe
+    BISON ?= $(VISUAL_STUDIO_ROOT)/win_bison.exe
 endif
 
 ifeq "$(is_mingw)" "1"
-    mkdirc = C:\MinGW\msys\1.0\bin\mkdir.exe
-    CC+=gcc
+    MAKE := $(MINGW64)/bin/mingw32-make
+    POWERSHELL ?= powershell
+    mkdirc = $(POWERSHELL) mkdir -Force
+    rmc = $(POWERSHELL) rm -Recurse -Force -ErrorAction Ignore
 else
+    rmc = rm -rf
     mkdirc = mkdir
 endif
 
@@ -94,4 +108,4 @@ endif
 # Debug or Release
 # Release by default
 #-----------------------------------------------
-build ?= debug
+build ?= release

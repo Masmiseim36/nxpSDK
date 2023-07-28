@@ -14,7 +14,7 @@ var classerpcgen_1_1erpcgen_tool =
     [ "erpcgenTool", "classerpcgen_1_1erpcgen_tool.html#a7ddf48e09ef4a67f0dfcf800482e635c", null ],
     [ "~erpcgenTool", "classerpcgen_1_1erpcgen_tool.html#a8488fb6270f6db566bb25bdc31c7d44f", null ],
     [ "checkArguments", "classerpcgen_1_1erpcgen_tool.html#a1d1d2ae4050e41e342353f68403b2249", null ],
-    [ "printUsage", "classerpcgen_1_1erpcgen_tool.html#aaf4ae6398b015327af5f8844b11506a7", null ],
+    [ "printUsage", "classerpcgen_1_1erpcgen_tool.html#aaf0e1a1537a2f8456ce806536cd27a9b", null ],
     [ "processOptions", "classerpcgen_1_1erpcgen_tool.html#a10e055a876632b2b10dcce3dd801eebb", null ],
     [ "run", "classerpcgen_1_1erpcgen_tool.html#ad7669c67e73726f9481c0092a6028a49", null ],
     [ "setVerboseLogging", "classerpcgen_1_1erpcgen_tool.html#abd926b2405ea43c2c1a458c534a10113", null ],

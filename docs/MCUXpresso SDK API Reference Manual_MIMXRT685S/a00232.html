@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: IAP OTP Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Hashcrypt_driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,322 +99,228 @@ $(document).ready(function(){initNavTree('a00232.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">IAP OTP Driver<div class="ingroups"><a class="el" href="a00231.html">IAP: In Application Programming Driver</a></div></div>  </div>
+<div class="title">Hashcrypt_driver<div class="ingroups"><a class="el" href="a00230.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga859c70de1a97b05f61723b64e6f06227"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga859c70de1a97b05f61723b64e6f06227"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga859c70de1a97b05f61723b64e6f06227">HASHCRYPT_MODE_SHA1</a>&#160;&#160;&#160;0x1</td></tr>
+<tr class="memdesc:ga859c70de1a97b05f61723b64e6f06227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm definitions correspond with the values for Mode field in Control register ! <br/></td></tr>
+<tr class="separator:ga859c70de1a97b05f61723b64e6f06227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaabfcbcb5ac86a1edac4035264bc7d2b8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"></td></tr>
-<tr class="memdesc:gaabfcbcb5ac86a1edac4035264bc7d2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTP Status Group. <br/></td></tr>
-<tr class="separator:gaabfcbcb5ac86a1edac4035264bc7d2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00">kStatus_OTP_InvalidAddress</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 1), 
+<tr class="memitem:gadae9003658482577d1b7ac6e9770bb84"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00232.html#ggadae9003658482577d1b7ac6e9770bb84a521a8aebc98248da4565bbf8fd69ff57">kHASHCRYPT_Sha1</a> = HASHCRYPT_MODE_SHA1, 
 <br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93">kStatus_OTP_ProgramFail</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 2), 
+&#160;&#160;<a class="el" href="a00232.html#ggadae9003658482577d1b7ac6e9770bb84ae14b2fbb186eb7ecb1bfc007a509b3d3">kHASHCRYPT_Sha256</a> = HASHCRYPT_MODE_SHA256, 
 <br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4">kStatus_OTP_CrcFail</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa6b2812dc3a772696674644021963e9e5">kStatus_OTP_Error</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa04c03b460d85fa1a71ec9b190fa69ec0">kStatus_OTP_EccCheckFail</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181faa6a221a15bbe35240999f04e44cffdc7">kStatus_OTP_Locked</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 6), 
-<br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa365cd204f0eb037f13fcdc9eec986cc4">kStatus_OTP_Timeout</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 7), 
-<br/>
-&#160;&#160;<a class="el" href="a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fac1090e0c604ff9bb4f40c88653b482c5">kStatus_OTP_CrcCheckPass</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 8)
+&#160;&#160;<a class="el" href="a00232.html#ggadae9003658482577d1b7ac6e9770bb84a142430d685b31911c77af2ce8194a51b">kHASHCRYPT_Aes</a> = HASHCRYPT_MODE_AES
 <br/>
  }</td></tr>
-<tr class="memdesc:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTP Error Status definitions.  <a href="a00232.html#ga5d76b81b0ad4c19007a781d4edb8181f">More...</a><br/></td></tr>
-<tr class="separator:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gadae9003658482577d1b7ac6e9770bb84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for Hashcrypt operation.  <a href="a00232.html#gadae9003658482577d1b7ac6e9770bb84">More...</a><br/></td></tr>
+<tr class="separator:gadae9003658482577d1b7ac6e9770bb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab7b9a8dea075fba8f8742ff263c8b298"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gab7b9a8dea075fba8f8742ff263c8b298">IAP_OtpInit</a> (uint32_t src_clk_freq)</td></tr>
-<tr class="memdesc:gab7b9a8dea075fba8f8742ff263c8b298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize OTP controller.  <a href="#gab7b9a8dea075fba8f8742ff263c8b298">More...</a><br/></td></tr>
-<tr class="separator:gab7b9a8dea075fba8f8742ff263c8b298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa3411920d5a6dd4cfbaf0ffc8064349"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gaaa3411920d5a6dd4cfbaf0ffc8064349">IAP_OtpDeinit</a> (void)</td></tr>
-<tr class="memdesc:gaaa3411920d5a6dd4cfbaf0ffc8064349"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-Initialize OTP controller.  <a href="#gaaa3411920d5a6dd4cfbaf0ffc8064349">More...</a><br/></td></tr>
-<tr class="separator:gaaa3411920d5a6dd4cfbaf0ffc8064349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee0553e40fa9b328a6ddc248db5e0f41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gaee0553e40fa9b328a6ddc248db5e0f41">IAP_OtpFuseRead</a> (uint32_t addr, uint32_t *data)</td></tr>
-<tr class="memdesc:gaee0553e40fa9b328a6ddc248db5e0f41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read Fuse value from OTP Fuse Block.  <a href="#gaee0553e40fa9b328a6ddc248db5e0f41">More...</a><br/></td></tr>
-<tr class="separator:gaee0553e40fa9b328a6ddc248db5e0f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaccf763b9b621276e1d0f10bbc9aa7124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gaccf763b9b621276e1d0f10bbc9aa7124">IAP_OtpFuseProgram</a> (uint32_t addr, uint32_t data, bool lock)</td></tr>
-<tr class="memdesc:gaccf763b9b621276e1d0f10bbc9aa7124"><td class="mdescLeft">&#160;</td><td class="mdescRight">Program value to OTP Fuse block.  <a href="#gaccf763b9b621276e1d0f10bbc9aa7124">More...</a><br/></td></tr>
-<tr class="separator:gaccf763b9b621276e1d0f10bbc9aa7124"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf922b6790f2d0ec29fc1a9f63a42e775"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gaf922b6790f2d0ec29fc1a9f63a42e775">IAP_OtpShadowRegisterReload</a> (void)</td></tr>
-<tr class="memdesc:gaf922b6790f2d0ec29fc1a9f63a42e775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reload all shadow registers from OTP fuse block.  <a href="#gaf922b6790f2d0ec29fc1a9f63a42e775">More...</a><br/></td></tr>
-<tr class="separator:gaf922b6790f2d0ec29fc1a9f63a42e775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf19747f602ac5c200bba398f7601b88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gadf19747f602ac5c200bba398f7601b88">IAP_OtpCrcCheck</a> (uint32_t start_addr, uint32_t end_addr, uint32_t crc_addr)</td></tr>
-<tr class="memdesc:gadf19747f602ac5c200bba398f7601b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do CRC Check via OTP controller.  <a href="#gadf19747f602ac5c200bba398f7601b88">More...</a><br/></td></tr>
-<tr class="separator:gadf19747f602ac5c200bba398f7601b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3cce0671a425a0af2e1903f758bd7106"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga3cce0671a425a0af2e1903f758bd7106">IAP_OtpCrcCalc</a> (uint32_t *src, uint32_t numberOfWords, uint32_t *crcChecksum)</td></tr>
-<tr class="memdesc:ga3cce0671a425a0af2e1903f758bd7106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the CRC checksum for specified data for OTP.  <a href="#ga3cce0671a425a0af2e1903f758bd7106">More...</a><br/></td></tr>
-<tr class="separator:ga3cce0671a425a0af2e1903f758bd7106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga02f8a8a22a0ac96e7ac823da4cacd585">HASHCRYPT_Init</a> (HASHCRYPT_Type *base)</td></tr>
+<tr class="memdesc:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables clock and disables reset for HASHCRYPT peripheral.  <a href="#ga02f8a8a22a0ac96e7ac823da4cacd585">More...</a><br/></td></tr>
+<tr class="separator:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga2561c8bc17a4b2143a0cc7c46de64fbe">HASHCRYPT_Deinit</a> (HASHCRYPT_Type *base)</td></tr>
+<tr class="memdesc:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables clock for HASHCRYPT peripheral.  <a href="#ga2561c8bc17a4b2143a0cc7c46de64fbe">More...</a><br/></td></tr>
+<tr class="separator:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga6de3a130dd77ff83fba428d53188e661"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga6de3a130dd77ff83fba428d53188e661">FSL_HASHCRYPT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 11))</td></tr>
+<tr class="memdesc:ga6de3a130dd77ff83fba428d53188e661"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT driver version.  <a href="#ga6de3a130dd77ff83fba428d53188e661">More...</a><br/></td></tr>
+<tr class="separator:ga6de3a130dd77ff83fba428d53188e661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga5d76b81b0ad4c19007a781d4edb8181f"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga6de3a130dd77ff83fba428d53188e661"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">#define FSL_HASHCRYPT_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 11))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Version 2.2.11.</p>
+<p>Current version: 2.2.11</p>
+<p>Change log:</p>
+<ul>
+<li>Version 2.0.0<ul>
+<li>Initial version</li>
+</ul>
+</li>
+<li>Version 2.0.1<ul>
+<li>Support loading AES key from unaligned address</li>
+</ul>
+</li>
+<li>Version 2.0.2<ul>
+<li>Support loading AES key from unaligned address for different compiler and core variants</li>
+</ul>
+</li>
+<li>Version 2.0.3<ul>
+<li>Remove SHA512 and AES ICB algorithm definitions</li>
+</ul>
+</li>
+<li>Version 2.0.4<ul>
+<li>Add SHA context switch support</li>
+</ul>
+</li>
+<li>Version 2.1.0<ul>
+<li>Update the register name and macro to align with new header.</li>
+</ul>
+</li>
+<li>Version 2.1.1<ul>
+<li>Fix MISRA C-2012.</li>
+</ul>
+</li>
+<li>Version 2.1.2<ul>
+<li>Support loading AES input data from unaligned address.</li>
+</ul>
+</li>
+<li>Version 2.1.3<ul>
+<li>Fix MISRA C-2012.</li>
+</ul>
+</li>
+<li>Version 2.1.4<ul>
+<li>Fix context switch cannot work when switching from AES.</li>
+</ul>
+</li>
+<li>Version 2.1.5<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() to prevent possible optimization issue.</li>
+</ul>
+</li>
+<li>Version 2.2.0<ul>
+<li>Add AES-OFB and AES-CFB mixed IP/SW modes.</li>
+</ul>
+</li>
+<li>Version 2.2.1<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() prevent compiler from reordering memory write when -O2 or higher is used.</li>
+</ul>
+</li>
+<li>Version 2.2.2<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() to fix optimization issue</li>
+</ul>
+</li>
+<li>Version 2.2.3<ul>
+<li>Added check for size in hashcrypt_aes_one_block to prevent overflowing COUNT field in MEMCTRL register, if its bigger than COUNT field do a multiple runs.</li>
+</ul>
+</li>
+<li>Version 2.2.4<ul>
+<li>In all HASHCRYPT_AES_xx functions have been added setting CTRL_MODE bitfield to 0 after processing data, which decreases power consumption.</li>
+</ul>
+</li>
+<li>Version 2.2.5<ul>
+<li>Add data synchronization barrier and instruction synchronization barrier inside hashcrypt_sha_process_message_data() to fix optimization issue</li>
+</ul>
+</li>
+<li>Version 2.2.6<ul>
+<li>Add data synchronization barrier inside <a class="el" href="a00024.html#ga73e2339a36879daa7aa54491387ba103" title="Add data to current HASH. ">HASHCRYPT_SHA_Update()</a> and hashcrypt_get_data() function to fix optimization issue on MDK and ARMGCC release targets</li>
+</ul>
+</li>
+<li>Version 2.2.7<ul>
+<li>Add data synchronization barrier inside <a class="el" href="a00024.html#ga73e2339a36879daa7aa54491387ba103" title="Add data to current HASH. ">HASHCRYPT_SHA_Update()</a> to fix optimization issue on MCUX IDE release target</li>
+</ul>
+</li>
+<li>Version 2.2.8<ul>
+<li>Unify hashcrypt hashing behavior between aligned and unaligned input data</li>
+</ul>
+</li>
+<li>Version 2.2.9<ul>
+<li>Add handling of set ERROR bit in the STATUS register</li>
+</ul>
+</li>
+<li>Version 2.2.10<ul>
+<li>Fix missing error statement in hashcrypt_save_running_hash()</li>
+</ul>
+</li>
+<li>Version 2.2.11<ul>
+<li>Fix incorrect SHA-256 calculation for long messages with reload </li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gadae9003658482577d1b7ac6e9770bb84"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00232.html#gadae9003658482577d1b7ac6e9770bb84">hashcrypt_algo_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00"></a>kStatus_OTP_InvalidAddress</em>&nbsp;</td><td class="fielddoc">
-<p>Invalid OTP address. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadae9003658482577d1b7ac6e9770bb84a521a8aebc98248da4565bbf8fd69ff57"></a>kHASHCRYPT_Sha1</em>&nbsp;</td><td class="fielddoc">
+<p>SHA_1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93"></a>kStatus_OTP_ProgramFail</em>&nbsp;</td><td class="fielddoc">
-<p>Program Fail. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadae9003658482577d1b7ac6e9770bb84ae14b2fbb186eb7ecb1bfc007a509b3d3"></a>kHASHCRYPT_Sha256</em>&nbsp;</td><td class="fielddoc">
+<p>SHA_256. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4"></a>kStatus_OTP_CrcFail</em>&nbsp;</td><td class="fielddoc">
-<p>CrcCheck Fail. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa6b2812dc3a772696674644021963e9e5"></a>kStatus_OTP_Error</em>&nbsp;</td><td class="fielddoc">
-<p>Errors happened during OTP operation. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa04c03b460d85fa1a71ec9b190fa69ec0"></a>kStatus_OTP_EccCheckFail</em>&nbsp;</td><td class="fielddoc">
-<p>Ecc Check failed during OTP operation. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181faa6a221a15bbe35240999f04e44cffdc7"></a>kStatus_OTP_Locked</em>&nbsp;</td><td class="fielddoc">
-<p>OTP Fuse field has been locked. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa365cd204f0eb037f13fcdc9eec986cc4"></a>kStatus_OTP_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>OTP operation time out. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fac1090e0c604ff9bb4f40c88653b482c5"></a>kStatus_OTP_CrcCheckPass</em>&nbsp;</td><td class="fielddoc">
-<p>OTP CRC Check Pass. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadae9003658482577d1b7ac6e9770bb84a142430d685b31911c77af2ce8194a51b"></a>kHASHCRYPT_Aes</em>&nbsp;</td><td class="fielddoc">
+<p>AES. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gab7b9a8dea075fba8f8742ff263c8b298"></a>
+<a class="anchor" id="ga02f8a8a22a0ac96e7ac823da4cacd585"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpInit </td>
+          <td class="memname">void HASHCRYPT_Init </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>src_clk_freq</em></td><td>)</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function enables OTP Controller clock.</p>
+<p>Enable clock and disable reset for HASHCRYPT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">src_clk_freq</td><td>The Frequency of the source clock of OTP controller </td></tr>
+    <tr><td class="paramname">base</td><td>HASHCRYPT base address </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaaa3411920d5a6dd4cfbaf0ffc8064349"></a>
+<a class="anchor" id="ga2561c8bc17a4b2143a0cc7c46de64fbe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpDeinit </td>
+          <td class="memname">void HASHCRYPT_Deinit </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This functin disables OTP Controller Clock. </p>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaee0553e40fa9b328a6ddc248db5e0f41"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpFuseRead </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>addr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function read fuse data from OTP Fuse block to specified data buffer.</p>
+<p>Disable clock and enable reset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">addr</td><td>Fuse address </td></tr>
-    <tr><td class="paramname">data</td><td>Buffer to hold the data read from OTP Fuse block </td></tr>
+    <tr><td class="paramname">base</td><td>HASHCRYPT base address </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success - Data read from OTP Fuse block successfully kStatus_InvalidArgument - data pointer is invalid kStatus_OTP_EccCheckFail - Ecc Check Failed kStatus_OTP_Error - Other Errors </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaccf763b9b621276e1d0f10bbc9aa7124"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpFuseProgram </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>addr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>lock</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function program data to specified OTP Fuse address.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">addr</td><td>Fuse address </td></tr>
-    <tr><td class="paramname">data</td><td>data to be programmed into OTP Fuse block </td></tr>
-    <tr><td class="paramname">lock</td><td>lock the fuse field or not </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success - Data has been programmed into OTP Fuse block successfully kStatus_OTP_ProgramFail - Fuse programming failed kStatus_OTP_Locked - The address to be programmed into is locked kStatus_OTP_Error - Other Errors </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf922b6790f2d0ec29fc1a9f63a42e775"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpShadowRegisterReload </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function reloads all the shadow registers from OTP Fuse block</p>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success - Shadow registers' reloadding succeeded. kStatus_OTP_EccCheckFail - Ecc Check Failed kStatus_OTP_Error - Other Errors </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gadf19747f602ac5c200bba398f7601b88"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpCrcCheck </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>start_addr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>end_addr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>crc_addr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function checks whether data in specified fuse address ranges match the crc value in the specified CRC address and return the actual crc value as needed.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">start_addr</td><td>Start address of selected Fuse address range </td></tr>
-    <tr><td class="paramname">end_addr</td><td>End address of selected Fuse address range </td></tr>
-    <tr><td class="paramname">crc_addr</td><td>Address that hold CRC data</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success CRC check succeeded, CRC value matched. kStatus_InvalidArgument - Invalid Argument kStatus_OTP_EccCheckFail Ecc Check Failed kStatus_OTP_CrcFail CRC Check Failed </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3cce0671a425a0af2e1903f758bd7106"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00213.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpCrcCalc </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>numberOfWords</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>crcChecksum</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function calculates the CRC checksum for specified data for OTP</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">src</td><td>the source address of data </td></tr>
-    <tr><td class="paramname">numberOfWords</td><td>number of Fuse words </td></tr>
-    <tr><td class="paramname">crcChecksum</td><td>Buffer to store the CRC checksum</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success CRC checksum is computed successfully. kStatus_InvalidArgument - Invalid Argument </dd></dl>
 
 </div>
 </div>

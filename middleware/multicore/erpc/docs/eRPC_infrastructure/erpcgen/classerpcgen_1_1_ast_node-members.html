@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.10.0</span>
+   &#160;<span id="projectnumber">Rev. 1.11.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_ast_node.html','');})
 <p>This is the complete list of members for <a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a3c0a8040c3cf0ea621544bffdc44a033">appendChild</a>(AstNode *node)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#af93e5482a8c032afb73a0443bdfb8c10">AstNode</a>(const Token &amp;token)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#af93e5482a8c032afb73a0443bdfb8c10">AstNode</a>(const Token &amp;token)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a85358932700cac01ee23a220205bdfba">AstNode</a>(Token &amp;token, AstNode *parent)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a6461dacf08c5e25ceadb84c798db996b">AstNode</a>(const AstNode &amp;other)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a3457e8079d80158047cee1294926c63f">attribute_map_t</a> typedef</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_ast_node.html','');})
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a651cbcd73e0c4c0b75b8c21334bf3bbd">getChild</a>(int index) const </td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a814dc8085d1ac2fe4290200f514fdece">getDescription</a>() const </td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a077d782a18bdfb22d8a10a828481088c">getIndex</a>()</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#aed311b11f950bd3cf65e1a66e96a3cc1">getIndexOfChild</a>(AstNode *child)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a6eb4f7483a6c1cefeeb1f8b04113665d">getIndexOfChild</a>(const AstNode *child)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a71886c95f8fe70f115ccba2883cb4f08">getParent</a>() const </td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a4644802709f33aabbeed7450d0f5ee1f">getToken</a>()</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a56d14536ef1c2dd5ddf2e02bfa87e2eb">getToken</a>() const </td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_ast_node.html','');})
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#aa809c3fe3989fd4e0f8fd6900b378e9f">reverseExpr</a>()</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a84856c47428fc75851c9d1dce3d0d674">setAttribute</a>(const std::string &amp;name, Value *node)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#ade4a3ceb22c961deab26c534a0d4f512">setParent</a>(AstNode *newParent)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#ac87ae686f256b14b79379728ce953358">setToken</a>(Token &amp;token)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#a79c8a62b838f319ac024715447753628">setToken</a>(const Token &amp;token)</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html#aeb0797e0870237b6adb6398fc81ebe6b">~AstNode</a>()</td><td class="entry"><a class="el" href="classerpcgen_1_1_ast_node.html">erpcgen::AstNode</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
